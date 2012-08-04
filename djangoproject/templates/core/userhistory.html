@@ -1,0 +1,35 @@
+{% extends "core/base.html" %}
+{% block mainContent%}
+<h3>{{le_user.getUserInfo.screenName}}</h3>
+<hr>
+
+<div class="row-fluid">
+	<div class="span2">
+	  	<img src="{{le_user.gravatar_url_big}}"/><br>
+	  	Since {{le_user.date_joined|date:"N j, o"}}<br>
+	  	<a href="{{le_user.get_view_link}}" style="text-align:center">Profile</a>
+	</div>
+
+	<div class="span10">
+
+
+{% if le_user.getOffers %}
+  <h3>Sponsoring issues</h3>
+  {% include 'core/offer_grid.html' with offers=le_user.getOffers %}
+{% else %}
+  <h3>Not sponsoring any issues</h3>
+  <hr>
+{% endif %}
+{% if le_user.getSolutions %}
+  <hr>
+  <h3>Working on issues</h3>
+  {% include 'core/solution_grid.html' with solutions=le_user.getSolutions %}
+{% else %}
+  <h3>Not working on any issues</h3>
+  <hr>
+{% endif %}
+
+	</div>
+</div>
+
+{% endblock mainContent%}

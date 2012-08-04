@@ -1,0 +1,110 @@
+{% extends "core/base.html" %}
+{% block mainContent%}
+
+        <div class="span1"></div>
+        <div class="span8">
+          <h1>FAQ</h1>
+          <hr>
+          <h3>Do you really think that idea could work? </h3>
+          <p>
+            We really do. Because we believe that the amount of decent honest people in the world is way higher then the minimum required for something like this to work.<br>
+            Yeah, we'll keep on staying foolish, just like uncle Steve taught us.<br>
+            Have you heard of <a href="http://agilemanifesto.org/" target="_agile">the Agile Manifesto</a>? FreedomSponsors is all about taking the third principle to its ultimate conseqences:<br> 
+            <ul>
+            <li>"<strong>Customer collaboration</strong> over contract negotiation".</li>
+            </ul>
+            We think this tool we're providing will give people the ability to give the right push to open source projects, so that things go faster; while also enabling programmers to do more work on the projects they love.
+          </p>
+          <hr>
+          <h3>How can I tell if a "sponsor" is serious about his offer?</h3>
+          <p>
+            You can't. But you can take a look at his/her history. Everything you do at FreedomSponsors is public.<br>
+            Check out their profile. If there are a lot of unpaid offers on resolved issues, that's a bad sign.
+          </p>
+          <hr>
+          <h3>So you have a reputation system?</h3>
+          <p>
+            Not yet. We just display the users history attached to their profiles.<br>
+            But we intend to have something like that in the future.
+          </p>
+          <hr>
+          <h3>How do I add "credits" to FreedomSponsors?</h3>
+          <p>
+            YOU DON'T!<br/>
+            Payments are made directly from sponsors to developers.<br>
+            Our wish is that sponsors pay the developers not because they have to, but because they feel grateful for their work.<br>
+            For that reason, there is nothing on the system that forces nobody to pay anything. There are no escrows and no pre paid credits - this is not an implementation detail - it's by philosophy.
+          </p>
+          <hr>
+          <h3>What about privacy?</h3>
+          <p>
+            We don't show your email address.
+            Everything else that you do here - offers, working, commenting - is public for the world to see.
+          </p>
+          <hr>
+          <h3>How does payment work?</h3>
+          <p>
+            We use <a href="https://www.paypal.com/cgi-bin/webscr?cmd=xpt/Marketing/general/what-is-paypal-outside&nav=0.0">Paypal</a>. You don't need to have an account right away, but you'll need one when you want to send or receive payments, so we suggest you go ahead and <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_registration-run">create your account</a>.<br>
+            On the payment page (in Paypal's website) you'll see that 3% of what you're paying is going to FreedomSponsors (we don't mind being transparent).<br> For example, when you're paying a U$ 10.00 offer, you'll see something like:<br>
+            <ul>
+              <li>Mr. Developer ........... U$ 9.70</li>
+              <li>FreedomSponsors ......... U$ 0.30</li>
+            </ul>
+          </p>
+          <hr>
+          <h3>Two developers are claiming to have resolved my issue. How should I pay? </h3>
+          <p>
+            First you should verify whether the issue is really solved. We encourage sponsors to pay only after their problem is gone!<br><br>
+            Then you have to decide whether you'll pay developer A, developer B, or both. To make a fair choice, do a little digging and check out the original issue to see which one(s) of them really worked on it.<br><br>
+            For example, maybe developer A submitted a patch for a bugfix, and developer B had to do some rework on it before integrating it into trunk. In that case, they both deserve some credit.<br>
+            You'll have the option to select how much you pay to whom. The choice is yours.
+          </p>
+          <hr>
+          <h3>How a fix done by a independent developer will return back to the main project (trunk)?</h3>
+          <p>
+            Ideally, there should be no "independent developers". The best way for a developer to contribute to an open source project is to actually get involved with the corresponding community.<br>
+            In most cases, it is also a bad thing for the end user (meaning, the sponsor) if the work is done on a branch, or a fork of the main codebase, because then the user would not benefit from new improvements that eventually get added in the future.<br><br>
+            The <a href="/core/issue/add">"Sponsor issue" form</a> has a "No Forking" checkbox as part of the acceptance criteria. By checking it, the sponsor is telling that only solutions that are implemented on the main project's codebase will be accepted.<br>
+            We want to encourage sponsors to actually fund the original projects, so that checkbox comes checked by default.
+          </p>
+          <hr>
+          <h3>I resolved an issue, but the sponsor just didn't pay me. Is there anything I can do?</h3>
+          <p>
+            Well, to actually get paid, no, not really.<br>
+            But you can add comments to every issue and every offer (offer, and issues are separate things. One issue can have many offers.)<br>
+            So you can add a comment to that offer and write whatever you want. It will be forever linked to that sponsor's account.
+          </p>
+          <hr>
+          <h3>Does FreedomSponsors have any kind of integration API?</h3>
+          <p>
+            Yes, but it's not much though - so far.<br>
+            Please visit the <a href="/core/dev">Developers section</a>
+          </p>
+          <hr>
+          <h3>Tell me more about FreedomSponsors!</h3>
+          <p>
+            Sure thing, but this is not the best place for it.
+            <ul>
+              <li>Check out <a href="http://www.facebook.com/freedomsponsors">Facebook page</a> to know more about our history, and what are our plans to the future.</li>
+              <li>Follow us on <a href="http://twitter.com/freedomsponsors">Twitter</a>, to get more realtime updates about what we're up to.</li>              
+            </ul>
+          </p>
+          <hr>
+          <h3>I have more questions!</h3>
+          <p>
+            Please drop it on our <a href="/core/feedback">feedback section</a>.<br>
+            If you're having any issues with our website, got any suggestions, or just want add a comment, that's the place for it too.
+          </p>
+        </div>
+        <div class="span1"></div>
+
+
+{% endblock mainContent%}
+
+
+
+
+
+
+
+

@@ -1,0 +1,37 @@
+{% extends "core/base.html" %}
+
+{% block mainContent%}
+
+{% if projects %}
+{% load pagination_tags %}
+<h3>Projects</h3>
+<span style="font-size:12px">To add a project, <a href="/core/issue/add">sponsor</a> a new Issue</span>
+<hr>
+<table class="table table-condensed table-striped">
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Home</th>
+      <th>Issue Tracker</th>
+    </tr>
+  </thead>
+  <tbody>
+{% autopaginate projects 50 %}
+{% for project in projects %}
+    <tr>
+      <td>{{ project.name }}</td>
+      <td><a href="{{ project.homeURL }}" target="_project">{{ project.homeURL }}</a></td>
+      <td><a href="{{ project.trackerURL }}" target="_tracker">{{ project.trackerURL }}</a></td>
+    </tr>
+    <tr>
+{% endfor %}
+  </tbody>
+</table>
+<div class="pagination pagination-right">
+{% paginate %}
+</div>
+
+{% else %}
+    <p>No projects found</p>
+{% endif %}
+{% endblock mainContent %}

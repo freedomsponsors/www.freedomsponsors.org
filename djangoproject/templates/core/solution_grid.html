@@ -1,0 +1,24 @@
+<table class="table table-condensed table-striped">
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Key</th>
+      <th>Title</th>
+      <th>Status</th>
+      <th>Added</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for solution in solutions %}
+    <tr>
+      <td><a href="{{ solution.issue.get_view_link }}">{{ solution.issue.project.name }}</a></td>
+      <td><a href="{{ solution.issue.get_view_link }}">{{ solution.issue.key }}</a></td>
+      <td><a href="{{ solution.issue.get_view_link }}">{{ solution.issue.title }}</a></td>
+      <td>{{solution.status}}</td>
+      <td><span title="{{ solution.creationDate }}">{{ solution.creationDate|date:"D, d/M/Y" }}</span></td>
+    </tr>
+    <tr>
+{% endfor %}
+  </tbody>
+</table>
+

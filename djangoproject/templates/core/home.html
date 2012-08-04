@@ -1,0 +1,50 @@
+{% extends "core/base.html" %}
+{% block mainContent%}
+
+
+    <div class="container-fluid" style="margin-left: auto; margin-right: auto; width: 873px;">
+
+      <div class="sloganPai">
+        <span class="slogan">Crowdfunding Open Source, one issue at a time. </span> 
+      </div>
+      <div class="introductionText" style="font-size:16px;">
+        Place money offers on the issues that you need. Pay up when they're resolved. <a href="/core/about">Learn more...</a>
+      </div>
+      <div class="introductionText" style="font-size:13px;">
+        For example, do you need Hibernate to do <a href="https://hibernate.onjira.com/browse/HHH-1050" target="_hibernate">HQL Unions</a>, or perhaps you'd like Maven to do <a href="http://jira.codehaus.org/browse/MNG-1977" target="_maven">Global Dependency Exclusions</a>?<br>
+        And could you even give, like, 10 bucks to the developer that implements it? Here is where you tell everyone about it.
+      </div>
+    </div>
+    <!-- Slogan + texto -->
+
+    <hr class="center">
+
+    <!-- top issues -->
+    <div class="container-fluid" style="margin-left: auto; margin-right: auto; width: 800px;">
+      <h2>Latest Issues</h2>
+      <div class="topIssues">
+        <table>
+          {% for issue in issues %}
+          <tr class="topIssuesItens">
+            <td class="favoriteIssues">&nbsp;&nbsp;{{forloop.counter}}.</td>
+            <td class="favoriteIssuesDollar">$</td>
+            <td class="favoriteIssues">{{issue.getTotalOffersPrice}}</td>
+            <td>&nbsp;</td>
+            <td class="favoriteIssuesDescricao"><a href="{{issue.get_view_link}}" >{{issue}}</a></td>
+          </tr>
+          {% endfor %}
+
+
+
+        </table>
+
+        <br />
+        <br />
+
+      </div> <!--/.topIssues -->
+    </div>
+    <br /><br />
+
+
+
+{% endblock mainContent%}

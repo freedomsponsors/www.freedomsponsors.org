@@ -1,0 +1,145 @@
+{% extends "core/base.html" %}
+{% block mainContent%}
+<h3>{{user.first_name}} {{user.last_name}} - edit profile</h3>
+<hr>
+
+<div class="modal hide fade in" id="div_brazilianModal">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">×</button>
+    <h3>Here's something you should know...</h3>
+  </div>
+  <div class="modal-body">
+    <p>
+    	Well... aqui entre nós, podemos continuar em português né? :-)<br>
+    	Se você pretende fazer ofertas em issues, leia isso aqui!<br><br>
+
+    	Todas as ofertas feitas aqui no FreedomSponsors são em dólar (U$).<br>
+    	Acontece que a legislação brasileira exige que transações que tenham como origem e destinos contas paypal brasileiras sejam necessariamente feitas em reais (R$).<br><br>
+
+    	Na hora do pagamento, a sua oferta (que estará em dólar) terá um valor em reais <strong>sugerido</strong> convertido usando a velha e boa relação de 2 pra 1 (U$ 1,00 = +/- R$ 2,00). Nessa hora você terá a opção de alterar em reais, se quiser.
+
+    </p>
+  </div>
+  <div class="modal-footer">
+  	<a href="#" class="btn btn-primary" data-dismiss="modal">Beleza, entendi!</a>
+  </div>
+</div>
+
+<div class="row-fluid">
+	<div class="span2">
+	  	<img src="{{user.gravatar_url_big}}"/>
+	  	<a href="http://en.gravatar.com/" target="_gravatar">Change picture</a> <i class="icon-question-sign popopo" rel="popover" data-content="We display your picture as it is registered in Gravatar. Go ahead and create your account there if you still don't have one" data-original-title="No upload here!"></i>
+	</div>
+	<div class="span8">
+		<form method="post" class="form-horizontal" action="/core/user/edit/submit">
+		{% csrf_token %}
+		<fieldset>
+		
+		<input type="hidden" name="next" value="{{next}}">
+
+		<div class="control-group">
+			<label class="control-label" for="screenName">Screen name</label>
+			<div class="controls">
+				<input type="text" class="span4" id="screenName" name="screenName" value="{{userinfo.screenName}}">
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="primaryEmail">Primary email</label>
+			<div class="controls">
+				<input type="text" class="span7" id="primaryEmail" name="primaryEmail" value="{{user.email}}" disabled>
+				<p class="help-block">
+					This is where you'll receive notifications from FreedomSponsors
+				</p>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="paypalEmail">Paypal email</label>
+			<div class="controls">
+				<input type="text" class="span7" id="paypalEmail" name="paypalEmail" value="{{userinfo.paypalEmail}}">
+				<p class="help-block">
+					The email account registered in <a href="http://www.paypal.com" target="_paypal">Paypal</a> (you're gonna need one to send and receive payments)
+				</p>
+			</div>
+		</div>
+		<div class="control-group controls">
+			<label class="checkbox">
+				<input type="checkbox" id="brazilianPaypal" name="brazilianPaypal" value="brazilianPaypal" 
+				{% if userinfo.brazilianPaypal %}
+				checked
+				{% endif %}
+				>
+				I have a brazilian paypal account
+			</label>
+			<p class="help-block">
+				Why are you asking me this <i class="icon-question-sign popopo" rel="popover" data-content="Paypal works a little different with brazilian accounts, in such a way that it changes how FreedomSponsors should behave." data-original-title="Because..."></i>
+			</p>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="realName">Real name</label>
+			<div class="controls">
+				<input type="text" class="span4" id="realName" name="realName" value="{{userinfo.realName}}">
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="website">Website</label>
+			<div class="controls">
+				<input type="text" class="span4" id="website" name="website" value="{{userinfo.website}}">
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="about">About yourself</label>
+			<div class="controls">
+				<textarea id="about" class="span8" name="about" rows="8">{{userinfo.about}}</textarea>
+			</div>
+		</div>
+		<div class="control-group controls">
+			<label class="checkbox">
+				<input type="checkbox" id="receiveAllEmail" name="receiveAllEmail" value="receiveAllEmail" 
+				{% if userinfo.receiveAllEmail %}
+				checked
+				{% endif %}
+				>
+				Send me notification mail about the issues that I'm involved with
+			</label>
+		</div>
+		<div class="form-actions">
+			<a id="btnCancel" class="btn btn-primary" href="{{user.get_view_link}}">Cancel</a>
+			<button id="btnSubmit" class="btn btn-success">Submit</button>
+		</div>
+
+		</fieldset>
+		</form>
+
+	</div>
+</div>
+
+<script>
+	function submit_onclick(){
+		if(!$('#screenName').val()){
+			alert('Screen name is required')
+			return false;
+		}
+		if(!$('#paypalEmail').val()){
+			alert("Paypal email is required (if you don't have a paypal account, you can create one later and associate it with this email)")
+			return false;
+		}
+		if(!$('#realName').val()){
+			alert('Real name is required')
+			return false;
+		}
+	}
+
+
+
+  $(function(){
+    $('.popopo').popover({trigger:'hover'});
+	$('#btnSubmit').click(submit_onclick);
+	$('#brazilianPaypal').change(function(){
+		var selected = $('#brazilianPaypal:checked').val() != undefined;
+		if(selected){
+			$('#div_brazilianModal').modal();
+		}
+	});
+  });
+</script>
+{% endblock mainContent%}
