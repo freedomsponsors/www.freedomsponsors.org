@@ -1,0 +1,25 @@
+{% extends "core/base.html" %}
+
+{% block mainContent%}
+
+<form method="get" class="well">
+  <div class="form-inline">
+    <div class="span4">
+      <input type="text" name="s" value="{{s|default:''}}" class="search-query span12" placeholder="Search terms">
+    </div>
+    <div class="span3">
+      {% include 'core/generic_typeahead.html' with placeholder="Filter By Project" ajaxpath="/core/json/project?query=" name="project_" hval=project_id tval=project_name tclass="search-query span12" %}
+    </div>
+    <div class="span3">
+      <input type="submit" value="Search">
+    </div>
+  </div>
+</form>
+<hr>
+
+{% if issues %}
+  {% include 'core/issue_grid.html' %}
+{% else %}
+    <p>No issues found</p>
+{% endif %}
+{% endblock mainContent %}

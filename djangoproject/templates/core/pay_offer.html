@@ -1,0 +1,195 @@
+{% extends "core/base.html" %}
+{% block mainContent%}
+
+<script src="/static/bootstrap/js/jquery.numeric.js"></script>
+
+
+<h2>Pay U$ {{offer.price}} for issue - {{offer.issue.title}} </h2>
+
+
+<a href="{{offer.issue.get_view_link}}">View issue</a>
+ | <a href="{{offer.get_view_link}}">View offer</a>
+{% if issue.trackerURL %}
+ | <a href="{{offer.issue.trackerURL}}" target="_issue">View original</a>
+{% endif %}
+ | Sponsor: <a href="{{offer.sponsor.get_view_link}}">{{offer.sponsor.getUserInfo.screenName}}</a>
+{% if offer.issue.project %}
+ | Project: <a target="_project" href="{{offer.issue.project.homeURL}}">{{offer.issue.project.name}}</a>
+{% endif %}
+ | Status: {{offer.status}}
+
+<br><br>
+
+
+{% if solutions_done %}
+  {% if solutions_done.count == 1 %}
+  Confirm amount to pay
+  {% else %}
+  More than one developer claims to have resolved the issue. 
+  Specify how much you'll pay to whom.
+  {% endif %}
+  <br><br>
+  <form method="post" action="/core/offer/pay/submit">
+{% csrf_token %}
+  <div id="div_step1">
+	<input type="hidden" id="offer_id" name="offer_id" value="{{offer.id}}">
+  	<input type="hidden" name="count" value="{{solutions_done.count}}">
+	<!-- <table class="table table-condensed table-striped">
+	  <tbody> -->
+	{% for solution in solutions_done %}
+
+	    <!-- <tr>
+	      <td> -->
+	    <div class="form-inline">
+	      <div class="span2">
+		      <input type="hidden" checked id="solutionId_{{forloop.counter0}}" name="solutionId_{{forloop.counter0}}" value="{{solution.id}}">
+			  <input type="checkbox" class="sol_checkbox" checked id="check_{{forloop.counter0}}" name="check_{{forloop.counter0}}">
+			  <img src="{{solution.programmer.gravatar_url_small}}"/> {{ solution.programmer.getUserInfo.screenName }}
+	      </div>
+	      <div class="span2">
+		      <input type="text" id="pay_{{forloop.counter0}}" name="pay_{{forloop.counter0}}" class="span6 positive" value="{{shared_price}}" placeholder="{{currency_symbol}}">
+		  </div>
+		  <div class="span8"></div>
+	    </div><br><br>
+	{% endfor %}
+	  <div class="span6">
+	    <button id="btnNext1" class="btn btn-primary pull-right">Next &gt;&gt;</button>
+	  </div>
+	  <div class="span6"></div>
+  </div>
+
+  <div id="div_step2" class="hide">
+  	{% for solution in solutions_done %}
+  	  <div id="div_summary_{{forloop.counter0}}" class="form-inline">
+  	  	<div class="span2">
+	  	  	<img src="{{solution.programmer.gravatar_url_small}}"/> {{ solution.programmer.getUserInfo.screenName }}
+	  	</div>
+  	  	<div class="span2">
+	  	  	{{currency_symbol}} <span id="amt_{{forloop.counter0}}"></span>
+	  	</div>
+	  	<div class="span8"></div>
+  	  </div>
+  	{% endfor %}
+      <div id="div_summary_fs" class="form-inline">
+        <div class="span2">
+          <img src="http://www.gravatar.com/avatar/d138c5e3cf9bdc70d03a132562db3202?s=23&d=http%3A%2F%2Fdl.dropbox.com%2Fu%2F2683925%2Fglyphicons_003_user.png"/> Freedom Sponsors
+        </div>
+        <div class="span2">
+          {{currency_symbol}} <span id="amt_fs"></span>
+        </div>
+        <div class="span8"></div>
+      </div>
+      <div id="div_summary_sum" class="form-inline">
+        <div class="span2">Total .............</div>
+        <div class="span2">
+          {{currency_symbol}} <span id="amt_sum"></span>
+        </div>
+        <div class="span8"></div>
+      </div>
+	  <div class="span6">
+	    <button id="btnPrev2" class="btn btn-primary pull-left">&lt;&lt; Prev</button>
+	    <button id="confirm" class="btn btn-success pull-right">Confirm</button>
+	  </div>
+	  <div class="span6"></div>
+  </div>
+
+</form>
+{% else %}
+	<div class="alert">
+		No programmer have solved this issue yet!
+	</div>
+{% endif %}
+
+<script>
+
+  stage = {
+    offer_price : {{offer.price}},
+    convert_rate : {{convert_rate}},
+  	count : {{solutions_done.count}},
+  	step:1,
+  	fs_fee:{{FS_FEE}}
+  };
+
+  function setVisibleSliding($div, visible){
+  	if(visible){
+  		$div.slideDown();
+  	} else {
+  		$div.slideUp();
+  	}
+  }
+
+  function updateStage(){
+  	setVisibleSliding($('#div_step1'), stage.step == 1);
+  	setVisibleSliding($('#div_step2'), stage.step == 2);
+  }
+
+  function onCheckChanged(){
+  	var checked_count = 0;
+  	for(var i=0; i < stage.count; i++){
+  		var ischecked = $('#check_'+i+':checked').val() != undefined;
+  		if(ischecked){
+  			checked_count++;
+  		}
+  	}
+  	var price = '';
+  	if(checked_count > 0){
+		price = (parseFloat(stage.offer_price) * stage.convert_rate / checked_count).toFixed(2);
+  	}
+
+  	for(var i=0; i < stage.count; i++){
+  		var ischecked = $('#check_'+i+':checked').val() != undefined;
+  		var $pay = $('#pay_'+i);
+  		if(ischecked){
+  			$pay.val(price);
+
+  		} else {
+  			$pay.val('');
+  		}
+  	}
+  }
+
+  function next1_click(){
+    var sum = 0;
+    var realSum = 0;
+  	for(var i=0; i < stage.count; i++){
+  		var ischecked = $('#check_'+i+':checked').val() != undefined;
+  		var $div = $('#div_summary_'+i);
+  		if(ischecked){
+  			$div.removeClass("hide");
+  			var $pay = $('#pay_'+i);
+  			var _amt = document.getElementById('amt_'+i);
+  			var pay = parseFloat($pay.val());
+        var realPay = parseFloat((pay * (1-stage.fs_fee)).toFixed(2));
+  			_amt.innerHTML = realPay.toFixed(2);
+  			sum += pay;
+        realSum += realPay;
+  		} else {
+  			$div.addClass("hide");
+  		}
+  	}
+    var _amt_fs = document.getElementById('amt_fs');
+    var _amt_sum = document.getElementById('amt_sum');
+    var fee = sum - realSum
+    _amt_fs.innerHTML = fee.toFixed(2);
+    _amt_sum.innerHTML = sum.toFixed(2);
+
+  	stage.step = 2;
+  	updateStage();
+  	return false;
+  }
+
+  function prev2_click(){
+  	stage.step = 1;
+  	updateStage();
+  	return false;
+  }
+
+  $(function(){
+    $(".positive").numeric({ negative: false }, function() { alert("No negative values"); this.value = ""; this.focus(); });
+    $(".sol_checkbox").change(onCheckChanged);
+    document.getElementById("btnNext1").onclick = next1_click;
+    document.getElementById("btnPrev2").onclick = prev2_click;
+  });
+</script>
+
+{% endblock mainContent%}

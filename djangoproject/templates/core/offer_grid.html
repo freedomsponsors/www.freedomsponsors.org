@@ -1,0 +1,27 @@
+<table class="table table-condensed table-striped">
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Key</th>
+      <th>Title</th>
+      <th>Offer (U$)</th>
+      <th>Status</th>
+      <th>Added</th>
+      <th>Expires</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for offer in offers %}
+    <tr>
+      <td><a href="{{ offer.issue.get_view_link }}">{{ offer.issue.project.name }}</a></td>
+      <td><a href="{{ offer.issue.get_view_link }}">{{ offer.issue.key }}</a></td>
+      <td><a href="{{ offer.issue.get_view_link }}">{{ offer.issue.title }}</a></td>
+      <td><a href="{{ offer.get_view_link }}">{{offer.price}}</a></td>
+      <td>{{offer.status}}</td>
+      <td><span title="{{ offer.creationDate }}">{{ offer.creationDate|date:"M/d/Y" }}</span></td>
+      <td><span title="{{ offer.expirationDate }}">{{ offer.expirationDate|date:"M/d/Y" }}</span></td>
+    </tr>
+    <tr>
+{% endfor %}
+  </tbody>
+</table>

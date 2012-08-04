@@ -1,0 +1,19 @@
+{% extends "email/base.html" %}
+{% block mainContent%}
+Hello {{ solution.programmer.getUserInfo.screenName }}<br>
+<a href="{{SITE_HOME}}{{ new_offer.sponsor.get_view_link }}" style="color: #08C;text-decoration: none;cursor: auto;">
+  {{ new_offer.sponsor.getUserInfo.screenName }}</a> has changed the U$ {{old_offer.price}} offer he had on an issue that you're involved with. Details below<br><br>
+Old offer
+<div style="background-color: #D9EDF7;border-bottom-color: #BCE8F1;border-bottom-left-radius: 4px;border-bottom-right-radius: 4px;border-bottom-style: solid;border-bottom-width: 1px;border-left-color: #BCE8F1;border-left-style: solid;border-left-width: 1px;border-right-color: #BCE8F1;border-right-style: solid;border-right-width: 1px;border-top-color: #BCE8F1;border-top-left-radius: 4px;border-top-right-radius: 4px;border-top-style: solid;border-top-width: 1px;color: #3A87AD;line-height: 18px;margin-bottom: 18px;margin-left: 0px;margin-right: 0px;margin-top: 0px;padding-bottom: 8px;padding-left: 14px;padding-right: 35px;padding-top: 8px;">
+	<strong>value:</strong> U$ {{old_offer.price}}<br>
+	<strong>acceptance criteria:</strong> {{old_offer.acceptanceCriteria|linebreaks}}
+</div>
+New offer
+<div style="background-color: #D9EDF7;border-bottom-color: #BCE8F1;border-bottom-left-radius: 4px;border-bottom-right-radius: 4px;border-bottom-style: solid;border-bottom-width: 1px;border-left-color: #BCE8F1;border-left-style: solid;border-left-width: 1px;border-right-color: #BCE8F1;border-right-style: solid;border-right-width: 1px;border-top-color: #BCE8F1;border-top-left-radius: 4px;border-top-right-radius: 4px;border-top-style: solid;border-top-width: 1px;color: #3A87AD;line-height: 18px;margin-bottom: 18px;margin-left: 0px;margin-right: 0px;margin-top: 0px;padding-bottom: 8px;padding-left: 14px;padding-right: 35px;padding-top: 8px;">
+	<strong>value:</strong> U$ {{new_offer.price}}<br>
+	<strong>acceptance criteria:</strong> {{new_offer.acceptanceCriteria|linebreaks}}
+</div>
+That issue is now worth a total of U$ {{new_offer.issue.getTotalOffersPrice}}. <br><br>
+We will let you know if there are any updates.
+{% endblock mainContent%}
+

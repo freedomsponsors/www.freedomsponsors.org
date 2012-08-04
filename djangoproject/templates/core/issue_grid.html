@@ -1,0 +1,69 @@
+{% with showOffers=showOffers|default:"true" showWorking=showWorking|default:"true" showKey=showKey|default:"true" showCreatedBy=showCreatedBy|default:"true" %}
+{% load pagination_tags %}
+<table class="table table-condensed table-striped">
+  <thead>
+    <tr>
+      <th>Project</th>
+
+      {% ifequal showKey "true" %}
+      <th>Key</th>
+      {% endifequal %}
+
+      {% ifequal showCreatedBy "true" %}
+      <th>Created by</th>
+      {% endifequal %}
+
+      <th>Title</th>
+
+      {% ifequal showOffers "true" %}
+      <th>Offers (U$) <i class="icon-question-sign popopo" rel="popover" data-content="$ paid / $ on open offers" data-original-title="Meaning..."></i></th>
+      {% endifequal %}
+
+      {% ifequal showWorking "true" %}
+      <th>Working <i class="icon-question-sign popopo" rel="popover" data-content="Solutions done / Solutions in progress" data-original-title="Meaning..."></i></th>
+      {% endifequal %}
+
+      <th>Added</th>
+    </tr>
+  </thead>
+  <tbody>
+{% autopaginate issues %}
+{% for issue in issues %}
+    <tr>
+
+      <td><a href="{{ issue.get_view_link }}">{{ issue.project.name }}</a></td>
+
+      {% ifequal showKey "true" %}
+      <td><a href="{{ issue.get_view_link }}">{{ issue.key }}</a></td>
+      {% endifequal %}
+
+      {% ifequal showCreatedBy "true" %}
+      <td><a href="{{ issue.createdByUser.get_view_link }}">{{ issue.createdByUser.getUserInfo.screenName }}</a></td>
+      {% endifequal %}
+
+      <td><a href="{{ issue.get_view_link }}">{{ issue.title }}</a></td>
+
+      {% ifequal showOffers "true" %}
+      <td>{{issue.getTotalPaidPrice}} / {{issue.getTotalOffersPrice}}</td>
+      {% endifequal %}
+
+      {% ifequal showWorking "true" %}
+      <td>{{issue.countSolutionsDone}} / {{issue.countSolutionsInProgress}}</td>
+      {% endifequal %}
+
+      <td><span title="{{ issue.creationDate }}">{{ issue.creationDate|date:"D, d/M/Y" }}</span></td>
+    </tr>
+    <tr>
+{% endfor %}
+  </tbody>
+</table>
+<div class="pagination pagination-right">
+{% paginate %}
+</div>
+
+<script>
+  $(function(){
+    $('.popopo').popover({trigger:'hover'})
+  });
+</script>
+{% endwith %}

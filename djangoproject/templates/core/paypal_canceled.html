@@ -1,0 +1,25 @@
+{% extends "core/empty_base.html" %}
+{% block body %}
+
+<div class="alert">
+{{msg}}
+</div>
+<button id="btnClose" class="btn btn-primary">Close</button>
+
+
+<script src="https://www.paypalobjects.com/js/external/dg.js"> </script>
+<script>
+	function closeWindow(){
+		canceled = top.canceled || top.opener.top.canceled; 
+		canceled();
+		dgFlow = top.dgFlow || top.opener.top.dgFlow; 
+		dgFlow.closeFlow(); 
+		top.close();
+	}
+
+	$(function(){
+		$('#btnClose').click(closeWindow);
+	});
+</script>
+
+{% endblock body %}

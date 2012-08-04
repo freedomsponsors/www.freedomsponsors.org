@@ -1,0 +1,197 @@
+- /
+Não logado:
+	Mostra o conteudo estatico do site. Videozinho de como funciona, links pra quem somos etc.
+	Mostra opção de login (que com openId = cadastre-se)
+Logado: 
+	redirect pra /home
+É a mesma mecânica do site do dropbox
+
+x /home
+	Mostra as Issues que ele está envolvido. Seja via Offer ou Solution, separado pelo tipo do "envolvimento".
+	Mostra os links: 
+		Search Issues (/issue)
+		Sponsor new Issue (/issue/add)
+		My Profile (/user/<id>)
+x /issue
+	De cara carrega uma lista das issues mais populares, com uma ferramenta de busca, paginada.
+	Clicou na issue 17, vai pra /issue/17
+
+x /issue/add
+	Página pra adicionar um Offer.
+		- AutoComplete pra escolher o projeto, com uma opção pra adicionar se não tiver encontrado
+		- TextField pra digitar a URL da issue. Se não tiver cadastrado, aparece opção pra digitar outros campos (na verdade, outro campo, no singular: o título).
+		- TextField pra digitar o valor oferecido
+		- TextArea pra digitar o critério de aceitação
+		- botao save: Cria a Offer e redireciona pra /offer/<id>
+
+x /issue/<id>
+	Mostra Tudo que tem pra saber da issue:
+		Titulo, link pra abrir a URL dela num iFrame, quanto tá valendo, 
+		as Offers e seus status (com os respectivos links /offer/<id>), 
+		as Solutions e seus status, e programadores que estão trabalhando nela (com os respectivos /user/<id>)
+		a lista de IssueComments abaixo, a lá JIRA (ou StackOverflow)
+	Além disso mostra as opções do que dá pra fazer com a issue (dependendo do contexto de quem está logado e seu relacionamento com a issue).
+		- Sponsor (/issue/<id>/sponsor)
+		- Revoke offer (/offer/<id>/revoke)
+		- Pay offer (/offer/<id>/pay)
+		- Work on this issue (/solution/add)
+		- Abort work (/solution/<id>/abort)
+		- Resolve issue (/solution/<id>/resolve)
+
+x /issue/<id>/sponsor
+	Abre uma tela parecida com a da /issue/add, só que o projeto e a issue já vem escolhidos, readonly
+
+x /user/<id>
+	Perfil do usuario. Se for o usuario logado, mostra algumas ações adicionais, e habilita edição de algumas coisas.
+		- Nome, mebro desde quando, about.
+		- Perfis públicos nas redes sociais
+		- Connect with (Facebook, Twitter, Gmail, etc) - aqui deve usar oauth
+		- Estatisticas basicas de reputação (# de issues e $ oferecido x pago, issues working e done)
+		- Link pro histórico
+
+x /user/<id>/history
+	Histórico de issues que o usuário se relaciona
+		- Sponsored list
+		- Worked on list
+
+x /offer/<id>
+	Mostra Tudo que tem pra saber da offer: 
+		Status, sponsor (link pro perfil), título da issue, link pra abrir a URL da issue num iframe.
+		Comentarios
+	Alem disso, se for o dono da offer, o usuario tem as opções para
+		Revoke
+		Pay
+
+x /offer/<id>/revoke
+	Na verdade isso é só uma "action", e não uma página. 
+	Antes de acessar essa URL, o usuario vê uma confirm("you sure?") javascript e se for sim, muda o status da Offer e recarrega /offer/<id>
+
+x /offer/<id>/pay
+	Mostra todos os programadores com Solutions pra issue (Quem resolveu primeiro aparece primeiro) e um campo pra especificar quanto vai pagar pra cada um.
+	A medida que ele preenche, um resumo do que realmente será pago é mostrado logo abaixo.
+	Exemplo:
+		Usuario preenche:
+			Joao: U$ 50.00
+			Ze: U$: 20.00
+		Resumo mostra
+			"Blablabla" explicando que o FreedomSponsors precisa dá uma mordidinha (digamos de 5%)
+			João: U$: 47.50
+			Ze: U$: 19.00
+			FreedomSponsors: U$: 3.50
+			Checkbox "I accept FreedomSponsors terms"
+			Botão PAY (redireciona pro Paypal)
+
+x /solution/add
+	Não precisa ser uma página nova. Isso fica na propria /issue/<id>. 
+	Aqui basta um javascript que abre uma TextArea pra digitar um comentario e um botão "Start Working on this issue".
+	É como se o usuário estivesse adicionando um comentário normalmente, só que além disso o sistema adiciona um Solution "IN_PROGRESS"
+
+
+x /solution/<id>/abort
+	Funciona quase igual ao solution/add
+
+x /solution/<id>/resolve
+	Funciona quase igual ao solution/add
+
+
+
+
+
+=============================================================================
+
+1)
+We love open source
+But sometimes, development go slower then healthy.
+We want to help improve that.
+We'll tell you how. Click here
+
+2)
+You know how open 
+source projects
+have those issue 
+trackers, right?
+
+People go there 
+and ask for bugfixes 
+and new features
+
+
+3)
+Some even have a voting system
+And developers use the results
+to prioritize their work
+
+4) 
+But if you need an issue so bad
+that you could PAY a few bucks for it,
+here's what you do:
+
+5) 
+1) Create an offer here at FreedomSponsors, 
+pointing to the original issue in the project's issue tracker
+
+6) 
+2) Other people might also be interested on it,
+so they throw in a few bucks too. 
+You guys now became that issue's sponsors.
+But relax, nobody's gotta pay anything yet.
+
+7)
+Oh yeah, you gotta tell those developers about it, of course!
+
+8)
+3) Over time, that issue acumulates "potential money"
+(which is way more interesting, then just votes, right?)
+
+9)
+4) Some developer then resolves the issue, 
+and tell everyone about it here at FreedomSponsors.
+
+10)
+5) As a sponsor, you go and and see if it really solves your problem.
+
+11)
+6) If it does, you pay the guy. If it doesn't, you don't
+(Just don't try to be a smartass - it won't be good for your reputation.)
+At that point, everyone is gonna need Paypal accounts!
+And that's it.
+
+FreedomSponsors get's a tiny cut out of the developer's pay.
+It's 3%. Not 20, not 10, not 5. Just 3.
+We're not greedy, nor evil - but we do gotta keep business running :-)
+
+12)
+We know that idea sounds a little crazy...
+You're probably thinking "what if this" and "what if that"...
+We thought about some of those, maybe there a few answers for you in THE FAQ - check it out.
+
+13)
+We believe that the guys working on those projects deserve to be rich
+(or at least, making a few more bucks out of it)
+
+14)
+And we believe that people should be able to influence to direction of those projects
+according to their needs.
+
+15)
+And yeah, we believe we can make that happen.
+
+16)
+So, if you love open source too,
+and you believe in that vision, then we ask you two things:
+1) Sign up (it's really easy, you don't even need a password)
+2) Spread the word - everyone needs to know about us for that to happen.
+
+17)
+Oh, and last but not least. Our system is still at beta stage.
+Find any bugs, got any suggestions or comments? 
+Don't hesitate to contact us, or send us your feedback (really, we love feedback).
+
+18)
+I did mention spreading the word, right?
+Yeah, yeah! I mean Twitter, Facebook, Google+...
+C'mon man you gotta tell everyone! :-)
+
+19)
+That's it. Thanks!
+Happy sponsoring :-)

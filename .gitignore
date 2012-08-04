@@ -1,0 +1,8 @@
+env_settings.py
+*.pyc
+.project
+.pydevproject
+fakeMail
+.settings
+logs
+chromedriver.log

@@ -1,0 +1,44 @@
+{% extends "core/base.html" %}
+{% block mainContent%}
+
+<div id="div_waiting" class="alert alert-info">
+	Communicating with paypal...
+</div>
+<div id="div_canceled" class="alert hide">
+	Payment Canceled
+</div>
+<div id="div_success" class="hide">
+	<div class="alert alert-info">
+		Payment Succeded
+	</div>
+	<a href="{{offer.issue.get_view_link}}" class="btn btn-primary">Back to issue</a>
+	
+</div>
+
+<form action= "{{form_action}}" target="PPDGFrame"> 
+    <input id="type" type="hidden" name="expType" value="light"> 
+    <input id="paykey" type="hidden" name="paykey" value="{{paykey}}">    
+    <!-- <input id="preapprovalkey" type="hidden" name="preapprovalkey" value="PA-..."> -->
+    <input type="submit" class="btn hide" id="submitBtn" value="Pay with PayPal">  
+</form>
+
+<script src="https://www.paypalobjects.com/js/external/dg.js"> </script>
+<script>
+	var dgFlow = new PAYPAL.apps.DGFlow({ trigger: 'submitBtn' }); 
+	$('#submitBtn').trigger('click');
+
+	function canceled(){
+		$('#div_waiting').slideUp();
+		$('#div_canceled').slideDown();
+		$('#submitBtn').removeClass("hide");
+		document.getElementById('submitBtn').value = 'Try again';
+	}
+
+	function success(){
+		$('#div_waiting').slideUp();
+		$('#div_success').slideDown();
+	}
+  
+</script>
+
+{% endblock mainContent%}
