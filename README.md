@@ -29,7 +29,7 @@ cd www.freedomsponsors.org/djangoproject
 ./manage.py runserver # and visit http://localhost:8000
 ```
 
-(If you find that the steps above are not actually accurate, please let us know!)
+(If you find that the steps above are not actually accurate, please [open a new issue to let us know](https://github.com/freedomsponsors/www.freedomsponsors.org/issues/new)!)
 
 You should also verify if you can run all the automatic tests successfully.
 You will need to install [Splinter](https://github.com/cobrateam/splinter) (a Selenium wrapper), and you will also need need to create two test gmail accounts (and then specify username and password in your env_settings.py file).
@@ -41,4 +41,4 @@ Then you can run tests using
 ```
 
 Also, there is a fully-functional test-environment at http://ambtest.freedomsponsors.org.
-Feel free to use it as you like. We provide no guarantee about the data on the database though.
+Feel free to use it as you like. We provide no guarantee about the data on it though!
