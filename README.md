@@ -40,5 +40,5 @@ Then you can run tests using
 ./manage.py test core
 ```
 
-Also, there is a fully-functional test-environment at http://ambtest.freedomsponsors.org
+Also, there is a fully-functional test-environment at http://ambtest.freedomsponsors.org.
 Feel free to use it as you like. We provide no guarantee about the data on the database though.
