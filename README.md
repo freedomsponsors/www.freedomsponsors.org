@@ -13,7 +13,6 @@ git clone git://github.com/freedomsponsors/www.freedomsponsors.org.git
 # 2. Create a 'frespo' database on postgres (default username and password is 'frespo')
 
 # 3. Configure settings
-cd www.freedomsponsors.org/djangoproject
 mv frespo/env_settings.py_template frespo/env_settings.py
 nano frespo/env_settings.py #edit according to your environment
 
@@ -27,6 +26,19 @@ cd www.freedomsponsors.org/djangoproject
 ./manage.py loadProjects
 
 # 5. Run!
-
 ./manage.py runserver # and visit http://localhost:8000
 ```
+
+(If you find that the steps above are not actually accurate, please let us know!)
+
+You should also verify if you can run all the automatic tests successfully.
+You will need to install [Splinter](https://github.com/cobrateam/splinter) (a Selenium wrapper), and you will also need need to create two test gmail accounts (and then specify username and password in your env_settings.py file).
+
+Then you can run tests using
+
+```shell
+./manage.py test core
+```
+
+Also, there is a fully-functional test-environment at http://ambtest.freedomsponsors.org
+Feel free to use it as you like. We provide no guarantee about the data on the database though.
