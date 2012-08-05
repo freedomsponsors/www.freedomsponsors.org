@@ -41,4 +41,4 @@ Then you can run tests using
 ```
 
 Also, there is a fully-functional test-environment at http://ambtest.freedomsponsors.org.
-Feel free to use it as you like. We provide no guarantee about the data on it though!
+Feel free to use it as you like (might be useful when reading the code!). We provide no guarantee about the data on it though!
