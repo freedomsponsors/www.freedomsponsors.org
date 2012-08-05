@@ -1,8 +1,32 @@
 www.freedomsponsors.org
 =======================
 
-FreedomSponsors source code is currently hosted in a private repository at bitbucket.
+FreedomSponsors is a Django web application.
+Help and pull requests are welcome!
 
-In a few days we'll  move it here and have it open sourced (there's just some code cleanup we gotta do first).
+To run app locally, follow these steps:
 
-Stay tuned ;-)
+```shell
+# 1. Clone repo
+git clone git://github.com/freedomsponsors/www.freedomsponsors.org.git
+
+# 2. Create a 'frespo' database on postgres (default username and password is 'frespo')
+
+# 3. Configure settings
+cd www.freedomsponsors.org/djangoproject
+mv frespo/env_settings.py_template frespo/env_settings.py
+nano frespo/env_settings.py #edit according to your environment
+
+# 3. Create database objects
+cd www.freedomsponsors.org/djangoproject
+./manage.py syncdb
+./migrate.sh
+
+# 4. Populate with some initial data
+./manage.py loadFeedbackData
+./manage.py loadProjects
+
+# 5. Run!
+
+./manage.py runserver # and visit http://localhost:8000
+```
