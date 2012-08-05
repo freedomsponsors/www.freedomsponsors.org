@@ -2,9 +2,12 @@ www.freedomsponsors.org
 =======================
 
 FreedomSponsors is a Django web application.
-Help and pull requests are welcome!
 
-To run app locally, follow these steps:
+FS is made by, and for developers. 
+If you'd like to help (bug reports, suggestions, or even code), you are more than welcome.
+Please take a look at the open issues.
+
+Instructions to run application locally:
 
 ```shell
 # 1. Clone repo
