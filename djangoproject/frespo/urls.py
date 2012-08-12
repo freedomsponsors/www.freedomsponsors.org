@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     url(r'^bladmin/', include(admin.site.urls)),
 
     url(r'', include('social_auth.urls')),
+    url(r'', include('emailmgr.urls')),
 )
 
 urlpatterns += staticfiles_urlpatterns()

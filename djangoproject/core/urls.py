@@ -1,6 +1,8 @@
 from django.conf.urls import patterns, include, url
 from django.views.generic import TemplateView
 
+
+
 urlpatterns = patterns('core.views',
 	url(r'^$', 'home'),
 	url(r'^home/$', 'home'),
@@ -8,11 +10,6 @@ urlpatterns = patterns('core.views',
 	url(r'^faq/$', TemplateView.as_view(template_name='core/faq.html')),
 	url(r'^dev/$', TemplateView.as_view(template_name='core/dev.html')),
 	url(r'^myissues/$', 'myissues'),
-	url(r'^user/(?P<user_id>\d+)/$', 'viewUser'),
-	url(r'^user/(?P<user_id>\d+)/history*$', 'viewUserHistory'),
-	url(r'^user/(?P<user_id>\d+)/.*$', 'viewUser'),
-	url(r'^user/edit$', 'editUserForm'),
-	url(r'^user/edit/submit$', 'editUser'),
 	url(r'^project/$', 'listProjects'),
 	url(r'^issue/$', 'listIssues'),
     url(r'^issue/(?P<issue_id>\d+)/$', 'viewIssue'),
@@ -39,6 +36,14 @@ urlpatterns = patterns('core.views',
 	url(r'^solution/resolve/submit$', 'resolveSolution'),
 	url(r'^login/$', 'login'),
 	url(r'^logout/$', 'logout'),
+)
+
+urlpatterns += patterns('core.userviews',
+	url(r'^user/(?P<user_id>\d+)/$', 'viewUser'),
+	url(r'^user/(?P<user_id>\d+)/history*$', 'viewUserHistory'),
+	url(r'^user/(?P<user_id>\d+)/.*$', 'viewUser'),
+	url(r'^user/edit$', 'editUserForm'),
+	url(r'^user/edit/submit$', 'editUser'),
 )
 
 urlpatterns += patterns('core.jsonviews',

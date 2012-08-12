@@ -1,0 +1,20 @@
+<div class="modal hide fade in" id="alert_modal">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">×</button>
+    <h3 id="offerDataFormModal_title">Email verification pending</h3>
+  </div>
+  <div class="modal-body">
+    <p>You still have unverified emails.</p>
+    <p>Please check you inbox and click the confirmation link to complete email address verification.</p>
+    <p>To re-send the verification email, just edit and save your profile.</p>
+ </div>
+  <div class="modal-footer">
+    <a href="#" class="btn btn-primary" data-dismiss="modal">OK</a>
+  </div>
+</div>
+
+<script>
+  $(function(){
+    $('#alert_modal').modal()
+  });
+</script>

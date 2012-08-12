@@ -27,7 +27,8 @@ class AppDriver:
         browser = self.browser
 
         browser.visit(self.home_url) 
-        browser.click_link_by_partial_text('Log in with')
+        browser.click_link_by_partial_text('Log in / Register')
+        browser.click_link_by_href('/login/google')
         browser.fill('Email', user['username'])
         browser.fill('Passwd', user['password'])
         browser.find_by_value('Login').click()
@@ -42,7 +43,8 @@ class AppDriver:
         browser = self.browser
 
         browser.visit(self.home_url) 
-        browser.click_link_by_partial_text('Log in with')
+        browser.click_link_by_partial_text('Log in / Register')
+        browser.click_link_by_href('/login/google')
         browser.fill('Email', user['username'])
         browser.fill('Passwd', user['password'])
         browser.find_by_value('Login').click()

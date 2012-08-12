@@ -49,6 +49,7 @@ else:
 
 SITE_PROTOCOL = 'http'
 SITE_HOST = env_settings.SITE_HOST
+SITE_NAME = env_settings.SITE_NAME
 SITE_HOME = SITE_PROTOCOL+'://'+SITE_HOST
 
 PAYPAL_CANCEL_URL = SITE_HOME+'/core/paypal/cancel'
@@ -201,7 +202,10 @@ INSTALLED_APPS = (
     'social_auth',
     'mailer',
     'south',
+    'emailmgr',
 )
+
+
 
 AUTHENTICATION_BACKENDS = (
     'social_auth.backends.twitter.TwitterBackend',
@@ -215,6 +219,7 @@ AUTHENTICATION_BACKENDS = (
     'social_auth.backends.contrib.flickr.FlickrBackend',
     'social_auth.backends.contrib.instagram.InstagramBackend',
     'social_auth.backends.contrib.github.GithubBackend',
+    'social_auth.backends.contrib.bitbucket.BitbucketBackend',
     'social_auth.backends.contrib.yandex.YandexBackend',
 #    'social_auth.backends.contrib.yahoo.YahooOAuthBackend',
     'social_auth.backends.OpenIDBackend',
@@ -262,6 +267,10 @@ SKYROCK_CONSUMER_KEY         = ''
 SKYROCK_CONSUMER_SECRET      = ''
 YAHOO_CONSUMER_KEY           = ''
 YAHOO_CONSUMER_SECRET        = ''
+
+SOCIAL_AUTH_PROTECTED_USER_FIELDS = ['email',]
+FACEBOOK_EXTENDED_PERMISSIONS = ['email',]
+GITHUB_EXTENDED_PERMISSIONS = ['user',] 
 
 LOGIN_URL          = '/core/login'
 LOGIN_REDIRECT_URL = '/'

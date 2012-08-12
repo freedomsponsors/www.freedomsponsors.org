@@ -44,20 +44,47 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label" for="primaryEmail">Primary email</label>
+			<label class="control-label" for="primaryEmail">Primary email
+{% if user.email and not userinfo.is_primary_email_verified %}
+<i class="icon-warning-sign popopo" rel="popover" data-content="This email is not verified. Save your profile to resend verification email." data-original-title="Unverified email"></i>
+{% endif %}
+			</label>
 			<div class="controls">
-				<input type="text" class="span7" id="primaryEmail" name="primaryEmail" value="{{user.email}}" disabled>
+				<input type="text" class="span7" id="primaryEmail" name="primaryEmail" value="{{user.email}}">
 				<p class="help-block">
 					This is where you'll receive notifications from FreedomSponsors
 				</p>
 			</div>
 		</div>
-		<div class="control-group">
-			<label class="control-label" for="paypalEmail">Paypal email</label>
+		<div class="control-group controls">
+			<label class="checkbox">
+				<input type="checkbox" id="differentPaypalEmail" name="differentPaypalEmail" value="differentPaypalEmail" 
+				{% if userinfo.is_differentPaypalEmail %}
+				checked
+				{% endif %}
+				>
+				Use a different email address for Paypal
+			</label>
+			<p class="help-block">
+				What if I don't have Paypal <i class="icon-question-sign popopo" rel="popover" data-content="You will only need one to send or receive payments. Check the FAQ for more details." data-original-title="That's OK, for now..."></i>
+			</p>
+		</div>
+		<div class="control-group" id="div_paypalEmail"
+					{% if userinfo.is_differentPaypalEmail %}
+						style="display:block"
+					{% else %}
+						style="display:none"
+					{% endif %}
+		>
+			<label class="control-label" for="paypalEmail">Paypal email
+{% if userinfo.paypalEmail and not userinfo.is_paypal_email_verified %}
+<i class="icon-warning-sign popopo" rel="popover" data-content="This email is not verified. Save your profile to resend verification email." data-original-title="Unverified email"></i>
+{% endif %}
+			</label>
 			<div class="controls">
 				<input type="text" class="span7" id="paypalEmail" name="paypalEmail" value="{{userinfo.paypalEmail}}">
 				<p class="help-block">
-					The email account registered in <a href="http://www.paypal.com" target="_paypal">Paypal</a> (you're gonna need one to send and receive payments)
+					The email account registered in <a href="http://www.paypal.com" target="_paypal">Paypal</a> (you  need one to send and receive payments)
 				</p>
 			</div>
 		</div>
@@ -115,15 +142,15 @@
 
 <script>
 	function submit_onclick(){
-		if(!$('#screenName').val()){
+		if(!$('#screenName').val().trim()){
 			alert('Screen name is required')
 			return false;
 		}
-		if(!$('#paypalEmail').val()){
-			alert("Paypal email is required (if you don't have a paypal account, you can create one later and associate it with this email)")
+		if(!$('#primaryEmail').val().trim()){
+			alert('Primary email is required')
 			return false;
 		}
-		if(!$('#realName').val()){
+		if(!$('#realName').val().trim()){
 			alert('Real name is required')
 			return false;
 		}
@@ -138,6 +165,15 @@
 		var selected = $('#brazilianPaypal:checked').val() != undefined;
 		if(selected){
 			$('#div_brazilianModal').modal();
+		}
+	});
+	$('#differentPaypalEmail').change(function(){
+		var selected = $('#differentPaypalEmail:checked').val() != undefined;
+		$('#paypalEmail').val('');
+		if(selected){
+			$('#div_paypalEmail').slideDown();
+		} else {
+			$('#div_paypalEmail').slideUp();
 		}
 	});
   });

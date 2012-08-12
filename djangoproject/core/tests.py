@@ -13,13 +13,6 @@ from trackerutils import fetchIssueInfo
 
 waitifbreak=10
 
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.assertEqual(1 + 1, 2)
-
 class TrackerUtilsTest(TestCase):
     def test_hibernate_jira(self):
         issueInfo = fetchIssueInfo("https://hibernate.onjira.com/browse/HHH-1050")

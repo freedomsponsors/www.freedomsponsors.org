@@ -1,0 +1,6 @@
+{% load i18n %}
+{% blocktrans with this_site.name as site_name %}
+
+Activate email address for {{ site_name }}
+
+{% endblocktrans %}

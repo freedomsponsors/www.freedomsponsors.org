@@ -27,10 +27,6 @@
 
 {% include 'core/issue_offer_action_bar.html' %}
 
-{% if show_alert %}
-{% include show_alert %}
-{% endif %}
-
 <a href="{{offer.issue.get_view_link}}">View issue</a>
 
  | Sponsor: <a href="{{offer.sponsor.get_view_link}}">{{offer.sponsor.getUserInfo.screenName}}</a>

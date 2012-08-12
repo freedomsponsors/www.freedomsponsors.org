@@ -22,6 +22,8 @@ class UserInfo(models.Model):
     about = models.TextField(null=True, blank=True)
     receiveAllEmail = models.BooleanField()
     brazilianPaypal = models.BooleanField()
+    is_primary_email_verified = models.BooleanField()
+    is_paypal_email_verified = models.BooleanField()
 
     @classmethod
     def newUserInfo(cls, user):
@@ -35,6 +37,11 @@ class UserInfo(models.Model):
         userinfo.receiveAllEmail = True
         userinfo.brazilianPaypal = False
         return userinfo
+
+    def is_differentPaypalEmail(self):
+        is_different = self.paypalEmail and self.paypalEmail != self.user.email
+        return is_different
+
 
 def gravatar_url_small(self):
     gravatar_url = "http://www.gravatar.com/avatar/" + hashlib.md5(self.email.lower()).hexdigest() + "?"
@@ -60,6 +67,14 @@ def getOffers(self):
 
 def getSolutions(self):
     return Solution.objects.filter(programmer=self).order_by('-creationDate')
+
+def set_email_verified(self, is_primary):
+    userinfo = self.getUserInfo()
+    if is_primary:
+        userinfo.is_primary_email_verified = True
+    else:
+        userinfo.is_paypal_email_verified = True
+    userinfo.save()
 
 def get_view_link(self):
     res = '/core/user/%s'%self.id
@@ -105,6 +120,7 @@ User.getOffers = getOffers
 User.getSolutions = getSolutions
 User.getStats = getStats
 User.get_view_link = get_view_link
+User.set_email_verified = set_email_verified
 
 def getSocialIcon(self):
     return socialImages[self.provider]

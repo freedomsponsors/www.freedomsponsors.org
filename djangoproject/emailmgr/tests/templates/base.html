@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <title>{% block www_title %}Email Manager{% endblock www_title %}</title>
+    </head>
+    <body>
+        <h1>Email Manager Test</h1>
+        
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% block www_content %}
+        {% endblock www_content %}
+    </body>
+</html>

@@ -43,55 +43,7 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container-fluid">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="/">FreedomSponsors.org<span style="font-size:13px"> (beta)</a>
-{% if user and user.is_authenticated %}
-          <div class="btn-group pull-right">
-            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-              <i class="icon-user"></i> {{ user.getUserInfo.screenName }}
-              <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu">
-              <li><a href="{{ user.get_view_link }}">Profile</a></li>
-              <li><a href="/core/user/edit">Edit</a></li>
-              <li class="divider"></li>
-              <li><a href="/core/logout">Sign Out</a></li>
-            </ul>
-          </div>
-          <a class="btn btn-inverse pull-right" href="/core/issue/add">
-            <i class="icon-plus icon-white"></i> 
-            Sponsor new issue
-          </a>
-{% else %}
-          <a id="login_button" class="btn btn-inverse pull-right" href="/login/google">
-            Log in with <img src="/static/img/google_button.png">
-          </a>
-{% endif %}
-          <div class="nav-collapse">
-            <ul class="nav">
-{% if user and user.is_authenticated %}
-              <li><a href="/core/myissues">My issues</a></li>
-{% endif %}
-              <li><a target="_about" href="http://freedomsponsors.github.com/">About</a></li>
-              <li><a href="/core/feedback">Feedback</a></li>
-              <li><a href="/core/project">Projects</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
-          {% block menuItems %}
-          {% endblock %}
-          <form class="navbar-search" action="/core/issue" method="get">
-            <input type="text" name="s" class="search-query span2" placeholder="Search">
-          </form>
-        </div>
-      </div>
-    </div>
+  {% include "core/navbar.html" %}
 
     <div class="container-fluid">
       {% block social_buttons %}
@@ -107,6 +59,10 @@
         <div class="span1">
         </div><!--/span-->
         <div class="span10">
+
+{% if show_alert %}
+{% include show_alert %}
+{% endif %}
 
         {% block mainContent %}
           <p> put some content here </p>

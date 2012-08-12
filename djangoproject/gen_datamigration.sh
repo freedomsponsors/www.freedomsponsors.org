@@ -1,0 +1,1 @@
+./manage.py datamigration core $1

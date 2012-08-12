@@ -22,6 +22,7 @@ AUTO_EMAIL_USERNAME = 'noreply@freedomsponsors.com'
 AUTO_EMAIL_PASSWORD = 'ThisIsNotTheRealPassword_obviously'
 
 SITE_HOST = 'localhost:8000' # www.freedomsponsors.org
+SITE_NAME = 'FreedomSponsors_test' # FreedomSponsors
 PAYPAL_USE_SANDBOX = True
 
 PAYPAL_SANDBOX_API_USERNAME = "XX_9999999999_biz_api1.gmail.com"

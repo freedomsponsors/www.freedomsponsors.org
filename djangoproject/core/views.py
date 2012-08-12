@@ -162,50 +162,6 @@ def myissues(request):
         {},
         context_instance = RequestContext(request))
 
-def viewUser(request, user_id):
-    user = User.objects.get(pk=user_id)
-    unconnectedSocialAccounts = None
-    if(user.id == request.user.id):
-        unconnectedSocialAccounts = getUnconnectedSocialAccounts(user)
-    return render_to_response('core/user.html',
-        {'le_user':user,
-        'stats': user.getStats(),
-        'unconnectedSocialAccounts':unconnectedSocialAccounts},
-        context_instance = RequestContext(request))
-    
-def viewUserHistory(request, user_id):
-    user = User.objects.get(pk=user_id)
-    return render_to_response('core/userhistory.html',
-        {'le_user':user,},
-        context_instance = RequestContext(request))
-
-@login_required
-def editUserForm(request):
-    userinfo = request.user.getUserInfo()
-    if(not userinfo):
-        userinfo = UserInfo.newUserInfo(request.user)
-        userinfo.save()
-    return render_to_response('core/useredit.html',
-        {'userinfo':userinfo,
-        'next':dictOrEmpty(request.GET, 'next')},
-        context_instance = RequestContext(request))
-
-@login_required
-def editUser(request):
-    userinfo = request.user.getUserInfo()
-    userinfo.screenName = request.POST['screenName']
-    userinfo.paypalEmail = request.POST['paypalEmail']
-    userinfo.website = request.POST['website']
-    userinfo.about = request.POST['about']
-    userinfo.realName = request.POST['realName']
-    userinfo.receiveAllEmail = request.POST.has_key('receiveAllEmail')
-    userinfo.brazilianPaypal = request.POST.has_key('brazilianPaypal')
-    userinfo.save()
-    next = dictOrEmpty(request.POST, 'next')
-    if(next):
-        return redirect(next)
-    else:
-        return redirect(request.user.get_view_link())
 
 def listIssues(request):
     issues = Issue.objects.all()

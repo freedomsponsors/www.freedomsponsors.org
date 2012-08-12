@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block www_title %}{{block.super}} - Email List{% endblock www_title%}
+
+{% block www_content %}
+
+<section id="account-settings" data-action="">
+    {% for e in email_list %}
+        {{e.email}} -
+        {% if e.is_primary %}
+            Primary Email<br/>
+        {% else %}
+            {% if e.is_active %}
+                <a href= "{% url emailmgr_email_delete e.identifier %}">Delete</a> |
+                <a href= "{% url emailmgr_email_make_primary e.identifier %}">Make Primary</a>
+                <br/>
+            {% else %}
+                {% if e.is_activation_sent %}
+                    <a href= "{% url emailmgr_email_send_activation e.identifier %}">Resend Activation</a> |
+                {% else %}
+                    <a href= "{% url emailmgr_email_send_activation e.identifier %}">Send Activation</a> |
+                {% endif %}
+                <a href= "{% url emailmgr_email_delete e.identifier %}">Delete</a>
+                <br/>
+            {% endif %}
+        {% endif %}
+    {% endfor %} 
+    <form action="{% url emailmgr_email_add %}" enctype="multipart/form-data" method="post" accept-charset="utf-8">{% csrf_token %}
+        <fieldset>
+            <legend>Add Email</legend>
+            {{ email_form.as_p }}
+        </fieldset>
+        <input type="submit" value="Add Email" />
+    </form>
+</section>
+{% endblock www_content %}

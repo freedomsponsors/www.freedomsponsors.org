@@ -4,6 +4,8 @@ socialImages = {'google' : '/static/img/google.gif',
     'yahoo':'/static/img/yahoo.gif',
     'facebook':'/static/img/facebook.gif',
     'twitter':'/static/img/twitter.png',
+    'github' : '/static/img/github.png',
+    'bitbucket' : '/static/img/bitbucket.jpg',
 }
 
 def validateIssueURL(url):
