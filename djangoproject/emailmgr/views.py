@@ -102,7 +102,6 @@ def email_activate(request, identifier="somekey"):
             Msg.add_message (request, Msg.SUCCESS, _('email address already active'))
         else:
             email.is_active = True
-            _notify_email_activation(email)
             if not email.user.email:
                 email.user.email = email.email
                 email.is_primary = True
@@ -110,6 +109,7 @@ def email_activate(request, identifier="somekey"):
             email.save()
             user_activated_email.send(sender=EmailAddress, email_address=email)
             Msg.add_message (request, Msg.SUCCESS, _('email address is now active'))
+        _notify_email_activation(email)
             
     # return HttpResponseRedirect(reverse('emailmgr_email_list'))
     return HttpResponseRedirect(email.user.get_view_link()+'?email_verified=true')
