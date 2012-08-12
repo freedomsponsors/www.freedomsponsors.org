@@ -30,6 +30,8 @@ class UserInfo(models.Model):
         userinfo = cls()
         userinfo.user = user
         userinfo.paypalEmail = user.email
+        userinfo.is_primary_email_verified = True
+        userinfo.is_paypal_email_verified = True
         userinfo.screenName = user.username
         userinfo.website = ''
         userinfo.about = ''
