@@ -13,6 +13,7 @@ ADMINS = (
 )
 FRESPO_PROJECT_ID = 1 #Feedback issues
 DEBUG = True
+FAKE_EMAILS= True
 
 DATABASE_NAME = 'frespo'
 DATABASE_USER = 'frespo'

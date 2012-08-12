@@ -33,7 +33,7 @@ DATABASES = {
 # if 'test' in sys.argv:
 #     DATABASES['default'] = {'ENGINE': 'django.db.backends.sqlite3'}
 
-fakeEmails = True
+fakeEmails = env_settings.FAKE_EMAILS
 if(fakeEmails):
     EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
     MAILER_EMAIL_BACKEND = EMAIL_BACKEND
