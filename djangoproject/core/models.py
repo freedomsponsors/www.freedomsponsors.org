@@ -12,6 +12,8 @@ from django.utils.http import urlquote
 from django.template.defaultfilters import slugify
 from decimal import Decimal
 from django.db.models import Q
+from core.gfm import gfm
+from markdown import markdown
 
 class UserInfo(models.Model): 
     user = models.ForeignKey(User)
@@ -271,6 +273,9 @@ class IssueComment(models.Model):
         event.save()
         self.content = content
         self.save()
+
+    def toHTML(self):
+        return markdown(gfm(self.content)) #TODO find a better implementation for this
 
 class IssueCommentHistEvent(models.Model):
     comment = models.ForeignKey(IssueComment)

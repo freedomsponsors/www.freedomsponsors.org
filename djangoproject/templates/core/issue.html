@@ -1,6 +1,5 @@
 {% extends "core/base.html" %}
 
-
 {% block og_meta_description %}
     <meta property="og:description"
           content="[ Issue ] 
@@ -109,16 +108,8 @@ Created by: <a href="{{issue.createdByUser.get_view_link}}">{{issue.createdByUse
 <h3>Issue comments</h3>
   <hr>
 {% for comment in issue.getComments %}
-	<a href="{{comment.author.get_view_link}}">{{ comment.author.getUserInfo.screenName }}</a>
-  added a comment - 
-	<span title="{{ comment.creationDate }}">{{ comment.creationDate|date:"D, d/M/Y" }}</span>
-  {% ifequal comment.author.id user.id %}
-    <a href="javascript:showEditComment({{forloop.counter}})"><i class="icon-pencil"></i></a>
-  {% endifequal %}
-  <div id="div_comment_r_{{forloop.counter}}">{{comment.content|linebreaks}}</div>
-  {% ifequal comment.author.id user.id %}
-  {% include 'core/edit_comment_form.html' with counter=forloop.counter formaction='/core/issue/comment/edit/submit' %}
-  {% endifequal %}
+
+  {% include 'core/include_comment.html' with counter=forloop.counter formaction='/core/issue/comment/edit/submit' %}
   <hr>
 {% endfor %}
 
@@ -133,6 +124,9 @@ Created by: <a href="{{issue.createdByUser.get_view_link}}">{{issue.createdByUse
         <label class="control-label" for="description">Your comment</label>
         <div class="controls">
           <textarea class="input-xlarge span10" id="content" name="content" rows="10"></textarea>
+          <p class="help-block">
+            You can use <a target="_markdown" href="http://daringfireball.net/projects/markdown/">markdown</a> for formatting
+          </p>
         </div>
       </div>
 
