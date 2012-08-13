@@ -270,12 +270,13 @@ def addIssueForm(request):
         if(trackerURL):
             redirectPath += '?next=/core/issue/add%3FtrackerURL%3D'+trackerURL
         return redirect(redirectPath)
-    issues = Issue.objects.filter(trackerURL__iexact=trackerURL)
-    issue_already_exists = issues.count() >= 1
-    if(issues.count() > 1):
-        logger.warning("Database inconsistency: more than one issue found with url = %s"%trackerURL)
-    if(issue_already_exists):
-        return redirect(issues[0].get_view_link()+'?show_sponsor=true&c=s')
+    if(trackerURL):
+        issues = Issue.objects.filter(trackerURL__iexact=trackerURL)
+        issue_already_exists = issues.count() >= 1
+        if(issues.count() > 1):
+            logger.warning("Database inconsistency: more than one issue found with url = %s"%trackerURL)
+        if(issue_already_exists):
+            return redirect(issues[0].get_view_link()+'?show_sponsor=true&c=s')
 
     return render_to_response('core/add_issue.html',
         {'trackerURL' : trackerURL},
