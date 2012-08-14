@@ -152,7 +152,7 @@ def notifySponsors_newoffercomment(comment):
 	for offer in comment.offer.issue.getOffers():
 		if (comment.author.id != offer.sponsor.id):
 			_send_mail_to_user(user = offer.sponsor, 
-				subject = comment.author.getUserInfo().screenName+" commented on issue ["+comment.issue.title+"]",
+				subject = comment.author.getUserInfo().screenName+" commented on issue ["+comment.offer.issue.title+"]",
 				templateName = 'email/comment_added.html', 
 				contextData = {"you" : offer.sponsor,
 				"issue" : comment.offer.issue,
