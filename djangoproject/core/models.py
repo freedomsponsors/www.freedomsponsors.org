@@ -46,6 +46,12 @@ class UserInfo(models.Model):
         is_different = self.paypalEmail and self.paypalEmail != self.user.email
         return is_different
 
+    def get_website_url(self):
+        if(self.website.startswith("http://") or self.website.startswith("https://")):
+            return self.website
+        else:
+            return "http://"+self.website
+
 
 def gravatar_url_small(self):
     gravatar_url = "http://www.gravatar.com/avatar/" + hashlib.md5(self.email.lower()).hexdigest() + "?"
