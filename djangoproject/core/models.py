@@ -220,6 +220,14 @@ class Issue(models.Model):
                 s = s + offer.price
         return s
 
+    def getTotalOffersPrice_displayString(self):
+        s = self.getTotalOffersPrice()
+        if(s == 0):
+            return "PAID"
+        else:
+            return s
+
+
     def getTotalPaidPrice(self):
         offers = Offer.objects.filter(issue=self,status=Offer.PAID)
         s = Decimal(0)
