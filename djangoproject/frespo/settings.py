@@ -271,8 +271,13 @@ YAHOO_CONSUMER_SECRET        = ''
 SOCIAL_AUTH_PROTECTED_USER_FIELDS = ['email',]
 FACEBOOK_EXTENDED_PERMISSIONS = ['email',]
 
+
 LOGIN_URL          = '/core/login'
 LOGIN_REDIRECT_URL = '/'
+GITHUB_EXTRA_DATA = [('login', 'social_username')]
+FACEBOOK_EXTRA_DATA = [('username', 'social_username')]
+TWITTER_EXTRA_DATA = [('screen_name', 'social_username')]
+
 #LOGIN_ERROR_URL    = '/login-error/'
 
 # A sample logging configuration. The only tangible logging

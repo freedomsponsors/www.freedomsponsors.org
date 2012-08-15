@@ -15,6 +15,7 @@ from django.db.models import Q
 from core.gfm import gfm
 from markdown import markdown
 
+
 class UserInfo(models.Model): 
     user = models.ForeignKey(User)
     paypalEmail = models.EmailField(max_length=256)
@@ -138,6 +139,10 @@ def getSocialIcon(self):
 def getSocialProfileLink(self):
     if(self.provider == 'facebook'):
         return 'http://www.facebook.com/'+self.uid
+    elif(self.provider == 'github' and self.extra_data.has_key('social_username')):
+        return 'http://github.com/'+self.extra_data['social_username']
+    elif(self.provider == 'twitter' and self.extra_data.has_key('social_username')):
+        return 'http://twitter.com/'+self.extra_data['social_username']
     else: 
         return None
 
