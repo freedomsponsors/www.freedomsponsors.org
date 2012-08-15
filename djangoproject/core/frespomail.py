@@ -106,7 +106,7 @@ def notifyProgrammers_offerchanged(old_offer, new_offer):
 def notifyProgrammers_paymentconfirmed(payment):
 	for part in payment.getParts():
 		_send_mail_to_user(user = part.programmer, 
-			subject = payment.offer.sponsor.getUserInfo().screenName+" has made you a U$ "+str(part.price)+" payment",
+			subject = payment.offer.sponsor.getUserInfo().screenName+" has made you a "+payment.get_currency_symbol()+" "+str(part.price)+" payment",
 			templateName = 'email/offerpaid.html', 
 			contextData = {"payment" : payment,
 			"part" : part,
