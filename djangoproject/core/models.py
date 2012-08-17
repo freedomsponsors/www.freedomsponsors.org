@@ -53,6 +53,9 @@ class UserInfo(models.Model):
         else:
             return "http://"+self.website
 
+    def is_complete(self):
+        return True #TODO
+
 
 def gravatar_url_small(self):
     gravatar_url = "http://www.gravatar.com/avatar/" + hashlib.md5(self.email.lower()).hexdigest() + "?"
@@ -93,6 +96,9 @@ def get_view_link(self):
         res += '/'+urlquote(slugify(self.getUserInfo().screenName))
     return res
 
+def is_registration_complete(self):
+    return self.getUserInfo() and self.getUserInfo().is_complete()
+
 def getStats(self):
     stats = {'sponsoredOpenCount' : 0,
         'sponsoredOpenPrice' : Decimal(0),
@@ -130,6 +136,7 @@ User.getSocialAuths = getSocialAuths
 User.getOffers = getOffers
 User.getSolutions = getSolutions
 User.getStats = getStats
+User.is_registration_complete = is_registration_complete
 User.get_view_link = get_view_link
 User.set_email_verified = set_email_verified
 

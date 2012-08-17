@@ -262,14 +262,10 @@ def viewIssue(request, issue_id):
         
         context_instance = RequestContext(request))
 
+
 @login_required
 def addIssueForm(request):
     trackerURL = dictOrEmpty(request.GET, 'trackerURL')
-    if(request.user.getUserInfo() == None):
-        redirectPath = '/core/user/edit'
-        if(trackerURL):
-            redirectPath += '?next=/core/issue/add%3FtrackerURL%3D'+trackerURL
-        return redirect(redirectPath)
     if(trackerURL):
         issues = Issue.objects.filter(trackerURL__iexact=trackerURL)
         issue_already_exists = issues.count() >= 1
