@@ -54,7 +54,7 @@ class UserInfo(models.Model):
             return "http://"+self.website
 
     def is_complete(self):
-        return True #TODO
+        return self.screenName and self.realName and self.user.email
 
 
 def gravatar_url_small(self):
