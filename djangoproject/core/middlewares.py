@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 class CompleteRegistrationFirst:
 	def process_request(self, request):
 		if(request.user.is_authenticated()):
-			if(request.path == '/core/user/edit'):
+			if(request.path in ['/core/user/edit', '/core/user/edit/submit']):
 				return None
 			user = request.user
 			if(user.is_registration_complete()):
