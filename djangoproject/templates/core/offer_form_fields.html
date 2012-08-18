@@ -65,6 +65,11 @@
         alert('please specify an offer value');
         return false;
       }
+      if(price < 5){
+        alert('The minimum offer is U$ 5,00');
+        alert('U$ '+price+"?! You're kidding, right? Come on...");
+        return false;
+      }
       if(!$('#acceptanceCriteria').val()){
         alert('please specify you acceptance criteria for this offer');
         return false;
