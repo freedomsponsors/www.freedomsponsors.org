@@ -20,19 +20,15 @@
               <li><a href="/core/logout">Sign Out</a></li>
             </ul>
           </div>
-          <a class="btn btn-inverse pull-right" href="/core/issue/add">
-            <i class="icon-plus icon-white"></i> 
-            Sponsor new issue
-          </a>
 {% else %}
           <a id="login_button" class="btn btn-inverse pull-right" href="/core/login">
             Log in / Register
           </a>
-          <a class="btn btn-inverse pull-right" href="/core/login?next=/core/issue/add">
+{% endif %}
+          <a class="btn btn-inverse pull-right" href="/core/issue/add">
             <i class="icon-plus icon-white"></i> 
             Sponsor new issue
           </a>
-{% endif %}
           <div class="nav-collapse">
             <ul class="nav">
 {% if user and user.is_authenticated %}
