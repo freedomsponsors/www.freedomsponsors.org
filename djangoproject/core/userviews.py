@@ -22,10 +22,7 @@ def viewUser(request, user_id):
     context = {'le_user':user,
         'stats': user.getStats(),
         'unconnectedSocialAccounts':unconnectedSocialAccounts,
-        'show_alert' : show_alert,
         }
-    if(show_alert):
-        context = dict(context.items() + alert_data.items())
     return render_to_response('core/user.html',
         context,
         context_instance = RequestContext(request))
