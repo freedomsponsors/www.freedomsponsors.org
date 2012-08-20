@@ -1,0 +1,45 @@
+{% extends "core/base.html" %}
+{% block mainContent%}
+
+<form method="post" class="form-horizontal">
+{% csrf_token %}
+  <fieldset>
+
+    <div class="control-group">
+        <label class="control-label" for="mail_to_all">All users</label>
+        <div class="controls">
+          <label class="radio">
+            <input type="radio" id="mail_to_all" name="mail_to" value="all">
+            </label>
+        </div>
+        <label class="control-label" for="mail_to_some">Some users</label>
+        <div class="controls">
+          <label class="radio">
+            <input type="radio" id="mail_to_some" name="mail_to" value="some">
+
+            <input type="text" id="emails" name="emails" value="" placeholder="email1@bla.com, email2@bla.com">
+            </label>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="subject">Subject</label>
+        <div class="controls">
+          <input type="text" id="subject" name="subject" value="" placeholder="subject">
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="body">Body</label>
+        <div class="controls">
+          <textarea class="input-xlarge" id="body" name="body" rows="10"></textarea>
+        </div>
+    </div>
+      <div class="control-group">
+        <div class="span9">
+          <input type="submit" class="btn btn-primary pull-right" value="Vai!">
+        </div>
+      </div>
+
+  </fieldset>
+</form>
+
+{% endblock mainContent%}

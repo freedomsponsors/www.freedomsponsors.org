@@ -6,12 +6,24 @@ from django.conf import settings
 
 ADMINS_EMAILS = map((lambda x: x[1]), settings.ADMINS)
 
+def plain_send_mail(to, subject, body):
+	send_html_mail(subject, body, body, settings.DEFAULT_FROM_EMAIL, [to])
+
+def send_mail_to_all_users(subject, body):
+	count = 0
+	for user in User.objects.all():
+		if(user.getUserInfo() and user.getUserInfo().receiveAllEmail):
+			plain_send_mail(user.email, subject, body)
+			count += 1
+	return count
+
 def _send_mail_to_user(user, subject, templateName, contextData):
 	if(user.getUserInfo() and user.getUserInfo().receiveAllEmail):
 		template = get_template(templateName)
 		context = Context(contextData)
 		html_content = template.render(context)
 		send_html_mail(subject, html_content, html_content, settings.DEFAULT_FROM_EMAIL, [user.email])
+
 
 def notifySponsors_workbegun(solution, comment):
 	for offer in solution.issue.getOffers():

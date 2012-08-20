@@ -1,0 +1,37 @@
+Dear FreedomSponsor user.
+
+We're sending out this email to let you know about the latest changes and improvements we made to the FreedomSponsors platform. Some you may have noticed already.
+
+1) FreedomSponsors is now open source.
+The code is on Github --> http://github.com/freedomsponsors
+We believe that this move sends the right message to the open source community, and maybe we can even get some collaboration from developers everywhere.
+Please feel free to browse the code and the issue tracker.
+Collaboration is very welcome!
+
+2) FS now has a JIRA plugin that adds a "Sponsor this issue" link to the issue view (also, on Github).
+It is a great honor to us that the Jenkins project is the first one to try it.
+See it in action here --> https://issues.jenkins-ci.org/browse/JENKINS-13000
+If by any chace you are part of an JIRA-enabled open source project, please feel free to use it.
+
+3) There are more ways to sign-in besides GMail. You can also connect other social accounts to your current account.
+If you do that, please do it from your profile page, an *not* from the login page - otherwise you'll create a second FS account. Also, linked accounts for Twitter, Github and Facebook will show as a link to your public profile.
+
+4) If you signed up before we changed the "about page" (the one with the slideshows) please note that we remade that (thanks God ^_^). Actually the new about page is part of the FS blog.
+Please visit --> http://blog.freedomsponsors.org
+Now that's an about page you can share with your friends without having to feel embarassed by it :-)
+
+5) Issues and offer comments now support markdown formatting.
+
+6) There's now a minimum offer limit: U$ 5.00
+
+Among other minor improvements and bugfixes.
+There's a lot of other ideas that we will implement, here's two, just so you know:
+
+1) Add an opt-in service for Github repository owners, similar to the JIRA plugin.
+FS will be able to add comments to newly created issues with a "Sponsor this issue" link.
+
+2) The "suggest sponsorship" button - you'll be able to suggest that someone else (for example, your boss) sponsor a given issue.
+
+We're very excited with the future ahead of us, and we just wanted to share that with you. :-)
+
+

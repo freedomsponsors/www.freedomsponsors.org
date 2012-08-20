@@ -6,6 +6,7 @@ from django.views.generic import TemplateView
 urlpatterns = patterns('core.views',
     url(r'^$', 'home'),
     url(r'^home/$', 'home'),
+    url(r'^admail/$', 'admail'),
     url(r'^about/$', TemplateView.as_view(template_name='core/about.html')),
     url(r'^faq/$', TemplateView.as_view(template_name='core/faq.html')),
     url(r'^dev/$', TemplateView.as_view(template_name='core/dev.html')),
