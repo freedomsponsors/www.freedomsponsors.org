@@ -14,6 +14,7 @@ from django.conf import settings
 from frespopaypal import generatePayment, verify_ipn
 from django.views.decorators.csrf import csrf_exempt
 from decimal import Decimal
+from django.contrib import messages
 import logging
 
 logger = logging.getLogger(__name__)

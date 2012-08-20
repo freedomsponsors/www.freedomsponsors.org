@@ -1,5 +1,6 @@
 from exceptions import BaseException
 from django.shortcuts import redirect
+from django.contrib import messages
 
 class CompleteRegistrationFirst:
 	def process_request(self, request):
@@ -10,6 +11,7 @@ class CompleteRegistrationFirst:
 			if(user.is_registration_complete()):
 				return None
 			else:
+				messages.info(request, 'Please complete your profile before proceeding.')
 				return redirect('/core/user/edit?next='+request.get_full_path())
 		else:
 			return None

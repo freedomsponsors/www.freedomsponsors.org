@@ -8,6 +8,7 @@ from frespoutils import get_or_none, getUnconnectedSocialAccounts, dictOrEmpty
 from django.conf import settings
 from emailmgr.models import EmailAddress
 from emailmgr import utils as emailmgr_utils
+from django.contrib import messages
 import logging
 
 def viewUser(request, user_id):
@@ -16,7 +17,7 @@ def viewUser(request, user_id):
     changedEmails = None
     if(user.id == request.user.id):
         unconnectedSocialAccounts = getUnconnectedSocialAccounts(user)
-    show_alert, alert_data = _getAlertsForViewUser(request, user)
+    _getAlertsForViewUser(request, user)
 
     context = {'le_user':user,
         'stats': user.getStats(),
@@ -108,6 +109,7 @@ def _changePaypalEmailIfNeeded(userinfo, newPaypalEmail):
         return True
     return False
 
+# TODO: replace this with the message framewor
 def _getAlertsForViewUser(request, user):
     if(user.id == request.user.id):
         changedEmails = []
@@ -117,14 +119,17 @@ def _getAlertsForViewUser(request, user):
             changedEmails.append(user.getUserInfo().paypalEmail)
         changedEmails = ' and '.join(changedEmails)
         if(changedEmails):
-            return 'core/popup_verification_email_sent.html', {'changed_emails' : changedEmails}
+            messages.info(request, "We've sent an email confirmation to "+changedEmails+". Please check you inbox and click the confirmation link to complete email address verification.")
+            return
 
         userinfo = user.getUserInfo()
         if(not (userinfo.is_primary_email_verified and userinfo.is_paypal_email_verified)):
-            return 'core/popup_verification_email_pending.html', {}
+            messages.info(request, "You still have unverified emails. Please check you inbox and click the confirmation link to complete email address verification. To re-send the verification email, just edit and save your profile.")
+            return
 
     if dictOrEmpty(request.GET, 'email_verified') == 'true':
-        return 'core/popup_email_verified.html', {}
+        messages.info(request, "Your email was verified successfully. Thanks ^_^")
+        return
 
     return None, None
 

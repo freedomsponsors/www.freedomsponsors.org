@@ -46,6 +46,17 @@
   {% include "core/navbar.html" %}
 
     <div class="container-fluid">
+
+{% if messages %}
+<div class="alert">
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+</div>
+{% endif %}
+
       {% block social_buttons %}
       <div id="div_social_buttons" class="row-fluid">
         <div class="span10">
