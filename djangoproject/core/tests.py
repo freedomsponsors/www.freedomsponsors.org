@@ -90,15 +90,24 @@ class TrackerUtilsTest(TestCase):
         issueInfo = fetchIssueInfo("https://theres.nothing.here/jira/browse/NOTHING-123")
         assert(issueInfo.error)
 
+class AccountCreationTests(LiveServerTestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.app = None
+        super(AccountCreationTests, cls).setUpClass()
 
+    @classmethod
+    def tearDownClass(cls):
+        cls.app.quit()
 
-class MySeleniumTests(LiveServerTestCase):
     def setUp(self):
-        self.app = AppDriver.build()
+        if(not AccountCreationTests.app):
+            self.app = AppDriver.build()
+            AccountCreationTests.app = self.app
         self.app.reset(self.live_server_url)
 
     def tearDown(self):
-        self.app.quit()
+        self.app.logout()
 
     def test_splinter_createaccount(self):
         try:
@@ -108,14 +117,34 @@ class MySeleniumTests(LiveServerTestCase):
             sleep(waitifbreak)
             raise
 
+class SoloUserTests(LiveServerTestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.app = None
+        super(SoloUserTests, cls).setUpClass()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.app.quit()
+
+    def setUp(self):
+        if(not SoloUserTests.app):
+            self.app = AppDriver.build()
+            SoloUserTests.app = self.app
+            self.app.createGoogleSession(td.userDict1)
+        self.users = td.loadUsers()
+        self.app.reset(self.live_server_url)
+
+    def tearDown(self):
+        self.app.logout()
+
     def test_splinter_login(self):
-        td.loadUsers()
-        self.app.login_google(td.userDict1)
+        self.app.login_google()
         
     def test_splinter_add_issue_HHH_1052(self):
         add_initial_projects()
-        td.loadUsers()
-        self.app.login_google(td.userDict1)
+        # td.loadUsers()
+        self.app.login_google()
         try:
             offerDict = td.buildDefaultOfferDict14('https://hibernate.onjira.com/browse/HHH-1052')
             self.app.addOffer(offerDict)
@@ -129,8 +158,8 @@ class MySeleniumTests(LiveServerTestCase):
 
     def test_splinter_sponsor_jira_HHH0152(self):
         add_initial_projects()
-        td.loadUsers()
-        self.app.login_google(td.userDict1)
+        # td.loadUsers()
+        self.app.login_google()
         try:
             offerDict = td.buildDefaultOfferDict14('https://hibernate.onjira.com/browse/HHH-1052')
             del offerDict['step1']
@@ -144,9 +173,9 @@ class MySeleniumTests(LiveServerTestCase):
             raise
 
     def test_splinter_add_issue_HHH_1052_with_empty_db(self):
-        td.loadUsers()
+        # td.loadUsers()
         frespoProject(frespoUser())
-        self.app.login_google(td.userDict1)
+        self.app.login_google()
         try:
             self.app.go_to_projects()
             assert(not self.app.is_text_present('Hibernate'))
@@ -165,9 +194,9 @@ class MySeleniumTests(LiveServerTestCase):
             raise
 
     def test_splinter_add_issue_inexistent(self):
-        td.loadUsers()
+        # td.loadUsers()
         frespoProject(frespoUser())
-        self.app.login_google(td.userDict1)
+        self.app.login_google()
         try:
             offerDict = td.buildDefaultOfferDict1234(
                 trackerURL='https://hibernate.onjira.com/browse/OH404-1052',
@@ -190,9 +219,9 @@ class MySeleniumTests(LiveServerTestCase):
             raise
 
     def test_splinter_add_issue_unreachable(self):
-        td.loadUsers()
+        # td.loadUsers()
         frespoProject(frespoUser())
-        self.app.login_google(td.userDict1)
+        self.app.login_google()
         try:
             offerDict = td.buildDefaultOfferDict1234(
                 trackerURL='https://hibernatis.onjira.com/browse/OH404-1052',
@@ -215,8 +244,8 @@ class MySeleniumTests(LiveServerTestCase):
             raise
 
     def test_splinter_add_issue_avulsa(self):
-        td.loadUsers()
-        self.app.login_google(td.userDict1)
+        # td.loadUsers()
+        self.app.login_google()
         try:
             offerDict = td.buildOfferDictAvulsa()
             self.app.addOffer(offerDict)
@@ -228,35 +257,11 @@ class MySeleniumTests(LiveServerTestCase):
             sleep(waitifbreak)
             raise
 
-    def test_splinter_sponsor_issue_HHH_1052(self):
-        add_initial_projects()
-        users = td.loadUsers()
-        offer = td.buildOfferForHHH1052(users[0].adminUser)
-        td.loadOffer(offer)
-        self.app.login_google(td.userDict2)
-        try:
-            self.app.followIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
-            otherOffer = {
-                'price':Decimal('15.00'), 
-                'acceptanceCriteria':'Soh comitar',
-                'require_release' : False,
-                'no_forking' : True,
-            }
-            self.app.sponsorCurrentIssue(otherOffer)
-            assert(self.app.is_text_present('[ Offer ] U$ 15.00 for issue - Allow CalendarType.set to accept Date objects'))
-            self.app.followIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
-            self.app.followOfferLinkByValue(otherOffer['price'])
-        except:
-            traceback.print_exc()
-            sleep(waitifbreak)
-            raise
-
     def test_splinter_edit_issue_HHH_1052(self):
         add_initial_projects()
-        users = td.loadUsers()
-        offer = td.buildOfferForHHH1052(users[0].adminUser)
+        offer = td.buildOfferForHHH1052(self.users[0].adminUser)
         td.loadOffer(offer)
-        self.app.login_google(td.userDict1)
+        self.app.login_google()
         try:
             self.app.followIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
 
@@ -292,3 +297,43 @@ class MySeleniumTests(LiveServerTestCase):
             raise
             
 
+class SecondUserTests(LiveServerTestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.app = None
+        super(SecondUserTests, cls).setUpClass()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.app.quit()
+
+    def setUp(self):
+        if(not SecondUserTests.app):
+            self.app = AppDriver.build()
+            SecondUserTests.app = self.app
+            self.app.createGoogleSession(td.userDict2)
+        self.users = td.loadUsers()
+        self.app.reset(self.live_server_url)
+
+    def test_splinter_sponsor_issue_HHH_1052(self):
+        add_initial_projects()
+        # users = td.loadUsers()
+        offer = td.buildOfferForHHH1052(self.users[0].adminUser)
+        td.loadOffer(offer)
+        try:
+            self.app.login_google()
+            self.app.followIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
+            otherOffer = {
+                'price':Decimal('15.00'), 
+                'acceptanceCriteria':'Soh comitar',
+                'require_release' : False,
+                'no_forking' : True,
+            }
+            self.app.sponsorCurrentIssue(otherOffer)
+            assert(self.app.is_text_present('[ Offer ] U$ 15.00 for issue - Allow CalendarType.set to accept Date objects'))
+            self.app.followIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
+            self.app.followOfferLinkByValue(otherOffer['price'])
+        except:
+            traceback.print_exc()
+            sleep(waitifbreak)
+            raise

@@ -9,7 +9,7 @@
           <a class="brand" href="/">FreedomSponsors.org<span style="font-size:13px"> (beta)</a>
 {% if user and user.is_authenticated %}
           <div class="btn-group pull-right">
-            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+            <a id="a_userMenu" class="btn dropdown-toggle" data-toggle="dropdown" href="#">
               <i class="icon-user"></i> {{ user.getUserInfo.screenName }}
               <span class="caret"></span>
             </a>
