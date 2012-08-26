@@ -17,11 +17,26 @@ class AppDriver:
 
     def reset(self, home_url):
     	self.home_url = home_url
-        self.browser.cookies.delete()
+        # self.browser.cookies.delete()
 
     def go_to_projects(self):
-        self.browser.visit(self.home_url+"/core/project") 
+        self.browser.visit(self.home_url+"/core/project")
 
+    def logout(self):
+        userMenu = self.browser.find_by_id('a_userMenu')
+        if(len(userMenu) > 0):
+            userMenu[0].click()
+            self.browser.click_link_by_partial_text('Sign Out')
+
+    def createGoogleSession(self, user):
+        print ('>>>>>>>>>>>> create google session')
+        browser = self.browser
+        browser.visit('https://gmail.google.com') 
+        paradinha()
+        browser.fill('Email', user['username'])
+        browser.fill('Passwd', user['password'])
+        paradinha()
+        browser.find_by_value('Sign in').click()
 
     def create_account_google(self, user):
         browser = self.browser
@@ -39,18 +54,18 @@ class AppDriver:
         assert(browser.is_text_present(user['first_name']+user['last_name']))
         assert(browser.is_text_present('Crowdfunding Open Source, one issue at a time'))
 
-    def login_google(self, user):
+    def login_google(self, user=None):
         browser = self.browser
 
         browser.visit(self.home_url) 
         browser.click_link_by_partial_text('Log in / Register')
         browser.click_link_by_href('/login/google')
-        browser.fill('Email', user['username'])
-        browser.fill('Passwd', user['password'])
-        browser.find_by_value('Login').click()
-        assert(browser.is_text_present(user['first_name']+user['last_name']))
-        browser.click_link_by_partial_text('FreedomSponsors.org')
-        assert(browser.is_text_present(user['first_name']+user['last_name']))
+        if(user):
+            browser.fill('Email', user['username'])
+            browser.fill('Passwd', user['password'])
+            browser.find_by_value('Login').click()
+            browser.click_link_by_partial_text('FreedomSponsors.org')
+            assert(browser.is_text_present(user['first_name']+user['last_name']))
         assert(browser.is_text_present('Crowdfunding Open Source, one issue at a time'))
 
     def sponsor_issue(self, trackerURL, offer_dict):
