@@ -6,7 +6,7 @@
   {% if issue.key %}
     {{issue.key}}:
   {% endif %}
-  {{issue.title}} (worth U$ {{issue.getTotalOffersPrice}})"/>
+  {{issue.title}} (worth US$ {{issue.getTotalOffersPrice}})"/>
 {% endblock og_meta_description %}
 
 
@@ -18,7 +18,7 @@
   {% if issue.key %}
     {{issue.key}}:
   {% endif %}
-  {{issue.title}} (worth U$ {{issue.getTotalOffersPrice}})</h3>
+  {{issue.title}} (worth US$ {{issue.getTotalOffersPrice}})</h3>
 {% if issue.trackerURL %}
 <a href="{{issue.trackerURL}}" target="_issue"><span class="label label-inverse">Open original issue</span></a>
 
@@ -44,7 +44,7 @@ Created by: <a href="{{issue.createdByUser.get_view_link}}">{{issue.createdByUse
 <table class="table table-condensed table-striped">
   <thead>
     <tr>
-      <th>Offer (U$)</th>
+      <th>Offer (US$)</th>
       <th>Sponsor</th>
       <th style="width:50px">Acceptance</th>
       <th>Status</th>

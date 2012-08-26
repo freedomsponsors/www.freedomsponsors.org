@@ -71,13 +71,13 @@ x /offer/<id>/pay
 	A medida que ele preenche, um resumo do que realmente será pago é mostrado logo abaixo.
 	Exemplo:
 		Usuario preenche:
-			Joao: U$ 50.00
-			Ze: U$: 20.00
+			Joao: US$ 50.00
+			Ze: US$: 20.00
 		Resumo mostra
 			"Blablabla" explicando que o FreedomSponsors precisa dá uma mordidinha (digamos de 5%)
-			João: U$: 47.50
-			Ze: U$: 19.00
-			FreedomSponsors: U$: 3.50
+			João: US$: 47.50
+			Ze: US$: 19.00
+			FreedomSponsors: US$: 3.50
 			Checkbox "I accept FreedomSponsors terms"
 			Botão PAY (redireciona pro Paypal)
 

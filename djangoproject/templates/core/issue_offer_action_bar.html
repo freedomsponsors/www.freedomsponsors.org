@@ -45,9 +45,9 @@
         {% include 'core/offer_form_fields.html' %}
         <!-- offer price 
         <div class="control-group">
-          <label class="control-label" for="price">Offer (U$)</label>
+          <label class="control-label" for="price">Offer (US$)</label>
           <div class="controls">
-            <input type="text" id="offerDataFormModal_price" name="price" class="span1 positive" placeholder="U$">
+            <input type="text" id="offerDataFormModal_price" name="price" class="span1 positive" placeholder="US$">
           </div>
         </div> -->
 
@@ -140,7 +140,7 @@
 {% if myoffer and myoffer.status == 'OPEN' %}
 
   function showModal_revokeThisOffer(){
-    document.getElementById('commentFormModal_title').innerHTML = 'Revoke U$ {{offer.price}} offer';
+    document.getElementById('commentFormModal_title').innerHTML = 'Revoke US$ {{offer.price}} offer';
     document.getElementById('commentFormModal_form').action = '/core/offer/revoke/submit';
     document.getElementById('commentFormModal_comment').placeholder = "Add a comment to let everyone know that you're not willing to pay for this issue anymore";
     document.getElementById('commentFormModal_submit').innerHTML = 'Revoke offer!';

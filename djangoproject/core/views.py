@@ -242,7 +242,7 @@ def payOfferForm(request, offer_id):
     shared_price = None
     
     convert_rate = 1
-    currency_symbol = "U$"
+    currency_symbol = "US$"
     alert_brazil = False
     if(offer.sponsor.getUserInfo().brazilianPaypal):
         convert_rate = 2

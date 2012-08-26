@@ -69,7 +69,7 @@ def notifyProgrammers_workdone(solution, comment):
 def notifyProgrammers_offerrevoked(offer, comment):
 	for solution in offer.issue.getSolutions():
 		_send_mail_to_user(user = solution.programmer, 
-			subject = offer.sponsor.getUserInfo().screenName+" revoked his U$ "+str(offer.price)+" offer for an issue that you are involved with",
+			subject = offer.sponsor.getUserInfo().screenName+" revoked his US$ "+str(offer.price)+" offer for an issue that you are involved with",
 			templateName = 'email/offerrevoked.html', 
 			contextData = {"solution" : solution,
 			"offer" : offer,
@@ -79,7 +79,7 @@ def notifyProgrammers_offerrevoked(offer, comment):
 def notifyProgrammers_offeradded(offer):
 	for solution in offer.issue.getSolutions():
 		_send_mail_to_user(user = solution.programmer, 
-			subject = offer.sponsor.getUserInfo().screenName+" made a U$ "+str(offer.price)+" offer for an issue that you are involved with",
+			subject = offer.sponsor.getUserInfo().screenName+" made a US$ "+str(offer.price)+" offer for an issue that you are involved with",
 			templateName = 'email/offeradded_programmer.html', 
 			contextData = {"solution" : solution,
 			"offer" : offer,
@@ -89,7 +89,7 @@ def notifySponsors_offeradded(offer):
 	for otherOffer in offer.issue.getOffers():
 		if(not offer.id == otherOffer.id):
 			_send_mail_to_user(user = otherOffer.sponsor, 
-				subject = offer.sponsor.getUserInfo().screenName+" made a U$ "+str(offer.price)+" offer for an issue that you're sponsoring",
+				subject = offer.sponsor.getUserInfo().screenName+" made a US$ "+str(offer.price)+" offer for an issue that you're sponsoring",
 				templateName = 'email/offeradded_sponsor.html', 
 				contextData = {"yourOffer" : otherOffer,
 				"theirOffer" : offer,
@@ -107,7 +107,7 @@ def notifyProgrammers_offerchanged(old_offer, new_offer):
 	if(action):
 		for solution in new_offer.issue.getSolutions():
 			_send_mail_to_user(user = solution.programmer, 
-				subject = old_offer.sponsor.getUserInfo().screenName+" "+action+" the U$ "+str(old_offer.price)+" offer on an issue that you are involved with",
+				subject = old_offer.sponsor.getUserInfo().screenName+" "+action+" the US$ "+str(old_offer.price)+" offer on an issue that you are involved with",
 				templateName = 'email/offerchanged.html', 
 				contextData = {"old_offer" : old_offer,
 				"new_offer" : new_offer,

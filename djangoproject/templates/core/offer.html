@@ -2,7 +2,7 @@
 
 {% block og_meta_description %}
     <meta property="og:description"
-          content="[ Offer ] U$ {{offer.price}} for issue - {{offer.issue.title}}"/>
+          content="[ Offer ] US$ {{offer.price}} for issue - {{offer.issue.title}}"/>
 {% endblock og_meta_description %}
 
 
@@ -10,7 +10,7 @@
 
 <input type="hidden" id="offer_id" name="offer_id" value="{{offer.id}}">
 
-<h3>[ Offer ] U$ {{offer.price}} for issue - {{offer.issue.title}} </h3>
+<h3>[ Offer ] US$ {{offer.price}} for issue - {{offer.issue.title}} </h3>
 {% if issue.trackerURL %}
 <a href="{{offer.issue.trackerURL}}" target="_issue"><span class="label label-inverse">Open original issue</span></a>
 {% endif %}

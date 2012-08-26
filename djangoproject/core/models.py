@@ -568,7 +568,7 @@ class Payment(models.Model):
     CONFIRMED_IPN = 'CONFIRMED_IPN'
     FORGOTTEN = 'FORGOTTEN'
     
-    CURRENCY_SYMBOLS = {'USD' : 'U$',
+    CURRENCY_SYMBOLS = {'USD' : 'US$',
         'BRL' : 'R$'}
 
     @classmethod
