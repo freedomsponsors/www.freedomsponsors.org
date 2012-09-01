@@ -197,6 +197,7 @@ class Issue(models.Model):
     createdByUser = models.ForeignKey(User)
     creationDate = models.DateTimeField()
     trackerURL = models.URLField(null=True, blank=True)
+    is_feedback = models.BooleanField()
 
     @classmethod
     def newIssue(cls, project, key, title, createdByUser, trackerURL):
@@ -208,6 +209,7 @@ class Issue(models.Model):
         issue.creationDate = timezone.now()
         issue.createdByUser = createdByUser
         issue.trackerURL = trackerURL
+        issue.is_feedback = False
         return issue
 
     @classmethod
@@ -218,11 +220,23 @@ class Issue(models.Model):
         issue.description = description
         issue.creationDate = timezone.now()
         issue.createdByUser = createdByUser
+        issue.is_feedback = False
+        return issue
+
+    @classmethod
+    def newIssueFeedback(cls, title, description, createdByUser):
+        issue = cls()
+        issue.title = title
+        issue.key = ''
+        issue.description = description
+        issue.creationDate = timezone.now()
+        issue.createdByUser = createdByUser
+        issue.is_feedback = True
         return issue
 
     @classmethod
     def listIssues(cls):
-        return Issue.objects.filter(~Q(project__id=settings.FRESPO_PROJECT_ID) | Q(project = None)).order_by('-creationDate')
+        return Issue.objects.filter(is_feedback=False).order_by('-creationDate')
 
     def getTotalOffersPrice(self):
         offers = Offer.objects.filter(issue=self,status=Offer.OPEN)
