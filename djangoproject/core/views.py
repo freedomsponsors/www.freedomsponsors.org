@@ -321,10 +321,10 @@ def addIssue(request):
         "project.trackerURL: "+offer.issue.project.trackerURL+"\n<br>"
     notify_admin("INFO: New issue sponsored", msg)
     
+    params = '?a=s'
     if(dictOrEmpty(request.POST, 'invoke_parent_callback') == 'true'):
-        params = '?c=s' # c = Callback (iframe javascript callback)
-    else:
-        params = '?a=s' # a = Alert
+        params += '&c=s' # c = Callback (iframe javascript callback)
+
     return redirect(offer.get_view_link()+params)
 
 @login_required
