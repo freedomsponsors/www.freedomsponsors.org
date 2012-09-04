@@ -5,8 +5,8 @@ from core.frespoutils import Struct
 TIMEOUT=5
 
 def paradinha():
-    sleep(0.3)
-    # sleep(1)
+    sleep(0.4)
+    # sleep(2)
 
 class AppDriver:
     @classmethod
@@ -166,8 +166,11 @@ class AppDriver:
         paradinha()
         self._fillOfferForm(offerdatadict)
         if(assertAlmostDone):
-            assert(browser.is_text_present("You're almost done"))
-            browser.click_link_by_text('OK')
+            self._assertAlmostDone()
+
+    def _assertAlmostDone(self):
+        assert(self.browser.is_text_present("You're almost done"))
+        self.browser.click_link_by_text('OK')
 
     def _fillOfferForm(self, offerdatadict):
         offerdata=Struct(**offerdatadict)

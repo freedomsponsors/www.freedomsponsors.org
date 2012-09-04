@@ -174,22 +174,6 @@ class SoloUserTests(LiveServerTestCase):
             sleep(waitifbreak)
             raise
 
-    def test_splinter_sponsor_from_jira_some_jenkins_issue(self):
-        add_initial_projects()
-        # td.loadUsers()
-        self.app.login_google()
-        try:
-            offerDict = td.buildDefaultOfferDict14('whatever')
-            del offerDict['step1']
-            self.app.sponsor_issue_from_plugin('https://issues.jenkins-ci.org/browse/JENKINS-12345', offerDict) #TODO implement this
-            assert(self.app.is_text_present('[ Offer ] US$ 10.00 for issue - Publishing Selenium report blocks concurrent builds'))
-            self.app.followIssueLinkOnHomeByTitle('Publishing Selenium report blocks concurrent builds')
-            self.app.followOfferLinkByValue(offerDict['step4']['price'])
-        except:
-            traceback.print_exc()
-            sleep(waitifbreak)
-            raise
-
 
     def test_splinter_add_issue_HHH_1052_with_empty_db(self):
         # td.loadUsers()
