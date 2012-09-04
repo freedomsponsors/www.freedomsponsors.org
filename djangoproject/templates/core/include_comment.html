@@ -1,9 +1,9 @@
   <script>
     $(function(){
-      var comment_{{counter}} = '{{comment.content|escapejs}}';
-      var converter = new Showdown.converter();
-      var html = converter.makeHtml(comment_{{counter}});
-      $("#div_comment_r_{{counter}}").html(html)
+      // var comment_{{counter}} = '{{comment.content|escapejs}}';
+      // var converter = new Showdown.converter();
+      // var html = converter.makeHtml(comment_{{counter}});
+      // $("#div_comment_r_{{counter}}").html(html)
     });
   </script>
 
@@ -13,7 +13,11 @@
   {% ifequal comment.author.id user.id %}
     <a href="javascript:showEditComment({{counter}})"><i class="icon-pencil"></i></a>
   {% endifequal %}
-  <div  id="div_comment_r_{{counter}}"></div>
+  <div  id="div_comment_r_{{counter}}">
+    {% autoescape off %}
+    {{comment.toHTML}}    
+    {% endautoescape %}
+  </div>
   {% ifequal comment.author.id user.id %}
   {% include 'core/edit_comment_form.html' %}
   {% endifequal %}

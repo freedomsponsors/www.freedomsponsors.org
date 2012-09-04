@@ -15,6 +15,11 @@ git clone git://github.com/freedomsponsors/www.freedomsponsors.org.git
 
 # 2. Create a 'frespo' database on postgres (default username and password is 'frespo')
 
+# 2.1 Install misaka and pygments
+
+    sudo pip install misaka
+    sudo pip install pygments
+
 # 3. Configure settings
 mv frespo/env_settings.py_template frespo/env_settings.py
 nano frespo/env_settings.py #edit according to your environment
