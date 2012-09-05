@@ -6,15 +6,17 @@ from pygments.formatters import HtmlFormatter
 
 class HighlighterRenderer(HtmlRenderer, SmartyPants):
     def block_code(self, text, lang):
+        s = ''
         if not lang:
-            return '\n<pre><code>%s</code></pre>\n' % text.strip()
+            lang = 'text'
         try:
             lexer = get_lexer_by_name(lang, stripall=True)
         except:
-            return '<div class="highlight"><span class="err">Error: language "%s" is not supported</span></div>' % lang + \
-                '\n<pre><code>%s</code></pre>\n' % text.strip()
+            s += '<div class="highlight"><span class="err">Error: language "%s" is not supported</span></div>' % lang
+            lexer = get_lexer_by_name('text', stripall=True)
         formatter = HtmlFormatter()
-        return highlight(text, lexer, formatter)
+        s += highlight(text, lexer, formatter)
+        return s
 
     def table(self, header, body):
         return '<table class="table">\n'+header+'\n'+body+'\n</table>'
