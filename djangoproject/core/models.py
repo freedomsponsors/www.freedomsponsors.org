@@ -12,30 +12,9 @@ from django.utils.http import urlquote
 from django.template.defaultfilters import slugify
 from decimal import Decimal
 from django.db.models import Q
-from core.gfm import gfm
-from markdown import markdown
-
-import misaka
-from misaka import HtmlRenderer, SmartyPants
-from pygments import highlight, lexers, formatters
-from pygments.lexers import get_lexer_by_name
-from pygments.formatters import HtmlFormatter
-
-class BleepRenderer(HtmlRenderer, SmartyPants):
-    def block_code(self, text, lang):
-        if not lang:
-            return '\n<pre><code>%s</code></pre>\n' % text.strip()
-        lexer = get_lexer_by_name(lang, stripall=True)
-        formatter = HtmlFormatter()
-        return highlight(text, lexer, formatter)
-
-# And use the renderer
-renderer = BleepRenderer()
-md = misaka.Markdown(renderer,extensions=misaka.EXT_FENCED_CODE | misaka.EXT_NO_INTRA_EMPHASIS)
-
-# print md.render('Some Markdown text.')
-
-
+import formattingutils
+# from core.gfm import gfm
+# from markdown import markdown
 
 
 class UserInfo(models.Model): 
@@ -337,9 +316,10 @@ class IssueComment(models.Model):
         self.save()
 
     def toHTML(self):
+        return formattingutils.markdownFormat(self.content)
         # return markdown(gfm(self.content)) #TODO find a better implementation for this
         # return misaka.html(self.content)
-        return md.render(self.content)
+        # return md.render(self.content)
 
 class IssueCommentHistEvent(models.Model):
     comment = models.ForeignKey(IssueComment)
