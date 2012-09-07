@@ -52,7 +52,7 @@ class AppDriver:
         assert(browser.is_text_present(user['first_name']+user['last_name']))
         browser.click_link_by_partial_text('FreedomSponsors.org')
         assert(browser.is_text_present(user['first_name']+user['last_name']))
-        assert(browser.is_text_present('Crowdfunding Open Source, one issue at a time'))
+        assert(browser.is_text_present('Crowdfunding Free Software, one issue at a time'))
 
     def login_google(self, user=None):
         browser = self.browser
@@ -66,7 +66,7 @@ class AppDriver:
             browser.find_by_value('Login').click()
             browser.click_link_by_partial_text('FreedomSponsors.org')
             assert(browser.is_text_present(user['first_name']+user['last_name']))
-        assert(browser.is_text_present('Crowdfunding Open Source, one issue at a time'))
+        assert(browser.is_text_present('Crowdfunding Free Software, one issue at a time'))
 
     def sponsor_issue(self, trackerURL, offer_dict):
         browser = self.browser
