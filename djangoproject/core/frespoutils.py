@@ -6,25 +6,26 @@ socialImages = {'google' : '/static/img/google.gif',
     'twitter':'/static/img/twitter.png',
     'github' : '/static/img/github.png',
     'bitbucket' : '/static/img/bitbucket.jpg',
+#    'myopenid' : '/static/img/myopenid.png'
 }
 
 def validateIssueURL(url):
-	parsedURL = urlparse(url)
-	if(not parsedURL.scheme == 'http' and not parsedURL.scheme == 'https'):
-		return 'protocol must be http or https'
-	elif(not parsedURL.path or parsedURL.path == '/'):
-		return 'This is not a issue URL'
-	else:
-		return ''
+    parsedURL = urlparse(url)
+    if(not parsedURL.scheme == 'http' and not parsedURL.scheme == 'https'):
+        return 'protocol must be http or https'
+    elif(not parsedURL.path or parsedURL.path == '/'):
+        return 'This is not a issue URL'
+    else:
+        return ''
 
 def validateURL(url):
-	parsedURL = urlparse(url)
-	if(not parsedURL.scheme == 'http' and not parsedURL.scheme == 'https'):
-		return 'protocol must be http or https'
-	elif(not parsedURL.netloc or parsedURL.netloc.find('.') < 0 ):
-		return 'invalid URL'
-	else:
-		return ''
+    parsedURL = urlparse(url)
+    if(not parsedURL.scheme == 'http' and not parsedURL.scheme == 'https'):
+        return 'protocol must be http or https'
+    elif(not parsedURL.netloc or parsedURL.netloc.find('.') < 0 ):
+        return 'invalid URL'
+    else:
+        return ''
 
 def get_or_none(model, **kwargs):
     try:
@@ -33,13 +34,14 @@ def get_or_none(model, **kwargs):
         return None
 
 def getUnconnectedSocialAccounts(user):
-	imgs = socialImages.copy()
-	for auth in user.getSocialAuths():
-		del imgs[auth.provider]
-	res = []
-	for provider in imgs.keys():
-		res.append({'provider':provider, 'icon':imgs[provider]})
-	return res
+    imgs = socialImages.copy()
+    for auth in user.getSocialAuths():
+        if imgs.has_key(auth.provider):
+            del imgs[auth.provider]
+    res = []
+    for provider in imgs.keys():
+        res.append({'provider':provider, 'icon':imgs[provider]})
+    return res
     
 def dictOrEmpty(dict, key):
     if(dict.has_key(key)):

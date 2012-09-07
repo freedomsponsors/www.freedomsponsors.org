@@ -12,9 +12,6 @@ from django.utils.http import urlquote
 from django.template.defaultfilters import slugify
 from decimal import Decimal
 from django.db.models import Q
-# import formattingutils
-# from core.gfm import gfm
-# from markdown import markdown
 
 
 class UserInfo(models.Model): 
@@ -142,7 +139,10 @@ User.get_view_link = get_view_link
 User.set_email_verified = set_email_verified
 
 def getSocialIcon(self):
-    return socialImages[self.provider]
+    if(socialImages.has_key(self.provider)):
+        return socialImages[self.provider]
+    else:
+        return None
 
 def getSocialProfileLink(self):
     if(self.provider == 'facebook'):
@@ -315,9 +315,6 @@ class IssueComment(models.Model):
         self.content = content
         self.save()
 
-    # def toHTML(self):
-    #     return formattingutils.markdownFormat(self.content)
-
 class IssueCommentHistEvent(models.Model):
     comment = models.ForeignKey(IssueComment)
     eventDate = models.DateTimeField()
@@ -480,9 +477,6 @@ class OfferComment(models.Model):
         event.save()
         self.content = content
         self.save()
-
-    # def toHTML(self):
-    #     return formattingutils.markdownFormat(self.content)
 
 class OfferCommentHistEvent(models.Model):
     comment = models.ForeignKey(OfferComment)

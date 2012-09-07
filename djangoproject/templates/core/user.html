@@ -92,10 +92,12 @@
 							connected accounts
 						</div>
 						{% for auth in le_user.getSocialAuths %}
-						{% if auth.getSocialProfileLink %}
-						<div class="span1" style="border:1px solid #DDD; height:60px; width:110px; margin:3px; text-align:center; display:block"><a style="margin-top:18px; display:block" href="{{auth.getSocialProfileLink}}" target="_{{auth.provider}}"><img src="{{auth.getSocialIcon}}"></a></div>
-						{% else %}
-						<div class="span1" style="border:1px solid #DDD; height:60px; width:110px; margin:3px; text-align:center; display:block"><span style="margin-top:18px; display:block"><img src="{{auth.getSocialIcon}}"></span></div>
+						{% if auth.getSocialIcon %}
+							{% if auth.getSocialProfileLink %}
+							<div class="span1" style="border:1px solid #DDD; height:60px; width:110px; margin:3px; text-align:center; display:block"><a style="margin-top:18px; display:block" href="{{auth.getSocialProfileLink}}" target="_{{auth.provider}}"><img src="{{auth.getSocialIcon}}"></a></div>
+							{% else %}
+							<div class="span1" style="border:1px solid #DDD; height:60px; width:110px; margin:3px; text-align:center; display:block"><span style="margin-top:18px; display:block"><img src="{{auth.getSocialIcon}}"></span></div>
+							{% endif %}
 						{% endif %}
 						{% endfor %}
 					</div>
