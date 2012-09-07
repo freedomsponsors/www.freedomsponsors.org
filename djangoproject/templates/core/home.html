@@ -30,6 +30,7 @@
             <td class="favoriteIssuesDollar">$</td>
             <td class="favoriteIssues">{{issue.getTotalOffersPrice_displayString}}</td>
             <td>&nbsp;</td>
+            <!-- <td><a href="{{issue.createdByUser.get_view_link}}"><img src="{{issue.createdByUser.gravatar_url_medium}}"> {{ issue.createdByUser.getUserInfo.screenName }}</a></td> -->
             <td class="favoriteIssuesDescricao"><a href="{{issue.get_view_link}}" >{{issue}}</a></td>
           </tr>
           {% endfor %}

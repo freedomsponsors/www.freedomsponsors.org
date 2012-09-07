@@ -56,7 +56,7 @@ Created by: <a href="{{issue.createdByUser.get_view_link}}">{{issue.createdByUse
 {% for offer in issue.getOffers %}
     <tr>
       <td><a href="{{ offer.get_view_link }}">{{offer.price}}</a></td>
-      <td><a href="{{ offer.sponsor.get_view_link }}">{{ offer.sponsor.getUserInfo.screenName }}</a></td>
+      <td><a href="{{ offer.sponsor.get_view_link }}"><img src="{{offer.sponsor.gravatar_url_medium}}"> {{ offer.sponsor.getUserInfo.screenName }}</a></td>
       <td style="text-align:center">
         {% if offer.no_forking %}
           <span title="No forking"><i class="icon-home"></i></span>
@@ -94,7 +94,7 @@ Created by: <a href="{{issue.createdByUser.get_view_link}}">{{issue.createdByUse
 	  <tbody>
 	{% for solution in issue.getSolutions %}
 	    <tr>
-	      <td><a href="{{solution.programmer.get_view_link}}">{{ solution.programmer.getUserInfo.screenName }}</a></td>
+	      <td><a href="{{solution.programmer.get_view_link}}"><img src="{{solution.programmer.gravatar_url_medium}}"> {{ solution.programmer.getUserInfo.screenName }}</a></td>
 	      <td>{{solution.status}}</td>
 	      <td><span title="{{ solution.creationDate }}">{{ solution.creationDate|date:"D, d/M/Y" }}</span></td>
 	    </tr>

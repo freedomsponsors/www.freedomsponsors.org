@@ -29,7 +29,7 @@
 
 <a href="{{offer.issue.get_view_link}}">View issue</a>
 
- | Sponsor: <a href="{{offer.sponsor.get_view_link}}">{{offer.sponsor.getUserInfo.screenName}}</a>
+ | Sponsor: <a href="{{offer.sponsor.get_view_link}}"><img src="{{offer.sponsor.gravatar_url_small}}">  {{offer.sponsor.getUserInfo.screenName}}</a>
 {% if offer.issue.project %}
  | Project: <a target="_project" href="{{offer.issue.project.homeURL}}">{{offer.issue.project.name}}</a>
 {% endif %}

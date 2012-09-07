@@ -9,7 +9,7 @@
     });
   </script>
 
-	<a href="{{comment.author.get_view_link}}">{{ comment.author.getUserInfo.screenName }}</a>
+	<a href="{{comment.author.get_view_link}}"><img src="{{comment.author.gravatar_url_medium}}"> {{ comment.author.getUserInfo.screenName }}</a>
   added a comment - 
 	<span title="{{ comment.creationDate }}">{{ comment.creationDate|date:"D, d/M/Y" }}</span>
   {% ifequal comment.author.id user.id %}
