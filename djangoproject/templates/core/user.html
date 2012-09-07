@@ -81,7 +81,10 @@
 			<div class="span6">
 				About {{le_user.getUserInfo.screenName}}
 				<div class="alert alert-info">
-					{{le_user.getUserInfo.about|linebreaks}}
+				    {% load markdown %}
+				    {% autoescape off %}
+					{{le_user.getUserInfo.about|markdown}}
+				    {% endautoescape %}
 				</div>
 				<div class="row-fluid">
 					<div class="span12">

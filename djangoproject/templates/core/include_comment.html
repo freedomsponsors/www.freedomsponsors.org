@@ -4,6 +4,8 @@
       // var converter = new Showdown.converter();
       // var html = converter.makeHtml(comment_{{counter}});
       // $("#div_comment_r_{{counter}}").html(html)
+
+      //leave this code here because we'll need somethink like this to add a js markdown preview
     });
   </script>
 
@@ -14,8 +16,9 @@
     <a href="javascript:showEditComment({{counter}})"><i class="icon-pencil"></i></a>
   {% endifequal %}
   <div  id="div_comment_r_{{counter}}">
+    {% load markdown %}
     {% autoescape off %}
-    {{comment.toHTML}}    
+    {{ comment.content|markdown }}    
     {% endautoescape %}
   </div>
   {% ifequal comment.author.id user.id %}

@@ -1,9 +1,11 @@
-{% with showOffers=showOffers|default:"true" showWorking=showWorking|default:"true" showKey=showKey|default:"true" showCreatedBy=showCreatedBy|default:"true" %}
+{% with showOffers=showOffers|default:"true" showWorking=showWorking|default:"true" showProject=showProject|default:"true" showKey=showKey|default:"true" showCreatedBy=showCreatedBy|default:"true" %}
 {% load pagination_tags %}
 <table class="table table-condensed table-striped">
   <thead>
     <tr>
+      {% ifequal showProject "true" %}
       <th>Project</th>
+      {% endifequal %}
 
       {% ifequal showKey "true" %}
       <th>Key</th>
@@ -31,7 +33,9 @@
 {% for issue in issues %}
     <tr>
 
+      {% ifequal showProject "true" %}
       <td><a href="{{ issue.get_view_link }}">{{ issue.project.name }}</a></td>
+      {% endifequal %}
 
       {% ifequal showKey "true" %}
       <td><a href="{{ issue.get_view_link }}">{{ issue.key }}</a></td>

@@ -12,7 +12,7 @@ from django.utils.http import urlquote
 from django.template.defaultfilters import slugify
 from decimal import Decimal
 from django.db.models import Q
-import formattingutils
+# import formattingutils
 # from core.gfm import gfm
 # from markdown import markdown
 
@@ -315,11 +315,8 @@ class IssueComment(models.Model):
         self.content = content
         self.save()
 
-    def toHTML(self):
-        return formattingutils.markdownFormat(self.content)
-        # return markdown(gfm(self.content)) #TODO find a better implementation for this
-        # return misaka.html(self.content)
-        # return md.render(self.content)
+    # def toHTML(self):
+    #     return formattingutils.markdownFormat(self.content)
 
 class IssueCommentHistEvent(models.Model):
     comment = models.ForeignKey(IssueComment)
@@ -483,6 +480,9 @@ class OfferComment(models.Model):
         event.save()
         self.content = content
         self.save()
+
+    # def toHTML(self):
+    #     return formattingutils.markdownFormat(self.content)
 
 class OfferCommentHistEvent(models.Model):
     comment = models.ForeignKey(OfferComment)

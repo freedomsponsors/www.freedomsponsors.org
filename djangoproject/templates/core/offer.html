@@ -42,7 +42,10 @@
 <br><br>
 <h3>Offer acceptance criteria</h3>
 <div class="alert alert-info">
-	{{offer.acceptanceCriteria|linebreaks}} <br>
+    {% load markdown %}
+    {% autoescape off %}
+	{{offer.acceptanceCriteria|markdown}} <br>
+    {% endautoescape %}
 	{% if offer.expirationDate and not offer.is_expired %}
 	<h6> <i class="icon-warning-sign"></i> Expires on {{ offer.expirationDate|date:"D, M/d/Y" }} </h6>
 	{% endif %}
@@ -80,7 +83,7 @@
 	      <div class="controls">
 	        <textarea class="input-xlarge span10" id="content" name="content" rows="10"></textarea>
 			<p class="help-block">
-				You can use <a target="_markdown" href="http://daringfireball.net/projects/markdown/">markdown</a> for formatting
+				You can use <a target="_markdown" href="http://blog.freedomsponsors.com/markdown_formatting/">markdown</a> for formatting
 			</p>
 	      </div>
 	    </div>
