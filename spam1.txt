@@ -22,7 +22,7 @@ Now that's an about page you can share with your friends without having to feel 
 
 5) Issues and offer comments now support markdown formatting.
 
-6) There's now a minimum offer limit: U$ 5.00
+6) There's now a minimum offer limit: US$ 5.00
 
 Among other minor improvements and bugfixes.
 There's a lot of other ideas that we will implement, here's two, just so you know:
