@@ -171,7 +171,7 @@ def admail(request):
 def home(request):
     if(request.user.is_authenticated() and request.user.getUserInfo() == None):
         return redirect('/core/user/edit')
-    issues = Issue.listIssues()[0:10]
+    issues = Issue.listIssues()[0:30]
     return render_to_response('core/home.html',
         {'issues':issues},
         context_instance = RequestContext(request))

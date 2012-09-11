@@ -248,8 +248,9 @@ class Issue(models.Model):
         return s
 
     def getTotalOffersPrice_displayString(self):
-        s = self.getTotalOffersPrice()
-        if(s == 0):
+        money = self.getTotalOffersPrice()
+        paid = self.getTotalPaidPrice()
+        if(money == 0 and paid > 0):
             return "PAID"
         else:
             return s
