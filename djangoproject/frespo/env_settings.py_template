@@ -15,8 +15,8 @@ DEBUG = True
 FAKE_EMAILS= True
 
 DATABASE_NAME = 'frespo'
-DATABASE_USER = 'frespo'
-DATABASE_PASS = 'frespo'
+DATABASE_USER = 'postgres'
+DATABASE_PASS = ''
 
 AUTO_EMAIL_USERNAME = 'noreply@freedomsponsors.com'
 AUTO_EMAIL_PASSWORD = 'ThisIsNotTheRealPassword_obviously'

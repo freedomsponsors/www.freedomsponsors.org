@@ -8,5 +8,6 @@ before_script
  - cd djangoproject 
  - mv frespo/env_settings.py_template frespo/env_settings.py 
  - mkdir logs
+ - psql -c 'create database frespo;' -U postgres
 # command to run tests, e.g. python setup.py test
 script:  ./manage.py test core
