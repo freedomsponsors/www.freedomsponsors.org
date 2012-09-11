@@ -4,4 +4,4 @@ python:
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 install: pip install django splinter pygments misaka --use-mirrors
 # command to run tests, e.g. python setup.py test
-script:  cd djangoproject && mv frespo/env_settings.py_template frespo/env_settings.py && ./manage.py test core
+script:  cd djangoproject && mv frespo/env_settings.py_template frespo/env_settings.py && mkdir logs && ./manage.py test core
