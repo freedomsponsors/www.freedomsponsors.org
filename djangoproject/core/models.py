@@ -253,7 +253,7 @@ class Issue(models.Model):
         if(money == 0 and paid > 0):
             return "PAID"
         else:
-            return s
+            return money
 
 
     def getTotalPaidPrice(self):
