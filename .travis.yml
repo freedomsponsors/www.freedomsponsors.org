@@ -12,6 +12,4 @@ before_script:
  - "export DISPLAY=:99.0"
  - "sh -e /etc/init.d/xvfb start"
 # command to run tests, e.g. python setup.py test
-script:  ./manage.py test core
-
-after_script: cat logs/frespo.log
+script:  code=$(./manage.py test core); cat logs/frespo.log; exit $code
