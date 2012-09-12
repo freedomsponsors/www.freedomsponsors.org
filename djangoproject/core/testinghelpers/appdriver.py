@@ -11,12 +11,13 @@ def paradinha():
 class AppDriver:
     @classmethod
     def build(cls):
-    	driver = cls()
-    	driver.browser = Browser('chrome')
-    	return driver
+        driver = cls()
+        # driver.browser = Browser('chrome')
+        driver.browser = Browser('chrome')
+        return driver
 
     def reset(self, home_url):
-    	self.home_url = home_url
+        self.home_url = home_url
         # self.browser.cookies.delete()
 
     def go_to_projects(self):
