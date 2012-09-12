@@ -71,6 +71,7 @@ class AppDriver:
             browser.find_by_value('Login').click()
             browser.click_link_by_partial_text('FreedomSponsors.org')
             assert(browser.is_text_present(user['first_name']+user['last_name']))
+        logger.info ('>>>>>>>>>>>> login_google, url: '+browser.url)
         assert(browser.is_text_present('Crowdfunding Free Software, one issue at a time'))
 
     def sponsor_issue(self, trackerURL, offer_dict):
