@@ -17,6 +17,7 @@ class AppDriver:
         return driver
 
     def reset(self, home_url):
+        print ('>>>>>>>>>>>> reset '+home_url)
         self.home_url = home_url
         # self.browser.cookies.delete()
 
@@ -41,7 +42,6 @@ class AppDriver:
 
     def create_account_google(self, user):
         browser = self.browser
-
         browser.visit(self.home_url) 
         browser.click_link_by_partial_text('Log in / Register')
         browser.click_link_by_href('/login/google')
