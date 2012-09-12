@@ -1,6 +1,9 @@
 from splinter.browser import Browser 
 from time import sleep
 from core.frespoutils import Struct
+import logging
+
+logger = logging.getLogger(__name__)
 
 TIMEOUT=5
 
@@ -17,7 +20,7 @@ class AppDriver:
         return driver
 
     def reset(self, home_url):
-        print ('>>>>>>>>>>>> reset '+home_url)
+        logger.info ('>>>>>>>>>>>> reset '+home_url)
         self.home_url = home_url
         # self.browser.cookies.delete()
 
@@ -31,7 +34,7 @@ class AppDriver:
             self.browser.click_link_by_partial_text('Sign Out')
 
     def createGoogleSession(self, user):
-        print ('>>>>>>>>>>>> create google session')
+        logger.info ('>>>>>>>>>>>> create google session')
         browser = self.browser
         browser.visit('https://gmail.google.com') 
         paradinha()

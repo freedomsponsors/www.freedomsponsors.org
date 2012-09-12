@@ -10,6 +10,8 @@ from core.testinghelpers import testdata as td
 from core.management.commands.loadProjects import add_initial_projects
 from core.management.commands.loadFeedbackData import frespoUser, frespoProject
 from trackerutils import fetchIssueInfo
+import logging
+
 
 waitifbreak=10
 
