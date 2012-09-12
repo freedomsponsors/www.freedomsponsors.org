@@ -4,7 +4,7 @@ python:
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 install: pip install django splinter pygments misaka psycopg2 --use-mirrors
 
-before_script
+before_script:
  - cd djangoproject 
  - mv frespo/env_settings.py_template frespo/env_settings.py 
  - mkdir logs
