@@ -14,5 +14,4 @@ before_script:
 # command to run tests, e.g. python setup.py test
 script:  ./manage.py test core
 
-after_script:
- - cat logs/frespo.log
+after_script: cat logs/frespo.log
