@@ -13,3 +13,6 @@ before_script:
  - "sh -e /etc/init.d/xvfb start"
 # command to run tests, e.g. python setup.py test
 script:  ./manage.py test core
+
+after_script:
+ - cat logs/frespo.log
