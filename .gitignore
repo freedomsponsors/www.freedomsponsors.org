@@ -6,3 +6,4 @@ fakeMail
 .settings
 logs
 chromedriver.log
+.idea

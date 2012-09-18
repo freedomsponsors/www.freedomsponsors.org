@@ -7,15 +7,15 @@ logger = logging.getLogger(__name__)
 
 TIMEOUT=5
 
-def paradinha():
-    sleep(0.4)
+def paradinha(time=0.4):
+    sleep(time)
     # sleep(2)
 
 class AppDriver:
     @classmethod
     def build(cls):
         driver = cls()
-        # driver.browser = Browser('chrome')
+#        driver.browser = Browser('chrome')
         driver.browser = Browser()
         return driver
 
@@ -37,7 +37,7 @@ class AppDriver:
         logger.info ('>>>>>>>>>>>> create google session')
         browser = self.browser
         browser.visit('https://gmail.google.com') 
-        paradinha()
+        paradinha(2)
         browser.fill('Email', user['username'])
         browser.fill('Passwd', user['password'])
         paradinha()
