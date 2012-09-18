@@ -14,7 +14,7 @@ install:
 before_script:
  - cd djangoproject 
  - mv frespo/env_settings.py_template frespo/env_settings.py 
- - mkdir logs
+ - mkdir logs 
  - psql -c 'create database frespo;' -U postgres
  - "export DISPLAY=:99.0"
  - "sh -e /etc/init.d/xvfb start"
