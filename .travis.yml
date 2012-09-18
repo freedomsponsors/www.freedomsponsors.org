@@ -9,6 +9,7 @@ install:
  - unzip chromedriver_linux32_16.0.902.0.zip
  - cd ../..
  - pip install django splinter pygments misaka psycopg2 simplejson --use-mirrors
+ - sudo aptitude -y -q install unzip chromium-browser
 
 before_script:
  - cd djangoproject 
