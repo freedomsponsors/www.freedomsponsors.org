@@ -15,8 +15,8 @@ class AppDriver:
     @classmethod
     def build(cls):
         driver = cls()
-#        driver.browser = Browser('chrome')
-        driver.browser = Browser()
+        driver.browser = Browser('chrome')
+        # driver.browser = Browser()
         return driver
 
     def reset(self, home_url):
