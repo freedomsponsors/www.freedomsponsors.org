@@ -3,10 +3,11 @@ python:
   - "2.6"
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 install: 
- - pip install django splinter pygments misaka psycopg2 simplejson --use-mirrors
+ - mkdir -p /tmp/bin 
  - cd /tmp/bin 
  - wget http://chromium.googlecode.com/files/chromedriver_linux32_16.0.902.0.zip 
  - unzip chromedriver_linux32_16.0.902.0.zip
+ - pip install django splinter pygments misaka psycopg2 simplejson --use-mirrors
 
 before_script:
  - cd djangoproject 
