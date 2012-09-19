@@ -79,7 +79,7 @@ font-size: 14px;
 .sloganPai{
   margin-top:10px;
   margin-bottom: 10px;
-  margin-left: 80px;
+  margin-left: 10px;
 }
 .slogan{
   text-align: justify;
@@ -92,7 +92,7 @@ font-size: 14px;
 .introductionText{
  /* text-align: justify; */
   font-size:14px;
-  margin-left:90px;
+  margin-left:20px;
   margin-bottom:10px;
   width: 790px;
 }
