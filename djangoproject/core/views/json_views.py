@@ -1,17 +1,11 @@
 # Create your views here.
 
-from django.http import HttpResponseRedirect
-from django.contrib.auth import logout as auth_logout
-from django.template import Context, loader, RequestContext
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render_to_response
 from core.models import *
 from django.http import HttpResponse
 from core.frespoutils import validateIssueURL, dictOrEmpty
 import json
 import logging
 from core.trackerutils import fetchIssueInfo
-from urlparse import urlparse
 from core.frespomail import notify_admin
 import traceback
 

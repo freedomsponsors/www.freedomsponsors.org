@@ -7,7 +7,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^$', 'core.views.home', name='home'),
+    url(r'^$', 'core.views.main_views.home', name='home'),
     # url(r'^frespo/', include('frespo.foo.urls')),
     url(r'^core/', include('core.urls')),
 

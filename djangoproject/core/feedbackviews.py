@@ -11,8 +11,8 @@ def feedback(request):
 
 @login_required
 def addFeedback(request):
-    issue_title = request.POST['title']
-    issue_description = request.POST['description']
+    issue_title = dict['title']
+    issue_description = dict['description']
     if(not issue_title or not issue_description):
         raise BaseException('title and description are required')
     issue = Issue.newIssueFeedback(issue_title, issue_description, request.user)

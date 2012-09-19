@@ -9,7 +9,6 @@ from django.conf import settings
 from emailmgr.models import EmailAddress
 from emailmgr import utils as emailmgr_utils
 from django.contrib import messages
-import logging
 
 def viewUser(request, user_id):
     user = User.objects.get(pk=user_id)
