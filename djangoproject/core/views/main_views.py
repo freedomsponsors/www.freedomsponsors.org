@@ -5,8 +5,8 @@ from django.contrib.auth import logout as auth_logout
 from django.template import  RequestContext
 from django.shortcuts import render_to_response, redirect
 from core.models import *
-from core.frespoutils import  dictOrEmpty
-from core.frespomail import *
+from core.utils.frespo_utils import  dictOrEmpty
+from core.services.mail_services import *
 from django.contrib import messages
 import logging
 

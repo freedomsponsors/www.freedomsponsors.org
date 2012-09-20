@@ -1,4 +1,4 @@
-from trackerutils import fetchIssueInfo
+from core.utils.trackers_adapter import fetchIssueInfo
 
 issueInfo = fetchIssueInfo("https://issues.apache.org/jira/browse/AXIS-66")
 assert(not issueInfo.error)

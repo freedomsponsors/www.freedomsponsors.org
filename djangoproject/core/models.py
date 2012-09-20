@@ -3,15 +3,13 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from datetime import timedelta
-from django.template.defaultfilters import title
 from django.contrib.auth.models import User
 import urllib, hashlib, time, random
-from frespoutils import get_or_none, socialImages
+from core.utils.frespo_utils import get_or_none, socialImages
 from social_auth.models import UserSocialAuth
 from django.utils.http import urlquote
 from django.template.defaultfilters import slugify
 from decimal import Decimal
-from django.db.models import Q
 
 
 class UserInfo(models.Model): 

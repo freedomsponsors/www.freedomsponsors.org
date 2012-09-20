@@ -1,7 +1,7 @@
 from django.core.management.base import NoArgsCommand
 from optparse import make_option
 from core.models import *
-from core.frespoutils import get_or_none
+from core.utils.frespo_utils import get_or_none
 from django.contrib.auth.models import User
 
 

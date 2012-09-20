@@ -1,6 +1,6 @@
 from splinter.browser import Browser 
 from time import sleep
-from core.frespoutils import Struct
+from core.utils.frespo_utils import Struct
 import logging
 
 logger = logging.getLogger(__name__)
@@ -55,7 +55,7 @@ class AppDriver:
         assert(browser.is_text_present(user['first_name']+' '+user['last_name']+' - edit profile'))
         browser.find_by_id('btnSubmit').click()
         assert(browser.is_text_present(user['first_name']+user['last_name']))
-        browser.click_link_by_partial_text('FreedomSponsors.org')
+        browser.find_by_id('upper_left_brand').click()
         assert(browser.is_text_present(user['first_name']+user['last_name']))
         assert(browser.is_text_present('Crowdfunding Free Software, one issue at a time'))
 
@@ -79,13 +79,13 @@ class AppDriver:
         browser.visit(self.home_url+'/core/issue/sponsor?trackerURL='+trackerURL)
         offer = Struct(**offer_dict)
         if(offer_dict.has_key('step2')):
-            _waitUntilVisible(browser, 'div_step2_w')
+            _waitUntilVisible_id(browser, 'div_step2_w')
             self._fillStep2(offer.step2)
         if(offer_dict.has_key('step3')):
-            _waitUntilVisible(browser, 'div_step3_w')
+            _waitUntilVisible_id(browser, 'div_step3_w')
             self._fillStep3(offer.step3)
         if(offer_dict.has_key('step4')):
-            _waitUntilVisible(browser, 'div_step4_w')
+            _waitUntilVisible_id(browser, 'div_step4_w')
             self._fillOfferForm(offer.step4)
         alert = None
         try:
@@ -110,13 +110,13 @@ class AppDriver:
             browser.find_by_id('btnNext1').click()
             paradinha()
         if(offer_dict.has_key('step2')):
-            _waitUntilVisible(browser, 'div_step2_w')
+            _waitUntilVisible_id(browser, 'div_step2_w')
             self._fillStep2(offer.step2)
         if(offer_dict.has_key('step3')):
-            _waitUntilVisible(browser, 'div_step3_w')
+            _waitUntilVisible_id(browser, 'div_step3_w')
             self._fillStep3(offer.step3)
         if(offer_dict.has_key('step4')):
-            _waitUntilVisible(browser, 'div_step4_w')
+            _waitUntilVisible_id(browser, 'div_step4_w')
             self._fillOfferForm(offer.step4)
         if(offer.step1.has_key('trackerURL')):
             assert(browser.is_text_present("You're almost done"))
@@ -174,6 +174,30 @@ class AppDriver:
         if(assertAlmostDone):
             self._assertAlmostDone()
 
+    def commentOnCurrentIssueOrOffer(self, content, verifyContent=None):
+        browser = self.browser
+        browser.find_by_id('content').type(content)
+        browser.find_by_id('btnSubmitNewComment').click()
+        if not verifyContent:
+            verifyContent = content
+        _waitUntilTextPresent(browser, verifyContent)
+
+    def editCommentOnCurrentIssueOrOffer(self, index, newcontent, verifyContent=None):
+        browser = self.browser
+        browser.find_by_name('selector-edit-comment')[index].click()
+        for textarea in browser.find_by_name('content'):
+            if textarea.visible:
+                textarea.fill(newcontent)
+                element = browser.find_by_name('selector-btnSubmitEditComment')[index]
+                _waitUntilVisible_element(element)
+                element.click()
+                if not verifyContent:
+                    verifyContent = newcontent
+                _waitUntilTextPresent(browser, verifyContent)
+                return
+        raise
+
+
     def _assertAlmostDone(self):
         assert(self.browser.is_text_present("You're almost done"))
         self.browser.click_link_by_text('OK')
@@ -225,7 +249,7 @@ def _check(browser, id, yes):
     else:
         browser.uncheck(id)
 
-def _waitUntilVisible(browser, id):
+def _waitUntilVisible_id(browser, id):
     t=0
     i = 0.2
     while(not browser.find_by_id(id).visible and t < TIMEOUT):
@@ -233,3 +257,21 @@ def _waitUntilVisible(browser, id):
         t = t+i
     if(not browser.find_by_id(id).visible):
         raise BaseException('Timeout waiting for element to become visible: '+id)
+
+def _waitUntilVisible_element(element):
+    t=0
+    i = 0.2
+    while(not element.visible and t < TIMEOUT):
+        sleep(i)
+        t = t+i
+    if(not element.visible):
+        raise BaseException('Timeout waiting for element to become visible: '+element)
+
+def _waitUntilTextPresent(browser, text):
+    t=0
+    i = 0.2
+    while(not browser.is_text_present(text) and t < TIMEOUT):
+        sleep(i)
+        t = t+i
+    if(not browser.is_text_present(text)):
+        raise BaseException('Timeout waiting for text to be present: '+text)

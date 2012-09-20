@@ -1,8 +1,12 @@
 from decimal import Decimal
-from core.frespomail import *
-from core.frespomail import notifyProgrammers_offerrevoked, notifySponsors_workdone, notifyProgrammers_workdone
-from core.frespoutils import dictOrEmpty, validateURL, validateIssueURL, get_or_none
+from core.services.mail_services import *
+from core.services.mail_services import notifyProgrammers_offerrevoked, notifySponsors_workdone, notifyProgrammers_workdone, notify_admin
+from core.utils.frespo_utils import dictOrEmpty, validateURL, validateIssueURL, get_or_none
 from core.models import Issue, Project, Offer, Solution, IssueComment, OfferComment
+from core.utils.trackers_adapter import fetchIssueInfo
+import logging
+
+logger = logging.getLogger(__name__)
 
 __author__ = 'tony'
 
@@ -40,7 +44,7 @@ def add_new_issue_and_offer(dict, user):
 def sponsor_existing_issue(issue_id, dict, user):
     issue = Issue.objects.get(pk=issue_id)
     _throwIfAlreadySponsoring(issue, user)
-    offer = _buildOfferFromRequest_and_issue(dict, user, issue);
+    offer = _buildOfferFromDictionary_and_issue(dict, user, issue);
     offer.save()
     notifyProgrammers_offeradded(offer)
     notifySponsors_offeradded(offer)
@@ -121,6 +125,24 @@ def resolve_existing_solution(solution_id, comment_content, user):
     return solution
 
 
+def process_issue_url(trackerURL, user):
+    result = {}
+    result["urlValidationError"] = validateIssueURL(trackerURL)
+    if(not result["urlValidationError"]):
+        issues = Issue.objects.filter(trackerURL__iexact=trackerURL)
+        issue_already_exists = issues.count() >= 1
+        if(issues.count() > 1):
+            logger.warning("Database inconsistency: more than one issue found with url = %s"%trackerURL)
+        if(issue_already_exists):
+            result["issue"] = {"id":issues[0].id}
+            return result
+        else:
+            issueInfo = fetchIssueInfo(trackerURL)
+            _append_project_id_and_update_db_if_needed(issueInfo, trackerURL, user)
+            result["issueInfo"] = issueInfo.__dict__
+    return result
+
+
 def _buildOfferFromDictionary(dict, user):
     check_noProject = dict.has_key('noProject')
     issue_trackerURL = dict['trackerURL']
@@ -171,7 +193,7 @@ def _buildOfferFromDictionary(dict, user):
 
         issue = Issue.newIssue(project, issue_key, issue_title, user, issue_trackerURL)
 
-    return _buildOfferFromRequest_and_issue(dict, user, issue);
+    return _buildOfferFromDictionary_and_issue(dict, user, issue);
 
 
 def _throwIfIssueExists(trackerURL, user):
@@ -181,13 +203,13 @@ def _throwIfIssueExists(trackerURL, user):
             raise BaseException('Already exists: '+trackerURL+". User %s"%user.id)
 
 
-def _buildOfferFromRequest_and_issue(dict, user, issue):
+def _buildOfferFromDictionary_and_issue(dict, user, issue):
     offer = Offer.newOffer(issue, user, Decimal(0), '', False, False, None)
-    _setOfferAttributesFromRequest(offer, dict)
+    _setOfferAttributesFromDictionary(offer, dict)
     return offer
 
 
-def _setOfferAttributesFromRequest(offer, dict):
+def _setOfferAttributesFromDictionary(offer, dict):
     offer.price = Decimal(dict['price'])
     offer.no_forking = dict.has_key('no_forking')
     offer.require_release = dict.has_key('require_release')
@@ -201,7 +223,6 @@ def _setOfferAttributesFromRequest(offer, dict):
 
     if(offer.price <= 0):
         raise BaseException('offer price must be a positive number')
-
 
 
 def _throwIfAlreadySponsoring(issue, user):
@@ -219,8 +240,6 @@ def _throwIfSolutionInProgress(solution, user, operation=None):
         raise BaseException('Error: found solution in progress '+str(solution.id)+', '+str(user.id)+'. operation: '+operation)
 
 
-
-
 def _throwIfSolutionNotInProgress(solution, user, operation=None):
     if(not solution.status == Solution.IN_PROGRESS):
         raise BaseException('Error. Expected solution in IN_PROGRESS state. Found ('+solution.status+'). User '+str(user.id)+'/ solution '+str(solution.id)+'. operation: '+operation)
@@ -236,3 +255,34 @@ def _throwIfNotSolutionOwner(solution, user):
         raise BaseException('Security error. '+str(user.id)+' is not solution ('+str(solution.id)+') owner. (Hey, if you do hack us, have the finesse to let us know, please - we are all firends here, right? ;-)')
 
 
+def _append_project_id_and_update_db_if_needed(issueInfo, trackerURL, user):
+    issueInfo.project_id = ''
+    project = None
+    if(issueInfo.project_trackerURL):
+        found_projects = Project.objects.filter(trackerURL__iexact=issueInfo.project_trackerURL)
+        if(found_projects.count() > 1):
+            notify_admin("WARNING: Database inconsistency", "more than one project found with url = %s"%issueInfo.project_trackerURL)
+        elif(found_projects.count() == 1):
+            project = found_projects[0]
+            _update_project_name_if_needed(project, issueInfo.project_name)
+        else:
+            project = _create_project(issueInfo, user)
+    if(project):
+        issueInfo.project_id = project.id
+        issueInfo.project_homeURL = project.homeURL
+
+
+def _update_project_name_if_needed(project, project_name):
+    if(project.name != project_name):
+        project.name = project_name
+        project.save()
+
+
+def _create_project(issueInfo, createdByUser):
+    project = Project.newProject(issueInfo.project_name, createdByUser, '', issueInfo.project_trackerURL)
+    project.save()
+    notify_admin("INFO: Project created from json view", "issue key: "+issueInfo.key+"\n<br>"+ \
+        "issue key: "+issueInfo.key+"\n<br>"+ \
+        "project : "+project.name+"\n<br>"+ \
+        "project.trackerURL: "+project.trackerURL+"\n<br>")
+    return project

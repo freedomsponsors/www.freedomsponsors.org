@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
-from core.services.comment_services import add_comment_to_offer, edit_comment_of_offer, edit_comment_of_issue, add_comment_to_issue
+from core.services import comment_services
 
 __author__ = 'tony'
 
@@ -8,7 +8,7 @@ __author__ = 'tony'
 def addIssueComment(request):
     issue_id = int(request.POST['issue_id'])
     comment_content = request.POST['content']
-    issue = add_comment_to_issue(issue_id, comment_content, request.user)
+    issue = comment_services.add_comment_to_issue(issue_id, comment_content, request.user)
     return redirect(issue.get_view_link())
 
 
@@ -16,7 +16,7 @@ def addIssueComment(request):
 def addOfferComment(request):
     offer_id = int(request.POST['offer_id'])
     comment_content = request.POST['content']
-    offer = add_comment_to_offer(offer_id, comment_content, request.user)
+    offer = comment_services.add_comment_to_offer(offer_id, comment_content, request.user)
     return redirect(offer.get_view_link())
 
 
@@ -24,7 +24,7 @@ def addOfferComment(request):
 def editIssueComment(request):
     comment_id = int(request.POST['comment_id'])
     comment_content = request.POST['content']
-    comment = edit_comment_of_issue(comment_id, comment_content, request)
+    comment = comment_services.edit_comment_of_issue(comment_id, comment_content, request.user)
     return redirect(comment.issue.get_view_link())
 
 
@@ -32,7 +32,7 @@ def editIssueComment(request):
 def editOfferComment(request):
     comment_id = int(request.POST['comment_id'])
     comment_content = request.POST['content']
-    comment = edit_comment_of_offer(comment_id, comment_content, request)
+    comment = comment_services.edit_comment_of_offer(comment_id, comment_content, request.user)
     return redirect(comment.offer.get_view_link())
 
 

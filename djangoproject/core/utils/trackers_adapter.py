@@ -3,7 +3,7 @@ from urlparse import urlparse
 import re
 from xml.dom.minidom import parseString
 import json
-from core.frespomail import notify_admin
+from core.services.mail_services import notify_admin
 
 class IssueInfo:
 	pass

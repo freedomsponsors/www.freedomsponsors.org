@@ -19,7 +19,7 @@ if(settings.PAYPAL_USE_SANDBOX):
 else:
 	WEBSCR_URL = 'https://www.paypal.com/cgi-bin/webscr'
 
-def generatePayment(payment):
+def generate_paypal_payment(payment):
 	receivers = []
 	for part in payment.getParts():
 		receivers.append({'amount' : str(part.realprice), 'email' : part.programmer.email})

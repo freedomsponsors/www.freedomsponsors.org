@@ -1,55 +1,29 @@
-from decimal import Decimal
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
-from core.frespomail import notifyProgrammers_paymentconfirmed
-from core.frespopaypal import generatePayment, verify_ipn
-from core.frespoutils import get_or_none
-from core.models import Offer, Payment, Solution, PaymentPart
+from core.utils.paypal_adapter import  verify_ipn
+from core.utils.frespo_utils import  dictOrEmpty
+from core.models import Offer, Payment
+from core.services import payment_services
 import logging
 
 logger = logging.getLogger(__name__)
 
 __author__ = 'tony'
 
+
 @login_required
 def payOffer(request):
-    offer = Offer.objects.get(pk=int(request.POST['offer_id']))
-    if(offer.status == Offer.PAID):
-        raise BaseException('offer %s is already paid'%offer.id+'. User %s'%request.user)
+    offer_id = int(request.POST['offer_id'])
     count = int(request.POST['count'])
-    if(request.session.has_key('current_payment_id')):
-        curr_payment = Payment.objects.get(pk=int(request.session['current_payment_id']))
-        if(curr_payment.status != Payment.CONFIRMED_WEB and curr_payment.status != Payment.CONFIRMED_IPN):
-            curr_payment.forget()
+    current_payment_id = dictOrEmpty(request.session, 'current_payment_id')
+    if(current_payment_id):
+        payment_services.forget_payment(int(current_payment_id))
 
-    payment = Payment.newPayment(offer)
-    parts = []
-    sum = Decimal(0)
-    realSum = Decimal(0)
-    for i in range(count):
-        check = request.POST.has_key('check_%s'%i)
-        if(check):
-            solution = Solution.objects.get(pk=int(request.POST['solutionId_%s'%i]))
-            pay = Decimal(request.POST['pay_%s'%i])
-            realPay = Decimal(pay*Decimal(1-settings.FS_FEE))
-            part = PaymentPart.newPart(payment, solution.programmer, pay, realPay)
-            parts.append(part)
-            sum += pay
-            realSum += realPay
-
-    payment.fee = sum - realSum
-    payment.total = sum
-    payment.save()
-    for part in parts:
-        part.payment = payment
-        part.save()
-
-    generatePayment(payment)
-    payment.save()
+    offer, payment = payment_services.generate_payment(offer_id, count, request.POST, request.user)
 
     request.session['current_payment_id'] = payment.id
 
@@ -121,14 +95,7 @@ def paypalIPN(request):
     if verify_ipn(request.POST.copy()):
         paykey = request.POST['pay_key']
         status = request.POST['status']
-        if(status == 'COMPLETED'):
-            payment = get_or_none(Payment, paykey=paykey)
-            if(not payment):
-                raise BaseException('payment not found '+paykey)
-            payment.confirm_ipn()
-            payment.offer.paid()
-        else:
-            logger.warn('received a '+status+' IPN confirmation')
+        payment_services.process_ipn_return(paykey, status)
 
         return HttpResponse("OK")
     else:
@@ -138,12 +105,9 @@ def paypalIPN(request):
 @login_required
 @csrf_exempt
 def paypalReturn(request):
-    if(request.session.has_key('current_payment_id')):
-        curr_payment = Payment.objects.get(pk=int(request.session['current_payment_id']))
-        curr_payment.confirm_web()
-        curr_payment.offer.paid()
-        msg = 'Payment confirmed'
-        notifyProgrammers_paymentconfirmed(curr_payment) #TODO Mover pro IPN
+    current_payment_id = dictOrEmpty(request.session, 'current_payment_id')
+    if(current_payment_id):
+        curr_payment, msg = payment_services.payment_confirmed_web(current_payment_id)
         del request.session['current_payment_id']
         logger.info('CONFIRM_WEB successful for payment %s'%curr_payment.id)
     else :

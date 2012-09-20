@@ -66,7 +66,7 @@ urlpatterns += patterns('core.views.json_views',
 #   url(r'^issue/sponsor_jira$', 'sponsorJiraForm'),
 # )
 
-urlpatterns += patterns('core.feedbackviews',
+urlpatterns += patterns('core.views.feedback_views',
     url(r'^feedback$', 'feedback'),
     url(r'^feedback/submit$', 'addFeedback'),
 )

@@ -33,16 +33,7 @@ def get_or_none(model, **kwargs):
     except model.DoesNotExist:
         return None
 
-def getUnconnectedSocialAccounts(user):
-    imgs = socialImages.copy()
-    for auth in user.getSocialAuths():
-        if imgs.has_key(auth.provider):
-            del imgs[auth.provider]
-    res = []
-    for provider in imgs.keys():
-        res.append({'provider':provider, 'icon':imgs[provider]})
-    return res
-    
+
 def dictOrEmpty(dict, key):
     if(dict.has_key(key)):
         return dict[key]

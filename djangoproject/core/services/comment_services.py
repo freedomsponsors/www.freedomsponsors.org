@@ -1,6 +1,5 @@
-from core.frespomail import notifyProgrammers_newoffercomment, notifySponsors_newoffercomment, notifyProgrammers_newissuecomment, notifySponsors_newissuecomment
+from core.services.mail_services import notifyProgrammers_newoffercomment, notifySponsors_newoffercomment, notifyProgrammers_newissuecomment, notifySponsors_newissuecomment
 from core.models import Offer, OfferComment, IssueComment, Issue
-from core.views.comment_views import _throwIfNotCommentAuthor
 
 __author__ = 'tony'
 
@@ -13,16 +12,16 @@ def add_comment_to_offer(offer_id, comment_content, user):
     return offer
 
 
-def edit_comment_of_offer(comment_id, comment_content, request):
+def edit_comment_of_offer(comment_id, comment_content, user):
     comment = OfferComment.objects.get(pk=comment_id)
-    _throwIfNotCommentAuthor(comment, request.user)
+    _throwIfNotCommentAuthor(comment, user)
     comment.changeContent(comment_content)
     return comment
 
 
-def edit_comment_of_issue(comment_id, comment_content, request):
+def edit_comment_of_issue(comment_id, comment_content, user):
     comment = IssueComment.objects.get(pk=comment_id)
-    _throwIfNotCommentAuthor(comment, request.user)
+    _throwIfNotCommentAuthor(comment, user)
     comment.changeContent(comment_content)
     return comment
 

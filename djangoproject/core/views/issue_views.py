@@ -2,9 +2,9 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import redirect, render_to_response
 from django.template import RequestContext
-from core.frespoutils import get_or_none, dictOrEmpty
+from core.utils.frespo_utils import get_or_none, dictOrEmpty
 from core.models import  Issue, Offer, Solution, Project
-from core.services.issue_services import add_new_issue_and_offer, abort_existing_solution, add_solution_to_existing_issue, change_existing_offer, search_issues, resolve_existing_solution, revoke_existing_offer, sponsor_existing_issue
+from core.services import issue_services
 import logging
 
 logger = logging.getLogger(__name__)
@@ -15,7 +15,7 @@ __author__ = 'tony'
 @login_required
 def addIssue(request):
     try:
-        offer = add_new_issue_and_offer(request.POST, request.user)
+        offer = issue_services.add_new_issue_and_offer(request.POST, request.user)
     except BaseException as ex:
         return HttpResponse("ERROR: "+ex.message)
     params = '?a=s'
@@ -29,7 +29,7 @@ def addIssue(request):
 def abortSolution(request):
     solution_id = int(request.POST['solution_id'])
     comment_content = request.POST['comment']
-    solution = abort_existing_solution(solution_id, comment_content, request.user)
+    solution = issue_services.abort_existing_solution(solution_id, comment_content, request.user)
     return redirect(solution.issue.get_view_link())
 
 
@@ -38,14 +38,14 @@ def addSolution(request):
     """Start working on this issue"""
     issue_id = int(request.POST['issue_id'])
     comment_content = request.POST['comment']
-    issue = add_solution_to_existing_issue(issue_id, comment_content, request.user)
+    issue = issue_services.add_solution_to_existing_issue(issue_id, comment_content, request.user)
     return redirect(issue.get_view_link())
 
 
 @login_required
 def editOffer(request):
     offer_id = int(request.POST['offer_id'])
-    offer = change_existing_offer(offer_id, request.POST, request.user)
+    offer = issue_services.change_existing_offer(offer_id, request.POST, request.user)
     return redirect(offer.get_view_link())
 
 
@@ -53,7 +53,7 @@ def listIssues(request):
     project_id = request.GET.get('project_id')
     project_name = request.GET.get('project_name')
     search_terms = request.GET.get('s')
-    issues = search_issues(project_id, project_name, search_terms)
+    issues = issue_services.search_issues(project_id, project_name, search_terms)
     return render_to_response('core/issue_list.html',
         {'issues':issues,
          's':search_terms,
@@ -76,7 +76,7 @@ def myissues(request):
 def resolveSolution(request):
     solution_id = int(request.POST['solution_id'])
     comment_content = request.POST['comment']
-    solution = resolve_existing_solution(solution_id, comment_content, request.user)
+    solution = issue_services.resolve_existing_solution(solution_id, comment_content, request.user)
     return redirect(solution.issue.get_view_link())
 
 
@@ -85,7 +85,7 @@ def revokeOffer(request):
     offer_id = int(request.POST['offer_id'])
     comment_content = request.POST['comment']
 
-    offer = revoke_existing_offer(offer_id, comment_content, request.user)
+    offer = issue_services.revoke_existing_offer(offer_id, comment_content, request.user)
 
     return redirect(offer.issue.get_view_link())
 
@@ -94,7 +94,7 @@ def revokeOffer(request):
 def sponsorIssue(request):
     issue_id = int(request.POST['issue_id'])
 
-    offer = sponsor_existing_issue(issue_id, request.POST, request.user)
+    offer = issue_services.sponsor_existing_issue(issue_id, request.POST, request.user)
 
     invoke_parent_callback = dictOrEmpty(request.POST, 'invoke_parent_callback')
     if(invoke_parent_callback == 'true'):
