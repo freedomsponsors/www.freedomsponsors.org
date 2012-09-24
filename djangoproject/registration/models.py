@@ -261,5 +261,11 @@ class RegistrationProfile(models.Model):
         message = render_to_string('registration/activation_email.txt',
                                    ctx_dict)
         
-        self.user.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
+        if "mailer" in settings.INSTALLED_APPS:
+            from mailer import send_mail
+        else:
+            from django.core.mail import send_mail
+
+        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email])
+        # self.user.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
     
