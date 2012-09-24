@@ -1,5 +1,5 @@
 from splinter.browser import Browser 
-from time import sleep
+from time import sleep, time
 from core.utils.frespo_utils import Struct
 import logging
 
@@ -231,14 +231,45 @@ class AppDriver:
         if(not expires is None):
             _check(browser, 'expires', expires)
             if(expires):
-                browser.fill('expiration_time', str(expiration_days))
+                expiration_time = browser.find_by_name('expiration_time')[0]
+                _waitUntilVisible_element(expiration_time)
+                # browser.fill('expiration_time', str(expiration_days))
+                expiration_time.fill(str(expiration_days))
         browser.find_by_id('btnSubmitOffer').click()
         paradinha()
 
     def is_text_present(self, text):
         return self.browser.is_text_present(text)
 
+    def pay_with_paypal(self, paypal_credentials):
+        browser = self.browser
+        browser.click_link_by_text('Pay Offer')
+        btnNext = browser.find_by_id('btnNext1')[0]
+        _waitUntilVisible_element(btnNext)
+        btnNext.click()
+        btnConfirm = browser.find_by_id('confirm')[0]
+        _waitUntilVisible_element(btnConfirm)
+        btnConfirm.click()
+        _waitUntilTextPresent(browser, 'Communicating with paypal...')
+        with browser.get_iframe('PPDGFrame') as ifr:
+            _waitUntilTrue(lambda: ifr.is_text_present('Log In'), 10)
+            ifr.click_link_by_text('Log In')
+        curr_window = browser.windows[0]
+        paypal_window = browser.windows[1]
+        browser.switch_to_window(paypal_window)
+        browser.fill('email', paypal_credentials['email'])
+        browser.fill('password', paypal_credentials['password'])
+        browser.find_by_name('_eventId_submit')[0].click()
+        _waitUntilTextPresent(browser, 'Pay', 10)
+        browser.find_by_name('_eventId_submit')[0].click()
+        _waitUntilTextPresent(browser, 'You paid with My PayPal Balance', 10)
+        browser.find_by_name('_eventId_submit')[0].click()
 
+        # somehow the session is lost here and the test breaks :-(
+        browser.switch_to_window(curr_window)
+#        browser.click_link_by_text('Close')
+#        _waitUntilTextPresent(browser, 'Back to issue')
+#        browser.click_link_by_text('Back to issue')
 
     def quit(self):
         self.browser.quit()
@@ -250,28 +281,30 @@ def _check(browser, id, yes):
         browser.uncheck(id)
 
 def _waitUntilVisible_id(browser, id):
-    t=0
-    i = 0.2
-    while(not browser.find_by_id(id).visible and t < TIMEOUT):
-        sleep(i)
-        t = t+i
-    if(not browser.find_by_id(id).visible):
+    try:
+        _waitUntilTrue(lambda : browser.find_by_id(id).visible)
+    except TimeOutException:
         raise BaseException('Timeout waiting for element to become visible: '+id)
 
-def _waitUntilVisible_element(element):
-    t=0
+def _waitUntilTrue(f, timeout=TIMEOUT):
+    limit = time() + timeout
     i = 0.2
-    while(not element.visible and t < TIMEOUT):
+    while(not f() and time() < limit):
         sleep(i)
-        t = t+i
-    if(not element.visible):
-        raise BaseException('Timeout waiting for element to become visible: '+element)
+    if(not f()):
+        raise TimeOutException()
 
-def _waitUntilTextPresent(browser, text):
-    t=0
-    i = 0.2
-    while(not browser.is_text_present(text) and t < TIMEOUT):
-        sleep(i)
-        t = t+i
-    if(not browser.is_text_present(text)):
+class TimeOutException(BaseException):
+    pass
+
+def _waitUntilVisible_element(element):
+    try:
+        _waitUntilTrue(lambda : element.visible)
+    except TimeOutException:
+        raise BaseException('Timeout waiting for element to become visible: '+str(element))
+
+def _waitUntilTextPresent(browser, text, timeout=TIMEOUT):
+    try:
+        _waitUntilTrue(lambda : browser.is_text_present(text), timeout)
+    except TimeOutException:
         raise BaseException('Timeout waiting for text to be present: '+text)

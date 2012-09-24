@@ -204,6 +204,7 @@ INSTALLED_APPS = (
     'mailer',
     'south',
     'emailmgr',
+    'registration',
 )
 
 
@@ -278,6 +279,8 @@ LOGIN_REDIRECT_URL = '/'
 GITHUB_EXTRA_DATA = [('login', 'social_username')]
 FACEBOOK_EXTRA_DATA = [('username', 'social_username')]
 TWITTER_EXTRA_DATA = [('screen_name', 'social_username')]
+
+ACCOUNT_ACTIVATION_DAYS = 7
 
 #LOGIN_ERROR_URL    = '/login-error/'
 

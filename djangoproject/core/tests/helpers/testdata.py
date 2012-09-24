@@ -13,6 +13,9 @@ userDict2 = {'username':settings.TEST_GMAIL_ACCOUNT_2['username'],
     'password':settings.TEST_GMAIL_ACCOUNT_2['password'], 
     'first_name':'Outra', 'last_name':'Fake'}
 
+paypal_credentials_1 = {'email':'spon1_1348457115_per@gmail.com',
+    'password' : '12345678'}
+
 def buildDefaultOfferDict14(trackerURL):
     return {
         'step1' : {
@@ -100,6 +103,11 @@ def buildOfferForHHH1052(createdByUser):
         expiration_days=-1)
     return offer
 
+def buildSolutionDoneFor(issue, programmer):
+    solution = Solution.newSolution(issue, programmer)
+    solution.status = Solution.DONE
+    return solution
+
 def buildUser(userdict):
     adminUser = User()
     adminUser.username = userdict['first_name']+userdict['last_name']
@@ -135,6 +143,9 @@ def loadOffer(offer):
     offer.issue.save()
     offer.issue = offer.issue
     offer.save()
+
+def loadSolution(solution):
+    solution.save()
 
 def _defaultUserInfo(user):
     userInfo = UserInfo()

@@ -46,7 +46,6 @@ class SecondUserIssueTests(FrespoSplinterTestCase):
 
     def test_splinter_sponsor_issue_HHH_1052(self):
         add_initial_projects()
-        # users = td.loadUsers()
         offer = td.buildOfferForHHH1052(self.users[0].adminUser)
         td.loadOffer(offer)
         try:

@@ -2,6 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+import registration
 
 admin.autodiscover()
 
@@ -11,11 +12,11 @@ urlpatterns = patterns('',
     # url(r'^frespo/', include('frespo.foo.urls')),
     url(r'^core/', include('core.urls')),
 
-    # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^bladmin/doc/', include('django.contrib.admindocs.urls')),
 
-    # Uncomment the next line to enable the admin:
     url(r'^bladmin/', include(admin.site.urls)),
+
+    url(r'^accounts/', include('registration.backends.default.urls')),
 
     url(r'', include('social_auth.urls')),
     url(r'', include('emailmgr.urls')),

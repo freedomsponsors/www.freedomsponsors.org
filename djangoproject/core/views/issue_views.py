@@ -173,3 +173,31 @@ def listProjects(request):
     return render_to_response('core/project_list.html',
         {'projects':projects},
         context_instance = RequestContext(request))
+
+
+@login_required
+def payOfferForm(request, offer_id):
+    offer = Offer.objects.get(pk=offer_id)
+    solutions_done = offer.issue.getSolutionsDone()
+    shared_price = None
+
+    convert_rate = 1
+    currency_symbol = "US$"
+    alert_brazil = False
+    if(offer.sponsor.getUserInfo().brazilianPaypal):
+        convert_rate = 2
+        currency_symbol = "R$"
+        alert_brazil = True
+
+    if(solutions_done.count() > 0):
+        shared_price = convert_rate* offer.price / solutions_done.count()
+
+    return render_to_response('core/pay_offer.html',
+        {'offer':offer,
+         'solutions_done' : solutions_done,
+         'shared_price' : shared_price,
+         'convert_rate' : convert_rate,
+         'currency_symbol' : currency_symbol,
+         'alert_brazil' : alert_brazil,
+         },
+        context_instance = RequestContext(request))

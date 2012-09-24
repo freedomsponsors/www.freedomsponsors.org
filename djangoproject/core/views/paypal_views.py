@@ -6,7 +6,7 @@ from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
 from core.utils.paypal_adapter import  verify_ipn
 from core.utils.frespo_utils import  dictOrEmpty
-from core.models import Offer, Payment
+from core.models import  Payment
 from core.services import payment_services
 import logging
 
@@ -36,34 +36,6 @@ def payOffer(request):
         {'offer' : offer,
         'paykey':payment.paykey,
         'form_action':form_action},
-        context_instance = RequestContext(request))
-
-
-@login_required
-def payOfferForm(request, offer_id):
-    offer = Offer.objects.get(pk=offer_id)
-    solutions_done = offer.issue.getSolutionsDone()
-    shared_price = None
-
-    convert_rate = 1
-    currency_symbol = "US$"
-    alert_brazil = False
-    if(offer.sponsor.getUserInfo().brazilianPaypal):
-        convert_rate = 2
-        currency_symbol = "R$"
-        alert_brazil = True
-
-    if(solutions_done.count() > 0):
-        shared_price = convert_rate* offer.price / solutions_done.count()
-
-    return render_to_response('core/pay_offer.html',
-        {'offer':offer,
-         'solutions_done' : solutions_done,
-         'shared_price' : shared_price,
-         'convert_rate' : convert_rate,
-         'currency_symbol' : currency_symbol,
-         'alert_brazil' : alert_brazil,
-         },
         context_instance = RequestContext(request))
 
 
