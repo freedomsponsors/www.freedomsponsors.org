@@ -266,6 +266,6 @@ class RegistrationProfile(models.Model):
         else:
             from django.core.mail import send_mail
 
-        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email])
+        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [self.user.email])
         # self.user.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
     
