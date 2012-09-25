@@ -261,9 +261,9 @@ class AppDriver:
         btnConfirm = browser.find_by_id('confirm')[0]
         _waitUntilVisible_element(btnConfirm)
         btnConfirm.click()
-        _waitUntilTextPresent(browser, 'Communicating with paypal...')
+        _waitUntilTextPresent(browser, 'Communicating with paypal...', 20)
         with browser.get_iframe('PPDGFrame') as ifr:
-            _waitUntilTrue(lambda: ifr.is_text_present('Log In'), 10)
+            _waitUntilTrue(lambda: ifr.is_text_present('Log In'), 20)
             ifr.click_link_by_text('Log In')
         curr_window = browser.windows[0]
         paypal_window = browser.windows[1]
@@ -271,9 +271,9 @@ class AppDriver:
         browser.fill('email', paypal_credentials['email'])
         browser.fill('password', paypal_credentials['password'])
         browser.find_by_name('_eventId_submit')[0].click()
-        _waitUntilTextPresent(browser, 'Pay', 10)
+        _waitUntilTextPresent(browser, 'Pay', 20)
         browser.find_by_name('_eventId_submit')[0].click()
-        _waitUntilTextPresent(browser, 'You paid with My PayPal Balance', 10)
+        _waitUntilTextPresent(browser, 'You paid with My PayPal Balance', 20)
         browser.find_by_name('_eventId_submit')[0].click()
 
         # somehow the session is lost here and the test breaks :-(
