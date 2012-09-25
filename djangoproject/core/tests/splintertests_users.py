@@ -2,14 +2,15 @@ from time import sleep
 import traceback
 from helpers import testdata as td
 from splintertests_issues import FrespoSplinterTestCase
-from unittest import skipIf
+from django.utils.unittest import skipIf
 from django.conf import settings
 
 waitifbreak = 10
 
 __author__ = 'tony'
 
-@skipIf(settings.SKIP_GOOGLE_TESTS)
+@skipIf(True, 'not supported in this environment')
+# @skipIf(settings.SKIP_GOOGLE_TESTS, 'not supported in this environment')
 class AccountCreationTests(FrespoSplinterTestCase):
     def needs_users(self):
         return False
