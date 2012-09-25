@@ -5,7 +5,7 @@ from splintertests_issues import FrespoSplinterTestCase
 from django.utils.unittest import skipIf
 from django.conf import settings
 
-waitifbreak = 10
+waitifbreak = 1
 
 __author__ = 'tony'
 
