@@ -7,7 +7,7 @@ import traceback
 
 __author__ = 'tony'
 
-waitifbreak = 20
+waitifbreak = 1
 
 class SoloUserCommentTests(FrespoSplinterTestCase):
 #    def onAppCreate(self):

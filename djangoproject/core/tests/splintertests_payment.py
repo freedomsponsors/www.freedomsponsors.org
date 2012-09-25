@@ -8,7 +8,7 @@ import traceback
 
 __author__ = 'tony'
 
-waitifbreak = 120
+waitifbreak = 1
 
 class PaymentTests(FrespoSplinterTestCase):
 #    def onAppCreate(self):
