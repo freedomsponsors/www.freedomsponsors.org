@@ -16,6 +16,8 @@ DATABASE_NAME = env_settings.DATABASE_NAME
 DATABASE_USER = env_settings.DATABASE_USER
 DATABASE_PASS = env_settings.DATABASE_PASS
 
+SKIP_GOOGLE_TESTS = env_settings.SKIP_GOOGLE_TESTS
+
 TEMPLATE_DEBUG = DEBUG
 MANAGERS = ADMINS
 
@@ -280,7 +282,7 @@ GITHUB_EXTRA_DATA = [('login', 'social_username')]
 FACEBOOK_EXTRA_DATA = [('username', 'social_username')]
 TWITTER_EXTRA_DATA = [('screen_name', 'social_username')]
 
-ACCOUNT_ACTIVATION_DAYS = 7
+ACCOUNT_ACTIVATION_DAYS = 1
 
 #LOGIN_ERROR_URL    = '/login-error/'
 
