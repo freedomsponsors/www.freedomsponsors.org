@@ -27,13 +27,13 @@
 {% endif %}
 <br>
 <div class="row">
-<div class="span1"></div>
-{% include 'core/openid_login.html' with provider="google" image="google.gif" %}
-{% include 'core/openid_login.html' with provider="github" image="github.png" %}
-{% include 'core/openid_login.html' with provider="bitbucket" image="bitbucket.jpg" %}
-{% include 'core/openid_login.html' with provider="facebook" image="facebook.gif" %}
-{% include 'core/openid_login.html' with provider="twitter" image="twitter.png" %}
-{% include 'core/openid_login.html' with provider="yahoo" image="yahoo.gif" %}
+    <div class="span1"></div>
+    {% include 'core/openid_login.html' with provider="google" image="google.gif" %}
+    {% include 'core/openid_login.html' with provider="github" image="github.png" %}
+    {% include 'core/openid_login.html' with provider="bitbucket" image="bitbucket.jpg" %}
+    {% include 'core/openid_login.html' with provider="facebook" image="facebook.gif" %}
+    {% include 'core/openid_login.html' with provider="twitter" image="twitter.png" %}
+    {% include 'core/openid_login.html' with provider="yahoo" image="yahoo.gif" %}
 </div>
 <hr>
 <h3>Or...</h3>
@@ -49,6 +49,23 @@
 		  </div>
 		</form>
 	</div>
-<div>
+</div>
+<h3>Or...</h3>
+<div class="row">
+    <div class="span1"></div>
+    <div class="span10">
+        <form class="form-inline" action="/accounts/login/?next=/" method="post">
+            {% csrf_token %}
+            <div>
+                <label for="id_username">Use you plain old</label>
+                <input id="id_username" style="width:100px" type="text" placeholder="username" name="username" maxlength="30" />
+                <label for="id_password">and</label>
+                <input type="password" style="width:100px" name="password" placeholder="password" id="id_password" />
+                <input type="submit" value="Login">
+                (Sign up <a href="/accounts/register">here</a>)
+            </div>
+        </form>
+    </div>
+</div>
 
 {% endblock mainContent %}

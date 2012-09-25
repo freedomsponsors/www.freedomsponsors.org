@@ -1,11 +1,9 @@
-{% extends "registration/base.html" %}
+{% extends "core/base.html" %}
 
-{% block title %}Sign up{% endblock %}
-
-{% block content %}
+{% block mainContent %}
 
   {% if form.errors %}
-  <p class="errors">Please correct the errors below: {{ form.non_field_errors }}</p>
+      <div class="alert alert-error">Please correct the errors below: {{ form.non_field_errors }}</div>
   {% endif %}
 
   <h1>Create an account</h1>
@@ -15,28 +13,28 @@
     <p>
       <label for="id_username">Username:</label>
       {% if form.username.errors %}
-        <p class="errors">{{ form.username.errors.as_text }}</p>
+        <div class="alert alert-error">{{ form.username.errors.as_text }}</div>
       {% endif %}
       {{ form.username }}
     </p>
     <p>
       <label for="id_email">Email address:</label>
       {% if form.email.errors %}
-        <p class="errors">{{ form.email.errors.as_text }}</p>
+          <div class="alert alert-error">{{ form.email.errors.as_text }}</div>
       {% endif %}
       {{ form.email }}
     </p>
     <p>
       <label for="id_password1">Password:</label>
       {% if form.password1.errors %}
-        <p class="errors">{{ form.password1.errors.as_text }}</p>
+          <div class="alert alert-error">{{ form.password1.errors.as_text }}</div>
       {% endif %}
       {{ form.password1 }}
     </p>
     <p>
-      <label for="id_password2">Password (type again to catch typos):</label>
+      <label for="id_password2">Confirm password:</label>
       {% if form.password2.errors %}
-        <p class="errors">{{ form.password2.errors.as_text }}</p>
+          <div class="alert alert-error">{{ form.password2.errors.as_text }}</div>
       {% endif %}
       {{ form.password2 }}
     </p>
