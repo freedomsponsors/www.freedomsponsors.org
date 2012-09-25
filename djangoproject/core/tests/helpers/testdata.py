@@ -81,10 +81,16 @@ issueDictHHH1051 = {'trackerURL':'https://hibernate.onjira.com/browse/HHH-1051',
     'title':'Compiled native SQL queries are not cached', 
     'project_name':'Hibernate'}
 
-def loadUsers():
+def loadUsersGoogle():
     users = []
-    users.append(loadUser(buildUser(userDict1)))
-    users.append(loadUser(buildUser(userDict2)))
+    users.append(loadUser(buildUserGoogle(userDict1)))
+    users.append(loadUser(buildUserGoogle(userDict2)))
+    return users
+
+def loadUsersPlain():
+    users = []
+    users.append(loadUser(buildUserPlain(userDict1)))
+    users.append(loadUser(buildUserPlain(userDict2)))
     return users
 
 def buildOfferForHHH1052(createdByUser):
@@ -108,7 +114,7 @@ def buildSolutionDoneFor(issue, programmer):
     solution.status = Solution.DONE
     return solution
 
-def buildUser(userdict):
+def buildUserGoogle(userdict):
     adminUser = User()
     adminUser.username = userdict['first_name']+userdict['last_name']
     adminUser.first_name = userdict['first_name']
@@ -122,6 +128,21 @@ def buildUser(userdict):
     user.adminUser = adminUser
     user.userInfo = userInfo
     user.social_auths = [google_auth]
+    return user
+
+def buildUserPlain(userdict):
+    adminUser = User()
+    adminUser.username = userdict['username']
+    adminUser.first_name = userdict['first_name']
+    adminUser.last_name = userdict['last_name']
+    adminUser.email = userdict['username']+'@gmail.com'
+    adminUser.set_password(userdict['password'])
+    adminUser.date_joined = timezone.now()
+    userInfo = _defaultUserInfo(adminUser)
+    user = _Thing()
+    user.adminUser = adminUser
+    user.userInfo = userInfo
+    user.social_auths = []
     return user
 
 class _Thing:

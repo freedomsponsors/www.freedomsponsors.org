@@ -28,7 +28,7 @@ class FrespoSplinterTestCase(LiveServerTestCase):
             self.__class__.app = self.app
             self.onAppCreate()
         if self.needs_users():
-            self.users = td.loadUsers()
+            self.users = td.loadUsersPlain()
         self.app.reset(self.live_server_url)
 
     def tearDown(self):
@@ -41,15 +41,15 @@ class FrespoSplinterTestCase(LiveServerTestCase):
         return True
 
 class SecondUserIssueTests(FrespoSplinterTestCase):
-    def onAppCreate(self):
-        self.app.createGoogleSession(td.userDict2)
+#    def onAppCreate(self):
+#        self.app.createGoogleSession(td.userDict2)
 
     def test_splinter_sponsor_issue_HHH_1052(self):
         add_initial_projects()
         offer = td.buildOfferForHHH1052(self.users[0].adminUser)
         td.loadOffer(offer)
         try:
-            self.app.login_google()
+            self.app.login_plain(td.userDict2)
             self.app.followIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
             otherOffer = {
                 'price':Decimal('15.00'),
@@ -68,16 +68,15 @@ class SecondUserIssueTests(FrespoSplinterTestCase):
 
 
 class SoloUserIssueTests(FrespoSplinterTestCase):
-    def onAppCreate(self):
-        self.app.createGoogleSession(td.userDict1)
+#    def onAppCreate(self):
+#        self.app.createGoogleSession(td.userDict1)
 
     def test_splinter_login(self):
-        self.app.login_google()
+        self.app.login_plain(td.userDict1)
 
     def test_splinter_add_issue_HHH_1052(self):
         add_initial_projects()
-        # td.loadUsers()
-        self.app.login_google()
+        self.app.login_plain(td.userDict1)
         try:
             offerDict = td.buildDefaultOfferDict14('https://hibernate.onjira.com/browse/HHH-1052')
             self.app.addOffer(offerDict)
@@ -91,8 +90,7 @@ class SoloUserIssueTests(FrespoSplinterTestCase):
 
     def test_splinter_sponsor_jira_HHH0152(self):
         add_initial_projects()
-        # td.loadUsers()
-        self.app.login_google()
+        self.app.login_plain(td.userDict1)
         try:
             offerDict = td.buildDefaultOfferDict14('https://hibernate.onjira.com/browse/HHH-1052')
             del offerDict['step1']
@@ -107,9 +105,8 @@ class SoloUserIssueTests(FrespoSplinterTestCase):
 
 
     def test_splinter_add_issue_HHH_1052_with_empty_db(self):
-        # td.loadUsers()
         frespoProject(frespoUser())
-        self.app.login_google()
+        self.app.login_plain(td.userDict1)
         try:
             self.app.go_to_projects()
             assert(not self.app.is_text_present('Hibernate'))
@@ -128,9 +125,8 @@ class SoloUserIssueTests(FrespoSplinterTestCase):
             raise
 
     def test_splinter_add_issue_inexistent(self):
-        # td.loadUsers()
         frespoProject(frespoUser())
-        self.app.login_google()
+        self.app.login_plain(td.userDict1)
         try:
             offerDict = td.buildDefaultOfferDict1234(
                 trackerURL='https://hibernate.onjira.com/browse/OH404-1052',
@@ -153,9 +149,8 @@ class SoloUserIssueTests(FrespoSplinterTestCase):
             raise
 
     def test_splinter_add_issue_unreachable(self):
-        # td.loadUsers()
         frespoProject(frespoUser())
-        self.app.login_google()
+        self.app.login_plain(td.userDict1)
         try:
             offerDict = td.buildDefaultOfferDict1234(
                 trackerURL='https://hibernatis.onjira.com/browse/OH404-1052',
@@ -178,8 +173,7 @@ class SoloUserIssueTests(FrespoSplinterTestCase):
             raise
 
     def test_splinter_add_issue_avulsa(self):
-        # td.loadUsers()
-        self.app.login_google()
+        self.app.login_plain(td.userDict1)
         try:
             offerDict = td.buildOfferDictAvulsa()
             self.app.addOffer(offerDict)
@@ -195,7 +189,7 @@ class SoloUserIssueTests(FrespoSplinterTestCase):
         add_initial_projects()
         offer = td.buildOfferForHHH1052(self.users[0].adminUser)
         td.loadOffer(offer)
-        self.app.login_google()
+        self.app.login_plain(td.userDict1)
         try:
             self.app.followIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
 

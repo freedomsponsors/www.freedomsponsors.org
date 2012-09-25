@@ -74,6 +74,16 @@ class AppDriver:
         logger.info ('>>>>>>>>>>>> login_google, url: '+browser.url)
         assert(browser.is_text_present('Crowdfunding Free Software, one issue at a time'))
 
+    def login_plain(self, userdict):
+        browser = self.browser
+
+        browser.visit(self.home_url)
+        browser.click_link_by_partial_text('Log in / Register')
+        browser.fill('username', userdict['username'])
+        browser.fill('password', userdict['password'])
+        browser.find_by_id('submit_login_plain').click()
+
+
     def sponsor_issue(self, trackerURL, offer_dict):
         browser = self.browser
         browser.visit(self.home_url+'/core/issue/sponsor?trackerURL='+trackerURL)
@@ -205,6 +215,7 @@ class AppDriver:
     def _fillOfferForm(self, offerdatadict):
         offerdata=Struct(**offerdatadict)
         browser = self.browser
+        _waitUntilVisible_element(browser.find_by_name('price')[0])
         browser.fill('price', str(offerdata.price))
         browser.fill('acceptanceCriteria', offerdata.acceptanceCriteria)
         if(offerdatadict.has_key('no_forking')):

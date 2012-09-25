@@ -10,14 +10,14 @@ __author__ = 'tony'
 waitifbreak = 20
 
 class SoloUserCommentTests(FrespoSplinterTestCase):
-    def onAppCreate(self):
-        self.app.createGoogleSession(td.userDict1)
+#    def onAppCreate(self):
+#        self.app.createGoogleSession(td.userDict1)
 
     def test_splinter_solo_comments(self):
         add_initial_projects()
         offer = td.buildOfferForHHH1052(self.users[0].adminUser)
         td.loadOffer(offer)
-        self.app.login_google()
+        self.app.login_plain(td.userDict1)
         try:
             self.app.followIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
             def gogogo():
