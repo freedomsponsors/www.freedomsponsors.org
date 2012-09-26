@@ -1,13 +1,11 @@
-{% extends "registration/base.html" %}
+{% extends "core/base.html" %}
 
-{% block title %}Log in{% endblock %}
-
-{% block content %}
+{% block mainContent %}
 
 <h1>Log in</h1>
 
 {% if form.errors %}
-<p class="error">Please correct the errors below:</p>
+<div class="alert alert-error">Your username and password didn't match. Please try again.</div>
 {% endif %}
 
 <form method="post" action="?next={{ next|default:"/" }}">{% csrf_token %}
