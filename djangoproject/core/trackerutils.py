@@ -5,8 +5,16 @@ from xml.dom.minidom import parseString
 import json
 from core.frespomail import notify_admin
 
-class IssueInfo:
-	pass
+class IssueInfo(object):
+
+	def __init__(self):
+		self.error = ''
+		self.project_name = ''
+		self.issue_title = ''
+		self.key = ''
+		self.tracker = ''
+		self.project_trackerURL = ''
+
 
 def fetchIssueInfo(issueURL):
 	if(looks_like_github(issueURL)):
@@ -15,28 +23,20 @@ def fetchIssueInfo(issueURL):
 		info = retriveJIRAInfo(issueURL)
 	elif(looks_like_bugzilla(issueURL)):
 		info = retriveBugzillaInfo(issueURL)
+	elif(looks_like_bitbucket(issueURL)):
+		info = retrieveBitBucketInfo(issueURL)
 	else:
-		info = noInfo()
+		info = IssueInfo()
 	if(info.error):
-		print 'Error fetching jira info for: '+issueURL+' - '+info.error
-		notify_admin('Error fetching jira info for: '+issueURL, info.error)
+		print 'Error fetching info for: '+issueURL+' - '+info.error
+		notify_admin('Error fetching info for: '+issueURL, info.error)
 	return info
 
-
-def noInfo():
-	info = IssueInfo()
-	info.error = ''
-	info.project_name = ''
-	info.issue_title = ''
-	info.key = ''
-	info.tracker = ''
-	info.project_trackerURL = ''
-	return info		
 
 ######## JIRA ##########
 
 def retriveJIRAInfo(url):
-	info = noInfo()
+	info = IssueInfo()
 	parsedURL = urlparse(url)
 	last_after_slash = parsedURL.path.split('/')[-1]
 	jira_key = last_after_slash
@@ -88,7 +88,7 @@ def looks_like_github(url):
 	return parsedURL.netloc.lower() == 'github.com'
 
 def retriveGithubInfo(url):
-	info = noInfo()
+	info = IssueInfo()
 	parsedURL = urlparse(url)
 	pathTokens = parsedURL.path.split('/')
 	if(len(pathTokens) < 5 or pathTokens[3].lower() != 'issues'):
@@ -107,7 +107,7 @@ def retriveGithubInfo(url):
 				issueJson = json.loads(content)
 				info.issue_title = issueJson['title']
 			except:
-				info.error = 'Could not parse JSon view from: '+issueJsonURL
+				info.error = 'Could not parse JSON view from: '+issueJsonURL
 		else:
 			info.error = ('status %s: '%resp.status)+issueJsonURL
 	except httplib2.HttpLib2Error as e:
@@ -127,7 +127,7 @@ def looks_like_bugzilla(url):
 
 def retriveBugzillaInfo(url):
 	parsedURL = urlparse(url)
-	info = noInfo()
+	info = IssueInfo()
 	info.error = ''
 	info.key = parsedURL.query.split('id=')[1]
 	info.tracker = 'BUGZILLA'
@@ -150,3 +150,36 @@ def retriveBugzillaInfo(url):
 	except httplib2.HttpLib2Error as e:
 		info.error = e.message
 		return info
+
+########## BitBucket ########
+
+def looks_like_bitbucket(url):
+	parsedURL = urlparse(url)
+	return parsedURL.netloc.lower() == 'bitbucket.org'
+
+def retrieveBitBucketInfo(url):
+	info = IssueInfo()
+	parsedURL = urlparse(url)
+	pathTokens = parsedURL.path.split('/')
+	if(len(pathTokens) < 5 or pathTokens[3].lower() != 'issue'):
+		info.error = "URL doesn't look like a BitBucket issue link"
+		return info
+	_username, info.project_name, info.key = pathTokens[1], pathTokens[2], pathTokens[4]
+	info.tracker = 'BITBUCKET'
+	info.project_name = _project_name
+	info.project_trackerURL = parsedURL.scheme+'://'+parsedURL.netloc+'/'+_username+'/'+_project_name + '/issues'
+	issueJsonURL = 'https://api.bitbucket.org/1.0/repositories/' + _username + '/' + _project_name + '/issues/' + pathTokens[4]
+	h = httplib2.Http(disable_ssl_certificate_validation=True)
+	try: 
+		resp, content = h.request(issueJsonURL)
+		if resp.status == 200:
+			try:
+				issueJson = json.loads(content)
+				info.issue_title = issueJson['title']
+			except:
+				info.error = 'Could not parse JSon view from: '+issueJsonURL
+		else:
+			info.error = ('status %s: '%resp.status)+issueJsonURL
+	except httplib2.HttpLib2Error as e:
+		info.error = e.message
+	return info
