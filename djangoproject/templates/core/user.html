@@ -14,6 +14,14 @@
 		<div class="row-fluid">
 			<div class="span6">
 				<table>
+				{% if le_user.id == user.id %}
+					<tr>
+						<td>Username:</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>{{user.username}}</td>
+					</tr>
+				{% endif %}
 					<tr>
 						<td>Screen name:</td>
 						<td>&nbsp;</td>

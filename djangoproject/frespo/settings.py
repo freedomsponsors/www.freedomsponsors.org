@@ -36,12 +36,12 @@ DATABASES = {
 #     DATABASES['default'] = {'ENGINE': 'django.db.backends.sqlite3'}
 
 fakeEmails = env_settings.FAKE_EMAILS
+EMAIL_BACKEND = 'mailer.backend.DbBackend'
 if(fakeEmails):
-    EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-    MAILER_EMAIL_BACKEND = EMAIL_BACKEND
+    MAILER_EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
     EMAIL_FILE_PATH = './fakeMail'
 else:
-#    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    # EMAIL_BACKEND = 'mailer.backend.DbBackend'
     EMAIL_HOST = 'smtp.gmail.com'
     EMAIL_PORT = 587
     EMAIL_HOST_USER = env_settings.AUTO_EMAIL_USERNAME
