@@ -67,6 +67,15 @@ class TrackerUtilsTest(TestCase):
         assert(issueInfo.project_name == 'www.gittip.com')
         assert(issueInfo.issue_title == 'pay with bitcoin, litecoin')
 
+    def test_coveragepy_bitbucket(self):
+        issueInfo = fetchIssueInfo("https://bitbucket.org/ned/coveragepy/issue/193/unicodedecodeerror-on-htmlpy")
+        assert(not issueInfo.error)
+        assert(issueInfo.tracker == 'BITBUCKET')
+        assert(issueInfo.key == '193')
+        assert(issueInfo.project_trackerURL == 'https://bitbucket.org/ned/coveragepy/issues')
+        assert(issueInfo.project_name == 'coveragepy')
+        assert(issueInfo.issue_title == 'UnicodeDecodeError on html.py')
+
     def test_ant_bugzilla(self):
         issueInfo = fetchIssueInfo("https://issues.apache.org/bugzilla/show_bug.cgi?id=32089")
         assert(not issueInfo.error)
