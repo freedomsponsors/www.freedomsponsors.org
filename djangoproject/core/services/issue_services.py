@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 __author__ = 'tony'
 
 def search_issues(project_id, project_name, search_terms):
-    issues = Issue.objects.all()
+    issues = Issue.objects.filter(is_feedback=False)
     if project_id:
         issues = issues.filter(project__id=project_id)
     elif project_name:
