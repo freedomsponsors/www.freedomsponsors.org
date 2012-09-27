@@ -27,7 +27,7 @@ from django.conf.urls.defaults import *
 
 from django.contrib.auth import views as auth_views
 
-from registration.forms import MailerPasswordResetForm
+# from registration.forms import MailerPasswordResetForm
 from django.conf import settings
 
 
