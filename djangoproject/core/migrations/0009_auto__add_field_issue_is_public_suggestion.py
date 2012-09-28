@@ -1,23 +1,23 @@
 # -*- coding: utf-8 -*-
 import datetime
 from south.db import db
-from south.v2 import DataMigration
+from south.v2 import SchemaMigration
 from django.db import models
-from core.models import *
-from django.conf import settings
 
 
-class Migration(DataMigration):
+class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        "Write your forwards methods here."
-        for issue in Issue.objects.filter(project__id=settings.FRESPO_PROJECT_ID) :
-            issue.is_feedback = True
-            issue.save()
+        # Adding field 'Issue.is_public_suggestion'
+        db.add_column('core_issue', 'is_public_suggestion',
+                      self.gf('django.db.models.fields.BooleanField')(default=False),
+                      keep_default=False)
+
 
     def backwards(self, orm):
-        "Write your backwards methods here."
-        raise RuntimeError("Cannot reverse this migration.")
+        # Deleting field 'Issue.is_public_suggestion'
+        db.delete_column('core_issue', 'is_public_suggestion')
+
 
     models = {
         'auth.group': {
@@ -63,6 +63,7 @@ class Migration(DataMigration):
             'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_feedback': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'is_public_suggestion': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'key': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True', 'blank': 'True'}),
             'project': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['core.Project']", 'null': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '400'}),
@@ -199,4 +200,3 @@ class Migration(DataMigration):
     }
 
     complete_apps = ['core']
-    symmetrical = True

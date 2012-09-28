@@ -197,6 +197,7 @@ class Issue(models.Model):
     creationDate = models.DateTimeField()
     trackerURL = models.URLField(null=True, blank=True)
     is_feedback = models.BooleanField()
+    is_public_suggestion = models.BooleanField()
 
     @classmethod
     def newIssue(cls, project, key, title, createdByUser, trackerURL):
