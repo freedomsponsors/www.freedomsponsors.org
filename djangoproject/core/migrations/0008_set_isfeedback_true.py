@@ -11,7 +11,7 @@ class Migration(DataMigration):
 
     def forwards(self, orm):
         "Write your forwards methods here."
-        for issue in Issue.objects.filter(project__id=settings.FRESPO_PROJECT_ID) :
+        for issue in orm.Issue.objects.filter(project__id=settings.FRESPO_PROJECT_ID) :
             issue.is_feedback = True
             issue.save()
 
