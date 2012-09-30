@@ -37,9 +37,8 @@ class AppDriver:
         logger.info ('>>>>>>>>>>>> create google session')
         browser = self.browser
         browser.visit('https://gmail.google.com') 
-        paradinha(2)
-        browser.fill('Email', user['username'])
-        browser.fill('Passwd', user['password'])
+        _waitAndFill(browser, 'Email', user['username'])
+        _waitAndFill(browser, 'Passwd', user['password'])
         paradinha()
         browser.find_by_value('Sign in').click()
 
@@ -48,8 +47,8 @@ class AppDriver:
         browser.visit(self.home_url) 
         browser.click_link_by_partial_text('Log in / Register')
         browser.click_link_by_href('/login/google')
-        browser.fill('Email', user['username'])
-        browser.fill('Passwd', user['password'])
+        _waitAndFill(browser, 'Email', user['username'])
+        _waitAndFill(browser, 'Passwd', user['password'])
         # browser.find_by_value('Login').click()
         browser.find_by_id('signIn').click()
         assert(browser.is_text_present(user['first_name']+' '+user['last_name']+' - edit profile'))
@@ -66,8 +65,8 @@ class AppDriver:
         browser.click_link_by_partial_text('Log in / Register')
         browser.click_link_by_href('/login/google')
         if(user):
-            browser.fill('Email', user['username'])
-            browser.fill('Passwd', user['password'])
+            _waitAndFill(browser, 'Email', user['username'])
+            _waitAndFill(browser, 'Passwd', user['password'])
             browser.find_by_value('Login').click()
             browser.click_link_by_partial_text('FreedomSponsors.org')
             assert(browser.is_text_present(user['first_name']+user['last_name']))
@@ -79,8 +78,8 @@ class AppDriver:
 
         browser.visit(self.home_url)
         browser.click_link_by_partial_text('Log in / Register')
-        browser.fill('username', userdict['username'])
-        browser.fill('password', userdict['password'])
+        _waitAndFill(browser, 'username', userdict['username'])
+        _waitAndFill(browser, 'password', userdict['password'])
         browser.find_by_id('submit_login_plain').click()
 
 
@@ -114,11 +113,10 @@ class AppDriver:
         if(offer_dict.has_key('step1')):
             step1 = Struct(**offer.step1)
             if(offer.step1.has_key('trackerURL')):
-                browser.fill('trackerURL', step1.trackerURL)
+                _waitAndFill(browser, 'trackerURL', step1.trackerURL)
             if(offer.step1.has_key('noProject')):
-                _check(browser, 'noProject', step1.noProject)
+                _waitAndCheck(browser, 'noProject', step1.noProject)
             browser.find_by_id('btnNext1').click()
-            paradinha()
         if(offer_dict.has_key('step2')):
             _waitUntilVisible_id(browser, 'div_step2_w')
             self._fillStep2(offer.step2)
@@ -136,27 +134,25 @@ class AppDriver:
         browser = self.browser
         step2 = Struct(**step2dict)
         if(step2dict.has_key('key')):
-            browser.fill('key', step2.key)
+            _waitAndFill(browser, 'key', step2.key)
         if(step2dict.has_key('title')):
-            browser.fill('title', step2.title)
+            _waitAndFill(browser, 'title', step2.title)
         if(step2dict.has_key('description')):
             browser.find_by_id('description')[0].fill('step2.description')
         browser.find_by_id('btnNext2').click()
-        paradinha()
 
     def _fillStep3(self, step3dict):
         browser = self.browser
         step3 = Struct(**step3dict)
         if(step3dict.has_key('createProject')):
-            _check(browser, 'createProject', step3.createProject)
+            _waitAndCheck(browser, 'createProject', step3.createProject)
         if(step3dict.has_key('newProjectName')):
-            browser.fill('newProjectName', step3.newProjectName)
+            _waitAndFill(browser, 'newProjectName', step3.newProjectName)
         if(step3dict.has_key('newProjectHomeURL')):
-            browser.fill('newProjectHomeURL', step3.newProjectHomeURL)
+            _waitAndFill(browser, 'newProjectHomeURL', step3.newProjectHomeURL)
         if(step3dict.has_key('newProjectTrackerURL')):
-            browser.fill('newProjectTrackerURL', step3.newProjectTrackerURL)
+            _waitAndFill(browser, 'newProjectTrackerURL', step3.newProjectTrackerURL)
         browser.find_by_id('btnNext3').click()
-        paradinha()
 
     
     def followIssueLinkOnHomeByTitle(self, title):
@@ -179,7 +175,6 @@ class AppDriver:
     def sponsorCurrentIssue(self, offerdatadict, assertAlmostDone=True):
         browser = self.browser
         browser.click_link_by_partial_text('Sponsor this issue')
-        paradinha()
         self._fillOfferForm(offerdatadict)
         if(assertAlmostDone):
             self._assertAlmostDone()
@@ -216,38 +211,35 @@ class AppDriver:
         offerdata=Struct(**offerdatadict)
         browser = self.browser
         _waitUntilVisible_element(browser.find_by_name('price')[0])
-        browser.fill('price', str(offerdata.price))
-        browser.fill('acceptanceCriteria', offerdata.acceptanceCriteria)
+        _waitAndFill(browser, 'price', str(offerdata.price))
+        _waitAndFill(browser, 'acceptanceCriteria', offerdata.acceptanceCriteria)
         if(offerdatadict.has_key('no_forking')):
-            _check(browser, 'no_forking', offerdata.no_forking)
+            _waitAndCheck(browser, 'no_forking', offerdata.no_forking)
         if(offerdatadict.has_key('require_release')):
-            _check(browser, 'require_release', offerdata.require_release)
+            _waitAndCheck(browser, 'require_release', offerdata.require_release)
         browser.find_by_id('btnSubmitOffer').click()
-        paradinha()
-        
+
 
     def editCurrentOffer(self, price=None, acceptanceCriteria=None, no_forking=None, 
             require_release=None, expires=None, expiration_days=None):
         browser = self.browser
         browser.click_link_by_partial_text('Change offer')
-        paradinha()
         if(price):
-            browser.fill('price', str(price))
+            _waitAndFill(browser, 'price', str(price))
         if(acceptanceCriteria):
-            browser.fill('acceptanceCriteria', acceptanceCriteria)
+            _waitAndFill(browser, 'acceptanceCriteria', acceptanceCriteria)
         if(not no_forking is None):
-            _check(browser, 'no_forking', no_forking)
+            _waitAndCheck(browser, 'no_forking', no_forking)
         if(not require_release is None):
-            _check(browser, 'require_release', require_release)
+            _waitAndCheck(browser, 'require_release', require_release)
         if(not expires is None):
-            _check(browser, 'expires', expires)
+            _waitAndCheck(browser, 'expires', expires)
             if(expires):
                 expiration_time = browser.find_by_name('expiration_time')[0]
                 _waitUntilVisible_element(expiration_time)
-                # browser.fill('expiration_time', str(expiration_days))
+                # _waitAndFill(browser, 'expiration_time', str(expiration_days))
                 expiration_time.fill(str(expiration_days))
         browser.find_by_id('btnSubmitOffer').click()
-        paradinha()
 
     def is_text_present(self, text):
         return self.browser.is_text_present(text)
@@ -268,8 +260,8 @@ class AppDriver:
         curr_window = browser.windows[0]
         paypal_window = browser.windows[1]
         browser.switch_to_window(paypal_window)
-        browser.fill('email', paypal_credentials['email'])
-        browser.fill('password', paypal_credentials['password'])
+        _waitAndFill(browser, 'email', paypal_credentials['email'])
+        _waitAndFill(browser, 'password', paypal_credentials['password'])
         browser.find_by_name('_eventId_submit')[0].click()
         _waitUntilTextPresent(browser, 'Pay', 20)
         browser.find_by_name('_eventId_submit')[0].click()
@@ -285,7 +277,13 @@ class AppDriver:
     def quit(self):
         self.browser.quit()
 
-def _check(browser, id, yes):
+def _waitAndFill(browser, name, text):
+    element = browser.find_by_name(name)[0]
+    _waitUntilVisible_element(element)
+    element.fill(text)
+
+def _waitAndCheck(browser, id, yes):
+    _waitUntilVisible_id(browser, id)
     if(yes):
         browser.check(id)
     else:
