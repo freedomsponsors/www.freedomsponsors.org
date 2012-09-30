@@ -31,7 +31,7 @@
 </div>
 
 
-<form method="post" class="form-horizontal" action="/core/issue/add/submit">
+<form method="post" id="form_addIssue" class="form-horizontal" action="/core/issue/add/submit">
 {% csrf_token %}
   <fieldset>
 
@@ -57,14 +57,24 @@
         </div>
       </div>
       <div class="span9">
-        <button id="btnNext1" class="btn btn-primary pull-right">Next &gt;&gt;</button>
+        <div class="btn-toolbar pull-right" >
+          <div class="btn-group">
+            <button id="btnKickstart1" class="btn btn-primary"> 
+              Kickstart &gt;&gt; 
+              <i class="icon-question-sign icon-white popopo" rel="popover" data-content="Create an issue without an offer, just to draw everyone's attention to it. See more in the FAQ!" data-original-title="What's this?"></i>
+            </button>
+          </div>
+          <div class="btn-group">
+            <button id="btnNext1" class="btn btn-primary ">Sponsor &gt;&gt;</button>
+          </div>
+        </div>
       </div>
     </div>
 
     <div id="div_step2_w" class="control-group hide">
       <div id="div_issue_fill_gaps" class="alert">
         It was not possible to determine all issue atributes from its URL. 
-        Would you be so kind to fill the gaps?
+        Please fill the gaps.
       </div>
       <div id="div_key" class="control-group">
         <!-- issue key -->
@@ -155,12 +165,20 @@
 
     <div id="div_step4_w" class="hide">
 
+      <div id="div_offer_form_fields">
       {% include 'core/offer_form_fields.html' %}
+      </div>
+      <div id="div_kickstart_message">
+        <h3>You're about to "kickstart" an issue.</h3>
+        This is like placing a $0 offer on it. It will be added to the issue list page, and people will be able to place real offers on it.
+        <br><br>
+      </div>
 
       <div class="control-group">
         <div class="span9">
           <button id="btnPrevious4" class="btn btn-primary pull-left">&lt;&lt; Previous</button>
           <button id="btnSubmitOffer" class="btn btn-primary pull-right">Make offer!</button>
+          <button id="btnSubmitKickstart" class="btn btn-primary pull-right">Kickstart issue!</button>        
         </div>
       </div>
     </div>
@@ -191,10 +209,16 @@
     var $btnNext1 = $('#btnNext1');
     var $btnNext2 = $('#btnNext2');
     var $btnNext3 = $('#btnNext3');
+    var $btnKickstart1 = $('#btnKickstart1');
+    var $btnSubmitKickstart = $('#btnSubmitKickstart');
+    var $btnSubmitOffer = $('#btnSubmitOffer')
     var _btnNext1 = document.getElementById('btnNext1');
     var _btnNext2 = document.getElementById('btnNext2');
     var _btnNext3 = document.getElementById('btnNext3');
+    var _btnKickstart1 = document.getElementById('btnKickstart1');
+    var _btnSubmitKickstart = document.getElementById('btnSubmitKickstart');
     var _btnSubmitOffer = document.getElementById('btnSubmitOffer');
+    var _form_addIssue = document.getElementById('form_addIssue');
     var $btnPrevious2 = $('#btnPrevious2');
     var $btnPrevious3 = $('#btnPrevious3');
     var $btnPrevious4 = $('#btnPrevious4');
@@ -205,6 +229,8 @@
     var _span_issue = document.getElementById('span_issue');
     var _span_project = document.getElementById('span_project');
     var $div_offerData = $('#div_offerData');
+    var $div_offer_form_fields = $('#div_offer_form_fields');
+    var $div_kickstart_message = $('#div_kickstart_message');
     var $div_project = $('#div_project');
     var $div_project_typeahed = $('#div_project_typeahed');
     var $project_id = $('#project_id');
@@ -344,6 +370,7 @@
       var showStep2 = avulsa || (!issueInfo.key || !issueInfo.issue_title)
       var showStep3 = !avulsa && (!stage.has_project_id() || stage.must_complete_project())
       var showStep4 = true;
+      var kickstarting = stage.operation == 'KICKSTART'
 
       if(!avulsa){
         $key.val(issueInfo.key);
@@ -383,6 +410,15 @@
         stage.steps.push(4);
         setVisibleHiding($('#no_forking_label'), !avulsa);
         setVisibleHiding($('#require_release_label'), !avulsa);
+        if (kickstarting){
+          _form_addIssue.action = '/core/issue/kickstart/submit';
+        } else {
+          _form_addIssue.action = '/core/issue/add/submit';
+        }
+        setVisibleHiding($btnSubmitOffer, !kickstarting);
+        setVisibleHiding($div_offer_form_fields, !kickstarting);
+        setVisibleHiding($div_kickstart_message, kickstarting);
+        setVisibleHiding($btnSubmitKickstart, kickstarting);
       }
     };
 
@@ -407,7 +443,7 @@
 
     var processJsonResponse = function(result){
       if(result.urlValidationError){
-        alert('invalid url: '+urlVal+' ('+result.urlValidationError+')');
+        alert('invalid url: ('+result.urlValidationError+')');
         return false;
       }
       var exists = promptUserIfIssueExists(result.issue);
@@ -418,6 +454,16 @@
     };
 
     var next1_onclick = function(){
+      stage.operation = 'SPONSOR';
+      next1();
+      return false;
+    }
+    var kickstart1_onclick = function(){
+      stage.operation = 'KICKSTART';
+      next1();
+      return false;
+    }
+    var next1 = function(){
       stage.issueAvulsa = $('#noProject:checked').val() != undefined;
       if(stage.issueAvulsa){
         prepareStageForIssueAvulsa();
@@ -481,7 +527,7 @@
       return false;
     };
 
-    var next3_onclick = function(){
+    var validateStep3 = function(){
       var createProject_isSelected = $('#createProject:checked').val() != undefined;
       var creating_project = createProject_isSelected && !stage.has_project_id();
       var newProjectAttributeIsMissing = !$newProjectName.val() || !$newProjectHomeURL.val() || !$newProjectTrackerURL.val();
@@ -509,13 +555,27 @@
           return false;
         }
       }
-      stepForward();
+      return true;      
+    }
+
+    var next3_onclick = function(){
+      if(validateStep3()){
+        stepForward();
+      }
       return false;
     };
+
+    var submit_kickstart_onclick = function(){
+      if(validateStep3()){
+        _form_addIssue.submit()
+      }
+      return false;
+    }
 
     var submit_click = function(){
       return validateOffer(); //validateOffer is defined in offer_form_fields.html
     };
+
 
     var trackerURL_oninput = function(){
       var urlVal = $trackerURL.val();
@@ -560,8 +620,10 @@
     $noProject.change(noProject_onchange);
     $createProject.change(createProject_onchange);
     _btnNext1.onclick = next1_onclick;
+    _btnKickstart1.onclick = kickstart1_onclick;
     _btnNext2.onclick = next2_onclick;
     _btnNext3.onclick = next3_onclick;
+    _btnSubmitKickstart.onclick = submit_kickstart_onclick
     _btnPrevious2.onclick = prev2_onclick;
     _btnPrevious3.onclick = prev3_onclick;
     _btnPrevious4.onclick = prev4_onclick;

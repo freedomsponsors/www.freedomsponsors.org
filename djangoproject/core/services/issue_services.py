@@ -40,6 +40,20 @@ def add_new_issue_and_offer(dict, user):
     notify_admin("INFO: New issue sponsored", msg)
     return offer
 
+def add_new_issue(dict, user):
+    issue = _buildIssueFromDictionary(dict, user);
+    if(issue.project):
+        issue.project.save()
+        issue.project = issue.project
+    issue.save()
+    msg = "issue key: " + issue.key + "\n<br>" +\
+          "issue title: " + issue.title + "\n<br>"
+    if(issue.project):
+        msg += "project : " + issue.project.name + "\n<br>" +\
+               "project.trackerURL: " + issue.project.trackerURL + "\n<br>"
+    notify_admin("INFO: New issue kickstarted", msg)
+    return issue
+
 
 def sponsor_existing_issue(issue_id, dict, user):
     issue = Issue.objects.get(pk=issue_id)
@@ -144,6 +158,10 @@ def process_issue_url(trackerURL, user):
 
 
 def _buildOfferFromDictionary(dict, user):
+    issue = _buildIssueFromDictionary(dict, user)
+    return _buildOfferFromDictionary_and_issue(dict, user, issue);
+
+def _buildIssueFromDictionary(dict, user):
     check_noProject = dict.has_key('noProject')
     issue_trackerURL = dict['trackerURL']
     issue_projectId = dict['project_id']
@@ -155,9 +173,7 @@ def _buildOfferFromDictionary(dict, user):
     issue_key = dictOrEmpty(dict, 'key');
     issue_title = dictOrEmpty(dict, 'title');
     issue_description = dictOrEmpty(dict, 'description');
-
     _throwIfIssueExists(issue_trackerURL, user)
-
     issue = None
     if(check_noProject):
         if(not issue_title or not issue_description):
@@ -172,11 +188,13 @@ def _buildOfferFromDictionary(dict, user):
 
             projectHomeURLValidationError = validateURL(newProject_homeURL)
             if(projectHomeURLValidationError):
-                raise BaseException('invalid project URL ('+newProject_homeURL+') - '+projectHomeURLValidationError)
+                raise BaseException(
+                    'invalid project URL (' + newProject_homeURL + ') - ' + projectHomeURLValidationError)
 
             projectTrackerURLValidationError = validateURL(newProject_trackerURL)
             if(projectTrackerURLValidationError):
-                raise BaseException('invalid project tracker URL ('+newProject_trackerURL+') - '+projectTrackerURLValidationError)
+                raise BaseException(
+                    'invalid project tracker URL (' + newProject_trackerURL + ') - ' + projectTrackerURLValidationError)
 
             project = Project.newProject(newProject_name, user, newProject_homeURL, newProject_trackerURL)
         else:
@@ -189,11 +207,10 @@ def _buildOfferFromDictionary(dict, user):
 
         issueURLValidationError = validateIssueURL(issue_trackerURL)
         if(issueURLValidationError):
-            raise BaseException('invalid issue URL ('+issue_trackerURL+') - '+issueURLValidationError)
+            raise BaseException('invalid issue URL (' + issue_trackerURL + ') - ' + issueURLValidationError)
 
         issue = Issue.newIssue(project, issue_key, issue_title, user, issue_trackerURL)
-
-    return _buildOfferFromDictionary_and_issue(dict, user, issue);
+    return issue
 
 
 def _throwIfIssueExists(trackerURL, user):

@@ -24,6 +24,15 @@ def addIssue(request):
 
     return redirect(offer.get_view_link()+params)
 
+@login_required
+def kickstartIssue(request):
+    try:
+        issue = issue_services.add_new_issue(request.POST, request.user)
+    except BaseException as ex:
+        return HttpResponse("ERROR: "+ex.message)
+
+    return redirect(issue.get_view_link())
+
 
 @login_required
 def abortSolution(request):
