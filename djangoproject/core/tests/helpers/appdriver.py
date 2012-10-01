@@ -283,6 +283,7 @@ def _waitAndFill(browser, name, text):
     element.fill(text)
 
 def _waitAndCheck(browser, id, yes):
+    paradinha()
     _waitUntilVisible_id(browser, id)
     if(yes):
         browser.check(id)
