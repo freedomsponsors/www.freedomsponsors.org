@@ -78,4 +78,6 @@ If you receive error messages regarding psycopg2, try the following:
 
     $ sudo pip install psycopg2
 
+### Licensing
+
 This software is licensed under the [AFFERO GENERAL PUBLIC LICENSE](http://www.gnu.org/licenses/agpl-3.0.html)
