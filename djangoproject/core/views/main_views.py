@@ -56,9 +56,11 @@ def admail(request):
 def home(request):
     if(request.user.is_authenticated() and request.user.getUserInfo() == None):
         return redirect('/core/user/edit')
-    issues = issue_services.search_issues()[0:30]
+    issues_sponsoring = issue_services.search_issues(is_public_suggestion = False)[0:10]
+    issues_kickstarting = issue_services.search_issues(is_public_suggestion = True)[0:10]
     return render_to_response('core/home.html',
-        {'issues':issues},
+        {'issues_sponsoring':issues_sponsoring,
+         'issues_kickstarting':issues_kickstarting},
         context_instance = RequestContext(request))
 
 

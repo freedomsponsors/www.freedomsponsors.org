@@ -1,0 +1,108 @@
+/*** Gregorio Benatti */
+td._favoriteIssues{
+  width: 50px;
+  height: 30px;
+}
+
+td.favoriteIssues2{
+  width: 30px;
+  height: 30px;
+}
+
+td._favoriteIssuesDollar{
+  width: 20px;
+}
+
+#logo{ 
+  display: inline; 
+  float: left; 
+  text-align: center; 
+}
+
+.hometablecell{
+  vertical-align: top;
+  margin-left: 20px;
+}
+
+
+.newLogo{
+  font-style: bold;
+  font-size: 30px;
+}
+
+.newLogoBeta{
+font-size: 14px;
+}
+
+#nav{ 
+  display: inline; 
+  float: right;
+  text-align: center;  
+  margin-top: 5px;
+}
+
+._favoriteIssues{ 
+  font-size: 16px; 
+  margin-right: 25px;
+  vertical-align: top;
+}
+
+.favoriteIssues2{ 
+  font-size: 16px; 
+  margin-right: 25px;
+  vertical-align: top;
+}
+
+._favoriteIssuesDescricao{
+  font-size: 16px; 
+  margin-right: 25px;
+  margin-left: 15px;
+  vertical-align: top;
+}
+
+._favoriteIssuesDollar{
+  font-size: 16px; 
+  margin-right: 5px;
+  vertical-align: top;
+}
+
+.sloganPai{
+  margin-top:10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
+.slogan{
+  text-shadow: -5px 5px 10px #fff;
+  font-size: 24px;
+  font-style: italic;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.introductionText{
+ /* text-align: justify; */
+  font-size:14px;
+}
+
+.topIssues{
+  display: inline; 
+  float: left; 
+  text-align: justify;
+  margin-left: 40px;
+  margin-right: 40px;
+  margin-top: 20px;
+  margin-bottom: -70px;
+}
+
+._topIssuesItens{
+  margin-bottom: 15px;
+}
+
+.center{
+  margin-left:auto;
+  margin-right:auto;
+  width:90%;
+  background-color:#b0e0e6;
+}
+
+/*** Gregorio Benatti */
+

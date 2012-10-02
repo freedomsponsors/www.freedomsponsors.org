@@ -10,8 +10,10 @@ logger = logging.getLogger(__name__)
 
 __author__ = 'tony'
 
-def search_issues(project_id=None, project_name=None, search_terms='', is_public_suggestion=False):
-    issues = Issue.objects.filter(is_feedback=False, is_public_suggestion=is_public_suggestion)
+def search_issues(project_id=None, project_name=None, search_terms='', is_public_suggestion=None):
+    issues = Issue.objects.filter(is_feedback=False)
+    if is_public_suggestion != None:
+        issues = issues.filter(is_public_suggestion=is_public_suggestion)
     if project_id:
         issues = issues.filter(project__id=project_id)
     elif project_name:

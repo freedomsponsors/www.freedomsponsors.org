@@ -43,60 +43,82 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 
-  {% include "core/navbar.html" %}
+    {% include "core/navbar.html" %}
 
     <div class="container-fluid">
+      
+      <!-- messages -->
+      {% if messages %}
+      <div class="alert">
+      <ul class="messages">
+          {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+          {% endfor %}
+      </ul>
+      </div>
+      {% endif %}
 
-{% if messages %}
-<div class="alert">
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-</div>
-{% endif %}
-
-      {% block social_buttons %}
-      <div id="div_social_buttons" class="row-fluid">
-        <div class="span10">
-        </div>
+      <!-- 3tops -->
+      <div class="row-fluid" style="">
         <div class="span2">
+        {% block topleft %}
+        {% endblock %}
+        </div>
+        <div class="span8">
+        {% block topmiddle %}
+        {% endblock %}
+        </div>
+        <div class="span2" style="">
+        {% block topright %}
           <div class="fb-like" data-href="{{SITE_HOME}}{{request.path}}" data-send="true" data-layout="button_count" data-width="120" data-show-faces="true"></div>
+        {% endblock %}
         </div>
       </div>
-      {% endblock social_buttons %}
+      
+      <!-- main -->
       <div class="row-fluid">
         <div class="span1">
         </div><!--/span-->
         <div class="span10">
+          {% if show_alert %}
+          {% include show_alert %}
+          {% endif %}
 
-{% if show_alert %}
-{% include show_alert %}
-{% endif %}
-
-        {% block mainContent %}
-          <p> put some content here </p>
-        {% endblock %}
+          {% block mainContent %}
+            <p> put some content here </p>
+          {% endblock %}
         </div><!--/span-->
 
         <div class="span1">
         </div>
       </div><!--/row-->
 
+
+    </div>
+
       <hr>
 
-      <footer style="width:600px;">
-        <p style="">© FreedomSponsors 2012 
-          | <a target="_about" href="http://blog.freedomsponsors.org/about">About</a> 
-          | <a target="_about" href="http://blog.freedomsponsors.org/faq">FAQ</a>
-          | <a target="_about" href="http://blog.freedomsponsors.org/developers">Developers</a>
-          | <a href="/core/feedback">Feedback</a>
-          | <a href="/core/project">Project list</a>
-          | <a href="http://www.facebook.com/freedomsponsors" target="_facebook">Facebook</a>
-          | <a href="http://www.twitter.com/freedomsponsors" target="_twitter">Twitter</a>
-        </p>
-      </footer>
+      <div class="navbar navbar-fixed-bottom" style="height: 30px">
+        <div class="navbar-inner">
+          <div class="container-fluid">
+            <div class="row-fluid" style="">
+              <div class="span1"></div>
+              <div class="span10">
+                <p style="text-align:center">© FreedomSponsors 2012 
+                  | <a target="_about" href="http://blog.freedomsponsors.org/about">About</a> 
+                  | <a target="_about" href="http://blog.freedomsponsors.org/faq">FAQ</a>
+                  | <a target="_about" href="http://blog.freedomsponsors.org/developers">Developers</a>
+                  | <a href="/core/feedback">Feedback</a>
+                  | <a href="/core/project">Project list</a>
+                  | <a href="http://www.facebook.com/freedomsponsors" target="_facebook">Facebook</a>
+                  | <a href="http://www.twitter.com/freedomsponsors" target="_twitter">Twitter</a>
+                </p>
+              </div>
+              <div class="span1"></div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="modal_ajax"></div>
     </div><!--/.fluid-container-->
 

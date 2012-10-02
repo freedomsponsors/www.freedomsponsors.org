@@ -1,55 +1,75 @@
 {% extends "core/base.html" %}
+
+{% block topmiddle %}
+          <!-- logo / slogan -->
+          <div style="margin: 0 auto; width:600px;">
+            <div> <img src="/static/img/FS_horizontal_logo_colored_482.png"> </div>
+            <div style="margin-top:30px">
+              <span class="slogan">Crowdfunding Free Software, one issue at a time</span> 
+            </div>
+            <div>
+              <span class="introductionText">Place money bounties for open source projects <strong>issues</strong>. <a target="_about" href="http://blog.freedomsponsors.org/about">Learn more...</a></span>
+            </div>
+          </div>
+{% endblock %}
+
 {% block mainContent%}
 
-
-    <div class="container-fluid" style="margin-left: auto; margin-right: auto; width: 873px;">
-      <div class="row">
-        <div class="span2">
-          <img src="static/img/FS_logo_home.png" >
-        </div>
-        <div class="span10">
-          <div class="sloganPai">
-            <span class="slogan">Crowdfunding Free Software, one issue at a time</span> 
+    <!-- miniform sponsor/kickstart -->
+    <div style="margin-top:30px;">
+      <form class="well form-inline" style="width:600px;margin: 0 auto;">
+        <legend>Sponsor/Kickstart a new issue</legend>
+        <label>Issue URL</label>
+        <input type="text" class="input-xlarge" placeholder="Paste the issue URL">
+            <button id="btnSponsor" class="btn btn-primary ">Kickstart &gt;&gt;</button> 
+            <button id="btnKickstart" class="btn btn-primary ">Sponsor &gt;&gt;</button>
+        <div class="btn-toolbar">
+          <div class="btn-group pull-right">
           </div>
-          <div class="introductionText" style="font-size:16px;">
-            Place money bounties for open source projects <strong>issues</strong>. <a target="_about" href="http://blog.freedomsponsors.org/about">Learn more...</a>
+          <div class="btn-group pull-right" style="margin-left:10px;">
           </div>
         </div>
-      </div>
+      </form>
     </div>
-    <!-- Slogan + texto -->
 
+    <!-- two tables -->
     <hr class="center">
+        <div class="row">
+          <div class="span6" style="">
 
-    <!-- top issues -->
-    <div class="container-fluid" style="margin-left: auto; margin-right: auto; width: 800px;">
-      <h2>Latest Issues</h2>
-      <div class="topIssues">
-        <table>
-          {% for issue in issues %}
-          <tr class="topIssuesItens">
-            <td class="favoriteIssues">&nbsp;&nbsp;{{forloop.counter}}.</td>
-            <td class="favoriteIssuesDollar">$</td>
-            <td class="favoriteIssues">{{issue.getTotalOffersPrice_displayString}}</td>
-            <td>&nbsp;</td>
-            <!-- <td><a href="{{issue.createdByUser.get_view_link}}"><img src="{{issue.createdByUser.gravatar_url_medium}}"> {{ issue.createdByUser.getUserInfo.screenName }}</a></td> -->
-            <td class="favoriteIssuesDescricao"><a href="{{issue.get_view_link}}" >{{issue}}</a></td>
-          </tr>
-          {% endfor %}
+            <!-- left = sponsored -->
+            <h2>Sponsored</h2>
+            <table><tbody>
+              {% for issue in issues_sponsoring %}
+              <tr>
+                <td class="hometablecell" style="width:30px">{{forloop.counter}}.</td>
+                <td class="hometablecell" style="width:70px">$ {{issue.getTotalOffersPrice_displayString}}</td>
+                <td class="hometablecell"><a href="{{issue.get_view_link}}" >{{issue}}</a></td>
+              </tr>
+              {% endfor %}
+              
+            </tbody></table>
+            <div class="">
+              <a href="/core/issue">More...</a>
+            </div>
 
+          </div>
+          <div class="span6" style="">
 
-
-        </table>
-        <div class="pull-right">
-          <a href="/core/issue">More...</a>
+            <!-- left = kickstarting -->
+            <h2>Kickstarting</h2>
+            <table><tbody>
+              {% for issue in issues_kickstarting %}
+              <tr>
+                <td class="hometablecell" style="width:30px">{{forloop.counter}}.</td>
+                <td class="hometablecell"><a href="{{issue.get_view_link}}" >{{issue}}</a></td>
+              </tr>
+              {% endfor %}
+            </tbody></table>
+            <div class="">
+              <a href="/core/issue">More...</a>
+            </div>
+          </div>
         </div>
-        <br />
-        <br />
-
-      </div> <!--/.topIssues -->
-    </div>
-    <br /><br />
-
-
 
 {% endblock mainContent%}
