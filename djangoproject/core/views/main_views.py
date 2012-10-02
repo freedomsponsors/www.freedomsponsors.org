@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import logout as auth_logout
 from django.template import  RequestContext
 from django.shortcuts import render_to_response, redirect
-from core.models import *
+from core.services import issue_services
 from core.utils.frespo_utils import  dictOrEmpty
 from core.services.mail_services import *
 from django.contrib import messages
@@ -56,7 +56,7 @@ def admail(request):
 def home(request):
     if(request.user.is_authenticated() and request.user.getUserInfo() == None):
         return redirect('/core/user/edit')
-    issues = Issue.listIssues()[0:30]
+    issues = issue_services.search_issues()[0:30]
     return render_to_response('core/home.html',
         {'issues':issues},
         context_instance = RequestContext(request))

@@ -15,7 +15,7 @@ __author__ = 'tony'
 @login_required
 def addIssue(request):
     try:
-        offer = issue_services.add_new_issue_and_offer(request.POST, request.user)
+        offer = issue_services.sponsor_new_issue(request.POST, request.user)
     except BaseException as ex:
         return HttpResponse("ERROR: "+ex.message)
     params = '?a=s'
@@ -27,7 +27,7 @@ def addIssue(request):
 @login_required
 def kickstartIssue(request):
     try:
-        issue = issue_services.add_new_issue(request.POST, request.user)
+        issue = issue_services.kickstart_new_issue(request.POST, request.user)
     except BaseException as ex:
         return HttpResponse("ERROR: "+ex.message)
 

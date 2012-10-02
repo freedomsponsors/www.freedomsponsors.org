@@ -234,10 +234,6 @@ class Issue(models.Model):
         issue.is_feedback = True
         return issue
 
-    @classmethod
-    def listIssues(cls):
-        return Issue.objects.filter(is_feedback=False).order_by('-creationDate')
-
     def getTotalOffersPrice(self):
         offers = Offer.objects.filter(issue=self,status=Offer.OPEN)
         s = Decimal(0)

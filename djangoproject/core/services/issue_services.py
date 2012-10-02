@@ -10,8 +10,8 @@ logger = logging.getLogger(__name__)
 
 __author__ = 'tony'
 
-def search_issues(project_id, project_name, search_terms):
-    issues = Issue.objects.filter(is_feedback=False)
+def search_issues(project_id=None, project_name=None, search_terms='', is_public_suggestion=False):
+    issues = Issue.objects.filter(is_feedback=False, is_public_suggestion=is_public_suggestion)
     if project_id:
         issues = issues.filter(project__id=project_id)
     elif project_name:
@@ -22,7 +22,7 @@ def search_issues(project_id, project_name, search_terms):
     return issues
 
 
-def add_new_issue_and_offer(dict, user):
+def sponsor_new_issue(dict, user):
     offer = _buildOfferFromDictionary(dict, user)
     if(offer.issue.project):
         offer.issue.project.save()
@@ -40,8 +40,9 @@ def add_new_issue_and_offer(dict, user):
     notify_admin("INFO: New issue sponsored", msg)
     return offer
 
-def add_new_issue(dict, user):
+def kickstart_new_issue(dict, user):
     issue = _buildIssueFromDictionary(dict, user);
+    issue.is_public_suggestion = True
     if(issue.project):
         issue.project.save()
         issue.project = issue.project
