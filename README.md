@@ -54,9 +54,9 @@ Also, there is a fully-functional test-environment at http://ambtest.freedomspon
 Feel free to use it as you like (might be useful when reading the code!). We provide no guarantee about the data on it though!
 
 
-# 6. Troubleshooting
+### Troubleshooting
 
-## django.contrib.sites.models.DoesNotExist: Site matching query does not exist.
+#### django.contrib.sites.models.DoesNotExist: Site matching query does not exist.
 
 If when you execute ./migrate.sh you get errors that include 
 "Site matching query does not exist", you can try the following to fix it:
@@ -72,7 +72,7 @@ If when you execute ./migrate.sh you get errors that include
 
 Then re-run ./migrate.sh, and the error must have gone away.
 
-## missing psycopg2 module 
+#### missing psycopg2 module 
 
 If you receive error messages regarding psycopg2, try the following: 
 
