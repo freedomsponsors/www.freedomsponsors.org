@@ -63,6 +63,9 @@ def sponsor_existing_issue(issue_id, dict, user):
     _throwIfAlreadySponsoring(issue, user)
     offer = _buildOfferFromDictionary_and_issue(dict, user, issue);
     offer.save()
+    if issue.is_public_suggestion:
+        issue.is_public_suggestion = False
+        issue.save()
     notifyProgrammers_offeradded(offer)
     notifySponsors_offeradded(offer)
     msg = "offer: " + str(offer.price) + "\n<br>" +\

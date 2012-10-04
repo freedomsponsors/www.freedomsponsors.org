@@ -62,12 +62,19 @@ def listIssues(request):
     project_id = request.GET.get('project_id')
     project_name = request.GET.get('project_name')
     search_terms = request.GET.get('s')
-    issues = issue_services.search_issues(project_id, project_name, search_terms)
+    operation = dictOrEmpty(request.GET, 'operation')
+    is_public_suggestion = None
+    if(operation == 'SPONSOR'):
+        is_public_suggestion = False
+    elif(operation == 'KICKSTART'):
+        is_public_suggestion = True
+    issues = issue_services.search_issues(project_id, project_name, search_terms, is_public_suggestion)
     return render_to_response('core/issue_list.html',
         {'issues':issues,
          's':search_terms,
          'project_id':project_id,
          'project_name':project_name,
+         'operation':operation,
         },
         context_instance = RequestContext(request))
 

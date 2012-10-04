@@ -2,19 +2,48 @@
 
 {% block mainContent%}
 
-<form method="get" class="well">
-  <div class="form-inline">
-    <div class="span4">
-      <input type="text" name="s" value="{{s|default:''}}" class="search-query span12" placeholder="Search terms">
+<form method="get">
+  <div class="well">
+    <div class="row">
+      <div class="span4" style="margin-left:20px">
+        <input type="text" class="search-query" style="width:100%" name="s" value="{{s|default:''}}" placeholder="Search terms">
+      </div>
+      <div class="span3" style="">
+        {% include 'core/generic_typeahead.html' with placeholder="Filter By Project" ajaxpath="/core/json/project?query=" name="project_" hval=project_id tval=project_name tclass="search-query span12" %}
+      </div>
     </div>
-    <div class="span3">
-      {% include 'core/generic_typeahead.html' with placeholder="Filter By Project" ajaxpath="/core/json/project?query=" name="project_" hval=project_id tval=project_name tclass="search-query span12" %}
-    </div>
-    <div class="span3">
-      <input type="submit" value="Search">
+    <div class="row" style="margin-top:10px;">
+      <div class="span1 form-inline" style="margin-left:20px;width:95px">
+        <input type="radio" id="rad_sponsoring" name="operation" value="SPONSOR" style="margin-bottom:6px" 
+          {% ifequal operation 'SPONSOR'%}
+          checked
+          {% endifequal %}
+        >
+        <label for="rad_sponsoring">Sponsoring</label>
+      </div>
+      <div class="span1 form-inline" style="width:95px">
+        <input type="radio" id="rad_kickstarting" name="operation" value="KICKSTART" style="margin-bottom:6px"
+          {% ifequal operation 'KICKSTART'%}
+          checked
+          {% endifequal %}
+        >
+        <label for="rad_kickstarting">Kickstarting</label>
+      </div>
+      <div class="span1 form-inline" style="">
+        <input type="radio" id="rad_both" name="operation" value="BOTH" style="margin-bottom:6px"
+          {% ifequal operation 'BOTH'%}
+          checked
+          {% endifequal %}
+        >
+        <label for="rad_both">Both</label>
+      </div>
+      <div class="span1" style="">
+        <input type="submit" style="width:100px" value="Search">
+      </div>
     </div>
   </div>
 </form>
+
 <hr>
 
 {% if issues %}
