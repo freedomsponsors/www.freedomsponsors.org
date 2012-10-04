@@ -17,12 +17,15 @@
 
     <!-- miniform sponsor/kickstart -->
     <div style="margin-top:30px;">
-      <form class="well form-inline" style="width:600px;margin: 0 auto;">
+      <form class="well form-inline" id="the_form" method="GET" action="/core/issue/add" style="width:600px;margin: 0 auto;">
         <legend>Sponsor/Kickstart a new issue</legend>
         <label>Issue URL</label>
-        <input type="text" class="input-xlarge" placeholder="Paste the issue URL">
-            <button id="btnSponsor" class="btn btn-primary ">Kickstart &gt;&gt;</button> 
-            <button id="btnKickstart" class="btn btn-primary ">Sponsor &gt;&gt;</button>
+        <input type="text" name="trackerURL" id="trackerURL" class="input-xlarge" placeholder="Paste the issue URL">
+        <input type="hidden" name="operation" id="operation">
+        <button id="btnKickstart" class="btn btn-primary ">Kickstart &gt;&gt;
+          <i class="icon-question-sign icon-white popopo" rel="popover" data-content="Create an issue without an offer, just to draw everyone's attention to it. See more in the FAQ!" data-original-title="What's this?"></i>
+        </button> 
+        <button id="btnSponsor" class="btn btn-primary ">Sponsor &gt;&gt;</button>
         <div class="btn-toolbar">
           <div class="btn-group pull-right">
           </div>
@@ -31,6 +34,54 @@
         </div>
       </form>
     </div>
+    <script>
+      $(function(){
+        var $trackerURL = $('#trackerURL');
+        var _trackerURL = document.getElementById('trackerURL');
+        var $operation = $('#operation');
+        var _the_form = document.getElementById('the_form');
+        var _btnSponsor = document.getElementById('btnSponsor');
+        var _btnKickstart = document.getElementById('btnKickstart');
+
+        var validate_form = function(){
+          var urlVal = $trackerURL.val();
+          if(!urlVal){
+            alert('Please type an issue URL');
+            return false;
+          }
+          return true;
+        }
+
+        var sponsor_onclick = function(){
+          if(validate_form()){
+            $operation.val('SPONSOR')
+            _the_form.submit();
+          }
+          return false;
+        };
+
+        var kickstart_onclick = function(){
+          if(validate_form()){
+            $operation.val('KICKSTART')
+            _the_form.submit();
+          }
+          return false;
+        };
+
+        var trackerURL_onkeypress = function(event){
+          if(event.keyCode == 13){
+            sponsor_onclick();
+          }
+          return event.keyCode != 13;
+        }; 
+
+        _btnSponsor.onclick = sponsor_onclick;
+        _btnKickstart.onclick = kickstart_onclick;
+        _trackerURL.onkeypress = trackerURL_onkeypress; //desabilita o enter
+
+        $('.popopo').popover({trigger:'hover'});
+      })
+    </script>
 
     <!-- two tables -->
     <hr class="center">

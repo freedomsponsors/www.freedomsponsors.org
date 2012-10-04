@@ -163,6 +163,7 @@ def viewOffer(request, offer_id):
 @login_required
 def addIssueForm(request):
     trackerURL = dictOrEmpty(request.GET, 'trackerURL')
+    operation = dictOrEmpty(request.GET, 'operation')
     if(trackerURL):
         issues = Issue.objects.filter(trackerURL__iexact=trackerURL)
         issue_already_exists = issues.count() >= 1
@@ -172,7 +173,8 @@ def addIssueForm(request):
             return redirect(issues[0].get_view_link()+'?show_sponsor=true&c=s')
 
     return render_to_response('core/add_issue.html',
-        {'trackerURL' : trackerURL},
+        {'trackerURL' : trackerURL,
+        'operation' : operation},
         context_instance = RequestContext(request))
 
 

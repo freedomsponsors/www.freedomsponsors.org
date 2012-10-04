@@ -252,6 +252,7 @@
       issueAvulsa : false,
       existing_issue_id : null,
       preloaded_trackerURL : '{{trackerURL}}',
+      preloaded_operation : '{{operation}}',
 
       has_project_id : function(){
         return !!this.issueInfo.project_id;
@@ -640,7 +641,13 @@
 
     if(stage.preloaded_trackerURL){
       $trackerURL.val(stage.preloaded_trackerURL);
-      next1_onclick();
+      if(stage.preloaded_operation){
+        if(stage.preloaded_operation == 'SPONSOR'){
+          next1_onclick();
+        } else if(stage.preloaded_operation == 'KICKSTART'){
+          kickstart1_onclick();
+        }
+      }
     }
   });
 
