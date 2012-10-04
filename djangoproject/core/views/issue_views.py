@@ -18,7 +18,7 @@ def addIssue(request):
         offer = issue_services.sponsor_new_issue(request.POST, request.user)
     except BaseException as ex:
         return HttpResponse("ERROR: "+ex.message)
-    params = '?a=s'
+    params = '?alert=SPONSOR'
     if(dictOrEmpty(request.POST, 'invoke_parent_callback') == 'true'):
         params += '&c=s' # c = Callback (iframe javascript callback)
 
@@ -31,7 +31,8 @@ def kickstartIssue(request):
     except BaseException as ex:
         return HttpResponse("ERROR: "+ex.message)
 
-    return redirect(issue.get_view_link())
+    params= '?alert=KICKSTART'
+    return redirect(issue.get_view_link()+params)
 
 
 @login_required
@@ -124,12 +125,16 @@ def viewIssue(request, issue_id):
     issue = Issue.objects.get(pk=issue_id)
     myoffer = None
     mysolution = None
+    show_alert = None
 
     if(request.user.is_authenticated()):
         myoffer = get_or_none(Offer, issue=issue,sponsor=request.user)
         mysolution = get_or_none(Solution, issue=issue,programmer=request.user)
 
     show_sponsor_popup = (dictOrEmpty(request.GET, 'show_sponsor') == 'true')
+    alert = dictOrEmpty(request.GET, 'alert')
+    if(alert == 'KICKSTART'):
+        show_alert = 'core/popup_just_kickstarted.html'
     invoke_parent_callback = (dictOrEmpty(request.GET, 'c') == 's')
 
     return render_to_response('core/issue.html',
@@ -137,7 +142,8 @@ def viewIssue(request, issue_id):
         'myoffer':myoffer,
         'mysolution':mysolution,
         'invoke_parent_callback' : invoke_parent_callback,
-        'show_sponsor_popup' : show_sponsor_popup},
+        'show_sponsor_popup' : show_sponsor_popup,
+        'show_alert' : show_alert},
 
         context_instance = RequestContext(request))
 
@@ -152,8 +158,8 @@ def viewOffer(request, offer_id):
         mysolution = get_or_none(Solution, issue=offer.issue,programmer=request.user)
         myoffer = get_or_none(Offer, issue=offer.issue,sponsor=request.user)
 
-    a = dictOrEmpty(request.GET, 'a')
-    if(a == 's' and offer.issue.project):
+    alert = dictOrEmpty(request.GET, 'alert')
+    if(alert == 'SPONSOR' and offer.issue.project):
         show_alert = 'core/popup_just_sponsored.html'
     invoke_parent_callback = (dictOrEmpty(request.GET, 'c') == 's')
 

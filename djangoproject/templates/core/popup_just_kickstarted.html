@@ -1,0 +1,33 @@
+<div class="modal hide fade in" id="alert_modal">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">×</button>
+    <h3 id="offerDataFormModal_title">Kickstarting! Now what?</h3>
+  </div>
+  <div class="modal-body">
+    {% if issue.project %}
+      <p>You are kickstarting this issue on FreedomSponsors, but the stakeholders of the <a href="{{issue.trackerURL}}" target="_issue">original issue</a> 
+        probably don't know about it. To get people to place bounties here, they must know that they can!</p>
+      <p>A good way to make that happen is to drop a comment there telling about FreedomSponsors.<br>
+        Of course, you can talk about in other forums too.<br/>
+        Go ahead and copy the text below if you like:</p>
+      <div class="alert alert-info">
+        <p> Hi everyone. I registered this issue in the "kickstarting" section on FreedomSponsors.
+          This means that if you need this issue that bad, you can go to <a href="{{SITE_HOME}}{{issue.get_view_link}}">{{SITE_HOME}}{{issue.get_view_link}}</a> and offer a few bucks for it.
+        </p>
+      </div>
+    {% else %}
+      <p>You are kickstarting this issue on FreedomSponsors, now you need to tell the world about it!</p>
+      <p>Here's the link for this issue: <a href="{{SITE_HOME}}{{issue.get_view_link}}">{{SITE_HOME}}{{issue.get_view_link}})</a>.<br>
+        Go ahead and tell everyone about it! ^_^<br/>
+    {% endif %}
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn btn-primary" data-dismiss="modal">OK</a>
+  </div>
+</div>
+
+<script>
+  $(function(){
+    $('#alert_modal').modal()
+  });
+</script>
