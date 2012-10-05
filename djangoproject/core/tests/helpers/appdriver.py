@@ -227,7 +227,9 @@ class AppDriver:
             _waitAndCheck(browser, 'no_forking', offerdata.no_forking)
         if(offerdatadict.has_key('require_release')):
             _waitAndCheck(browser, 'require_release', offerdata.require_release)
-        browser.find_by_id('btnSubmitOffer').click()
+        btnSubmit = browser.find_by_id('btnSubmitOffer')
+        _scrollTo(browser, btnSubmit)
+        btnSubmit.click()
 
 
     def editCurrentOffer(self, price=None, acceptanceCriteria=None, no_forking=None, 
@@ -322,6 +324,9 @@ def _waitUntilVisible_element(element):
         _waitUntilTrue(lambda : element.visible)
     except TimeOutException:
         raise BaseException('Timeout waiting for element to become visible: '+str(element))
+
+def _scrollTo(browser, element):
+    browser.execute_script("window.scrollTo(0, %s);" % element.Location.Y);
 
 def _waitUntilTextPresent(browser, text, timeout=TIMEOUT):
     try:

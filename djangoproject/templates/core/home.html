@@ -23,7 +23,7 @@
         <input type="text" name="trackerURL" id="trackerURL" class="input-xlarge" placeholder="Paste the issue URL">
         <input type="hidden" name="operation" id="operation">
         <button id="btnKickstart" class="btn btn-primary ">Kickstart &gt;&gt;
-          <i class="icon-question-sign icon-white popopo" rel="popover" data-content="Create an issue without an offer, just to draw everyone's attention to it. See more in the FAQ!" data-original-title="What's this?"></i>
+          <i class="icon-question-sign icon-white popopo_stay" rel="popover" data-content="Create an issue without an offer, just to draw everyone's attention to it. See more in <a href='http://blog.freedomsponsors.org/kickstarting-issues/'>the blog</a>!" data-original-title="What's this?"></i>
         </button> 
         <button id="btnSponsor" class="btn btn-primary ">Sponsor &gt;&gt;</button>
         <div class="btn-toolbar">
@@ -79,7 +79,6 @@
         _btnKickstart.onclick = kickstart_onclick;
         _trackerURL.onkeypress = trackerURL_onkeypress; //desabilita o enter
 
-        $('.popopo').popover({trigger:'hover'});
       })
     </script>
 
