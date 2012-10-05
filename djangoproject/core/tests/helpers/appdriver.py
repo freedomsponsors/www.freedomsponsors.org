@@ -87,6 +87,7 @@ class AppDriver:
         browser = self.browser
         browser.visit(self.home_url+'/core/issue/sponsor?trackerURL='+trackerURL)
         offer = Struct(**offer_dict)
+        browser.find_by_id('btnNext1').click()
         if(offer_dict.has_key('step2')):
             _waitUntilVisible_id(browser, 'div_step2_w')
             self._fillStep2(offer.step2)

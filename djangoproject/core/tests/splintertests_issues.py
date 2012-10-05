@@ -7,7 +7,7 @@ from core.management.commands.loadProjects import add_initial_projects
 from helpers import testdata as td
 from helpers.appdriver import AppDriver
 
-waitifbreak = 100
+waitifbreak = 1
 
 __author__ = 'tony'
 
