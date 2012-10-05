@@ -7,3 +7,5 @@ fakeMail
 logs
 chromedriver.log
 .idea
+.coverage
+report.xml
