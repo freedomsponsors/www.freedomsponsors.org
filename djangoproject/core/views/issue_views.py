@@ -117,7 +117,7 @@ def sponsorIssue(request):
     if(invoke_parent_callback == 'true'):
         params = '?c=s' # c = Callback (iframe javascript callback)
     else:
-        params = '?a=s' # a = Alert
+        params = '?alert=SPONSOR' # a = Alert
     return redirect(offer.get_view_link()+params)
 
 
