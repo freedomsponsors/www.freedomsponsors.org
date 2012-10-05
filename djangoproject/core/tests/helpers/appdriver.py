@@ -83,7 +83,7 @@ class AppDriver:
         browser.find_by_id('submit_login_plain').click()
 
 
-    def sponsor_issue(self, trackerURL, offer_dict):
+    def sponsor_issue_from_plugin(self, trackerURL, offer_dict):
         browser = self.browser
         browser.visit(self.home_url+'/core/issue/sponsor?trackerURL='+trackerURL)
         offer = Struct(**offer_dict)
@@ -106,10 +106,10 @@ class AppDriver:
             assert('congratulations' in alert.text)
             alert.accept()
 
-    def addOffer(self, offer_dict):
+    def sponsorOrKickstartIssue_from_newIssuePage(self, offer_dict, kickstarting = False):
         browser = self.browser
         offer = Struct(**offer_dict)
-        
+
         browser.click_link_by_href('/core/issue/add')
         if(offer_dict.has_key('step1')):
             step1 = Struct(**offer.step1)
@@ -117,19 +117,28 @@ class AppDriver:
                 _waitAndFill(browser, 'trackerURL', step1.trackerURL)
             if(offer.step1.has_key('noProject')):
                 _waitAndCheck(browser, 'noProject', step1.noProject)
-            browser.find_by_id('btnNext1').click()
+            if kickstarting:
+                browser.find_by_id('btnKickstart1').click()
+            else:
+                browser.find_by_id('btnNext1').click()
         if(offer_dict.has_key('step2')):
             _waitUntilVisible_id(browser, 'div_step2_w')
             self._fillStep2(offer.step2)
         if(offer_dict.has_key('step3')):
             _waitUntilVisible_id(browser, 'div_step3_w')
             self._fillStep3(offer.step3)
-        if(offer_dict.has_key('step4')):
+        if kickstarting:
             _waitUntilVisible_id(browser, 'div_step4_w')
-            self._fillOfferForm(offer.step4)
-        if(offer.step1.has_key('trackerURL')):
-            assert(browser.is_text_present("You're almost done"))
+            browser.find_by_id('btnSubmitKickstart').click()
+            assert(browser.is_text_present("Kickstarting! Now what?"))
             browser.click_link_by_text('OK')
+        else:
+            if(offer_dict.has_key('step4')):
+                _waitUntilVisible_id(browser, 'div_step4_w')
+                self._fillOfferForm(offer.step4)
+            if(offer.step1.has_key('trackerURL')):
+                assert(browser.is_text_present("You're almost done"))
+                browser.click_link_by_text('OK')
 
     def _fillStep2(self, step2dict):
         browser = self.browser

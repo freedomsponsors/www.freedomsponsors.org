@@ -79,7 +79,7 @@ class SoloUserIssueTests(FrespoSplinterTestCase):
         self.app.login_plain(td.userDict1)
         try:
             offerDict = td.buildDefaultOfferDict14('https://hibernate.onjira.com/browse/HHH-1052')
-            self.app.addOffer(offerDict)
+            self.app.sponsorOrKickstartIssue_from_newIssuePage(offerDict)
             assert(self.app.is_text_present('[ Offer ] US$ 10.00 for issue - Allow CalendarType.set to accept Date objects'))
             self.app.followIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
             self.app.followOfferLinkByValue(offerDict['step4']['price'])
@@ -88,13 +88,13 @@ class SoloUserIssueTests(FrespoSplinterTestCase):
             sleep(waitifbreak)
             raise
 
-    def test_splinter_sponsor_jira_HHH0152(self):
+    def test_splinter_sponsor_jira_HHH0152_from_plugin(self):
         add_initial_projects()
         self.app.login_plain(td.userDict1)
         try:
             offerDict = td.buildDefaultOfferDict14('https://hibernate.onjira.com/browse/HHH-1052')
             del offerDict['step1']
-            self.app.sponsor_issue('https://hibernate.onjira.com/browse/HHH-1052', offerDict)
+            self.app.sponsor_issue_from_plugin('https://hibernate.onjira.com/browse/HHH-1052', offerDict)
             assert(self.app.is_text_present('[ Offer ] US$ 10.00 for issue - Allow CalendarType.set to accept Date objects'))
             self.app.followIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
             self.app.followOfferLinkByValue(offerDict['step4']['price'])
@@ -103,6 +103,20 @@ class SoloUserIssueTests(FrespoSplinterTestCase):
             sleep(waitifbreak)
             raise
 
+    def test_splinter_kickstart_jira_HHH0152_from_addNewIssuePage(self):
+        add_initial_projects()
+        self.app.login_plain(td.userDict1)
+        try:
+            offerDict = td.buildDefaultOfferDict14('https://hibernate.onjira.com/browse/HHH-1052')
+            del offerDict['step4']
+            self.app.sponsorOrKickstartIssue_from_newIssuePage(offerDict, kickstarting=True)
+            assert(self.app.is_text_present('Allow CalendarType.set to accept Date objects'))
+            self.app.followIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
+#            self.app.followOfferLinkByValue(offerDict['step4']['price'])
+        except:
+            traceback.print_exc()
+            sleep(waitifbreak)
+            raise
 
     def test_splinter_add_issue_HHH_1052_with_empty_db(self):
         frespoProject(frespoUser())
@@ -112,7 +126,7 @@ class SoloUserIssueTests(FrespoSplinterTestCase):
             assert(not self.app.is_text_present('Hibernate'))
             offerDict = td.buildDefaultOfferDict134(trackerURL='https://hibernate.onjira.com/browse/HHH-1052',
                 newProjectHomeURL='http://www.hibernate.org/')
-            self.app.addOffer(offerDict)
+            self.app.sponsorOrKickstartIssue_from_newIssuePage(offerDict)
             assert(self.app.is_text_present('[ Offer ] US$ 10.00 for issue - Allow CalendarType.set to accept Date objects'))
             self.app.followIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
             self.app.followOfferLinkByValue(offerDict['step4']['price'])
@@ -135,7 +149,7 @@ class SoloUserIssueTests(FrespoSplinterTestCase):
                 newProjectName='Hibernatis',
                 newProjectHomeURL='http://www.hibernate.org/',
                 newProjectTrackerURL='https://hibernate.onjira.com/browse/OH404')
-            self.app.addOffer(offerDict)
+            self.app.sponsorOrKickstartIssue_from_newIssuePage(offerDict)
             assert(self.app.is_text_present('[ Offer ] US$ 10.00 for issue - This issue does not exist anywhere'))
             self.app.followIssueLinkOnHomeByTitle('This issue does not exist anywhere')
             self.app.followOfferLinkByValue(offerDict['step4']['price'])
@@ -159,7 +173,7 @@ class SoloUserIssueTests(FrespoSplinterTestCase):
                 newProjectName='Hibernatis',
                 newProjectHomeURL='http://www.hibernate.org/',
                 newProjectTrackerURL='https://hibernate.onjira.com/browse/OH404')
-            self.app.addOffer(offerDict)
+            self.app.sponsorOrKickstartIssue_from_newIssuePage(offerDict)
             assert(self.app.is_text_present('[ Offer ] US$ 10.00 for issue - This issue is on an unreachable tracker'))
             self.app.followIssueLinkOnHomeByTitle('This issue is on an unreachable tracker')
             self.app.followOfferLinkByValue(offerDict['step4']['price'])
@@ -176,7 +190,7 @@ class SoloUserIssueTests(FrespoSplinterTestCase):
         self.app.login_plain(td.userDict1)
         try:
             offerDict = td.buildOfferDictAvulsa()
-            self.app.addOffer(offerDict)
+            self.app.sponsorOrKickstartIssue_from_newIssuePage(offerDict)
             assert(self.app.is_text_present('[ Offer ] US$ 10.00 for issue - Build me a teleporting machine'))
             self.app.followIssueLinkOnHomeByTitle('Build me a teleporting machine')
             self.app.followOfferLinkByValue(offerDict['step4']['price'])
