@@ -200,6 +200,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
     'core',
+    'core_splinter_tests',
 #    'bootstrap-pagination'
     'pagination',
     'social_auth',

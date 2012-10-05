@@ -228,7 +228,7 @@ class AppDriver:
         if(offerdatadict.has_key('require_release')):
             _waitAndCheck(browser, 'require_release', offerdata.require_release)
         btnSubmit = browser.find_by_id('btnSubmitOffer')
-        _scrollTo(browser, btnSubmit)
+        _scrollTo(browser, 'btnSubmitOffer')
         btnSubmit.click()
 
 
@@ -325,8 +325,8 @@ def _waitUntilVisible_element(element):
     except TimeOutException:
         raise BaseException('Timeout waiting for element to become visible: '+str(element))
 
-def _scrollTo(browser, element):
-    browser.execute_script("window.scrollTo(0, %s);" % element.Location.Y);
+def _scrollTo(browser, element_id):
+    browser.execute_script('window.scrollTo(0, document.getElementById("%s").scrollTop);'%element_id);
 
 def _waitUntilTextPresent(browser, text, timeout=TIMEOUT):
     try:
