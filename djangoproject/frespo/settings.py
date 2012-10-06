@@ -6,7 +6,6 @@ import env_settings
 
 FS_FEE = Decimal('0.03')
 
-
 DEBUG = env_settings.DEBUG
 FRESPO_PROJECT_ID = -1 # only needed for backwards compatibility with south patch 0008_set_isfeedback_true.py
 TEST_GMAIL_ACCOUNT_1 = env_settings.TEST_GMAIL_ACCOUNT_1
