@@ -4,4 +4,5 @@
 coverage -e
 coverage -x manage.py test core --settings=frespo.test_settings
 coverage -r -m > report.xml
-coverage html '--include=core/*'
+rm -Rf coverage_html_report
+coverage html '--include=core/*' '--omit=core/migrations/*'
