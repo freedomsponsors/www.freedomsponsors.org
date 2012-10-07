@@ -1,6 +1,5 @@
 from decimal import Decimal
 from core.services.mail_services import *
-from core.services.mail_services import notifyProgrammers_offerrevoked, notifySponsors_workdone, notifyProgrammers_workdone, notify_admin
 from core.utils.frespo_utils import dictOrEmpty, validateURL, validateIssueURL, get_or_none
 from core.models import Issue, Project, Offer, Solution, IssueComment, OfferComment
 from core.utils.trackers_adapter import fetchIssueInfo

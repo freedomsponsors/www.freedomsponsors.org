@@ -1,4 +1,7 @@
 from urlparse import urlparse
+from decimal import Decimal
+
+_TWOPLACES = Decimal(10) ** -2
 
 socialImages = {'google' : '/static/img/google.gif',
     'yahoo':'/static/img/yahoo.gif',
@@ -39,6 +42,11 @@ def dictOrEmpty(dict, key):
         return dict[key]
     return ''
 
+#TODO: use this in a bunch of places (needed because sql doesn't store the .00 Decimal places - and this breaks a few tests)
+def twoplaces(dec):
+    return dec.quantize(_TWOPLACES)
+
 class Struct:
     def __init__(self, **entries): 
         self.__dict__.update(entries)
+

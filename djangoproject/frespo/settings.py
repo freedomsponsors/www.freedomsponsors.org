@@ -3,6 +3,7 @@ import os
 from decimal import Decimal
 import sys
 import env_settings
+import manage
 
 FS_FEE = Decimal('0.03')
 
@@ -20,16 +21,27 @@ SKIP_GOOGLE_TESTS = env_settings.SKIP_GOOGLE_TESTS
 TEMPLATE_DEBUG = DEBUG
 MANAGERS = ADMINS
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': DATABASE_NAME,                      # Or path to database file if using sqlite3.
-        'USER': DATABASE_USER,                      # Not used with sqlite3.
-        'PASSWORD': DATABASE_PASS,                  # Not used with sqlite3.
-        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
+#IS_TESTING = os.environ['IS_TESTING'] == 'true'
+IS_TESTING = 'test' == sys.argv[1]
+
+if IS_TESTING:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+            'NAME': 'test_db',                      # Or path to database file if using sqlite3.
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+            'NAME': DATABASE_NAME,                      # Or path to database file if using sqlite3.
+            'USER': DATABASE_USER,                      # Not used with sqlite3.
+            'PASSWORD': DATABASE_PASS,                  # Not used with sqlite3.
+            'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
+            'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
+        }
+    }
 
 # if 'test' in sys.argv:
 #     DATABASES['default'] = {'ENGINE': 'django.db.backends.sqlite3'}
@@ -37,7 +49,7 @@ DATABASES = {
 fakeEmails = env_settings.FAKE_EMAILS
 EMAIL_BACKEND = 'mailer.backend.DbBackend'
 if(fakeEmails):
-    MAILER_EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+    MAILER_EMAIL_BACKEND = env_settings.FAKE_EMAIL_BACKEND
     EMAIL_FILE_PATH = './fakeMail'
 else:
     # EMAIL_BACKEND = 'mailer.backend.DbBackend'
@@ -55,7 +67,7 @@ SITE_HOME = SITE_PROTOCOL+'://'+SITE_HOST
 
 PAYPAL_CANCEL_URL = SITE_HOME+'/core/paypal/cancel'
 PAYPAL_RETURN_URL = SITE_HOME+'/core/paypal/return'
-PAYPAL_IPNNOTIFY_URL = SITE_HOME+'/core/paypal/megablasteripn'
+PAYPAL_IPNNOTIFY_URL = SITE_HOME+env_settings.PAYPAL_IPNNOTIFY_URL
 
 PAYPAL_USE_SANDBOX = env_settings.PAYPAL_USE_SANDBOX
 PAYPAL_DEBUG = False

@@ -1,0 +1,51 @@
+from core.models import *
+from decimal import Decimal
+
+__author__ = 'tony'
+
+def create_dummy_sponsor():
+    user = User.objects.create_user('userone', 'userone@gogogo.com', 'abcdef')
+    userinfo = UserInfo.newUserInfo(user)
+    userinfo.screenName = 'User One'
+    userinfo.realName = 'User One'
+    userinfo.save()
+    return user
+
+def create_dummy_programmer():
+    user = User.objects.create_user('usertwo', 'usertwo@gogogo.com', 'abcdef')
+    userinfo = UserInfo.newUserInfo(user)
+    userinfo.screenName = 'User Two'
+    userinfo.realName = 'User Two'
+    userinfo.save()
+    return user
+
+def create_dummy_project():
+    sponsor = create_dummy_sponsor()
+    project = Project.newProject('Hibernate', sponsor, 'http://www.hibernate.org', 'https://hibernate.onjira.com/')
+    project.save()
+    return project
+
+def create_dummy_issue():
+    project = create_dummy_project()
+    issue = Issue.newIssue(project, 'HHH-1051', 'Compiled native SQL queries are not cached', project.createdByUser, 'https://hibernate.onjira.com/browse/HHH-1051')
+    issue.save()
+    return issue
+
+def create_dummy_offer():
+    issue = create_dummy_issue()
+    offer = Offer.newOffer(issue, issue.createdByUser, Decimal('10.00'), 'comita aih', True, True, None)
+    offer.save()
+    return offer
+
+
+def create_dummy_payment():
+    offer = create_dummy_offer()
+    payment = Payment.newPayment(offer)
+    payment.setPaykey('PK_ABCDEFG')
+    payment.fee = Decimal('0.30')
+    payment.total = Decimal('10.00')
+    payment.save()
+    programmer = create_dummy_programmer()
+    part = PaymentPart.newPart(payment, programmer, Decimal('10.00'), Decimal('9.70'))
+    part.save()
+    return payment

@@ -1,0 +1,12 @@
+{% extends "email/base.html" %}
+{% block mainContent%}
+Hello {{ payment.offer.sponsor.getUserInfo.screenName }}<br>
+Your {{payment.get_currency_symbol}} {{payment.total}} payment has been processed by Paypal.<br><br>
+
+This payment is regarding issue:<br>
+
+<a href="{{SITE_HOME}}{{ payment.offer.issue.get_view_link }}" style="color: #08C;text-decoration: none;cursor: auto;">{{payment.offer.issue.title}}</a><br><br>
+
+Thank you for using FreedomSponsors.<br>
+We will let you know if there are any updates.
+{% endblock mainContent%}

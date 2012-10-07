@@ -1,6 +1,6 @@
 from decimal import Decimal
 from django.conf import settings
-from core.services.mail_services import notifyProgrammers_paymentconfirmed
+from core.services.mail_services import notify_payment_parties_paymentconfirmed
 from core.utils.paypal_adapter import generate_paypal_payment
 from core.utils.frespo_utils import get_or_none
 from core.models import Payment, Offer, Solution, PaymentPart
@@ -50,7 +50,6 @@ def payment_confirmed_web(current_payment_id):
     curr_payment.confirm_web()
     curr_payment.offer.paid()
     msg = 'Payment confirmed'
-    notifyProgrammers_paymentconfirmed(curr_payment) #TODO Mover pro IPN
     return curr_payment, msg
 
 
@@ -61,5 +60,6 @@ def process_ipn_return(paykey, status):
             raise BaseException('payment not found ' + paykey)
         payment.confirm_ipn()
         payment.offer.paid()
+        notify_payment_parties_paymentconfirmed(payment) #TODO Mover pro IPN
     else:
         logger.warn('received a ' + status + ' IPN confirmation')
