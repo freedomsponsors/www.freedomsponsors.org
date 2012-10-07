@@ -23,15 +23,12 @@ MANAGERS = ADMINS
 
 #IS_TESTING = os.environ['IS_TESTING'] == 'true'
 IS_TESTING = 'test' == sys.argv[1]
+use_postgres = True
 
 if IS_TESTING:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-            'NAME': 'test_db',                      # Or path to database file if using sqlite3.
-        }
-    }
-else:
+    use_postgres = os.environ.has_key('TEST_DBMS') and os.environ['TEST_DBMS'] == 'POSTGRES'
+
+if use_postgres:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
@@ -40,6 +37,13 @@ else:
             'PASSWORD': DATABASE_PASS,                  # Not used with sqlite3.
             'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
             'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
+        }
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+            'NAME': 'test_db',                      # Or path to database file if using sqlite3.
         }
     }
 
