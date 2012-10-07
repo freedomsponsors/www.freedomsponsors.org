@@ -18,11 +18,12 @@
   {% if issue.key %}
     {{issue.key}}:
   {% endif %}
-  {{issue.title}} (worth US$ {{issue.getTotalOffersPrice}})</h3>
+  {{issue.title}} (worth US$ {{issue.getTotalOffersPrice}}) 
 {% if issue.trackerURL %}
-<a href="{{issue.trackerURL}}" target="_issue"><span class="label label-inverse">Open original issue</span></a>
-
+<a href="{{issue.trackerURL}}" class="btn btn-primary" target="_issue">Open original issue</a>
 {% endif %}
+</h3>
+
 <hr>
 
 {% include 'core/issue_offer_action_bar.html' %}

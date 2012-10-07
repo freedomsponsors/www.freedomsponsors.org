@@ -10,10 +10,12 @@
 
 <input type="hidden" id="offer_id" name="offer_id" value="{{offer.id}}">
 
-<h3>[ Offer ] US$ {{offer.price}} for issue - {{offer.issue.title}} </h3>
+<h3>[ Offer ] US$ {{offer.price}} for issue - {{offer.issue.title}} 
 {% if issue.trackerURL %}
-<a href="{{offer.issue.trackerURL}}" target="_issue"><span class="label label-inverse">Open original issue</span></a>
+<a href="{{offer.issue.trackerURL}}" class="btn btn-primary" target="_issue">Open original issue</a>
 {% endif %}
+</h3>
+
 
 {% if offer.is_expired %}
 <br><br>
