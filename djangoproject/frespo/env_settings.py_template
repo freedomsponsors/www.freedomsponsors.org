@@ -28,7 +28,7 @@ SITE_HOST = 'localhost:8000' # www.freedomsponsors.org
 SITE_NAME = 'FreedomSponsors_test' # FreedomSponsors
 PAYPAL_USE_SANDBOX = True
 
-PAYPAL_IPNNOTIFY_URL = '/core/paypal/megablasteripn'
+PAYPAL_IPNNOTIFY_URL_TOKEN = 'megablasteripn'
 PAYPAL_SANDBOX_API_USERNAME = "FP_1338073142_biz_api1.gmail.com"
 PAYPAL_SANDBOX_API_PASSWORD = '1338073168'
 PAYPAL_SANDBOX_API_SIGNATURE = 'AFcWxV21C7fd0v3bYYYRCpSSRl31AVAvZTYca4potYVRXAbpeSKQGHZO'

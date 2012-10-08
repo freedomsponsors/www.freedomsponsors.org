@@ -1,7 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.views.generic import TemplateView
-
-
+from django.conf import settings
 
 urlpatterns = patterns('core.views.main_views',
     url(r'^$', 'home'),
@@ -46,7 +45,7 @@ urlpatterns += patterns('core.views.paypal_views',
     url(r'^offer/pay/submit$', 'payOffer'),
     url(r'^paypal/cancel$', 'paypalCancel'),
     url(r'^paypal/return$', 'paypalReturn'),
-    url(r'^paypal/megablasteripn$', 'paypalIPN'),
+    url(r'^paypal/'+settings.PAYPAL_IPNNOTIFY_URL_TOKEN+'$', 'paypalIPN'),
 )
 
 urlpatterns += patterns('core.views.user_views',
