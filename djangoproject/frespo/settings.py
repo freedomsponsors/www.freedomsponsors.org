@@ -22,7 +22,7 @@ TEMPLATE_DEBUG = DEBUG
 MANAGERS = ADMINS
 
 #IS_TESTING = os.environ['IS_TESTING'] == 'true'
-IS_TESTING = 'test' == sys.argv[1]
+IS_TESTING = len(sys.argv) >= 2 and 'test' == sys.argv[1]
 use_postgres = True
 
 if IS_TESTING:
