@@ -35,17 +35,17 @@ urlpatterns += patterns('core.views.issue_views',
 )
 
 urlpatterns += patterns('core.views.comment_views',
-    url(r'^watch/issue/(?P<issue_id>\d+)$', 'watchIssue'),
-    url(r'^unwatch/issue/(?P<issue_id>\d+)$', 'unwatchIssue'),
-    url(r'^watch/offer/(?P<offer_id>\d+)$', 'watchOffer'),
-    url(r'^unwatch/offer/(?P<offer_id>\d+)$', 'unwatchOffer'),
-)
-
-urlpatterns += patterns('core.views.watch_views',
     url(r'^issue/comment/add/submit$', 'addIssueComment'),
     url(r'^issue/comment/edit/submit$', 'editIssueComment'),
     url(r'^offer/comment/add/submit$', 'addOfferComment'),
     url(r'^offer/comment/edit/submit$', 'editOfferComment'),
+)
+
+urlpatterns += patterns('core.views.watch_views',
+    url(r'^watch/issue/(?P<issue_id>\d+)$', 'watchIssue'),
+    url(r'^unwatch/issue/(?P<issue_id>\d+)$', 'unwatchIssue'),
+    url(r'^watch/offer/(?P<offer_id>\d+)$', 'watchOffer'),
+    url(r'^unwatch/offer/(?P<offer_id>\d+)$', 'unwatchOffer'),
 )
 
 urlpatterns += patterns('core.views.paypal_views',
