@@ -288,6 +288,24 @@ class Issue(models.Model):
         s += self.title
         return s
 
+# A record that indicates that a user is watching an issue
+class IssueWatch(models.Model):
+    issue = models.ForeignKey(Issue)
+    user = models.ForeignKey(User)
+    reason = models.CharField(max_length=30, null=False, blank=False)
+
+    CREATED = "CREATED"
+    COMMENTED = "COMMENTED"
+    SPONSORED = "SPONSORED"
+    WATCHED = "WATCHED"
+
+    def newIssueWatch(cls, issue, user, reason):
+        watch = cls()
+        watch.issue = issue
+        watch.user = user
+        watch.reason = reason
+        return watch
+
 # Um comentario que pode ser adicionado numa issue por qualquer pessoa
 #@Auditable
 class IssueComment(models.Model):
@@ -417,6 +435,23 @@ class Offer(models.Model):
 
     def get_view_link(self):
         return '/core/offer/%s'%self.id+'/'+urlquote(slugify(self.issue.title))
+
+# A record that indicates that a user is watching an offer
+class OfferWatch(models.Model):
+    offer = models.ForeignKey(Offer)
+    user = models.ForeignKey(User)
+    reason = models.CharField(max_length=30, null=False, blank=False)
+
+    CREATED = "CREATED"
+    COMMENTED = "COMMENTED"
+    WATCHED = "WATCHED"
+
+    def newOfferWatch(cls, issue, user, reason):
+        watch = cls()
+        watch.offer = offer
+        watch.user = user
+        watch.reason = reason
+        return watch
 
 class OfferHistEvent(models.Model):
     offer = models.ForeignKey(Offer)

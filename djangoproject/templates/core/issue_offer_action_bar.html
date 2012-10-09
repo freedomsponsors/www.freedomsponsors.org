@@ -69,20 +69,27 @@
     </div>
   {% endif %}
 {% endif %}
-  {% if mysolution and mysolution.status == 'IN_PROGRESS' %}
     <div class="btn-group">
+    {% if mysolution and mysolution.status == 'IN_PROGRESS' %}
       <a href="javascript:showModal_resolveThisIssue()" class="btn btn-success">Resolve issue</a>
       <a href="javascript:showModal_abortWorkOnThisIssue()" class="btn btn-danger">Abort work</a>
-    </div>
-  {% else %}
-    <div class="btn-group">
-    {% if user.is_authenticated %}
-      <a href="javascript:showModal_workOnThisIssue()" class="btn btn-primary">Work on this issue</a>
     {% else %}
-      <a href="/core/login/?next={{issue.get_view_link}}" class="btn btn-primary">Work on this issue</a>
+      {% if user.is_authenticated %}
+        <a href="javascript:showModal_workOnThisIssue()" class="btn btn-primary">Work on this issue</a>
+      {% else %}
+        <a href="/core/login/?next={{issue.get_view_link}}" class="btn btn-primary">Work on this issue</a>
+      {% endif %}
     {% endif %}
     </div>
-  {% endif %}
+    {% if user.is_authenticated %}
+    <!-- WATCHING 
+    <div class="btn-group">
+      <a href="#" class="btn btn-inverse" title="Start watching this issue">
+        <i class="icon-eye-close icon-white"></i>
+        Watch
+      </a>
+    </div> -->
+    {% endif %}
 </div>
 
 <script>
