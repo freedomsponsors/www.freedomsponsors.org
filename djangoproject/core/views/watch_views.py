@@ -2,23 +2,21 @@
 
 from core.models import *
 from django.http import HttpResponse
-from core.utils.frespo_utils import  dictOrEmpty
-import json
-from core.services import issue_services
-import traceback
-import logging
-
-logger = logging.getLogger(__name__)
+from core.services import watch_services
 
 def watchIssue(request, issue_id):
-    pass
+    watch_services.watch_issue(request.user, int(issue_id), IssueWatch.WATCHED)
+    return HttpResponse("WATCHING")
 
 def unwatchIssue(request, issue_id):
-    pass
+    watch_services.unwatch_issue(request.user, int(issue_id))
+    return HttpResponse("UNWATCHING")
 
 def watchOffer(request, offer_id):
-    pass
+    watch_services.watch_offer(request.user, int(offer_id), OfferWatch.WATCHED)
+    return HttpResponse("WATCHING")
 
 def unwatchOffer(request, offer_id):
-    pass
+    watch_services.unwatch_offer(request.user, int(offer_id))
+    return HttpResponse("UNWATCHING")
 

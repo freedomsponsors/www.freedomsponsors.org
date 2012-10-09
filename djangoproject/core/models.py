@@ -299,6 +299,7 @@ class IssueWatch(models.Model):
     SPONSORED = "SPONSORED"
     WATCHED = "WATCHED"
 
+    @classmethod
     def newIssueWatch(cls, issue, user, reason):
         watch = cls()
         watch.issue = issue
@@ -446,7 +447,8 @@ class OfferWatch(models.Model):
     COMMENTED = "COMMENTED"
     WATCHED = "WATCHED"
 
-    def newOfferWatch(cls, issue, user, reason):
+    @classmethod
+    def newOfferWatch(cls, offer, user, reason):
         watch = cls()
         watch.offer = offer
         watch.user = user

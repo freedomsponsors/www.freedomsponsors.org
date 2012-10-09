@@ -1,10 +1,12 @@
 from core.models import *
 from decimal import Decimal
+from random import randint
 
 __author__ = 'tony'
 
 def create_dummy_sponsor():
-    user = User.objects.create_user('userone', 'userone@gogogo.com', 'abcdef')
+    randomnum = randint(0,100000)
+    user = User.objects.create_user('userone_%s'%randomnum, 'userone@gogogo.com', 'abcdef')
     userinfo = UserInfo.newUserInfo(user)
     userinfo.screenName = 'User One'
     userinfo.realName = 'User One'
@@ -12,7 +14,8 @@ def create_dummy_sponsor():
     return user
 
 def create_dummy_programmer():
-    user = User.objects.create_user('usertwo', 'usertwo@gogogo.com', 'abcdef')
+    randomnum = randint(0,100000)
+    user = User.objects.create_user('usertwo_%s'%randomnum, 'usertwo@gogogo.com', 'abcdef')
     userinfo = UserInfo.newUserInfo(user)
     userinfo.screenName = 'User Two'
     userinfo.realName = 'User Two'
