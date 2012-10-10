@@ -2,6 +2,7 @@ from core.models import *
 from django.utils import unittest
 from core.services import watch_services
 from helpers import test_data
+from django.test.client import Client
 
 __author__ = 'tony'
 

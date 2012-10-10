@@ -1,0 +1,82 @@
+<div class="btn-group">
+  <a href="#" id="btnToggleWatch" class="btn btn-inverse" title="">
+    
+  </a>
+</div>
+
+<script>
+  $(function(){
+
+    var $btnToggleWatch = $('#btnToggleWatch')
+    var _btnToggleWatch = document.getElementById('btnToggleWatch')
+
+    var watchState = {
+        is_watching : "{{ is_watching }}",
+      {% if offer %}
+        watchType : "OFFER",
+        id : {{ offer.id }}
+      {% else %}
+        watchType : "ISSUE",
+        id : {{ issue.id }}
+      {% endif %}
+    };
+
+    var is_watching = function(){
+      return watchState.is_watching == 'True';
+    };
+
+    var update_button = function(){
+      if(is_watching()){
+        _btnToggleWatch.title = "Stop watching this issue"
+        _btnToggleWatch.innerHTML = '<i class="icon-eye-open icon-white"></i> Watching'
+      } else {
+        _btnToggleWatch.title = "Start watching this issue"
+        _btnToggleWatch.innerHTML = '<i class="icon-eye-close icon-white"></i> Watch'
+      }
+    };
+
+    var watch_issue_offer_set_waiting_icon = function(){
+      if(is_watching()){
+        _btnToggleWatch.innerHTML = '<i class="icon-time icon-white"></i> Watching'
+      } else {
+        _btnToggleWatch.innerHTML = '<i class="icon-time icon-white"></i> Watch'
+      }
+    }
+
+    var toggle_watch_issue_offer = function(){
+      var url = false;
+      var action = is_watching() ? 'unwatch' : 'watch';
+      if(watchState.watchType == "ISSUE"){
+        url = '/core/'+action+'/issue/'+watchState.id;
+      } else if(watchState.watchType == "OFFER"){
+        url = '/core/'+action+'/offer/'+watchState.id;
+      }
+      if(!url){
+        alert('unknown watch type:'+watchState.watchType);
+      }
+      $.ajax({
+        url: url,
+        dataType: 'text',
+        async: true,
+        success: function(data){
+          if(data == 'WATCHING'){
+            watchState.is_watching = 'True';
+          } else if (data == 'NOT_WATCHING'){
+            watchState.is_watching = 'False';
+          } else {
+            alert('unrecognized watch response: '+data);
+          }
+          update_button();
+        },
+        error: function(a,b,c){
+           alert('err: '+a+' '+b+' '+c);
+        }
+      });
+      watch_issue_offer_set_waiting_icon()
+    }
+
+    update_button();
+    _btnToggleWatch.onclick = toggle_watch_issue_offer;
+
+  })
+</script>

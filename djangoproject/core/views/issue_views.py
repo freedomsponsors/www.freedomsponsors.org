@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render_to_response
 from django.template import RequestContext
 from core.utils.frespo_utils import get_or_none, dictOrEmpty
 from core.models import  Issue, Offer, Solution, Project
-from core.services import issue_services
+from core.services import issue_services, watch_services
 import logging
 
 logger = logging.getLogger(__name__)
@@ -137,8 +137,11 @@ def viewIssue(request, issue_id):
         show_alert = 'core/popup_just_kickstarted.html'
     invoke_parent_callback = (dictOrEmpty(request.GET, 'c') == 's')
 
+    is_watching = request.user.is_authenticated() and watch_services.is_watching_issue(request.user, issue.id)
+
     return render_to_response('core/issue.html',
         {'issue':issue,
+        'is_watching':is_watching,
         'myoffer':myoffer,
         'mysolution':mysolution,
         'invoke_parent_callback' : invoke_parent_callback,
@@ -163,8 +166,11 @@ def viewOffer(request, offer_id):
         show_alert = 'core/popup_just_sponsored.html'
     invoke_parent_callback = (dictOrEmpty(request.GET, 'c') == 's')
 
+    is_watching = request.user.is_authenticated() and watch_services.is_watching_offer(request.user, offer.id)
+
     return render_to_response('core/offer.html',
         {'offer':offer,
+        'is_watching':is_watching,
         'issue':offer.issue,
         'show_alert':show_alert,
         'myoffer':myoffer,

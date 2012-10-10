@@ -4,6 +4,16 @@ from random import randint
 
 __author__ = 'tony'
 
+def createDummyUserRandom(login, password):
+    randomnum = randint(0,100000)
+    random_login = '%s_%s'%(login, randomnum)
+    user = User.objects.create_user(random_login, random_login+'@gogogo.com', password)
+    userinfo = UserInfo.newUserInfo(user)
+    userinfo.screenName = login+' Screen'
+    userinfo.realName = login+' Real'
+    userinfo.save()
+    return user
+
 def create_dummy_sponsor():
     randomnum = randint(0,100000)
     user = User.objects.create_user('userone_%s'%randomnum, 'userone@gogogo.com', 'abcdef')

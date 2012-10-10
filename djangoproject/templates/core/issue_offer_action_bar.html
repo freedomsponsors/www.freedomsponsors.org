@@ -82,13 +82,7 @@
     {% endif %}
     </div>
     {% if user.is_authenticated %}
-    <!-- WATCHING 
-    <div class="btn-group">
-      <a href="#" class="btn btn-inverse" title="Start watching this issue">
-        <i class="icon-eye-close icon-white"></i>
-        Watch
-      </a>
-    </div> -->
+      {% include 'core/watch_toggle_button.html' %}
     {% endif %}
 </div>
 
