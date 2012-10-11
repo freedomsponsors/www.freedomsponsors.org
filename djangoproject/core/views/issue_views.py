@@ -16,6 +16,7 @@ __author__ = 'tony'
 def addIssue(request):
     try:
         offer = issue_services.sponsor_new_issue(request.POST, request.user)
+        watch_services.watch_issue(request.user, offer.issue.id, IssueWatch.SPONSORED)
     except BaseException as ex:
         return HttpResponse("ERROR: "+ex.message)
     params = '?alert=SPONSOR'
@@ -28,6 +29,7 @@ def addIssue(request):
 def kickstartIssue(request):
     try:
         issue = issue_services.kickstart_new_issue(request.POST, request.user)
+        watch_services.watch_issue(request.user, issue.id, IssueWatch.CREATED)
     except BaseException as ex:
         return HttpResponse("ERROR: "+ex.message)
 
@@ -49,6 +51,7 @@ def addSolution(request):
     issue_id = int(request.POST['issue_id'])
     comment_content = request.POST['comment']
     issue = issue_services.add_solution_to_existing_issue(issue_id, comment_content, request.user)
+    watch_services.watch_issue(request.user, issue.id, IssueWatch.STARTED_WORKING)
     return redirect(issue.get_view_link())
 
 
@@ -112,6 +115,7 @@ def sponsorIssue(request):
     issue_id = int(request.POST['issue_id'])
 
     offer = issue_services.sponsor_existing_issue(issue_id, request.POST, request.user)
+    watch_services.watch_issue(request.user, issue_id, IssueWatch.SPONSORED)
 
     invoke_parent_callback = dictOrEmpty(request.POST, 'invoke_parent_callback')
     if(invoke_parent_callback == 'true'):

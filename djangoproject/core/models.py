@@ -298,6 +298,7 @@ class IssueWatch(models.Model):
     COMMENTED = "COMMENTED"
     SPONSORED = "SPONSORED"
     WATCHED = "WATCHED"
+    STARTED_WORKING = "STARTED_WORKING"
 
     @classmethod
     def newIssueWatch(cls, issue, user, reason):
