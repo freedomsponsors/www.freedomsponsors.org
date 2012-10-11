@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render_to_response
 from django.template import RequestContext
 from core.utils.frespo_utils import get_or_none, dictOrEmpty
-from core.models import  Issue, Offer, Solution, Project
+from core.models import *
 from core.services import issue_services, watch_services
 import logging
 

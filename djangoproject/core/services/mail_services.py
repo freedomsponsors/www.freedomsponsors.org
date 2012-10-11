@@ -154,7 +154,7 @@ def notifyWatchers_newoffercomment(comment):
                 "offer" : comment.offer,
                 "comment" : comment,
                 "SITE_HOME" : settings.SITE_HOME,
-                "type" : "issue"}
+                "type" : "offer"}
             _send_mail_to_user(watch.user, subject, 'email/comment_added.html', contextData)
             already_sent_to[watch.user.email] = True
 
