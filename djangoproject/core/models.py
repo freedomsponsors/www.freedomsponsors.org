@@ -444,7 +444,6 @@ class OfferWatch(models.Model):
     user = models.ForeignKey(User)
     reason = models.CharField(max_length=30, null=False, blank=False)
 
-    CREATED = "CREATED"
     COMMENTED = "COMMENTED"
     WATCHED = "WATCHED"
 
