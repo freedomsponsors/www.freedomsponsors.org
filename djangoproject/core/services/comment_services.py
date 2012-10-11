@@ -1,4 +1,4 @@
-from core.services.mail_services import notifyProgrammers_newoffercomment, notifySponsors_newoffercomment, notifyProgrammers_newissuecomment, notifySponsors_newissuecomment
+from core.services.mail_services import notifyWatchers_newoffercomment, notifyWatchers_newissuecomment
 from core.models import Offer, OfferComment, IssueComment, Issue
 
 __author__ = 'tony'
@@ -7,8 +7,7 @@ def add_comment_to_offer(offer_id, comment_content, user):
     offer = Offer.objects.get(pk=offer_id)
     comment = OfferComment.newComment(offer, user, comment_content)
     comment.save()
-    notifyProgrammers_newoffercomment(comment)
-    notifySponsors_newoffercomment(comment)
+    notifyWatchers_newoffercomment(comment)
     return offer
 
 
@@ -30,10 +29,8 @@ def add_comment_to_issue(issue_id, comment_content, user):
     issue = Issue.objects.get(pk=issue_id)
     comment = IssueComment.newComment(issue, user, comment_content)
     comment.save()
-    notifyProgrammers_newissuecomment(comment)
-    notifySponsors_newissuecomment(comment)
+    notifyWatchers_newissuecomment(comment)
     return issue
-
 
 def _throwIfNotCommentAuthor(comment, user):
     if(not comment.author.id == user.id):

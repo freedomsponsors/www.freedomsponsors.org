@@ -3,6 +3,18 @@ from core.services.mail_services import *
 
 __author__ = 'tony'
 
+def find_issue_watches(issue):
+    return IssueWatch.objects.filter(issue__id = issue.id)
+
+#TODO Improve
+def find_issue_and_offer_watches(offer):
+    issuewatches = find_issue_watches(offer.issue)
+    watches = OfferWatch.objects.filter(offer__id = offer.id)
+    w = []
+    w.extend(watches)
+    w.extend(issuewatches)
+    return w
+
 def watch_issue(user, issue_id, reason):
     watch = _findIssueWatchOrNone(user, issue_id)
     if not watch:

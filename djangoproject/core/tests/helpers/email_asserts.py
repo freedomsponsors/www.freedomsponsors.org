@@ -8,6 +8,9 @@ def send_emails():
 	cmd = send_mail.Command()
 	cmd.handle_noargs()
 
+def clear_sent():
+    mail.outbox = []
+
 def assert_sent_count(testcase, count):
     testcase.assertEquals(count, len(mail.outbox))
 

@@ -4,6 +4,7 @@ from django.template import Context
 from mailer import send_html_mail
 from django.conf import settings
 from core.utils.frespo_utils import twoplaces
+from core.services import watch_services
 
 ADMINS_EMAILS = map((lambda x: x[1]), settings.ADMINS)
 
@@ -130,53 +131,32 @@ def notify_payment_parties_paymentconfirmed(payment):
         contextData = {"payment" : payment,
         "SITE_HOME" : settings.SITE_HOME})
         
-def notifyProgrammers_newissuecomment(comment):
-    for solution in comment.issue.getSolutions():
-        if (comment.author.id != solution.programmer.id):
-            _send_mail_to_user(user = solution.programmer, 
-                subject = comment.author.getUserInfo().screenName+" commented on issue ["+comment.issue.title+"]",
-                templateName = 'email/comment_added.html', 
-                contextData = {"you" : solution.programmer,
-                "issue" : comment.issue,
-                "comment" : comment,
-                "type" : "issue",
-                "SITE_HOME" : settings.SITE_HOME})
-
-def notifySponsors_newissuecomment(comment):
-    for offer in comment.issue.getOffers():
-        if (comment.author.id != offer.sponsor.id):
-            _send_mail_to_user(user = offer.sponsor, 
-                subject = comment.author.getUserInfo().screenName+" commented on issue ["+comment.issue.title+"]",
-                templateName = 'email/comment_added.html', 
-                contextData = {"you" : offer.sponsor,
+def notifyWatchers_newissuecomment(comment):
+    watches = watch_services.find_issue_watches(comment.issue)
+    for watch in watches:
+        if(watch.user.id != comment.author.id):
+            subject = "%s added a comment on issue [%s]"%(comment.author.getUserInfo().screenName, comment.issue.title)
+            contextData = {"you" : watch.user,
                 "issue" : comment.issue,
                 "comment" : comment,
                 "SITE_HOME" : settings.SITE_HOME,
-                "type" : "issue"})
+                "type" : "issue"}
+            _send_mail_to_user(watch.user, subject, 'email/comment_added.html', contextData)
 
-def notifyProgrammers_newoffercomment(comment):
-    for solution in comment.offer.issue.getSolutions():
-        if (comment.author.id != solution.programmer.id):
-            _send_mail_to_user(user = solution.programmer, 
-                subject = comment.author.getUserInfo().screenName+" commented on issue offer ["+comment.issue.title+"]",
-                templateName = 'email/comment_added.html', 
-                contextData = {"you" : solution.programmer,
+def notifyWatchers_newoffercomment(comment):
+    watches = watch_services.find_issue_and_offer_watches(comment.offer)
+    already_sent_to = {}
+    for watch in watches:
+        if(watch.user.id != comment.author.id and not already_sent_to.has_key(watch.user.email)):
+            subject = "%s added a comment on offer [US$ %s / %s]"%(comment.author.getUserInfo().screenName, str(twoplaces(comment.offer.price)), comment.offer.issue.title)
+            contextData = {"you" : watch.user,
                 "issue" : comment.offer.issue,
-                "comment" : comment,
-                "type" : "offer",
-                "SITE_HOME" : settings.SITE_HOME})
-
-def notifySponsors_newoffercomment(comment):
-    for offer in comment.offer.issue.getOffers():
-        if (comment.author.id != offer.sponsor.id):
-            _send_mail_to_user(user = offer.sponsor, 
-                subject = comment.author.getUserInfo().screenName+" commented on issue ["+comment.offer.issue.title+"]",
-                templateName = 'email/comment_added.html', 
-                contextData = {"you" : offer.sponsor,
-                "issue" : comment.offer.issue,
+                "offer" : comment.offer,
                 "comment" : comment,
                 "SITE_HOME" : settings.SITE_HOME,
-                "type" : "issue"})
+                "type" : "issue"}
+            _send_mail_to_user(watch.user, subject, 'email/comment_added.html', contextData)
+            already_sent_to[watch.user.email] = True
 
 def notify_admin(subject, msg):
     send_html_mail(subject, msg, msg, settings.DEFAULT_FROM_EMAIL, ADMINS_EMAILS)
