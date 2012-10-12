@@ -4,7 +4,6 @@ from django.template import Context
 from mailer import send_html_mail
 from django.conf import settings
 from core.utils.frespo_utils import twoplaces
-from core.services import watch_services
 
 ADMINS_EMAILS = map((lambda x: x[1]), settings.ADMINS)
 
@@ -131,8 +130,7 @@ def notify_payment_parties_paymentconfirmed(payment):
         contextData = {"payment" : payment,
         "SITE_HOME" : settings.SITE_HOME})
         
-def notifyWatchers_newissuecomment(comment):
-    watches = watch_services.find_issue_watches(comment.issue)
+def notifyWatchers_newissuecomment(comment, watches):
     for watch in watches:
         if(watch.user.id != comment.author.id):
             subject = "%s added a comment on issue [%s]"%(comment.author.getUserInfo().screenName, comment.issue.title)
@@ -143,8 +141,7 @@ def notifyWatchers_newissuecomment(comment):
                 "type" : "issue"}
             _send_mail_to_user(watch.user, subject, 'email/comment_added.html', contextData)
 
-def notifyWatchers_newoffercomment(comment):
-    watches = watch_services.find_issue_and_offer_watches(comment.offer)
+def notifyWatchers_newoffercomment(comment, watches):
     already_sent_to = {}
     for watch in watches:
         if(watch.user.id != comment.author.id and not already_sent_to.has_key(watch.user.email)):
