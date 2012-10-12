@@ -1,5 +1,6 @@
 from decimal import Decimal
 from core.services.mail_services import *
+from core.services import watch_services
 from core.utils.frespo_utils import dictOrEmpty, validateURL, validateIssueURL, get_or_none
 from core.models import Issue, Project, Offer, Solution, IssueComment, OfferComment
 from core.utils.trackers_adapter import fetchIssueInfo
@@ -65,8 +66,8 @@ def sponsor_existing_issue(issue_id, dict, user):
     if issue.is_public_suggestion:
         issue.is_public_suggestion = False
         issue.save()
-    notifyProgrammers_offeradded(offer)
-    notifySponsors_offeradded(offer)
+    watches = watch_services.find_issue_watches(issue)
+    notifyWatchers_offeradded(offer, watches)
     msg = "offer: " + str(offer.price) + "\n<br>" +\
           "issue key: " + offer.issue.key + "\n<br>" +\
           "issue title: " + offer.issue.title + "\n<br>"
@@ -82,7 +83,8 @@ def change_existing_offer(offer_id, offerdict, user):
     _throwIfNotOfferOwner(offer, user)
     old_offer = offer.clone()
     offer.changeOffer(offerdict)
-    notifyProgrammers_offerchanged(old_offer, offer)
+    watches = watch_services.find_issue_and_offer_watches(offer)
+    notifyWatchers_offerchanged(old_offer, offer, watches)
     return offer
 
 
@@ -99,7 +101,8 @@ def add_solution_to_existing_issue(issue_id, comment_content, user):
     if(comment_content):
         comment = IssueComment.newComment(issue, user, comment_content)
         comment.save()
-    notifySponsors_workbegun(solution, comment)
+    watches = watch_services.find_issue_watches(solution.issue)
+    notifyWatchers_workbegun(solution, comment, watches)
     return issue
 
 
@@ -112,7 +115,8 @@ def abort_existing_solution(solution_id, comment_content, user):
     if(comment_content):
         comment = IssueComment.newComment(solution.issue, user, comment_content)
         comment.save()
-    notifySponsors_workstopped(solution, comment)
+    watches = watch_services.find_issue_watches(solution.issue)
+    notifyWatchers_workstopped(solution, comment, watches)
 
     return solution
 
@@ -126,7 +130,8 @@ def revoke_existing_offer(offer_id, comment_content, user):
     if(comment_content):
         comment = OfferComment.newComment(offer, user, comment_content)
         comment.save()
-    notifyProgrammers_offerrevoked(offer, comment)
+    watches = watch_services.find_issue_and_offer_watches(offer)
+    notifyWatchers_offerrevoked(offer, comment, watches)
     return offer
 
 
@@ -139,8 +144,8 @@ def resolve_existing_solution(solution_id, comment_content, user):
     if(comment_content):
         comment = IssueComment.newComment(solution.issue, user, comment_content)
         comment.save()
-    notifySponsors_workdone(solution, comment)
-    notifyProgrammers_workdone(solution, comment)
+    watches = watch_services.find_issue_watches(solution.issue)
+    notifyWatchers_workdone(solution, comment, watches)
     return solution
 
 

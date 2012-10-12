@@ -25,79 +25,70 @@ def _send_mail_to_user(user, subject, templateName, contextData):
         html_content = template.render(context)
         send_html_mail(subject, html_content, html_content, settings.DEFAULT_FROM_EMAIL, [user.email])
 
+def notifyWatchers_workbegun(solution, comment, watches):
+    def send_func(watch):
+        if(watch.user.id != solution.programmer.id):
+            _send_mail_to_user(user = watch.user,
+                subject = solution.programmer.getUserInfo().screenName+" has just begun working on issue [%s]"%solution.issue.title,
+                templateName = 'email/workbegun.html',
+                contextData = {"solution" : solution,
+                               "you" : watch.user,
+                               "SITE_HOME" : settings.SITE_HOME,
+                               "comment" : comment})
+    _notify_watchers(send_func, watches)
 
-def notifySponsors_workbegun(solution, comment):
-    for offer in solution.issue.getOffers():
-        _send_mail_to_user(user = offer.sponsor, 
-            subject = solution.programmer.getUserInfo().screenName+" has just begun working on your sponsored issue",
-            templateName = 'email/workbegun.html', 
-            contextData = {"solution" : solution,
-            "offer" : offer,
-            "SITE_HOME" : settings.SITE_HOME,
-            "comment" : comment})
+def notifyWatchers_workstopped(solution, comment, watches):
+    def send_func(watch):
+        if(watch.user.id != solution.programmer.id):
+            _send_mail_to_user(user = watch.user,
+                subject = solution.programmer.getUserInfo().screenName+" has stopped working on issue [%s]"%solution.issue.title,
+                templateName = 'email/workstopped.html',
+                contextData = {"solution" : solution,
+                               "you" : watch.user,
+                               "SITE_HOME" : settings.SITE_HOME,
+                               "comment" : comment})
+    _notify_watchers(send_func, watches)
 
-def notifySponsors_workstopped(solution, comment):
-    for offer in solution.issue.getOffers():
-        _send_mail_to_user(user = offer.sponsor, 
-            subject = solution.programmer.getUserInfo().screenName+" has stopped working on your sponsored issue",
-            templateName = 'email/workstopped.html', 
-            contextData = {"solution" : solution,
-            "offer" : offer,
-            "SITE_HOME" : settings.SITE_HOME,
-            "comment" : comment})
-
-def notifySponsors_workdone(solution, comment):
-    for offer in solution.issue.getOffers():
-        _send_mail_to_user(user = offer.sponsor, 
-            subject = solution.programmer.getUserInfo().screenName+" resolved your sponsored issue",
-            templateName = 'email/workdone_sponsor.html', 
-            contextData = {"solution" : solution,
-            "offer" : offer,
-            "SITE_HOME" : settings.SITE_HOME,
-            "comment" : comment})
-
-def notifyProgrammers_workdone(solution, comment):
-    for otherSolution in solution.issue.getSolutions():
-        if(not solution.id == otherSolution.id):
-            _send_mail_to_user(user = otherSolution.programmer, 
-                subject = solution.programmer.getUserInfo().screenName+" resolved an issue that you are involved with",
-                templateName = 'email/workdone_programmer.html', 
+def notifyWatchers_workdone(solution, comment, watches):
+    def send_func(watch):
+        if(watch.user.id != solution.programmer.id):
+            _send_mail_to_user(user = watch.user,
+                subject = solution.programmer.getUserInfo().screenName+" resolved issue [%s]"%solution.issue.title,
+                templateName = 'email/workdone.html',
                 contextData = {"theirSolution" : solution,
-                "yourSolution" : otherSolution,
-                "SITE_HOME" : settings.SITE_HOME,
-                "comment" : comment})
+                               "you" : watch.user,
+                               "SITE_HOME" : settings.SITE_HOME,
+                               "comment" : comment})
+    _notify_watchers(send_func, watches)
 
-def notifyProgrammers_offerrevoked(offer, comment):
-    for solution in offer.issue.getSolutions():
-        _send_mail_to_user(user = solution.programmer, 
-            subject = offer.sponsor.getUserInfo().screenName+" revoked his US$ "+str(offer.price)+" offer for an issue that you are involved with",
-            templateName = 'email/offerrevoked.html', 
-            contextData = {"solution" : solution,
-            "offer" : offer,
-            "SITE_HOME" : settings.SITE_HOME,
-            "comment" : comment})
+#    for otherSolution in solution.issue.getSolutions():
+#        if(not solution.id == otherSolution.id):
 
-def notifyProgrammers_offeradded(offer):
-    for solution in offer.issue.getSolutions():
-        _send_mail_to_user(user = solution.programmer, 
-            subject = offer.sponsor.getUserInfo().screenName+" made a US$ "+str(offer.price)+" offer for an issue that you are involved with",
-            templateName = 'email/offeradded_programmer.html', 
-            contextData = {"solution" : solution,
-            "offer" : offer,
-            "SITE_HOME" : settings.SITE_HOME})
+def notifyWatchers_offerrevoked(offer, comment, watches):
+    def send_func(watch):
+        if(watch.user.id != offer.sponsor.id):
+            _send_mail_to_user(user = watch.user,
+                subject = offer.sponsor.getUserInfo().screenName+" revoked his US$ "+str(offer.price)+" offer for issue [%s]"%offer.issue.title,
+                templateName = 'email/offerrevoked.html',
+                contextData = {"you" : watch.user,
+                               "offer" : offer,
+                               "SITE_HOME" : settings.SITE_HOME,
+                               "comment" : comment})
+    _notify_watchers(send_func, watches)
 
-def notifySponsors_offeradded(offer):
-    for otherOffer in offer.issue.getOffers():
-        if(not offer.id == otherOffer.id):
-            _send_mail_to_user(user = otherOffer.sponsor, 
-                subject = offer.sponsor.getUserInfo().screenName+" made a US$ "+str(offer.price)+" offer for an issue that you're sponsoring",
-                templateName = 'email/offeradded_sponsor.html', 
-                contextData = {"yourOffer" : otherOffer,
-                "theirOffer" : offer,
-                "SITE_HOME" : settings.SITE_HOME})
+def notifyWatchers_offeradded(offer, watches):
+    def send_func(watch):
+        if(watch.user.id != offer.sponsor.id):
+            _send_mail_to_user(user = watch.user,
+                subject = offer.sponsor.getUserInfo().screenName+" made a US$ "+str(offer.price)+" offer for issue [%s]"%offer.issue.title,
+                templateName = 'email/offeradded.html',
+                contextData = {"you" : watch.user,
+                               "theirOffer" : offer,
+                               "SITE_HOME" : settings.SITE_HOME})
+    _notify_watchers(send_func, watches)
 
-def notifyProgrammers_offerchanged(old_offer, new_offer):
-    action = ''
+def notifyWatchers_offerchanged(old_offer, new_offer, watches):
+    action = 'changed'
     if(new_offer.price > old_offer.price):
         action = 'raised'
     elif(new_offer.price < old_offer.price):
@@ -106,15 +97,17 @@ def notifyProgrammers_offerchanged(old_offer, new_offer):
         action = 'changed the acceptance criteria for'
 
     if(action):
-        for solution in new_offer.issue.getSolutions():
-            _send_mail_to_user(user = solution.programmer, 
-                subject = old_offer.sponsor.getUserInfo().screenName+" "+action+" the US$ "+str(old_offer.price)+" offer on an issue that you are involved with",
-                templateName = 'email/offerchanged.html', 
-                contextData = {"old_offer" : old_offer,
-                "new_offer" : new_offer,
-                "solution" : solution,
-                "action" : action,
-                "SITE_HOME" : settings.SITE_HOME})
+        def send_func(watch):
+            if(watch.user.id != new_offer.sponsor.id):
+                _send_mail_to_user(user = watch.user,
+                    subject = old_offer.sponsor.getUserInfo().screenName+" "+action+" the US$ "+str(old_offer.price)+" offer on issue [%s]"%old_offer.issue.title,
+                    templateName = 'email/offerchanged.html',
+                    contextData = {"you" : watch.user,
+                                   "old_offer" : old_offer,
+                                   "new_offer" : new_offer,
+                                   "action" : action,
+                                   "SITE_HOME" : settings.SITE_HOME})
+        _notify_watchers(send_func, watches)
 
 def notify_payment_parties_paymentconfirmed(payment):
     for part in payment.getParts():
@@ -131,28 +124,36 @@ def notify_payment_parties_paymentconfirmed(payment):
         "SITE_HOME" : settings.SITE_HOME})
         
 def notifyWatchers_newissuecomment(comment, watches):
-    for watch in watches:
+    def send_func(watch):
         if(watch.user.id != comment.author.id):
             subject = "%s added a comment on issue [%s]"%(comment.author.getUserInfo().screenName, comment.issue.title)
             contextData = {"you" : watch.user,
-                "issue" : comment.issue,
-                "comment" : comment,
-                "SITE_HOME" : settings.SITE_HOME,
-                "type" : "issue"}
+                           "issue" : comment.issue,
+                           "comment" : comment,
+                           "SITE_HOME" : settings.SITE_HOME,
+                           "type" : "issue"}
             _send_mail_to_user(watch.user, subject, 'email/comment_added.html', contextData)
+    _notify_watchers(send_func, watches)
 
 def notifyWatchers_newoffercomment(comment, watches):
+    def send_func(watch):
+        if(watch.user.id != comment.author.id):
+            subject = "%s added a comment on offer [US$ %s / %s]" % (
+                comment.author.getUserInfo().screenName, str(twoplaces(comment.offer.price)), comment.offer.issue.title)
+            contextData = {"you": watch.user,
+                           "issue": comment.offer.issue,
+                           "offer": comment.offer,
+                           "comment": comment,
+                           "SITE_HOME": settings.SITE_HOME,
+                           "type": "offer"}
+            _send_mail_to_user(watch.user, subject, 'email/comment_added.html', contextData)
+    _notify_watchers(send_func, watches)
+
+def _notify_watchers(send_func, watches):
     already_sent_to = {}
     for watch in watches:
-        if(watch.user.id != comment.author.id and not already_sent_to.has_key(watch.user.email)):
-            subject = "%s added a comment on offer [US$ %s / %s]"%(comment.author.getUserInfo().screenName, str(twoplaces(comment.offer.price)), comment.offer.issue.title)
-            contextData = {"you" : watch.user,
-                "issue" : comment.offer.issue,
-                "offer" : comment.offer,
-                "comment" : comment,
-                "SITE_HOME" : settings.SITE_HOME,
-                "type" : "offer"}
-            _send_mail_to_user(watch.user, subject, 'email/comment_added.html', contextData)
+        if(not already_sent_to.has_key(watch.user.email)):
+            send_func(watch)
             already_sent_to[watch.user.email] = True
 
 def notify_admin(subject, msg):
