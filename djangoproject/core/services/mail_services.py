@@ -68,7 +68,7 @@ def notifyWatchers_offerrevoked(offer, comment, watches):
     def send_func(watch):
         if(watch.user.id != offer.sponsor.id):
             _send_mail_to_user(user = watch.user,
-                subject = offer.sponsor.getUserInfo().screenName+" revoked his US$ "+str(offer.price)+" offer for issue [%s]"%offer.issue.title,
+                subject = offer.sponsor.getUserInfo().screenName+" revoked his US$ "+str(twoplaces(offer.price))+" offer for issue [%s]"%offer.issue.title,
                 templateName = 'email/offerrevoked.html',
                 contextData = {"you" : watch.user,
                                "offer" : offer,
@@ -100,7 +100,7 @@ def notifyWatchers_offerchanged(old_offer, new_offer, watches):
         def send_func(watch):
             if(watch.user.id != new_offer.sponsor.id):
                 _send_mail_to_user(user = watch.user,
-                    subject = old_offer.sponsor.getUserInfo().screenName+" "+action+" the US$ "+str(old_offer.price)+" offer on issue [%s]"%old_offer.issue.title,
+                    subject = old_offer.sponsor.getUserInfo().screenName+" "+action+" the US$ "+str(twoplaces(old_offer.price))+" offer on issue [%s]"%old_offer.issue.title,
                     templateName = 'email/offerchanged.html',
                     contextData = {"you" : watch.user,
                                    "old_offer" : old_offer,
