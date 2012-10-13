@@ -21,6 +21,9 @@ DATABASE_NAME = 'frespo'
 DATABASE_USER = 'postgres'
 DATABASE_PASS = ''
 
+GITHUB_BOT_USERNAME = 'freedomsponsors-bot'
+GITHUB_BOT_PASSWORD = '*********'
+
 AUTO_EMAIL_USERNAME = 'noreply@freedomsponsors.com'
 AUTO_EMAIL_PASSWORD = 'ThisIsNotTheRealPassword_obviously'
 
