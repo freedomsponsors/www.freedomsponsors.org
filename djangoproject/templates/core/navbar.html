@@ -15,11 +15,15 @@
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-              <li><a href="{{ user.get_view_link }}">Profile</a></li>
-              <li><a href="/core/user/edit">Edit</a></li>
+              <li><a href="{{ user.get_view_link }}">View Profile</a></li>
+              <li><a href="/core/user/edit">Edit Profile</a></li>
   {% if user.has_usable_password %}
               <li><a href="/accounts/password/change">Change password</a></li>
   {% endif %}
+{% if user and user.is_authenticated %}
+              <li class="divider"></li>
+              <li><a href="/core/myissues">My issues</a></li>
+{% endif %}
               <li class="divider"></li>
               <li><a href="/core/logout">Sign Out</a></li>
             </ul>
@@ -35,19 +39,13 @@
           </a>
           <div class="nav-collapse">
             <ul class="nav">
-{% if user and user.is_authenticated %}
-              <li><a href="/core/myissues">My issues</a></li>
-{% endif %}
               <li><a target="_about" href="http://blog.freedomsponsors.org/about">About</a></li>
               <li><a href="/core/feedback">Feedback</a></li>
-              <li><a href="/core/project">Projects</a></li>
+              <li><a href="/core/issue">Issues</a></li>
             </ul>
           </div><!--/.nav-collapse -->
           {% block menuItems %}
           {% endblock %}
-          <form class="navbar-search" action="/core/issue" method="get">
-            <input type="text" name="s" class="search-query span2" placeholder="Search">
-          </form>
         </div>
       </div>
     </div>
