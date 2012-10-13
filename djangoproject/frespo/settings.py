@@ -217,6 +217,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'core',
     'core_splinter_tests',
+    'gh_frespo_integration',
 #    'bootstrap-pagination'
     'pagination',
     'social_auth',
