@@ -72,6 +72,12 @@ def getUserInfo(self):
 def getSocialAuths(self):
     return UserSocialAuth.objects.filter(user=self)
 
+def github_username(self):
+    for social_auth in self.getSocialAuths():
+        if social_auth.provider == 'github' and social_auth.extra_data.has_key('social_username'):
+            return social_auth.extra_data['social_username']
+    return None
+
 def getOffers(self):
     return Offer.objects.filter(sponsor=self).order_by('status','-price')
 
@@ -129,6 +135,7 @@ User.gravatar_url_medium = gravatar_url_medium
 User.gravatar_url_big = gravatar_url_big
 User.getUserInfo = getUserInfo
 User.getSocialAuths = getSocialAuths
+User.github_username = github_username
 User.getOffers = getOffers
 User.getSolutions = getSolutions
 User.getStats = getStats

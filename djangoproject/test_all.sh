@@ -1,5 +1,5 @@
 export TEST_DBMS=SQLITE
-./manage.py test core
+./manage.py test core gh_frespo_integration
 code1=$?
 export TEST_DBMS=POSTGRES
 ./manage.py test core_splinter_tests

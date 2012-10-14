@@ -23,6 +23,10 @@
 {% if user and user.is_authenticated %}
               <li class="divider"></li>
               <li><a href="/core/myissues">My issues</a></li>
+  {% if user.github_username %}
+              <li class="divider"></li>
+              <li><a href="/github/configure">Github Settings</a></li>
+  {% endif %}
 {% endif %}
               <li class="divider"></li>
               <li><a href="/core/logout">Sign Out</a></li>

@@ -1,0 +1,69 @@
+{% extends "core/base.html" %}
+{% block mainContent%}
+    <h2>Select repositories link issue trackers to</h2>
+    See <a href="http://blog.freedomsponsors.org">this blog post</a> to understand how it works.
+    <form action="/github/configure/submit/" method="post">
+    {% csrf_token %}
+        <input type="hidden" name="repo_count" value="{{ repos|length }}">
+        <table class="table">
+            <tr>
+                <th></th>
+                <th></th>
+                <th style="text-align: center;">
+                    <label>Add Sponsor Links <input type="checkbox" name="checkall_addlink" id="checkall_addlink"></label>
+                </th>
+                <th style="text-align: center;">
+                    <label>New issues only <input type="checkbox" name="checkall_newonly" id="checkall_newonly"></label>
+                </th>
+            </tr>
+            {% for repo in repos %}
+                <tr>
+                    <input type="hidden" name="repoid_{{forloop.counter0}}" value="{{ repo.id }}">
+                    <td width="56"><img src="{{ repo.owner.avatar_url }}" width="48" height="48"></td>
+                    <td style="vertical-align: middle;"><h3>{{ repo.full_name }}</h3></td>
+                    <td style="text-align: center; vertical-align: middle;">
+                        <input type="checkbox" id="check_addlink_{{ forloop.counter0 }}" name="check_addlink_{{ repo.id }}"
+                        {% if repo.add_links %}
+                          checked
+                        {% endif %}
+                        >
+                    </td>
+                    <td style="text-align: center; vertical-align: middle;">
+                        <input type="checkbox" id="check_newonly_{{ forloop.counter0 }}" name="check_newonly_{{ repo.id }}"
+                        {% if repo.new_only %}
+                          checked
+                        {% endif %}
+                        >
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <input type="submit" class="btn btn-primary pull-right">
+    </form>
+    <script>
+
+
+        $(function(){
+            var N = {{ repos|length }};
+
+            var select_all = function(prefix, check){
+                if(!check){
+                    check = false;
+                }
+                for(var i=0; i < N; i++){
+                    $('#'+prefix+'_'+i).attr('checked', check);
+                }
+            };
+
+            $('#checkall_addlink').change(function(){
+                var check = $('#checkall_addlink').attr('checked');
+                select_all('check_addlink', check);
+            });
+
+            $('#checkall_newonly').change(function(){
+                var check = $('#checkall_newonly').attr('checked');
+                select_all('check_newonly', check);
+            });
+        });
+    </script>
+{% endblock mainContent %}

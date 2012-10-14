@@ -1,4 +1,3 @@
-from core.models import *
 from django.utils import unittest
 from core.services import watch_services
 from helpers import test_data, email_asserts
