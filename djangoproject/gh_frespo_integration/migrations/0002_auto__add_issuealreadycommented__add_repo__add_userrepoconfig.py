@@ -36,6 +36,8 @@ class Migration(SchemaMigration):
             ('add_links', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('new_only', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('creationDate', self.gf('django.db.models.fields.DateTimeField')()),
+            ('last_ran', self.gf('django.db.models.fields.DateTimeField')()),
+            ('already_did_old', self.gf('django.db.models.fields.BooleanField')(default=False)),
         ))
         db.send_create_signal('gh_frespo_integration', ['UserRepoConfig'])
 
@@ -107,8 +109,10 @@ class Migration(SchemaMigration):
         'gh_frespo_integration.userrepoconfig': {
             'Meta': {'object_name': 'UserRepoConfig'},
             'add_links': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'already_did_old': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'creationDate': ('django.db.models.fields.DateTimeField', [], {}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'last_ran': ('django.db.models.fields.DateTimeField', [], {}),
             'new_only': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'repo': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['gh_frespo_integration.Repo']"}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"})

@@ -30,6 +30,8 @@ class UserRepoConfig(models.Model):
     add_links = models.BooleanField()
     new_only = models.BooleanField()
     creationDate = models.DateTimeField()
+    last_ran = models.DateTimeField()
+    already_did_old = models.BooleanField()
 
     @classmethod
     def newConfig(cls, user, repo):
@@ -39,8 +41,25 @@ class UserRepoConfig(models.Model):
         config.add_links = False
         config.new_only = False
         config.creationDate = timezone.now()
+        config.last_ran = config.creationDate
+        config.already_did_old = False
         return config
+
+    def update_last_ran(self):
+        self.last_ran = timezone.now()
+        self.save()
+
+    def set_already_did_old(self):
+        self.already_did_old = True
+        self.save()
 
 class IssueAlreadyCommented(models.Model):
     repo = models.ForeignKey(Repo)
     number = models.IntegerField()
+
+    @classmethod
+    def newIssueAlreadyCommented(cls, repo, number):
+        iac = cls()
+        iac.repo = repo
+        iac.number = number
+        return iac

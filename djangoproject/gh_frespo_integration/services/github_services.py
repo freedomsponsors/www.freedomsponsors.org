@@ -1,5 +1,6 @@
 from gh_frespo_integration.utils import github_adapter
 from gh_frespo_integration.models import *
+from django.conf import settings
 import logging
 
 __author__ = 'tony'
@@ -61,3 +62,36 @@ def update_user_configs(user, dict):
         config.save()
         my_repo_ids.append(gh_id)
     UserRepoConfig.objects.filter(user__id = user.id).exclude(repo__gh_id__in = my_repo_ids).delete()
+
+def add_sponsorthis_comments():
+    configs = UserRepoConfig.objects.filter(add_links = True)
+    for config in configs:
+        repo_owner = config.repo.owner
+        repo_name = config.repo.name
+        last_ran = None
+        if config.new_only or config.already_did_old:
+            last_ran = config.last_ran
+        config.update_last_ran()
+        issues = github_adapter.fetch_issues(repo_owner, repo_name, last_ran)
+        for issue in issues:
+            _add_comment_if_not_already(config, int(issue['number']), repo_owner, repo_name)
+        if not config.new_only:
+            config.set_already_did_old()
+
+def _add_comment_if_not_already(repo_config, issue_number, repo_owner, repo_name):
+    issue_already_commented = get_issue_already_commented(repo_config.repo, issue_number)
+    if not issue_already_commented:
+        body = '[Sponsor this issue on FreedomSponsors.org](%s/core/issue/sponsor?trackerURL=https://github.com/%s/%s/issues/%s)' % (settings.SITE_HOME, repo_owner, repo_name, issue_number)
+        github_adapter.bot_comment(repo_owner, repo_name, issue_number, body)
+        issue_already_commented = IssueAlreadyCommented.newIssueAlreadyCommented(repo_config.repo, issue_number)
+        issue_already_commented.save()
+
+def get_issue_already_commented(repo, number):
+    iacs = IssueAlreadyCommented.objects.filter(repo__id = repo.id, number = number)
+    if iacs.count() > 1:
+        logger.error('Database inconsistency: multiple issue_already_commented found for repo:%s / number:%s'%(repo.id, number))
+    elif iacs.count() == 1:
+        return iacs[0]
+    else:
+        return None
+
