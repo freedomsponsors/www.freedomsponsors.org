@@ -15,9 +15,9 @@
                 <th style="text-align: center;">
                     <label>Add Sponsor Links <input type="checkbox" name="checkall_addlink" id="checkall_addlink"></label>
                 </th>
-                <th style="text-align: center;">
+                <!-- <th style="text-align: center;">
                     <label>New issues only <input type="checkbox" name="checkall_newonly" id="checkall_newonly"></label>
-                </th>
+                </th> -->
             </tr>
             {% for repo in repos %}
                 <tr>
@@ -31,13 +31,13 @@
                         {% endif %}
                         >
                     </td>
-                    <td style="text-align: center; vertical-align: middle;">
+                    <!-- <td style="text-align: center; vertical-align: middle;">
                         <input type="checkbox" id="check_newonly_{{ forloop.counter0 }}" name="check_newonly_{{ repo.id }}"
                         {% if repo.new_only %}
                           checked
                         {% endif %}
                         >
-                    </td>
+                    </td> -->
                 </tr>
             {% endfor %}
         </table>
@@ -63,10 +63,10 @@
                 select_all('check_addlink', check);
             });
 
-            $('#checkall_newonly').change(function(){
-                var check = $('#checkall_newonly').attr('checked');
-                select_all('check_newonly', check);
-            });
+           // $('#checkall_newonly').change(function(){
+           //     var check = $('#checkall_newonly').attr('checked');
+           //     select_all('check_newonly', check);
+           // });
         });
     </script>
 {% endblock mainContent %}

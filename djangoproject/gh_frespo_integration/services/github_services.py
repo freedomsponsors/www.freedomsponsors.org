@@ -59,7 +59,8 @@ def update_user_configs(user, dict):
         if not config:
             config = UserRepoConfig.newConfig(user, repodb)
         config.add_links = dict.has_key('check_addlink_%s' % gh_id)
-        config.new_only = dict.has_key('check_newonly_%s' % gh_id)
+#        config.new_only = dict.has_key('check_newonly_%s' % gh_id)
+        config.new_only = True
         config.save()
         my_repo_ids.append(gh_id)
     UserRepoConfig.objects.filter(user__id = user.id).exclude(repo__gh_id__in = my_repo_ids).delete()
