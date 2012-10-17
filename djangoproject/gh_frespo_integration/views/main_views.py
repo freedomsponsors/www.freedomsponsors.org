@@ -19,6 +19,7 @@ def configure(request):
 def configure_submit(request):
     try:
         github_services.update_user_configs(request.user, request.POST)
+        messages.info(request, 'Github settings saved.')
     except BaseException as e:
         repos = []
         messages.error(request, 'Cannot save config repos: '+e.message)
