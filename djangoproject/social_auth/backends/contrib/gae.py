@@ -37,7 +37,7 @@ class GAEAuth(BaseAuth):
     """GoogleAppengine authentication"""
     AUTH_BACKEND = GAEBackend
 
-    def auth_url(self):
+    def auth_url(self, data=None):
         """Build and return complete URL."""
         return users.create_login_url(reverse('socialauth_complete',
                                               args=(self.AUTH_BACKEND.name,)))

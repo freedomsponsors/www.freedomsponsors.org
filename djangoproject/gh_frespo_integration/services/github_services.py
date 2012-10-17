@@ -2,6 +2,7 @@ from gh_frespo_integration.utils import github_adapter
 from gh_frespo_integration.models import *
 from django.conf import settings
 import logging
+from datetime import timedelta
 
 __author__ = 'tony'
 
@@ -65,18 +66,25 @@ def update_user_configs(user, dict):
 
 def add_sponsorthis_comments():
     configs = UserRepoConfig.objects.filter(add_links = True)
+    logger.debug('starting sponsor_this routine...')
     for config in configs:
         repo_owner = config.repo.owner
         repo_name = config.repo.name
         last_ran = None
+        logger.debug('processing repo_config %s (%s/%s)' % (config.id, config.repo.owner, config.repo.name))
         if config.new_only or config.already_did_old:
-            last_ran = config.last_ran
+            last_ran = config.last_ran - timedelta(hours=1)
+            logger.debug('will list issues after %s' % last_ran)
+        else:
+            logger.debug('will list all issues')
         config.update_last_ran()
         issues = github_adapter.fetch_issues(repo_owner, repo_name, last_ran)
+        logger.debug('issues are fetched')
         for issue in issues:
             _add_comment_if_not_already(config, int(issue['number']), repo_owner, repo_name)
         if not config.new_only:
             config.set_already_did_old()
+    logger.debug('sponsor_this ended successfully')
 
 def _add_comment_if_not_already(repo_config, issue_number, repo_owner, repo_name):
     issue_already_commented = get_issue_already_commented(repo_config.repo, issue_number)
@@ -85,6 +93,9 @@ def _add_comment_if_not_already(repo_config, issue_number, repo_owner, repo_name
         github_adapter.bot_comment(repo_owner, repo_name, issue_number, body)
         issue_already_commented = IssueAlreadyCommented.newIssueAlreadyCommented(repo_config.repo, issue_number)
         issue_already_commented.save()
+        logger.info('commented on issue %s of %s/%s' % (issue_number, repo_owner, repo_name))
+    else:
+        logger.debug('NOT commenting on issue %s of %s/%s because it was already commented on' % (issue_number, repo_owner, repo_name))
 
 def get_issue_already_commented(repo, number):
     iacs = IssueAlreadyCommented.objects.filter(repo__id = repo.id, number = number)

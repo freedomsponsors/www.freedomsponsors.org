@@ -717,6 +717,8 @@ class BaseOAuth2(BaseOAuth):
         scope = self.DEFAULT_SCOPE or []
         if self.SCOPE_VAR_NAME:
             scope = scope + setting(self.SCOPE_VAR_NAME, [])
+        if self.data.has_key('add_scopes'):
+            scope = scope + self.data['add_scopes'].split(',')
         return scope
 
 

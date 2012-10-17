@@ -37,13 +37,19 @@ def bot_comment(username, repo_name, issue_number, body):
     if(r.status_code != 201):
         raise BaseException("status %s: %s" % (r.status_code, github_url))
 
+def bot_comment_on_users_behalf(user, username, repo_name, issue_number, body):
+    access_token='' #TODO get user github token (big hex string on the database)
+    github_url = "https://api.github.com/repos/%s/%s/issues/%s/comments?access_token=%s"%(username, repo_name, issue_number, access_token)
+    data = json.dumps({"body": body})
+    r = requests.post(github_url, data, auth=BOT_AUTH)
+    if(r.status_code != 201):
+        raise BaseException("status %s: %s" % (r.status_code, github_url))
+
 def fetch_issues(repo_owner, repo_name, since):
     url = "https://api.github.com/repos/%s/%s/issues" % (repo_owner, repo_name)
-    print since
     if since:
         since_date = since.strftime('%Y-%m-%dT%H:%M:%SZ')
         url += "?since=%s" % since_date
-    print url
     issues = _fetch_json_objects_from_url(url)
     if not since:
         return issues
