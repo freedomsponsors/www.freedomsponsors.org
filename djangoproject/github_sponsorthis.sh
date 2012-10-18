@@ -1,1 +1,1 @@
-./manage.py github_sponsorthis.sh
+./manage.py github_sponsorthis
