@@ -1,0 +1,65 @@
+{% extends "core/base.html" %}
+
+{% block mainContent%}
+
+  <div>
+    <h2> FreedomSponsors is <span style="color:#08C">{{stats.age}}</span> old</h2>
+  </div>
+  <br><br>
+  <div>
+    <h2> <span style="color:#08C">{{stats.user_count}}</span> users have registered so far</h2>
+    of which <span style="color:#08C">{{stats.sponsor_count}}</span> have sponsored and <span style="color:#08C">{{stats.programmer_count}}</span> have worked on issues.
+  </div>
+  <br><br>
+  <div>
+    <h2> There are <span style="color:#08C">{{stats.offer_count}}</span> offers in <span style="color:#08C">{{stats.issue_count}}</span> issues</h2>
+    <span style="color:#08C">{{stats.open_offer_count}}</span> of those offers are open, <span style="color:#08C">{{stats.revoked_offer_count}}</span> are revoked and <span style="color:#08C">{{stats.paid_offer_count}}</span> are paid.
+  </div>
+  <br><br>
+  <div>
+    <h2> Open offers amount to <span style="color:#08C">US$ {{stats.open_sum}}</span></h2>
+    And paid offers..... <span style="color:#08C">US$ {{stats.paid_sum}}</span><br>
+    Revoked offers..... <span style="color:#08C">US$ {{stats.revoked_sum}}</span><br>
+    Expired offers....... <span style="color:#08C">US$ {{stats.expired_sum}}</span>
+  </div>
+  <br><br>
+
+  <div>
+    <h2> And here's a list of our top sponsors </h2>
+    <table>
+      <tr>
+        <th style="text-align:left">Sponsor</th>
+        <th>Open offers</th>
+      </tr>
+      {% for sponsor in stats.sponsors %}
+      <tr>
+        <td><a href="/core/user/{{sponsor.0}}/{{sponsor.1}}">{{sponsor.1}}</td>
+        <td style="text-align:right">{{sponsor.2}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  <br><br>
+  <div>
+    Want to see more stats? Drop us some <a href="/core/feedback">feedback</a>.
+  </div>
+
+{% endblock mainContent%}
+
+def get_stats():
+    return {
+        'age' : _age(),
+        'user_count' : UserInfo.objects.count(),
+        'sponsor_count' : _count(COUNT_SPONSORS),
+        'programmer_count' : _count(COUNT_PROGRAMMERS),
+        'offer_count' : _count(COUNT_OFFERS),
+        'issue_count' : _count(COUNT_ISSUES),
+        'paid_offer_count' : _count(COUNT_OFFERS_PAID),
+        'open_offer_count' : _count(COUNT_OFFERS_OPEN),
+        'revoked_offer_count' : _count(COUNT_OFFERS_REVOKED),
+        'paid_sum' : _sum(SUM_PAID),
+        'open_sum' : _sum(SUM_OPEN),
+        'expired_sum' : _sum(SUM_EXPIRED),
+        'revoked_sum' : _sum(SUM_REVOKED),
+        'sponsors' : _select(SELECT_SPONSORS),
+    }

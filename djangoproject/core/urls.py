@@ -5,6 +5,7 @@ from django.conf import settings
 urlpatterns = patterns('core.views.main_views',
     url(r'^$', 'home'),
     url(r'^home/$', 'home'),
+    url(r'^stats/$', 'stats'),
     url(r'^admail/$', 'admail'),
     url(r'^about/$', TemplateView.as_view(template_name='core/about.html')),
     url(r'^faq/$', TemplateView.as_view(template_name='core/faq.html')),

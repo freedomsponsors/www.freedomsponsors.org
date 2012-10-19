@@ -7,6 +7,7 @@ from django.shortcuts import render_to_response, redirect
 from core.services import issue_services
 from core.utils.frespo_utils import  dictOrEmpty
 from core.services.mail_services import *
+from core.services import stats_services
 from django.contrib import messages
 import logging
 
@@ -64,6 +65,11 @@ def home(request):
         context_instance = RequestContext(request))
 
 
+def stats(request):
+    stats = stats_services.get_stats()
+    return render_to_response('core/stats.html',
+        {'stats':stats,},
+        context_instance = RequestContext(request))
 
 
 
