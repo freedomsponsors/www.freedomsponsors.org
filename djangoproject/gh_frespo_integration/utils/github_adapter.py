@@ -37,13 +37,25 @@ def bot_comment(username, repo_name, issue_number, body):
     if(r.status_code != 201):
         raise BaseException("status %s: %s" % (r.status_code, github_url))
 
+#TODO test
 def bot_comment_on_users_behalf(user, username, repo_name, issue_number, body):
     access_token='' #TODO get user github token (big hex string on the database)
     github_url = "https://api.github.com/repos/%s/%s/issues/%s/comments?access_token=%s"%(username, repo_name, issue_number, access_token)
     data = json.dumps({"body": body})
-    r = requests.post(github_url, data, auth=BOT_AUTH)
+    r = requests.post(github_url, data)
     if(r.status_code != 201):
         raise BaseException("status %s: %s" % (r.status_code, github_url))
+
+#TODO test
+def get_user_authorization_scopes(user):
+    access_token='' #TODO get user github token (big hex string on the database)
+    access_token='1164a3efdfb07ee319a703b32c70b6d7ce3197dd'
+    github_url = "https://api.github.com/rate_limit?access_token=%s" % access_token
+    r = requests.get(github_url)
+    if(r.status_code != 201):
+        raise BaseException("status %s: %s" % (r.status_code, github_url))
+    return r.headers['x-oauth-scopes']
+
 
 def fetch_issues(repo_owner, repo_name, since):
     url = "https://api.github.com/repos/%s/%s/issues" % (repo_owner, repo_name)

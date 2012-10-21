@@ -4,7 +4,8 @@ from django.template import  RequestContext
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, redirect
 from core.utils.frespo_utils import  dictOrEmpty
-from core.services import user_services
+from core.services import user_services, mail_services
+from django.conf import settings
 
 def viewUser(request, user_id):
     user = User.objects.get(pk=user_id)
@@ -39,11 +40,16 @@ def editUserForm(request):
     if(not userinfo):
         userinfo = UserInfo.newUserInfo(request.user)
         userinfo.save()
+        mail_services.welcome(request.user)
+        _notify_admin_new_user(request.user)
     return render_to_response('core/useredit.html',
         {'userinfo':userinfo,
         'next':dictOrEmpty(request.GET, 'next')},
         context_instance = RequestContext(request))
 
+def _notify_admin_new_user(user):
+    mail_services.notify_admin(subject='New user registered: '+user.getUserInfo().screenName,
+        msg=settings.SITE_HOME+user.get_view_link())
 
 @login_required
 def editUser(request):

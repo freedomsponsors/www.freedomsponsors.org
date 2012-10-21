@@ -37,6 +37,12 @@ def notifyWatchers_workbegun(solution, comment, watches):
                                "comment" : comment})
     _notify_watchers(send_func, watches)
 
+def welcome(user):
+    _send_mail_to_user(user=user,
+        subject='Welcome to FreedomSponsors',
+        templateName='email/welcome.html',
+        contextData={"you" : user})
+
 def notifyWatchers_workstopped(solution, comment, watches):
     def send_func(watch):
         if(watch.user.id != solution.programmer.id):
