@@ -56,5 +56,5 @@ def verify_ipn(data):
 	# If not verified
 	if not status == "VERIFIED":
 		return False
- 
+
 	return True

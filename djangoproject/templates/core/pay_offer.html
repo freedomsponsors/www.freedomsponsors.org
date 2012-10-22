@@ -40,14 +40,14 @@
 
 	    <!-- <tr>
 	      <td> -->
-	    <div class="form-inline">
+	    <div>
 	      <div class="span2">
 		      <input type="hidden" checked id="solutionId_{{forloop.counter0}}" name="solutionId_{{forloop.counter0}}" value="{{solution.id}}">
 			  <input type="checkbox" class="sol_checkbox" checked id="check_{{forloop.counter0}}" name="check_{{forloop.counter0}}">
 			  <img src="{{solution.programmer.gravatar_url_small}}"/> {{ solution.programmer.getUserInfo.screenName }}
 	      </div>
-	      <div class="span2">
-		      <input type="text" id="pay_{{forloop.counter0}}" name="pay_{{forloop.counter0}}" class="span6 positive" value="{{shared_price}}" placeholder="{{currency_symbol}}">
+	      <div class="span2 input-prepend">
+		     <span class="add-on">{{currency_symbol}}</span><input type="text" id="pay_{{forloop.counter0}}" name="pay_{{forloop.counter0}}" class="span6 positive" value="{{shared_price}}">
 		  </div>
 		  <div class="span8"></div>
 	    </div><br><br>

@@ -2,15 +2,15 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import redirect, render_to_response
 from django.template import RequestContext
-from core.utils.frespo_utils import get_or_none, dictOrEmpty
+from core.utils.frespo_utils import get_or_none, dictOrEmpty, twoplaces
 from core.models import *
-from core.services import issue_services, watch_services
+from core.services import issue_services, watch_services, payment_services
+from decimal import Decimal
 import logging
 
 logger = logging.getLogger(__name__)
 
 __author__ = 'tony'
-
 
 @login_required
 def addIssue(request):
@@ -219,12 +219,13 @@ def payOfferForm(request, offer_id):
     currency_symbol = "US$"
     alert_brazil = False
     if(offer.sponsor.getUserInfo().brazilianPaypal):
-        convert_rate = 2
+        convert_rate = payment_services.usd_2_brl_convert_rate()
         currency_symbol = "R$"
         alert_brazil = True
 
     if(solutions_done.count() > 0):
-        shared_price = convert_rate* offer.price / solutions_done.count()
+        shared_price = convert_rate * float(offer.price) / solutions_done.count()
+        shared_price = twoplaces(Decimal(shared_price))
 
     return render_to_response('core/pay_offer.html',
         {'offer':offer,

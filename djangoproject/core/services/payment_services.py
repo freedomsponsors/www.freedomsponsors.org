@@ -4,6 +4,7 @@ from core.services.mail_services import notify_payment_parties_paymentconfirmed
 from core.utils.paypal_adapter import generate_paypal_payment
 from core.utils.frespo_utils import get_or_none
 from core.models import Payment, Offer, Solution, PaymentPart
+from core.utils import google_calc_adapter
 import logging
 
 logger = logging.getLogger(__name__)
@@ -63,3 +64,7 @@ def process_ipn_return(paykey, status):
         notify_payment_parties_paymentconfirmed(payment) #TODO Mover pro IPN
     else:
         logger.warn('received a ' + status + ' IPN confirmation')
+
+def usd_2_brl_convert_rate():
+    return google_calc_adapter.usd2brl() * 1.045
+    

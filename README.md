@@ -19,7 +19,7 @@ git clone git://github.com/freedomsponsors/www.freedomsponsors.org.git
 
 # 2.1 Install dependencies
 
-    sudo pip install django splinter pygments misaka psycopg2 simplejson coverage
+    sudo pip install django splinter pygments misaka psycopg2 simplejson coverage python-dateutil
 
 # Depending on your environment, psycopg2 installation with pip might fail.
 # If that's your case, you might also wanna try.
