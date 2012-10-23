@@ -84,6 +84,9 @@ def getOffers(self):
 def getSolutions(self):
     return Solution.objects.filter(programmer=self).order_by('-creationDate')
 
+def getKickstartingIssues(self):
+    return Issue.objects.filter(createdByUser=self, is_public_suggestion=True).order_by('-creationDate')
+
 def set_email_verified(self, is_primary):
     userinfo = self.getUserInfo()
     if is_primary:
@@ -138,6 +141,7 @@ User.getSocialAuths = getSocialAuths
 User.github_username = github_username
 User.getOffers = getOffers
 User.getSolutions = getSolutions
+User.getKickstartingIssues = getKickstartingIssues
 User.getStats = getStats
 User.is_registration_complete = is_registration_complete
 User.get_view_link = get_view_link

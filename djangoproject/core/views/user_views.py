@@ -27,12 +27,6 @@ def viewUser(request, user_id):
     return render_to_response('core/user.html',
         context,
         context_instance = RequestContext(request))
-    
-def viewUserHistory(request, user_id):
-    user = User.objects.get(pk=user_id)
-    return render_to_response('core/userhistory.html',
-        {'le_user':user,},
-        context_instance = RequestContext(request))
 
 @login_required
 def editUserForm(request):
