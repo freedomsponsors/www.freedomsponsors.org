@@ -130,7 +130,7 @@ class AppDriver:
         if kickstarting:
             _waitUntilVisible_id(browser, 'div_step4_w')
             browser.find_by_id('btnSubmitKickstart').click()
-            assert(browser.is_text_present("Kickstarting! Now what?"))
+            _waitUntilTextPresent(browser, "Kickstarting! Now what?")
             browser.click_link_by_text('OK')
         else:
             if(offer_dict.has_key('step4')):
