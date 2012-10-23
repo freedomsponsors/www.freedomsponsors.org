@@ -8,12 +8,13 @@
   <br><br>
   <div>
     <h2> <span style="color:#08C">{{stats.user_count}}</span> users have registered so far</h2>
-    of which <span style="color:#08C">{{stats.sponsor_count}}</span> have sponsored and <span style="color:#08C">{{stats.programmer_count}}</span> have worked on issues.
+    of which <span style="color:#08C">{{stats.sponsor_count}}</span> have sponsored, <span style="color:#08C">{{stats.programmer_count}}</span> have worked on issues, and <span style="color:#08C">{{stats.paid_programmer_count}}</span> have received payments.
   </div>
   <br><br>
   <div>
-    <h2> There are <span style="color:#08C">{{stats.offer_count}}</span> offers in <span style="color:#08C">{{stats.issue_count}}</span> issues</h2>
-    <span style="color:#08C">{{stats.open_offer_count}}</span> of those offers are open, <span style="color:#08C">{{stats.revoked_offer_count}}</span> are revoked and <span style="color:#08C">{{stats.paid_offer_count}}</span> are paid.
+    <h2> There are <span style="color:#08C">{{stats.offer_count}}</span> offers spread across <span style="color:#08C">{{stats.issue_count}}</span> issues and <span style="color:#08C">{{stats.issue_project_count}}</span> projects</h2>
+    <span style="color:#08C">{{stats.open_offer_count}}</span> of those offers are open, <span style="color:#08C">{{stats.revoked_offer_count}}</span> are revoked and <span style="color:#08C">{{stats.paid_offer_count}}</span> are paid.<br>
+    <span style="color:#08C">{{stats.issue_count_sponsoring}}</span> of those issues are being sponsored, and <span style="color:#08C">{{stats.issue_count_kickstarting}}</span> are still in <a href="http://blog.freedomsponsors.org/kickstarting-issues/">"kickstarting mode"</a>.
   </div>
   <br><br>
   <div>
@@ -21,6 +22,25 @@
     And paid offers..... <span style="color:#08C">US$ {{stats.paid_sum}}</span><br>
     Revoked offers..... <span style="color:#08C">US$ {{stats.revoked_sum}}</span><br>
     Expired offers....... <span style="color:#08C">US$ {{stats.expired_sum}}</span>
+  </div>
+  <br><br>
+
+  <div>
+    <h2> Here's how the offers are distributed among projects </h2>
+    <table>
+      <tr>
+        <th style="text-align:left">Project</th>
+        <th>Sponsored issues</th>
+        <th>Total offers</th>
+      </tr>
+      {% for project in stats.projects %}
+      <tr>
+        <td><a href="/core/issue/?s=&project_id={{project.0}}">{{project.1}}</td>
+        <td style="text-align:right">{{project.2}}</td>
+        <td style="text-align:right">{{project.3}}</td>
+      </tr>
+      {% endfor %}
+    </table>
   </div>
   <br><br>
 

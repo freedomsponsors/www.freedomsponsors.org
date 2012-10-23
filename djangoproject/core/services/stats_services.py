@@ -12,15 +12,27 @@ and (o."expirationDate" > now() or o."expirationDate" is null)
 group by ui.user_id, ui."screenName"
 order by s desc"""
 
-COUNT_SPONSORS = "select count(distinct sponsor_id) from core_offer"
+SELECT_SPONSORED_PROJECTS = """select pr.id, pr.name, count(i.id) c, sum(o.price) s
+from core_project pr, core_issue i, core_offer o
+where pr.id = i.project_id and i.id = o.issue_id
+group by pr.id, pr.name
+order by s desc"""
 
+COUNT_SPONSORS = "select count(distinct sponsor_id) from core_offer"
 COUNT_PROGRAMMERS = "select count(distinct programmer_id) from core_solution"
+COUNT_PAID_PROGRAMMERS = """select count(distinct pr.programmer_id) 
+from core_paymentpart pr, core_payment pa
+where pr.payment_id = pa.id
+and pa.status = 'CONFIRMED_IPN'"""
 
 COUNT_OFFERS = "select count(*) from core_offer"
 COUNT_ISSUES = "select count(*) from core_issue where is_feedback = false"
+COUNT_ISSUES_SPONSORING = "select count(*) from core_issue where is_feedback = false and is_public_suggestion = false"
+COUNT_ISSUES_KICKSTARTING = "select count(*) from core_issue where is_feedback = false and is_public_suggestion = true"
 COUNT_OFFERS_PAID = "select count(*) from core_offer where status = 'PAID'"
 COUNT_OFFERS_OPEN = "select count(*) from core_offer where status = 'OPEN'"
 COUNT_OFFERS_REVOKED = "select count(*) from core_offer where status = 'REVOKED'"
+COUNT_PROJECTS = "select count(distinct project_id) from core_issue where is_feedback = false"
 
 SUM_PAID = "select sum (price) from core_offer where status = 'PAID'"
 
@@ -38,8 +50,12 @@ def get_stats():
         'user_count' : UserInfo.objects.count(),
         'sponsor_count' : _count(COUNT_SPONSORS),
         'programmer_count' : _count(COUNT_PROGRAMMERS),
+        'paid_programmer_count' : _count(COUNT_PAID_PROGRAMMERS),
         'offer_count' : _count(COUNT_OFFERS),
         'issue_count' : _count(COUNT_ISSUES),
+        'issue_project_count' : _count(COUNT_PROJECTS),
+        'issue_count_kickstarting' : _count(COUNT_ISSUES_KICKSTARTING),
+        'issue_count_sponsoring' : _count(COUNT_ISSUES_SPONSORING),
         'paid_offer_count' : _count(COUNT_OFFERS_PAID),
         'open_offer_count' : _count(COUNT_OFFERS_OPEN),
         'revoked_offer_count' : _count(COUNT_OFFERS_REVOKED),
@@ -48,6 +64,7 @@ def get_stats():
         'expired_sum' : _sum(SUM_EXPIRED),
         'revoked_sum' : _sum(SUM_REVOKED),
         'sponsors' : _select(SELECT_SPONSORS),
+        'projects' : _select(SELECT_SPONSORED_PROJECTS),
     }
 
 def _age():
