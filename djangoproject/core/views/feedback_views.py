@@ -12,6 +12,7 @@ def feedback(request):
 
 @login_required
 def addFeedback(request):
+    dict = request.POST
     issue_title = dict['title']
     issue_description = dict['description']
     if(not issue_title or not issue_description):
