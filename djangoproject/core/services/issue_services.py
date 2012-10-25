@@ -291,19 +291,11 @@ def _append_project_id_and_update_db_if_needed(issueInfo, trackerURL, user):
             notify_admin("WARNING: Database inconsistency", "more than one project found with url = %s"%issueInfo.project_trackerURL)
         elif(found_projects.count() == 1):
             project = found_projects[0]
-            _update_project_name_if_needed(project, issueInfo.project_name)
         else:
             project = _create_project(issueInfo, user)
     if(project):
         issueInfo.project_id = project.id
         issueInfo.project_homeURL = project.homeURL
-
-
-def _update_project_name_if_needed(project, project_name):
-    if(project.name != project_name):
-        project.name = project_name
-        project.save()
-
 
 def _create_project(issueInfo, createdByUser):
     project = Project.newProject(issueInfo.project_name, createdByUser, '', issueInfo.project_trackerURL)
