@@ -225,7 +225,7 @@ def payOfferForm(request, offer_id):
 
     if(solutions_done.count() > 0):
         shared_price = convert_rate * float(offer.price) / solutions_done.count()
-        shared_price = twoplaces(Decimal(shared_price))
+        shared_price = twoplaces(Decimal(str(shared_price)))
 
     return render_to_response('core/pay_offer.html',
         {'offer':offer,
