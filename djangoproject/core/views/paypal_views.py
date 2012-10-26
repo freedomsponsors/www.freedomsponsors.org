@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
-from core.utils.paypal_adapter import  verify_ipn
+from core.utils import paypal_adapter
 from core.utils.frespo_utils import  dictOrEmpty
 from core.models import  Payment
 from core.services import payment_services
@@ -64,10 +64,11 @@ def paypalCancel(request):
 
 @csrf_exempt
 def paypalIPN(request):
-    if verify_ipn(request.POST.copy()):
+    if paypal_adapter.verify_ipn(request.POST.copy()):
         paykey = request.POST['pay_key']
         status = request.POST['status']
-        payment_services.process_ipn_return(paykey, status)
+        tracking_id = request.POST['tracking_id']
+        payment_services.process_ipn_return(paykey, status, tracking_id)
 
         return HttpResponse("OK")
     else:
