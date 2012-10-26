@@ -3,14 +3,19 @@ import math
 from core.models import *
 from django.db import connection, transaction
 
-SELECT_SPONSORS = """select ui.user_id, ui."screenName", sum(o.price) s
-from auth_user u, core_offer o, core_userinfo ui
-where o.sponsor_id = u.id
-and ui.user_id = u.id
-and o.status = 'OPEN'
-and (o."expirationDate" > now() or o."expirationDate" is null)
+SELECT_SPONSORS = """select ui.user_id user_id, ui."screenName", sum(o.price) as s, sum(o2.price) as s2, coalesce(sum(o.price), 0) + coalesce(sum(o2.price), 0) as s3
+from auth_user u, core_userinfo ui
+    left outer join core_offer o
+    on o.sponsor_id = user_id 
+       and o.status = 'OPEN' 
+       and (o."expirationDate" > now() or o."expirationDate" is null)
+    left outer join core_offer o2
+    on o2.sponsor_id = user_id 
+       and o2.status = 'PAID'
+where ui.user_id = u.id
 group by ui.user_id, ui."screenName"
-order by s desc"""
+having coalesce(sum(o.price), 0) + coalesce(sum(o2.price), 0) > 0
+order by s3 desc"""
 
 SELECT_SPONSORED_PROJECTS = """select pr.id, pr.name, count(i.id) c, sum(o.price) s
 from core_project pr, core_issue i, core_offer o

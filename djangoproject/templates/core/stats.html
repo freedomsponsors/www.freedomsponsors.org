@@ -49,12 +49,16 @@
     <table>
       <tr>
         <th style="text-align:left">Sponsor</th>
-        <th>Open offers</th>
+        <th>Open offers
+        <i class="icon-question-sign popopo" rel="popover" data-content="Green means paid. Orange means open." data-original-title="Colors meaning"></i>
+      </th>
       </tr>
       {% for sponsor in stats.sponsors %}
       <tr>
         <td><a href="/core/user/{{sponsor.0}}/{{sponsor.1}}">{{sponsor.1}}</td>
-        <td style="text-align:right">{{sponsor.2}}</td>
+        <td style="text-align:right">
+          {% include 'core/paid_and_open.html' with vOpen=sponsor.2 vPaid=sponsor.3 %}
+        </td>
       </tr>
       {% endfor %}
     </table>
