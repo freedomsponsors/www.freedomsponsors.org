@@ -57,6 +57,7 @@ def create_dummy_payment():
     payment.setPaykey('PK_ABCDEFG')
     payment.fee = Decimal('0.30')
     payment.total = Decimal('10.00')
+    payment.confirm_key = 'abcd1234'
     payment.save()
     programmer = create_dummy_programmer()
     part = PaymentPart.newPart(payment, programmer, Decimal('10.00'), Decimal('9.70'))

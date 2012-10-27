@@ -10,7 +10,7 @@ class TestPaymentService(unittest.TestCase):
     def test_process_ipn_return(self):
         payment = test_data.create_dummy_payment()
         email_asserts.clear_sent()
-        payment_services.process_ipn_return(payment.paykey, 'COMPLETED')
+        payment_services.process_ipn_return(payment.paykey, 'COMPLETED', 'abcd1234')
         payment = Payment.objects.get(id=payment.id);
         self.assertEquals(Payment.CONFIRMED_IPN, payment.status)
         email_asserts.send_emails()
