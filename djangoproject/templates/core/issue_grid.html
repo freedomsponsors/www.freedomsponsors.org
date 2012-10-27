@@ -18,11 +18,11 @@
       <th>Title</th>
 
       {% ifequal showOffers "true" %}
-      <th>Offers (US$) <i class="icon-question-sign popopo" rel="popover" data-content="$ paid / $ on open offers" data-original-title="Meaning..."></i></th>
+      <th>Offers (US$) <i class="icon-question-sign popopo" rel="popover" data-content="Green means paid. Orange means open." data-original-title="Colors meaning"></i></th>
       {% endifequal %}
 
       {% ifequal showWorking "true" %}
-      <th>Working <i class="icon-question-sign popopo" rel="popover" data-content="Solutions done / Solutions in progress" data-original-title="Meaning..."></i></th>
+      <th>Working <i class="icon-question-sign popopo" rel="popover" data-content="Green means DONE. Orange means IN PROGRESS." data-original-title="Colors meaning"></i></th>
       {% endifequal %}
 
       <th>Added</th>
@@ -48,11 +48,15 @@
       <td><a href="{{ issue.get_view_link }}">{{ issue.title }}</a></td>
 
       {% ifequal showOffers "true" %}
-      <td>{{issue.getTotalPaidPrice}} / {{issue.getTotalOffersPrice}}</td>
+      <td>
+        {% include 'core/green_and_orange.html' with vOpen=issue.getTotalOffersPrice vPaid=issue.getTotalPaidPrice %}
+      </td>
       {% endifequal %}
 
       {% ifequal showWorking "true" %}
-      <td>{{issue.countSolutionsDone}} / {{issue.countSolutionsInProgress}}</td>
+      <td>
+        {% include 'core/green_and_orange.html' with vOpen=issue.countSolutionsInProgress vPaid=issue.countSolutionsDone %}
+      </td>
       {% endifequal %}
 
       <td><span title="{{ issue.creationDate }}">{{ issue.creationDate|date:"D, d/M/Y" }}</span></td>

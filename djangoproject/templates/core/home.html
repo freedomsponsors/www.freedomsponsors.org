@@ -94,7 +94,7 @@
               <tr>
                 <td class="hometablecell" style="width:30px">{{forloop.counter}}.</td>
                 <td class="hometablecell" style="width:70px">
-                  {% include 'core/paid_and_open.html' with vOpen=issue.getTotalOffersPrice vPaid=issue.getTotalPaidPrice %}
+                  {% include 'core/green_and_orange.html' with vOpen=issue.getTotalOffersPrice vPaid=issue.getTotalPaidPrice %}
                 </td>
                 <td class="hometablecell"><a href="{{issue.get_view_link}}"
                   {% if issue.getTotalPaidPrice %}
