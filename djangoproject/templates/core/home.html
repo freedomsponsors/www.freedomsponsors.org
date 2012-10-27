@@ -89,11 +89,13 @@
 
             <!-- left = sponsored -->
             <h2>Sponsored</h2>
-            <table><tbody>
+            <table class="table"><tbody>
               {% for issue in issues_sponsoring %}
               <tr>
                 <td class="hometablecell" style="width:30px">{{forloop.counter}}.</td>
-                <td class="hometablecell" style="width:70px">$ {{issue.getTotalOffersPrice_displayString}}</td>
+                <td class="hometablecell" style="width:70px">
+                  {% include 'core/paid_and_open.html' with vOpen=issue.getTotalOffersPrice vPaid=issue.getTotalPaidPrice %}
+                </td>
                 <td class="hometablecell"><a href="{{issue.get_view_link}}" >{{issue}}</a></td>
               </tr>
               {% endfor %}
@@ -108,7 +110,7 @@
 
             <!-- left = kickstarting -->
             <h2>Kickstarting</h2>
-            <table><tbody>
+            <table class="table"><tbody>
               {% for issue in issues_kickstarting %}
               <tr>
                 <td class="hometablecell" style="width:30px">{{forloop.counter}}.</td>
