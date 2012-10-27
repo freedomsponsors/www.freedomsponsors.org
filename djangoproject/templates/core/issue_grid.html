@@ -1,6 +1,6 @@
 {% with showOffers=showOffers|default:"true" showWorking=showWorking|default:"true" showProject=showProject|default:"true" showKey=showKey|default:"true" showCreatedBy=showCreatedBy|default:"true" %}
 {% load pagination_tags %}
-<table class="table table-condensed table-striped">
+<table class="table table-striped table-condensed">
   <thead>
     <tr>
       {% ifequal showProject "true" %}
@@ -22,7 +22,7 @@
       {% endifequal %}
 
       {% ifequal showWorking "true" %}
-      <th>Working <i class="icon-question-sign popopo" rel="popover" data-content="Green means DONE. Orange means IN PROGRESS." data-original-title="Colors meaning"></i></th>
+      <th>Workers <i class="icon-question-sign popopo" rel="popover" data-content="Green means DONE. Orange means IN PROGRESS." data-original-title="Colors meaning"></i></th>
       {% endifequal %}
 
       <th>Added</th>
@@ -61,7 +61,6 @@
 
       <td><span title="{{ issue.creationDate }}">{{ issue.creationDate|date:"D, d/M/Y" }}</span></td>
     </tr>
-    <tr>
 {% endfor %}
   </tbody>
 </table>
