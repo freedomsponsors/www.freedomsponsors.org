@@ -67,4 +67,6 @@ def process_ipn_return(paykey, status, tracking_id):
 
 def usd_2_brl_convert_rate():
     return google_calc_adapter.usd2brl() * 1.045
-    
+
+def get_offer_payment(offer):
+    return get_or_none(Payment, offer__id = offer.id, status = Payment.CONFIRMED_IPN)

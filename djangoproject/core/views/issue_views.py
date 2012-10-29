@@ -157,9 +157,13 @@ def viewIssue(request, issue_id):
 
 def viewOffer(request, offer_id):
     offer = Offer.objects.get(pk=offer_id)
+    payment = None
     myoffer = None
     mysolution = None
     show_alert = None
+
+    if offer.status == Offer.PAID :
+        payment = payment_services.get_offer_payment(offer)
 
     if(request.user.is_authenticated()):
         mysolution = get_or_none(Solution, issue=offer.issue,programmer=request.user)
@@ -174,6 +178,7 @@ def viewOffer(request, offer_id):
 
     return render_to_response('core/offer.html',
         {'offer':offer,
+         'payment':payment,
         'is_watching':is_watching,
         'issue':offer.issue,
         'show_alert':show_alert,

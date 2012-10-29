@@ -8,7 +8,6 @@
 
 {% block mainContent%}
 
-<input type="hidden" id="offer_id" name="offer_id" value="{{offer.id}}">
 
 <h3>[ Offer ] US$ {{offer.price}} for issue - {{offer.issue.title}} 
 {% if issue.trackerURL %}
@@ -42,6 +41,21 @@
 <div class="alert alert-info">{{offer.issue.description|linebreaks}}</div>
 {% endif %}
 <br><br>
+    {% if payment %}
+        <h3> Paid on {{ payment.lastChangeDate|date:"D, d/M/Y" }}</h3>
+        <table class="table">
+            <tr>
+                <th>Paid to</th>
+                <th>$</th>
+            </tr>
+            {% for part in payment.getParts %}
+                <tr>
+                    <th><a href="{{part.programmer.get_view_link}}"><img src="{{part.programmer.gravatar_url_medium}}"> {{ part.programmer.getUserInfo.screenName }}</a></th>
+                    <th><span style="color:#030"><strong>{{ part.price }}</strong></span></th>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
 <h3>Offer acceptance criteria</h3>
 <div class="alert alert-info">
     {% load markdown %}
@@ -81,7 +95,7 @@
 		<input type="hidden" id="offer_id" name="offer_id" value="{{offer.id}}">
 	    
 	    <div class="control-group" id="div_commentContent">
-	      <label class="control-label" for="description">Your comment</label>
+	      <label class="control-label" for="content">Your comment</label>
 	      <div class="controls">
 	        <textarea class="input-xlarge span10" id="content" name="content" rows="10"></textarea>
 			<p class="help-block">
