@@ -21,7 +21,15 @@
       <td><span title="{{ offer.creationDate }}">{{ offer.creationDate|date:"M/d/Y" }}</span></td>
       <td><span title="{{ offer.expirationDate }}">{{ offer.expirationDate|date:"M/d/Y" }}</span></td>
     </tr>
-    <tr>
+    {% if offer.get_payment %}
+        {% for part in offer.get_payment.getParts %}
+            <tr>
+                <td colspan="3"> </td>
+                <td colspan="2"><a href="{{part.programmer.get_view_link}}"><img src="{{part.programmer.gravatar_url_small}}"> {{ part.programmer.getUserInfo.screenName }}</a></td>
+                <td colspan="2"><span style="color:#030"><strong>{{ offer.get_payment.get_currency_symbol }} {{ part.price }}</strong></span></td>
+            </tr>
+        {% endfor %}
+    {% endif %}
 {% endfor %}
   </tbody>
 </table>

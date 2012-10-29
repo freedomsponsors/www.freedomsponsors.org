@@ -41,21 +41,22 @@
 <div class="alert alert-info">{{offer.issue.description|linebreaks}}</div>
 {% endif %}
 <br><br>
-    {% if payment %}
-        <h3> Paid on {{ payment.lastChangeDate|date:"D, d/M/Y" }}</h3>
+    {% if offer.get_payment %}
+        <h3> Paid on {{ offer.get_payment.lastChangeDate|date:"D, d/M/Y" }}</h3>
         <table class="table">
             <tr>
                 <th>Paid to</th>
                 <th>$</th>
             </tr>
-            {% for part in payment.getParts %}
+            {% for part in offer.get_payment.getParts %}
                 <tr>
-                    <th><a href="{{part.programmer.get_view_link}}"><img src="{{part.programmer.gravatar_url_medium}}"> {{ part.programmer.getUserInfo.screenName }}</a></th>
-                    <th><span style="color:#030"><strong>{{ part.price }}</strong></span></th>
+                    <td><a href="{{part.programmer.get_view_link}}"><img src="{{part.programmer.gravatar_url_medium}}"> {{ part.programmer.getUserInfo.screenName }}</a></td>
+                    <td><span style="color:#030"><strong>{{ offer.get_payment.get_currency_symbol }} {{ part.price }}</strong></span></td>
                 </tr>
             {% endfor %}
         </table>
     {% endif %}
+
 <h3>Offer acceptance criteria</h3>
 <div class="alert alert-info">
     {% load markdown %}
