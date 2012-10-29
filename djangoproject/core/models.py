@@ -333,6 +333,9 @@ class IssueComment(models.Model):
         self.content = content
         self.save()
 
+    def was_edited(self):
+        return IssueCommentHistEvent.objects.filter(comment__id = self.id).count() > 0
+
 class IssueCommentHistEvent(models.Model):
     comment = models.ForeignKey(IssueComment)
     eventDate = models.DateTimeField()
@@ -517,6 +520,9 @@ class OfferComment(models.Model):
         event.save()
         self.content = content
         self.save()
+
+    def was_edited(self):
+        return OfferCommentHistEvent.objects.filter(comment__id = self.id).count() > 0
 
 class OfferCommentHistEvent(models.Model):
     comment = models.ForeignKey(OfferComment)

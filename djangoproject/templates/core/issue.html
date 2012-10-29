@@ -114,6 +114,26 @@ Created by: <a href="{{issue.createdByUser.get_view_link}}">{{issue.createdByUse
   <hr>
 {% endfor %}
 
+<script>
+    function loadCommentHistory(comment_id){
+        $("body").addClass("loading");
+        $.ajax({
+            url: '/core/issue/comment/'+comment_id+'/history',
+            dataType: 'HTML',
+            async: true,
+            success: function(data){
+                document.getElementById('ajax_popup_modal').innerHTML = data
+                $('#ajax_popup_modal').modal()
+                $("body").removeClass("loading");
+                return false;
+            },
+            error: function(a,b,c){
+                alert(a+' '+b+' '+c);
+            }
+        });
+    }
+</script>
+
 {% if user.is_authenticated %}
   <form method="post" class="well form-horizontal" action="/core/issue/comment/add/submit">
   {% csrf_token %}
@@ -122,7 +142,7 @@ Created by: <a href="{{issue.createdByUser.get_view_link}}">{{issue.createdByUse
   	<input type="hidden" id="issue_id" name="issue_id" value="{{issue.id}}">
       
       <div class="control-group" id="div_commentContent">
-        <label class="control-label" for="description">Your comment</label>
+        <label class="control-label" for="content">Your comment</label>
         <div class="controls">
           <textarea class="input-xlarge span10" id="content" name="content" rows="10"></textarea>
           <p class="help-block">

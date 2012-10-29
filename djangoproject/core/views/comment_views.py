@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render_to_response
+from django.template import RequestContext
 from core.models import *
 from core.services import comment_services, watch_services
 
@@ -38,4 +39,8 @@ def editOfferComment(request):
     comment = comment_services.edit_comment_of_offer(comment_id, comment_content, request.user)
     return redirect(comment.offer.get_view_link())
 
-
+def viewIssueCommentHistory(request, comment_id):
+    comment_events = IssueCommentHistEvent.objects.filter(comment__id = comment_id)
+    return render_to_response('core/comment_history.html',
+        {'comment_events':comment_events,},
+        context_instance = RequestContext(request))

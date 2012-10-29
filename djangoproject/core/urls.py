@@ -38,6 +38,7 @@ urlpatterns += patterns('core.views.issue_views',
 urlpatterns += patterns('core.views.comment_views',
     url(r'^issue/comment/add/submit$', 'addIssueComment'),
     url(r'^issue/comment/edit/submit$', 'editIssueComment'),
+    url(r'^issue/comment/(?P<comment_id>\d+)/history$', 'viewIssueCommentHistory'),
     url(r'^offer/comment/add/submit$', 'addOfferComment'),
     url(r'^offer/comment/edit/submit$', 'editOfferComment'),
 )

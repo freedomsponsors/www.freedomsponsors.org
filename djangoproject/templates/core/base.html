@@ -85,6 +85,9 @@
           {% include show_alert %}
           {% endif %}
 
+            <!-- general purpose modal for displaying Ajax-loaded content -->
+            <div class="modal hide fade in" id="ajax_popup_modal">
+            </div>
           {% block mainContent %}
             <p> put some content here </p>
           {% endblock %}
