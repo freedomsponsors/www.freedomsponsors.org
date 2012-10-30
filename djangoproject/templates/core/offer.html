@@ -83,9 +83,29 @@
 <h3>Offer comments</h3>
 {% for comment in offer.getComments %}
   <hr>
-
-  	  {% include 'core/include_comment.html' with counter=forloop.counter formaction='/core/offer/comment/edit/submit' %}
+  {% include 'core/include_comment.html' with counter=forloop.counter formaction='/core/offer/comment/edit/submit' %}
 {% endfor %}
+
+<script>
+    function loadCommentHistory(comment_id){
+        $("body").addClass("loading");
+        $.ajax({
+            url: '/core/offer/comment/'+comment_id+'/history',
+            dataType: 'HTML',
+            async: true,
+            success: function(data){
+                document.getElementById('ajax_popup_modal').innerHTML = data
+                $('#ajax_popup_modal').modal()
+                $("body").removeClass("loading");
+                return false;
+            },
+            error: function(a,b,c){
+                alert(a+' '+b+' '+c);
+            }
+        });
+    }
+</script>
+
 
 {% if user.is_authenticated %}
 
