@@ -2,6 +2,7 @@ from core.models import *
 from django.utils import unittest
 from core.services import payment_services, watch_services
 from helpers import test_data, email_asserts
+from django.conf import settings
 
 __author__ = 'tony'
 
@@ -20,5 +21,5 @@ class TestPaymentService(unittest.TestCase):
         email_asserts.assert_sent(self, to=payment.offer.sponsor.email, subject="You have made a US$ 10.00 payment")
         email_asserts.assert_sent(self, to=payment.getParts()[0].programmer.email, subject="User One has made you a US$ 10.00 payment")
         email_asserts.assert_sent(self, to=watcher.email, subject="User One has paid his offer [US$ 10.00 / Compiled native SQL queries are not cached]")
-        email_asserts.assert_sent(self, to='tonylampada@gmail.com', subject="payment confirmed: [US$ 10.00 / Compiled native SQL queries are not cached]")
+        email_asserts.assert_sent(self, to=settings.ADMINS[0][1], subject="payment confirmed: [US$ 10.00 / Compiled native SQL queries are not cached]")
 
