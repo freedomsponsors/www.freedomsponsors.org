@@ -16,7 +16,7 @@ def createDummyUserRandom(login, password):
 
 def create_dummy_sponsor():
     randomnum = randint(0,100000)
-    user = User.objects.create_user('userone_%s'%randomnum, 'userone@gogogo.com', 'abcdef')
+    user = User.objects.create_user('userone_%s'%randomnum, 'userone_%s@gogogo.com'%randomnum, 'abcdef')
     userinfo = UserInfo.newUserInfo(user)
     userinfo.screenName = 'User One'
     userinfo.realName = 'User One'
@@ -25,7 +25,7 @@ def create_dummy_sponsor():
 
 def create_dummy_programmer():
     randomnum = randint(0,100000)
-    user = User.objects.create_user('usertwo_%s'%randomnum, 'usertwo@gogogo.com', 'abcdef')
+    user = User.objects.create_user('usertwo_%s'%randomnum, 'usertwo_%s@gogogo.com'%randomnum, 'abcdef')
     userinfo = UserInfo.newUserInfo(user)
     userinfo.screenName = 'User Two'
     userinfo.realName = 'User Two'

@@ -1,8 +1,9 @@
 from decimal import Decimal
 from django.conf import settings
-from core.services.mail_services import notify_payment_parties_paymentconfirmed, notify_admin
+from core.services.mail_services import notify_payment_parties_and_watchers_paymentconfirmed, notify_admin
+from core.services import watch_services
 from core.utils.paypal_adapter import generate_paypal_payment
-from core.utils.frespo_utils import get_or_none
+from core.utils.frespo_utils import get_or_none, twoplaces
 from core.models import Payment, Offer, Solution, PaymentPart
 from core.utils import google_calc_adapter
 import logging
@@ -61,9 +62,15 @@ def process_ipn_return(paykey, status, tracking_id):
             raise BaseException('payment not found ' + paykey)
         payment.confirm_ipn()
         payment.offer.paid()
-        notify_payment_parties_paymentconfirmed(payment)
+        watches = watch_services.find_issue_and_offer_watches(payment.offer)
+        notify_payment_parties_and_watchers_paymentconfirmed(payment, watches)
+        notify_admin_payment_confirmed(payment)
     else:
         logger.warn('received a ' + status + ' IPN confirmation')
+
+def notify_admin_payment_confirmed(payment):
+    notify_admin('payment confirmed: [%s %s / %s]'%(payment.get_currency_symbol(), twoplaces(payment.total), payment.offer.issue.title),
+        payment.offer.get_view_link())
 
 def usd_2_brl_convert_rate():
     return google_calc_adapter.usd2brl() * 1.045

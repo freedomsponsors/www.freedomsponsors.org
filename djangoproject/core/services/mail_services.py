@@ -115,7 +115,8 @@ def notifyWatchers_offerchanged(old_offer, new_offer, watches):
                                    "SITE_HOME" : settings.SITE_HOME})
         _notify_watchers(send_func, watches)
 
-def notify_payment_parties_paymentconfirmed(payment):
+def notify_payment_parties_and_watchers_paymentconfirmed(payment, watches):
+    already_sent_to = {}
     for part in payment.getParts():
         _send_mail_to_user(user = part.programmer, 
             subject = payment.offer.sponsor.getUserInfo().screenName+" has made you a "+payment.get_currency_symbol()+" "+str(twoplaces(part.price))+" payment",
@@ -123,12 +124,24 @@ def notify_payment_parties_paymentconfirmed(payment):
             contextData = {"payment" : payment,
             "part" : part,
             "SITE_HOME" : settings.SITE_HOME})
+        already_sent_to[part.programmer.email] = True
     _send_mail_to_user(user = payment.offer.sponsor,
         subject = "You have made a "+payment.get_currency_symbol()+" "+str(twoplaces(payment.total))+" payment",
         templateName = 'email/payment_sent.html',
         contextData = {"payment" : payment,
         "SITE_HOME" : settings.SITE_HOME})
-        
+    already_sent_to[payment.offer.sponsor.email] = True
+    def send_func(watch):
+        subject = "%s has paid his offer [US$ %s / %s]" % (
+            payment.offer.sponsor.getUserInfo().screenName, str(twoplaces(payment.offer.price)), payment.offer.issue.title)
+        contextData = {"you": watch.user,
+                       "issue": payment.offer.issue,
+                       "offer": payment.offer,
+                       "SITE_HOME": settings.SITE_HOME,}
+        _send_mail_to_user(watch.user, subject, 'email/payment_made.html', contextData)
+    _notify_watchers(send_func, watches, already_sent_to)
+
+
 def notifyWatchers_newissuecomment(comment, watches):
     def send_func(watch):
         if(watch.user.id != comment.author.id):
@@ -155,8 +168,9 @@ def notifyWatchers_newoffercomment(comment, watches):
             _send_mail_to_user(watch.user, subject, 'email/comment_added.html', contextData)
     _notify_watchers(send_func, watches)
 
-def _notify_watchers(send_func, watches):
-    already_sent_to = {}
+def _notify_watchers(send_func, watches, already_sent_to = None):
+    if not already_sent_to:
+        already_sent_to = {}
     for watch in watches:
         if(not already_sent_to.has_key(watch.user.email)):
             send_func(watch)
