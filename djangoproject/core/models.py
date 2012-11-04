@@ -727,6 +727,7 @@ class PaymentHistEvent(models.Model):
 class PaymentPart(models.Model):
     payment = models.ForeignKey(Payment)
     programmer = models.ForeignKey(User)
+    paypalEmail = models.EmailField(max_length=256, null=True)
     price = models.DecimalField(max_digits=9, decimal_places=2)
     realprice = models.DecimalField(max_digits=9, decimal_places=2)
 
@@ -735,6 +736,7 @@ class PaymentPart(models.Model):
         part = cls()
         part.payment = payment
         part.programmer = programmer
+        part.paypalEmail = programmer.getUserInfo().paypalEmail
         part.price = Decimal(price)
         part.realprice = Decimal(realprice)
         return part
