@@ -132,6 +132,16 @@
 				Send me notification mail about the issues that I'm involved with
 			</label>
 		</div>
+		<div class="control-group controls">
+			<label class="checkbox">
+				<input type="checkbox" id="hide_from_userlist" name="hide_from_userlist" value="hide_from_userlist" 
+				{% if userinfo.hide_from_userlist %}
+				checked
+				{% endif %}
+				>
+				Do not include me in the public user listing
+			</label>
+		</div>
 		<div class="form-actions">
 			<a id="btnCancel" class="btn btn-primary" href="{{user.get_view_link}}">Cancel</a>
 			<button id="btnSubmit" class="btn btn-success">Submit</button>

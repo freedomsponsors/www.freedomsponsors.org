@@ -1,6 +1,8 @@
 from core.utils.frespo_utils import socialImages, dictOrEmpty
 from emailmgr import utils as emailmgr_utils
 from emailmgr.models import EmailAddress
+from django.contrib.auth.models import User
+from core.models import *
 
 __author__ = 'tony'
 
@@ -44,6 +46,7 @@ def edit_existing_user(user, dict):
     userinfo.realName = dict['realName']
     userinfo.receiveAllEmail = dict.has_key('receiveAllEmail')
     userinfo.brazilianPaypal = dict.has_key('brazilianPaypal')
+    userinfo.hide_from_userlist = dict.has_key('hide_from_userlist')
     newEmail = dict['primaryEmail']
     newPaypalEmail = dictOrEmpty(dict, 'paypalEmail')
     if(not newPaypalEmail):
@@ -52,6 +55,9 @@ def edit_existing_user(user, dict):
     paypalActivation = _changePaypalEmailIfNeeded(userinfo, newPaypalEmail)
     userinfo.save()
     return paypalActivation, primaryActivation
+
+def get_users_list():
+    return UserInfo.objects.filter(hide_from_userlist = False).order_by("id")
 
 
 def _changePaypalEmailIfNeeded(userinfo, newPaypalEmail):

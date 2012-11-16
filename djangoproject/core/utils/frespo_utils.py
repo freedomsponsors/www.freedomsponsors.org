@@ -12,6 +12,15 @@ socialImages = {'google' : '/static/img/google.gif',
 #    'myopenid' : '/static/img/myopenid.png'
 }
 
+socialImages_small = {'google' : '/static/img/google_small.png',
+    'yahoo':'/static/img/yahoo_small.png',
+    'facebook':'/static/img/facebook_small.png',
+    'twitter':'/static/img/twitter_small.png',
+    'github' : '/static/img/github_small.gif',
+    'bitbucket' : '/static/img/bitbucket_small.png',
+#    'myopenid' : '/static/img/myopenid.png'
+}
+
 def validateIssueURL(url):
     parsedURL = urlparse(url)
     if(not parsedURL.scheme == 'http' and not parsedURL.scheme == 'https'):

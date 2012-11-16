@@ -59,6 +59,7 @@ urlpatterns += patterns('core.views.paypal_views',
 )
 
 urlpatterns += patterns('core.views.user_views',
+    url(r'^user/$', 'listUsers'),
     url(r'^user/(?P<user_id>\d+)/$', 'viewUser'),
     url(r'^user/(?P<user_id>\d+)/.*$', 'viewUser'),
     url(r'^user/edit$', 'editUserForm'),

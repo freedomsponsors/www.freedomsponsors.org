@@ -5,7 +5,7 @@ from django.utils import timezone
 from datetime import timedelta
 from django.contrib.auth.models import User
 import urllib, hashlib, time, random
-from core.utils.frespo_utils import get_or_none, socialImages
+from core.utils.frespo_utils import get_or_none, socialImages, socialImages_small
 from social_auth.models import UserSocialAuth
 from django.utils.http import urlquote
 from django.template.defaultfilters import slugify
@@ -23,6 +23,7 @@ class UserInfo(models.Model):
     brazilianPaypal = models.BooleanField()
     is_primary_email_verified = models.BooleanField()
     is_paypal_email_verified = models.BooleanField()
+    hide_from_userlist = models.BooleanField()
 
     @classmethod
     def newUserInfo(cls, user):
@@ -37,6 +38,7 @@ class UserInfo(models.Model):
         userinfo.realName = user.first_name+' '+user.last_name
         userinfo.receiveAllEmail = True
         userinfo.brazilianPaypal = False
+        userinfo.hide_from_userlist = False
         return userinfo
 
     def is_differentPaypalEmail(self):
@@ -153,6 +155,12 @@ def getSocialIcon(self):
     else:
         return None
 
+def getSocialIcon_small(self):
+    if(socialImages_small.has_key(self.provider)):
+        return socialImages_small[self.provider]
+    else:
+        return None
+
 def getSocialProfileLink(self):
     if(self.provider == 'facebook'):
         return 'http://www.facebook.com/'+self.uid
@@ -164,6 +172,7 @@ def getSocialProfileLink(self):
         return None
 
 UserSocialAuth.getSocialIcon = getSocialIcon
+UserSocialAuth.getSocialIcon_small = getSocialIcon_small
 UserSocialAuth.getSocialProfileLink = getSocialProfileLink
 
 
