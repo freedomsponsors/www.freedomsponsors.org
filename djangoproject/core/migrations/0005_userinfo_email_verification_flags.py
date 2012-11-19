@@ -3,14 +3,13 @@ import datetime
 from south.db import db
 from south.v2 import DataMigration
 from django.db import models
-from core.models import UserInfo
 
 class Migration(DataMigration):
 
     def forwards(self, orm):
         "Write your forwards methods here."
         # Note: Remember to use orm['appname.ModelName'] rather than "from appname.models..."
-        for userinfo in UserInfo.objects.all():
+        for userinfo in orm.UserInfo.objects.all():
             userinfo.is_primary_email_verified = True
             userinfo.is_paypal_email_verified = (userinfo.paypalEmail == userinfo.user.email)
             userinfo.save()
