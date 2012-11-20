@@ -57,7 +57,7 @@ def edit_existing_user(user, dict):
     return paypalActivation, primaryActivation
 
 def get_users_list():
-    return UserInfo.objects.filter(hide_from_userlist = False).order_by("id")
+    return UserInfo.objects.filter(hide_from_userlist = False).order_by("-id")
 
 
 def _changePaypalEmailIfNeeded(userinfo, newPaypalEmail):
