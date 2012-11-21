@@ -51,6 +51,11 @@ class UserInfo(models.Model):
         else:
             return "http://"+self.website
 
+    def get_website_short(self):
+        if self.website and len(self.website) > 40:
+            return self.website[0:40]+'...'
+        return self.website
+
     def is_complete(self):
         return self.screenName and self.realName and self.user.email
 

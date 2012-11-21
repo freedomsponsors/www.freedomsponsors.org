@@ -10,7 +10,7 @@
     <tr>
       <th>User</th>
       <th style="width:120px">Social links</th>
-      <th  style="width:280px">Home page</th>
+      <th>Home page</th>
       <th>About</th>
     </tr>
   </thead>
@@ -28,7 +28,7 @@
         {% endif %}
         {% endfor %}
       </td>
-      <td><a href="{{userinfo.website}}">{{userinfo.website}}</a></td>
+      <td><a href="{{userinfo.get_website_url}}">{{userinfo.get_website_short}}</a></td>
       <td>
         {% autoescape off %}
         {{ userinfo.about|markdown }}    
