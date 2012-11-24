@@ -389,8 +389,8 @@
         if(!avulsa && issueInfo.error){
           document.getElementById('div_issue_fill_gaps').innerHTML = 'It was not possible to determine all issue atributes from its URL. Would you be so kind to fill the gaps? <br> ('+issueInfo.error+')';
         }
-        setEnabled($key, !avulsa && !issueInfo.key);
-        setEnabled($title, avulsa || !issueInfo.issue_title);
+        // setEnabled($key, !avulsa && !issueInfo.key);
+        // setEnabled($title, avulsa || !issueInfo.issue_title);
         setVisibleHiding($div_key, !avulsa);
         setVisibleHiding($div_description, avulsa);
       }
@@ -402,9 +402,9 @@
         setVisibleHiding($div_project_typeahed, !project_exists);
         setVisibleHiding($div_createProject, !project_exists);
         setVisibleSliding($div_newProject, stage.must_complete_project());
-        setEnabled($newProjectName, !issueInfo.project_name);
-        setEnabled($newProjectHomeURL, !issueInfo.project_homeURL);
-        setEnabled($newProjectTrackerURL, !issueInfo.project_trackerURL);
+        // setEnabled($newProjectName, !issueInfo.project_name);
+        // setEnabled($newProjectHomeURL, !issueInfo.project_homeURL);
+        // setEnabled($newProjectTrackerURL, !issueInfo.project_trackerURL);
       }
 
       if(showStep4){
