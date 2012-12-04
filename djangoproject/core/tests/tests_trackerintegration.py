@@ -88,3 +88,12 @@ class TrackerUtilsTest(TestCase):
     def test_nowhere(self):
         issueInfo = fetchIssueInfo("https://theres.nothing.here/jira/browse/NOTHING-123")
         assert(issueInfo.error)
+
+    def test_chromium_googlecode(self):
+        issueInfo = fetchIssueInfo("http://code.google.com/p/chromium/issues/detail?id=140028")
+        assert not issueInfo.error
+        assert issueInfo.tracker == 'GOOGLECODE'
+        assert issueInfo.key == '140028'
+        assert issueInfo.project_trackerURL == 'http://code.google.com/p/chromium/issues/list'
+        assert issueInfo.project_name == 'chromium'
+        assert issueInfo.issue_title == 'Slow memory leak seen when Google Analytics loaded in Chrome with Real Time view'

@@ -1,5 +1,5 @@
 import httplib2
-from urlparse import urlparse
+from urlparse import urlparse, parse_qs
 import re
 from xml.dom.minidom import parseString
 import json
@@ -25,6 +25,8 @@ def fetchIssueInfo(issueURL):
 		info = retriveBugzillaInfo(issueURL)
 	elif(looks_like_bitbucket(issueURL)):
 		info = retrieveBitBucketInfo(issueURL)
+	elif(looks_like_google_code(issueURL)):
+		info = retrieveGoogleCodeInfo(issueURL)
 	else:
 		info = IssueInfo()
 	if(info.error):
@@ -183,3 +185,39 @@ def retrieveBitBucketInfo(url):
 	except httplib2.HttpLib2Error as e:
 		info.error = e.message
 	return info
+
+######## Google Code ##########
+
+def retrieveGoogleCodeInfo(url):
+	info = IssueInfo()
+	parsedURL = urlparse(url)
+	pathTokens = parsedURL.path.split('/')
+	if len(pathTokens) < 5 or pathTokens[1] != 'p' or pathTokens[3] != 'issues' or pathTokens[4] != 'detail':
+		info.error = "URL doesn't look like a Google Code issue link"
+		return info
+	info.key = parse_qs(parsedURL.query)['id'][0]
+	info.tracker = 'GOOGLECODE'
+	info.project_name = pathTokens[2]
+	info.project_trackerURL = info.project_trackerURL = parsedURL.scheme+'://'+parsedURL.netloc+'/p/'+info.project_name+'/issues/list'
+	issueUrl = 'https://code.google.com/feeds/issues/p/' + info.project_name + '/issues/full?id=' + info.key
+
+	h = httplib2.Http(disable_ssl_certificate_validation=True)
+	try: 
+		resp, content = h.request(issueUrl)
+		if resp.status == 200:
+			try:
+				dom = parseString(content)
+				entry = dom.getElementsByTagName('entry')[0]
+				info.issue_title = entry.getElementsByTagName('title')[0].childNodes[0].wholeText
+			except:
+				info.error = 'Could not parse XML from: '+issueUrl
+		else:
+			info.error = ('status %s: '%resp.status)+issueUrl
+	except httplib2.HttpLib2Error as e:
+		info.error = e.message
+	return info
+			
+	
+def looks_like_google_code(url):
+	parsedURL = urlparse(url)
+	return parsedURL.netloc.lower() == 'code.google.com'
