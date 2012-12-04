@@ -12,7 +12,10 @@ def clear_sent():
     mail.outbox = []
 
 def assert_sent_count(testcase, count):
-    testcase.assertEquals(count, len(mail.outbox))
+    msg = 'sent %s emails instead of %s :\n' % (len(mail.outbox), count)
+    for message in mail.outbox:
+        msg += '\tTO: '+str(message.to) + ' / SUBJECT: '+message.subject+'\n'
+    testcase.assertEquals(count, len(mail.outbox), msg)
 
 def assert_sent(testcase, to, subject):
     found = False
