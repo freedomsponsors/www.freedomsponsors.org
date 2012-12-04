@@ -12,3 +12,5 @@ chromedriver.log
 coverage_html_report
 report.xml
 htmlcov
+bitcoin_json.txt
+bitcoin_senhas.txt
