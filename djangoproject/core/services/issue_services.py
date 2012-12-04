@@ -1,4 +1,5 @@
 from decimal import Decimal
+from django.db.models import Q
 from core.services.mail_services import *
 from core.services import watch_services
 from core.utils.frespo_utils import dictOrEmpty, validateURL, validateIssueURL, get_or_none
@@ -11,7 +12,7 @@ logger = logging.getLogger(__name__)
 __author__ = 'tony'
 
 def search_issues(project_id=None, project_name=None, search_terms='', is_public_suggestion=None):
-    issues = Issue.objects.filter(is_feedback=False)
+    issues = Issue.objects.filter(Q(is_feedback=False) | Q(offer__isnull=False))
     if is_public_suggestion != None:
         issues = issues.filter(is_public_suggestion=is_public_suggestion)
     if project_id:
