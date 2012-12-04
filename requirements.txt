@@ -1,0 +1,8 @@
+django==1.4
+splinter
+pygments
+misaka
+psycopg2
+simplejson
+coverage
+python-dateutil

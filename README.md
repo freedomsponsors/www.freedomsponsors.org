@@ -24,7 +24,7 @@ Instructions to run application locally:
   2.1 Install dependencies.
 
     ```bash
-    sudo pip install django splinter pygments misaka psycopg2 simplejson coverage python-dateutil
+    sudo pip install -r requirements.txt
     ```
 
     Depending on your environment, psycopg2 installation with pip might fail.
