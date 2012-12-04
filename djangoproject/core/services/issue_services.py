@@ -12,8 +12,9 @@ logger = logging.getLogger(__name__)
 __author__ = 'tony'
 
 def search_issues(project_id=None, project_name=None, search_terms='', is_public_suggestion=None):
-    issues = Issue.objects.filter(Q(is_feedback=False) | Q(offer__isnull=False)) #woops
-    issues = Issue.objects.filter(Q(is_feedback=False))
+    issues = Issue.objects.filter(Q(is_feedback=False) | Q(offer__isnull=False)).distinct()
+    # issues = Issue.objects.filter(Q(is_feedback=False) | Q(is_public_suggestion = False))
+    # issues = Issue.objects.filter(Q(is_feedback=False) | Q(is_public_suggestion = False))
     if is_public_suggestion != None:
         issues = issues.filter(is_public_suggestion=is_public_suggestion)
     if project_id:
