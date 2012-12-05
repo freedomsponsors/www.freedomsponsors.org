@@ -220,6 +220,7 @@ class Issue(models.Model):
     description = models.TextField(null=True, blank=True)
     createdByUser = models.ForeignKey(User)
     creationDate = models.DateTimeField()
+    updatedDate = models.DateTimeField(null=True, blank=True)
     trackerURL = models.URLField(null=True, blank=True)
     is_feedback = models.BooleanField()
     is_public_suggestion = models.BooleanField()
@@ -266,6 +267,10 @@ class Issue(models.Model):
             if (not offer.is_expired()):
                 s = s + offer.price
         return s
+
+    def touch(self):
+        self.updatedDate = timezone.now()
+        self.save()
 
     def getTotalPaidPrice(self):
         offers = Offer.objects.filter(issue=self,status=Offer.PAID)

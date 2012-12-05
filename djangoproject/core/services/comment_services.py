@@ -6,6 +6,7 @@ __author__ = 'tony'
 
 def add_comment_to_offer(offer_id, comment_content, user):
     offer = Offer.objects.get(pk=offer_id)
+    offer.issue.touch()
     comment = OfferComment.newComment(offer, user, comment_content)
     comment.save()
     watches = watch_services.find_issue_and_offer_watches(comment.offer)
@@ -29,6 +30,7 @@ def edit_comment_of_issue(comment_id, comment_content, user):
 
 def add_comment_to_issue(issue_id, comment_content, user):
     issue = Issue.objects.get(pk=issue_id)
+    issue.touch()
     comment = IssueComment.newComment(issue, user, comment_content)
     comment.save()
     watches = watch_services.find_issue_watches(comment.issue)

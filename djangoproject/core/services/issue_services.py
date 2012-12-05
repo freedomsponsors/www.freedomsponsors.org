@@ -21,7 +21,7 @@ def search_issues(project_id=None, project_name=None, search_terms='', is_public
         issues = issues.filter(project__name__icontains=project_name)
     if search_terms:
         issues = issues.filter(title__icontains=search_terms)
-    issues = issues.order_by('-creationDate')
+    issues = issues.order_by('-updatedDate')
     return issues
 
 
@@ -61,6 +61,7 @@ def kickstart_new_issue(dict, user):
 
 def sponsor_existing_issue(issue_id, dict, user):
     issue = Issue.objects.get(pk=issue_id)
+    issue.touch()
     _throwIfAlreadySponsoring(issue, user)
     offer = _buildOfferFromDictionary_and_issue(dict, user, issue);
     offer.save()
@@ -81,6 +82,7 @@ def sponsor_existing_issue(issue_id, dict, user):
 
 def change_existing_offer(offer_id, offerdict, user):
     offer = Offer.objects.get(pk=offer_id)
+    offer.issue.touch()
     _throwIfNotOfferOwner(offer, user)
     old_offer = offer.clone()
     offer.changeOffer(offerdict)
@@ -91,6 +93,7 @@ def change_existing_offer(offer_id, offerdict, user):
 
 def add_solution_to_existing_issue(issue_id, comment_content, user):
     issue = Issue.objects.get(pk=issue_id)
+    issue.touch()
     solution = get_or_none(Solution, issue=issue, programmer=user)
     if(solution):
         _throwIfSolutionInProgress(solution, user, 'add solution')
@@ -109,6 +112,7 @@ def add_solution_to_existing_issue(issue_id, comment_content, user):
 
 def abort_existing_solution(solution_id, comment_content, user):
     solution = Solution.objects.get(pk=solution_id)
+    solution.issue.touch()
     _throwIfNotSolutionOwner(solution, user)
     _throwIfSolutionNotInProgress(solution, user, 'abort solution')
     solution.abort()
@@ -124,6 +128,7 @@ def abort_existing_solution(solution_id, comment_content, user):
 
 def revoke_existing_offer(offer_id, comment_content, user):
     offer = Offer.objects.get(pk=offer_id)
+    offer.issue.touch()
     _throwIfNotOfferOwner(offer, user)
     _throwIfOfferNotOpen(offer, user, 'revoke offer')
     offer.revoke()
@@ -138,6 +143,7 @@ def revoke_existing_offer(offer_id, comment_content, user):
 
 def resolve_existing_solution(solution_id, comment_content, user):
     solution = Solution.objects.get(pk=solution_id)
+    solution.issue.touch()
     _throwIfNotSolutionOwner(solution, user)
     _throwIfSolutionNotInProgress(solution, user, 'resolve solution')
     solution.resolve()
