@@ -13,8 +13,8 @@
 
 
 {% block mainContent%}
-
-<h3> [ Issue ] 
+<div id="main-content">
+<h3 class="issue-header"> [ Issue ] 
   {% if issue.key %}
     {{issue.key}}:
   {% endif %}
@@ -27,7 +27,7 @@
 <hr>
 
 {% include 'core/issue_offer_action_bar.html' %}
-
+<div id="issue-info">
 Created by: <a href="{{issue.createdByUser.get_view_link}}">{{issue.createdByUser.getUserInfo.screenName}}</a>
 {% if issue.project %}
  | Project: <a target="_project" href="{{issue.project.homeURL}}">{{issue.project.name}}</a>
@@ -37,10 +37,11 @@ Created by: <a href="{{issue.createdByUser.get_view_link}}">{{issue.createdByUse
 <h3>Issue Description</h3>
 <div class="alert alert-info">{{ issue.description|linebreaks }}</div>
 {% endif %}
-
+</div>
 <hr>
 
 {% if issue.getOffers %}
+<div id="issue-offers">
 <h3> Offers </h3>
 <table class="table table-condensed table-striped">
   <thead>
@@ -79,10 +80,12 @@ Created by: <a href="{{issue.createdByUser.get_view_link}}">{{issue.createdByUse
 {% endfor %}
   </tbody>
 </table>
+</div>
 {% endif %}
 
 
 {% if issue.getSolutions %}
+<div id="issue-solutions">
 	<h3> People working on this issue </h3>
 	<table class="table table-condensed table-striped">
 	  <thead>
@@ -103,9 +106,10 @@ Created by: <a href="{{issue.createdByUser.get_view_link}}">{{issue.createdByUse
 	{% endfor %}
 	  </tbody>
 	</table>
+	</div>
 {% endif %}
 
-
+<div id="issue-comments">
 <h3>Issue comments</h3>
   <hr>
 {% for comment in issue.getComments %}
@@ -133,6 +137,7 @@ Created by: <a href="{{issue.createdByUser.get_view_link}}">{{issue.createdByUse
         });
     }
 </script>
+</div>
 
 {% if user.is_authenticated %}
   <form method="post" class="well form-horizontal" action="/core/issue/comment/add/submit">
@@ -181,5 +186,5 @@ Created by: <a href="{{issue.createdByUser.get_view_link}}">{{issue.createdByUse
     $(divid).html(html)
   }
 </script>
-
+</div>
 {% endblock mainContent%}
