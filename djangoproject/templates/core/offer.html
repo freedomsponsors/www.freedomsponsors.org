@@ -118,10 +118,13 @@
 	    <div class="control-group" id="div_commentContent">
 	      <label class="control-label" for="content">Your comment</label>
 	      <div class="controls">
-	        <textarea class="input-xlarge span10" id="content" name="content" rows="10"></textarea>
-			<p class="help-block">
-				You can use <a target="_markdown" href="http://blog.freedomsponsors.org/markdown_formatting/">markdown</a> for formatting
-			</p>
+	        <textarea class="input-xlarge span10" style="font-family:monospace" id="content" name="content" rows="10" onkeyup="javascript:preview_add_comment()"></textarea>
+    			<p class="help-block">
+    				You can use <a target="_markdown" href="http://blog.freedomsponsors.org/markdown_formatting/">markdown</a> for formatting
+    			</p>
+          Preview
+          <div class="well" id="preview_0">
+          </div>
 	      </div>
 	    </div>
 	    <div id="div_formActions" class="form-actions">
@@ -154,6 +157,16 @@
   	if(parent && parent.document && parent.document.frespo_sponsorissue_callback){
   		parent.document.frespo_sponsorissue_callback(offer);
   	}
+  }
+
+  function preview_add_comment(){
+    preview_comment('#content', '#preview_0')
+  }
+  function preview_comment(taid, divid){
+    var contents = $(taid).val()
+    var converter = new Showdown.converter();
+    var html = converter.makeHtml(contents);
+    $(divid).html(html)
   }
 
   {% if invoke_parent_callback %}
