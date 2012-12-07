@@ -571,6 +571,7 @@ class Solution(models.Model):
     creationDate = models.DateTimeField()
     lastChangeDate = models.DateTimeField()
     status = models.CharField(max_length=30) # IN_PROGRESS, DONE, ABORTED
+    accepting_payments = models.BooleanField()
 
     IN_PROGRESS = "IN_PROGRESS"
     DONE = "DONE"
