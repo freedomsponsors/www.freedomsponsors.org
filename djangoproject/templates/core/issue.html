@@ -13,7 +13,7 @@
 
 
 {% block mainContent%}
-<div id="main-content">
+
 <h3 class="issue-header"> [ Issue ] 
   {% if issue.key %}
     {{issue.key}}:
@@ -28,58 +28,58 @@
 
 {% include 'core/issue_offer_action_bar.html' %}
 <div id="issue-info">
-Created by: <a href="{{issue.createdByUser.get_view_link}}">{{issue.createdByUser.getUserInfo.screenName}}</a>
-{% if issue.project %}
- | Project: <a target="_project" href="{{issue.project.homeURL}}">{{issue.project.name}}</a>
-{% endif %}
-{% if issue.description %}
-<br><br>
-<h3>Issue Description</h3>
-<div class="alert alert-info">{{ issue.description|linebreaks }}</div>
-{% endif %}
+  Created by: <a href="{{issue.createdByUser.get_view_link}}">{{issue.createdByUser.getUserInfo.screenName}}</a>
+  {% if issue.project %}
+   | Project: <a target="_project" href="{{issue.project.homeURL}}">{{issue.project.name}}</a>
+  {% endif %}
+  {% if issue.description %}
+  <br><br>
+  <h3>Issue Description</h3>
+  <div class="alert alert-info">{{ issue.description|linebreaks }}</div>
+  {% endif %}
 </div>
 <hr>
 
 {% if issue.getOffers %}
 <div id="issue-offers">
-<h3> Offers </h3>
-<table class="table table-condensed table-striped">
-  <thead>
-    <tr>
-      <th>Offer (US$)</th>
-      <th>Sponsor</th>
-      <th style="width:50px">Acceptance</th>
-      <th>Status</th>
-      <th>Added</th>
-      <th>Expires</th>
-    </tr>
-  </thead>
-  <tbody>
-{% for offer in issue.getOffers %}
-    <tr>
-      <td><a href="{{ offer.get_view_link }}">{{offer.price}}</a></td>
-      <td><a href="{{ offer.sponsor.get_view_link }}"><img src="{{offer.sponsor.gravatar_url_medium}}"> {{ offer.sponsor.getUserInfo.screenName }}</a></td>
-      <td style="text-align:center">
-        {% if offer.no_forking %}
-          <span title="No forking"><i class="icon-home"></i></span>
-        {% endif %}
-        {% if offer.require_release %}
-          <span title="Require release"><i class="icon-gift"></i></span>
-        {% endif %}
-      </td>
-      <td>{{offer.status}}</td>
-      <td><span title="{{ offer.creationDate }}">{{ offer.creationDate|date:"M/d/Y" }}</span></td>
-      <td>
-        {% if offer.is_expired %}
-          <span title="Expired!"><i class="icon-warning-sign"></i></span>
-        {% endif %}
-        <span title="{{ offer.expirationDate }}">{{ offer.expirationDate|date:"M/d/Y" }}</span>
-      </td>
-    </tr>
-    <tr>
-{% endfor %}
-  </tbody>
-</table>
+  <h3> Offers </h3>
+  <table class="table table-condensed table-striped">
+    <thead>
+      <tr>
+        <th>Offer (US$)</th>
+        <th>Sponsor</th>
+        <th style="width:50px">Acceptance</th>
+        <th>Status</th>
+        <th>Added</th>
+        <th>Expires</th>
+      </tr>
+    </thead>
+    <tbody>
+  {% for offer in issue.getOffers %}
+      <tr>
+        <td><a href="{{ offer.get_view_link }}">{{offer.price}}</a></td>
+        <td><a href="{{ offer.sponsor.get_view_link }}"><img src="{{offer.sponsor.gravatar_url_medium}}"> {{ offer.sponsor.getUserInfo.screenName }}</a></td>
+        <td style="text-align:center">
+          {% if offer.no_forking %}
+            <span title="No forking"><i class="icon-home"></i></span>
+          {% endif %}
+          {% if offer.require_release %}
+            <span title="Require release"><i class="icon-gift"></i></span>
+          {% endif %}
+        </td>
+        <td>{{offer.status}}</td>
+        <td><span title="{{ offer.creationDate }}">{{ offer.creationDate|date:"M/d/Y" }}</span></td>
+        <td>
+          {% if offer.is_expired %}
+            <span title="Expired!"><i class="icon-warning-sign"></i></span>
+          {% endif %}
+          <span title="{{ offer.expirationDate }}">{{ offer.expirationDate|date:"M/d/Y" }}</span>
+        </td>
+      </tr>
+      <tr>
+  {% endfor %}
+    </tbody>
+  </table>
 </div>
 {% endif %}
 
@@ -106,37 +106,37 @@ Created by: <a href="{{issue.createdByUser.get_view_link}}">{{issue.createdByUse
 	{% endfor %}
 	  </tbody>
 	</table>
-	</div>
+</div>
 {% endif %}
 
 <div id="issue-comments">
-<h3>Issue comments</h3>
-  <hr>
-{% for comment in issue.getComments %}
+  <h3>Issue comments</h3>
+    <hr>
+  {% for comment in issue.getComments %}
 
-  {% include 'core/include_comment.html' with counter=forloop.counter formaction='/core/issue/comment/edit/submit' %}
-  <hr>
-{% endfor %}
+    {% include 'core/include_comment.html' with counter=forloop.counter formaction='/core/issue/comment/edit/submit' %}
+    <hr>
+  {% endfor %}
 
-<script>
-    function loadCommentHistory(comment_id){
-        $("body").addClass("loading");
-        $.ajax({
-            url: '/core/issue/comment/'+comment_id+'/history',
-            dataType: 'HTML',
-            async: true,
-            success: function(data){
-                document.getElementById('ajax_popup_modal').innerHTML = data
-                $('#ajax_popup_modal').modal()
-                $("body").removeClass("loading");
-                return false;
-            },
-            error: function(a,b,c){
-                alert(a+' '+b+' '+c);
-            }
-        });
-    }
-</script>
+  <script>
+      function loadCommentHistory(comment_id){
+          $("body").addClass("loading");
+          $.ajax({
+              url: '/core/issue/comment/'+comment_id+'/history',
+              dataType: 'HTML',
+              async: true,
+              success: function(data){
+                  document.getElementById('ajax_popup_modal').innerHTML = data
+                  $('#ajax_popup_modal').modal()
+                  $("body").removeClass("loading");
+                  return false;
+              },
+              error: function(a,b,c){
+                  alert(a+' '+b+' '+c);
+              }
+          });
+      }
+  </script>
 </div>
 
 {% if user.is_authenticated %}
@@ -186,5 +186,4 @@ Created by: <a href="{{issue.createdByUser.get_view_link}}">{{issue.createdByUse
     $(divid).html(html)
   }
 </script>
-</div>
 {% endblock mainContent%}
