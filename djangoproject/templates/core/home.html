@@ -98,9 +98,13 @@
                 </td>
                 <td class="hometablecell"><a href="{{issue.get_view_link}}"
                   {% if issue.getTotalPaidPrice %}
-                   style="text-decoration: line-through;"
+                   style="color:#090;"
                   {% endif %}
-                 >{{issue}}</a></td>
+                 >
+                  {% if issue.getTotalPaidPrice %}
+                   <strong>PAID: </strong>
+                  {% endif %}
+                 {{issue}}</a></td>
               </tr>
               {% endfor %}
               

@@ -45,11 +45,17 @@
       <td><a href="{{ issue.createdByUser.get_view_link }}">{{ issue.createdByUser.getUserInfo.screenName }}</a></td>
       {% endifequal %}
 
-      <td><a href="{{ issue.get_view_link }}"
-        {% if issue.getTotalPaidPrice %}
-         style="text-decoration: line-through;"
-        {% endif %}
-        >{{ issue.title }}</a></td>
+      <td>
+        <a href="{{issue.get_view_link}}"
+          {% if issue.getTotalPaidPrice %}
+           style="color:#090;"
+          {% endif %}
+         >
+          {% if issue.getTotalPaidPrice %}
+           <strong>PAID: </strong>
+          {% endif %}
+         {{issue.title}}</a>
+      </td>
 
       {% ifequal showOffers "true" %}
       <td>
