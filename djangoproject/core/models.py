@@ -294,6 +294,9 @@ class Issue(models.Model):
     def getSolutionsDone(self):
         return Solution.objects.filter(issue=self, status=Solution.DONE).order_by('creationDate')
 
+    def getSolutionsAcceptingPayments(self):
+        return Solution.objects.filter(issue=self, accepting_payments=True)
+
     def getComments(self):
         return IssueComment.objects.filter(issue=self).order_by('creationDate')
 

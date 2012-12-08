@@ -21,8 +21,8 @@
 <br><br>
 
 
-{% if solutions_done %}
-  {% if solutions_done.count == 1 %}
+{% if solutions_accepting_payments %}
+  {% if solutions_accepting_payments.count == 1 %}
   Confirm amount to pay
   {% else %}
   More than one developer claims to have resolved the issue. 
@@ -33,10 +33,10 @@
 {% csrf_token %}
   <div id="div_step1">
 	<input type="hidden" id="offer_id" name="offer_id" value="{{offer.id}}">
-  	<input type="hidden" name="count" value="{{solutions_done.count}}">
+  	<input type="hidden" name="count" value="{{solutions_accepting_payments.count}}">
 	<!-- <table class="table table-condensed table-striped">
 	  <tbody> -->
-	{% for solution in solutions_done %}
+	{% for solution in solutions_accepting_payments %}
 
 	    <!-- <tr>
 	      <td> -->
@@ -96,7 +96,7 @@
 </form>
 {% else %}
 	<div class="alert">
-		No programmer have solved this issue yet!
+		No programmer is accepting payments for this issue yet!
 	</div>
 {% endif %}
 

@@ -214,7 +214,7 @@ def listProjects(request):
 @login_required
 def payOfferForm(request, offer_id):
     offer = Offer.objects.get(pk=offer_id)
-    solutions_done = offer.issue.getSolutionsDone()
+    solutions_accepting_payments = offer.issue.getSolutionsAcceptingPayments()
     shared_price = None
 
     convert_rate = 1
@@ -225,13 +225,13 @@ def payOfferForm(request, offer_id):
         currency_symbol = "R$"
         alert_brazil = True
 
-    if(solutions_done.count() > 0):
-        shared_price = convert_rate * float(offer.price) / solutions_done.count()
+    if(solutions_accepting_payments.count() > 0):
+        shared_price = convert_rate * float(offer.price) / solutions_accepting_payments.count()
         shared_price = twoplaces(Decimal(str(shared_price)))
 
     return render_to_response('core/pay_offer.html',
         {'offer':offer,
-         'solutions_done' : solutions_done,
+         'solutions_accepting_payments' : solutions_accepting_payments,
          'shared_price' : shared_price,
          'convert_rate' : convert_rate,
          'currency_symbol' : currency_symbol,
