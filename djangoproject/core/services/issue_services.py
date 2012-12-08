@@ -91,15 +91,15 @@ def change_existing_offer(offer_id, offerdict, user):
     return offer
 
 
-def add_solution_to_existing_issue(issue_id, comment_content, user):
+def add_solution_to_existing_issue(issue_id, comment_content, accepting_payments, user):
     issue = Issue.objects.get(pk=issue_id)
     issue.touch()
     solution = get_or_none(Solution, issue=issue, programmer=user)
     if(solution):
         _throwIfSolutionInProgress(solution, user, 'add solution')
-        solution.reopen()
+        solution.reopen(accepting_payments)
     else:
-        solution = Solution.newSolution(issue, user)
+        solution = Solution.newSolution(issue, user, accepting_payments)
     solution.save()
     comment = None
     if(comment_content):

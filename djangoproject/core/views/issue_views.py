@@ -50,7 +50,8 @@ def addSolution(request):
     """Start working on this issue"""
     issue_id = int(request.POST['issue_id'])
     comment_content = request.POST['comment']
-    issue = issue_services.add_solution_to_existing_issue(issue_id, comment_content, request.user)
+    accepting_payments = request.POST.has_key('accept_payments')
+    issue = issue_services.add_solution_to_existing_issue(issue_id, comment_content, accepting_payments, request.user)
     watch_services.watch_issue(request.user, issue.id, IssueWatch.STARTED_WORKING)
     return redirect(issue.get_view_link())
 

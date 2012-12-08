@@ -578,13 +578,14 @@ class Solution(models.Model):
     ABORTED = "ABORTED"
 
     @classmethod
-    def newSolution(cls, issue, programmer):
+    def newSolution(cls, issue, programmer, accepting_payments):
         solution = cls()
         solution.issue = issue
         solution.programmer = programmer
         solution.creationDate = timezone.now()
         solution.lastChangeDate = solution.creationDate
         solution.status = Solution.IN_PROGRESS
+        solution.accepting_payments = accepting_payments
         return solution
 
     def abort(self):
@@ -592,6 +593,7 @@ class Solution(models.Model):
         event.save()
         self.status = Solution.ABORTED
         self.lastChangeDate = timezone.now()
+        self.accepting_payments = False
         self.save()
 
     def resolve(self):
@@ -599,13 +601,15 @@ class Solution(models.Model):
         event.save()
         self.status = Solution.DONE
         self.lastChangeDate = timezone.now()
+        self.accepting_payments = True
         self.save()
 
-    def reopen(self):
+    def reopen(self, accepting_payments):
         event = SolutionHistEvent.newChangeEvent(solution=self, event=SolutionHistEvent.REOPEN)
         event.save()
         self.status = Solution.IN_PROGRESS
         self.lastChangeDate = timezone.now()
+        self.accepting_payments = accepting_payments
         self.save()
 
 class SolutionHistEvent(models.Model):
