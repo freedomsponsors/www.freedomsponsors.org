@@ -4,6 +4,7 @@ from django.template import  RequestContext
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, redirect
 from core.utils.frespo_utils import  dictOrEmpty
+from django.utils.translation import ugettext as _
 from core.services import user_services, mail_services
 from django.conf import settings
 
@@ -42,14 +43,14 @@ def editUserForm(request):
         context_instance = RequestContext(request))
 
 def _notify_admin_new_user(user):
-    mail_services.notify_admin(subject='New user registered: '+user.getUserInfo().screenName,
+    mail_services.notify_admin(subject=_('New user registered: ')+user.getUserInfo().screenName,
         msg=settings.SITE_HOME+user.get_view_link())
 
 @login_required
 def editUser(request):
     paypalActivation, primaryActivation = user_services.edit_existing_user(request.user, request.POST)
 
-    next = dictOrEmpty(request.POST, 'next')
+    next = dictOrEmpty(request.POST, _('next'))
     if(next):
         return redirect(next)
     else:

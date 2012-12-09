@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import redirect, render_to_response
 from django.template import RequestContext
+from django.utils.translation import ugettext as _
 from core.utils.frespo_utils import get_or_none, dictOrEmpty, twoplaces
 from core.models import *
 from core.services import issue_services, watch_services, payment_services
@@ -18,7 +19,7 @@ def addIssue(request):
         offer = issue_services.sponsor_new_issue(request.POST, request.user)
         watch_services.watch_issue(request.user, offer.issue.id, IssueWatch.SPONSORED)
     except BaseException as ex:
-        return HttpResponse("ERROR: "+ex.message)
+        return HttpResponse(_("ERROR: ")+ex.message)
     params = '?alert=SPONSOR'
     if(dictOrEmpty(request.POST, 'invoke_parent_callback') == 'true'):
         params += '&c=s' # c = Callback (iframe javascript callback)
@@ -31,7 +32,7 @@ def kickstartIssue(request):
         issue = issue_services.kickstart_new_issue(request.POST, request.user)
         watch_services.watch_issue(request.user, issue.id, IssueWatch.CREATED)
     except BaseException as ex:
-        return HttpResponse("ERROR: "+ex.message)
+        return HttpResponse(_("ERROR: ")+ex.message)
 
     params= '?alert=KICKSTART'
     return redirect(issue.get_view_link()+params)
