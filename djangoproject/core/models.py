@@ -233,6 +233,7 @@ class Issue(models.Model):
         issue.description = ''
         issue.title = title
         issue.creationDate = timezone.now()
+        issue.updatedDate = issue.creationDate
         issue.createdByUser = createdByUser
         issue.trackerURL = trackerURL
         issue.is_feedback = False
@@ -245,6 +246,7 @@ class Issue(models.Model):
         issue.key = ''
         issue.description = description
         issue.creationDate = timezone.now()
+        issue.updatedDate = issue.creationDate
         issue.createdByUser = createdByUser
         issue.is_feedback = False
         return issue
@@ -256,6 +258,7 @@ class Issue(models.Model):
         issue.key = ''
         issue.description = description
         issue.creationDate = timezone.now()
+        issue.updatedDate = issue.creationDate
         issue.createdByUser = createdByUser
         issue.is_feedback = True
         return issue
