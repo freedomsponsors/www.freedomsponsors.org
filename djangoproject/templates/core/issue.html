@@ -61,10 +61,10 @@
       <td><a href="{{ offer.sponsor.get_view_link }}"><img src="{{offer.sponsor.gravatar_url_medium}}"> {{ offer.sponsor.getUserInfo.screenName }}</a></td>
       <td style="text-align:center">
         {% if offer.no_forking %}
-          <span title="No forking"><i class="icon-home"></i></span>
+          <i class="icon-home popopo" rel="popover" data-content="Solution must be available in the main project codebase. Forking is not OK." data-original-title="No forking"></i>
         {% endif %}
         {% if offer.require_release %}
-          <span title="Require release"><i class="icon-gift"></i></span>
+          <i class="icon-gift popopo" rel="popover" data-content="Solution must be available as a new released version. Just commiting is not enough." data-original-title="Release required"></i>
         {% endif %}
       </td>
       <td>{{offer.status}}</td>
