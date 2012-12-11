@@ -615,6 +615,9 @@ class Solution(models.Model):
         self.accepting_payments = accepting_payments
         self.save()
 
+    def get_received_payments(self):
+        return PaymentPart.objects.filter(solution__id = self.id)
+
 class SolutionHistEvent(models.Model):
     solution = models.ForeignKey(Solution)
     eventDate = models.DateTimeField()
