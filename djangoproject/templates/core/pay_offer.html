@@ -6,6 +6,20 @@
 
 <h2>Pay US$ {{offer.price}} for issue - {{offer.issue.title}} </h2>
 
+<div class="modal hide fade in" id="alert_paying_unfinished">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">×</button>
+    <h3 id="offerDataFormModal_title">You're paying an unfinished solution</h3>
+  </div>
+  <div class="modal-body">
+      <p>You are about to pay a developer that still have not finished this issue. </p>
+      <p>Payments are made directly to developers, therefore they are non-refundable. Read <a target="_blog" href="#">this blog post</a> to learn more. </p>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn btn-primary" data-dismiss="modal">OK, I understand</a>
+  </div>
+</div>
+
 
 <a href="{{offer.issue.get_view_link}}">View issue</a>
  | <a href="{{offer.get_view_link}}">View offer</a>
@@ -59,7 +73,7 @@
   </div>
 
   <div id="div_step2" class="hide">
-  	{% for solution in solutions_done %}
+  	{% for solution in solutions_accepting_payments %}
   	  <div id="div_summary_{{forloop.counter0}}" class="form-inline">
   	  	<div class="span2">
 	  	  	<img src="{{solution.programmer.gravatar_url_small}}"/> {{ solution.programmer.getUserInfo.screenName }}
@@ -105,7 +119,12 @@
   stage = {
     offer_price : {{offer.price}},
     convert_rate : {{convert_rate}},
-  	count : {{solutions_done.count}},
+  	count : {{solutions_accepting_payments.count}},
+    solutions : [
+    {% for solution in solutions_accepting_payments %}
+      {id : {{solution.id}}, status : '{{solution.status}}'},
+    {% endfor %}
+    ],
   	step:1,
   	fs_fee:{{FS_FEE}}
   };
@@ -125,7 +144,7 @@
 
   function onCheckChanged(){
   	var checked_count = 0;
-  	for(var i=0; i < stage.count; i++){
+  	for(var i=0; i < stage.solutions.length; i++){
   		var ischecked = $('#check_'+i+':checked').val() != undefined;
   		if(ischecked){
   			checked_count++;
@@ -136,7 +155,7 @@
 		price = (parseFloat(stage.offer_price) * stage.convert_rate / checked_count).toFixed(2);
   	}
 
-  	for(var i=0; i < stage.count; i++){
+  	for(var i=0; i < stage.solutions.length; i++){
   		var ischecked = $('#check_'+i+':checked').val() != undefined;
   		var $pay = $('#pay_'+i);
   		if(ischecked){
@@ -151,7 +170,8 @@
   function next1_click(){
     var sum = 0;
     var realSum = 0;
-  	for(var i=0; i < stage.count; i++){
+    var paying_unfinished = false;
+  	for(var i=0; i < stage.solutions.length; i++){
   		var ischecked = $('#check_'+i+':checked').val() != undefined;
   		var $div = $('#div_summary_'+i);
   		if(ischecked){
@@ -163,6 +183,9 @@
   			_amt.innerHTML = realPay.toFixed(2);
   			sum += pay;
         realSum += realPay;
+        if(stage.solutions[i].status != 'DONE'){
+          paying_unfinished = true;
+        }
   		} else {
   			$div.addClass("hide");
   		}
@@ -175,7 +198,14 @@
 
   	stage.step = 2;
   	updateStage();
+    if(paying_unfinished){
+      alert_paying_unfinished();
+    }
   	return false;
+  }
+
+  function alert_paying_unfinished(){
+    $('#alert_paying_unfinished').modal()
   }
 
   function prev2_click(){

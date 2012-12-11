@@ -98,7 +98,7 @@ Created by: <a href="{{issue.createdByUser.get_view_link}}">{{issue.createdByUse
 	      <td><a href="{{solution.programmer.get_view_link}}"><img src="{{solution.programmer.gravatar_url_medium}}"> {{ solution.programmer.getUserInfo.screenName }}</a></td>
 	      <td>{{solution.status}}
         {% if solution.accepting_payments %}
-          <span title="Accepting payments"><i class="icon-heart"></i></span>
+          / Accepting payments
         {% endif %}
         </td>
 	      <td><span title="{{ solution.creationDate }}">{{ solution.creationDate|date:"D, d/M/Y" }}</span></td>
