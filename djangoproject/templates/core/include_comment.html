@@ -10,7 +10,7 @@
   </script>
 
 	<a href="{{comment.author.get_view_link}}"><img src="{{comment.author.gravatar_url_medium}}"> {{ comment.author.getUserInfo.screenName }}</a>
-  added a comment - 
+  commented - 
 	<span title="{{ comment.creationDate }}">{{ comment.creationDate|date:"D, d/M/Y" }}</span>
   {% ifequal comment.author.id user.id %}
     <a href="javascript:showEditComment({{counter}})" name="selector-edit-comment"><i class="icon-pencil"></i></a>
