@@ -45,8 +45,7 @@ Instructions to run application locally:
 
   ```bash
   cd www.freedomsponsors.org/djangoproject
-  ./manage.py syncdb
-  ./migrate.sh
+  ./manage.py syncdb --migrate --noinput
   ```
 
 5. Populate with some initial data.
