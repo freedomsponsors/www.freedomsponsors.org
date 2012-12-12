@@ -105,7 +105,7 @@ TIME_ZONE = env_settings.TIME_ZONE
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'es'
+LANGUAGE_CODE = env_settings.LANGUAGE_CODE
 
 SITE_ID = 1
 
