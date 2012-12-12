@@ -2,6 +2,7 @@
 
 from core.models import *
 from django.http import HttpResponse
+from django.utils.translation import ugettext as _
 from core.utils.frespo_utils import  dictOrEmpty
 import json
 from core.services import issue_services
@@ -19,7 +20,7 @@ def project(request):
             result.append({"id":project.id, "value":project.name})
         return HttpResponse(json.dumps(result))
     else :
-        return HttpResponse("Error: need query parameter.", status=404)
+        return HttpResponse(_("Error: need query parameter."), status=404)
 
 def by_issue_url(request):
     if request.GET.has_key('trackerURL'):
@@ -31,12 +32,12 @@ def by_issue_url(request):
             traceback.print_exc()
             raise
     else :
-        return HttpResponse("Error: need trackerURL parameter.", status=404)
+        return HttpResponse(_("Error: need trackerURL parameter."), status=404)
 
 def get_offers(request):
     trackerURL = dictOrEmpty(request.GET, 'trackerURL')
     if(not trackerURL):
-        return HttpResponse("Error: need trackerURL parameter.", status=404)
+        return HttpResponse(_("Error: need trackerURL parameter."), status=404)
     sponsor_id = dictOrEmpty(request.GET, 'sponsor_id')
     offers = Offer.objects.filter(issue__trackerURL__iexact=trackerURL)
     if(sponsor_id):

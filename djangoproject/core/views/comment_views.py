@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render_to_response
+from django.utils.translation import ugettext as _
 from django.template import RequestContext
 from core.models import *
 from core.services import comment_services, watch_services

@@ -33,8 +33,8 @@ if use_postgres:
             'NAME': DATABASE_NAME,                      # Or path to database file if using sqlite3.
             'USER': DATABASE_USER,                      # Not used with sqlite3.
             'PASSWORD': DATABASE_PASS,                  # Not used with sqlite3.
-            'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
-            'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
+            'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+            'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
         }
     }
 else:
@@ -105,7 +105,7 @@ TIME_ZONE = env_settings.TIME_ZONE
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = env_settings.LANGUAGE_CODE
 
 SITE_ID = 1
 
@@ -205,6 +205,10 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
+LOCALE_PATHS = (
+    os.path.join(PROJECT_DIR, "locale"),
+)
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -225,7 +229,7 @@ INSTALLED_APPS = (
     'mailer',
     'south',
     'emailmgr',
-    'registration',
+    'registration',    
 )
 
 

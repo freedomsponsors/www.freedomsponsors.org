@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
+from django.utils.translation import ugettext as _
 from core.utils import paypal_adapter
 from core.utils.frespo_utils import  dictOrEmpty
 from core.models import  Payment
@@ -45,15 +46,15 @@ def paypalCancel(request):
         curr_payment = Payment.objects.get(pk=int(request.session['current_payment_id']))
         if(curr_payment.status != Payment.CONFIRMED_WEB and curr_payment.status != Payment.CONFIRMED_IPN):
             curr_payment.cancel()
-            msg = 'Payment canceled'
-            logger.info('CANCELED payment %s'%curr_payment.id)
+            msg = _('Payment canceled')
+            logger.info(_('CANCELED payment %s')%curr_payment.id)
         else:
-            msg = 'Error: attempt to cancel a payment already processed'
+            msg = _('Error: attempt to cancel a payment already processed')
             curr_payment = None
             logger.warn('attempt to cancel processed payment %s'%curr_payment.id)
         del request.session['current_payment_id']
     else :
-        msg = 'Session expired'
+        msg = _('Session expired')
         curr_payment = None
         logger.warn('CANCEL received while no payment in session. user = %s'%request.user.id)
     return render_to_response('core/paypal_canceled.html',
@@ -70,9 +71,9 @@ def paypalIPN(request):
         tracking_id = request.POST['tracking_id']
         payment_services.process_ipn_return(paykey, status, tracking_id)
 
-        return HttpResponse("OK")
+        return HttpResponse(_("OK"))
     else:
-        raise BaseException('unverified IPN '+str(request.POST))
+        raise BaseException(_('unverified IPN ')+str(request.POST))
 
 
 @login_required
@@ -84,7 +85,7 @@ def paypalReturn(request):
         del request.session['current_payment_id']
         logger.info('CONFIRM_WEB successful for payment %s'%curr_payment.id)
     else :
-        msg = 'Session expired'
+        msg = _('Session expired')
         curr_payment = None
         logger.warn('CONFIRM_WEB received while no payment in session. user = %s'%request.user.id)
     return render_to_response('core/paypal_confirmed.html',

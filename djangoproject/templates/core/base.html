@@ -1,4 +1,5 @@
 {% extends "core/empty_base.html" %}
+{% load i18n %}
 {% block body %}
 
   <style type="text/css">
@@ -111,13 +112,13 @@
               <div class="span1"></div>
               <div class="span10">
                 <p style="text-align:center">© FreedomSponsors 2012 
-                  | <a target="_about" href="http://blog.freedomsponsors.org/about">About</a> 
-                  | <a target="_about" href="http://blog.freedomsponsors.org/faq">FAQ</a>
-                  | <a target="_about" href="http://blog.freedomsponsors.org/developers">Developers</a>
-                  | <a href="/core/feedback">Feedback</a>
-                  | <a href="/core/project">Project list</a>
-                  | <a href="http://www.facebook.com/freedomsponsors" target="_facebook">Facebook</a>
-                  | <a href="http://www.twitter.com/freedomsponsors" target="_twitter">Twitter</a>
+                  | <a target="_about" href="http://blog.freedomsponsors.org/about">{% trans "About" %}</a> 
+                  | <a target="_about" href="http://blog.freedomsponsors.org/faq">{% trans "FAQ" %}</a>
+                  | <a target="_about" href="http://blog.freedomsponsors.org/developers">{% trans "Developers" %}</a>
+                  | <a href="/core/feedback">{% trans "Feedback" %}</a>
+                  | <a href="/core/project">{% trans "Project list" %}</a>
+                  | <a href="http://www.facebook.com/freedomsponsors" target="_facebook">{% trans "Facebook" %}</a>
+                  | <a href="http://www.twitter.com/freedomsponsors" target="_twitter">{% trans "Twitter" %}</a>
                 </p>
               </div>
               <div class="span1"></div>
