@@ -19,9 +19,7 @@ Instructions to run application locally:
   git clone git://github.com/freedomsponsors/www.freedomsponsors.org.git
   ```
 
-2. Create a `frespo` database on postgres (default username and password is `frespo`).
-
-  2.1 Install dependencies.
+2. Install dependencies.
 
     ```bash
     sudo pip install -r requirements.txt
@@ -41,21 +39,28 @@ Instructions to run application locally:
   nano frespo/env_settings.py # edit according to your environment
   ```
 
-4. Create database objects.
+4. Create a Postgres user and database:
+
+  ```bash
+  createuser -d -SR frespo
+  createdb -O frespo frespo
+  ````
+
+5. Create database objects.
 
   ```bash
   cd www.freedomsponsors.org/djangoproject
   ./manage.py syncdb --migrate --noinput
   ```
 
-5. Populate with some initial data.
+6. Populate with some initial data.
 
   ```bash
   ./manage.py loadFeedbackData
   ./manage.py loadProjects
   ```
 
-6. Run!
+7. Run!
 
   ```bash
   ./manage.py runserver # and visit http://localhost:8000
