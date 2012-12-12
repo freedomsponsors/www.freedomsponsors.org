@@ -206,7 +206,7 @@ TEMPLATE_DIRS = (
 )
 
 LOCALE_PATHS = (
-'/home/manuel/Enkidu/www.freedomsponsors.org/djangoproject/locale',
+    os.path.join(PROJECT_DIR, "locale"),
 )
 
 INSTALLED_APPS = (
