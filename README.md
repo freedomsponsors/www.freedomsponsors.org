@@ -37,7 +37,7 @@ Instructions to run application locally:
 3. Configure settings.
 
   ```bash
-  mv frespo/env_settings.py_template frespo/env_settings.py
+  cp frespo/env_settings.py_template frespo/env_settings.py
   nano frespo/env_settings.py # edit according to your environment
   ```
 
