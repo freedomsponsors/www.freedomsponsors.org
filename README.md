@@ -1,11 +1,11 @@
-www.freedomsponsors.org 
+www.freedomsponsors.org
 =======================
 
 [![Build Status](https://secure.travis-ci.org/freedomsponsors/www.freedomsponsors.org.png)](http://travis-ci.org/freedomsponsors/www.freedomsponsors.org)
 
 FreedomSponsors is a Django web application.
 
-FS is made by, and for developers. 
+FS is made by, and for developers.
 If you'd like to help (bug reports, suggestions, or even code), you are more than welcome.
 Please take a look at the open issues.
 
@@ -45,6 +45,9 @@ Instructions to run application locally:
   createuser -d -SR frespo
   createdb -O frespo frespo
   ````
+
+  You need to use `sudo -u postgres` to run these commands if you don't
+  have permitions to manipulate Postgres.
 
 5. Create database objects.
 
