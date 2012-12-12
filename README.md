@@ -1,11 +1,11 @@
-www.freedomsponsors.org 
+www.freedomsponsors.org
 =======================
 
 [![Build Status](https://secure.travis-ci.org/freedomsponsors/www.freedomsponsors.org.png)](http://travis-ci.org/freedomsponsors/www.freedomsponsors.org)
 
 FreedomSponsors is a Django web application.
 
-FS is made by, and for developers. 
+FS is made by, and for developers.
 If you'd like to help (bug reports, suggestions, or even code), you are more than welcome.
 Please take a look at the open issues.
 
@@ -19,9 +19,7 @@ Instructions to run application locally:
   git clone git://github.com/freedomsponsors/www.freedomsponsors.org.git
   ```
 
-2. Create a `frespo` database on postgres (default username and password is `frespo`).
-
-  2.1 Install dependencies.
+2. Install dependencies.
 
     ```bash
     sudo pip install -r requirements.txt
@@ -41,22 +39,30 @@ Instructions to run application locally:
   nano frespo/env_settings.py # edit according to your environment
   ```
 
-4. Create database objects.
+4. Create a Postgres user and database:
+
+  ```bash
+  createdb -O postgres frespo
+  ````
+
+  You need to use `sudo -u postgres` to run these commands if you don't
+  have permitions to manipulate Postgres.
+
+5. Create database objects.
 
   ```bash
   cd www.freedomsponsors.org/djangoproject
-  ./manage.py syncdb
-  ./migrate.sh
+  ./manage.py syncdb --migrate --noinput
   ```
 
-5. Populate with some initial data.
+6. Populate with some initial data.
 
   ```bash
   ./manage.py loadFeedbackData
   ./manage.py loadProjects
   ```
 
-6. Run!
+7. Run!
 
   ```bash
   ./manage.py runserver # and visit http://localhost:8000
