@@ -18,7 +18,7 @@ FAKE_EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
 ENVIRONMENT = 'NOT_DEV' #change to DEV in your machine
 
 DATABASE_NAME = 'frespo'
-DATABASE_USER = 'frespo'
+DATABASE_USER = 'postgres'
 DATABASE_PASS = ''
 
 GITHUB_BOT_USERNAME = 'freedomsponsors-bot'

@@ -42,8 +42,7 @@ Instructions to run application locally:
 4. Create a Postgres user and database:
 
   ```bash
-  createuser -d -SR frespo
-  createdb -O frespo frespo
+  createdb -O postgres frespo
   ````
 
   You need to use `sudo -u postgres` to run these commands if you don't
