@@ -107,6 +107,7 @@
   }
 
   var myoffer = false;
+  var alert_reputation_revoking = '{{alert_reputation_revoking}}' == 'True'
 {% if myoffer %}
   myoffer = {
     id : "{{myoffer.id}}",
@@ -159,6 +160,13 @@
 
 {% if mysolution and mysolution.status == 'IN_PROGRESS' %}
   function showModal_abortWorkOnThisIssue(){
+    if(alert_reputation_revoking){
+      var msg = 'You already received money for this issue. \nAborting work might be bad for your reputation. \nAre you sure you want to do this?'
+      if(!confirm(msg)){
+        return;
+      }
+    }
+
     document.getElementById('commentFormModal_title').innerHTML = 'Abort work on this issue';
     document.getElementById('commentFormModal_form').action = '/core/solution/abort/submit';
     document.getElementById('commentFormModal_comment').placeholder = "Add a comment to let everyone know that you won't be working on this issue anymore";

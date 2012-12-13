@@ -140,6 +140,8 @@ def viewIssue(request, issue_id):
     alert = dictOrEmpty(request.GET, 'alert')
     if(alert == 'KICKSTART'):
         show_alert = 'core/popup_just_kickstarted.html'
+    alert_reputation_revoking = mysolution and mysolution.status == Solution.IN_PROGRESS and mysolution.get_received_payments().count() > 0
+
     invoke_parent_callback = (dictOrEmpty(request.GET, 'c') == 's')
 
     is_watching = request.user.is_authenticated() and watch_services.is_watching_issue(request.user, issue.id)
@@ -151,7 +153,8 @@ def viewIssue(request, issue_id):
         'mysolution':mysolution,
         'invoke_parent_callback' : invoke_parent_callback,
         'show_sponsor_popup' : show_sponsor_popup,
-        'show_alert' : show_alert},
+        'show_alert' : show_alert,
+        'alert_reputation_revoking': alert_reputation_revoking},
 
         context_instance = RequestContext(request))
 
