@@ -9,6 +9,8 @@ FS is made by, and for developers.
 If you'd like to help (bug reports, suggestions, or even code), you are more than welcome.
 Please take a look at the open issues.
 
+Also, feel free to join the [mailing list](https://groups.google.com/forum/?hl=en&fromgroups#!forum/freedomsponsors)
+
 ## Running
 
 Instructions to run application locally:
