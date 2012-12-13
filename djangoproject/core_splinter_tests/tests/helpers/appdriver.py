@@ -192,7 +192,9 @@ class AppDriver:
     def commentOnCurrentIssueOrOffer(self, content, verifyContent=None):
         browser = self.browser
         browser.find_by_id('content').type(content)
-        browser.find_by_id('btnSubmitNewComment').click()
+        btnSubmit = browser.find_by_id('btnSubmitNewComment')[0]
+        _scrollTo(browser, btnSubmit)
+        btnSubmit.click()
         if not verifyContent:
             verifyContent = content
         _waitUntilTextPresent(browser, verifyContent)
@@ -205,6 +207,7 @@ class AppDriver:
                 textarea.fill(newcontent)
                 element = browser.find_by_name('selector-btnSubmitEditComment')[index]
                 _waitUntilVisible_element(element)
+                _scrollTo(browser, element)
                 element.click()
                 if not verifyContent:
                     verifyContent = newcontent
@@ -325,8 +328,10 @@ def _waitUntilVisible_element(element):
         raise BaseException('Timeout waiting for element to become visible: '+str(element))
 
 # This was supposed to be a workaround for 'Element is not clickable at point...'
-def _scrollTo(browser, element_id):
-    browser.execute_script('window.scrollTo(0, document.getElementById("%s").scrollTop);'%element_id);
+def _scrollTo(browser, element):
+    y = element._element.location['y']
+    browser.execute_script('window.scrollTo(0, %s);' % y);
+    # browser.execute_script('window.scrollTo(0, document.getElementById("%s").scrollTop);'%element_id);
 
 def _waitUntilTextPresent(browser, text, timeout=TIMEOUT):
     try:

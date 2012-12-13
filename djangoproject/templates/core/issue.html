@@ -14,7 +14,7 @@
 
 {% block mainContent%}
 
-<h3> [ Issue ] 
+<h3 class="issue-header"> [ Issue ] 
   {% if issue.key %}
     {{issue.key}}:
   {% endif %}
@@ -27,20 +27,21 @@
 <hr>
 
 {% include 'core/issue_offer_action_bar.html' %}
-
-Created by: <a href="{{issue.createdByUser.get_view_link}}">{{issue.createdByUser.getUserInfo.screenName}}</a>
-{% if issue.project %}
- | Project: <a target="_project" href="{{issue.project.homeURL}}">{{issue.project.name}}</a>
-{% endif %}
-{% if issue.description %}
-<br><br>
-<h3>Issue Description</h3>
-<div class="alert alert-info">{{ issue.description|linebreaks }}</div>
-{% endif %}
-
+<div id="issue-info">
+  Created by: <a href="{{issue.createdByUser.get_view_link}}">{{issue.createdByUser.getUserInfo.screenName}}</a>
+  {% if issue.project %}
+   | Project: <a target="_project" href="{{issue.project.homeURL}}">{{issue.project.name}}</a>
+  {% endif %}
+  {% if issue.description %}
+  <br><br>
+  <h3>Issue Description</h3>
+  <div class="alert alert-info">{{ issue.description|linebreaks }}</div>
+  {% endif %}
+</div>
 <hr>
 
 {% if issue.getOffers %}
+<div id="issue-offers">
 <h3> Offers </h3>
 <table class="table table-condensed table-striped">
   <thead>
@@ -60,10 +61,10 @@ Created by: <a href="{{issue.createdByUser.get_view_link}}">{{issue.createdByUse
       <td><a href="{{ offer.sponsor.get_view_link }}"><img src="{{offer.sponsor.gravatar_url_medium}}"> {{ offer.sponsor.getUserInfo.screenName }}</a></td>
       <td style="text-align:center">
         {% if offer.no_forking %}
-          <span title="No forking"><i class="icon-home"></i></span>
+          <i class="icon-home popopo" rel="popover" data-content="Solution must be available in the main project codebase. Forking is not OK." data-original-title="No forking"></i>
         {% endif %}
         {% if offer.require_release %}
-          <span title="Require release"><i class="icon-gift"></i></span>
+          <i class="icon-gift popopo" rel="popover" data-content="Solution must be available as a new released version. Just commiting is not enough." data-original-title="Release required"></i>
         {% endif %}
       </td>
       <td>{{offer.status}}</td>
@@ -79,10 +80,12 @@ Created by: <a href="{{issue.createdByUser.get_view_link}}">{{issue.createdByUse
 {% endfor %}
   </tbody>
 </table>
+</div>
 {% endif %}
 
 
 {% if issue.getSolutions %}
+<div id="issue-solutions">
 	<h3> People working on this issue </h3>
 	<table class="table table-condensed table-striped">
 	  <thead>
@@ -107,8 +110,10 @@ Created by: <a href="{{issue.createdByUser.get_view_link}}">{{issue.createdByUse
 	{% endfor %}
 	  </tbody>
 	</table>
+</div>
 {% endif %}
 
+<div id="issue-comments">
 
 <h3>Issue comments</h3>
   <hr>
@@ -137,6 +142,7 @@ Created by: <a href="{{issue.createdByUser.get_view_link}}">{{issue.createdByUse
         });
     }
 </script>
+</div>
 
 {% if user.is_authenticated %}
   <form method="post" class="well form-horizontal" action="/core/issue/comment/add/submit">

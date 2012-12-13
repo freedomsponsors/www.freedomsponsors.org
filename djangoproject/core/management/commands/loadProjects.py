@@ -28,7 +28,6 @@ def add_initial_projects():
 		else:
 			project = Project.newProject(name, frespo_user, homeURL, trackerURL)
 			project.save()
-			print('added project '+project.name+':%s'%project.id)
 		return project
 
 	addProj('ActiveMQ', 'http://activemq.apache.org/', 'https://issues.apache.org/jira/browse/AMQ')
@@ -133,6 +132,7 @@ def add_initial_projects():
 	addProj('python-paypalx', 'https://github.com/e-loue/python-paypalx', 'https://github.com/e-loue/python-paypalx/issues')
 	addProj('django-mailer', 'https://github.com/jtauber/django-mailer/', 'https://github.com/jtauber/django-mailer/issues')
 	addProj('Django', 'https://www.djangoproject.com/', 'https://code.djangoproject.com/query')
+	print('added projects')
 
 class Command(NoArgsCommand):
 
