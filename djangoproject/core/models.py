@@ -771,7 +771,7 @@ class PaymentPart(models.Model):
         part.payment = payment
         part.solution = solution
         part.programmer = solution.programmer
-        part.paypalEmail = programmer.getUserInfo().paypalEmail
+        part.paypalEmail = part.programmer.getUserInfo().paypalEmail
         part.price = Decimal(price)
         part.realprice = Decimal(realprice)
         return part
