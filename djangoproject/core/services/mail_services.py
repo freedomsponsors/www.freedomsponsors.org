@@ -37,6 +37,18 @@ def notifyWatchers_workbegun(solution, comment, watches):
                                "comment" : comment})
     _notify_watchers(send_func, watches)
 
+def notifyWatchers_acceptingpayments(solution, watches):
+    def send_func(watch):
+        if(watch.user.id != solution.programmer.id):
+            _send_mail_to_user(user = watch.user,
+                subject = solution.programmer.getUserInfo().screenName+" is ready to accept payments for issue [%s]"%solution.issue.title,
+                templateName = 'email/acceptingpayments.html',
+                contextData = {"solution" : solution,
+                               "you" : watch.user,
+                               "SITE_HOME" : settings.SITE_HOME,})
+    _notify_watchers(send_func, watches)
+
+
 def welcome(user):
     _send_mail_to_user(user=user,
         subject='Welcome to FreedomSponsors',

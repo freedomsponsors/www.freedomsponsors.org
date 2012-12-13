@@ -107,6 +107,8 @@ def add_solution_to_existing_issue(issue_id, comment_content, accepting_payments
         comment.save()
     watches = watch_services.find_issue_watches(solution.issue)
     notifyWatchers_workbegun(solution, comment, watches)
+    if(accepting_payments):
+        notifyWatchers_acceptingpayments(solution, watches)
     return issue
 
 
