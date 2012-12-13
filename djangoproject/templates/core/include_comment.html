@@ -1,4 +1,4 @@
-  <script>
+<script>
     $(function(){
       // var comment_{{counter}} = '{{comment.content|escapejs}}';
       // var converter = new Showdown.converter();
@@ -7,24 +7,30 @@
 
       //leave this code here because we'll need somethink like this to add a js markdown preview
     });
-  </script>
+</script>
+<hr/>
+<div id="comment-{{ comment.id }}" class="issueComment">
 
-	<a href="{{comment.author.get_view_link}}"><img src="{{comment.author.gravatar_url_medium}}"> {{ comment.author.getUserInfo.screenName }}</a>
-  commented - 
-	<span title="{{ comment.creationDate }}">{{ comment.creationDate|date:"D, d/M/Y" }}</span>
-  {% ifequal comment.author.id user.id %}
-    <a href="javascript:showEditComment({{counter}})" name="selector-edit-comment"><i class="icon-pencil"></i></a>
-  {% endifequal %}
-  {% if comment.was_edited %}
-      <!-- loadCommentHistory must be defined in the including page -->
-    <a href="#" onclick="loadCommentHistory({{ comment.id }})" style="color:red">edited</a>
-  {% endif %}
-  <div  id="div_comment_r_{{counter}}">
-    {% load markdown %}
-    {% autoescape off %}
-    {{ comment.content|markdown }}    
-    {% endautoescape %}
-  </div>
+        <a href="{{comment.author.get_view_link}}"><img src="{{comment.author.gravatar_url_medium}}"> {{ comment.author.getUserInfo.screenName }}</a>
+        <a href="{{issue.get_view_link}}/#comment-{{ comment.id }}">commented</a> - 
+	    <span title="{{ comment.creationDate }}">{{ comment.creationDate|date:"D, d/M/Y" }}</span>
+	
+        {% ifequal comment.author.id user.id %}
+        <a href="javascript:showEditComment({{counter}})" name="selector-edit-comment"><i class="icon-pencil"></i></a>
+        {% endifequal %}
+  
+        {% if comment.was_edited %}
+        <!-- loadCommentHistory must be defined in the including page -->
+        <a href="#" onclick="loadCommentHistory({{ comment.id }})" style="color:red">edited</a>
+        {% endif %}
+  
+        <div  id="div_comment_r_{{counter}}" class="commentContent">
+        {% load markdown %}
+        {% autoescape off %}
+        {{ comment.content|markdown }}    
+        {% endautoescape %}
+        </div>
   {% ifequal comment.author.id user.id %}
   {% include 'core/edit_comment_form.html' %}
   {% endifequal %}
+</div>
