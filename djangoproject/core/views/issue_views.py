@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import redirect, render_to_response
 from django.template import RequestContext
@@ -115,6 +116,7 @@ def revokeOffer(request):
 def sponsorIssue(request):
     issue_id = int(request.POST['issue_id'])
 
+    issue = Issue.objects.get(pk = issue_id)
     offer = issue_services.sponsor_existing_issue(issue_id, request.POST, request.user)
     watch_services.watch_issue(request.user, issue_id, IssueWatch.SPONSORED)
 
@@ -123,6 +125,8 @@ def sponsorIssue(request):
         params = '?c=s' # c = Callback (iframe javascript callback)
     else:
         params = '?alert=SPONSOR' # a = Alert
+    if (issue.getSolutionsAcceptingPayments().count() > 0):
+        messages.info(request, 'This issue is open for payments. You are free to choose: you can pay now, or you can wait until after the issue is finished. No pressure :-)')
     return redirect(offer.get_view_link()+params)
 
 
