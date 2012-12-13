@@ -183,7 +183,7 @@
   			_amt.innerHTML = realPay.toFixed(2);
   			sum += pay;
         realSum += realPay;
-        if(stage.solutions[i].status != 'DONE'){
+        if(stage.solutions[i].status != 'DONE' && pay > 0){
           paying_unfinished = true;
         }
   		} else {
