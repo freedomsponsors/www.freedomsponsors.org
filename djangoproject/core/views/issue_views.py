@@ -173,6 +173,7 @@ def viewOffer(request, offer_id):
     alert = dictOrEmpty(request.GET, 'alert')
     if(alert == 'SPONSOR' and offer.issue.project):
         show_alert = 'core/popup_just_sponsored.html'
+    alert_reputation_revoking = mysolution and mysolution.status == Solution.IN_PROGRESS and mysolution.get_received_payments().count() > 0
     invoke_parent_callback = (dictOrEmpty(request.GET, 'c') == 's')
 
     is_watching = request.user.is_authenticated() and watch_services.is_watching_offer(request.user, offer.id)
@@ -184,6 +185,7 @@ def viewOffer(request, offer_id):
         'show_alert':show_alert,
         'myoffer':myoffer,
         'mysolution':mysolution,
+        'alert_reputation_revoking': alert_reputation_revoking,
         'invoke_parent_callback' : invoke_parent_callback},
         context_instance = RequestContext(request))
 
