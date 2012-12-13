@@ -116,11 +116,9 @@
 <div id="issue-comments">
 
 <h3>Issue comments</h3>
-  <hr>
 {% for comment in issue.getComments %}
 
   {% include 'core/include_comment.html' with counter=forloop.counter formaction='/core/issue/comment/edit/submit' %}
-  <hr>
 {% endfor %}
 
 <script>
@@ -142,6 +140,7 @@
         });
     }
 </script>
+
 </div>
 
 {% if user.is_authenticated %}
