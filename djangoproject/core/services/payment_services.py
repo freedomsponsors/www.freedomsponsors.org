@@ -33,7 +33,7 @@ def generate_payment(offer_id, receiver_count, dict, user):
             if(pay > 0):
                 solution = Solution.objects.get(pk=int(dict['solutionId_%s' % i]))
                 realPay = Decimal(pay * Decimal(1 - settings.FS_FEE))
-                part = PaymentPart.newPart(payment, solution.programmer, pay, realPay)
+                part = PaymentPart.newPart(payment, solution, pay, realPay)
                 parts.append(part)
                 sum += pay
                 realSum += realPay
