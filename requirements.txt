@@ -1,8 +1,8 @@
 django==1.4
-splinter
-pygments
-misaka
-psycopg2
-simplejson
-coverage
-python-dateutil
+splinter==0.4.9
+Pygments==1.5
+misaka==1.0.2
+psycopg2==2.4.5
+simplejson==2.6.2
+coverage==3.6b1
+python-dateutil==2.1
