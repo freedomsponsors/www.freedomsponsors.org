@@ -21,20 +21,13 @@ Instructions to run application locally:
   git clone git://github.com/freedomsponsors/www.freedomsponsors.org.git
   ```
 
-2. Create a `frespo` database on postgres (default username and password is `frespo`).
+2. Create a virtualenv and install dependencies.
 
-  2.1 Install dependencies.
+  ```bash
+  python bootstrap
+  ```
 
-    ```bash
-    sudo pip install -r requirements.txt
-    ```
-
-    Depending on your environment, psycopg2 installation with pip might fail.
-    If that's your case, you might also wanna try.
-
-    ```bash
-    sudo apt-get install python-psycopg2
-    ```
+  Note that to install the `psycopg2` package you must have Postgres installed on your system. Otherwise the *pip install* might fail.
 
 3. Configure settings.
 
