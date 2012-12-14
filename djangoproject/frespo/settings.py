@@ -8,14 +8,11 @@ import manage
 
 FS_FEE = Decimal('0.03')
 
-DEBUG = env_settings.DEBUG
+DEBUG = False
 FRESPO_PROJECT_ID = -1 # only needed for backwards compatibility with south patch 0008_set_isfeedback_true.py
-TEST_GMAIL_ACCOUNT_1 = env_settings.TEST_GMAIL_ACCOUNT_1
-TEST_GMAIL_ACCOUNT_2 = env_settings.TEST_GMAIL_ACCOUNT_2
-ADMINS = env_settings.ADMINS
-DATABASE_NAME = env_settings.DATABASE_NAME
-DATABASE_USER = env_settings.DATABASE_USER
-DATABASE_PASS = env_settings.DATABASE_PASS
+ADMINS = (
+    ('Admin', 'admin@freedomsponsors.org'),
+    )
 
 TEMPLATE_DEBUG = DEBUG
 MANAGERS = ADMINS
@@ -49,63 +46,28 @@ else:
 # if 'test' in sys.argv:
 #     DATABASES['default'] = {'ENGINE': 'django.db.backends.sqlite3'}
 
-fakeEmails = env_settings.FAKE_EMAILS
-useDjangoMailer = env_settings.USE_DJANGO_MAILER
 
-if useDjangoMailer:
-    EMAIL_BACKEND = 'mailer.backend.DbBackend'
-    if fakeEmails:
-        MAILER_EMAIL_BACKEND = env_settings.FAKE_EMAIL_BACKEND
-    else:
-        MAILER_EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-else:
-    if fakeEmails:
-        EMAIL_BACKEND = env_settings.FAKE_EMAIL_BACKEND
-    else:
-        EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
-if(fakeEmails):
-    EMAIL_FILE_PATH = './fakeMail'
-else:
-    # EMAIL_BACKEND = 'mailer.backend.DbBackend'
-    EMAIL_HOST = env_settings.EMAIL_HOST
-    EMAIL_PORT = env_settings.EMAIL_PORT
-    EMAIL_HOST_USER = env_settings.AUTO_EMAIL_USERNAME
-    EMAIL_HOST_PASSWORD = env_settings.AUTO_EMAIL_PASSWORD
-    EMAIL_USE_TLS = env_settings.EMAIL_USE_TLS
-    DEFAULT_FROM_EMAIL = env_settings.AUTO_EMAIL_USERNAME
-
-GITHUB_BOT_USERNAME = env_settings.GITHUB_BOT_USERNAME
-GITHUB_BOT_PASSWORD = env_settings.GITHUB_BOT_PASSWORD
+GITHUB_BOT_USERNAME = 'freedomsponsors-bot'
+GITHUB_BOT_PASSWORD = '*********'
 
 SITE_PROTOCOL = 'http'
-SITE_HOST = env_settings.SITE_HOST
-SITE_NAME = env_settings.SITE_NAME
+SITE_HOST = 'www.freedomsponsors.org'
+SITE_NAME = 'FreedomSponsors'
 SITE_HOME = SITE_PROTOCOL+'://'+SITE_HOST
 
-PAYPAL_IPNNOTIFY_URL_TOKEN = env_settings.PAYPAL_IPNNOTIFY_URL_TOKEN
+PAYPAL_USE_SANDBOX = False
+PAYPAL_DEBUG = False
+PAYPAL_IPNNOTIFY_URL_TOKEN = 'megablasteripn'
+PAYPAL_API_USERNAME = "FP_1338073142_biz_api1.gmail.com"
+PAYPAL_PASSWORD = '1338073168'
+PAYPAL_API_SIGNATURE = 'AFcWxV21C7fd0v3bYYYRCpSSRl31AVAvZTYca4potYVRXAbpeSKQGHZO'
+PAYPAL_API_APPLICATION_ID = 'APP-80W284485P519543T' #see www.x.com
+PAYPAL_API_EMAIL = 'FP_1338073142_biz@gmail.com'
+PAYPAL_FRESPO_RECEIVER_EMAIL = 'FP_1338073142_biz@gmail.com'
+
 PAYPAL_CANCEL_URL = SITE_HOME+'/core/paypal/cancel'
 PAYPAL_RETURN_URL = SITE_HOME+'/core/paypal/return'
 PAYPAL_IPNNOTIFY_URL = SITE_HOME+'/core/paypal/'+PAYPAL_IPNNOTIFY_URL_TOKEN
-
-PAYPAL_USE_SANDBOX = env_settings.PAYPAL_USE_SANDBOX
-PAYPAL_DEBUG = False
-if(PAYPAL_USE_SANDBOX):
-    PAYPAL_API_USERNAME = env_settings.PAYPAL_SANDBOX_API_USERNAME
-    PAYPAL_API_PASSWORD = env_settings.PAYPAL_SANDBOX_API_PASSWORD
-    PAYPAL_API_SIGNATURE = env_settings.PAYPAL_SANDBOX_API_SIGNATURE
-    PAYPAL_API_APPLICATION_ID = env_settings.PAYPAL_SANDBOX_API_APPLICATION_ID
-    PAYPAL_API_EMAIL = env_settings.PAYPAL_SANDBOX_API_EMAIL
-    PAYPAL_FRESPO_RECEIVER_EMAIL = env_settings.PAYPAL_SANDBOX_FRESPO_RECEIVER_EMAIL
-else:
-    PAYPAL_API_USERNAME = env_settings.PAYPAL_PRODUCTION_API_USERNAME
-    PAYPAL_API_PASSWORD = env_settings.PAYPAL_PRODUCTION_API_PASSWORD
-    PAYPAL_API_SIGNATURE = env_settings.PAYPAL_PRODUCTION_API_SIGNATURE
-    PAYPAL_API_APPLICATION_ID = env_settings.PAYPAL_PRODUCTION_API_APPLICATION_ID
-    PAYPAL_API_EMAIL = env_settings.PAYPAL_PRODUCTION_API_EMAIL
-    PAYPAL_FRESPO_RECEIVER_EMAIL = env_settings.PAYPAL_PRODUCTION_FRESPO_RECEIVER_EMAIL
-
-
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -114,7 +76,7 @@ else:
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = env_settings.TIME_ZONE
+TIME_ZONE = 'America/Sao_Paulo'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -275,10 +237,10 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-TWITTER_CONSUMER_KEY         = env_settings.TWITTER_CONSUMER_KEY
-TWITTER_CONSUMER_SECRET      = env_settings.TWITTER_CONSUMER_SECRET
-FACEBOOK_APP_ID              = env_settings.FACEBOOK_APP_ID
-FACEBOOK_API_SECRET          = env_settings.FACEBOOK_API_SECRET
+TWITTER_CONSUMER_KEY         = ''
+TWITTER_CONSUMER_SECRET      = ''
+FACEBOOK_APP_ID              = ''
+FACEBOOK_API_SECRET          = ''
 LINKEDIN_CONSUMER_KEY        = ''
 LINKEDIN_CONSUMER_SECRET     = ''
 ORKUT_CONSUMER_KEY           = ''
@@ -289,8 +251,8 @@ GOOGLE_OAUTH2_CLIENT_ID      = ''
 GOOGLE_OAUTH2_CLIENT_SECRET  = ''
 FOURSQUARE_CONSUMER_KEY      = ''
 FOURSQUARE_CONSUMER_SECRET   = ''
-GITHUB_APP_ID                = env_settings.GITHUB_APP_ID
-GITHUB_API_SECRET            = env_settings.GITHUB_API_SECRET
+GITHUB_APP_ID                = ''
+GITHUB_API_SECRET            = ''
 DROPBOX_APP_ID               = ''
 DROPBOX_API_SECRET           = ''
 FLICKR_APP_ID                = ''
@@ -299,8 +261,8 @@ INSTAGRAM_CLIENT_ID          = ''
 INSTAGRAM_CLIENT_SECRET      = ''
 VK_APP_ID                    = ''
 VK_API_SECRET                = ''
-BITBUCKET_CONSUMER_KEY       = env_settings.BITBUCKET_CONSUMER_KEY
-BITBUCKET_CONSUMER_SECRET    = env_settings.BITBUCKET_CONSUMER_SECRET
+BITBUCKET_CONSUMER_KEY       = ''
+BITBUCKET_CONSUMER_SECRET    = ''
 LIVE_CLIENT_ID               = ''
 LIVE_CLIENT_SECRET           = ''
 SKYROCK_CONSUMER_KEY         = ''
@@ -359,7 +321,7 @@ LOGGING = {
             'maxBytes': 1024*1024*5, # 5 MB
             'backupCount': 5,
             'formatter':'standard',
-        },  
+        },
     },
     'loggers': {
         '': {
@@ -383,3 +345,7 @@ LOGGING = {
 PAGINATION_DEFAULT_PAGINATION = 20
 PAGINATION_DEFAULT_WINDOW = 3
 
+try:
+    from env_settings import *
+except ImportError:
+    print u'WARNING: env_settings.py not found.'
