@@ -5,6 +5,7 @@ from decimal import Decimal
 import sys
 import env_settings
 import manage
+import dj_database_url
 from unipath import Path
 
 PROJECT_DIR = Path(__file__).parent.parent
@@ -20,34 +21,10 @@ ADMINS = (
 TEMPLATE_DEBUG = DEBUG
 MANAGERS = ADMINS
 
-#IS_TESTING = os.environ['IS_TESTING'] == 'true'
-IS_TESTING = len(sys.argv) >= 2 and 'test' == sys.argv[1]
-use_postgres = True
-
-if IS_TESTING:
-    use_postgres = os.environ.has_key('TEST_DBMS') and os.environ['TEST_DBMS'] == 'POSTGRES'
-
-if use_postgres:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-            'NAME': DATABASE_NAME,                      # Or path to database file if using sqlite3.
-            'USER': DATABASE_USER,                      # Not used with sqlite3.
-            'PASSWORD': DATABASE_PASS,                  # Not used with sqlite3.
-            'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
-            'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
-        }
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-            'NAME': 'test_db',                      # Or path to database file if using sqlite3.
-        }
-    }
-
-# if 'test' in sys.argv:
-#     DATABASES['default'] = {'ENGINE': 'django.db.backends.sqlite3'}
+DATABASES = {
+    'default': dj_database_url.config(
+        default='sqlite:///' + PROJECT_DIR.child('database.db'))
+}
 
 
 GITHUB_BOT_USERNAME = 'freedomsponsors-bot'
