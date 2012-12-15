@@ -5,6 +5,9 @@ from decimal import Decimal
 import sys
 import env_settings
 import manage
+from unipath import Path
+
+PROJECT_DIR = Path(__file__).parent.parent
 
 FS_FEE = Decimal('0.03')
 
@@ -172,9 +175,8 @@ ROOT_URLCONF = 'frespo.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'frespo.wsgi.application'
 
-PROJECT_DIR = os.path.dirname(__file__)+'/..'
 TEMPLATE_DIRS = (
-    os.path.join(PROJECT_DIR, "templates")
+    PROJECT_DIR.child("templates"),
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -317,7 +319,7 @@ LOGGING = {
         'default': {
             'level':'DEBUG',
             'class':'logging.handlers.RotatingFileHandler',
-            'filename': env_settings.FRESPO_LOG_FILE,
+            'filename': PROJECT_DIR.child('logs', 'frespo.log'),
             'maxBytes': 1024*1024*5, # 5 MB
             'backupCount': 5,
             'formatter':'standard',
