@@ -1,3 +1,4 @@
+# coding: utf-8
 # Django settings for frespo project.
 import os
 from decimal import Decimal

@@ -1,3 +1,4 @@
+# coding: utf-8
 # Environment-specific settings
 
 TEST_GMAIL_ACCOUNT_1 = {
