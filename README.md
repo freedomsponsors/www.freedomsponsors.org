@@ -101,14 +101,14 @@ Instructions to run application locally:
   ```bash
   $ cd djangoproject
   $ cp frespo/env_settings.py_template frespo/env_settings.py
-  $ nano frespo/env_settings.py # edit according to your environment
+  $ nano frespo/env_settings.py # edit according to your environment - don't forget to change database user/password
   $ mkdir logs #create the logs folder manually
   ```
 
 5. Create database objects.
 
   ```bash  
-  $ ./manage.py syncdb #you may set up a superuser here if you want to
+  $ ./manage.py syncdb #if asked to create a superuser answer 'yes' and use default values
   $ ./migrate.sh
   ```
 
