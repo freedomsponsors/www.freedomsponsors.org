@@ -68,9 +68,9 @@ Instructions to run application locally:
   $ git clone git://github.com/freedomsponsors/www.freedomsponsors.org.git
   ```
 
-2. Create a `frespo` database on postgres (default username and password is `frespo`).
+3. Create a `frespo` database on postgres (default username and password is `frespo`).
 
-  2.1 Install dependencies.
+  3.1 Install dependencies.
 
     ```bash
     $ cd www.freedomsponsors.org
@@ -84,7 +84,7 @@ Instructions to run application locally:
     $ sudo apt-get install python-psycopg2
     ```
     
-  2.2 Create the database/default user.
+  3.2 Create the database/default user.
   
     ```bash
     $ sudo su postgres #run the next command as portgres
@@ -96,7 +96,7 @@ Instructions to run application locally:
     $ su ubuntu #switch back to your working user
     ```
 
-3. Configure settings.
+4. Configure settings.
 
   ```bash
   $ cd djangoproject
@@ -105,14 +105,14 @@ Instructions to run application locally:
   $ mkdir logs #create the logs folder manually
   ```
 
-4. Create database objects.
+5. Create database objects.
 
   ```bash  
   $ ./manage.py syncdb #you may set up a superuser here if you want to
   $ ./migrate.sh
   ```
 
-5. Populate with some initial data.
+6. Populate with some initial data.
 
   ```bash
   $ ./manage.py loadFeedbackData
@@ -120,7 +120,7 @@ Instructions to run application locally:
   $ ./populaTestes.sh
   ```
 
-6. Run!
+7. Run!
 
   ```bash
   $ ./manage.py runserver # and visit http://localhost:8000
