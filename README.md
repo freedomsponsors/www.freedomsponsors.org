@@ -56,6 +56,12 @@ Instructions to run application locally:
  $ sudo apt-get install libpq-dev
  ```
  
+ 1.7 Install pip.
+ 
+ ```bash
+ $ sudo apt-get install python-pip
+ ```
+ 
 2. Clone the web application repository.
 
   ```bash
