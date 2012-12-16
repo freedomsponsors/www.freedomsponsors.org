@@ -83,10 +83,10 @@ Instructions to run application locally:
     ```bash
     $ sudo su postgres #run the next command as portgres
     $ psql template1
-    template1=# CREATE USER frespo WITH PASSWORD 'frespo';
-    template1=# CREATE DATABASE frespo;
-    template1=# GRANT ALL PRIVILEGES ON DATABASE frespo TO frespo;
-    template1=# \q
+    template1=$ CREATE USER frespo WITH PASSWORD 'frespo';
+    template1=$ CREATE DATABASE frespo;
+    template1=$ GRANT ALL PRIVILEGES ON DATABASE frespo TO frespo;
+    template1=$ \q
     $ su ubuntu #switch back to your working user
     ```
 
@@ -96,13 +96,13 @@ Instructions to run application locally:
   $ cd djangoproject
   $ cp frespo/env_settings.py_template frespo/env_settings.py
   $ nano frespo/env_settings.py # edit according to your environment - don't forget to change database user/password
-  $ mkdir logs #create the logs folder manually
+  $ mkdir logs # create the logs folder manually
   ```
 
 5. Create database objects.
 
   ```bash  
-  $ ./manage.py syncdb #if asked to create a superuser answer 'yes' and use default values
+  $ ./manage.py syncdb # if asked to create a superuser answer 'no'
   $ ./migrate.sh
   ```
 
@@ -111,7 +111,7 @@ Instructions to run application locally:
   ```bash
   $ ./manage.py loadFeedbackData
   $ ./manage.py loadProjects
-  $ ./populaTestes.sh
+  $ ./populaTestes.sh # answer 'yes' for the apocalyptical question
   ```
 
 7. Run!
