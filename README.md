@@ -11,14 +11,61 @@ Please take a look at the open issues.
 
 Also, feel free to join the [mailing list](https://groups.google.com/forum/?hl=en&fromgroups#!forum/freedomsponsors)
 
+## Windows users
+
+If you're a Windows user we suggest you set up a virtual machine using [VirtualBox](http://www.virtualbox.org) - Ubuntu
+virtual machines can be downloaded [here](http://virtualboxes.org/images/ubuntu/). 
+
 ## Running
 
 Instructions to run application locally:
 
-1. Clone repo.
+1. You'll need a few tools for the next steps - make sure all of them are installed before proceeding to the next steps.
+
+ 1.1 Make sure your package information is up to date.
+ 
+ ```bash
+ $ sudo apt-get update --fix-missing
+ ```
+ 
+ 1.2 Install Git.
+ 
+  ```bash
+  $ sudo apt-get install git
+  ```
+ 
+ 1.3 Install PostgreSQL.
+ 
+ ```bash
+ $ sudo apt-get install postgresql
+ ```
+ 1.4 Install python-dev.
+ 
+ ```bash
+ $ sudo apt-get install python-dev
+ ```
+ 1.5 Install python-lxml.
+ 
+ ```bash
+ $ sudo apt-get install python-lxml
+ ```
+ 
+ 1.6 Install libpq-dev.
+ 
+ ```bash
+ $ sudo apt-get install libpq-dev
+ ```
+ 
+ 1.7 Install python-lxml.
+ 
+ ```bash
+ $ sudo apt-get install python-lxml
+ ```
+ 
+2. Clone the web application repository.
 
   ```bash
-  git clone git://github.com/freedomsponsors/www.freedomsponsors.org.git
+  $ git clone git://github.com/freedomsponsors/www.freedomsponsors.org.git
   ```
 
 2. Create a `frespo` database on postgres (default username and password is `frespo`).
@@ -26,42 +73,57 @@ Instructions to run application locally:
   2.1 Install dependencies.
 
     ```bash
-    sudo pip install -r requirements.txt
+    $ cd www.freedomsponsors.org
+    $ sudo pip install -r requirements.txt
     ```
 
-    Depending on your environment, psycopg2 installation with pip might fail.
-    If that's your case, you might also wanna try.
+    Depending on your environment, psycopg2 installation with pip might fail. If that's the case you can install it 
+    using apt-get.
 
     ```bash
-    sudo apt-get install python-psycopg2
+    $ sudo apt-get install python-psycopg2
+    ```
+    
+  2.2 Create the database/default user.
+  
+    ```bash
+    $ sudo su postgres #run the next command as portgres
+    $ psql template1
+    template1=# CREATE USER frespo WITH PASSWORD 'frespo';
+    template1=# CREATE DATABASE frespo;
+    template1=# GRANT ALL PRIVILEGES ON DATABASE frespo TO frespo;
+    template1=# \q
+    $ su ubuntu #switch back to your working user
     ```
 
 3. Configure settings.
 
   ```bash
-  cp frespo/env_settings.py_template frespo/env_settings.py
-  nano frespo/env_settings.py # edit according to your environment
+  $ cd djangoproject
+  $ cp frespo/env_settings.py_template frespo/env_settings.py
+  $ nano frespo/env_settings.py # edit according to your environment
+  $ mkdir logs #create the logs folder manually
   ```
 
 4. Create database objects.
 
-  ```bash
-  cd www.freedomsponsors.org/djangoproject
-  ./manage.py syncdb
-  ./migrate.sh
+  ```bash  
+  $ ./manage.py syncdb #you may set up a superuser here if you want to
+  $ ./migrate.sh
   ```
 
 5. Populate with some initial data.
 
   ```bash
-  ./manage.py loadFeedbackData
-  ./manage.py loadProjects
+  $ ./manage.py loadFeedbackData
+  $ ./manage.py loadProjects
+  $ ./populaTestes.sh
   ```
 
 6. Run!
 
   ```bash
-  ./manage.py runserver # and visit http://localhost:8000
+  $ ./manage.py runserver # and visit http://localhost:8000
   ```
 
 If you find that the steps above are not actually accurate, please [open a new issue to let us know](https://github.com/freedomsponsors/www.freedomsponsors.org/issues/new)!
