@@ -95,7 +95,11 @@ Instructions to run application locally:
   ```bash
   $ cd djangoproject
   $ cp frespo/env_settings.py_template frespo/env_settings.py
-  $ nano frespo/env_settings.py # edit according to your environment - don't forget to change database user/password
+  # edit the env_settings.fy file - you must change the definitions shown below (values as used in this walkthrough):
+  # ENVIRONMENT = 'DEV'
+  # DATABASE_USER = 'frespo'
+  # DATABASE_PASS = 'frespo'  
+  $ nano frespo/env_settings.py 
   $ mkdir logs # create the logs folder manually
   ```
 
