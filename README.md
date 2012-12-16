@@ -56,12 +56,6 @@ Instructions to run application locally:
  $ sudo apt-get install libpq-dev
  ```
  
- 1.7 Install python-lxml.
- 
- ```bash
- $ sudo apt-get install python-lxml
- ```
- 
 2. Clone the web application repository.
 
   ```bash
