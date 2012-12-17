@@ -87,7 +87,7 @@ Instructions to run application locally:
   3.2 Create the database/default user.
   
     ```bash
-    $ sudo su postgres #run the next command as portgres
+    $ sudo su postgres #run the next command as postgres
     $ psql template1
     template1=$ CREATE USER frespo WITH PASSWORD 'frespo';
     template1=$ CREATE DATABASE frespo;
