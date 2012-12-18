@@ -13,17 +13,26 @@ ADMINS = (
 )
 DEBUG = True
 FAKE_EMAILS= True
+USE_DJANGO_MAILER = False
 FAKE_EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
 #FAKE_EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 ENVIRONMENT = 'NOT_DEV' #change to DEV in your machine
 
 DATABASE_NAME = 'frespo'
-DATABASE_USER = 'postgres'
-DATABASE_PASS = ''
+DATABASE_USER = 'postgres' # Change this to match your environment 
+DATABASE_PASS = '' # Change this to match your environment 
 
 GITHUB_BOT_USERNAME = 'freedomsponsors-bot'
 GITHUB_BOT_PASSWORD = '*********'
 
+#--------- Use Gmail
+#EMAIL_HOST = 'smtp.gmail.com'
+#EMAIL_PORT = 587
+#EMAIL_USE_TLS = True
+#--------- Use a local postfix
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 25
+EMAIL_USE_TLS = False
 AUTO_EMAIL_USERNAME = 'noreply@freedomsponsors.com'
 AUTO_EMAIL_PASSWORD = 'ThisIsNotTheRealPassword_obviously'
 

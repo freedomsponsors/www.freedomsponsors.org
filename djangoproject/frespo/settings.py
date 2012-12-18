@@ -49,17 +49,29 @@ else:
 #     DATABASES['default'] = {'ENGINE': 'django.db.backends.sqlite3'}
 
 fakeEmails = env_settings.FAKE_EMAILS
-EMAIL_BACKEND = 'mailer.backend.DbBackend'
+useDjangoMailer = env_settings.USE_DJANGO_MAILER
+
+if useDjangoMailer:
+    EMAIL_BACKEND = 'mailer.backend.DbBackend'
+    if fakeEmails:
+        MAILER_EMAIL_BACKEND = env_settings.FAKE_EMAIL_BACKEND
+    else:
+        MAILER_EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+else:
+    if fakeEmails:
+        EMAIL_BACKEND = env_settings.FAKE_EMAIL_BACKEND
+    else:
+        EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 if(fakeEmails):
-    MAILER_EMAIL_BACKEND = env_settings.FAKE_EMAIL_BACKEND
     EMAIL_FILE_PATH = './fakeMail'
 else:
     # EMAIL_BACKEND = 'mailer.backend.DbBackend'
-    EMAIL_HOST = 'smtp.gmail.com'
-    EMAIL_PORT = 587
+    EMAIL_HOST = env_settings.EMAIL_HOST
+    EMAIL_PORT = env_settings.EMAIL_PORT
     EMAIL_HOST_USER = env_settings.AUTO_EMAIL_USERNAME
     EMAIL_HOST_PASSWORD = env_settings.AUTO_EMAIL_PASSWORD
-    EMAIL_USE_TLS = True
+    EMAIL_USE_TLS = env_settings.EMAIL_USE_TLS
     DEFAULT_FROM_EMAIL = env_settings.AUTO_EMAIL_USERNAME
 
 GITHUB_BOT_USERNAME = env_settings.GITHUB_BOT_USERNAME
