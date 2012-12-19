@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
@@ -29,10 +30,10 @@ def payOffer(request):
 
     if(settings.PAYPAL_USE_SANDBOX):
         # form_action = 'https://www.sandbox.paypal.com/webapps/adaptivepayment/flow/pay'
-        redirect_url = 'https://www.sandbox.paypal.com/webscr?cmd=_ap-payment&paykey==%s' % payment.paykey
+        redirect_url = 'https://www.sandbox.paypal.com/webscr?cmd=_ap-payment&paykey=%s' % payment.paykey
     else:
         # form_action = 'https://www.paypal.com/webapps/adaptivepayment/flow/pay'
-        redirect_url = 'https://www.paypal.com/webscr?cmd=_ap-payment&paykey==%s' % payment.paykey
+        redirect_url = 'https://www.paypal.com/webscr?cmd=_ap-payment&paykey=%s' % payment.paykey
 
     # return render_to_response('core/waitPayment.html',
     #     {'offer' : offer,
@@ -90,7 +91,9 @@ def paypalReturn(request):
         msg = 'Session expired'
         curr_payment = None
         logger.warn('CONFIRM_WEB received while no payment in session. user = %s'%request.user.id)
-    return render_to_response('core/paypal_confirmed.html',
-        {'msg':msg,
-        'payment':curr_payment},
-        context_instance = RequestContext(request))
+    messages.info(request, "Your payment is being processed. You'll receive an email when your payment is confirmed.")
+    # return render_to_response('core/paypal_confirmed.html',
+    #     {'msg':msg,
+    #     'payment':curr_payment},
+    #     context_instance = RequestContext(request))
+    return redirect(curr_payment.offer.issue.get_view_link())
