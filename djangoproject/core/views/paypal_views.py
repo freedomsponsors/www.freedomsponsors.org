@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
 from core.utils import paypal_adapter
@@ -28,15 +28,18 @@ def payOffer(request):
     request.session['current_payment_id'] = payment.id
 
     if(settings.PAYPAL_USE_SANDBOX):
-        form_action = 'https://www.sandbox.paypal.com/webapps/adaptivepayment/flow/pay'
+        # form_action = 'https://www.sandbox.paypal.com/webapps/adaptivepayment/flow/pay'
+        redirect_url = 'https://www.sandbox.paypal.com/webscr?cmd=_ap-payment&paykey==%s' % payment.paykey
     else:
-        form_action = 'https://www.paypal.com/webapps/adaptivepayment/flow/pay'
+        # form_action = 'https://www.paypal.com/webapps/adaptivepayment/flow/pay'
+        redirect_url = 'https://www.paypal.com/webscr?cmd=_ap-payment&paykey==%s' % payment.paykey
 
-    return render_to_response('core/waitPayment.html',
-        {'offer' : offer,
-        'paykey':payment.paykey,
-        'form_action':form_action},
-        context_instance = RequestContext(request))
+    # return render_to_response('core/waitPayment.html',
+    #     {'offer' : offer,
+    #     'paykey':payment.paykey,
+    #     'form_action':form_action},
+    #     context_instance = RequestContext(request))
+    return redirect(redirect_url)
 
 
 @login_required
