@@ -88,12 +88,9 @@ Instructions to run application locally:
   
     ```bash
     $ sudo su postgres #run the next command as postgres
-    $ psql template1
-    template1=$ CREATE USER frespo WITH PASSWORD 'frespo';
-    template1=$ CREATE DATABASE frespo;
-    template1=$ GRANT ALL PRIVILEGES ON DATABASE frespo TO frespo;
-    template1=$ \q
-    $ su ubuntu #switch back to your working user
+    $ createuser -d -SR frespo
+    $ createdb -O frespo frespo
+    $ exit # go back to your normal user
     ```
 
 4. Configure settings.
@@ -101,7 +98,7 @@ Instructions to run application locally:
   ```bash
   $ cd djangoproject
   $ cp frespo/env_settings.py_template frespo/env_settings.py
-  # edit the env_settings.fy file - you must change the definitions shown below (values as used in this walkthrough):
+  # edit the env_settings.py file - you must change the definitions shown below (values as used in this walkthrough):
   # ENVIRONMENT = 'DEV'
   # DATABASE_USER = 'frespo'
   # DATABASE_PASS = 'frespo'  
@@ -112,19 +109,11 @@ Instructions to run application locally:
 5. Create database objects.
 
   ```bash  
-  $ ./manage.py syncdb # if asked to create a superuser answer 'no'
-  $ ./migrate.sh
+  $ cd www.freedomsponsors.org/djangoproject
+  $ ./manage.py syncdb --migrate --noinput
   ```
 
-6. Populate with some initial data.
-
-  ```bash
-  $ ./manage.py loadFeedbackData
-  $ ./manage.py loadProjects
-  $ ./populaTestes.sh # answer 'yes' for the apocalyptical question
-  ```
-
-7. Run!
+6. Run!
 
   ```bash
   $ ./manage.py runserver # and visit http://localhost:8000
