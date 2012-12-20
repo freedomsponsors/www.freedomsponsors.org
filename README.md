@@ -88,7 +88,7 @@ Instructions to run application locally:
   
     ```bash
     $ sudo su postgres #run the next command as postgres
-    $ createuser -d -SR frespo
+    $ createuser -d -SRP frespo # this will prompot you to create a password (just use frespo for now)
     $ createdb -O frespo frespo
     $ exit # go back to your normal user
     ```
@@ -100,6 +100,7 @@ Instructions to run application locally:
   $ cp frespo/env_settings.py_template frespo/env_settings.py
   # edit the env_settings.py file - you must change the definitions shown below (values as used in this walkthrough):
   # ENVIRONMENT = 'DEV'
+  # DATABASE_NAME = 'frespo'
   # DATABASE_USER = 'frespo'
   # DATABASE_PASS = 'frespo'  
   $ nano frespo/env_settings.py 
