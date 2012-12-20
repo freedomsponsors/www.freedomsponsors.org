@@ -37,7 +37,8 @@ Instructions to run application locally:
  1.3 Install PostgreSQL.
  
  ```bash
- $ sudo apt-get install postgresql
+ $ sudo apt-get install postgresql 
+ $ sudo apt-get install postgresql-server-dev-all # Make sure you have this.
  ```
  1.4 Install python-dev.
  
@@ -68,23 +69,7 @@ Instructions to run application locally:
   $ git clone git://github.com/freedomsponsors/www.freedomsponsors.org.git
   ```
 
-3. Create a `frespo` database on postgres (default username and password is `frespo`).
-
-  3.1 Install dependencies.
-
-    ```bash
-    $ cd www.freedomsponsors.org
-    $ sudo pip install -r requirements.txt
-    ```
-
-    Depending on your environment, psycopg2 installation with pip might fail. If that's the case you can install it 
-    using apt-get.
-
-    ```bash
-    $ sudo apt-get install python-psycopg2
-    ```
-    
-  3.2 Create the database/default user.
+3. Create the database/default user.
   
     ```bash
     $ sudo su postgres #run the next command as postgres
@@ -106,15 +91,33 @@ Instructions to run application locally:
   $ nano frespo/env_settings.py 
   $ mkdir logs # create the logs folder manually
   ```
+5. Create a virtualenv and install dependencies.
 
-5. Create database objects.
+    ```bash
+    $ python bootstrap
+    ```
+  If this command fails because of psycopg2, make sure you have installed postgresql-server-dev-all (mentioned on step 1)
+
+  Then you can enter the virtualenv:
+
+    ```bash
+    $ source bin/activate
+    ```
+  To exit the virtualenv
+
+    ```bash
+    $ deactivate
+    ```
+  You'll need to be in the virtual environment to use `./manage.py ...` commands
+
+6. Create database objects.
 
   ```bash  
   $ cd www.freedomsponsors.org/djangoproject
   $ ./manage.py syncdb --migrate --noinput
   ```
 
-6. Run!
+7. Run!
 
   ```bash
   $ ./manage.py runserver # and visit http://localhost:8000
