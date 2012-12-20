@@ -37,7 +37,8 @@ Instructions to run application locally:
  1.3 Install PostgreSQL.
  
  ```bash
- $ sudo apt-get install postgresql
+ $ sudo apt-get install postgresql 
+ $ sudo apt-get install postgresql-server-dev-all # Make sure you have this.
  ```
  1.4 Install python-dev.
  
@@ -68,32 +69,13 @@ Instructions to run application locally:
   $ git clone git://github.com/freedomsponsors/www.freedomsponsors.org.git
   ```
 
-3. Create a `frespo` database on postgres (default username and password is `frespo`).
-
-  3.1 Install dependencies.
-
-    ```bash
-    $ cd www.freedomsponsors.org
-    $ sudo pip install -r requirements.txt
-    ```
-
-    Depending on your environment, psycopg2 installation with pip might fail. If that's the case you can install it 
-    using apt-get.
-
-    ```bash
-    $ sudo apt-get install python-psycopg2
-    ```
-    
-  3.2 Create the database/default user.
+3. Create the database/default user.
   
     ```bash
     $ sudo su postgres #run the next command as postgres
-    $ psql template1
-    template1=$ CREATE USER frespo WITH PASSWORD 'frespo';
-    template1=$ CREATE DATABASE frespo;
-    template1=$ GRANT ALL PRIVILEGES ON DATABASE frespo TO frespo;
-    template1=$ \q
-    $ su ubuntu #switch back to your working user
+    $ createuser -d -SRP frespo # this will prompot you to create a password (just use frespo for now)
+    $ createdb -O frespo frespo
+    $ exit # go back to your normal user
     ```
 
 4. Configure settings.
@@ -101,27 +83,38 @@ Instructions to run application locally:
   ```bash
   $ cd djangoproject
   $ cp frespo/env_settings.py_template frespo/env_settings.py
-  # edit the env_settings.fy file - you must change the definitions shown below (values as used in this walkthrough):
+  # edit the env_settings.py file - you must change the definitions shown below (values as used in this walkthrough):
   # ENVIRONMENT = 'DEV'
+  # DATABASE_NAME = 'frespo'
   # DATABASE_USER = 'frespo'
   # DATABASE_PASS = 'frespo'  
   $ nano frespo/env_settings.py 
   $ mkdir logs # create the logs folder manually
   ```
+5. Create a virtualenv and install dependencies.
 
-5. Create database objects.
+    ```bash
+    $ python bootstrap
+    ```
+  If this command fails because of psycopg2, make sure you have installed postgresql-server-dev-all (mentioned on step 1)
+
+  Then you can enter the virtualenv:
+
+    ```bash
+    $ source bin/activate
+    ```
+  To exit the virtualenv
+
+    ```bash
+    $ deactivate
+    ```
+  You'll need to be in the virtual environment to use `./manage.py ...` commands
+
+6. Create database objects.
 
   ```bash  
-  $ ./manage.py syncdb # if asked to create a superuser answer 'no'
-  $ ./migrate.sh
-  ```
-
-6. Populate with some initial data.
-
-  ```bash
-  $ ./manage.py loadFeedbackData
-  $ ./manage.py loadProjects
-  $ ./populaTestes.sh # answer 'yes' for the apocalyptical question
+  $ cd www.freedomsponsors.org/djangoproject
+  $ ./manage.py syncdb --migrate --noinput
   ```
 
 7. Run!
