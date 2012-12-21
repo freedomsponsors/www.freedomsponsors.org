@@ -2,7 +2,6 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
-from django.utils.translation import ugettext as _
 from datetime import timedelta
 from django.contrib.auth.models import User
 import urllib, hashlib, time, random
@@ -701,7 +700,7 @@ class Payment(models.Model):
             self.save()
         else:
             #TODO: logar coisas melhor
-            print _('warning: canceled confirmed payment %s')%self.id
+            print('warning: canceled confirmed payment %s'%self.id)
 
     def forget(self):
         event = PaymentHistEvent.newChangeEvent(payment=self, event=PaymentHistEvent.FORGET)
@@ -712,7 +711,7 @@ class Payment(models.Model):
             self.save()
         else:
             #TODO: logar coisas melhor
-            print _('warning: forgot '+self.status+' payment %s'%self.id)
+            print ('warning: forgot '+self.status+' payment %s'%self.id)
 
     def confirm_web(self):
         event = PaymentHistEvent.newChangeEvent(payment=self, event=PaymentHistEvent.CONFIRM_WEB)
@@ -723,7 +722,7 @@ class Payment(models.Model):
             self.save()
         if(self.status == Payment.CANCELED or self.status == Payment.CONFIRMED_WEB):
             #TODO: logar coisas melhor
-            print _('warning: confirmed_web '+self.status+' payment %s'%self.id)
+            print ('warning: confirmed_web '+self.status+' payment %s'%self.id)
 
     def confirm_ipn(self):
         event = PaymentHistEvent.newChangeEvent(payment=self, event=PaymentHistEvent.CONFIRM_IPN)
@@ -733,7 +732,7 @@ class Payment(models.Model):
         self.save()
         if(self.status == Payment.CANCELED):
             #TODO: logar coisas melhor
-            print _('warning: confirmed_ipn '+self.status+' payment %s'%self.id)
+            print ('warning: confirmed_ipn '+self.status+' payment %s'%self.id)
 
 class PaymentHistEvent(models.Model):
     payment = models.ForeignKey(Payment)
