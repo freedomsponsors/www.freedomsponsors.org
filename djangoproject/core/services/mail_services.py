@@ -1,7 +1,7 @@
 from core.models import *
 from django.template.loader import get_template
 from django.template import Context
-from mailer import send_html_mail
+from core.utils.frespo_utils import send_html_mail
 from django.conf import settings
 from core.utils.frespo_utils import twoplaces
 
@@ -36,6 +36,18 @@ def notifyWatchers_workbegun(solution, comment, watches):
                                "SITE_HOME" : settings.SITE_HOME,
                                "comment" : comment})
     _notify_watchers(send_func, watches)
+
+def notifyWatchers_acceptingpayments(solution, watches):
+    def send_func(watch):
+        if(watch.user.id != solution.programmer.id):
+            _send_mail_to_user(user = watch.user,
+                subject = solution.programmer.getUserInfo().screenName+" is ready to accept payments for issue [%s]"%solution.issue.title,
+                templateName = 'email/acceptingpayments.html',
+                contextData = {"solution" : solution,
+                               "you" : watch.user,
+                               "SITE_HOME" : settings.SITE_HOME,})
+    _notify_watchers(send_func, watches)
+
 
 def welcome(user):
     _send_mail_to_user(user=user,

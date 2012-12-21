@@ -12,11 +12,17 @@
         <input type="hidden" name="issue_id" value="{{issue.id}}">
         <input type="hidden" name="offer_id" value="{{myoffer.id}}">
         <input type="hidden" name="solution_id" value="{{mysolution.id}}">
-        <div lass="control-group">
+        <div class="control-group">
           <!-- issue description -->
           <label class="control-label" for="comment">Add a comment</label>
           <div class="controls">
             <textarea class="input-xlarge span11" placeholder="some placeholder" id="commentFormModal_comment" name="comment" rows="10"></textarea>
+          </div>
+          <div class="controls hide" id="div_accept_payments">
+            <label class="checkbox">
+              <input type="checkbox" id="accept_payments" name="accept_payments" value="accept_payments">
+              Start accepting payments for this issue.
+            </label>
           </div>
         </div>
       </div>
@@ -101,6 +107,7 @@
   }
 
   var myoffer = false;
+  var alert_reputation_revoking = '{{alert_reputation_revoking}}' == 'True'
 {% if myoffer %}
   myoffer = {
     id : "{{myoffer.id}}",
@@ -130,6 +137,7 @@
     document.getElementById('commentFormModal_form').action = '/core/offer/revoke/submit';
     document.getElementById('commentFormModal_comment').placeholder = "Add a comment to let everyone know that you're not willing to pay for this issue anymore";
     document.getElementById('commentFormModal_submit').innerHTML = 'Revoke offer!';
+    $('#div_accept_payments').addClass("hide")
     showModal('genericCommentFormModal');
   }
 {% else %}
@@ -152,10 +160,18 @@
 
 {% if mysolution and mysolution.status == 'IN_PROGRESS' %}
   function showModal_abortWorkOnThisIssue(){
+    if(alert_reputation_revoking){
+      var msg = 'You already received money for this issue. \nAborting work might be bad for your reputation. \nAre you sure you want to do this?'
+      if(!confirm(msg)){
+        return;
+      }
+    }
+
     document.getElementById('commentFormModal_title').innerHTML = 'Abort work on this issue';
     document.getElementById('commentFormModal_form').action = '/core/solution/abort/submit';
     document.getElementById('commentFormModal_comment').placeholder = "Add a comment to let everyone know that you won't be working on this issue anymore";
     document.getElementById('commentFormModal_submit').innerHTML = 'Abort work on this issue!';
+    $('#div_accept_payments').addClass("hide")
     showModal('genericCommentFormModal');
   }
 
@@ -164,6 +180,7 @@
     document.getElementById('commentFormModal_form').action = '/core/solution/resolve/submit';
     document.getElementById('commentFormModal_comment').placeholder = "Add a comment to let everyone know that you resolved the issue!";
     document.getElementById('commentFormModal_submit').innerHTML = 'Resolve issue!';
+    $('#div_accept_payments').addClass("hide")
     showModal('genericCommentFormModal');
   }
 {% else %}
@@ -172,6 +189,7 @@
     document.getElementById('commentFormModal_form').action = '/core/solution/add/submit';
     document.getElementById('commentFormModal_comment').placeholder = "Add a comment to let everyone know that you'll be working on this issue";
     document.getElementById('commentFormModal_submit').innerHTML = 'Work on this issue!';
+    $('#div_accept_payments').removeClass("hide")
     showModal('genericCommentFormModal');
   }
 {% endif %}

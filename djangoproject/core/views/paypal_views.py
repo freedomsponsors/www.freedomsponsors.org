@@ -1,7 +1,8 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.http import HttpResponse
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import ugettext as _
@@ -29,15 +30,18 @@ def payOffer(request):
     request.session['current_payment_id'] = payment.id
 
     if(settings.PAYPAL_USE_SANDBOX):
-        form_action = 'https://www.sandbox.paypal.com/webapps/adaptivepayment/flow/pay'
+        # form_action = 'https://www.sandbox.paypal.com/webapps/adaptivepayment/flow/pay'
+        redirect_url = 'https://www.sandbox.paypal.com/webscr?cmd=_ap-payment&paykey=%s' % payment.paykey
     else:
-        form_action = 'https://www.paypal.com/webapps/adaptivepayment/flow/pay'
+        # form_action = 'https://www.paypal.com/webapps/adaptivepayment/flow/pay'
+        redirect_url = 'https://www.paypal.com/webscr?cmd=_ap-payment&paykey=%s' % payment.paykey
 
-    return render_to_response('core/waitPayment.html',
-        {'offer' : offer,
-        'paykey':payment.paykey,
-        'form_action':form_action},
-        context_instance = RequestContext(request))
+    # return render_to_response('core/waitPayment.html',
+    #     {'offer' : offer,
+    #     'paykey':payment.paykey,
+    #     'form_action':form_action},
+    #     context_instance = RequestContext(request))
+    return redirect(redirect_url)
 
 
 @login_required
@@ -57,11 +61,12 @@ def paypalCancel(request):
         msg = _('Session expired')
         curr_payment = None
         logger.warn('CANCEL received while no payment in session. user = %s'%request.user.id)
-    return render_to_response('core/paypal_canceled.html',
-        {'msg':msg,
-        'payment':curr_payment},
-        context_instance = RequestContext(request))
-
+    messages.error(request, "Payment canceled.")
+    # return render_to_response('core/paypal_canceled.html',
+    #     {'msg':msg,
+    #     'payment':curr_payment},
+    #     context_instance = RequestContext(request))
+    return redirect(curr_payment.offer.issue.get_view_link())
 
 @csrf_exempt
 def paypalIPN(request):
@@ -88,7 +93,9 @@ def paypalReturn(request):
         msg = _('Session expired')
         curr_payment = None
         logger.warn('CONFIRM_WEB received while no payment in session. user = %s'%request.user.id)
-    return render_to_response('core/paypal_confirmed.html',
-        {'msg':msg,
-        'payment':curr_payment},
-        context_instance = RequestContext(request))
+    messages.warning(request, "Your payment is being processed. You'll receive an email when your payment is confirmed.")
+    # return render_to_response('core/paypal_confirmed.html',
+    #     {'msg':msg,
+    #     'payment':curr_payment},
+    #     context_instance = RequestContext(request))
+    return redirect(curr_payment.offer.issue.get_view_link())

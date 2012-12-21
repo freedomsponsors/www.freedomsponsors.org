@@ -9,6 +9,7 @@ from django.db import models
 from django.db import transaction
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
+from django.core.mail import send_mail
 
 try:
     from django.utils.timezone import now as datetime_now
@@ -261,11 +262,6 @@ class RegistrationProfile(models.Model):
         message = render_to_string('registration/activation_email.txt',
                                    ctx_dict)
         
-        if "mailer" in settings.INSTALLED_APPS:
-            from mailer import send_mail
-        else:
-            from django.core.mail import send_mail
-
         send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [self.user.email])
         # self.user.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
     

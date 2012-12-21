@@ -9,57 +9,118 @@ FS is made by, and for developers.
 If you'd like to help (bug reports, suggestions, or even code), you are more than welcome.
 Please take a look at the open issues.
 
+Also, feel free to join the [mailing list](https://groups.google.com/forum/?hl=en&fromgroups#!forum/freedomsponsors)
+
+## Windows users
+
+If you're a Windows user we suggest you set up a virtual machine using [VirtualBox](http://www.virtualbox.org) - Ubuntu
+virtual machines can be downloaded [here](http://virtualboxes.org/images/ubuntu/). 
+
 ## Running
 
 Instructions to run application locally:
 
-1. Clone repo.
+1. You'll need a few tools for the next steps - make sure all of them are installed before proceeding to the next steps.
+
+ 1.1 Make sure your package information is up to date.
+ 
+ ```bash
+ $ sudo apt-get update --fix-missing
+ ```
+ 
+ 1.2 Install Git.
+ 
+  ```bash
+  $ sudo apt-get install git
+  ```
+ 
+ 1.3 Install PostgreSQL.
+ 
+ ```bash
+ $ sudo apt-get install postgresql 
+ $ sudo apt-get install postgresql-server-dev-all # Make sure you have this.
+ ```
+ 1.4 Install python-dev.
+ 
+ ```bash
+ $ sudo apt-get install python-dev
+ ```
+ 1.5 Install python-lxml.
+ 
+ ```bash
+ $ sudo apt-get install python-lxml
+ ```
+ 
+ 1.6 Install libpq-dev.
+ 
+ ```bash
+ $ sudo apt-get install libpq-dev
+ ```
+ 
+ 1.7 Install pip.
+ 
+ ```bash
+ $ sudo apt-get install python-pip
+ ```
+ 
+2. Clone the web application repository.
 
   ```bash
-  git clone git://github.com/freedomsponsors/www.freedomsponsors.org.git
+  $ git clone git://github.com/freedomsponsors/www.freedomsponsors.org.git
   ```
 
-2. Create a `frespo` database on postgres (default username and password is `frespo`).
-
-  2.1 Install dependencies.
-
+3. Create the database/default user.
+  
     ```bash
-    sudo pip install -r requirements.txt
+    $ sudo su postgres #run the next command as postgres
+    $ createuser -d -SRP frespo # this will prompot you to create a password (just use frespo for now)
+    $ createdb -O frespo frespo
+    $ exit # go back to your normal user
     ```
 
-    Depending on your environment, psycopg2 installation with pip might fail.
-    If that's your case, you might also wanna try.
+4. Configure settings.
+
+  ```bash
+  $ cd djangoproject
+  $ cp frespo/env_settings.py_template frespo/env_settings.py
+  # edit the env_settings.py file - you must change the definitions shown below (values as used in this walkthrough):
+  # ENVIRONMENT = 'DEV'
+  # DATABASE_NAME = 'frespo'
+  # DATABASE_USER = 'frespo'
+  # DATABASE_PASS = 'frespo'  
+  $ nano frespo/env_settings.py 
+  $ mkdir logs # create the logs folder manually
+  ```
+5. Create a virtualenv and install dependencies.
 
     ```bash
-    sudo apt-get install python-psycopg2
+    $ python bootstrap
     ```
+  If this command fails because of psycopg2, make sure you have installed postgresql-server-dev-all (mentioned on step 1)
 
-3. Configure settings.
+  Then you can enter the virtualenv:
 
-  ```bash
-  mv frespo/env_settings.py_template frespo/env_settings.py
-  nano frespo/env_settings.py # edit according to your environment
+    ```bash
+    $ source bin/activate
+    ```
+  To exit the virtualenv
+
+    ```bash
+    $ deactivate
+    ```
+  You'll need to be in the virtual environment to use `./manage.py ...` commands
+
+6. Create database objects.
+
+  ```bash  
+  $ cd www.freedomsponsors.org/djangoproject
+  $ ./manage.py syncdb --migrate --noinput
   ```
 
-4. Create database objects.
+7. Run!
 
   ```bash
-  cd www.freedomsponsors.org/djangoproject
-  ./manage.py syncdb
-  ./migrate.sh
-  ```
-
-5. Populate with some initial data.
-
-  ```bash
-  ./manage.py loadFeedbackData
-  ./manage.py loadProjects
-  ```
-
-6. Run!
-
-  ```bash
-  ./manage.py runserver # and visit http://localhost:8000
+  $ ./manage.py runserver # and visit http://localhost:8000
   ```
 
 If you find that the steps above are not actually accurate, please [open a new issue to let us know](https://github.com/freedomsponsors/www.freedomsponsors.org/issues/new)!

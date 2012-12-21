@@ -34,7 +34,7 @@
 {% if offer.issue.project %}
  | Project: <a target="_project" href="{{offer.issue.project.homeURL}}">{{offer.issue.project.name}}</a>
 {% endif %}
- | Status: {{offer.status}}
+ | Status: {% if offer.is_expired %}EXPIRED{% else %}{{offer.status}}{% endif %}
 {% if offer.issue.description %}
 <br><br>
 <h3>Issue Description</h3>

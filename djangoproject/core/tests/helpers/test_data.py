@@ -50,6 +50,12 @@ def create_dummy_offer():
     offer.save()
     return offer
 
+def create_dummy_solution():
+    issue = create_dummy_issue()
+    programmer = create_dummy_programmer()
+    solution = Solution.newSolution(issue, programmer, False)
+    solution.save()
+    return solution
 
 def create_dummy_payment():
     offer = create_dummy_offer()
@@ -59,7 +65,7 @@ def create_dummy_payment():
     payment.total = Decimal('10.00')
     payment.confirm_key = 'abcd1234'
     payment.save()
-    programmer = create_dummy_programmer()
-    part = PaymentPart.newPart(payment, programmer, Decimal('10.00'), Decimal('9.70'))
+    solution = create_dummy_solution()
+    part = PaymentPart.newPart(payment, solution, Decimal('10.00'), Decimal('9.70'))
     part.save()
     return payment

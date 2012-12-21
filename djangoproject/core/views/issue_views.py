@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import redirect, render_to_response
 from django.template import RequestContext
@@ -51,7 +52,8 @@ def addSolution(request):
     """Start working on this issue"""
     issue_id = int(request.POST['issue_id'])
     comment_content = request.POST['comment']
-    issue = issue_services.add_solution_to_existing_issue(issue_id, comment_content, request.user)
+    accepting_payments = request.POST.has_key('accept_payments')
+    issue = issue_services.add_solution_to_existing_issue(issue_id, comment_content, accepting_payments, request.user)
     watch_services.watch_issue(request.user, issue.id, IssueWatch.STARTED_WORKING)
     return redirect(issue.get_view_link())
 
@@ -115,6 +117,7 @@ def revokeOffer(request):
 def sponsorIssue(request):
     issue_id = int(request.POST['issue_id'])
 
+    issue = Issue.objects.get(pk = issue_id)
     offer = issue_services.sponsor_existing_issue(issue_id, request.POST, request.user)
     watch_services.watch_issue(request.user, issue_id, IssueWatch.SPONSORED)
 
@@ -123,6 +126,8 @@ def sponsorIssue(request):
         params = '?c=s' # c = Callback (iframe javascript callback)
     else:
         params = '?alert=SPONSOR' # a = Alert
+    if (issue.getSolutionsAcceptingPayments().count() > 0):
+        messages.info(request, 'This issue is open for payments. You are free to choose: you can pay now, or you can wait until after the issue is finished. No pressure :-)')
     return redirect(offer.get_view_link()+params)
 
 
@@ -140,6 +145,8 @@ def viewIssue(request, issue_id):
     alert = dictOrEmpty(request.GET, 'alert')
     if(alert == 'KICKSTART'):
         show_alert = 'core/popup_just_kickstarted.html'
+    alert_reputation_revoking = mysolution and mysolution.status == Solution.IN_PROGRESS and mysolution.get_received_payments().count() > 0
+
     invoke_parent_callback = (dictOrEmpty(request.GET, 'c') == 's')
 
     is_watching = request.user.is_authenticated() and watch_services.is_watching_issue(request.user, issue.id)
@@ -151,7 +158,8 @@ def viewIssue(request, issue_id):
         'mysolution':mysolution,
         'invoke_parent_callback' : invoke_parent_callback,
         'show_sponsor_popup' : show_sponsor_popup,
-        'show_alert' : show_alert},
+        'show_alert' : show_alert,
+        'alert_reputation_revoking': alert_reputation_revoking},
 
         context_instance = RequestContext(request))
 
@@ -170,6 +178,7 @@ def viewOffer(request, offer_id):
     alert = dictOrEmpty(request.GET, 'alert')
     if(alert == 'SPONSOR' and offer.issue.project):
         show_alert = 'core/popup_just_sponsored.html'
+    alert_reputation_revoking = mysolution and mysolution.status == Solution.IN_PROGRESS and mysolution.get_received_payments().count() > 0
     invoke_parent_callback = (dictOrEmpty(request.GET, 'c') == 's')
 
     is_watching = request.user.is_authenticated() and watch_services.is_watching_offer(request.user, offer.id)
@@ -181,6 +190,7 @@ def viewOffer(request, offer_id):
         'show_alert':show_alert,
         'myoffer':myoffer,
         'mysolution':mysolution,
+        'alert_reputation_revoking': alert_reputation_revoking,
         'invoke_parent_callback' : invoke_parent_callback},
         context_instance = RequestContext(request))
 
@@ -214,7 +224,7 @@ def listProjects(request):
 @login_required
 def payOfferForm(request, offer_id):
     offer = Offer.objects.get(pk=offer_id)
-    solutions_done = offer.issue.getSolutionsDone()
+    solutions_accepting_payments = offer.issue.getSolutionsAcceptingPayments()
     shared_price = None
 
     convert_rate = 1
@@ -225,13 +235,13 @@ def payOfferForm(request, offer_id):
         currency_symbol = "R$"
         alert_brazil = True
 
-    if(solutions_done.count() > 0):
-        shared_price = convert_rate * float(offer.price) / solutions_done.count()
+    if(solutions_accepting_payments.count() > 0):
+        shared_price = convert_rate * float(offer.price) / solutions_accepting_payments.count()
         shared_price = twoplaces(Decimal(str(shared_price)))
 
     return render_to_response('core/pay_offer.html',
         {'offer':offer,
-         'solutions_done' : solutions_done,
+         'solutions_accepting_payments' : solutions_accepting_payments,
          'shared_price' : shared_price,
          'convert_rate' : convert_rate,
          'currency_symbol' : currency_symbol,

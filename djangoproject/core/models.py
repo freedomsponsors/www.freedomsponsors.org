@@ -234,6 +234,7 @@ class Issue(models.Model):
         issue.description = ''
         issue.title = title
         issue.creationDate = timezone.now()
+        issue.updatedDate = issue.creationDate
         issue.createdByUser = createdByUser
         issue.trackerURL = trackerURL
         issue.is_feedback = False
@@ -246,6 +247,7 @@ class Issue(models.Model):
         issue.key = ''
         issue.description = description
         issue.creationDate = timezone.now()
+        issue.updatedDate = issue.creationDate
         issue.createdByUser = createdByUser
         issue.is_feedback = False
         return issue
@@ -257,6 +259,7 @@ class Issue(models.Model):
         issue.key = ''
         issue.description = description
         issue.creationDate = timezone.now()
+        issue.updatedDate = issue.creationDate
         issue.createdByUser = createdByUser
         issue.is_feedback = True
         return issue
@@ -294,6 +297,9 @@ class Issue(models.Model):
 
     def getSolutionsDone(self):
         return Solution.objects.filter(issue=self, status=Solution.DONE).order_by('creationDate')
+
+    def getSolutionsAcceptingPayments(self):
+        return Solution.objects.filter(issue=self, accepting_payments=True)
 
     def getComments(self):
         return IssueComment.objects.filter(issue=self).order_by('creationDate')
@@ -572,19 +578,21 @@ class Solution(models.Model):
     creationDate = models.DateTimeField()
     lastChangeDate = models.DateTimeField()
     status = models.CharField(max_length=30) # IN_PROGRESS, DONE, ABORTED
+    accepting_payments = models.BooleanField()
 
     IN_PROGRESS = "IN_PROGRESS"
     DONE = "DONE"
     ABORTED = "ABORTED"
 
     @classmethod
-    def newSolution(cls, issue, programmer):
+    def newSolution(cls, issue, programmer, accepting_payments):
         solution = cls()
         solution.issue = issue
         solution.programmer = programmer
         solution.creationDate = timezone.now()
         solution.lastChangeDate = solution.creationDate
         solution.status = Solution.IN_PROGRESS
+        solution.accepting_payments = accepting_payments
         return solution
 
     def abort(self):
@@ -592,6 +600,7 @@ class Solution(models.Model):
         event.save()
         self.status = Solution.ABORTED
         self.lastChangeDate = timezone.now()
+        self.accepting_payments = False
         self.save()
 
     def resolve(self):
@@ -599,14 +608,19 @@ class Solution(models.Model):
         event.save()
         self.status = Solution.DONE
         self.lastChangeDate = timezone.now()
+        self.accepting_payments = True
         self.save()
 
-    def reopen(self):
+    def reopen(self, accepting_payments):
         event = SolutionHistEvent.newChangeEvent(solution=self, event=SolutionHistEvent.REOPEN)
         event.save()
         self.status = Solution.IN_PROGRESS
         self.lastChangeDate = timezone.now()
+        self.accepting_payments = accepting_payments
         self.save()
+
+    def get_received_payments(self):
+        return PaymentPart.objects.filter(solution__id = self.id)
 
 class SolutionHistEvent(models.Model):
     solution = models.ForeignKey(Solution)
@@ -747,16 +761,18 @@ class PaymentHistEvent(models.Model):
 class PaymentPart(models.Model):
     payment = models.ForeignKey(Payment)
     programmer = models.ForeignKey(User)
+    solution = models.ForeignKey(Solution)
     paypalEmail = models.EmailField(max_length=256, null=True)
     price = models.DecimalField(max_digits=9, decimal_places=2)
     realprice = models.DecimalField(max_digits=9, decimal_places=2)
 
     @classmethod
-    def newPart(cls, payment, programmer, price, realprice):
+    def newPart(cls, payment, solution, price, realprice):
         part = cls()
         part.payment = payment
-        part.programmer = programmer
-        part.paypalEmail = programmer.getUserInfo().paypalEmail
+        part.solution = solution
+        part.programmer = solution.programmer
+        part.paypalEmail = part.programmer.getUserInfo().paypalEmail
         part.price = Decimal(price)
         part.realprice = Decimal(realprice)
         return part

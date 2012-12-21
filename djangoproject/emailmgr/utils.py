@@ -8,12 +8,9 @@ from django.contrib.auth.models import User
 from django.utils.hashcompat import sha_constructor
 from django.utils.translation import gettext_lazy as _
 import defaults
+from django.core.mail import send_mail
 
 # some people might like to user mailer by jtauber, accomodate them
-if "mailer" in settings.INSTALLED_APPS:
-    from mailer import send_mail
-else:
-    from django.core.mail import send_mail
 
 # get a random string of known length
 def get_unique_random(length=10):

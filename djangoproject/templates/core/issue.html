@@ -67,7 +67,7 @@
           <i class="icon-gift popopo" rel="popover" data-content="Solution must be available as a new released version. Just commiting is not enough." data-original-title="Release required"></i>
         {% endif %}
       </td>
-      <td>{{offer.status}}</td>
+      <td>{% if offer.is_expired %}EXPIRED{% else %}{{offer.status}}{% endif %}</td>
       <td><span title="{{ offer.creationDate }}">{{ offer.creationDate|date:"M/d/Y" }}</span></td>
       <td>
         {% if offer.is_expired %}
@@ -99,7 +99,11 @@
 	{% for solution in issue.getSolutions %}
 	    <tr>
 	      <td><a href="{{solution.programmer.get_view_link}}"><img src="{{solution.programmer.gravatar_url_medium}}"> {{ solution.programmer.getUserInfo.screenName }}</a></td>
-	      <td>{{solution.status}}</td>
+	      <td>{{solution.status}}
+        {% if solution.accepting_payments %}
+          / Accepting payments
+        {% endif %}
+        </td>
 	      <td><span title="{{ solution.creationDate }}">{{ solution.creationDate|date:"D, d/M/Y" }}</span></td>
 	    </tr>
 	    <tr>
