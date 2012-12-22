@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 import math
 from core.models import *
 from django.db import connection, transaction
+from django.db.models import Count
 
 SELECT_SPONSORS = """select t.user_id, t."screenName", sum(p1), sum(p2), coalesce(sum(p1), 0) + coalesce(sum(p2), 0) as s3
 from (select o.id, ui.user_id, ui."screenName", o.price as p1, null as p2
@@ -36,7 +37,6 @@ COUNT_ISSUES_KICKSTARTING = "select count(*) from core_issue where is_feedback =
 COUNT_OFFERS_PAID = "select count(*) from core_offer where status = 'PAID'"
 COUNT_OFFERS_OPEN = "select count(*) from core_offer where status = 'OPEN'"
 COUNT_OFFERS_REVOKED = "select count(*) from core_offer where status = 'REVOKED'"
-COUNT_PROJECTS = "select count(distinct project_id) from core_issue where is_feedback = false"
 
 SUM_PAID = "select sum (price) from core_offer where status = 'PAID'"
 
@@ -56,10 +56,10 @@ def get_stats():
         'programmer_count' : _count(COUNT_PROGRAMMERS),
         'paid_programmer_count' : _count(COUNT_PAID_PROGRAMMERS),
         'offer_count' : _count(COUNT_OFFERS),
-        'issue_project_count' : _count(COUNT_PROJECTS),
         'issue_count_kickstarting' : _count(COUNT_ISSUES_KICKSTARTING),
         'issue_count_sponsoring' : _count(COUNT_ISSUES_SPONSORING),
         'issue_count' : Issue.objects.filter(is_feedback=False).count(),
+        'issue_project_count' : Issue.objects.filter(is_feedback=False).aggregate(Count('project', distinct=True))['project__count'],
         'paid_offer_count' : _count(COUNT_OFFERS_PAID),
         'open_offer_count' : _count(COUNT_OFFERS_OPEN),
         'revoked_offer_count' : _count(COUNT_OFFERS_REVOKED),

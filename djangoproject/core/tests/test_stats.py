@@ -1,5 +1,7 @@
 # coding: utf-8
+from model_mommy import mommy
 from django.test import TestCase
+from core.services import stats_services
 
 
 class StatsView(TestCase):
@@ -14,4 +16,19 @@ class StatsView(TestCase):
 
     def test_context(self):
         self.assertIn('stats', self.resp.context)
+
+
+class StatsService(TestCase):
+    def setUp(self):
+        mommy.make_one('core.Project')
+
+        p = mommy.make_one('core.Project')
+        mommy.make_one('core.Issue', project=p, createdByUser=p.createdByUser, is_feedback=False)
+        mommy.make_one('core.Issue', project=p, createdByUser=p.createdByUser, is_feedback=False)
+        mommy.make_one('core.Issue', project=p, createdByUser=p.createdByUser, is_feedback=True)
+
+        self.stats = stats_services.get_stats()
+
+    def test_issue_project_count(self):
+        self.assertEqual(1, self.stats['issue_project_count'])
 
