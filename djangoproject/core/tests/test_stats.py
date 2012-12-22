@@ -17,6 +17,10 @@ class StatsView(TestCase):
     def test_context(self):
         self.assertIn('stats', self.resp.context)
 
+    def test_num_queries(self):
+        with self.assertNumQueries(18):
+            self.client.get('/core/stats/')
+
 
 class CountProject(TestCase):
     def setUp(self):
