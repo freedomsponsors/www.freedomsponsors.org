@@ -32,3 +32,19 @@ class StatsService(TestCase):
     def test_issue_project_count(self):
         self.assertEqual(1, self.stats['issue_project_count'])
 
+
+class CountKickstarting(TestCase):
+    def setUp(self):
+        mommy.make_one('core.Issue', is_feedback=False, is_public_suggestion=False)
+        mommy.make_one('core.Issue', is_feedback=True, is_public_suggestion=False)
+        mommy.make_one('core.Issue', is_feedback=True, is_public_suggestion=True)
+
+        # Query hit
+        mommy.make_many('core.Issue', quantity=2, is_feedback=False, is_public_suggestion=True)
+
+        self.stats = stats_services.get_stats()
+
+    def test_count_kickstarting(self):
+        self.assertEqual(2, self.stats['issue_count_kickstarting'])
+
+

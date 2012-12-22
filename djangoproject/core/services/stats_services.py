@@ -33,7 +33,6 @@ and pa.status = 'CONFIRMED_IPN'"""
 
 COUNT_OFFERS = "select count(*) from core_offer"
 COUNT_ISSUES_SPONSORING = "select count(*) from core_issue where is_feedback = false and is_public_suggestion = false"
-COUNT_ISSUES_KICKSTARTING = "select count(*) from core_issue where is_feedback = false and is_public_suggestion = true"
 COUNT_OFFERS_PAID = "select count(*) from core_offer where status = 'PAID'"
 COUNT_OFFERS_OPEN = "select count(*) from core_offer where status = 'OPEN'"
 COUNT_OFFERS_REVOKED = "select count(*) from core_offer where status = 'REVOKED'"
@@ -56,10 +55,10 @@ def get_stats():
         'programmer_count' : _count(COUNT_PROGRAMMERS),
         'paid_programmer_count' : _count(COUNT_PAID_PROGRAMMERS),
         'offer_count' : _count(COUNT_OFFERS),
-        'issue_count_kickstarting' : _count(COUNT_ISSUES_KICKSTARTING),
         'issue_count_sponsoring' : _count(COUNT_ISSUES_SPONSORING),
         'issue_count' : Issue.objects.filter(is_feedback=False).count(),
         'issue_project_count' : Issue.objects.filter(is_feedback=False).aggregate(Count('project', distinct=True))['project__count'],
+        'issue_count_kickstarting' : Issue.objects.filter(is_feedback=False, is_public_suggestion=True).count(),
         'paid_offer_count' : _count(COUNT_OFFERS_PAID),
         'open_offer_count' : _count(COUNT_OFFERS_OPEN),
         'revoked_offer_count' : _count(COUNT_OFFERS_REVOKED),
