@@ -18,7 +18,7 @@ class StatsView(TestCase):
         self.assertIn('stats', self.resp.context)
 
 
-class StatsService(TestCase):
+class CountProject(TestCase):
     def setUp(self):
         mommy.make_one('core.Project')
 
@@ -29,7 +29,7 @@ class StatsService(TestCase):
 
         self.stats = stats_services.get_stats()
 
-    def test_issue_project_count(self):
+    def test_count_project(self):
         self.assertEqual(1, self.stats['issue_project_count'])
 
 
