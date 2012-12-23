@@ -178,3 +178,5 @@ class CountOffers(TestCase):
     def test_count_open_offers(self):
         self.assertEqual(2, self.stats['open_offer_count'])
 
+    def test_count_revoked_offers(self):
+        self.assertEqual(2, self.stats['revoked_offer_count'])
