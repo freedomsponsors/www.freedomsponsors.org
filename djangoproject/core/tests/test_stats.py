@@ -145,3 +145,18 @@ class CountProgrammersWithSolutions(TestCase):
 
     def test_count_programmers_with_solutions(self):
         self.assertEqual(2, self.stats['programmer_count'])
+
+
+class CountPaidProgrammers(TestCase):
+    def setUp(self):
+        mommy.make_many('core.PaymentPart', quantity=2, programmer__id=1, payment__status='CONFIRMED_IPN')
+        mommy.make_many('core.PaymentPart', quantity=2, programmer__id=2, payment__status='CONFIRMED_IPN')
+        mommy.make_many('core.PaymentPart', quantity=2, programmer__id=1)
+        mommy.make_many('core.PaymentPart', quantity=2, programmer__id=2)
+        mommy.make_many('core.PaymentPart', quantity=2, programmer__id=3)
+        mommy.make_many('core.PaymentPart', quantity=2, programmer__id=4)
+
+        self.stats = stats_services.get_stats()
+
+    def test_count_paid_programmers(self):
+        self.assertEqual(2, self.stats['paid_programmer_count'])

@@ -14,11 +14,6 @@ where pr.id = i.project_id and i.id = o.issue_id
 group by pr.id, pr.name
 order by s desc"""
 
-COUNT_PAID_PROGRAMMERS = """select count(distinct pr.programmer_id) 
-from core_paymentpart pr, core_payment pa
-where pr.payment_id = pa.id
-and pa.status = 'CONFIRMED_IPN'"""
-
 COUNT_OFFERS = "select count(*) from core_offer"
 COUNT_OFFERS_PAID = "select count(*) from core_offer where status = 'PAID'"
 COUNT_OFFERS_OPEN = "select count(*) from core_offer where status = 'OPEN'"
@@ -38,7 +33,7 @@ def get_stats():
         'user_count' : UserInfo.objects.count(),
         'sponsor_count' : Offer.objects.aggregate(Count('sponsor', distinct=True))['sponsor__count'] or 0,
         'programmer_count' : Solution.objects.aggregate(Count('programmer', distinct=True))['programmer__count'] or 0,
-        'paid_programmer_count' : _count(COUNT_PAID_PROGRAMMERS),
+        'paid_programmer_count' : PaymentPart.objects.filter(payment__status='CONFIRMED_IPN').aggregate(Count('programmer', distinct=True))['programmer__count'] or 0,
         'offer_count' : _count(COUNT_OFFERS),
         'issue_count' : Issue.objects.filter(is_feedback=False).count(),
         'issue_project_count' : Issue.objects.filter(is_feedback=False).aggregate(Count('project', distinct=True))['project__count'],
