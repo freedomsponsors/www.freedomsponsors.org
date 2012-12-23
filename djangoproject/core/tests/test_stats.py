@@ -134,3 +134,14 @@ class CountSponsors(TestCase):
         self.assertEqual(2, self.stats['sponsor_count'])
 
 
+class CountProgrammersWithSolutions(TestCase):
+    def setUp(self):
+        u1 = mommy.make_one('auth.User')
+        u2 = mommy.make_one('auth.User')
+        mommy.make_many('core.Solution', quantity=2, programmer=u1)
+        mommy.make_many('core.Solution', quantity=2, programmer=u2)
+
+        self.stats = stats_services.get_stats()
+
+    def test_count_programmers_with_solutions(self):
+        self.assertEqual(2, self.stats['programmer_count'])

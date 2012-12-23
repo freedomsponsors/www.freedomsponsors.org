@@ -14,7 +14,6 @@ where pr.id = i.project_id and i.id = o.issue_id
 group by pr.id, pr.name
 order by s desc"""
 
-COUNT_PROGRAMMERS = "select count(distinct programmer_id) from core_solution"
 COUNT_PAID_PROGRAMMERS = """select count(distinct pr.programmer_id) 
 from core_paymentpart pr, core_payment pa
 where pr.payment_id = pa.id
@@ -38,7 +37,7 @@ def get_stats():
         'age' : _age(),
         'user_count' : UserInfo.objects.count(),
         'sponsor_count' : Offer.objects.aggregate(Count('sponsor', distinct=True))['sponsor__count'] or 0,
-        'programmer_count' : _count(COUNT_PROGRAMMERS),
+        'programmer_count' : Solution.objects.aggregate(Count('programmer', distinct=True))['programmer__count'] or 0,
         'paid_programmer_count' : _count(COUNT_PAID_PROGRAMMERS),
         'offer_count' : _count(COUNT_OFFERS),
         'issue_count' : Issue.objects.filter(is_feedback=False).count(),
