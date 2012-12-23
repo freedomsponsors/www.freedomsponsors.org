@@ -164,9 +164,9 @@ class CountPaidProgrammers(TestCase):
 
 class CountOffers(TestCase):
     def setUp(self):
-        mommy.make_many('core.Offer', quantity=2, status='PAID')
-        mommy.make_many('core.Offer', quantity=2, status='OPEN')
-        mommy.make_many('core.Offer', quantity=2, status='REVOKED')
+        mommy.make_many('core.Offer', quantity=2, price=1, status='PAID')
+        mommy.make_many('core.Offer', quantity=2, price=1, status='OPEN')
+        mommy.make_many('core.Offer', quantity=2, price=1, status='REVOKED')
         self.stats = stats_services.get_stats()
 
     def test_count_offers(self):
@@ -180,3 +180,6 @@ class CountOffers(TestCase):
 
     def test_count_revoked_offers(self):
         self.assertEqual(2, self.stats['revoked_offer_count'])
+
+    def test_sum_paid_offers(self):
+        self.assertEqual(2, self.stats['paid_sum'])

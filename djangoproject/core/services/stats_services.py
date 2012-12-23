@@ -14,10 +14,6 @@ where pr.id = i.project_id and i.id = o.issue_id
 group by pr.id, pr.name
 order by s desc"""
 
-SUM_PAID = "select sum (price) from core_offer where status = 'PAID'"
-
-
-
 SUM_REVOKED = "select sum (price) from core_offer where status = 'REVOKED'"
 
 LAUNCH_DATE = datetime(2012, 7, 8)
@@ -37,7 +33,7 @@ def get_stats():
         'paid_offer_count' : Offer.objects.filter(status=Offer.PAID).count(),
         'open_offer_count' : Offer.objects.filter(status=Offer.OPEN).count(),
         'revoked_offer_count' : Offer.objects.filter(status=Offer.REVOKED).count(),
-        'paid_sum' : _sum(SUM_PAID),
+        'paid_sum' : Offer.objects.filter(status=Offer.PAID).aggregate(Sum('price'))['price__sum'] or 0,
         'open_sum' : Offer.objects.filter(status='OPEN').filter(Q(expirationDate=None) | Q(expirationDate__gt=date.today())).aggregate(Sum('price'))['price__sum'] or 0,
         'expired_sum' : Offer.objects.filter(status='OPEN').filter(Q(expirationDate__lte=date.today())).aggregate(Sum('price'))['price__sum'] or 0,
         'revoked_sum' : _sum(SUM_REVOKED),
