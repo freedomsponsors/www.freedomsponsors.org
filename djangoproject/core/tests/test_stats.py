@@ -121,3 +121,16 @@ class Sponsors(TestCase):
                                  lambda u: (u.screenName, u.paid_ammount, u.open_ammount))
 
 
+class CountSponsors(TestCase):
+    def setUp(self):
+        u1 = mommy.make_one('auth.User')
+        u2 = mommy.make_one('auth.User')
+        mommy.make_many('core.Offer', quantity=2, sponsor=u1)
+        mommy.make_many('core.Offer', quantity=2, sponsor=u2)
+
+        self.stats = stats_services.get_stats()
+
+    def test_count_sponsors(self):
+        self.assertEqual(2, self.stats['sponsor_count'])
+
+
