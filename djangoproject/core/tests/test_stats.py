@@ -172,3 +172,6 @@ class CountOffers(TestCase):
     def test_count_offers(self):
         self.assertEqual(6, self.stats['offer_count'])
 
+    def test_count_paid_offers(self):
+        self.assertEqual(2, self.stats['paid_offer_count'])
+
