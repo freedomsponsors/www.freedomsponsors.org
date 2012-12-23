@@ -14,7 +14,6 @@ where pr.id = i.project_id and i.id = o.issue_id
 group by pr.id, pr.name
 order by s desc"""
 
-COUNT_OFFERS = "select count(*) from core_offer"
 COUNT_OFFERS_PAID = "select count(*) from core_offer where status = 'PAID'"
 COUNT_OFFERS_OPEN = "select count(*) from core_offer where status = 'OPEN'"
 COUNT_OFFERS_REVOKED = "select count(*) from core_offer where status = 'REVOKED'"
@@ -34,7 +33,7 @@ def get_stats():
         'sponsor_count' : Offer.objects.aggregate(Count('sponsor', distinct=True))['sponsor__count'] or 0,
         'programmer_count' : Solution.objects.aggregate(Count('programmer', distinct=True))['programmer__count'] or 0,
         'paid_programmer_count' : PaymentPart.objects.filter(payment__status='CONFIRMED_IPN').aggregate(Count('programmer', distinct=True))['programmer__count'] or 0,
-        'offer_count' : _count(COUNT_OFFERS),
+        'offer_count' : Offer.objects.count(),
         'issue_count' : Issue.objects.filter(is_feedback=False).count(),
         'issue_project_count' : Issue.objects.filter(is_feedback=False).aggregate(Count('project', distinct=True))['project__count'],
         'issue_count_kickstarting' : Issue.objects.filter(is_feedback=False, is_public_suggestion=True).count(),

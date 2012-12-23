@@ -160,3 +160,15 @@ class CountPaidProgrammers(TestCase):
 
     def test_count_paid_programmers(self):
         self.assertEqual(2, self.stats['paid_programmer_count'])
+
+
+class CountOffers(TestCase):
+    def setUp(self):
+        mommy.make_many('core.Offer', quantity=2, status='PAID')
+        mommy.make_many('core.Offer', quantity=2, status='OPEN')
+        mommy.make_many('core.Offer', quantity=2, status='REVOKED')
+        self.stats = stats_services.get_stats()
+
+    def test_count_offers(self):
+        self.assertEqual(6, self.stats['offer_count'])
+
