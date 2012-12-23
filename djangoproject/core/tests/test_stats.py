@@ -183,3 +183,6 @@ class CountOffers(TestCase):
 
     def test_sum_paid_offers(self):
         self.assertEqual(2, self.stats['paid_sum'])
+
+    def test_sum_revoked_offers(self):
+        self.assertEqual(2, self.stats['revoked_sum'])
