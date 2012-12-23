@@ -9,3 +9,4 @@ python-dateutil==2.1
 six==1.2.0
 model-mommy==0.8.1
 mock==1.0.1
+django-aggregate-if==0.1

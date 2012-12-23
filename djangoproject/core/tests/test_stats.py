@@ -106,3 +106,18 @@ class SumPriceOfExpiredOffers(TestCase):
     def test_sum_price_of_expired_offers(self):
         self.assertEqual(99, self.stats['expired_sum'])
 
+
+class Sponsors(TestCase):
+    def setUp(self):
+        u = mommy.make_one('core.UserInfo', screenName='sponsorA')
+        mommy.make_one('core.Offer', sponsor=u.user, price=10, status='PAID', expirationDate=None)
+        mommy.make_one('core.Offer', sponsor=u.user, price=90, status='OPEN', expirationDate=None)
+
+        self.stats = stats_services.get_stats()
+
+    def test_sponsors(self):
+        qs = self.stats['sponsors']
+        self.assertQuerysetEqual(qs, [('sponsorA', 10, 90)],
+                                 lambda u: (u.screenName, u.paid_ammount, u.open_ammount))
+
+

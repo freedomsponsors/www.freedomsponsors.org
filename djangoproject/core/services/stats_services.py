@@ -3,23 +3,10 @@ import math
 from core.models import *
 from django.db import connection, transaction
 from django.db.models import Q
-from django.db.models import Sum, Count
+from django.db.models import Count
 from django.utils.datetime_safe import date
+from aggregate_if import Sum
 
-
-SELECT_SPONSORS = """select t.user_id, t."screenName", sum(p1), sum(p2), coalesce(sum(p1), 0) + coalesce(sum(p2), 0) as s3
-from (select o.id, ui.user_id, ui."screenName", o.price as p1, null as p2
-    from core_userinfo ui, core_offer o
-    where o.sponsor_id = user_id 
-    and o.status = 'OPEN' 
-    and (o."expirationDate" > now() or o."expirationDate" is null)
-    union
-    select o.id, ui.user_id, ui."screenName", null as p1, o.price as p2
-    from core_userinfo ui, core_offer o
-    where o.sponsor_id = user_id 
-    and o.status = 'PAID') t
-group by t.user_id, t."screenName"
-order by s3 desc"""
 
 SELECT_SPONSORED_PROJECTS = """select pr.id, pr.name, count(i.id) c, sum(o.price) s
 from core_project pr, core_issue i, core_offer o
@@ -66,7 +53,10 @@ def get_stats():
         'open_sum' : Offer.objects.filter(status='OPEN').filter(Q(expirationDate=None) | Q(expirationDate__gt=date.today())).aggregate(Sum('price'))['price__sum'] or 0,
         'expired_sum' : Offer.objects.filter(status='OPEN').filter(Q(expirationDate__lte=date.today())).aggregate(Sum('price'))['price__sum'] or 0,
         'revoked_sum' : _sum(SUM_REVOKED),
-        'sponsors' : _select(SELECT_SPONSORS),
+        'sponsors' : UserInfo.objects.annotate(
+                         paid_ammount=Sum('user__offer__price', only=Q(user__offer__status='PAID')),
+                         open_ammount=Sum('user__offer__price', only=Q(user__offer__status='OPEN')),
+                     ).order_by('-paid_ammount'),
         'projects' : _select(SELECT_SPONSORED_PROJECTS),
     }
 
