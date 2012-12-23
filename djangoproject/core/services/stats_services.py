@@ -2,7 +2,10 @@ from datetime import datetime, timedelta
 import math
 from core.models import *
 from django.db import connection, transaction
-from django.db.models import Count
+from django.db.models import Q
+from django.db.models import Sum, Count
+from django.utils.datetime_safe import date
+
 
 SELECT_SPONSORS = """select t.user_id, t."screenName", sum(p1), sum(p2), coalesce(sum(p1), 0) + coalesce(sum(p2), 0) as s3
 from (select o.id, ui.user_id, ui."screenName", o.price as p1, null as p2
@@ -38,7 +41,6 @@ COUNT_OFFERS_REVOKED = "select count(*) from core_offer where status = 'REVOKED'
 
 SUM_PAID = "select sum (price) from core_offer where status = 'PAID'"
 
-SUM_OPEN = """select sum (price) from core_offer where status = 'OPEN' and ("expirationDate" is null or "expirationDate" > now())"""
 
 SUM_EXPIRED = """select sum (price) from core_offer where status = 'OPEN' and "expirationDate" <= now()"""
 
@@ -62,8 +64,8 @@ def get_stats():
         'open_offer_count' : _count(COUNT_OFFERS_OPEN),
         'revoked_offer_count' : _count(COUNT_OFFERS_REVOKED),
         'paid_sum' : _sum(SUM_PAID),
-        'open_sum' : _sum(SUM_OPEN),
         'expired_sum' : _sum(SUM_EXPIRED),
+        'open_sum' : Offer.objects.filter(status='OPEN').filter(Q(expirationDate=None) | Q(expirationDate__gt=date.today())).aggregate(Sum('price'))['price__sum'] or 0,
         'revoked_sum' : _sum(SUM_REVOKED),
         'sponsors' : _select(SELECT_SPONSORS),
         'projects' : _select(SELECT_SPONSORED_PROJECTS),
