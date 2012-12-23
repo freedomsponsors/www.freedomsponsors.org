@@ -86,3 +86,23 @@ class SumPriceOfOpenOffers(TestCase):
     def test_sum_price_of_open_offers(self):
         self.assertEqual(99, self.stats['open_sum'])
 
+
+class SumPriceOfExpiredOffers(TestCase):
+    def setUp(self):
+        mommy.make_one('core.Offer', status='PAID', price=1, expirationDate=None)
+        mommy.make_one('core.Offer', status='PAID', price=1, expirationDate=date(2012, 12, 12))
+        mommy.make_one('core.Offer', status='PAID', price=1, expirationDate=date(2012, 12, 13))
+        mommy.make_one('core.Offer', status='PAID', price=1, expirationDate=date(2012, 12, 01))
+        mommy.make_one('core.Offer', status='OPEN', price=1, expirationDate=None)
+        mommy.make_one('core.Offer', status='OPEN', price=1, expirationDate=date(2012, 12, 13))
+
+        # Query hits
+        mommy.make_one('core.Offer', status='OPEN', price=9, expirationDate=date(2012, 12, 01))
+        mommy.make_one('core.Offer', status='OPEN', price=90, expirationDate=date(2012, 12, 12))
+
+        with patch('django.utils.datetime_safe.date.today', Mock(return_value=date(2012, 12, 12))):
+            self.stats = stats_services.get_stats()
+
+    def test_sum_price_of_expired_offers(self):
+        self.assertEqual(99, self.stats['expired_sum'])
+

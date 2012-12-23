@@ -42,7 +42,6 @@ COUNT_OFFERS_REVOKED = "select count(*) from core_offer where status = 'REVOKED'
 SUM_PAID = "select sum (price) from core_offer where status = 'PAID'"
 
 
-SUM_EXPIRED = """select sum (price) from core_offer where status = 'OPEN' and "expirationDate" <= now()"""
 
 SUM_REVOKED = "select sum (price) from core_offer where status = 'REVOKED'"
 
@@ -64,8 +63,8 @@ def get_stats():
         'open_offer_count' : _count(COUNT_OFFERS_OPEN),
         'revoked_offer_count' : _count(COUNT_OFFERS_REVOKED),
         'paid_sum' : _sum(SUM_PAID),
-        'expired_sum' : _sum(SUM_EXPIRED),
         'open_sum' : Offer.objects.filter(status='OPEN').filter(Q(expirationDate=None) | Q(expirationDate__gt=date.today())).aggregate(Sum('price'))['price__sum'] or 0,
+        'expired_sum' : Offer.objects.filter(status='OPEN').filter(Q(expirationDate__lte=date.today())).aggregate(Sum('price'))['price__sum'] or 0,
         'revoked_sum' : _sum(SUM_REVOKED),
         'sponsors' : _select(SELECT_SPONSORS),
         'projects' : _select(SELECT_SPONSORED_PROJECTS),
