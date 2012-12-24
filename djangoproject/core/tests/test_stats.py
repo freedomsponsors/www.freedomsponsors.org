@@ -68,45 +68,6 @@ class CountSponsoring(TestCase):
         self.assertEqual(2, self.stats['issue_count_sponsoring'])
 
 
-class SumPriceOfOpenOffers(TestCase):
-    def setUp(self):
-        mommy.make_one('core.Offer', status='PAID', price=1, expirationDate=None)
-        mommy.make_one('core.Offer', status='PAID', price=1, expirationDate=date(2012, 12, 12))
-        mommy.make_one('core.Offer', status='PAID', price=1, expirationDate=date(2012, 12, 13))
-        mommy.make_one('core.Offer', status='PAID', price=1, expirationDate=date(2012, 12, 01))
-        mommy.make_one('core.Offer', status='OPEN', price=1, expirationDate=date(2012, 12, 01))
-        mommy.make_one('core.Offer', status='OPEN', price=1, expirationDate=date(2012, 12, 12))
-        # Query hits
-        mommy.make_one('core.Offer', status='OPEN', price=9, expirationDate=None)
-        mommy.make_one('core.Offer', status='OPEN', price=90, expirationDate=date(2012, 12, 13))
-
-        with patch('django.utils.datetime_safe.date.today', Mock(return_value=date(2012, 12, 12))):
-            self.stats = stats_services.get_stats()
-
-    def test_sum_price_of_open_offers(self):
-        self.assertEqual(99, self.stats['open_sum'])
-
-
-class SumPriceOfExpiredOffers(TestCase):
-    def setUp(self):
-        mommy.make_one('core.Offer', status='PAID', price=1, expirationDate=None)
-        mommy.make_one('core.Offer', status='PAID', price=1, expirationDate=date(2012, 12, 12))
-        mommy.make_one('core.Offer', status='PAID', price=1, expirationDate=date(2012, 12, 13))
-        mommy.make_one('core.Offer', status='PAID', price=1, expirationDate=date(2012, 12, 01))
-        mommy.make_one('core.Offer', status='OPEN', price=1, expirationDate=None)
-        mommy.make_one('core.Offer', status='OPEN', price=1, expirationDate=date(2012, 12, 13))
-
-        # Query hits
-        mommy.make_one('core.Offer', status='OPEN', price=9, expirationDate=date(2012, 12, 01))
-        mommy.make_one('core.Offer', status='OPEN', price=90, expirationDate=date(2012, 12, 12))
-
-        with patch('django.utils.datetime_safe.date.today', Mock(return_value=date(2012, 12, 12))):
-            self.stats = stats_services.get_stats()
-
-    def test_sum_price_of_expired_offers(self):
-        self.assertEqual(99, self.stats['expired_sum'])
-
-
 class Sponsors(TestCase):
     def setUp(self):
         u = mommy.make_one('core.UserInfo', screenName='sponsorA')
@@ -124,20 +85,6 @@ class Sponsors(TestCase):
         with self.assertNumQueries(1):
             for obj in self.stats['sponsors']:
                 pass
-
-
-
-class CountSponsors(TestCase):
-    def setUp(self):
-        u1 = mommy.make_one('auth.User')
-        u2 = mommy.make_one('auth.User')
-        mommy.make_many('core.Offer', quantity=2, sponsor=u1)
-        mommy.make_many('core.Offer', quantity=2, sponsor=u2)
-
-        self.stats = stats_services.get_stats()
-
-    def test_count_sponsors(self):
-        self.assertEqual(2, self.stats['sponsor_count'])
 
 
 class CountProgrammersWithSolutions(TestCase):
@@ -166,32 +113,6 @@ class CountPaidProgrammers(TestCase):
 
     def test_count_paid_programmers(self):
         self.assertEqual(2, self.stats['paid_programmer_count'])
-
-
-class CountOffers(TestCase):
-    def setUp(self):
-        mommy.make_many('core.Offer', quantity=2, price=1, status='PAID')
-        mommy.make_many('core.Offer', quantity=2, price=1, status='OPEN')
-        mommy.make_many('core.Offer', quantity=2, price=1, status='REVOKED')
-        self.stats = stats_services.get_stats()
-
-    def test_count_offers(self):
-        self.assertEqual(6, self.stats['offer_count'])
-
-    def test_count_paid_offers(self):
-        self.assertEqual(2, self.stats['paid_offer_count'])
-
-    def test_count_open_offers(self):
-        self.assertEqual(2, self.stats['open_offer_count'])
-
-    def test_count_revoked_offers(self):
-        self.assertEqual(2, self.stats['revoked_offer_count'])
-
-    def test_sum_paid_offers(self):
-        self.assertEqual(2, self.stats['paid_sum'])
-
-    def test_sum_revoked_offers(self):
-        self.assertEqual(2, self.stats['revoked_sum'])
 
 
 class Projects(TestCase):
