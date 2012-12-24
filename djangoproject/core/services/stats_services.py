@@ -1,7 +1,5 @@
-from datetime import datetime, timedelta
-import math
+from datetime import datetime
 from core.models import *
-from django.db import connection, transaction
 from django.db.models import Q
 from django.db.models import Count
 from django.utils.datetime_safe import date
@@ -46,19 +44,3 @@ def _age():
         if(weeks > 1):
             s += "s"
     return s;
-
-def _count(query):
-    return int(_sum(query))
-
-def _sum(query):
-    rows = _select(query)
-    r = rows[0][0]
-    if r is None:
-        r = 0
-    return r
-
-def _select(query):
-    cursor = connection.cursor()
-    cursor.execute(query)
-    rows = cursor.fetchall()
-    return rows
