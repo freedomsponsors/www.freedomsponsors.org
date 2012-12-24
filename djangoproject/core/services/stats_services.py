@@ -22,16 +22,20 @@ def get_offer_stats():
         revoked_sum=Sum('price', only=Q(status=Offer.REVOKED)),
     )
 
+def get_issue_stats():
+    return Issue.objects.filter(is_feedback=False).aggregate(
+        issue_count=Count('pk'),
+        issue_project_count=Count('project', distinct=True),
+        issue_count_kickstarting=CountIf('pk', only=Q(is_public_suggestion=True)),
+        issue_count_sponsoring=CountIf('pk', only=Q(is_public_suggestion=False)),
+    )
+
 def get_stats():
     stats = {
         'age' : _age(),
         'user_count' : UserInfo.objects.count(),
         'programmer_count' : Solution.objects.aggregate(Count('programmer', distinct=True))['programmer__count'] or 0,
         'paid_programmer_count' : PaymentPart.objects.filter(payment__status='CONFIRMED_IPN').aggregate(Count('programmer', distinct=True))['programmer__count'] or 0,
-        'issue_count' : Issue.objects.filter(is_feedback=False).count(),
-        'issue_project_count' : Issue.objects.filter(is_feedback=False).aggregate(Count('project', distinct=True))['project__count'],
-        'issue_count_kickstarting' : Issue.objects.filter(is_feedback=False, is_public_suggestion=True).count(),
-        'issue_count_sponsoring' : Issue.objects.filter(is_feedback=False, is_public_suggestion=False).count(),
         'sponsors' : UserInfo.objects.annotate(
                          paid_ammount=Sum('user__offer__price', only=Q(user__offer__status=Offer.PAID)),
                          open_ammount=Sum('user__offer__price', only=Q(user__offer__status=Offer.OPEN)),
@@ -40,6 +44,7 @@ def get_stats():
     }
 
     stats.update(get_offer_stats())
+    stats.update(get_issue_stats())
 
     return stats
 

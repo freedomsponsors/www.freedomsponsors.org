@@ -20,7 +20,7 @@ class StatsView(TestCase):
         self.assertIn('stats', self.resp.context)
 
     def test_num_queries(self):
-        with self.assertNumQueries(10):
+        with self.assertNumQueries(7):
             self.client.get('/core/stats/')
 
 
@@ -168,3 +168,25 @@ class OfferStats(TestCase):
 
     def test_revoked_sum(self):
         self.assertEqual(26, self.stats['revoked_sum'])
+
+
+class IssueStats(TestCase):
+    def setUp(self):
+        mommy.make_one('core.Issue', is_feedback=True, project__id=1)
+        mommy.make_one('core.Issue', is_feedback=False, project__id=2, is_public_suggestion=False)
+        mommy.make_one('core.Issue', is_feedback=False, project__id=2, is_public_suggestion=True)
+
+        with self.assertNumQueries(1):
+            self.stats = stats_services.get_issue_stats()
+
+    def test_issue_count(self):
+        self.assertEqual(2, self.stats['issue_count'])
+
+    def test_issue_project_count(self):
+        self.assertEqual(1, self.stats['issue_project_count'])
+
+    def test_issue_count_kickstarting(self):
+        self.assertEqual(1, self.stats['issue_count_kickstarting'])
+
+    def test_issue_count_sponsoring(self):
+        self.assertEqual(1, self.stats['issue_count_sponsoring'])
