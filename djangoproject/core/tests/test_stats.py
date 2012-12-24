@@ -120,6 +120,12 @@ class Sponsors(TestCase):
         self.assertQuerysetEqual(qs, [('sponsorA', 10, 90)],
                                  lambda u: (u.screenName, u.paid_ammount, u.open_ammount))
 
+    def test_num_queries(self):
+        with self.assertNumQueries(1):
+            for obj in self.stats['sponsors']:
+                pass
+
+
 
 class CountSponsors(TestCase):
     def setUp(self):
