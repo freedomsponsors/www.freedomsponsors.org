@@ -24,12 +24,12 @@ def get_stats():
         'open_offer_count' : Offer.objects.filter(status=Offer.OPEN).count(),
         'revoked_offer_count' : Offer.objects.filter(status=Offer.REVOKED).count(),
         'paid_sum' : Offer.objects.filter(status=Offer.PAID).aggregate(Sum('price'))['price__sum'] or 0,
-        'open_sum' : Offer.objects.filter(status='OPEN').filter(Q(expirationDate=None) | Q(expirationDate__gt=date.today())).aggregate(Sum('price'))['price__sum'] or 0,
-        'expired_sum' : Offer.objects.filter(status='OPEN').filter(Q(expirationDate__lte=date.today())).aggregate(Sum('price'))['price__sum'] or 0,
+        'open_sum' : Offer.objects.filter(status=Offer.OPEN).filter(Q(expirationDate=None) | Q(expirationDate__gt=date.today())).aggregate(Sum('price'))['price__sum'] or 0,
+        'expired_sum' : Offer.objects.filter(status=Offer.OPEN).filter(Q(expirationDate__lte=date.today())).aggregate(Sum('price'))['price__sum'] or 0,
         'revoked_sum' : Offer.objects.filter(status=Offer.REVOKED).aggregate(Sum('price'))['price__sum'] or 0,
         'sponsors' : UserInfo.objects.annotate(
-                         paid_ammount=Sum('user__offer__price', only=Q(user__offer__status='PAID')),
-                         open_ammount=Sum('user__offer__price', only=Q(user__offer__status='OPEN')),
+                         paid_ammount=Sum('user__offer__price', only=Q(user__offer__status=Offer.PAID)),
+                         open_ammount=Sum('user__offer__price', only=Q(user__offer__status=Offer.OPEN)),
                      ).order_by('-paid_ammount'),
         'projects' : Project.objects.annotate(issue_count=Count('issue', distinct=True), offer_sum=Sum('issue__offer__price')).order_by('-offer_sum'),
     }
