@@ -8,12 +8,6 @@ from django.utils.datetime_safe import date
 from aggregate_if import Sum
 
 
-SELECT_SPONSORED_PROJECTS = """select pr.id, pr.name, count(i.id) c, sum(o.price) s
-from core_project pr, core_issue i, core_offer o
-where pr.id = i.project_id and i.id = o.issue_id
-group by pr.id, pr.name
-order by s desc"""
-
 LAUNCH_DATE = datetime(2012, 7, 8)
 
 def get_stats():
@@ -39,7 +33,7 @@ def get_stats():
                          paid_ammount=Sum('user__offer__price', only=Q(user__offer__status='PAID')),
                          open_ammount=Sum('user__offer__price', only=Q(user__offer__status='OPEN')),
                      ).order_by('-paid_ammount'),
-        'projects' : _select(SELECT_SPONSORED_PROJECTS),
+        'projects' : Project.objects.annotate(issue_count=Count('issue', distinct=True), offer_sum=Sum('issue__offer__price')).order_by('-offer_sum'),
     }
 
 def _age():

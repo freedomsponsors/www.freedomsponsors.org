@@ -35,9 +35,9 @@
       </tr>
       {% for project in stats.projects %}
       <tr>
-        <td><a href="/core/issue/?s=&project_id={{project.0}}">{{project.1}}</td>
-        <td style="text-align:right">{{project.2}}</td>
-        <td style="text-align:right">{{project.3}}</td>
+        <td><a href="/core/issue/?s=&project_id={{project.pk}}">{{project.name}}</td>
+        <td style="text-align:right">{{project.issue_count}}</td>
+        <td style="text-align:right">{{project.offer_sum}}</td>
       </tr>
       {% endfor %}
     </table>

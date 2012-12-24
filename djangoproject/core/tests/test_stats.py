@@ -186,3 +186,19 @@ class CountOffers(TestCase):
 
     def test_sum_revoked_offers(self):
         self.assertEqual(2, self.stats['revoked_sum'])
+
+
+class Projects(TestCase):
+    def setUp(self):
+        for i in mommy.make_many('core.Issue', quantity=3, project__id=1, project__name='projectA'):
+            mommy.make_many('core.Offer', quantity=2, price=10, issue=i)
+
+        for i in mommy.make_many('core.Issue', quantity=2, project__id=2, project__name='projectB'):
+            mommy.make_many('core.Offer', quantity=2, price=20, issue=i)
+
+        self.stats = stats_services.get_stats()
+
+    def test_projects(self):
+        qs = self.stats['projects']
+        self.assertQuerysetEqual(qs, [('projectB', 2, 80), ('projectA', 3, 60)],
+                             lambda p: (p.name, p.issue_count, p.offer_sum))
