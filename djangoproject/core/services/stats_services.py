@@ -4,35 +4,44 @@ from django.db.models import Q
 from django.db.models import Count
 from django.utils.datetime_safe import date
 from aggregate_if import Sum
+from aggregate_if import Count as CountIf
 
 
 LAUNCH_DATE = datetime(2012, 7, 8)
 
+def get_offer_stats():
+    return Offer.objects.aggregate(
+        sponsor_count=CountIf('sponsor'), #, distinct=True),
+        offer_count=CountIf('pk'), #, distinct=True),
+        paid_offer_count=CountIf('pk', only=Q(status=Offer.PAID)),
+        open_offer_count=CountIf('pk', only=Q(status=Offer.OPEN)), # FIXME: Should OPEN ignore EXPIRED?
+        revoked_offer_count=CountIf('pk', only=Q(status=Offer.REVOKED)),
+        paid_sum=Sum('price', only=Q(status=Offer.PAID)),
+        open_sum=Sum('price', only=Q(status=Offer.OPEN) & (Q(expirationDate=None) | Q(expirationDate__gt=date.today()))),
+        expired_sum=Sum('price', only=Q(status=Offer.OPEN) & Q(expirationDate__lte=date.today())),
+        revoked_sum=Sum('price', only=Q(status=Offer.REVOKED)),
+    )
+
 def get_stats():
-    return {
+    stats = {
         'age' : _age(),
         'user_count' : UserInfo.objects.count(),
-        'sponsor_count' : Offer.objects.aggregate(Count('sponsor', distinct=True))['sponsor__count'] or 0,
         'programmer_count' : Solution.objects.aggregate(Count('programmer', distinct=True))['programmer__count'] or 0,
         'paid_programmer_count' : PaymentPart.objects.filter(payment__status='CONFIRMED_IPN').aggregate(Count('programmer', distinct=True))['programmer__count'] or 0,
-        'offer_count' : Offer.objects.count(),
         'issue_count' : Issue.objects.filter(is_feedback=False).count(),
         'issue_project_count' : Issue.objects.filter(is_feedback=False).aggregate(Count('project', distinct=True))['project__count'],
         'issue_count_kickstarting' : Issue.objects.filter(is_feedback=False, is_public_suggestion=True).count(),
         'issue_count_sponsoring' : Issue.objects.filter(is_feedback=False, is_public_suggestion=False).count(),
-        'paid_offer_count' : Offer.objects.filter(status=Offer.PAID).count(),
-        'open_offer_count' : Offer.objects.filter(status=Offer.OPEN).count(),
-        'revoked_offer_count' : Offer.objects.filter(status=Offer.REVOKED).count(),
-        'paid_sum' : Offer.objects.filter(status=Offer.PAID).aggregate(Sum('price'))['price__sum'] or 0,
-        'open_sum' : Offer.objects.filter(status=Offer.OPEN).filter(Q(expirationDate=None) | Q(expirationDate__gt=date.today())).aggregate(Sum('price'))['price__sum'] or 0,
-        'expired_sum' : Offer.objects.filter(status=Offer.OPEN).filter(Q(expirationDate__lte=date.today())).aggregate(Sum('price'))['price__sum'] or 0,
-        'revoked_sum' : Offer.objects.filter(status=Offer.REVOKED).aggregate(Sum('price'))['price__sum'] or 0,
         'sponsors' : UserInfo.objects.annotate(
                          paid_ammount=Sum('user__offer__price', only=Q(user__offer__status=Offer.PAID)),
                          open_ammount=Sum('user__offer__price', only=Q(user__offer__status=Offer.OPEN)),
                      ).order_by('-paid_ammount'),
         'projects' : Project.objects.annotate(issue_count=Count('issue', distinct=True), offer_sum=Sum('issue__offer__price')).order_by('-offer_sum'),
     }
+
+    stats.update(get_offer_stats())
+
+    return stats
 
 def _age():
     delta = (datetime.today() - LAUNCH_DATE).days

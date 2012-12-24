@@ -20,7 +20,7 @@ class StatsView(TestCase):
         self.assertIn('stats', self.resp.context)
 
     def test_num_queries(self):
-        with self.assertNumQueries(18):
+        with self.assertNumQueries(10):
             self.client.get('/core/stats/')
 
 
@@ -208,3 +208,42 @@ class Projects(TestCase):
         qs = self.stats['projects']
         self.assertQuerysetEqual(qs, [('projectB', 2, 80), ('projectA', 3, 60)],
                              lambda p: (p.name, p.issue_count, p.offer_sum))
+
+
+class OfferStats(TestCase):
+    def setUp(self):
+        mommy.make_many('core.Offer', quantity=2, price=10, status='OPEN')
+        mommy.make_many('core.Offer', quantity=2, price=11, status='PAID')
+        mommy.make_many('core.Offer', quantity=2, price=12, status='OPEN', expirationDate=date.today()) #expired
+        mommy.make_many('core.Offer', quantity=2, price=13, status='REVOKED')
+
+        with self.assertNumQueries(1):
+            self.stats = stats_services.get_offer_stats()
+
+    def test_offer_count(self):
+        self.assertEqual(8, self.stats['offer_count'])
+
+    def test_sponsor_count(self):
+        self.assertEqual(8, self.stats['sponsor_count'])
+
+    def test_paid_offer_count(self):
+        self.assertEqual(2, self.stats['paid_offer_count'])
+
+    def test_open_offer_count(self):
+        # FIXME: For now it's including OPEN but EXPIRED
+        self.assertEqual(4, self.stats['open_offer_count'])
+
+    def test_revoked_offer_count(self):
+        self.assertEqual(2, self.stats['revoked_offer_count'])
+
+    def test_open_sum(self):
+        self.assertEqual(20, self.stats['open_sum'])
+
+    def test_paid_sum(self):
+        self.assertEqual(22, self.stats['paid_sum'])
+
+    def test_expired_sum(self):
+        self.assertEqual(24, self.stats['expired_sum'])
+
+    def test_revoked_sum(self):
+        self.assertEqual(26, self.stats['revoked_sum'])
