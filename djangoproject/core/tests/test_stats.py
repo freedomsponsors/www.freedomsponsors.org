@@ -24,50 +24,6 @@ class StatsView(TestCase):
             self.client.get('/core/stats/')
 
 
-class CountProject(TestCase):
-    def setUp(self):
-        mommy.make_one('core.Project')
-
-        p = mommy.make_one('core.Project')
-        mommy.make_one('core.Issue', project=p, createdByUser=p.createdByUser, is_feedback=False)
-        mommy.make_one('core.Issue', project=p, createdByUser=p.createdByUser, is_feedback=False)
-        mommy.make_one('core.Issue', project=p, createdByUser=p.createdByUser, is_feedback=True)
-
-        self.stats = stats_services.get_stats()
-
-    def test_count_project(self):
-        self.assertEqual(1, self.stats['issue_project_count'])
-
-
-class CountKickstarting(TestCase):
-    def setUp(self):
-        mommy.make_one('core.Issue', is_feedback=False, is_public_suggestion=False)
-        mommy.make_one('core.Issue', is_feedback=True, is_public_suggestion=False)
-        mommy.make_one('core.Issue', is_feedback=True, is_public_suggestion=True)
-
-        # Query hit
-        mommy.make_many('core.Issue', quantity=2, is_feedback=False, is_public_suggestion=True)
-
-        self.stats = stats_services.get_stats()
-
-    def test_count_kickstarting(self):
-        self.assertEqual(2, self.stats['issue_count_kickstarting'])
-
-class CountSponsoring(TestCase):
-    def setUp(self):
-        mommy.make_one('core.Issue', is_feedback=False, is_public_suggestion=True)
-        mommy.make_one('core.Issue', is_feedback=True, is_public_suggestion=False)
-        mommy.make_one('core.Issue', is_feedback=True, is_public_suggestion=True)
-
-        # Query hit
-        mommy.make_many('core.Issue', quantity=2, is_feedback=False, is_public_suggestion=False)
-
-        self.stats = stats_services.get_stats()
-
-    def test_count_sponsoring(self):
-        self.assertEqual(2, self.stats['issue_count_sponsoring'])
-
-
 class Sponsors(TestCase):
     def setUp(self):
         u = mommy.make_one('core.UserInfo', screenName='sponsorA')
