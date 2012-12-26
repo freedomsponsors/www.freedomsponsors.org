@@ -1,0 +1,1 @@
+./manage.py makemessages -a
