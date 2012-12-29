@@ -1,21 +1,19 @@
 from datetime import datetime
 from core.models import *
 from django.db.models import Q
-from django.db.models import Count
 from django.utils.datetime_safe import date
-from aggregate_if import Sum
-from aggregate_if import Count as CountIf
+from aggregate_if import Sum, Count
 
 
 LAUNCH_DATE = datetime(2012, 7, 8)
 
 def get_offer_stats():
     return Offer.objects.aggregate(
-        sponsor_count=CountIf('sponsor'), #, distinct=True),
-        offer_count=CountIf('pk'), #, distinct=True),
-        paid_offer_count=CountIf('pk', only=Q(status=Offer.PAID)),
-        open_offer_count=CountIf('pk', only=Q(status=Offer.OPEN)), # FIXME: Should OPEN ignore EXPIRED?
-        revoked_offer_count=CountIf('pk', only=Q(status=Offer.REVOKED)),
+        sponsor_count=Count('sponsor', distinct=True),
+        offer_count=Count('pk'),
+        paid_offer_count=Count('pk', only=Q(status=Offer.PAID)),
+        open_offer_count=Count('pk', only=Q(status=Offer.OPEN)), # FIXME: Should OPEN ignore EXPIRED?
+        revoked_offer_count=Count('pk', only=Q(status=Offer.REVOKED)),
         paid_sum=Sum('price', only=Q(status=Offer.PAID)),
         open_sum=Sum('price', only=Q(status=Offer.OPEN) & (Q(expirationDate=None) | Q(expirationDate__gt=date.today()))),
         expired_sum=Sum('price', only=Q(status=Offer.OPEN) & Q(expirationDate__lte=date.today())),
@@ -26,8 +24,8 @@ def get_issue_stats():
     return Issue.objects.filter(is_feedback=False).aggregate(
         issue_count=Count('pk'),
         issue_project_count=Count('project', distinct=True),
-        issue_count_kickstarting=CountIf('pk', only=Q(is_public_suggestion=True)),
-        issue_count_sponsoring=CountIf('pk', only=Q(is_public_suggestion=False)),
+        issue_count_kickstarting=Count('pk', only=Q(is_public_suggestion=True)),
+        issue_count_sponsoring=Count('pk', only=Q(is_public_suggestion=False)),
     )
 
 def get_stats():
