@@ -35,9 +35,9 @@ def get_stats():
         'programmer_count' : Solution.objects.aggregate(Count('programmer', distinct=True))['programmer__count'] or 0,
         'paid_programmer_count' : PaymentPart.objects.filter(payment__status='CONFIRMED_IPN').aggregate(Count('programmer', distinct=True))['programmer__count'] or 0,
         'sponsors' : UserInfo.objects.annotate(
-                         paid_ammount=Sum('user__offer__price', only=Q(user__offer__status=Offer.PAID)),
-                         open_ammount=Sum('user__offer__price', only=Q(user__offer__status=Offer.OPEN)),
-                     ).order_by('-paid_ammount'),
+                         paid_amount=Sum('user__offer__price', only=Q(user__offer__status=Offer.PAID)),
+                         open_amount=Sum('user__offer__price', only=Q(user__offer__status=Offer.OPEN)),
+                     ).order_by('-paid_amount'),
         'projects' : Project.objects.annotate(issue_count=Count('issue', distinct=True), offer_sum=Sum('issue__offer__price')).order_by('-offer_sum'),
     }
 

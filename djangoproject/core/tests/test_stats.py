@@ -35,7 +35,7 @@ class Sponsors(TestCase):
     def test_sponsors(self):
         qs = self.stats['sponsors']
         self.assertQuerysetEqual(qs, [('sponsorA', 10, 90)],
-                                 lambda u: (u.screenName, u.paid_ammount, u.open_ammount))
+                                 lambda u: (u.screenName, u.paid_amount, u.open_amount))
 
     def test_num_queries(self):
         with self.assertNumQueries(1):

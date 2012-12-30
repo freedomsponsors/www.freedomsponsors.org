@@ -57,7 +57,7 @@
       <tr>
         <td><a href="/core/user/{{sponsor.user.pk}}/{{sponsor.pk}}">{{sponsor.screenName}}</td>
         <td style="text-align:right">
-          {% include 'core/green_and_orange.html' with vOpen=sponsor.open_ammount vPaid=sponsor.paid_ammount %}
+          {% include 'core/green_and_orange.html' with vOpen=sponsor.open_amount vPaid=sponsor.paid_amount %}
         </td>
       </tr>
       {% endfor %}
