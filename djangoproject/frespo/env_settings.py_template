@@ -8,14 +8,6 @@ ENVIRONMENT = 'NOT_DEV' #change to DEV in your machine
 GITHUB_BOT_USERNAME = 'freedomsponsors-bot'
 GITHUB_BOT_PASSWORD = '*********'
 
-#--------- Use Gmail
-#EMAIL_HOST = 'smtp.gmail.com'
-#EMAIL_PORT = 587
-#EMAIL_USE_TLS = True
-#--------- Use a local postfix
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 25
-EMAIL_USE_TLS = False
 AUTO_EMAIL_USERNAME = 'noreply@freedomsponsors.com'
 AUTO_EMAIL_PASSWORD = 'ThisIsNotTheRealPassword_obviously'
 
