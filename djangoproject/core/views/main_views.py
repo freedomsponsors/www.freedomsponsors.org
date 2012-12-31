@@ -55,9 +55,6 @@ def admail(request):
         context_instance = RequestContext(request))
 
 def home(request):
-    if(request.user.is_authenticated() and request.user.getUserInfo() == None):
-        return redirect('/core/user/edit')
-
     context = RequestContext(request, {
         'issues_sponsoring': Issue.sponsoring.recently_updated()[0:10],
         'issues_kickstarting': Issue.kickstarting.recently_updated()[0:10]
