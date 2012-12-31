@@ -29,7 +29,7 @@ class HomeViewedByAnonymous(TestCase):
         self.assertIn('issues_kickstarting', self.resp.context)
 
     def test_num_queries(self):
-        with self.assertNumQueries(62):
+        with self.assertNumQueries(12):
             self.client.get('/')
 
     def test_issues_sponsoring(self):
@@ -37,7 +37,7 @@ class HomeViewedByAnonymous(TestCase):
         expected = [(i, False, Decimal('1'), Decimal('10')) for i in range(1, 11)]
 
         self.assertQuerysetEqual(sponsoring, expected,
-                                 lambda i: (i.pk, i.is_public_suggestion, i.getTotalOffersPrice(), i.getTotalPaidPrice()))
+                                 lambda i: (i.pk, i.is_public_suggestion, i.open_amount, i.paid_amount))
 
     def test_issues_kickstarting(self):
         sponsoring = self.resp.context['issues_kickstarting']
