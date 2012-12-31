@@ -60,7 +60,7 @@ def home(request):
     if(request.user.is_authenticated() and request.user.getUserInfo() == None):
         return redirect('/core/user/edit')
     issues_sponsoring = Issue.objects.filter(is_public_suggestion=False).select_related('project__name').annotate(paid_amount=Sum('offer__price', only=Q(offer__status='PAID')), open_amount=Sum('offer__price', only=Q(offer__status='OPEN'))).order_by('-updatedDate')[0:10]
-    issues_kickstarting = issue_services.search_issues(is_public_suggestion = True)[0:10]
+    issues_kickstarting = Issue.objects.filter(is_public_suggestion=True).select_related('project__name').order_by('-updatedDate')[0:10]
     return render_to_response('core/home.html',
         {'issues_sponsoring':issues_sponsoring,
          'issues_kickstarting':issues_kickstarting},

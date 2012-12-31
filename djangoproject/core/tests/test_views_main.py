@@ -29,7 +29,7 @@ class HomeViewedByAnonymous(TestCase):
         self.assertIn('issues_kickstarting', self.resp.context)
 
     def test_num_queries(self):
-        with self.assertNumQueries(12):
+        with self.assertNumQueries(2):
             self.client.get('/')
 
     def test_issues_sponsoring(self):
