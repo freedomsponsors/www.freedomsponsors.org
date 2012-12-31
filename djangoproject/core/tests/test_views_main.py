@@ -1,5 +1,6 @@
 # coding: utf-8
 from decimal import Decimal
+from django.contrib.auth.models import User
 from django.test import TestCase
 from django.core.urlresolvers import reverse as r
 from model_mommy import mommy
@@ -46,3 +47,13 @@ class HomeViewedByAnonymous(TestCase):
 
         self.assertQuerysetEqual(sponsoring, expected,
                                  lambda i: (i.pk, i.is_public_suggestion))
+
+
+class HomeViewedByUserWithoutProfile(TestCase):
+    def setUp(self):
+        User.objects.create_user('user', 'user@email.com', 'user')
+        assert self.client.login(username='user', password='user')
+        self.resp = self.client.get(r('home'))
+
+    def test_redirects(self):
+        self.assertRedirects(self.resp, '/core/user/edit?next=/')
