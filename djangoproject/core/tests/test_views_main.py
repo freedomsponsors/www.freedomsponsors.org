@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse as r
 from model_mommy import mommy
 
 
-class HomeViewedByAnonymous(TestCase):
+class HomeView(TestCase):
     def setUp(self):
         # Sponsoring
         for i in mommy.make_many('core.Issue', project__name='Linux', is_public_suggestion=False, quantity=11):
