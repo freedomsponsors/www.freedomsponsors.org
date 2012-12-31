@@ -160,7 +160,7 @@ TEMPLATE_DIRS = (
 )
 
 LOCALE_PATHS = (
-    os.path.join(PROJECT_DIR, "locale"),
+    PROJECT_DIR.child("locale"),
 )
 
 INSTALLED_APPS = (
