@@ -4,7 +4,7 @@ from django.test import TestCase
 from model_mommy import mommy
 
 
-class HomeView(TestCase):
+class HomeViewedByAnonymous(TestCase):
     def setUp(self):
         # Sponsoring
         for i in mommy.make_many('core.Issue', project__name='Linux', is_public_suggestion=False, quantity=11):
