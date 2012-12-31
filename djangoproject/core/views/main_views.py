@@ -72,15 +72,3 @@ def stats(request):
     return render_to_response('core/stats.html',
         {'stats':stats,},
         context_instance = RequestContext(request))
-
-
-
-
-
-
-
-
-
-
-
-
