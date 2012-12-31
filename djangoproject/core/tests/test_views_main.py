@@ -1,6 +1,7 @@
 # coding: utf-8
 from decimal import Decimal
 from django.test import TestCase
+from django.core.urlresolvers import reverse as r
 from model_mommy import mommy
 
 
@@ -16,7 +17,7 @@ class HomeViewedByAnonymous(TestCase):
             mommy.make_one('core.Offer', issue=i, price=1, status='OPEN')
             mommy.make_one('core.Offer', issue=i, price=10, status='PAID')
 
-        self.resp = self.client.get('/')
+        self.resp = self.client.get(r('home'))
 
     def test_get(self):
         self.assertEquals(200, self.resp.status_code)
@@ -30,7 +31,7 @@ class HomeViewedByAnonymous(TestCase):
 
     def test_num_queries(self):
         with self.assertNumQueries(2):
-            self.client.get('/')
+            self.client.get(r('home'))
 
     def test_issues_sponsoring(self):
         sponsoring = self.resp.context['issues_sponsoring']

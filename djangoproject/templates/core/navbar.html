@@ -7,8 +7,8 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <!-- <a class="brand" href="/">FreedomSponsors.org<span style="font-size:13px"> (beta)</a> -->
-          <a class="brand" href="/" style="padding-top:0px;padding-bottom:0px;"><img id="upper_left_brand" src="/static/img/FS_name.png"></a>
+          <!-- <a class="brand" href="{% url home %}">FreedomSponsors.org<span style="font-size:13px"> (beta)</a> -->
+          <a class="brand" href="{% url home %}" style="padding-top:0px;padding-bottom:0px;"><img id="upper_left_brand" src="/static/img/FS_name.png"></a>
 {% if user and user.is_authenticated %}
           <div class="btn-group pull-right">
             <a id="a_userMenu" class="btn dropdown-toggle" data-toggle="dropdown" href="#">
