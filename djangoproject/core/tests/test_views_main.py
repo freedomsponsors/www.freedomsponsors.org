@@ -1,9 +1,20 @@
 # coding: utf-8
 from django.test import TestCase
+from model_mommy import mommy
 
 
 class HomeView(TestCase):
     def setUp(self):
+        # Sponsoring
+        for i in mommy.make_many('core.Issue', project__name='Linux', is_public_suggestion=False, quantity=11):
+            mommy.make_one('core.Offer', issue=i, price=1, status='OPEN')
+            mommy.make_one('core.Offer', issue=i, price=10, status='PAID')
+
+        # Kickstarting
+        for i in mommy.make_many('core.Issue', project__name='Linux', is_public_suggestion=True, quantity=11):
+            mommy.make_one('core.Offer', issue=i, price=1, status='OPEN')
+            mommy.make_one('core.Offer', issue=i, price=10, status='PAID')
+
         self.resp = self.client.get('/')
 
     def test_get(self):
@@ -15,4 +26,8 @@ class HomeView(TestCase):
     def test_context(self):
         self.assertIn('issues_sponsoring', self.resp.context)
         self.assertIn('issues_kickstarting', self.resp.context)
+
+    def test_num_queries(self):
+        with self.assertNumQueries(62):
+            self.client.get('/')
 
