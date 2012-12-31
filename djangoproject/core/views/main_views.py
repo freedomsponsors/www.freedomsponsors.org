@@ -8,8 +8,6 @@ from core.utils.frespo_utils import  dictOrEmpty
 from core.services.mail_services import *
 from core.services import stats_services
 from core.models import Issue
-from django.db.models import Q
-from aggregate_if import Sum
 from django.contrib import messages
 import logging
 
@@ -59,12 +57,12 @@ def admail(request):
 def home(request):
     if(request.user.is_authenticated() and request.user.getUserInfo() == None):
         return redirect('/core/user/edit')
-    issues_sponsoring = Issue.objects.filter(is_public_suggestion=False).select_related('project__name').annotate(paid_amount=Sum('offer__price', only=Q(offer__status='PAID')), open_amount=Sum('offer__price', only=Q(offer__status='OPEN'))).order_by('-updatedDate')[0:10]
-    issues_kickstarting = Issue.objects.filter(is_public_suggestion=True).select_related('project__name').order_by('-updatedDate')[0:10]
-    return render_to_response('core/home.html',
-        {'issues_sponsoring':issues_sponsoring,
-         'issues_kickstarting':issues_kickstarting},
-        context_instance = RequestContext(request))
+
+    context = RequestContext(request, {
+        'issues_sponsoring': Issue.sponsoring.recently_updated()[0:10],
+        'issues_kickstarting': Issue.kickstarting.recently_updated()[0:10]
+    })
+    return render_to_response('core/home.html', context_instance=context)
 
 
 def stats(request):

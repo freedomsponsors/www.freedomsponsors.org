@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 from django.conf import settings
 from django.db import models
+from django.db.models import Q
 from django.utils import timezone
 from datetime import timedelta
 from django.contrib.auth.models import User
@@ -10,6 +11,7 @@ from social_auth.models import UserSocialAuth
 from django.utils.http import urlquote
 from django.template.defaultfilters import slugify
 from decimal import Decimal
+from aggregate_if import Sum
 
 
 class UserInfo(models.Model): 
@@ -209,6 +211,42 @@ class Project(models.Model):
     def __unicode__(self):
         return self.name
     
+##########
+# ISSUES #
+##########
+
+class IssueManager(models.Manager):
+    '''
+    Custom Manager to differentiate sponsoring issues from kickstarting issues.
+    '''
+    def __init__(self, is_public_suggestion):
+        self.is_kickstarting = is_public_suggestion
+        super(IssueManager, self).__init__()
+
+    @property
+    def is_sponsoring(self):
+        return not self.is_kickstarting
+
+    def get_query_set(self):
+        '''
+        Always filter sponsoring OR kickstarting.
+        '''
+        qs = super(IssueManager, self).get_query_set()
+        qs = qs.filter(is_public_suggestion=self.is_kickstarting)
+        return qs
+
+    def recently_updated(self):
+        '''
+        Returns issues recently updated.
+        For sponsoring, also aggregate the sum of paid and open offers.
+        '''
+        qs = self.select_related('project__name').order_by('-updatedDate')
+        if self.is_sponsoring:
+            qs = qs.annotate(
+                paid_amount=Sum('offer__price', only=Q(offer__status=Offer.PAID)),
+                open_amount=Sum('offer__price', only=Q(offer__status=Offer.OPEN)))
+        return qs
+
 
 # Uma issue de um projeto open source.
 # Isso aqui vai ser criado junto com a primeira "Offer" associada
@@ -224,6 +262,10 @@ class Issue(models.Model):
     trackerURL = models.URLField(null=True, blank=True)
     is_feedback = models.BooleanField()
     is_public_suggestion = models.BooleanField()
+
+    objects = models.Manager()
+    sponsoring = IssueManager(is_public_suggestion=False)
+    kickstarting = IssueManager(is_public_suggestion=True)
 
     @classmethod
     def newIssue(cls, project, key, title, createdByUser, trackerURL):
