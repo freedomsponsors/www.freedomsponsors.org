@@ -1,10 +1,5 @@
 # coding: utf-8
-# Django settings for frespo project.
-import os
 from decimal import Decimal
-import sys
-import env_settings
-import manage
 import dj_database_url
 from unipath import Path
 
