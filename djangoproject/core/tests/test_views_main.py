@@ -1,4 +1,5 @@
 # coding: utf-8
+from decimal import Decimal
 from django.test import TestCase
 from model_mommy import mommy
 
@@ -31,3 +32,16 @@ class HomeView(TestCase):
         with self.assertNumQueries(62):
             self.client.get('/')
 
+    def test_issues_sponsoring(self):
+        sponsoring = self.resp.context['issues_sponsoring']
+        expected = [(i, False, Decimal('1'), Decimal('10')) for i in range(1, 11)]
+
+        self.assertQuerysetEqual(sponsoring, expected,
+                                 lambda i: (i.pk, i.is_public_suggestion, i.getTotalOffersPrice(), i.getTotalPaidPrice()))
+
+    def test_issues_kickstarting(self):
+        sponsoring = self.resp.context['issues_kickstarting']
+        expected = [(i, True) for i in range(12, 22)]
+
+        self.assertQuerysetEqual(sponsoring, expected,
+                                 lambda i: (i.pk, i.is_public_suggestion))
