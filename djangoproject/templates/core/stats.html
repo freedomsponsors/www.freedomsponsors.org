@@ -35,9 +35,9 @@
       </tr>
       {% for project in stats.projects %}
       <tr>
-        <td><a href="/core/issue/?s=&project_id={{project.0}}">{{project.1}}</td>
-        <td style="text-align:right">{{project.2}}</td>
-        <td style="text-align:right">{{project.3}}</td>
+        <td><a href="/core/issue/?s=&project_id={{project.pk}}">{{project.name}}</td>
+        <td style="text-align:right">{{project.issue_count}}</td>
+        <td style="text-align:right">{{project.offer_sum}}</td>
       </tr>
       {% endfor %}
     </table>
@@ -55,9 +55,9 @@
       </tr>
       {% for sponsor in stats.sponsors %}
       <tr>
-        <td><a href="/core/user/{{sponsor.0}}/{{sponsor.1}}">{{sponsor.1}}</td>
+        <td><a href="/core/user/{{sponsor.user.pk}}/{{sponsor.pk}}">{{sponsor.screenName}}</td>
         <td style="text-align:right">
-          {% include 'core/green_and_orange.html' with vOpen=sponsor.2 vPaid=sponsor.3 %}
+          {% include 'core/green_and_orange.html' with vOpen=sponsor.open_amount vPaid=sponsor.paid_amount %}
         </td>
       </tr>
       {% endfor %}
