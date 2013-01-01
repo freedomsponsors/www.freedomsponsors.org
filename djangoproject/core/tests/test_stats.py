@@ -3,12 +3,13 @@ from mock import patch, Mock
 from model_mommy import mommy
 from django.test import TestCase
 from django.utils.datetime_safe import date
+from django.core.urlresolvers import reverse as r
 from core.services import stats_services
 
 
 class StatsView(TestCase):
     def setUp(self):
-        self.resp = self.client.get('/core/stats/')
+        self.resp = self.client.get(r('stats'))
 
     def test_get(self):
         self.assertEqual(200, self.resp.status_code)
@@ -21,7 +22,7 @@ class StatsView(TestCase):
 
     def test_num_queries(self):
         with self.assertNumQueries(7):
-            self.client.get('/core/stats/')
+            self.client.get(r('stats'))
 
 
 class Sponsors(TestCase):
