@@ -12,7 +12,7 @@ def get_offer_stats():
         sponsor_count=Count('sponsor', distinct=True),
         offer_count=Count('pk'),
         paid_offer_count=Count('pk', only=Q(status=Offer.PAID)),
-        open_offer_count=Count('pk', only=Q(status=Offer.OPEN)), # FIXME: Should OPEN ignore EXPIRED?
+        open_offer_count=Count('pk', only=Q(status=Offer.OPEN)),
         revoked_offer_count=Count('pk', only=Q(status=Offer.REVOKED)),
         paid_sum=Sum('price', only=Q(status=Offer.PAID)),
         open_sum=Sum('price', only=Q(status=Offer.OPEN) & (Q(expirationDate=None) | Q(expirationDate__gt=date.today()))),
