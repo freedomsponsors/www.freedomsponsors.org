@@ -211,6 +211,15 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
+TEST_GMAIL_ACCOUNT_1 = {
+    'username' : 'eunemqueriaessacontamesmo',
+    'password' : 'blimblom',
+}
+TEST_GMAIL_ACCOUNT_2 = {
+    'username' : 'minhaoutracontafake',
+    'password' : 'blimblom',
+}
+
 TWITTER_CONSUMER_KEY         = ''
 TWITTER_CONSUMER_SECRET      = ''
 FACEBOOK_APP_ID              = ''
