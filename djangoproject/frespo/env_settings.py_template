@@ -1,73 +1,13 @@
+# coding: utf-8
 # Environment-specific settings
 
-TEST_GMAIL_ACCOUNT_1 = {
-    'username' : 'eunemqueriaessacontamesmo',
-    'password' : 'blimblom',
-}
-TEST_GMAIL_ACCOUNT_2 = {
-    'username' : 'minhaoutracontafake',
-    'password' : 'blimblom',
-}
-ADMINS = (
-    ('YourNameHere', 'you@yourdomain.com'),
-)
 DEBUG = True
-FAKE_EMAILS= True
-USE_DJANGO_MAILER = False
-FAKE_EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
-#FAKE_EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 ENVIRONMENT = 'NOT_DEV' #change to DEV in your machine
 
-DATABASE_NAME = 'frespo'
-DATABASE_USER = 'postgres' # Change this to match your environment 
-DATABASE_PASS = '' # Change this to match your environment 
 
-
-
-GITHUB_BOT_USERNAME = 'freedomsponsors-bot'
-GITHUB_BOT_PASSWORD = '*********'
-
-#--------- Use Gmail
-#EMAIL_HOST = 'smtp.gmail.com'
-#EMAIL_PORT = 587
-#EMAIL_USE_TLS = True
-#--------- Use a local postfix
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 25
-EMAIL_USE_TLS = False
 AUTO_EMAIL_USERNAME = 'noreply@freedomsponsors.com'
 AUTO_EMAIL_PASSWORD = 'ThisIsNotTheRealPassword_obviously'
 
 SITE_HOST = 'localhost:8000' # www.freedomsponsors.org
 SITE_NAME = 'FreedomSponsors_test' # FreedomSponsors
 PAYPAL_USE_SANDBOX = True
-
-PAYPAL_IPNNOTIFY_URL_TOKEN = 'megablasteripn'
-PAYPAL_SANDBOX_API_USERNAME = "FP_1338073142_biz_api1.gmail.com"
-PAYPAL_SANDBOX_API_PASSWORD = '1338073168'
-PAYPAL_SANDBOX_API_SIGNATURE = 'AFcWxV21C7fd0v3bYYYRCpSSRl31AVAvZTYca4potYVRXAbpeSKQGHZO'
-PAYPAL_SANDBOX_API_APPLICATION_ID = 'APP-80W284485P519543T' #see www.x.com
-PAYPAL_SANDBOX_API_EMAIL = 'FP_1338073142_biz@gmail.com'
-PAYPAL_SANDBOX_FRESPO_RECEIVER_EMAIL = 'FP_1338073142_biz@gmail.com'
-
-PAYPAL_PRODUCTION_API_USERNAME = "YY_9999999999_biz_api1.gmail.com"
-PAYPAL_PRODUCTION_API_PASSWORD = 'WxVWxVWxVWxVWxV'
-PAYPAL_PRODUCTION_API_SIGNATURE = 'WxV21WxV21WxV21WxV21WxV21WxV21WxV21WxV21WxV21WxV21WxV21'
-PAYPAL_PRODUCTION_API_APPLICATION_ID = 'APP-V21V21V21V21V21V21'
-PAYPAL_PRODUCTION_API_EMAIL = 'YY_9999999999_biz@gmail.com'
-PAYPAL_PRODUCTION_FRESPO_RECEIVER_EMAIL = 'YY_9999999999_biz@gmail.com'
-
-TIME_ZONE = 'America/Sao_Paulo'
-
-LANGUAGE_CODE = 'en-us'
-
-TWITTER_CONSUMER_KEY = 'XYXYXYXYXYXYXYXY'
-TWITTER_CONSUMER_SECRET = 'ZWZWZWZWZWWZWZWZWZWZWZWZWWZZWZWZWZWZWZW'
-FACEBOOK_APP_ID = 'XYXYXYXYXYXYXYXY'
-FACEBOOK_API_SECRET = 'ZWZWZWZWZWWZWZWZWZWZWZWZWWZZWZWZWZWZWZW'
-GITHUB_APP_ID = 'XYXYXYXYXYXYXYXY'
-GITHUB_API_SECRET = 'ZWZWZWZWZWWZWZWZWZWZWZWZWWZZWZWZWZWZWZW'
-BITBUCKET_CONSUMER_KEY = 'XYXYXYXYXYXYXYXY'
-BITBUCKET_CONSUMER_SECRET = 'ZWZWZWZWZWWZWZWZWZWZWZWZWWZZWZWZWZWZWZW'
-
-FRESPO_LOG_FILE = 'logs/frespo.log'

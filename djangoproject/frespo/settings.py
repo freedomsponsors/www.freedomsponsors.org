@@ -1,110 +1,48 @@
-# Django settings for frespo project.
-import os
+# coding: utf-8
 from decimal import Decimal
-import sys
-import env_settings
-import manage
+import dj_database_url
+from unipath import Path
+
+PROJECT_DIR = Path(__file__).parent.parent
 
 FS_FEE = Decimal('0.03')
 
-DEBUG = env_settings.DEBUG
+DEBUG = False
 FRESPO_PROJECT_ID = -1 # only needed for backwards compatibility with south patch 0008_set_isfeedback_true.py
-TEST_GMAIL_ACCOUNT_1 = env_settings.TEST_GMAIL_ACCOUNT_1
-TEST_GMAIL_ACCOUNT_2 = env_settings.TEST_GMAIL_ACCOUNT_2
-ADMINS = env_settings.ADMINS
-DATABASE_NAME = env_settings.DATABASE_NAME
-DATABASE_USER = env_settings.DATABASE_USER
-DATABASE_PASS = env_settings.DATABASE_PASS
+ADMINS = (
+    ('Admin', 'admin@freedomsponsors.org'),
+    )
 
 TEMPLATE_DEBUG = DEBUG
 MANAGERS = ADMINS
 
-#IS_TESTING = os.environ['IS_TESTING'] == 'true'
-IS_TESTING = len(sys.argv) >= 2 and 'test' == sys.argv[1]
-use_postgres = True
+DATABASES = {
+    'default': dj_database_url.config(
+        default='sqlite:///' + PROJECT_DIR.child('database.db'))
+}
 
-if IS_TESTING:
-    use_postgres = os.environ.has_key('TEST_DBMS') and os.environ['TEST_DBMS'] == 'POSTGRES'
 
-if use_postgres:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-            'NAME': DATABASE_NAME,                      # Or path to database file if using sqlite3.
-            'USER': DATABASE_USER,                      # Not used with sqlite3.
-            'PASSWORD': DATABASE_PASS,                  # Not used with sqlite3.
-            'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
-            'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
-        }
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-            'NAME': 'test_db',                      # Or path to database file if using sqlite3.
-        }
-    }
-
-# if 'test' in sys.argv:
-#     DATABASES['default'] = {'ENGINE': 'django.db.backends.sqlite3'}
-
-fakeEmails = env_settings.FAKE_EMAILS
-useDjangoMailer = env_settings.USE_DJANGO_MAILER
-
-if useDjangoMailer:
-    EMAIL_BACKEND = 'mailer.backend.DbBackend'
-    if fakeEmails:
-        MAILER_EMAIL_BACKEND = env_settings.FAKE_EMAIL_BACKEND
-    else:
-        MAILER_EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-else:
-    if fakeEmails:
-        EMAIL_BACKEND = env_settings.FAKE_EMAIL_BACKEND
-    else:
-        EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
-if(fakeEmails):
-    EMAIL_FILE_PATH = './fakeMail'
-else:
-    # EMAIL_BACKEND = 'mailer.backend.DbBackend'
-    EMAIL_HOST = env_settings.EMAIL_HOST
-    EMAIL_PORT = env_settings.EMAIL_PORT
-    EMAIL_HOST_USER = env_settings.AUTO_EMAIL_USERNAME
-    EMAIL_HOST_PASSWORD = env_settings.AUTO_EMAIL_PASSWORD
-    EMAIL_USE_TLS = env_settings.EMAIL_USE_TLS
-    DEFAULT_FROM_EMAIL = env_settings.AUTO_EMAIL_USERNAME
-
-GITHUB_BOT_USERNAME = env_settings.GITHUB_BOT_USERNAME
-GITHUB_BOT_PASSWORD = env_settings.GITHUB_BOT_PASSWORD
+GITHUB_BOT_USERNAME = 'freedomsponsors-bot'
+GITHUB_BOT_PASSWORD = '*********'
 
 SITE_PROTOCOL = 'http'
-SITE_HOST = env_settings.SITE_HOST
-SITE_NAME = env_settings.SITE_NAME
+SITE_HOST = 'www.freedomsponsors.org'
+SITE_NAME = 'FreedomSponsors'
 SITE_HOME = SITE_PROTOCOL+'://'+SITE_HOST
 
-PAYPAL_IPNNOTIFY_URL_TOKEN = env_settings.PAYPAL_IPNNOTIFY_URL_TOKEN
+PAYPAL_USE_SANDBOX = False
+PAYPAL_DEBUG = False
+PAYPAL_IPNNOTIFY_URL_TOKEN = 'megablasteripn'
+PAYPAL_API_USERNAME = "FP_1338073142_biz_api1.gmail.com"
+PAYPAL_API_PASSWORD = '1338073168'
+PAYPAL_API_SIGNATURE = 'AFcWxV21C7fd0v3bYYYRCpSSRl31AVAvZTYca4potYVRXAbpeSKQGHZO'
+PAYPAL_API_APPLICATION_ID = 'APP-80W284485P519543T' #see www.x.com
+PAYPAL_API_EMAIL = 'FP_1338073142_biz@gmail.com'
+PAYPAL_FRESPO_RECEIVER_EMAIL = 'FP_1338073142_biz@gmail.com'
+
 PAYPAL_CANCEL_URL = SITE_HOME+'/core/paypal/cancel'
 PAYPAL_RETURN_URL = SITE_HOME+'/core/paypal/return'
 PAYPAL_IPNNOTIFY_URL = SITE_HOME+'/core/paypal/'+PAYPAL_IPNNOTIFY_URL_TOKEN
-
-PAYPAL_USE_SANDBOX = env_settings.PAYPAL_USE_SANDBOX
-PAYPAL_DEBUG = False
-if(PAYPAL_USE_SANDBOX):
-    PAYPAL_API_USERNAME = env_settings.PAYPAL_SANDBOX_API_USERNAME
-    PAYPAL_API_PASSWORD = env_settings.PAYPAL_SANDBOX_API_PASSWORD
-    PAYPAL_API_SIGNATURE = env_settings.PAYPAL_SANDBOX_API_SIGNATURE
-    PAYPAL_API_APPLICATION_ID = env_settings.PAYPAL_SANDBOX_API_APPLICATION_ID
-    PAYPAL_API_EMAIL = env_settings.PAYPAL_SANDBOX_API_EMAIL
-    PAYPAL_FRESPO_RECEIVER_EMAIL = env_settings.PAYPAL_SANDBOX_FRESPO_RECEIVER_EMAIL
-else:
-    PAYPAL_API_USERNAME = env_settings.PAYPAL_PRODUCTION_API_USERNAME
-    PAYPAL_API_PASSWORD = env_settings.PAYPAL_PRODUCTION_API_PASSWORD
-    PAYPAL_API_SIGNATURE = env_settings.PAYPAL_PRODUCTION_API_SIGNATURE
-    PAYPAL_API_APPLICATION_ID = env_settings.PAYPAL_PRODUCTION_API_APPLICATION_ID
-    PAYPAL_API_EMAIL = env_settings.PAYPAL_PRODUCTION_API_EMAIL
-    PAYPAL_FRESPO_RECEIVER_EMAIL = env_settings.PAYPAL_PRODUCTION_FRESPO_RECEIVER_EMAIL
-
-
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -113,11 +51,11 @@ else:
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = env_settings.TIME_ZONE
+TIME_ZONE = 'America/Sao_Paulo'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = env_settings.LANGUAGE_CODE
+LANGUAGE_CODE = 'en-us'
 
 SITE_ID = 1
 
@@ -209,16 +147,15 @@ ROOT_URLCONF = 'frespo.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'frespo.wsgi.application'
 
-PROJECT_DIR = os.path.dirname(__file__)+'/..'
 TEMPLATE_DIRS = (
-    os.path.join(PROJECT_DIR, "templates")
+    PROJECT_DIR.child("templates"),
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
 
 LOCALE_PATHS = (
-    os.path.join(PROJECT_DIR, "locale"),
+    PROJECT_DIR.child("locale"),
 )
 
 INSTALLED_APPS = (
@@ -274,10 +211,19 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-TWITTER_CONSUMER_KEY         = env_settings.TWITTER_CONSUMER_KEY
-TWITTER_CONSUMER_SECRET      = env_settings.TWITTER_CONSUMER_SECRET
-FACEBOOK_APP_ID              = env_settings.FACEBOOK_APP_ID
-FACEBOOK_API_SECRET          = env_settings.FACEBOOK_API_SECRET
+TEST_GMAIL_ACCOUNT_1 = {
+    'username' : 'eunemqueriaessacontamesmo',
+    'password' : 'blimblom',
+}
+TEST_GMAIL_ACCOUNT_2 = {
+    'username' : 'minhaoutracontafake',
+    'password' : 'blimblom',
+}
+
+TWITTER_CONSUMER_KEY         = ''
+TWITTER_CONSUMER_SECRET      = ''
+FACEBOOK_APP_ID              = ''
+FACEBOOK_API_SECRET          = ''
 LINKEDIN_CONSUMER_KEY        = ''
 LINKEDIN_CONSUMER_SECRET     = ''
 ORKUT_CONSUMER_KEY           = ''
@@ -288,8 +234,8 @@ GOOGLE_OAUTH2_CLIENT_ID      = ''
 GOOGLE_OAUTH2_CLIENT_SECRET  = ''
 FOURSQUARE_CONSUMER_KEY      = ''
 FOURSQUARE_CONSUMER_SECRET   = ''
-GITHUB_APP_ID                = env_settings.GITHUB_APP_ID
-GITHUB_API_SECRET            = env_settings.GITHUB_API_SECRET
+GITHUB_APP_ID                = ''
+GITHUB_API_SECRET            = ''
 DROPBOX_APP_ID               = ''
 DROPBOX_API_SECRET           = ''
 FLICKR_APP_ID                = ''
@@ -298,8 +244,8 @@ INSTAGRAM_CLIENT_ID          = ''
 INSTAGRAM_CLIENT_SECRET      = ''
 VK_APP_ID                    = ''
 VK_API_SECRET                = ''
-BITBUCKET_CONSUMER_KEY       = env_settings.BITBUCKET_CONSUMER_KEY
-BITBUCKET_CONSUMER_SECRET    = env_settings.BITBUCKET_CONSUMER_SECRET
+BITBUCKET_CONSUMER_KEY       = ''
+BITBUCKET_CONSUMER_SECRET    = ''
 LIVE_CLIENT_ID               = ''
 LIVE_CLIENT_SECRET           = ''
 SKYROCK_CONSUMER_KEY         = ''
@@ -354,11 +300,11 @@ LOGGING = {
         'default': {
             'level':'DEBUG',
             'class':'logging.handlers.RotatingFileHandler',
-            'filename': env_settings.FRESPO_LOG_FILE,
+            'filename': PROJECT_DIR.child('logs', 'frespo.log'),
             'maxBytes': 1024*1024*5, # 5 MB
             'backupCount': 5,
             'formatter':'standard',
-        },  
+        },
     },
     'loggers': {
         '': {
@@ -382,3 +328,7 @@ LOGGING = {
 PAGINATION_DEFAULT_PAGINATION = 20
 PAGINATION_DEFAULT_WINDOW = 3
 
+try:
+    from env_settings import *
+except ImportError:
+    print u'WARNING: env_settings.py not found.'

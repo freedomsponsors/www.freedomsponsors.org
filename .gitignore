@@ -21,3 +21,4 @@ distribute-0.6.24.tar.gz
 local
 include/python2.7
 django.mo
+*.db

@@ -7,3 +7,5 @@ simplejson==2.6.2
 coverage==3.6b1
 python-dateutil==2.1
 six==1.2.0
+Unipath==0.2.1
+dj-database-url==0.2.1
