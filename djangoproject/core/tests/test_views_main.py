@@ -8,12 +8,15 @@ from model_mommy import mommy
 
 class HomeView(TestCase):
     def setUp(self):
-        # Sponsoring
+        # Feedback: pks from 1 to 11
+        mommy.make_many('core.Issue', project__name='Linux', is_public_suggestion=False, is_feedback=True, quantity=11)
+
+        # Sponsoring: pks from 12 to 22
         for i in mommy.make_many('core.Issue', project__name='Linux', is_public_suggestion=False, quantity=11):
             mommy.make_one('core.Offer', issue=i, price=1, status='OPEN')
             mommy.make_one('core.Offer', issue=i, price=10, status='PAID')
 
-        # Kickstarting
+        # Kickstarting: pks from 23 to 33
         for i in mommy.make_many('core.Issue', project__name='Linux', is_public_suggestion=True, quantity=11):
             mommy.make_one('core.Offer', issue=i, price=1, status='OPEN')
             mommy.make_one('core.Offer', issue=i, price=10, status='PAID')
@@ -36,14 +39,14 @@ class HomeView(TestCase):
 
     def test_issues_sponsoring(self):
         sponsoring = self.resp.context['issues_sponsoring']
-        expected = [(i, False, Decimal('1'), Decimal('10')) for i in range(1, 11)]
+        expected = [(i, False, Decimal('1'), Decimal('10')) for i in range(12, 22)]
 
         self.assertQuerysetEqual(sponsoring, expected,
                                  lambda i: (i.pk, i.is_public_suggestion, i.open_amount, i.paid_amount))
 
     def test_issues_kickstarting(self):
         sponsoring = self.resp.context['issues_kickstarting']
-        expected = [(i, True) for i in range(12, 22)]
+        expected = [(i, True) for i in range(23, 33)]
 
         self.assertQuerysetEqual(sponsoring, expected,
                                  lambda i: (i.pk, i.is_public_suggestion))
