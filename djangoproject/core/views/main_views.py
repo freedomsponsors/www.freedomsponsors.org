@@ -1,5 +1,4 @@
-# Create your views here.
-
+# coding: utf-8
 from django.http import HttpResponseRedirect
 from django.contrib.auth import logout as auth_logout
 from django.template import  RequestContext
@@ -8,6 +7,7 @@ from core.services import issue_services
 from core.utils.frespo_utils import  dictOrEmpty
 from core.services.mail_services import *
 from core.services import stats_services
+from core.models import Issue
 from django.contrib import messages
 import logging
 
@@ -55,14 +55,11 @@ def admail(request):
         context_instance = RequestContext(request))
 
 def home(request):
-    if(request.user.is_authenticated() and request.user.getUserInfo() == None):
-        return redirect('/core/user/edit')
-    issues_sponsoring = issue_services.search_issues(is_public_suggestion = False)[0:10]
-    issues_kickstarting = issue_services.search_issues(is_public_suggestion = True)[0:10]
-    return render_to_response('core/home.html',
-        {'issues_sponsoring':issues_sponsoring,
-         'issues_kickstarting':issues_kickstarting},
-        context_instance = RequestContext(request))
+    context = RequestContext(request, {
+        'issues_sponsoring': Issue.sponsoring.recently_updated()[0:10],
+        'issues_kickstarting': Issue.kickstarting.recently_updated()[0:10]
+    })
+    return render_to_response('core/home.html', context_instance=context)
 
 
 def stats(request):
@@ -70,15 +67,3 @@ def stats(request):
     return render_to_response('core/stats.html',
         {'stats':stats,},
         context_instance = RequestContext(request))
-
-
-
-
-
-
-
-
-
-
-
-
