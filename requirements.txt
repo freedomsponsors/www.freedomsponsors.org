@@ -9,3 +9,5 @@ python-dateutil==2.1
 six==1.2.0
 Unipath==0.2.1
 dj-database-url==0.2.1
+django-nose==1.1
+rednose==0.3.3

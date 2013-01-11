@@ -328,6 +328,18 @@ LOGGING = {
 PAGINATION_DEFAULT_PAGINATION = 20
 PAGINATION_DEFAULT_WINDOW = 3
 
+# TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+# NOSE_ARGS = [
+#     '--match=^(must|ensure|should|test|it_should)',
+#     '--where=%s' % PROJECT_DIR,
+#     '--id-file=%s' % PROJECT_DIR.child('.noseids'),
+#     '--all-modules',
+#     '--with-id',
+#     '--verbosity=2',
+#     '--nologcapture',
+#     '--rednose',
+# ]
+
 try:
     from env_settings import *
 except ImportError:
