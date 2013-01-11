@@ -232,6 +232,7 @@ class IssueManager(models.Manager):
         Always filter sponsoring OR kickstarting.
         '''
         qs = super(IssueManager, self).get_query_set()
+        qs = qs.filter(Q(is_feedback=False) | Q(offer__isnull=False)).distinct()
         qs = qs.filter(is_public_suggestion=self.is_kickstarting)
         return qs
 
