@@ -332,6 +332,7 @@ def _waitUntilVisible_element(element):
 def _scrollTo(browser, element):
     y = element._element.location['y']
     browser.execute_script('window.scrollTo(0, %s);' % y);
+    sleep(0.05)
     # browser.execute_script('window.scrollTo(0, document.getElementById("%s").scrollTop);'%element_id);
 
 def _waitUntilTextPresent(browser, text, timeout=TIMEOUT):
