@@ -10,6 +10,7 @@ from social_auth.models import UserSocialAuth
 from django.utils.http import urlquote
 from django.template.defaultfilters import slugify
 from decimal import Decimal
+from core.utils.frespo_utils import twoplaces
 
 
 class UserInfo(models.Model): 
@@ -269,7 +270,7 @@ class Issue(models.Model):
         for offer in offers:
             if (not offer.is_expired()):
                 s = s + offer.price
-        return s
+        return twoplaces(s)
 
     def touch(self):
         self.updatedDate = timezone.now()
@@ -280,7 +281,7 @@ class Issue(models.Model):
         s = Decimal(0)
         for offer in offers:
             s = s + offer.price
-        return s
+        return twoplaces(s)
 
     def countSolutionsDone(self):
         return Solution.objects.filter(issue=self, status=Solution.DONE).count()
@@ -410,6 +411,9 @@ class Offer(models.Model):
         offer.set_expiration_days(expiration_days)
         offer.status = Offer.OPEN
         return offer
+
+    def price_2(self):
+        return twoplaces(self.price)
 
     def set_expiration_days(self, expiration_days):
         if(expiration_days and expiration_days > 0):

@@ -57,7 +57,7 @@
   <tbody>
 {% for offer in issue.getOffers %}
     <tr>
-      <td><a href="{{ offer.get_view_link }}">{{offer.price}}</a></td>
+      <td><a href="{{ offer.get_view_link }}">{{offer.price_2}}</a></td>
       <td><a href="{{ offer.sponsor.get_view_link }}"><img src="{{offer.sponsor.gravatar_url_medium}}"> {{ offer.sponsor.getUserInfo.screenName }}</a></td>
       <td style="text-align:center">
         {% if offer.no_forking %}

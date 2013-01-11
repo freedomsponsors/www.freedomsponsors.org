@@ -231,6 +231,7 @@ class AppDriver:
         if(offerdatadict.has_key('require_release')):
             _waitAndCheck(browser, 'require_release', offerdata.require_release)
         btnSubmit = browser.find_by_id('btnSubmitOffer')
+        _scrollTo(browser, btnSubmit)
         btnSubmit.click()
 
 

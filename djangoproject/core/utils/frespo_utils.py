@@ -68,7 +68,7 @@ def send_html_mail(subject, body_txt, body_html, from_email, to_addresses):
     msg.attach_alternative(body_html, "text/html")
     msg.send()
 
-#TODO: use this in a bunch of places (needed because sql doesn't store the .00 Decimal places - and this breaks a few tests)
+#TODO: use this in a bunch of places (needed because sqlite doesn't store the .00 Decimal places - and this breaks a few tests)
 def twoplaces(dec):
     return dec.quantize(_TWOPLACES)
 
