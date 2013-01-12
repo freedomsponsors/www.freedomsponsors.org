@@ -13,7 +13,7 @@
   commented - 
 	<span title="{{ comment.creationDate }}">{{ comment.creationDate|date:"D, d/M/Y" }}</span>
   {% ifequal comment.author.id user.id %}
-    <a href="javascript:showEditComment({{counter}})" name="selector-edit-comment"><i class="icon-pencil"></i></a>
+    <a href="javascript:showEditComment({{counter}})" id="selector-edit-comment{{counter}}"><i class="icon-pencil"></i></a>
   {% endifequal %}
   {% if comment.was_edited %}
       <!-- loadCommentHistory must be defined in the including page -->

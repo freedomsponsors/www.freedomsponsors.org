@@ -129,7 +129,9 @@ class AppDriver:
             self._fillStep3(offer.step3)
         if kickstarting:
             _waitUntilVisible_id(browser, 'div_step4_w')
-            browser.find_by_id('btnSubmitKickstart').click()
+            btnSubmit=browser.find_by_id('btnSubmitKickstart')
+            _scrollTo(browser, btnSubmit)
+            btnSubmit.click()
             _waitUntilTextPresent(browser, "Kickstarting! Now what?")
             browser.click_link_by_text('OK')
         else:
@@ -201,11 +203,13 @@ class AppDriver:
 
     def editCommentOnCurrentIssueOrOffer(self, index, newcontent, verifyContent=None):
         browser = self.browser
-        browser.find_by_name('selector-edit-comment')[index].click()
+        editlink = browser.find_by_id('selector-edit-comment%s' % (index+1))
+        _scrollTo(browser, editlink)
+        editlink.click()
         for textarea in browser.find_by_name('content'):
             if textarea.visible:
                 textarea.fill(newcontent)
-                element = browser.find_by_name('selector-btnSubmitEditComment')[index]
+                element = browser.find_by_id('selector-btnSubmitEditComment%s' % (index+1))
                 _waitUntilVisible_element(element)
                 _scrollTo(browser, element)
                 element.click()
@@ -331,8 +335,8 @@ def _waitUntilVisible_element(element):
 # This was supposed to be a workaround for 'Element is not clickable at point...'
 def _scrollTo(browser, element):
     y = element._element.location['y']
-    browser.execute_script('window.scrollTo(0, %s);' % y);
-    sleep(0.05)
+    browser.execute_script('window.scrollTo(0, %s);' % (y-50));
+    # sleep(0.5)
     # browser.execute_script('window.scrollTo(0, document.getElementById("%s").scrollTop);'%element_id);
 
 def _waitUntilTextPresent(browser, text, timeout=TIMEOUT):

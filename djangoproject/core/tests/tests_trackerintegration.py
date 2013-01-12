@@ -59,11 +59,11 @@ class TrackerUtilsTest(TestCase):
         # assert(issueInfo.issue_title == 'blau')
 
     def test_gittip_github(self):
-        issueInfo = fetchIssueInfo("https://github.com/whit537/www.gittip.com/issues/14")
+        issueInfo = fetchIssueInfo("https://github.com/zetaweb/www.gittip.com/issues/14")
         assert(not issueInfo.error)
         assert(issueInfo.tracker == 'GITHUB')
         assert(issueInfo.key == '14')
-        assert(issueInfo.project_trackerURL == 'https://github.com/whit537/www.gittip.com/issues')
+        assert(issueInfo.project_trackerURL == 'https://github.com/zetaweb/www.gittip.com/issues')
         assert(issueInfo.project_name == 'www.gittip.com')
         assert(issueInfo.issue_title == 'pay with bitcoin, litecoin')
 
