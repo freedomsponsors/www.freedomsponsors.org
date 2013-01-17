@@ -79,12 +79,15 @@ def add_sponsorthis_comments():
         else:
             logger.debug('will list all issues')
         config.update_last_ran()
-        issues = github_adapter.fetch_issues(repo_owner, repo_name, last_ran)
-        logger.debug('issues are fetched')
-        for issue in issues:
-            _add_comment_if_not_already(config, int(issue['number']), repo_owner, repo_name)
-        if not config.new_only:
-            config.set_already_did_old()
+        try:
+            issues = github_adapter.fetch_issues(repo_owner, repo_name, last_ran)
+            logger.debug('issues are fetched')
+            for issue in issues:
+                _add_comment_if_not_already(config, int(issue['number']), repo_owner, repo_name)
+            if not config.new_only:
+                config.set_already_did_old()
+        except BaseException as e:
+            logger.error("Error adding comments repository %s/%s: %s" % (repo_owner, repo_name, e))
     logger.debug('sponsor_this ended successfully')
 
 def _add_comment_if_not_already(repo_config, issue_number, repo_owner, repo_name):
