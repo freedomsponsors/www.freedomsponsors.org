@@ -18,6 +18,7 @@ urlpatterns += patterns('core.views.issue_views',
     url(r'^project/$', 'listProjects'),
     url(r'^myissues/$', 'myissues'),
     url(r'^issue/$', 'listIssues'),
+    url(r'^issue/rss$', 'listIssuesFeed'),
     url(r'^issue/sponsor/submit$', 'sponsorIssue'),
     url(r'^issue/sponsor$', 'addIssueForm'),
     url(r'^issue/add/submit$', 'addIssue'),
@@ -80,5 +81,4 @@ urlpatterns += patterns('core.views.feedback_views',
     url(r'^feedback$', 'feedback'),
     url(r'^feedback/submit$', 'addFeedback'),
 )
-
 
