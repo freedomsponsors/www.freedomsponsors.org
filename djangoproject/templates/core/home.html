@@ -23,10 +23,9 @@
         <label>{% trans "Issue URL" %}</label>
         <input type="text" name="trackerURL" id="trackerURL" class="input-xlarge" placeholder="{% trans 'Paste the issue URL' %}">
         <input type="hidden" name="operation" id="operation">
-        <button id="btnKickstart" class="btn btn-primary ">{% trans "Kickstart &gt;&gt;" %}
-          <i class="icon-question-sign icon-white popopo_stay" rel="popover" data-content="Create an issue without an offer, just to draw everyone's attention to it. See more in <a href='http://blog.freedomsponsors.org/kickstarting-issues/'>the blog</a>!" data-original-title="What's this?"></i>
-        </button> 
         <button id="btnSponsor" class="btn btn-primary ">{% trans "Sponsor &gt;&gt;" %}</button>
+        <a id="btnKickstart" class="btn">{% trans "Kickstart &gt;&gt;" %}</a>
+        <i class="icon-question-sign icon-black popopo_stay" style="margin-top:3px;" rel="popover" data-content="Create an issue without an offer, just to draw everyone's attention to it. <a href='http://blog.freedomsponsors.org/kickstarting-issues/'>See more in the blog</a>!" data-original-title="What's kickstart?" data-placement="bottom"></i>
         <div class="btn-toolbar">
           <div class="btn-group pull-right">
           </div>
