@@ -2,7 +2,7 @@
 
 {% block mainContent%}
 
-<form method="get">
+<form method="get" id="search_form">
   <div class="well">
     <div class="row">
       <div class="span4" style="margin-left:20px">
@@ -39,6 +39,18 @@
       </div>
       <div class="span1" style="">
         <input type="submit" style="width:100px" value="Search">
+      </div>
+      <div class="span1"> </div>
+      <div class="span1" style="">
+        <a href="#" onclick="javascript:submit_rss()"><img src="/static/img/rss_icon.gif"></a>
+        <script>
+          function submit_rss(){
+            form = document.getElementById('search_form')
+            form.action = '/core/issue/rss'
+            form.submit()
+          }
+        </script>
+        
       </div>
     </div>
   </div>
