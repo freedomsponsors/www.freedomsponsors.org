@@ -1,15 +1,16 @@
 from django.conf.urls import patterns, include, url
 from django.views.generic import TemplateView
 from django.conf import settings
+from django.views.generic.simple import redirect_to
 
 urlpatterns = patterns('core.views.main_views',
     url(r'^$', 'home'),
     url(r'^home/$', 'home'),
     url(r'^stats/$', 'stats'),
     url(r'^admail/$', 'admail'),
-    url(r'^about/$', TemplateView.as_view(template_name='core/about.html')),
-    url(r'^faq/$', TemplateView.as_view(template_name='core/faq.html')),
-    url(r'^dev/$', TemplateView.as_view(template_name='core/dev.html')),
+    url(r'^about/$', redirect_to, {'url': 'http://blog.freedomsponsors.org/about/'}),
+    url(r'^faq/$', redirect_to, {'url': 'http://blog.freedomsponsors.org/faq/'}),
+    url(r'^dev/$', redirect_to, {'url': 'http://blog.freedomsponsors.org/developers/'}),
     url(r'^login/$', 'login'),
     url(r'^logout/$', 'logout'),
 )
