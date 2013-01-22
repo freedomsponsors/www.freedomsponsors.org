@@ -81,6 +81,10 @@ def _listIssues(request):
 
 
 def listIssues(request):
+    project_id = request.GET.get('project_id')
+    project_name = request.GET.get('project_name')
+    search_terms = request.GET.get('s')
+    operation = dictOrEmpty(request.GET, 'operation')
     return render_to_response('core/issue_list.html',
         {'issues':_listIssues(request),
          's':search_terms,
