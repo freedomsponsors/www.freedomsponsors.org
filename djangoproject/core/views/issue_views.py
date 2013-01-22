@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.syndication.views import Feed
 from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import redirect, render_to_response
@@ -65,7 +66,7 @@ def editOffer(request):
     return redirect(offer.get_view_link())
 
 
-def listIssues(request):
+def _listIssues(request):
     project_id = request.GET.get('project_id')
     project_name = request.GET.get('project_name')
     search_terms = request.GET.get('s')
@@ -76,14 +77,51 @@ def listIssues(request):
     elif(operation == 'KICKSTART'):
         is_public_suggestion = True
     issues = issue_services.search_issues(project_id, project_name, search_terms, is_public_suggestion)
+    return issues
+
+
+def listIssues(request):
     return render_to_response('core/issue_list.html',
-        {'issues':issues,
+        {'issues':_listIssues(request),
          's':search_terms,
          'project_id':project_id,
          'project_name':project_name,
          'operation':operation,
         },
         context_instance = RequestContext(request))
+
+
+def listIssuesFeed(request):
+    feed_class = LatestIssuesFeed()
+    return feed_class(request)
+
+
+class LatestIssuesFeed(Feed):
+    title = "FreedomSponsors.org issues"
+    link = "/core/issue/rss"
+    description = "Lastest updated FreedomSponsors.org issues."
+
+    def get_object(self, request, *args, **kwargs):
+        self._request = request
+        return None
+
+    def items(self, obj):
+        return _listIssues(self._request)[:20]
+
+    def item_title(self, item):
+        return u'(%s) %s' % (item.project, item.title)
+
+    def item_author_name(self, item):
+        return item.createdByUser.username
+
+    def item_description(self, item):
+        return item.description
+
+    def item_link(self, item):
+        return item.get_view_link()
+
+    def item_pubdate(self, item):
+        return item.creationDate
 
 
 @login_required
