@@ -424,9 +424,8 @@ class Offer(models.Model):
             self.no_forking, self.require_release, self.expiration_time())
         return clone_offer
 
-
     def expires(self):
-        return self.expirationDate != None
+        return self.expirationDate != None and self.status == Offer.OPEN
 
     def is_expired(self):
         return self.expires() and timezone.now().date() > self.expirationDate
