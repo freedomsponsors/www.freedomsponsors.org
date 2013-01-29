@@ -18,7 +18,7 @@ before_script:
  - psql -c 'create database frespo;' -U postgres
  - "export DISPLAY=:99.0"
  - /sbin/start-stop-daemon --start --quiet --pidfile /tmp/cucumber_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16
-script: ./runTravisRUN.sh
+script: ./coverage.sh
 
 env:
   global:
