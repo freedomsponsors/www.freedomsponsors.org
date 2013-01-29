@@ -4,6 +4,7 @@ python:
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 install: 
  - echo test secure var $SECRETO
+ - if [ $SECRETO == "SUPER_SECRET" ]; then echo sim; else echo nao; fi
  - sudo aptitude -y -q install unzip chromium-browser
  - mkdir -p ./tmp/bin 
  - cd ./tmp/bin 
