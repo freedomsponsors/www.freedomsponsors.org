@@ -129,6 +129,7 @@ class AppDriver:
             self._fillStep3(offer.step3)
         if kickstarting:
             _waitUntilVisible_id(browser, 'div_step4_w')
+            _waitUntilVisible_id(browser, 'btnSubmitKickstart')
             btnSubmit=browser.find_by_id('btnSubmitKickstart')
             _scrollTo(browser, btnSubmit)
             btnSubmit.click()

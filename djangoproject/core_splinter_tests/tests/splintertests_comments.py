@@ -1,7 +1,7 @@
 from time import sleep
 from decimal import Decimal
 from core.management.commands.loadProjects import add_initial_projects
-from core_splinter_tests.tests import FrespoSplinterTestCase
+from splintertests_issues import FrespoSplinterTestCase
 from helpers import testdata as td
 import traceback
 

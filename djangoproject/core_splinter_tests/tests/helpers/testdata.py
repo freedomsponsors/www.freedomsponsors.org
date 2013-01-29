@@ -109,8 +109,8 @@ def buildOfferForHHH1052(createdByUser):
         expiration_days=-1)
     return offer
 
-def buildSolutionDoneFor(issue, programmer):
-    solution = Solution.newSolution(issue, programmer)
+def buildSolutionDoneFor(issue, programmer, accepting_payments):
+    solution = Solution.newSolution(issue, programmer, accepting_payments)
     solution.status = Solution.DONE
     return solution
 

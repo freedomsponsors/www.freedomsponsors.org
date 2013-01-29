@@ -1,7 +1,7 @@
 from time import sleep
 from decimal import Decimal
 from core.management.commands.loadProjects import add_initial_projects
-from core_splinter_tests.tests import FrespoSplinterTestCase
+from splintertests_issues import FrespoSplinterTestCase
 from django.test import LiveServerTestCase
 from helpers import testdata as td
 from django.utils.unittest import skipIf
@@ -21,7 +21,7 @@ class PaymentTests(FrespoSplinterTestCase):
         add_initial_projects()
         offer = td.buildOfferForHHH1052(self.users[0].adminUser)
         td.loadOffer(offer)
-        solution = td.buildSolutionDoneFor(offer.issue, self.users[1].adminUser)
+        solution = td.buildSolutionDoneFor(offer.issue, self.users[1].adminUser, True)
         td.loadSolution(solution)
         try:
             self.app.login_plain(td.userDict1)
