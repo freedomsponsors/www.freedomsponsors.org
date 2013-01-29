@@ -3,8 +3,6 @@ python:
   - "2.6"
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 install: 
- - echo test secure var $SECRETO
- - if [ $SECRETO == "SUPER_SECRET" ]; then echo sim; else echo nao; fi
  - sudo aptitude -y -q install unzip chromium-browser
  - mkdir -p ./tmp/bin 
  - cd ./tmp/bin 
@@ -24,4 +22,32 @@ script: ./runTravisRUN.sh
 
 env:
   global:
-    - secure: "U6xq0LQQYnETsjBe1xw2C5ZbPwxEAZKAK2kKIZ5UjulC1DiCyBXoUZxmcoAN\nrReLYaSVx/gpku6B2Z1LGijQBVKCxLRAXUnE2j3ZmS7yTLFZJ+V+obtNGj2B\nk7VGyE5+rlKpzC9DofHzMp8v72X2RfrZJFwC41vF5nt30ymHqq0="
+    - secure: "X4pSU4WNkipMhn15LljyLBwszIsUuOXzA7hCedIvIOy4Z0msjdnSbYHGI4au\naRuRz5slp/X1PHME8CgW6rJk45BTvctGKVjtkUzNlEAjqJ/yCYjzAJpt5wKK\nQOTAD/jqsCrKNSgmAjX2eCTzv4FYczBkIjglcsvRk+zCCmQscqk="
+    - secure: "G3/8E4vV4rio8dzcjowOsR1o9F2zUwz/yh7Y4CULBY3d1YIkATjB1CX/lqhU\nivmGTzu0NejNfZup3phEsYvyMCH2fB3k5swC9EB/7aOe2SAzq4YpVLmnGTuK\nOOkZxGHoiQpshKIlRAstCcaLx2+ZgFexlkF99zClyNbkZZrLYKE="
+    - secure: "bCHDW5LfoGkK5O4i7NOf2oCa/NsKgka1lt1lz1JYQib/Jc2jeC/xXBOmj5Wp\n8M0SvysgACmkPoM4IezReJvK11F4icVeIqBxpnHtViKZihptqtH8jvSQhkhv\nH8I7Hqoz/130EYm4riUyWXOp/skb6M5VdLAKnKSeTUkMVtN9dGQ="
+    - secure: "KF2SKGrpV58Nswl0lk2USE+K2GVCR2wGL/rHybh9NwyEU5OO02Ue2n/SsWAt\nAgHDQufjcmDMJse+m6o+5NMkKdfcMVKU/l1iv88Zz6ZUQ2shK8cXqMxzUdP9\n/YXayOi1IFL1oZ72rmNo2S3eHABTuKuoubkRo1i0LayDao38sLE="
+    - secure: "KZZCIjsDlG/2/R0yB1tk6QSGsdeVap3YPn49LXZO0ikngLwTOlYKMoeksR36\nkfcoXjxtuRxB7E5RsyzwyuXZABXnyJOCwmwxU6sjN96UNYxDdL+s5ZBPA5Ft\nqaGyByRurQBPKkIYV8ulZxEo5tVR6wQPu9c5/1st/OIUF0XaRn4="
+    - secure: "gCgzaLgzV/QMsiQEupxjo6ufFjud5NltPVL79bPgqhl7zzTIxs9BNcm67QtO\nSgHgg3mcIazwWNhy9LID6QbPO7JfVJo+AnSm0btiqmb3gZmaPgLjTNwdC/ge\nNl9kHrrrGFUL4jqFQ0T3pbZT4Nrx6IDagQ5u76jDKQ+syCbYJY0="
+    - secure: "V8PgmEG6oG8LGuujn3Et/s/MDD4PxwA8H7RLvu4JzUJfC2lIUR+5fao+NTx5\n+qKsFyAQYWDuKJQP/Gekkwx0KcFQ9FX6mCd3qVPsHQdDdsfhCZl+o2OVmzu8\n+4IbLAARAKJnxUEJKC+cFSdruclVI+qsdkIAuHuVTtUCquWC7zE="
+    - secure: "T1/2GIIvtNI1DJz5ZTL5cGGkEDA285lTvgybvVVTIoUQ7M/K2603taOjC8AQ\n3jJcdZ1cwQR1I734zS/Y5YVnSvGNvI/qIn8XtqdSYHg5hBknYAnxxaWMJmdY\nd8/OvkJqbVj4dp9u5SRERWkoQpai4js+aYSV4uvJ2YcCYOkFk2Q="
+    - secure: "P+AeCQjySXHNW5v0b1tMkBuybiCYpaS3AIiWQBWggMzauCre4H3I7Z8MKOpW\n+3sgGry0zouvAmyj6+jOJPUQx9p3GEp4ebeJrmYrSlSVEppi75sGcbIhh2my\nDFE4zaX32D7yCNOBL89hKSyfqvdCTfKlzE+AR1iDaLZmlq4+EcU="
+    - secure: "CMEdO5gBUH3qkSIici90lg3UTlTLpSF98VNfgZohHZipto3LtDvG10wJ1j+I\nhveW01Eh5MoIV1YM0vYDYZxVn9Evz5VKAoJFYwYA8gjMXnbVcKf5AINMCUwo\nEtPyAnAZ0gSOeLzqVFwUYvnNJ0+3xZjU3a1V5AHn6j071UaqjxU="
+    - secure: "Ze5nzc0DYVDjr+eKC+gmHhmV9swJ2PR7ZiaieivFDoqmqBOtAzN4vcLZkLKZ\nxem7QUoxghNDOUh8AW0PhHSO1Ywx1B6ZuwTljWQkYUpIf6OBQX4R4mYcS2gK\nr1eQVVhizUV8gFB3sF+cgIY3k+NUEPUm5XBN5d1F33nDIoVbVU0="
+    - secure: "I+fNxTFVlah33xPocr51neZEo3/afbgzIEJuRl3lRgBe78ppas5wIi9Zgb/O\nqhmbMKpIAz3B+xG0sN0ceKNpMMrns9HchaUjOcrO6oe7bSWzrNp3Gn1usaI+\nUAWghcxmB1JpZgfjyl/mJxMa26l3z0RoSTSaTZoK3O6yxq8LZoI="
+    - secure: "TTx7+6abcdiwaQROwjYKCBp68i/Rmi7AV2DmoQ14T+NAEdADAEzXye8NUVci\n05NlKXIZtngHB2V0PCaBayk0ZbD6s2ofPI0U4nhKGOyvEF88O3fMMZlOw5wS\ny1V6zAfiGXWd5BozUi0o5fGMWoJ7UySlQkMFi/yvwIMYTwuz1lc="
+    - secure: "DR8XVZZi68gFYOigAdRrde1B49gHOJUcx5FVqBSjTQOL9sALjS1e4sruha6h\nVpgGDl4wt5eMP8nux50vc5M7ZhCpiEdGl4wYSbJar5PAMqNYi8bfzcqv/AHl\nrOF9E657WTIbM+QngBUM7GbUXQQBuIdU4LX3sECTaPZ2DpWNqvI="
+    - secure: "aLiBovYYAO/0UpK3759BNaJ5s8sQRW24f+2ZB6RR3tnEW6gdZca5eZQ0jZF6\n9Xjrf3urujsGE3RoxfMO1usIE5QVcuW6A/WzKsYC+Sgm2p4Buxo+YtqVZlbB\n2U9DK3/YpQIaLNdSZ/VZR1+RpY2MFENbnjN+QbOuApDPfrBlV5M="
+    - secure: "YvlRZJKwEo9RiE+YZy3kES/nE1tdx5Y3yDki6g+pPzclvtVp6BdjczVrHYee\nMEfuhJaAao/C14UmwCL8sLrJdV7Tc93t6djv7iWO4CwqaHGOTVNf1UMxSorv\nrnQbP6y+bq7p1NdLD/vFsJBqinTfyWHQT/Ps5zKoJSZyd7tpSZE="
+    - secure: "Hw8vn2Fzd6El5wkdtu1PvlZ283ad/3XkbAHWA5rZOlD6W9BQnIHzmFV8V0fO\njP073Lyostcki3gbHMyPrmcr2DTudZrcnFNBh1EvFakhPTNt6VJaPJTBtysl\nohMMjSPa97ku+iyraWjKYAMKHj+k0iqZwhKoOlnSExOTIxTowfs="
+    - secure: "Jyxv6BK3uaZZGsFD0kPbbLGS0U7jo5ZUrrPiR3sUERNMvJyKrCmJOJOs+IGX\nHizWw5hzp5gn/R4wE8yjQKAloOXLqXxGOB+yhufitkt0lfvfm7ZPubt6nsO0\n2UtKl3VLLkVPHg1ioIEtb9NsBvsMml6ziPdyO9t4HSN/hAfMcdY="
+    - secure: "LF/WYjANhFrvVcDtmNJKJ3da4xEysIkzsS0iPJ8xYeTIkO9HxEjebqdS0pz5\nsJ2BBr0r/Idy9SHnEiL81NiTivOAZcUCBeCoUulV1VNQcmWK+mfbmlaf0+CV\n5ZDdjC6Z++VNI280U2mTPuAB1SPOaKrMguHmFVAYPAe2nkrPCXI="
+    - secure: "BHcUUNdvsQLEGmH+Xgg5KYxB6CFKoMxRQ7Zw5my7hpX0cwIL3GadcJPMMGd4\nBetV5CKpv9u3jKf+ttxqgdJhn2Uf6YVTCqtGFLe1Y/fcGU0eIH/rkZpmNqdI\nPogV4wAe+ghWbc8qBjxB7tNIojnpNtqoSSCmo+kSvLGAQmEiu2E="
+    - secure: "b72A7LQm1J5GPaNLJkCNfIwzzI1lEz/zV5qUzKLTCwAvvtHvo8exMIebXMoj\nofb2l4GkWG1N1f2i6mNwTpPR6YHqhv8+ZOcuFySenm7z7RP+1foSNHk0AaGc\n9aUlarNJAfc07zznK8APlQONLJmyKsJHlC3ghJL2VfFOnf4FUoo="
+    - secure: "Y2bCcHJB1LNpHWU8sXoEQ7Aeb3eH9s+T/D60uhCdn9Cgw/hpbCq5wrn91lxz\n5BDMH2x/poLxjHaCx/9oEAoOFmybgK3V3YLhtq3TWPp2UIzr6uYM8LRF0pFo\nIpBLKmu7YJQKeKHW7yRRIPHt2ZRBvgh3JM5ixI2wAVmWjNoxVqk="
+    - secure: "Fv7wQEBJY/+zARRqt3NHyJITtfF07xeKdQ5pQDzdAbaSXoPnKISgFfd26amb\nSU82lnfUzdVI1z4jKXKFZHJFHOG4VxhFlScAOXTLvyaZN68USX0w9O5z7p6T\n2JWL+YI9HAMzK5CM9D6G/OGgtayGbT4iuIulvn6QQVLzQ6+wb+E="
+    - secure: "a8UPA5V0C3nie8QAyilU25sBCzBkUB710tryZAKUE4hq1G91Xg7YXKZGIyYt\nUjfrM1MZmwpHTQFpEYAUToE/sPJ7/TReb0xQtYwrKlg3+QwpkIf6zp1b3Tvn\n4EIayBNByuWTK2Cx1GUjvT4mJBdIfF6zumArnc12UOiSE6Rq3dc="
+    - secure: "LZdXORbIQdVtl5peVvpMvfzFBERCCr2pJTjsz75O6WvNES3umHWRaybObmsM\nwT4DxtcJHxv+sMG67XUNVyK1i7xbBaR3KFrE18mPMt3h79LiQK/6Ydeirct9\nuOfv7+s/mHEPwJ+64oKwGoieJqbBXs/rRzhGDKDYX79sPtvWL6A="
+    - secure: "RwqeWmn7T9GLePi19J7k1xJQHy5I6iRllvQqSN3B+bAJf2+yBL0ReOuQfZXO\nbGVPLdA+wUEdZAwo76BefQ8jMxuiPxVsHzBDrL6Wp8ayQIHMosmSV2V0cVSI\nKebS9Kydq5PeICnYab/eajTdwHddQBogckjDLEpf3GN4oeqJMyc="
+    - secure: "bwUTSiAfMBOI+jDV56GevZIN2vmtwGqO4YLwpE3UCG5Rc4T9iUU5/5YGoEnW\n5d3GwkKVuz86NEreqp1qVyAxOckYgOYiGTIbKb5qgR4qcrGx6QevCyEmQEjs\nSSQFs+19rMk4SUsSNohpDf50SF/2/Z3HbXHISo7Ixq1ni5+/Q3E="
+    - secure: "NccYhaMpz/gaCPmhM+6VVzBhXhV55RLcVW5fFSK5udLvRB9zSiCmEICQXVQk\nFMWX5lhFTQqhjBPgJLs/3Rn/Qg/mQfOnQfNc8pZl16VSMGa9O+2nD3oQK8sM\n0DCg2vf8ewQkkwUES7la/D7gFzkEsA7RPWJnHb0QpmIHLv/tRp4="
+    - secure: "HBsPXgJMD+46E8vWC3OzudtKgHbHpIyKkrd9rrsafPSJ4luMElQEpYeDdcpv\n8kzpl7iDLWZFUOSnTouCjJnfda5TM75gJvHKbB/elNjj6kJqIVWTrjXJjqkF\nVGzVjrcnNpOArb+lDxFQ5AC7NmOKGktcguduaaOHKKJkvnpcd5g="
