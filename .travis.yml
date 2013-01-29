@@ -3,6 +3,7 @@ python:
   - "2.6"
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 install: 
+ - echo test secure var $SECRETO
  - sudo aptitude -y -q install unzip chromium-browser
  - mkdir -p ./tmp/bin 
  - cd ./tmp/bin 
@@ -19,3 +20,7 @@ before_script:
  - "export DISPLAY=:99.0"
  - /sbin/start-stop-daemon --start --quiet --pidfile /tmp/cucumber_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16
 script: ./runTravisRUN.sh
+
+env:
+  global:
+    - secure: "U6xq0LQQYnETsjBe1xw2C5ZbPwxEAZKAK2kKIZ5UjulC1DiCyBXoUZxmcoAN\nrReLYaSVx/gpku6B2Z1LGijQBVKCxLRAXUnE2j3ZmS7yTLFZJ+V+obtNGj2B\nk7VGyE5+rlKpzC9DofHzMp8v72X2RfrZJFwC41vF5nt30ymHqq0="
