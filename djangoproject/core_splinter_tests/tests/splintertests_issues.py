@@ -19,7 +19,8 @@ class FrespoSplinterTestCase(LiveServerTestCase):
 
     @classmethod
     def tearDownClass(cls):
-        cls.app.quit()
+        if cls.app:
+            cls.app.quit()
         super(FrespoSplinterTestCase, cls).tearDownClass()
 
     def setUp(self):
