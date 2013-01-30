@@ -4,7 +4,6 @@ if [ $TRAVIS_SECURE_ENV_VARS == "false" ]
 then 
 	exit 0
 fi
-oi
 
 echo -n $idrsa_{00..28} >> ~/.ssh/id_rsa_base64
 base64 --decode --ignore-garbage ~/.ssh/id_rsa_base64 > ~/.ssh/id_rsa
