@@ -47,6 +47,7 @@ def edit_existing_user(user, dict):
     userinfo.receiveAllEmail = dict.has_key('receiveAllEmail')
     userinfo.brazilianPaypal = dict.has_key('brazilianPaypal')
     userinfo.hide_from_userlist = dict.has_key('hide_from_userlist')
+    userinfo.preferred_language_code = dict['preferred_language_code']
     newEmail = dict['primaryEmail']
     newPaypalEmail = dictOrEmpty(dict, 'paypalEmail')
     if(not newPaypalEmail):

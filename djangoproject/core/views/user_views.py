@@ -32,6 +32,10 @@ def viewUser(request, user_id):
 @login_required
 def editUserForm(request):
     userinfo = request.user.getUserInfo()
+    available_languages = [
+        {'code':'en', 'label':_('English')},
+        {'code':'es', 'label':_('Spanish')},
+    ]
     if(not userinfo):
         userinfo = UserInfo.newUserInfo(request.user)
         userinfo.save()
@@ -39,6 +43,7 @@ def editUserForm(request):
         _notify_admin_new_user(request.user)
     return render_to_response('core/useredit.html',
         {'userinfo':userinfo,
+         'available_languages' : available_languages,
         'next':dictOrEmpty(request.GET, 'next')},
         context_instance = RequestContext(request))
 

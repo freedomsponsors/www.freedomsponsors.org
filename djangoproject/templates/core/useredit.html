@@ -102,6 +102,22 @@
 			</p>
 		</div>
 		<div class="control-group">
+			<label class="control-label" for="preferred_language_code">Preferred Language</label>
+			<div class="controls">
+				<select id="preferred_language_code" name="preferred_language_code" value="es">
+				{% for lang in available_languages %}
+					<option value="{{lang.code}}"
+					{% ifequal lang.code userinfo.preferred_language_code %}
+					selected
+					{% endifequal %}
+					>
+						{{lang.label}}
+					</option>
+				{% endfor %}
+				</select>
+			</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label" for="realName">Real name</label>
 			<div class="controls">
 				<input type="text" class="span4" id="realName" name="realName" value="{{userinfo.realName}}">

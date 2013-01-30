@@ -25,6 +25,7 @@ class UserInfo(models.Model):
     is_primary_email_verified = models.BooleanField()
     is_paypal_email_verified = models.BooleanField()
     hide_from_userlist = models.BooleanField()
+    preferred_language_code = models.CharField(max_length=10, null=True, blank=True)
 
     @classmethod
     def newUserInfo(cls, user):
