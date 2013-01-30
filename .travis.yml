@@ -1,26 +1,24 @@
 language: python
 python:
   - "2.6"
-# command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
-#install: 
-# - sudo aptitude -y -q install unzip chromium-browser
-# - mkdir -p ./tmp/bin 
-# - cd ./tmp/bin 
-# - wget http://chromium.googlecode.com/files/chromedriver_linux32_16.0.902.0.zip 
-# - unzip chromedriver_linux32_16.0.902.0.zip
-# - cd ../..
-# - pip install -r requirements.txt --use-mirrors
+install: 
+ - sudo aptitude -y -q install unzip chromium-browser
+ - mkdir -p ./tmp/bin 
+ - cd ./tmp/bin 
+ - wget http://chromium.googlecode.com/files/chromedriver_linux32_16.0.902.0.zip 
+ - unzip chromedriver_linux32_16.0.902.0.zip
+ - cd ../..
+ - pip install -r requirements.txt --use-mirrors
 
 before_script:
  - cd djangoproject 
-# - mv frespo/env_settings.py_template frespo/env_settings.py 
-# - mkdir logs 
-# - psql -c 'create database frespo;' -U postgres
-# - "export DISPLAY=:99.0"
-# - /sbin/start-stop-daemon --start --quiet --pidfile /tmp/cucumber_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16
-# - export PATH=../tmp/bin:$PATH
-#script: ./coverage.sh
-script: echo hello world!
+ - mv frespo/env_settings.py_template frespo/env_settings.py 
+ - mkdir logs 
+ - psql -c 'create database frespo;' -U postgres
+ - "export DISPLAY=:99.0"
+ - /sbin/start-stop-daemon --start --quiet --pidfile /tmp/cucumber_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16
+ - export PATH=../tmp/bin:$PATH
+script: ./coverage.sh
 
 after_script: ./upload_travis_reports.sh
 

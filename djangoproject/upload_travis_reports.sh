@@ -1,4 +1,5 @@
 #reconstruct private key file to authenticate on Github
+set -e
 
 if [ $TRAVIS_SECURE_ENV_VARS == "false" ]
 then 
