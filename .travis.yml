@@ -22,7 +22,7 @@ before_script:
 #script: ./coverage.sh
 script: echo hello world!
 
-after_script: ./deploy_coverage.sh
+after_script: ./upload_travis_reports.sh
 
 env:
   global:
