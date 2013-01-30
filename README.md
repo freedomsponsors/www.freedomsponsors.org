@@ -11,6 +11,8 @@ Please take a look at the open issues.
 
 Also, feel free to join the [mailing list](https://groups.google.com/forum/?hl=en&fromgroups#!forum/freedomsponsors)
 
+Testing coverage reports: [here](http://freedomsponsors.github.com/www.freedomsponsors.org/coverage_html_report/)
+
 ## Windows users
 
 If you're a Windows user we suggest you set up a virtual machine using [VirtualBox](http://www.virtualbox.org) - Ubuntu
