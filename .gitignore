@@ -9,7 +9,7 @@ chromedriver.log
 .idea
 .coverage
 .coverage.*
-#coverage_html_report
+coverage_html_report
 report.xml
 htmlcov
 bitcoin_json.txt
