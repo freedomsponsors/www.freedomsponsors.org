@@ -34,6 +34,7 @@ def editUserForm(request):
     userinfo = request.user.getUserInfo()
     available_languages = [
         {'code':'en', 'label':_('English')},
+        {'code':'pt-br', 'label':_('Brazilian Portuguese')},
         {'code':'es', 'label':_('Spanish')},
     ]
     if(not userinfo):

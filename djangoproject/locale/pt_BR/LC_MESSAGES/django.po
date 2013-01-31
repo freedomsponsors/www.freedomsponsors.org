@@ -1,0 +1,499 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-01-30 17:33-0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: core/views/feedback_views.py:21
+msgid "title and description are required"
+msgstr "título e descrição são obrigatórios"
+
+#: core/views/feedback_views.py:25
+#, python-format
+msgid "new Feedback: %s"
+msgstr "novo Feedback: %s"
+
+#: core/views/issue_views.py:24 core/views/issue_views.py:37
+msgid "ERROR: "
+msgstr "ERRO:"
+
+#: core/views/json_views.py:23
+msgid "Error: need query parameter."
+msgstr "Erro: falta o parâmetro da query"
+
+#: core/views/json_views.py:35 core/views/json_views.py:40
+msgid "Error: need trackerURL parameter."
+msgstr "Erro: falta o parâmetro trackerURL"
+
+#: core/views/paypal_views.py:53
+msgid "Payment canceled"
+msgstr "Pagamento cancelado"
+
+#: core/views/paypal_views.py:54
+#, python-format
+msgid "CANCELED payment %s"
+msgstr "CANCELADO o pagamento %s"
+
+#: core/views/paypal_views.py:56
+msgid "Error: attempt to cancel a payment already processed"
+msgstr "Erro: tentativa de cancelar um pagamento já processado"
+
+#: core/views/paypal_views.py:61 core/views/paypal_views.py:93
+msgid "Session expired"
+msgstr "Sessão expirada"
+
+#: core/views/paypal_views.py:79
+msgid "OK"
+msgstr ""
+
+#: core/views/paypal_views.py:81
+msgid "unverified IPN "
+msgstr "IPN não verificado"
+
+#: core/views/user_views.py:46
+msgid "New user registered: "
+msgstr "Novo usuário registrado: "
+
+#: core/views/user_views.py:53 pagination/templates/pagination/pagination
+#: (copy).html:21 (copy).html:23
+#: pagination/templates/pagination/pagination.html:19
+msgid "next"
+msgstr "próximo"
+
+#: core/views/watch_views.py:11 core/views/watch_views.py:21
+msgid "WATCHING"
+msgstr "ESTA_OBSERVANDO"
+
+#: core/views/watch_views.py:16 core/views/watch_views.py:26
+msgid "NOT_WATCHING"
+msgstr "NAO_ESTA_OBSERVANDO"
+
+#: emailmgr/models.py:10
+msgid "Email Address"
+msgstr "Endereço de E-mail"
+
+#: emailmgr/models.py:17
+msgid "email address"
+msgstr "endereço de e-mail"
+
+#: emailmgr/models.py:18
+msgid "email addresses"
+msgstr "endereços de e-mail"
+
+#: emailmgr/views.py:26
+msgid "email address added"
+msgstr "endereço de e-mail adicionado"
+
+#: emailmgr/views.py:50
+msgid "email address is already primary"
+msgstr "endereço de e-mail já é o primário"
+
+#: emailmgr/views.py:61
+msgid "primary address changed"
+msgstr "endereço primario alterado"
+
+#: emailmgr/views.py:63
+msgid "email address must be activated first"
+msgstr "o endereço de e-mail deve ser ativado antes"
+
+#: emailmgr/views.py:78
+msgid "email address already activated"
+msgstr "o endereço de e-mail já está ativado"
+
+#: emailmgr/views.py:84
+msgid "activation email sent"
+msgstr "e-mail de ativação enviado"
+
+#: emailmgr/views.py:99
+msgid "email address not found"
+msgstr "endereço de e-mail não encontrado"
+
+#: emailmgr/views.py:102
+msgid "email address already active"
+msgstr "o endereço de e-mail já está ativado"
+
+#: emailmgr/views.py:111
+msgid "email address is now active"
+msgstr "o endereço de email está ativo agora"
+
+#: emailmgr/views.py:127
+msgid "cannot remove primary email address"
+msgstr "o e-mail primário não pode ser removido"
+
+#: emailmgr/views.py:129
+msgid "email address is not associated with this account"
+msgstr "o endereço de e-mail não está associado a esta conta"
+
+#: emailmgr/views.py:132
+msgid "email address removed"
+msgstr "endereço de email removido"
+
+#: emailmgr/tests/templates/emailmgr/emailmgr_activation_message.txt:2
+#: templates/emailmgr/emailmgr_activation_message.txt:2
+#, python-format
+msgid ""
+"\n"
+"\n"
+"To activate the new email address for '%(user)s' at '%(site_name)s' click "
+"the following link.\n"
+"%(activate_url)s\n"
+"\n"
+"If you didn't request this email activation, delete this email.\n"
+msgstr ""
+"\n"
+"\n"
+"Para ativar o novo endereço de e-mail para '%(user)s' em '%(site_name)s' clique"
+"no link a seguir.\n"
+"%(activate_url)s\n"
+"\n"
+"Se você não solicitou este e-mail de ativação, delete-o.\n"
+
+#: emailmgr/tests/templates/emailmgr/emailmgr_activation_subject.txt:2
+#: templates/emailmgr/emailmgr_activation_subject.txt:2
+#, python-format
+msgid ""
+"\n"
+"\n"
+"Activate email address for %(site_name)s\n"
+"\n"
+msgstr ""
+"\n"
+"\n"
+"Ativar o endereço de e-mail para %(site_name)s\n"
+"\n"
+
+#: httplib2/__init__.py:398
+#, python-format
+msgid "Content purported to be compressed with %s but failed to decompress."
+msgstr "O conteúdo parecia comprimido com %s mas a descompressão falhou"
+
+#: httplib2/__init__.py:508
+#, python-format
+msgid "Unsupported value for qop: %s."
+msgstr "Valor não suportado para qop: %s."
+
+#: httplib2/__init__.py:511 httplib2/__init__.py:574
+#, python-format
+msgid "Unsupported value for algorithm: %s."
+msgstr "Valor não suportado para algoritimo: %s."
+
+#: httplib2/__init__.py:571
+msgid "The challenge doesn't contain a server nonce, or this one is empty."
+msgstr "O desafio não contém um único servidor, ou este está vazio."
+
+#: httplib2/__init__.py:577
+#, python-format
+msgid "Unsupported value for pw-algorithm: %s."
+msgstr "Valor não suportado para pw-algorith: %s."
+
+#: httplib2/__init__.py:1317
+msgid "Redirected but the response is missing a Location: header."
+msgstr "Redirecionado, falta uma Localização na resposta: header."
+
+#: pagination/templates/pagination/pagination (copy).html:5 (copy).html:7
+#: pagination/templates/pagination/pagination.html:5
+msgid "previous"
+msgstr "anterior"
+
+#: registration/admin.py:23
+msgid "Activate users"
+msgstr "Usuários ativos"
+
+#: registration/admin.py:43
+msgid "Re-send activation emails"
+msgstr "Reenviar e-mails de ativação"
+
+#: registration/forms.py:35
+msgid "Username"
+msgstr "Nome de usuário"
+
+#: registration/forms.py:36
+msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
+msgstr "Este valor deve conter somente letras, numeros e os caracteres @/./+/-/_"
+
+#: registration/forms.py:39
+msgid "E-mail"
+msgstr "E-mail"
+
+#: registration/forms.py:41
+msgid "Password"
+msgstr "Senha"
+
+#: registration/forms.py:43
+msgid "Password (again)"
+msgstr "Senha (novamente)"
+
+#: registration/forms.py:53
+msgid "A user with that username already exists."
+msgstr "Já existe um usuário com este nome de usuário"
+
+#: registration/forms.py:65
+msgid "A user with that email already exists."
+msgstr "Já existe um usuário com este e-mail"
+
+#: registration/forms.py:77
+msgid ""
+"We won't lecture you on password security - you probably heard enough about "
+"it by now. But please make it at least 6 characters long!"
+msgstr ""
+"Nós não vamos ensinalo sobre segurança de senhas - você provavelmente já ouviu falar bastante sobre"
+"isto. Mas, por favor crie uma com pelo menos 6 dígitos!"
+
+#: registration/forms.py:91
+msgid "The two password fields didn't match."
+msgstr "As senhas digitadas não conferem"
+
+#: registration/forms.py:102
+msgid "I have read and agree to the Terms of Service"
+msgstr "Eu li e concordo ccom os Termos de Serviço"
+
+#: registration/forms.py:103
+msgid "You must agree to the terms to register"
+msgstr "Você deve concordar com os termos para se registrar"
+
+#: registration/forms.py:119
+msgid ""
+"This email address is already in use. Please supply a different email "
+"address."
+msgstr ""
+"Este endereço de e-mail já está em uso. Favor fornecer um endereço de "
+"e-mail diferente."
+
+#: registration/forms.py:146
+msgid ""
+"Registration using free email addresses is prohibited. Please supply a "
+"different email address."
+msgstr ""
+"É proibido registrar-se com contas gratuitas de e-mail. Por favor, forneça "
+"um endereço de e-mail diferente."
+
+#: registration/models.py:177
+msgid "user"
+msgstr "usuário"
+
+#: registration/models.py:178
+msgid "activation key"
+msgstr "chave de ativação"
+
+#: registration/models.py:183
+msgid "registration profile"
+msgstr "perfil de registro"
+
+#: registration/models.py:184
+msgid "registration profiles"
+msgstr "perfís de registro"
+
+#: social_auth/backends/exceptions.py:29
+msgid "Authentication process was cancelled"
+msgstr "O processo de autenticação foi chamado"
+
+#: social_auth/backends/exceptions.py:31
+#, python-format
+msgid "Authentication failed: %s"
+msgstr "Autenticação falhou: %s"
+
+#: social_auth/backends/pipeline/social.py:26
+#, python-format
+msgid "This %(provider)s account is already in use."
+msgstr "Esta conta de %(provider)s já está em uso."
+
+#: templates/core/about.html:8
+msgid "Crowdfunding Opensource, one issue at a time..."
+msgstr "Financiamento coletivo de Software livre, uma issue por vez..."
+
+#: templates/core/about.html:22
+msgid "Some even have a voting system"
+msgstr "Alguns têm até sistema de votação"
+
+#: templates/core/about.html:23
+msgid "And developers use the results to prioritize their work."
+msgstr "E os desenvolvedores usam os resultados para priorizar seu trabalho."
+
+#: templates/core/about.html:29
+msgid "But what if..."
+msgstr "Mas e se..."
+
+#: templates/core/about.html:30
+msgid ""
+"If you need an issue so bad that you'd be willing to PAY a few bucks for it, "
+"here's what you can do:"
+msgstr ""
+"Se você precisar tanto de uma issue que você está disposto a pagar alguns trocados por ela,"
+"heis o que você pode fazer:"
+
+#: templates/core/about.html:36
+msgid "1) Create an offer here at FreedomSponsors"
+msgstr "1) Crie uma oferta no FreedomSponsors"
+
+#: templates/core/about.html:37
+msgid ""
+"The new offer points to the original issue in the project's issue tracker"
+msgstr ""
+"A nova oferta aponta para a issue original do issue tracker do projeto"
+
+#: templates/core/about.html:43
+msgid "2) Other people might also be interested on it"
+msgstr "2) Outras pessoas podem também estar interessadas nela"
+
+#: templates/core/about.html:52
+msgid "3) Oh yeah, you gotta tell the developers about it, of course!"
+msgstr "3) Ah sim, você tem que avisar os desenvolvedores também, é claro!"
+
+#: templates/core/about.html:59
+msgid "4) Over time, that issue acumulates "
+msgstr "4) Com o tempo, aquela issue acumula "
+
+#: templates/core/about.html:60
+msgid "Which is way more interesting than just votes, right?"
+msgstr "O que é muito mais interessante que simples votos, certo?"
+
+#: templates/core/about.html:66
+msgid "4) Some developer then resolves the issue"
+msgstr "5) Algum desenvolvedor então resolve a issue"
+
+#: templates/core/about.html:67
+msgid "And tells everyone about it here at FreedomSponsors."
+msgstr "E avisa todo mundo no FreedomSponsors"
+
+#: templates/core/about.html:73
+msgid "5) As a sponsor, you go and and see if it really solves your problem."
+msgstr "6) Como um patrocinador, você vai lá e ve se a issue realmente foi resolvida."
+
+#: templates/core/base.html:124 templates/core/navbar.html:47
+msgid "About"
+msgstr "Sobre"
+
+#: templates/core/base.html:125
+msgid "FAQ"
+msgstr "FAQ"
+
+#: templates/core/base.html:126
+msgid "Developers"
+msgstr "Desenvolvedores"
+
+#: templates/core/base.html:127 templates/core/navbar.html:51
+msgid "Feedback"
+msgstr ""
+
+#: templates/core/base.html:128
+msgid "Project list"
+msgstr "Lista de projetos"
+
+#: templates/core/base.html:129
+msgid "Facebook"
+msgstr ""
+
+#: templates/core/base.html:130
+msgid "Twitter"
+msgstr ""
+
+#: templates/core/empty_base.html:16
+#, fuzzy
+msgid ""
+"Check this out: freedomsponsors.org - Crowdfunding Free Software, one issue "
+"at a time."
+msgstr ""
+"Dê uma olhada: freedomsponsors.org - Financiamento coletivo de Software livre"
+"uma issue por vez "
+
+#: templates/core/home.html:9
+msgid "Crowdfunding Free Software, one issue at a time"
+msgstr "Financiamento coletivo de Software Livre, uma issue de cada vez"
+
+#: templates/core/home.html:12
+msgid "Place money bounties for open source projects <strong>issues</strong>"
+msgstr "Dê reconpensas financeiras para <strong>issues</strong> de projetos open source"
+
+#: templates/core/home.html:12
+msgid "Learn more..."
+msgstr "Aprender mais..."
+
+#: templates/core/home.html:22
+msgid "Sponsor/Kickstart a new issue"
+msgstr "Patrocine/Lance uma nova issue"
+
+#: templates/core/home.html:23
+msgid "Issue URL"
+msgstr "URL da issue"
+
+#: templates/core/home.html:24
+msgid "Paste the issue URL"
+msgstr "Cole a URL"
+
+#: templates/core/home.html:26
+msgid "Sponsor &gt;&gt;"
+msgstr "Patrocine &gt;&gt;"
+
+#: templates/core/home.html:27
+msgid "Kickstart &gt;&gt;"
+msgstr "Lance &gt;&gt;"
+
+#: templates/core/home.html:91
+msgid "Sponsored"
+msgstr "Patrocinados"
+
+#: templates/core/home.html:113 templates/core/home.html.py:130
+msgid "More..."
+msgstr "Mais..."
+
+#: templates/core/home.html:120
+msgid "Kickstarting"
+msgstr "Lançados"
+
+#: templates/core/navbar.html:19
+msgid "View Profile"
+msgstr "Ver Perfil"
+
+#: templates/core/navbar.html:20
+msgid "Edit Profile"
+msgstr "Editar Perfil"
+
+#: templates/core/navbar.html:22
+msgid "Change password"
+msgstr "Mudar senha"
+
+#: templates/core/navbar.html:26
+msgid "My issues"
+msgstr "Minhas issues"
+
+#: templates/core/navbar.html:29
+msgid "Github Settings"
+msgstr "Configurações do Github"
+
+#: templates/core/navbar.html:33
+msgid "Sign Out"
+msgstr "Sair"
+
+#: templates/core/navbar.html:38
+msgid "Log in / Register"
+msgstr "Entrar / Registrar"
+
+#: templates/core/navbar.html:43
+msgid "Sponsor new issue"
+msgstr "Patrocinar uma nova issue"
+
+#: templates/core/navbar.html:48
+msgid "Search"
+msgstr "Busca"
+
+#: templates/core/navbar.html:49
+msgid "Stats"
+msgstr "Estatísticas"
+
+#: templates/core/navbar.html:50
+msgid "Users"
+msgstr "Usuários"
