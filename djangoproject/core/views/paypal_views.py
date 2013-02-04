@@ -35,12 +35,6 @@ def payOffer(request):
     else:
         # form_action = 'https://www.paypal.com/webapps/adaptivepayment/flow/pay'
         redirect_url = 'https://www.paypal.com/webscr?cmd=_ap-payment&paykey=%s' % payment.paykey
-
-    # return render_to_response('core/waitPayment.html',
-    #     {'offer' : offer,
-    #     'paykey':payment.paykey,
-    #     'form_action':form_action},
-    #     context_instance = RequestContext(request))
     return redirect(redirect_url)
 
 

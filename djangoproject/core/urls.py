@@ -60,6 +60,10 @@ urlpatterns += patterns('core.views.paypal_views',
     url(r'^paypal/'+settings.PAYPAL_IPNNOTIFY_URL_TOKEN+'$', 'paypalIPN'),
 )
 
+urlpatterns += patterns('core.views.bitcoin_views',
+    url(r'^bitcoin/'+settings.BITCOIN_IPNNOTIFY_URL_TOKEN+'$', 'bitcoinIPN'),
+)
+
 urlpatterns += patterns('core.views.user_views',
     url(r'^user/$', 'listUsers'),
     url(r'^user/(?P<user_id>\d+)/$', 'viewUser'),

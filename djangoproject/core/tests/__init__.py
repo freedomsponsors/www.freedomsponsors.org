@@ -5,6 +5,7 @@
 # from test_watch_services import *
 # from test_watch_views import *
 # from test_feedback_views import *
+# from test_bitcoin import *
 
 __author__ = 'tony'
 
