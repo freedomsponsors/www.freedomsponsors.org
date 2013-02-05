@@ -12,6 +12,7 @@ def bitcoinIPN(request):
     logger.info("transaction_hash: %s" % dictOrEmpty(request.GET, "transaction_hash"))
     logger.info("destination_address: %s" % dictOrEmpty(request.GET, "destination_address"))
     logger.info("input_transaction_hash: %s" % dictOrEmpty(request.GET, "input_transaction_hash"))
+    logger.info("GET params: %s" % request.GET)
     logger.info('----- bitcoinIPN end ------')
     return HttpResponse("*ok*")
 

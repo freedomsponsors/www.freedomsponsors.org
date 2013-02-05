@@ -5,14 +5,14 @@ from splintertests_issues import FrespoSplinterTestCase
 from django.test import LiveServerTestCase
 from helpers import testdata as td
 from django.utils.unittest import skipIf
-from frespo import env_settings
+from django.conf import settings
 import traceback
 
 __author__ = 'tony'
 
 waitifbreak = 1
 
-@skipIf(env_settings.ENVIRONMENT != 'DEV', 'not supported in this environment')
+@skipIf(settings.ENVIRONMENT != 'DEV', 'not supported in this environment')
 class PaymentTests(FrespoSplinterTestCase):
 #    def onAppCreate(self):
 #        self.app.createGoogleSession(td.userDict1)
