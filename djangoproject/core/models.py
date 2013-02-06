@@ -655,7 +655,7 @@ class Payment(models.Model):
     paykey = models.CharField(max_length=128, null=True, blank=True)
     confirm_key = models.CharField(max_length=128, null=True, blank=True)
     status = models.CharField(max_length=30) # IN_PROGRESS, DONE, ABORTED
-    fee = models.DecimalField(max_digits=9, decimal_places=2)
+    fee = models.DecimalField(max_digits=9, decimal_places=8)
     total = models.DecimalField(max_digits=9, decimal_places=2)
     currency = models.CharField(max_length=10)
 
@@ -765,8 +765,8 @@ class PaymentPart(models.Model):
     programmer = models.ForeignKey(User)
     solution = models.ForeignKey(Solution)
     paypalEmail = models.EmailField(max_length=256, null=True)
-    price = models.DecimalField(max_digits=9, decimal_places=2)
-    realprice = models.DecimalField(max_digits=9, decimal_places=2)
+    price = models.DecimalField(max_digits=9, decimal_places=8)
+    realprice = models.DecimalField(max_digits=9, decimal_places=8)
 
     @classmethod
     def newPart(cls, payment, solution, price, realprice):
