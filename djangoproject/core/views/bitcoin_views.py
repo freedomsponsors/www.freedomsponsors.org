@@ -69,3 +69,22 @@ def bitcoinIPN(request):
 # >>> c2.getreceivedbyaccount('1KExeHvN1PoCrA87xGTPHBR3DhEYFgDQV1')
 # Decimal('0.001')
 
+# 2013-02-05 00:34:18,266 [INFO] core.views.bitcoin_views: ----- bitcoinIPN ------
+# 2013-02-05 00:34:18,267 [INFO] core.views.bitcoin_views: value: -150000
+# 2013-02-05 00:34:18,268 [INFO] core.views.bitcoin_views: input_address: 12EiAPTUZN4LStdP9nP7K8ZBfhrm5Mg2RW
+# 2013-02-05 00:34:18,268 [INFO] core.views.bitcoin_views: confirmations: 2
+# 2013-02-05 00:34:18,268 [INFO] core.views.bitcoin_views: transaction_hash: c406122df4a18fd1af51da3ef3c4e86fee84a47a249b86c28d2e316791a9c145
+# 2013-02-05 00:34:18,269 [INFO] core.views.bitcoin_views: destination_address: 12EiAPTUZN4LStdP9nP7K8ZBfhrm5Mg2RW
+# 2013-02-05 00:34:18,269 [INFO] core.views.bitcoin_views: input_transaction_hash: 
+# 2013-02-05 00:34:18,269 [INFO] core.views.bitcoin_views: GET params: <QueryDict: {u'transaction_hash': [u'c406122df4a18fd1af51da3ef3c4e86fee84a47a249b86c28d2e316791a9c145'], u'value': [u'-150000'], u'confirmations': [u'2'], u'anonymous': [u'false'], u'address': [u'12EiAPTUZN4LStdP9nP7K8ZBfhrm5Mg2RW'], u'input_address': [u'12EiAPTUZN4LStdP9nP7K8ZBfhrm5Mg2RW'], u'destination_address': [u'12EiAPTUZN4LStdP9nP7K8ZBfhrm5Mg2RW']}>
+# 2013-02-05 00:34:18,269 [INFO] core.views.bitcoin_views: ----- bitcoinIPN end ------
+
+# 2013-02-05 00:37:15,252 [INFO] core.views.bitcoin_views: ----- bitcoinIPN ------
+# 2013-02-05 00:37:15,252 [INFO] core.views.bitcoin_views: value: 100000
+# 2013-02-05 00:37:15,253 [INFO] core.views.bitcoin_views: input_address: 1KExeHvN1PoCrA87xGTPHBR3DhEYFgDQV1
+# 2013-02-05 00:37:15,253 [INFO] core.views.bitcoin_views: confirmations: 3
+# 2013-02-05 00:37:15,253 [INFO] core.views.bitcoin_views: transaction_hash: c406122df4a18fd1af51da3ef3c4e86fee84a47a249b86c28d2e316791a9c145
+# 2013-02-05 00:37:15,253 [INFO] core.views.bitcoin_views: destination_address: 1KExeHvN1PoCrA87xGTPHBR3DhEYFgDQV1
+# 2013-02-05 00:37:15,254 [INFO] core.views.bitcoin_views: input_transaction_hash: 
+# 2013-02-05 00:37:15,254 [INFO] core.views.bitcoin_views: GET params: <QueryDict: {u'transaction_hash': [u'c406122df4a18fd1af51da3ef3c4e86fee84a47a249b86c28d2e316791a9c145'], u'value': [u'100000'], u'confirmations': [u'3'], u'anonymous': [u'false'], u'address': [u'1KExeHvN1PoCrA87xGTPHBR3DhEYFgDQV1'], u'input_address': [u'1KExeHvN1PoCrA87xGTPHBR3DhEYFgDQV1'], u'destination_address': [u'1KExeHvN1PoCrA87xGTPHBR3DhEYFgDQV1']}>
+# 2013-02-05 00:37:15,254 [INFO] core.views.bitcoin_views: ----- bitcoinIPN end ------

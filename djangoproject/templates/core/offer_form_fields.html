@@ -1,8 +1,14 @@
 <!-- offer price -->
 <div class="control-group">
-  <label class="control-label" for="price">Offer (US$)</label>
+  <label class="control-label" for="price">Offer</label>
   <div class="controls form-inline">
-    <input type="text" id="price" name="price" value="" class="positive" style="width:80px;" placeholder="US$">
+    <div style="padding-bottom:10px;">
+      <input type="radio" id="currency" name="currency" value="USD" checked> US$
+      {% if BITCOIN_ENABLED %}
+      <input type="radio" id="currency" name="currency" value="BTC"> Bitcoin 
+      {% endif %}
+    </div>
+    <input type="text" id="price" name="price" value="" class="positive" style="width:80px;">
 
     <span >&nbsp;&nbsp;&nbsp;</span>
     <label class="checkbox" id="no_forking_label">

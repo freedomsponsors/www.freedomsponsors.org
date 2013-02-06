@@ -1,4 +1,4 @@
-env_settings.py
+env_settings.py*
 *.pyc
 .project
 .pydevproject
@@ -22,3 +22,4 @@ local
 include/python2.7
 #django.mo
 *.db
+.noseids

@@ -45,6 +45,7 @@ PAYPAL_RETURN_URL = SITE_HOME+'/core/paypal/return'
 PAYPAL_IPNNOTIFY_URL = SITE_HOME+'/core/paypal/'+PAYPAL_IPNNOTIFY_URL_TOKEN
 
 BITCOIN_IPNNOTIFY_URL_TOKEN = 'megablasteripn'
+BITCOIN_ENABLED = False
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name

@@ -10,6 +10,7 @@ from core.models import *
 from core.services import issue_services, watch_services, payment_services
 from decimal import Decimal
 import logging
+from django.conf import settings
 
 logger = logging.getLogger(__name__)
 
@@ -251,7 +252,8 @@ def addIssueForm(request):
 
     return render_to_response('core/add_issue.html',
         {'trackerURL' : trackerURL,
-        'operation' : operation},
+        'operation' : operation,
+        'BITCOIN_ENABLED' : settings.BITCOIN_ENABLED},
         context_instance = RequestContext(request))
 
 
