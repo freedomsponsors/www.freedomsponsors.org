@@ -11,6 +11,7 @@ from core.services import issue_services, watch_services, payment_services
 from decimal import Decimal
 import logging
 from django.conf import settings
+import traceback
 
 logger = logging.getLogger(__name__)
 
@@ -22,6 +23,7 @@ def addIssue(request):
         offer = issue_services.sponsor_new_issue(request.POST, request.user)
         watch_services.watch_issue(request.user, offer.issue.id, IssueWatch.SPONSORED)
     except BaseException as ex:
+        traceback.print_exc()
         return HttpResponse(_("ERROR: ")+ex.message)
     params = '?alert=SPONSOR'
     if(dictOrEmpty(request.POST, 'invoke_parent_callback') == 'true'):
@@ -35,6 +37,7 @@ def kickstartIssue(request):
         issue = issue_services.kickstart_new_issue(request.POST, request.user)
         watch_services.watch_issue(request.user, issue.id, IssueWatch.CREATED)
     except BaseException as ex:
+        traceback.print_exc()
         return HttpResponse(_("ERROR: ")+ex.message)
 
     params= '?alert=KICKSTART'

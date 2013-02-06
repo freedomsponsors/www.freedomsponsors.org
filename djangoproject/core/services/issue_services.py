@@ -247,7 +247,7 @@ def _buildOfferFromDictionary_and_issue(dict, user, issue):
 
 def _setOfferAttributesFromDictionary(offer, dict):
     offer.price = Decimal(dict['price'])
-    offer.currency = Decimal(dict['currency'])
+    offer.currency = dict['currency']
     offer.no_forking = dict.has_key('no_forking')
     offer.require_release = dict.has_key('require_release')
     offer_check_expires = dict.has_key('expires')
