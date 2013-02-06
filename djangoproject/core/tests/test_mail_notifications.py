@@ -56,6 +56,7 @@ class TestMailNotifications(unittest.TestCase):
         response = client2.post('/core/issue/sponsor/submit',
             {'issue_id': str(issue.id),
              'price':'20.00',
+             'currency' : 'USD',
              'acceptanceCriteria':'some criteria',})
         self.assertEqual(response.status_code, 302)
         offer_id = response.get('location').split('/')[-2]
