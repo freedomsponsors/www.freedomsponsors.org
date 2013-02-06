@@ -46,7 +46,7 @@ def create_dummy_issue():
 
 def create_dummy_offer():
     issue = create_dummy_issue()
-    offer = Offer.newOffer(issue, issue.createdByUser, Decimal('10.00'), 'comita aih', True, True, None)
+    offer = Offer.newOffer(issue, issue.createdByUser, Decimal('10.00'), 'USD', 'comita aih', True, True, None)
     offer.save()
     return offer
 
