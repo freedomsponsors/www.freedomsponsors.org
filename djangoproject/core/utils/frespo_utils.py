@@ -9,6 +9,10 @@ logger = logging.getLogger(__name__)
 
 _TWOPLACES = Decimal(10) ** -2
 
+CURRENCY_SYMBOLS = {'USD' : 'US$',
+    'BRL' : 'R$',
+    'BTC' : 'BTC'}
+
 socialImages = {'google' : '/static/img/google.gif',
     'yahoo':'/static/img/yahoo.gif',
     'facebook':'/static/img/facebook.gif',

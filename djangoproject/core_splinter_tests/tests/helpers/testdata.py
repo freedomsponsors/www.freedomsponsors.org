@@ -103,6 +103,7 @@ def buildOfferForHHH1052(createdByUser):
     offer = Offer.newOffer(issue=issue, 
         sponsor=createdByUser, 
         price=Decimal('10.00'), 
+        currency='USD',
         acceptanceCriteria='Resolve aih', 
         no_forking=True, 
         require_release=True, 

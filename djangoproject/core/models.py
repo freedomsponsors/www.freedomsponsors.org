@@ -10,7 +10,7 @@ from social_auth.models import UserSocialAuth
 from django.utils.http import urlquote
 from django.template.defaultfilters import slugify
 from decimal import Decimal
-from core.utils.frespo_utils import twoplaces
+from core.utils.frespo_utils import twoplaces, CURRENCY_SYMBOLS
 
 
 class UserInfo(models.Model): 
@@ -388,6 +388,7 @@ class Offer(models.Model):
     creationDate = models.DateTimeField()
     lastChangeDate = models.DateTimeField()
     price = models.DecimalField(max_digits=9, decimal_places=2) # Ateh 9999999.99 dolares
+    currency = models.CharField(max_length=10)
     acceptanceCriteria = models.TextField(null=True, blank=True)
     expirationDate = models.DateField(null=True, blank=True)
     no_forking = models.BooleanField(default=True)
@@ -399,13 +400,14 @@ class Offer(models.Model):
     PAID = "PAID"
 
     @classmethod
-    def newOffer(cls, issue, sponsor, price, acceptanceCriteria, no_forking, require_release, expiration_days):
+    def newOffer(cls, issue, sponsor, price, currency, acceptanceCriteria, no_forking, require_release, expiration_days):
         offer = cls()
         offer.issue = issue
         offer.sponsor = sponsor
         offer.creationDate = timezone.now()
         offer.lastChangeDate = offer.creationDate
         offer.price = Decimal(price)
+        offer.currency = currency
         offer.acceptanceCriteria = acceptanceCriteria
         offer.no_forking = no_forking
         offer.require_release = require_release
@@ -421,7 +423,7 @@ class Offer(models.Model):
             self.expirationDate = timezone.now() + timedelta(days=expiration_days)
 
     def clone(self):
-        clone_offer = Offer.newOffer(self.issue, self.sponsor, Decimal(self.price), self.acceptanceCriteria,
+        clone_offer = Offer.newOffer(self.issue, self.sponsor, Decimal(self.price), self.currency, self.acceptanceCriteria,
             self.no_forking, self.require_release, self.expiration_time())
         return clone_offer
 
@@ -663,9 +665,6 @@ class Payment(models.Model):
     CONFIRMED_IPN = 'CONFIRMED_IPN'
     FORGOTTEN = 'FORGOTTEN'
     
-    CURRENCY_SYMBOLS = {'USD' : 'US$',
-        'BRL' : 'R$'}
-
     @classmethod
     def newPayment(cls, offer):
         payment = cls()
@@ -684,7 +683,7 @@ class Payment(models.Model):
             self.currency = 'USD'
     
     def get_currency_symbol(self):
-        return Payment.CURRENCY_SYMBOLS[self.currency]
+        return CURRENCY_SYMBOLS[self.currency]
 
     def setPaykey(self, paykey):
         self.paykey = paykey

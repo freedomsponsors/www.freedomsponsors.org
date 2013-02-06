@@ -240,13 +240,14 @@ def _throwIfIssueExists(trackerURL, user):
 
 
 def _buildOfferFromDictionary_and_issue(dict, user, issue):
-    offer = Offer.newOffer(issue, user, Decimal(0), '', False, False, None)
+    offer = Offer.newOffer(issue, user, Decimal(0), '', '', False, False, None)
     _setOfferAttributesFromDictionary(offer, dict)
     return offer
 
 
 def _setOfferAttributesFromDictionary(offer, dict):
     offer.price = Decimal(dict['price'])
+    offer.currency = Decimal(dict['currency'])
     offer.no_forking = dict.has_key('no_forking')
     offer.require_release = dict.has_key('require_release')
     offer_check_expires = dict.has_key('expires')
