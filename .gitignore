@@ -1,4 +1,5 @@
 env_settings.py*
+test_settings.py*
 *.pyc
 .project
 .pydevproject

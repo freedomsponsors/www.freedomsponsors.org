@@ -2,6 +2,7 @@
 from decimal import Decimal
 import dj_database_url
 from unipath import Path
+import os
 
 PROJECT_DIR = Path(__file__).parent.parent
 
@@ -344,7 +345,8 @@ NOSE_ARGS = [
     '--rednose',
 ]
 
+os.environ.setdefault('ENV_SETTINGS', 'env_settings')
 try:
-    from env_settings import *
+    exec('from %s import *' % os.environ['ENV_SETTINGS'])
 except ImportError:
-    print u'WARNING: env_settings.py not found.'
+    print u'WARNING: %s not found.' % os.environ['ENV_SETTINGS']
