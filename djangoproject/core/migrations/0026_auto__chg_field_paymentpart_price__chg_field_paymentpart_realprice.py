@@ -10,10 +10,10 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
 
         # Changing field 'PaymentPart.price'
-        db.alter_column('core_paymentpart', 'price', self.gf('django.db.models.fields.DecimalField')(max_digits=9, decimal_places=8))
+        db.alter_column('core_paymentpart', 'price', self.gf('django.db.models.fields.DecimalField')(max_digits=16, decimal_places=8))
 
         # Changing field 'PaymentPart.realprice'
-        db.alter_column('core_paymentpart', 'realprice', self.gf('django.db.models.fields.DecimalField')(max_digits=9, decimal_places=8))
+        db.alter_column('core_paymentpart', 'realprice', self.gf('django.db.models.fields.DecimalField')(max_digits=16, decimal_places=8))
 
     def backwards(self, orm):
 
