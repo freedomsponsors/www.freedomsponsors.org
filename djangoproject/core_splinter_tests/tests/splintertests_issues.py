@@ -51,7 +51,7 @@ class SecondUserIssueTests(FrespoSplinterTestCase):
         td.loadOffer(offer)
         try:
             self.app.login_plain(td.userDict2)
-            self.app.followIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
+            self.app.followSponsoringIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
             otherOffer = {
                 'price':Decimal('15.00'),
                 'acceptanceCriteria':'Soh comitar',
@@ -60,7 +60,7 @@ class SecondUserIssueTests(FrespoSplinterTestCase):
             }
             self.app.sponsorCurrentIssue(otherOffer)
             assert(self.app.is_text_present('[ Offer ] US$ 15.00 for issue - Allow CalendarType.set to accept Date objects'))
-            self.app.followIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
+            self.app.followSponsoringIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
             self.app.followOfferLinkByValue(otherOffer['price'])
         except:
             traceback.print_exc()
@@ -82,7 +82,7 @@ class SoloUserIssueTests(FrespoSplinterTestCase):
             offerDict = td.buildDefaultOfferDict14('https://hibernate.onjira.com/browse/HHH-1052')
             self.app.sponsorOrKickstartIssue_from_newIssuePage(offerDict)
             assert(self.app.is_text_present('[ Offer ] US$ 10.00 for issue - Allow CalendarType.set to accept Date objects'))
-            self.app.followIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
+            self.app.followSponsoringIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
             self.app.followOfferLinkByValue(offerDict['step4']['price'])
         except:
             traceback.print_exc()
@@ -97,7 +97,7 @@ class SoloUserIssueTests(FrespoSplinterTestCase):
             del offerDict['step1']
             self.app.sponsor_issue_from_plugin('https://hibernate.onjira.com/browse/HHH-1052', offerDict)
             assert(self.app.is_text_present('[ Offer ] US$ 10.00 for issue - Allow CalendarType.set to accept Date objects'))
-            self.app.followIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
+            self.app.followSponsoringIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
             self.app.followOfferLinkByValue(offerDict['step4']['price'])
         except:
             traceback.print_exc()
@@ -112,7 +112,7 @@ class SoloUserIssueTests(FrespoSplinterTestCase):
             del offerDict['step4']
             self.app.sponsorOrKickstartIssue_from_newIssuePage(offerDict, kickstarting=True)
             assert(self.app.is_text_present('Allow CalendarType.set to accept Date objects'))
-            self.app.followIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
+            self.app.followKickstartingIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
 #            self.app.followOfferLinkByValue(offerDict['step4']['price'])
         except:
             traceback.print_exc()
@@ -129,7 +129,7 @@ class SoloUserIssueTests(FrespoSplinterTestCase):
                 newProjectHomeURL='http://www.hibernate.org/')
             self.app.sponsorOrKickstartIssue_from_newIssuePage(offerDict)
             assert(self.app.is_text_present('[ Offer ] US$ 10.00 for issue - Allow CalendarType.set to accept Date objects'))
-            self.app.followIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
+            self.app.followSponsoringIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
             self.app.followOfferLinkByValue(offerDict['step4']['price'])
             self.app.go_to_projects()
             assert(self.app.is_text_present('Hibernate ORM'))
@@ -152,7 +152,7 @@ class SoloUserIssueTests(FrespoSplinterTestCase):
                 newProjectTrackerURL='https://hibernate.onjira.com/browse/OH404')
             self.app.sponsorOrKickstartIssue_from_newIssuePage(offerDict)
             assert(self.app.is_text_present('[ Offer ] US$ 10.00 for issue - This issue does not exist anywhere'))
-            self.app.followIssueLinkOnHomeByTitle('This issue does not exist anywhere')
+            self.app.followSponsoringIssueLinkOnHomeByTitle('This issue does not exist anywhere')
             self.app.followOfferLinkByValue(offerDict['step4']['price'])
             self.app.go_to_projects()
             assert(self.app.is_text_present('Hibernatis'))
@@ -176,7 +176,7 @@ class SoloUserIssueTests(FrespoSplinterTestCase):
                 newProjectTrackerURL='https://hibernate.onjira.com/browse/OH404')
             self.app.sponsorOrKickstartIssue_from_newIssuePage(offerDict)
             assert(self.app.is_text_present('[ Offer ] US$ 10.00 for issue - This issue is on an unreachable tracker'))
-            self.app.followIssueLinkOnHomeByTitle('This issue is on an unreachable tracker')
+            self.app.followSponsoringIssueLinkOnHomeByTitle('This issue is on an unreachable tracker')
             self.app.followOfferLinkByValue(offerDict['step4']['price'])
             self.app.go_to_projects()
             assert(self.app.is_text_present('Hibernatis'))
@@ -193,7 +193,7 @@ class SoloUserIssueTests(FrespoSplinterTestCase):
             offerDict = td.buildOfferDictAvulsa()
             self.app.sponsorOrKickstartIssue_from_newIssuePage(offerDict)
             assert(self.app.is_text_present('[ Offer ] US$ 10.00 for issue - Build me a teleporting machine'))
-            self.app.followIssueLinkOnHomeByTitle('Build me a teleporting machine')
+            self.app.followSponsoringIssueLinkOnHomeByTitle('Build me a teleporting machine')
             self.app.followOfferLinkByValue(offerDict['step4']['price'])
         except:
             traceback.print_exc()
@@ -206,7 +206,7 @@ class SoloUserIssueTests(FrespoSplinterTestCase):
         td.loadOffer(offer)
         self.app.login_plain(td.userDict1)
         try:
-            self.app.followIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
+            self.app.followSponsoringIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
 
             self.app.editCurrentOffer(price=Decimal('11.00'), expires=True, expiration_days=2)
             assert(self.app.is_text_present('[ Offer ] US$ 11.00 for issue - Allow CalendarType.set to accept Date objects'))

@@ -168,11 +168,16 @@ class AppDriver:
         browser.find_by_id('btnNext3').click()
 
     
-    def followIssueLinkOnHomeByTitle(self, title):
+    def followSponsoringIssueLinkOnHomeByTitle(self, title):
         browser = self.browser
-        
         browser.visit(self.home_url) 
-        # browser.click_link_by_partial_text(": "+title)
+        browser.click_link_by_partial_text(title)
+
+    def followKickstartingIssueLinkOnHomeByTitle(self, title):
+        browser = self.browser
+        browser.visit(self.home_url) 
+        browser.click_link_by_partial_text('Kickstarting')
+        _waitUntilTextPresent(browser, title, 1)
         browser.click_link_by_partial_text(title)
 
     def followOfferLinkByValue(self, value):

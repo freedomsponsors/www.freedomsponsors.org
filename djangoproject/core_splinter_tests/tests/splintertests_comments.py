@@ -19,7 +19,7 @@ class SoloUserCommentTests(FrespoSplinterTestCase):
         td.loadOffer(offer)
         self.app.login_plain(td.userDict1)
         try:
-            self.app.followIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
+            self.app.followSponsoringIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
             def gogogo():
                 self.app.commentOnCurrentIssueOrOffer('Hello comment')
                 assert(self.app.is_text_present('Hello comment'))

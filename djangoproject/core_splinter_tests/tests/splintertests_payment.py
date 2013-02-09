@@ -25,9 +25,9 @@ class PaymentTests(FrespoSplinterTestCase):
         td.loadSolution(solution)
         try:
             self.app.login_plain(td.userDict1)
-            self.app.followIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
+            self.app.followSponsoringIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
             self.app.pay_with_paypal(td.paypal_credentials_1)
-            self.app.followIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
+            self.app.followSponsoringIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
             sleep(10)
 #            assert(self.app.is_text_present('10.00'))
 #            assert(self.app.is_text_present('PAID'))
