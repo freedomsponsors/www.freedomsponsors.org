@@ -265,24 +265,36 @@ class Issue(models.Model):
         issue.is_feedback = True
         return issue
 
-    def getTotalOffersPrice(self):
-        offers = Offer.objects.filter(issue=self,status=Offer.OPEN)
+    def getTotalOffersPriceUSD(self):
+        return self.getTotalOffersPrice_by_currency('USD')
+
+    def getTotalOffersPriceBTC(self):
+        return self.getTotalOffersPrice_by_currency('BTC')
+
+    def getTotalOffersPrice_by_currency(self, currency):
+        offers = Offer.objects.filter(issue=self, status=Offer.OPEN,currency=currency)
         s = Decimal(0)
         for offer in offers:
             if (not offer.is_expired()):
                 s = s + offer.price
         return twoplaces(s)
 
-    def touch(self):
-        self.updatedDate = timezone.now()
-        self.save()
+    def getTotalPaidPriceUSD(self):
+        return self.getTotalPaidPrice_by_currency('USD')
 
-    def getTotalPaidPrice(self):
-        offers = Offer.objects.filter(issue=self,status=Offer.PAID)
+    def getTotalPaidPriceBTC(self):
+        return self.getTotalPaidPrice_by_currency('BTC')
+
+    def getTotalPaidPrice_by_currency(self, currency):
+        offers = Offer.objects.filter(issue=self, status=Offer.PAID, currency=currency)
         s = Decimal(0)
         for offer in offers:
             s = s + offer.price
         return twoplaces(s)
+
+    def touch(self):
+        self.updatedDate = timezone.now()
+        self.save()
 
     def countSolutionsDone(self):
         return Solution.objects.filter(issue=self, status=Solution.DONE).count()

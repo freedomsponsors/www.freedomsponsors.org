@@ -13,7 +13,7 @@ New offer
 	<strong>value:</strong> US$ {{new_offer.price}}<br>
 	<strong>acceptance criteria:</strong> {{new_offer.acceptanceCriteria|linebreaks}}
 </div>
-That issue is now worth a total of US$ {{new_offer.issue.getTotalOffersPrice}}. <br><br>
+That issue is now worth a total of US$ {{theirOffer.issue.getTotalOffersPriceUSD}} + BTC {{theirOffer.issue.getTotalOffersPriceBTC}}. <br><br>
 We will let you know if there are any updates.
 {% endblock mainContent%}
 

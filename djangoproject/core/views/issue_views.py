@@ -255,8 +255,7 @@ def addIssueForm(request):
 
     return render_to_response('core/add_issue.html',
         {'trackerURL' : trackerURL,
-        'operation' : operation,
-        'BITCOIN_ENABLED' : settings.BITCOIN_ENABLED},
+        'operation' : operation,},
         context_instance = RequestContext(request))
 
 

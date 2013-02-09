@@ -6,7 +6,7 @@
   {% if issue.key %}
     {{issue.key}}:
   {% endif %}
-  {{issue.title}} (worth US$ {{issue.getTotalOffersPrice}})"/>
+  {{issue.title}} (worth US$ {{issue.getTotalOffersPriceUSD}})"/>
 {% endblock og_meta_description %}
 
 
@@ -18,7 +18,7 @@
   {% if issue.key %}
     {{issue.key}}:
   {% endif %}
-  {{issue.title}} (worth US$ {{issue.getTotalOffersPrice}}) 
+  {{issue.title}} (worth US$ {{issue.getTotalOffersPriceUSD}}) 
 {% if issue.trackerURL %}
 <a href="{{issue.trackerURL}}" class="btn btn-primary" target="_issue">Open original issue</a>
 {% endif %}

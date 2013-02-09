@@ -98,8 +98,13 @@
                   {% for issue in issues_sponsoring %}
                   <tr>
                     <td class="hometablecell" style="width:30px">{{forloop.counter}}.</td>
-                    <td class="hometablecell" style="width:70px">
-                      {% include 'core/green_and_orange.html' with vOpen=issue.getTotalOffersPrice vPaid=issue.getTotalPaidPrice %}
+                    <td class="hometablecell" style="width:140px">
+                      <div>
+                      {% include 'core/include/green_and_orange.html' with vOrange=issue.getTotalOffersPriceUSD vGreen=issue.getTotalPaidPriceUSD currency='US$' %}
+                      </div>
+                      <div>
+                      {% include 'core/include/green_and_orange.html' with vOrange=issue.getTotalOffersPriceBTC vGreen=issue.getTotalPaidPriceBTC currency='BTC' %}
+                      </div>
                     </td>
                     <td class="hometablecell"><a href="{{issue.get_view_link}}"
                       {% if issue.getTotalPaidPrice %}

@@ -8,7 +8,7 @@ This is the issue:
   <a href="{{SITE_HOME}}{{ theirOffer.issue.get_view_link }}" style="color: #08C;text-decoration: none;cursor: auto;">
     {{ theirOffer.issue.title }}</a>
 </div>
-That issue is now worth a total of US$ {{theirOffer.issue.getTotalOffersPrice}} <br><br>
+That issue is now worth a total of US$ {{theirOffer.issue.getTotalOffersPriceUSD}} + BTC {{theirOffer.issue.getTotalOffersPriceBTC}}. <br><br>
 We will let you know if there are any updates.
 {% endblock mainContent%}
 

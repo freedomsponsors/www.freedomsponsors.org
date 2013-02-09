@@ -58,14 +58,19 @@
       </td>
 
       {% ifequal showOffers "true" %}
-      <td>
-        {% include 'core/green_and_orange.html' with vOpen=issue.getTotalOffersPrice vPaid=issue.getTotalPaidPrice %}
+      <td style="width:140px">
+        <div>
+        {% include 'core/include/green_and_orange.html' with vOrange=issue.getTotalOffersPriceUSD vGreen=issue.getTotalPaidPriceUSD currency='US$' %}
+        </div>
+        <div>
+        {% include 'core/include/green_and_orange.html' with vOrange=issue.getTotalOffersPriceBTC vGreen=issue.getTotalPaidPriceBTC currency='BTC' %}
+        </div>
       </td>
       {% endifequal %}
 
       {% ifequal showWorking "true" %}
       <td>
-        {% include 'core/green_and_orange.html' with vOpen=issue.countSolutionsInProgress vPaid=issue.countSolutionsDone %}
+        {% include 'core/include/green_and_orange.html' with vOrange=issue.countSolutionsInProgress vGreen=issue.countSolutionsDone %}
       </td>
       {% endifequal %}
 
