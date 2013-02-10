@@ -78,7 +78,3 @@ def stats(request):
 
 
 
-
-
-
-

@@ -45,7 +45,7 @@ def paypalCancel(request):
         if(curr_payment.status != Payment.CONFIRMED_WEB and curr_payment.status != Payment.CONFIRMED_IPN):
             curr_payment.cancel()
             msg = _('Payment canceled')
-            logger.info(_('CANCELED payment %s')%curr_payment.id)
+            logger.info('CANCELED payment %s' % curr_payment.id)
         else:
             msg = _('Error: attempt to cancel a payment already processed')
             curr_payment = None
@@ -56,6 +56,7 @@ def paypalCancel(request):
         curr_payment = None
         logger.warn('CANCEL received while no payment in session. user = %s'%request.user.id)
     messages.error(request, "Payment canceled.")
+    #TODO: Show msg to user
     # return render_to_response('core/paypal_canceled.html',
     #     {'msg':msg,
     #     'payment':curr_payment},
