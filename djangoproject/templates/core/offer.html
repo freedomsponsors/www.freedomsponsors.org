@@ -26,7 +26,7 @@
 <hr>
 
 
-{% include 'core/issue_offer_action_bar.html' %}
+{% include 'core/include/issue_offer_action_bar.html' %}
 
 <a href="{{offer.issue.get_view_link}}">View issue</a>
 
@@ -83,7 +83,7 @@
 <h3>Offer comments</h3>
 {% for comment in offer.getComments %}
   <hr>
-  {% include 'core/include_comment.html' with counter=forloop.counter formaction='/core/offer/comment/edit/submit' %}
+  {% include 'core/include/comment.html' with counter=forloop.counter formaction='/core/offer/comment/edit/submit' %}
 {% endfor %}
 
 <script>

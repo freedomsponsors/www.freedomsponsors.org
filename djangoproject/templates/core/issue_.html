@@ -1,0 +1,195 @@
+{% extends "core/base.html" %}
+
+{% block og_meta_description %}
+    <meta property="og:description"
+          content="[ Issue ] 
+  {% if issue.key %}
+    {{issue.key}}:
+  {% endif %}
+  {{issue.title}} (worth US$ {{issue.getTotalOffersPriceUSD}})"/>
+{% endblock og_meta_description %}
+
+
+
+
+{% block mainContent%}
+
+<h3 class="issue-header"> [ Issue ] 
+  {% if issue.key %}
+    {{issue.key}}:
+  {% endif %}
+  {{issue.title}} (worth US$ {{issue.getTotalOffersPriceUSD}}) 
+{% if issue.trackerURL %}
+<a href="{{issue.trackerURL}}" class="btn btn-primary" target="_issue">Open original issue</a>
+{% endif %}
+</h3>
+
+<hr>
+
+{% include 'core/include/issue_offer_action_bar.html' %}
+<div id="issue-info">
+  Created by: <a href="{{issue.createdByUser.get_view_link}}">{{issue.createdByUser.getUserInfo.screenName}}</a>
+  {% if issue.project %}
+   | Project: <a target="_project" href="{{issue.project.homeURL}}">{{issue.project.name}}</a>
+  {% endif %}
+  {% if issue.description %}
+  <br><br>
+  <h3>Issue Description</h3>
+  <div class="alert alert-info">{{ issue.description|linebreaks }}</div>
+  {% endif %}
+</div>
+<hr>
+
+{% if issue.getOffers %}
+<div id="issue-offers">
+<h3> Offers </h3>
+<table class="table table-condensed table-striped">
+  <thead>
+    <tr>
+      <th>Offer (US$)</th>
+      <th>Sponsor</th>
+      <th style="width:50px">Acceptance</th>
+      <th>Status</th>
+      <th>Added</th>
+      <th>Expires</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for offer in issue.getOffers %}
+    <tr>
+      <td><a href="{{ offer.get_view_link }}">{{offer.price_2}}</a></td>
+      <td><a href="{{ offer.sponsor.get_view_link }}"><img src="{{offer.sponsor.gravatar_url_medium}}"> {{ offer.sponsor.getUserInfo.screenName }}</a></td>
+      <td style="text-align:center">
+        {% if offer.no_forking %}
+          <i class="icon-home popopo" rel="popover" data-content="Solution must be available in the main project codebase. Forking is not OK." data-original-title="No forking"></i>
+        {% endif %}
+        {% if offer.require_release %}
+          <i class="icon-gift popopo" rel="popover" data-content="Solution must be available as a new released version. Just commiting is not enough." data-original-title="Release required"></i>
+        {% endif %}
+      </td>
+      <td>{% if offer.is_expired %}EXPIRED{% else %}{{offer.status}}{% endif %}</td>
+      <td><span title="{{ offer.creationDate }}">{{ offer.creationDate|date:"M/d/Y" }}</span></td>
+      <td>
+        {% if offer.is_expired %}
+          <span title="Expired!"><i class="icon-warning-sign"></i></span>
+        {% endif %}
+        <span title="{{ offer.expirationDate }}">{{ offer.expirationDate|date:"M/d/Y" }}</span>
+      </td>
+    </tr>
+    <tr>
+{% endfor %}
+  </tbody>
+</table>
+</div>
+{% endif %}
+
+
+{% if issue.getSolutions %}
+<div id="issue-solutions">
+	<h3> People working on this issue </h3>
+	<table class="table table-condensed table-striped">
+	  <thead>
+	    <tr>
+	      <th>Programmer</th>
+	      <th>Status</th>
+	      <th>Added</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	{% for solution in issue.getSolutions %}
+	    <tr>
+	      <td><a href="{{solution.programmer.get_view_link}}"><img src="{{solution.programmer.gravatar_url_medium}}"> {{ solution.programmer.getUserInfo.screenName }}</a></td>
+	      <td>{{solution.status}}
+        {% if solution.accepting_payments %}
+          / Accepting payments
+        {% endif %}
+        </td>
+	      <td><span title="{{ solution.creationDate }}">{{ solution.creationDate|date:"D, d/M/Y" }}</span></td>
+	    </tr>
+	    <tr>
+	{% endfor %}
+	  </tbody>
+	</table>
+</div>
+{% endif %}
+
+<div id="issue-comments">
+
+<h3>Issue comments</h3>
+  <hr>
+{% for comment in issue.getComments %}
+
+  {% include 'core/include/comment.html' with counter=forloop.counter formaction='/core/issue/comment/edit/submit' %}
+  <hr>
+{% endfor %}
+
+<script>
+    function loadCommentHistory(comment_id){
+        $("body").addClass("loading");
+        $.ajax({
+            url: '/core/issue/comment/'+comment_id+'/history',
+            dataType: 'HTML',
+            async: true,
+            success: function(data){
+                document.getElementById('ajax_popup_modal').innerHTML = data
+                $('#ajax_popup_modal').modal()
+                $("body").removeClass("loading");
+                return false;
+            },
+            error: function(a,b,c){
+                alert(a+' '+b+' '+c);
+            }
+        });
+    }
+</script>
+</div>
+
+{% if user.is_authenticated %}
+  <form method="post" class="well form-horizontal" action="/core/issue/comment/add/submit">
+  {% csrf_token %}
+    <fieldset>
+
+  	<input type="hidden" id="issue_id" name="issue_id" value="{{issue.id}}">
+      
+      <div class="control-group" id="div_commentContent">
+        <label class="control-label" for="content">Your comment</label>
+        <div class="controls">
+          <textarea class="input-xlarge span10" style="font-family:monospace" id="content" name="content" rows="10" onkeyup="javascript:preview_add_comment()"></textarea>
+          <p class="help-block">
+            You can use <a target="_markdown" href="http://blog.freedomsponsors.org/markdown_formatting/">markdown</a> for formatting
+          </p>
+          Preview
+          <div class="well" id="preview_0">
+          </div>
+        </div>
+      </div>
+
+      <div id="div_formActions" class="form-actions">
+        <button type="submit" id="btnSubmitNewComment" class="btn btn-primary">Add</button>
+     </div>
+    </fieldset>
+  </form>
+
+{% endif %}
+
+<script>
+  function hideEditComment(counter){
+    $('#div_comment_r_'+counter).slideDown();
+    $('#div_comment_w_'+counter).slideUp();
+  }
+  function showEditComment(counter){
+    $('#div_comment_r_'+counter).slideUp();
+    $('#div_comment_w_'+counter).slideDown();
+  }
+  function preview_add_comment(){
+    preview_comment('#content', '#preview_0')
+  }
+  function preview_comment(taid, divid){
+    var contents = $(taid).val()
+    var converter = new Showdown.converter();
+    var html = converter.makeHtml(contents);
+    $(divid).html(html)
+  }
+</script>
+
+{% endblock mainContent%}
