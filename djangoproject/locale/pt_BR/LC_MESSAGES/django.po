@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-10 00:30-0200\n"
+"POT-Creation-Date: 2013-02-10 15:56-0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,15 +47,15 @@ msgstr "Pagamento cancelado"
 msgid "Error: attempt to cancel a payment already processed"
 msgstr "Erro: tentativa de cancelar um pagamento já processado"
 
-#: core/views/paypal_views.py:55 core/views/paypal_views.py:87
+#: core/views/paypal_views.py:55 core/views/paypal_views.py:88
 msgid "Session expired"
 msgstr "Sessão expirada"
 
-#: core/views/paypal_views.py:73
+#: core/views/paypal_views.py:74
 msgid "OK"
 msgstr "OK"
 
-#: core/views/paypal_views.py:75
+#: core/views/paypal_views.py:76
 msgid "unverified IPN "
 msgstr "IPN não verificado"
 
@@ -496,7 +496,6 @@ msgid "Programmer"
 msgstr "Programador"
 
 #: templates/core/issue.html:139 templates/core/issue.html.py:170
-#, fuzzy
 msgid "Status"
 msgstr ""
 
@@ -529,7 +528,8 @@ msgstr "Expira"
 msgid ""
 "Solution must be available in the main project codebase. Forking is not OK."
 msgstr ""
-"Solução deve estar disponível no repositório de código principal. Forking não é aceitável."
+"Solução deve estar disponível no repositório de código principal. Forking "
+"não é aceitável."
 
 #: templates/core/issue.html:182
 msgid "No forking"

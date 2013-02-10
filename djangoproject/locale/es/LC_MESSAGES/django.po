@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-10 00:30-0200\n"
+"POT-Creation-Date: 2013-02-10 15:56-0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,24 +43,19 @@ msgstr ""
 msgid "Payment canceled"
 msgstr ""
 
-#: core/views/paypal_views.py:48
-#, python-format
-msgid "CANCELED payment %s"
-msgstr ""
-
 #: core/views/paypal_views.py:50
 msgid "Error: attempt to cancel a payment already processed"
 msgstr ""
 
-#: core/views/paypal_views.py:55 core/views/paypal_views.py:87
+#: core/views/paypal_views.py:55 core/views/paypal_views.py:88
 msgid "Session expired"
 msgstr ""
 
-#: core/views/paypal_views.py:73
+#: core/views/paypal_views.py:74
 msgid "OK"
 msgstr ""
 
-#: core/views/paypal_views.py:75
+#: core/views/paypal_views.py:76
 msgid "unverified IPN "
 msgstr ""
 
@@ -85,14 +80,6 @@ msgstr "Nuevo usuario registrado: "
 #: pagination/templates/pagination/pagination.html:19
 msgid "next"
 msgstr "siguiente"
-
-#: core/views/watch_views.py:11 core/views/watch_views.py:21
-msgid "WATCHING"
-msgstr ""
-
-#: core/views/watch_views.py:16 core/views/watch_views.py:26
-msgid "NOT_WATCHING"
-msgstr ""
 
 #: emailmgr/models.py:10
 msgid "Email Address"

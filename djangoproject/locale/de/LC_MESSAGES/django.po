@@ -23,24 +23,19 @@ msgstr ""
 msgid "Payment canceled"
 msgstr ""
 
-#: core/views/paypal_views.py:48
-#, python-format
-msgid "CANCELED payment %s"
-msgstr ""
-
 #: core/views/paypal_views.py:50
 msgid "Error: attempt to cancel a payment already processed"
 msgstr ""
 
-#: core/views/paypal_views.py:55 core/views/paypal_views.py:87
+#: core/views/paypal_views.py:55 core/views/paypal_views.py:88
 msgid "Session expired"
 msgstr ""
 
-#: core/views/paypal_views.py:73
+#: core/views/paypal_views.py:74
 msgid "OK"
 msgstr ""
 
-#: core/views/paypal_views.py:75
+#: core/views/paypal_views.py:76
 msgid "unverified IPN "
 msgstr ""
 
@@ -64,14 +59,6 @@ msgstr ""
 #: (copy).html:21 (copy).html:23
 #: pagination/templates/pagination/pagination.html:19
 msgid "next"
-msgstr ""
-
-#: core/views/watch_views.py:11 core/views/watch_views.py:21
-msgid "WATCHING"
-msgstr ""
-
-#: core/views/watch_views.py:16 core/views/watch_views.py:26
-msgid "NOT_WATCHING"
 msgstr ""
 
 #: emailmgr/models.py:10
