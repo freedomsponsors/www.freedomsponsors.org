@@ -43,11 +43,6 @@ msgstr "Erro: falta o parâmetro trackerURL"
 msgid "Payment canceled"
 msgstr "Pagamento cancelado"
 
-#: core/views/paypal_views.py:48
-#, python-format
-msgid "CANCELED payment %s"
-msgstr "CANCELADO o pagamento %s"
-
 #: core/views/paypal_views.py:50
 msgid "Error: attempt to cancel a payment already processed"
 msgstr "Erro: tentativa de cancelar um pagamento já processado"
@@ -58,7 +53,7 @@ msgstr "Sessão expirada"
 
 #: core/views/paypal_views.py:73
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: core/views/paypal_views.py:75
 msgid "unverified IPN "
@@ -86,17 +81,9 @@ msgstr "Novo usuário registrado: "
 msgid "next"
 msgstr "próximo"
 
-#: core/views/watch_views.py:11 core/views/watch_views.py:21
-msgid "WATCHING"
-msgstr "ESTA_OBSERVANDO"
-
-#: core/views/watch_views.py:16 core/views/watch_views.py:26
-msgid "NOT_WATCHING"
-msgstr "NAO_ESTA_OBSERVANDO"
-
 #: emailmgr/models.py:10
 msgid "Email Address"
-msgstr "Endereço de E-mail"
+msgstr "Endereço de e-mail"
 
 #: emailmgr/models.py:17
 msgid "email address"
@@ -116,7 +103,7 @@ msgstr "endereço de e-mail já é o primário"
 
 #: emailmgr/views.py:61
 msgid "primary address changed"
-msgstr "endereço primario alterado"
+msgstr "endereço primário alterado"
 
 #: emailmgr/views.py:63
 msgid "email address must be activated first"
@@ -169,7 +156,7 @@ msgstr ""
 "\n"
 "\n"
 "Para ativar o novo endereço de e-mail para '%(user)s' em '%(site_name)s' "
-"cliqueno link a seguir.\n"
+"clique no link a seguir.\n"
 "%(activate_url)s\n"
 "\n"
 "Se você não solicitou este e-mail de ativação, delete-o.\n"
@@ -236,7 +223,7 @@ msgstr "Nome de usuário"
 #: registration/forms.py:36
 msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
 msgstr ""
-"Este valor deve conter somente letras, numeros e os caracteres @/./+/-/_"
+"Este valor deve conter somente letras, números e os caracteres @/./+/-/_"
 
 #: registration/forms.py:39
 msgid "E-mail"
@@ -263,9 +250,9 @@ msgid ""
 "We won't lecture you on password security - you probably heard enough about "
 "it by now. But please make it at least 6 characters long!"
 msgstr ""
-"Nós não vamos ensinalo sobre segurança de senhas - você provavelmente já "
-"ouviu falar bastante sobreisto. Mas, por favor crie uma com pelo menos 6 "
-"dígitos!"
+"Nós não vamos ensiná-lo sobre segurança de senhas - você provavelmente já "
+"ouviu falar bastante sobre isto. Mas, por favor crie uma com pelo menos 6 "
+"caracteres!"
 
 #: registration/forms.py:91
 msgid "The two password fields didn't match."
@@ -313,7 +300,7 @@ msgstr "perfís de registro"
 
 #: social_auth/backends/exceptions.py:29
 msgid "Authentication process was cancelled"
-msgstr "O processo de autenticação foi chamado"
+msgstr "O processo de autenticação foi cancelado"
 
 #: social_auth/backends/exceptions.py:31
 #, python-format
@@ -347,7 +334,7 @@ msgid ""
 "here's what you can do:"
 msgstr ""
 "Se você precisar tanto de uma issue que você está disposto a pagar alguns "
-"trocados por ela,heis o que você pode fazer:"
+"trocados por ela, eis o que você pode fazer:"
 
 #: templates/core/about.html:36
 msgid "1) Create an offer here at FreedomSponsors"
@@ -472,7 +459,7 @@ msgstr "Mais..."
 
 #: templates/core/issue.html:28
 msgid "Created by"
-msgstr ""
+msgstr "Criada por"
 
 #: templates/core/issue.html:30
 #, fuzzy
@@ -486,104 +473,107 @@ msgstr "Patrocinar uma nova issue"
 
 #: templates/core/issue.html:42 templates/core/issue.html.py:163
 msgid "Offers"
-msgstr ""
+msgstr "Ofertas"
 
 #: templates/core/issue.html:63
 msgid "Issue Description"
-msgstr ""
+msgstr "Descrição da Issue"
 
 #: templates/core/issue.html:77
 msgid "Comments"
-msgstr ""
+msgstr "Comentários"
 
 #: templates/core/issue.html:78
 msgid "Who's involved"
-msgstr ""
+msgstr "Quem está envolvido"
 
 #: templates/core/issue.html:134
 msgid "People working on this issue"
-msgstr ""
+msgstr "Pessoas trabalhando nesta issue"
 
 #: templates/core/issue.html:138
 msgid "Programmer"
-msgstr ""
+msgstr "Programador"
 
 #: templates/core/issue.html:139 templates/core/issue.html.py:170
 #, fuzzy
 msgid "Status"
-msgstr "Estatísticas"
+msgstr ""
 
 #: templates/core/issue.html:140 templates/core/issue.html.py:171
 msgid "Added"
-msgstr ""
+msgstr "Adicionada"
 
 #: templates/core/issue.html:149
 msgid "Accepting payments"
-msgstr ""
+msgstr "Aceitando pagamentos"
 
 #: templates/core/issue.html:167
 msgid "Offer"
-msgstr ""
+msgstr "Ofertas"
 
 #: templates/core/issue.html:168
 #, fuzzy
 msgid "Sponsor"
-msgstr "Patrocinados"
+msgstr "Patrocinador"
 
 #: templates/core/issue.html:169
 msgid "Acceptance"
-msgstr ""
+msgstr "Aceitação"
 
 #: templates/core/issue.html:172
 msgid "Expires"
-msgstr ""
+msgstr "Expira"
 
 #: templates/core/issue.html:182
 msgid ""
 "Solution must be available in the main project codebase. Forking is not OK."
 msgstr ""
+"Solução deve estar disponível no repositório de código principal. Forking não é aceitável."
 
 #: templates/core/issue.html:182
 msgid "No forking"
-msgstr ""
+msgstr "Sem forking"
 
 #: templates/core/issue.html:185
 msgid ""
 "Solution must be available as a new released version. Just commiting is not "
 "enough."
 msgstr ""
+"Solução deve estar disponível numa versão fechada. Apenas comitar não é "
+"suficiente."
 
 #: templates/core/issue.html:185
 msgid "Release required"
-msgstr ""
+msgstr "Release necessário"
 
 #: templates/core/issue.html:188
 msgid "EXPIRED"
-msgstr ""
+msgstr "EXPIRADA"
 
 #: templates/core/issue.html:192
 msgid "Expired"
-msgstr ""
+msgstr "Expirada"
 
 #: templates/core/issue.html:214
 msgid "Your comment"
-msgstr ""
+msgstr "Seu comentário"
 
 #: templates/core/issue.html:218
 msgid "You can use"
-msgstr ""
+msgstr "Você pode usar"
 
 #: templates/core/issue.html:218
 msgid "for formatting"
-msgstr ""
+msgstr "para formatar"
 
 #: templates/core/issue.html:220
 msgid "Preview"
-msgstr ""
+msgstr "Visualização"
 
 #: templates/core/issue.html:227
 msgid "Add"
-msgstr ""
+msgstr "Adicionar"
 
 #: templates/core/navbar.html:19
 msgid "View Profile"
