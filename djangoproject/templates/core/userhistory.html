@@ -15,7 +15,7 @@
 
 {% if le_user.getOffers %}
   <h3>Sponsoring issues</h3>
-  {% include 'core/offer_grid.html' with offers=le_user.getOffers %}
+  {% include 'core/include/offer_grid.html' with offers=le_user.getOffers %}
 {% else %}
   <h3>Not sponsoring any issues</h3>
   <hr>
@@ -23,7 +23,7 @@
 {% if le_user.getSolutions %}
   <hr>
   <h3>Working on issues</h3>
-  {% include 'core/solution_grid.html' with solutions=le_user.getSolutions %}
+  {% include 'core/include/solution_grid.html' with solutions=le_user.getSolutions %}
 {% else %}
   <h3>Not working on any issues</h3>
   <hr>

@@ -1,3 +1,4 @@
+{% load i18n %}
 <script>
   $(function(){
     // var comment_{{counter}} = '{{comment.content|escapejs}}';
@@ -22,7 +23,7 @@
         {% endifequal %}
         {% if comment.was_edited %}
             <!-- loadCommentHistory must be defined in the including page -->
-          | <a href="#" onclick="loadCommentHistory({{ comment.id }})" style="color:red">edited</a>
+          | <a href="#" onclick="loadCommentHistory({{ comment.id }})" style="color:red">{% trans "edited"%}</a>
         {% endif %}
       </span>
       <span class="pull-right" title="{{ comment.creationDate }}">{{ comment.creationDate|date:"D, d/M/Y" }}</span>

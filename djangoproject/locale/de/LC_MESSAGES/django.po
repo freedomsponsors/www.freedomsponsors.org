@@ -574,6 +574,10 @@ msgstr ""
 msgid "Users"
 msgstr ""
 
+#: templates/core/include/comment.html:26
+msgid "edited"
+msgstr ""
+
 #: templates/core/include/edit_comment_form.html:16
 msgid "Cancel"
 msgstr ""
