@@ -427,6 +427,9 @@ class Offer(models.Model):
         offer.status = Offer.OPEN
         return offer
 
+    def get_currency_symbol(self):
+        return CURRENCY_SYMBOLS[self.currency]
+
     def price_2(self):
         return twoplaces(self.price)
 
