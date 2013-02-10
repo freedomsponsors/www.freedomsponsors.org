@@ -1,20 +1,21 @@
-  <div id="div_comment_w_{{counter}}" class="hide">
-    <form method="post" class="well form-horizontal" action="{{formaction}}">
-    {% csrf_token %}
-      <fieldset>
-      <input type="hidden" name="comment_id" value="{{comment.id}}">
-        <div class="control-group" id="div_commentContent" style="margin-bottom:0px;">
-          <div class="controls" style="margin-left:0px;">
-            <textarea class="input-xlarge span12" style="font-family:monospace" id="content_{{counter}}" name="content" rows="10" onkeyup="javascript:preview_comment('#content_{{counter}}', '#preview_{{counter}}')">{{comment.content}}</textarea>
-            Preview
-            <div class="well" id="preview_{{counter}}">
-            </div>
+{% load i18n %}
+<div id="div_comment_w_{{counter}}" class="hide">
+  <form method="post" class="well form-horizontal" action="{{formaction}}">
+  {% csrf_token %}
+    <fieldset>
+    <input type="hidden" name="comment_id" value="{{comment.id}}">
+      <div class="control-group" id="div_commentContent" style="margin-bottom:0px;">
+        <div class="controls" style="margin-left:0px;">
+          <textarea class="input-xlarge span12" style="font-family:monospace" id="content_{{counter}}" name="content" rows="10" onkeyup="javascript:preview_comment('#content_{{counter}}', '#preview_{{counter}}')">{{comment.content}}</textarea>
+          {% trans "Preview"%}
+          <div class="well" id="preview_{{counter}}">
           </div>
         </div>
-        <div id="div_formActions" class="pull-right">
-          <a href="javascript:hideEditComment({{counter}})" class="btn">Cancel</a>
-          <button type="submit" id="selector-btnSubmitEditComment{{counter}}" class="btn btn-primary">Submit</button>
-       </div>
-      </fieldset>
-    </form>
-  </div>
+      </div>
+      <div id="div_formActions" class="pull-right">
+        <a href="javascript:hideEditComment({{counter}})" class="btn">{% trans "Cancel"%}</a>
+        <button type="submit" id="selector-btnSubmitEditComment{{counter}}" class="btn btn-primary">{% trans "Submit"%}</button>
+     </div>
+    </fieldset>
+  </form>
+</div>

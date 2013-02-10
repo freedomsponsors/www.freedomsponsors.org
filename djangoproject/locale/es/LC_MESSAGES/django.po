@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-10 15:56-0200\n"
+"POT-Creation-Date: 2013-02-10 16:20-0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -449,6 +449,14 @@ msgstr "Patrocinar un nuevo issue"
 msgid "Offers"
 msgstr ""
 
+#: templates/core/issue.html:43
+msgid "Green means paid. Orange means open."
+msgstr ""
+
+#: templates/core/issue.html:43
+msgid "Colors meaning"
+msgstr ""
+
 #: templates/core/issue.html:63
 msgid "Issue Description"
 msgstr ""
@@ -538,6 +546,7 @@ msgid "for formatting"
 msgstr ""
 
 #: templates/core/issue.html:220
+#: templates/core/include/edit_comment_form.html:10
 msgid "Preview"
 msgstr ""
 
@@ -588,3 +597,64 @@ msgstr ""
 #: templates/core/navbar.html:50
 msgid "Users"
 msgstr "Usuarios"
+
+#: templates/core/include/edit_comment_form.html:16
+msgid "Cancel"
+msgstr ""
+
+#: templates/core/include/edit_comment_form.html:17
+msgid "Submit"
+msgstr ""
+
+#: templates/core/include/issue_offer_action_bar.html:18
+msgid "Add a comment"
+msgstr ""
+
+#: templates/core/include/issue_offer_action_bar.html:25
+msgid "Start accepting payments for this issue."
+msgstr ""
+
+#: templates/core/include/issue_offer_action_bar.html:65
+msgid "Pay Offer"
+msgstr ""
+
+#: templates/core/include/issue_offer_action_bar.html:66
+#, fuzzy
+msgid "Change offer"
+msgstr "Cambiar contraseña"
+
+#: templates/core/include/issue_offer_action_bar.html:67
+msgid "Revoke Offer"
+msgstr ""
+
+#: templates/core/include/issue_offer_action_bar.html:72
+#: templates/core/include/issue_offer_action_bar.html:74
+#, fuzzy
+msgid "Sponsor this issue"
+msgstr "Patrocinar un nuevo issue"
+
+#: templates/core/include/issue_offer_action_bar.html:81
+#, fuzzy
+msgid "Resolve issue"
+msgstr "Patrocinar un nuevo issue"
+
+#: templates/core/include/issue_offer_action_bar.html:82
+msgid "Abort work"
+msgstr ""
+
+#: templates/core/include/issue_offer_action_bar.html:85
+#: templates/core/include/issue_offer_action_bar.html:87
+msgid "Work on this issue"
+msgstr ""
+
+#: templates/core/include/watch_toggle_button.html:8
+#: templates/core/include/watch_toggle_button.html:12
+#: templates/core/include/watch_toggle_button.html:46
+#: templates/core/include/watch_toggle_button.html:54
+msgid "Watch"
+msgstr ""
+
+#: templates/core/include/watch_toggle_button.html:43
+#: templates/core/include/watch_toggle_button.html:52
+msgid "Watching"
+msgstr ""

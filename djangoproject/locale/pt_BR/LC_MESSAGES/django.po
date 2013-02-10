@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-10 15:56-0200\n"
+"POT-Creation-Date: 2013-02-10 16:19-0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -403,7 +403,6 @@ msgid "Twitter"
 msgstr ""
 
 #: templates/core/empty_base.html:16
-#, fuzzy
 msgid ""
 "Check this out: freedomsponsors.org - Crowdfunding Free Software, one issue "
 "at a time."
@@ -462,18 +461,24 @@ msgid "Created by"
 msgstr "Criada por"
 
 #: templates/core/issue.html:30
-#, fuzzy
 msgid "Project"
-msgstr "Lista de projetos"
+msgstr "Projeto"
 
 #: templates/core/issue.html:33
-#, fuzzy
 msgid "Open original issue"
-msgstr "Patrocinar uma nova issue"
+msgstr "Abrir issue original"
 
 #: templates/core/issue.html:42 templates/core/issue.html.py:163
 msgid "Offers"
 msgstr "Ofertas"
+
+#: templates/core/issue.html:43
+msgid "Green means paid. Orange means open."
+msgstr "Verde significa pago. Laranja significa em aberto"
+
+#: templates/core/issue.html:43
+msgid "Colors meaning"
+msgstr "Significado das cores"
 
 #: templates/core/issue.html:63
 msgid "Issue Description"
@@ -512,7 +517,6 @@ msgid "Offer"
 msgstr "Ofertas"
 
 #: templates/core/issue.html:168
-#, fuzzy
 msgid "Sponsor"
 msgstr "Patrocinador"
 
@@ -568,6 +572,7 @@ msgid "for formatting"
 msgstr "para formatar"
 
 #: templates/core/issue.html:220
+#: templates/core/include/edit_comment_form.html:10
 msgid "Preview"
 msgstr "Visualização"
 
@@ -618,3 +623,61 @@ msgstr "Estatísticas"
 #: templates/core/navbar.html:50
 msgid "Users"
 msgstr "Usuários"
+
+#: templates/core/include/edit_comment_form.html:16
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: templates/core/include/edit_comment_form.html:17
+msgid "Submit"
+msgstr "Enviar"
+
+#: templates/core/include/issue_offer_action_bar.html:18
+msgid "Add a comment"
+msgstr "Seu comentário"
+
+#: templates/core/include/issue_offer_action_bar.html:25
+msgid "Start accepting payments for this issue."
+msgstr "Começar a aceitar pagamentos para esta issue."
+
+#: templates/core/include/issue_offer_action_bar.html:65
+msgid "Pay Offer"
+msgstr "Pagar oferta"
+
+#: templates/core/include/issue_offer_action_bar.html:66
+msgid "Change offer"
+msgstr "Mudar oferta"
+
+#: templates/core/include/issue_offer_action_bar.html:67
+msgid "Revoke Offer"
+msgstr "Cancelar oferta"
+
+#: templates/core/include/issue_offer_action_bar.html:72
+#: templates/core/include/issue_offer_action_bar.html:74
+msgid "Sponsor this issue"
+msgstr "Patrocinar esta issue"
+
+#: templates/core/include/issue_offer_action_bar.html:81
+msgid "Resolve issue"
+msgstr "Resolver issue"
+
+#: templates/core/include/issue_offer_action_bar.html:82
+msgid "Abort work"
+msgstr "Abortar trabalho"
+
+#: templates/core/include/issue_offer_action_bar.html:85
+#: templates/core/include/issue_offer_action_bar.html:87
+msgid "Work on this issue"
+msgstr "Trabalhar nesta issue"
+
+#: templates/core/include/watch_toggle_button.html:8
+#: templates/core/include/watch_toggle_button.html:12
+#: templates/core/include/watch_toggle_button.html:46
+#: templates/core/include/watch_toggle_button.html:54
+msgid "Watch"
+msgstr "Observar"
+
+#: templates/core/include/watch_toggle_button.html:43
+#: templates/core/include/watch_toggle_button.html:52
+msgid "Watching"
+msgstr "Observando"

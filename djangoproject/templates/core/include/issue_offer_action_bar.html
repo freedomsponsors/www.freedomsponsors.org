@@ -1,3 +1,4 @@
+{% load i18n %}
 <script src="/static/bootstrap/js/jquery.numeric.js"></script>
 <div class="modal hide fade in" id="genericCommentFormModal">
   <div class="modal-header">
@@ -14,14 +15,14 @@
         <input type="hidden" name="solution_id" value="{{mysolution.id}}">
         <div class="control-group">
           <!-- issue description -->
-          <label class="control-label" for="comment">Add a comment</label>
+          <label class="control-label" for="comment">{% trans "Add a comment" %}</label>
           <div class="controls">
             <textarea class="input-xlarge span11" placeholder="some placeholder" id="commentFormModal_comment" name="comment" rows="10"></textarea>
           </div>
           <div class="controls hide" id="div_accept_payments">
             <label class="checkbox">
               <input type="checkbox" id="accept_payments" name="accept_payments" value="accept_payments">
-              Start accepting payments for this issue.
+              {% trans "Start accepting payments for this issue." %}
             </label>
           </div>
         </div>
@@ -61,35 +62,33 @@
 {% if not offer or not myoffer or myoffer.id == offer.id %}
   {% if myoffer and myoffer.status == 'OPEN' %}
     <div class="btn-group">
-      <a href="/core/offer/{{myoffer.id}}/pay" class="btn btn-success">Pay Offer</a>
-      <a href="javascript:showModal_editOffer()" class="btn btn-warning">Change offer</a>
-      <a href="javascript:showModal_revokeThisOffer()" class="btn btn-danger">Revoke Offer</a>
+      <a href="/core/offer/{{myoffer.id}}/pay" class="btn btn-success">{% trans "Pay Offer" %}</a>
+      <a href="javascript:showModal_editOffer()" class="btn btn-warning">{% trans "Change offer" %}</a>
+      <a href="javascript:showModal_revokeThisOffer()" class="btn btn-danger">{% trans "Revoke Offer" %}</a>
     </div>
   {% else %}
     <div class="btn-group">
     {% if user.is_authenticated %}
-      <a href="javascript:showModal_sponsorThisIssue()" class="btn btn-primary">Sponsor this issue</a>
+      <a href="javascript:showModal_sponsorThisIssue()" class="btn btn-primary">{% trans "Sponsor this issue" %}</a>
     {% else %}
-      <a href="/core/login/?next={{issue.get_view_link}}" class="btn btn-primary">Sponsor this issue</a>
+      <a href="/core/login/?next={{issue.get_view_link}}" class="btn btn-primary">{% trans "Sponsor this issue" %}</a>
     {% endif %}
     </div>
   {% endif %}
 {% endif %}
     <div class="btn-group">
     {% if mysolution and mysolution.status == 'IN_PROGRESS' %}
-      <a href="javascript:showModal_resolveThisIssue()" class="btn btn-success">Resolve issue</a>
-      <a href="javascript:showModal_abortWorkOnThisIssue()" class="btn btn-danger">Abort work</a>
+      <a href="javascript:showModal_resolveThisIssue()" class="btn btn-success">{% trans "Resolve issue" %}</a>
+      <a href="javascript:showModal_abortWorkOnThisIssue()" class="btn btn-danger">{% trans "Abort work" %}</a>
     {% else %}
       {% if user.is_authenticated %}
-        <a href="javascript:showModal_workOnThisIssue()" class="btn btn-primary">Work on this issue</a>
+        <a href="javascript:showModal_workOnThisIssue()" class="btn btn-primary">{% trans "Work on this issue" %}</a>
       {% else %}
-        <a href="/core/login/?next={{issue.get_view_link}}" class="btn btn-primary">Work on this issue</a>
+        <a href="/core/login/?next={{issue.get_view_link}}" class="btn btn-primary">{% trans "Work on this issue" %}</a>
       {% endif %}
     {% endif %}
     </div>
-    {% if user.is_authenticated %}
-      {% include 'core/watch_toggle_button.html' %}
-    {% endif %}
+    {% include 'core/include/watch_toggle_button.html' %}
 </div>
 
 <script>
