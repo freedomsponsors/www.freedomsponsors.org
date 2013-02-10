@@ -9,7 +9,7 @@
         <input type="text" class="search-query" style="width:100%" name="s" value="{{s|default:''}}" placeholder="Search terms">
       </div>
       <div class="span3" style="">
-        {% include 'core/generic_typeahead.html' with placeholder="Filter By Project" ajaxpath="/core/json/project?query=" name="project_" hval=project_id tval=project_name tclass="search-query span12" %}
+        {% include 'core/include/generic_typeahead.html' with placeholder="Filter By Project" ajaxpath="/core/json/project?query=" name="project_" hval=project_id tval=project_name tclass="search-query span12" %}
       </div>
     </div>
     <div class="row" style="margin-top:10px;">

@@ -113,7 +113,7 @@
           <div id="div_project_typeahed">
             <label class="control-label" for="project_name">Project</label>
             <div class="controls">
-              {% include 'core/generic_typeahead.html' with placeholder="Search project by name" ajaxpath="/core/json/project?query=" name="project_" hval=project_id tval=project_name %}
+              {% include 'core/include/generic_typeahead.html' with placeholder="Search project by name" ajaxpath="/core/json/project?query=" name="project_" hval=project_id tval=project_name %}
             </div>
           </div>
           <div id="div_createProject">
@@ -166,7 +166,7 @@
     <div id="div_step4_w" class="hide">
 
       <div id="div_offer_form_fields">
-      {% include 'core/offer_form_fields.html' %}
+      {% include 'core/include/offer_form_fields.html' %}
       </div>
       <div id="div_kickstart_message">
         <h3>You're about to "kickstart" an issue.</h3>

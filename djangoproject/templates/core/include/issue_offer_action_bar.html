@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load l10n %}
 <script src="/static/bootstrap/js/jquery.numeric.js"></script>
 <div class="modal hide fade in" id="genericCommentFormModal">
   <div class="modal-header">
@@ -49,7 +50,7 @@
         <input type="hidden" name="issue_id" value="{{issue.id}}">
         <input type="hidden" name="offer_id" value="{{myoffer.id}}">
 
-        {% include 'core/offer_form_fields.html' %}
+        {% include 'core/include/offer_form_fields.html' %}
       </div>
       <div class="modal-footer">
         <button id="btnSubmitOffer" class="btn btn-primary">Sponsor this issue!</button>
@@ -111,7 +112,9 @@
   myoffer = {
     id : "{{myoffer.id}}",
     acceptanceCriteria : "{{myoffer.acceptanceCriteria|escapejs}}",
+    {% localize off %}
     price : {{myoffer.price}},
+    {% endlocalize %}
     no_forking : '{{myoffer.no_forking}}' == 'True',
     require_release : '{{myoffer.require_release}}' == 'True',
     expires : '{{myoffer.expires}}' == 'True',

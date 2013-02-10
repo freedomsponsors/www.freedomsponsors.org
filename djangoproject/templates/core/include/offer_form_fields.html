@@ -70,14 +70,22 @@
 
   function validateOffer(){
       var price = parseFloat($('#price').val());
+      var currency = $('input[name=currency]:checked').val()
       if(isNaN(price)){
         alert('please specify an offer value');
         return false;
       }
-      if(price < 5){
-        alert('The minimum offer is US$ 5,00');
-        alert('US$ '+price+"?! You're kidding, right? Come on...");
-        return false;
+      if(currency == 'BTC'){
+        if(price < 0.5){
+          alert('The minimum offer is BTC 0.50');
+          return false;
+        }
+      } else {
+        if(price < 5){
+          alert('The minimum offer is US$ 5.00');
+          alert('US$ '+price+"?! You're kidding, right? Come on...");
+          return false;
+        }
       }
       if(!$('#acceptanceCriteria').val()){
         alert('please specify you acceptance criteria for this offer');
