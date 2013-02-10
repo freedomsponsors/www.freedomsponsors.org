@@ -7,7 +7,7 @@ msgstr ""
 msgid "new Feedback: %s"
 msgstr ""
 
-#: core/views/issue_views.py:24 core/views/issue_views.py:37
+#: core/views/issue_views.py:27 core/views/issue_views.py:41
 msgid "ERROR: "
 msgstr ""
 
@@ -19,36 +19,48 @@ msgstr ""
 msgid "Error: need trackerURL parameter."
 msgstr ""
 
-#: core/views/paypal_views.py:53
+#: core/views/paypal_views.py:47
 msgid "Payment canceled"
 msgstr ""
 
-#: core/views/paypal_views.py:54
+#: core/views/paypal_views.py:48
 #, python-format
 msgid "CANCELED payment %s"
 msgstr ""
 
-#: core/views/paypal_views.py:56
+#: core/views/paypal_views.py:50
 msgid "Error: attempt to cancel a payment already processed"
 msgstr ""
 
-#: core/views/paypal_views.py:61 core/views/paypal_views.py:93
+#: core/views/paypal_views.py:55 core/views/paypal_views.py:87
 msgid "Session expired"
 msgstr ""
 
-#: core/views/paypal_views.py:79
+#: core/views/paypal_views.py:73
 msgid "OK"
 msgstr ""
 
-#: core/views/paypal_views.py:81
+#: core/views/paypal_views.py:75
 msgid "unverified IPN "
 msgstr ""
 
-#: core/views/user_views.py:46
+#: core/views/user_views.py:36
+msgid "English"
+msgstr ""
+
+#: core/views/user_views.py:37
+msgid "Brazilian Portuguese"
+msgstr ""
+
+#: core/views/user_views.py:38
+msgid "Spanish"
+msgstr ""
+
+#: core/views/user_views.py:52
 msgid "New user registered: "
 msgstr ""
 
-#: core/views/user_views.py:53 pagination/templates/pagination/pagination
+#: core/views/user_views.py:59 pagination/templates/pagination/pagination
 #: (copy).html:21 (copy).html:23
 #: pagination/templates/pagination/pagination.html:19
 msgid "next"
@@ -403,12 +415,123 @@ msgstr ""
 msgid "Sponsored"
 msgstr ""
 
-#: templates/core/home.html:113 templates/core/home.html.py:130
+#: templates/core/home.html:92
+msgid "Kickstarting"
+msgstr ""
+
+#: templates/core/home.html:123 templates/core/home.html.py:136
 msgid "More..."
 msgstr ""
 
-#: templates/core/home.html:120
-msgid "Kickstarting"
+#: templates/core/issue.html:28
+msgid "Created by"
+msgstr ""
+
+#: templates/core/issue.html:30
+msgid "Project"
+msgstr ""
+
+#: templates/core/issue.html:33
+msgid "Open original issue"
+msgstr ""
+
+#: templates/core/issue.html:42 templates/core/issue.html.py:163
+msgid "Offers"
+msgstr ""
+
+#: templates/core/issue.html:63
+msgid "Issue Description"
+msgstr ""
+
+#: templates/core/issue.html:77
+msgid "Comments"
+msgstr ""
+
+#: templates/core/issue.html:78
+msgid "Who's involved"
+msgstr ""
+
+#: templates/core/issue.html:134
+msgid "People working on this issue"
+msgstr ""
+
+#: templates/core/issue.html:138
+msgid "Programmer"
+msgstr ""
+
+#: templates/core/issue.html:139 templates/core/issue.html.py:170
+msgid "Status"
+msgstr ""
+
+#: templates/core/issue.html:140 templates/core/issue.html.py:171
+msgid "Added"
+msgstr ""
+
+#: templates/core/issue.html:149
+msgid "Accepting payments"
+msgstr ""
+
+#: templates/core/issue.html:167
+msgid "Offer"
+msgstr ""
+
+#: templates/core/issue.html:168
+msgid "Sponsor"
+msgstr ""
+
+#: templates/core/issue.html:169
+msgid "Acceptance"
+msgstr ""
+
+#: templates/core/issue.html:172
+msgid "Expires"
+msgstr ""
+
+#: templates/core/issue.html:182
+msgid ""
+"Solution must be available in the main project codebase. Forking is not OK."
+msgstr ""
+
+#: templates/core/issue.html:182
+msgid "No forking"
+msgstr ""
+
+#: templates/core/issue.html:185
+msgid ""
+"Solution must be available as a new released version. Just commiting is not "
+"enough."
+msgstr ""
+
+#: templates/core/issue.html:185
+msgid "Release required"
+msgstr ""
+
+#: templates/core/issue.html:188
+msgid "EXPIRED"
+msgstr ""
+
+#: templates/core/issue.html:192
+msgid "Expired"
+msgstr ""
+
+#: templates/core/issue.html:214
+msgid "Your comment"
+msgstr ""
+
+#: templates/core/issue.html:218
+msgid "You can use"
+msgstr ""
+
+#: templates/core/issue.html:218
+msgid "for formatting"
+msgstr ""
+
+#: templates/core/issue.html:220
+msgid "Preview"
+msgstr ""
+
+#: templates/core/issue.html:227
+msgid "Add"
 msgstr ""
 
 #: templates/core/navbar.html:19

@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-30 17:33-0200\n"
+"POT-Creation-Date: 2013-02-10 00:30-0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: core/views/feedback_views.py:21
@@ -27,7 +27,7 @@ msgstr "título e descrição são obrigatórios"
 msgid "new Feedback: %s"
 msgstr "novo Feedback: %s"
 
-#: core/views/issue_views.py:24 core/views/issue_views.py:37
+#: core/views/issue_views.py:27 core/views/issue_views.py:41
 msgid "ERROR: "
 msgstr "ERRO:"
 
@@ -39,36 +39,48 @@ msgstr "Erro: falta o parâmetro da query"
 msgid "Error: need trackerURL parameter."
 msgstr "Erro: falta o parâmetro trackerURL"
 
-#: core/views/paypal_views.py:53
+#: core/views/paypal_views.py:47
 msgid "Payment canceled"
 msgstr "Pagamento cancelado"
 
-#: core/views/paypal_views.py:54
+#: core/views/paypal_views.py:48
 #, python-format
 msgid "CANCELED payment %s"
 msgstr "CANCELADO o pagamento %s"
 
-#: core/views/paypal_views.py:56
+#: core/views/paypal_views.py:50
 msgid "Error: attempt to cancel a payment already processed"
 msgstr "Erro: tentativa de cancelar um pagamento já processado"
 
-#: core/views/paypal_views.py:61 core/views/paypal_views.py:93
+#: core/views/paypal_views.py:55 core/views/paypal_views.py:87
 msgid "Session expired"
 msgstr "Sessão expirada"
 
-#: core/views/paypal_views.py:79
+#: core/views/paypal_views.py:73
 msgid "OK"
 msgstr ""
 
-#: core/views/paypal_views.py:81
+#: core/views/paypal_views.py:75
 msgid "unverified IPN "
 msgstr "IPN não verificado"
 
-#: core/views/user_views.py:46
+#: core/views/user_views.py:36
+msgid "English"
+msgstr ""
+
+#: core/views/user_views.py:37
+msgid "Brazilian Portuguese"
+msgstr ""
+
+#: core/views/user_views.py:38
+msgid "Spanish"
+msgstr ""
+
+#: core/views/user_views.py:52
 msgid "New user registered: "
 msgstr "Novo usuário registrado: "
 
-#: core/views/user_views.py:53 pagination/templates/pagination/pagination
+#: core/views/user_views.py:59 pagination/templates/pagination/pagination
 #: (copy).html:21 (copy).html:23
 #: pagination/templates/pagination/pagination.html:19
 msgid "next"
@@ -156,8 +168,8 @@ msgid ""
 msgstr ""
 "\n"
 "\n"
-"Para ativar o novo endereço de e-mail para '%(user)s' em '%(site_name)s' clique"
-"no link a seguir.\n"
+"Para ativar o novo endereço de e-mail para '%(user)s' em '%(site_name)s' "
+"cliqueno link a seguir.\n"
 "%(activate_url)s\n"
 "\n"
 "Se você não solicitou este e-mail de ativação, delete-o.\n"
@@ -223,7 +235,8 @@ msgstr "Nome de usuário"
 
 #: registration/forms.py:36
 msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
-msgstr "Este valor deve conter somente letras, numeros e os caracteres @/./+/-/_"
+msgstr ""
+"Este valor deve conter somente letras, numeros e os caracteres @/./+/-/_"
 
 #: registration/forms.py:39
 msgid "E-mail"
@@ -250,8 +263,9 @@ msgid ""
 "We won't lecture you on password security - you probably heard enough about "
 "it by now. But please make it at least 6 characters long!"
 msgstr ""
-"Nós não vamos ensinalo sobre segurança de senhas - você provavelmente já ouviu falar bastante sobre"
-"isto. Mas, por favor crie uma com pelo menos 6 dígitos!"
+"Nós não vamos ensinalo sobre segurança de senhas - você provavelmente já "
+"ouviu falar bastante sobreisto. Mas, por favor crie uma com pelo menos 6 "
+"dígitos!"
 
 #: registration/forms.py:91
 msgid "The two password fields didn't match."
@@ -270,8 +284,8 @@ msgid ""
 "This email address is already in use. Please supply a different email "
 "address."
 msgstr ""
-"Este endereço de e-mail já está em uso. Favor fornecer um endereço de "
-"e-mail diferente."
+"Este endereço de e-mail já está em uso. Favor fornecer um endereço de e-mail "
+"diferente."
 
 #: registration/forms.py:146
 msgid ""
@@ -332,8 +346,8 @@ msgid ""
 "If you need an issue so bad that you'd be willing to PAY a few bucks for it, "
 "here's what you can do:"
 msgstr ""
-"Se você precisar tanto de uma issue que você está disposto a pagar alguns trocados por ela,"
-"heis o que você pode fazer:"
+"Se você precisar tanto de uma issue que você está disposto a pagar alguns "
+"trocados por ela,heis o que você pode fazer:"
 
 #: templates/core/about.html:36
 msgid "1) Create an offer here at FreedomSponsors"
@@ -342,8 +356,7 @@ msgstr "1) Crie uma oferta no FreedomSponsors"
 #: templates/core/about.html:37
 msgid ""
 "The new offer points to the original issue in the project's issue tracker"
-msgstr ""
-"A nova oferta aponta para a issue original do issue tracker do projeto"
+msgstr "A nova oferta aponta para a issue original do issue tracker do projeto"
 
 #: templates/core/about.html:43
 msgid "2) Other people might also be interested on it"
@@ -371,7 +384,8 @@ msgstr "E avisa todo mundo no FreedomSponsors"
 
 #: templates/core/about.html:73
 msgid "5) As a sponsor, you go and and see if it really solves your problem."
-msgstr "6) Como um patrocinador, você vai lá e ve se a issue realmente foi resolvida."
+msgstr ""
+"6) Como um patrocinador, você vai lá e ve se a issue realmente foi resolvida."
 
 #: templates/core/base.html:124 templates/core/navbar.html:47
 msgid "About"
@@ -407,8 +421,8 @@ msgid ""
 "Check this out: freedomsponsors.org - Crowdfunding Free Software, one issue "
 "at a time."
 msgstr ""
-"Dê uma olhada: freedomsponsors.org - Financiamento coletivo de Software livre"
-"uma issue por vez "
+"Dê uma olhada: freedomsponsors.org - Financiamento coletivo de Software "
+"livreuma issue por vez "
 
 #: templates/core/home.html:9
 msgid "Crowdfunding Free Software, one issue at a time"
@@ -416,7 +430,9 @@ msgstr "Financiamento coletivo de Software Livre, uma issue de cada vez"
 
 #: templates/core/home.html:12
 msgid "Place money bounties for open source projects <strong>issues</strong>"
-msgstr "Dê reconpensas financeiras para <strong>issues</strong> de projetos open source"
+msgstr ""
+"Dê reconpensas financeiras para <strong>issues</strong> de projetos open "
+"source"
 
 #: templates/core/home.html:12
 msgid "Learn more..."
@@ -446,13 +462,128 @@ msgstr "Lance &gt;&gt;"
 msgid "Sponsored"
 msgstr "Patrocinados"
 
-#: templates/core/home.html:113 templates/core/home.html.py:130
+#: templates/core/home.html:92
+msgid "Kickstarting"
+msgstr "Lançados"
+
+#: templates/core/home.html:123 templates/core/home.html.py:136
 msgid "More..."
 msgstr "Mais..."
 
-#: templates/core/home.html:120
-msgid "Kickstarting"
-msgstr "Lançados"
+#: templates/core/issue.html:28
+msgid "Created by"
+msgstr ""
+
+#: templates/core/issue.html:30
+#, fuzzy
+msgid "Project"
+msgstr "Lista de projetos"
+
+#: templates/core/issue.html:33
+#, fuzzy
+msgid "Open original issue"
+msgstr "Patrocinar uma nova issue"
+
+#: templates/core/issue.html:42 templates/core/issue.html.py:163
+msgid "Offers"
+msgstr ""
+
+#: templates/core/issue.html:63
+msgid "Issue Description"
+msgstr ""
+
+#: templates/core/issue.html:77
+msgid "Comments"
+msgstr ""
+
+#: templates/core/issue.html:78
+msgid "Who's involved"
+msgstr ""
+
+#: templates/core/issue.html:134
+msgid "People working on this issue"
+msgstr ""
+
+#: templates/core/issue.html:138
+msgid "Programmer"
+msgstr ""
+
+#: templates/core/issue.html:139 templates/core/issue.html.py:170
+#, fuzzy
+msgid "Status"
+msgstr "Estatísticas"
+
+#: templates/core/issue.html:140 templates/core/issue.html.py:171
+msgid "Added"
+msgstr ""
+
+#: templates/core/issue.html:149
+msgid "Accepting payments"
+msgstr ""
+
+#: templates/core/issue.html:167
+msgid "Offer"
+msgstr ""
+
+#: templates/core/issue.html:168
+#, fuzzy
+msgid "Sponsor"
+msgstr "Patrocinados"
+
+#: templates/core/issue.html:169
+msgid "Acceptance"
+msgstr ""
+
+#: templates/core/issue.html:172
+msgid "Expires"
+msgstr ""
+
+#: templates/core/issue.html:182
+msgid ""
+"Solution must be available in the main project codebase. Forking is not OK."
+msgstr ""
+
+#: templates/core/issue.html:182
+msgid "No forking"
+msgstr ""
+
+#: templates/core/issue.html:185
+msgid ""
+"Solution must be available as a new released version. Just commiting is not "
+"enough."
+msgstr ""
+
+#: templates/core/issue.html:185
+msgid "Release required"
+msgstr ""
+
+#: templates/core/issue.html:188
+msgid "EXPIRED"
+msgstr ""
+
+#: templates/core/issue.html:192
+msgid "Expired"
+msgstr ""
+
+#: templates/core/issue.html:214
+msgid "Your comment"
+msgstr ""
+
+#: templates/core/issue.html:218
+msgid "You can use"
+msgstr ""
+
+#: templates/core/issue.html:218
+msgid "for formatting"
+msgstr ""
+
+#: templates/core/issue.html:220
+msgid "Preview"
+msgstr ""
+
+#: templates/core/issue.html:227
+msgid "Add"
+msgstr ""
 
 #: templates/core/navbar.html:19
 msgid "View Profile"
