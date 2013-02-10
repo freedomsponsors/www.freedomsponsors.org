@@ -177,12 +177,13 @@ class AppDriver:
         browser = self.browser
         browser.visit(self.home_url) 
         browser.click_link_by_partial_text('Kickstarting')
-        _waitUntilTextPresent(browser, title, 1)
+        _waitUntilLinkTextPresent(browser, title, 1)
         browser.click_link_by_partial_text(title)
 
     def followOfferLinkByValue(self, value):
         browser = self.browser
-        
+        browser.click_link_by_partial_text("Who's involved")
+        _waitUntilLinkTextPresent(browser, str(value), 1)
         browser.click_link_by_partial_text(str(value))
 
     def logoff(self):
@@ -348,5 +349,11 @@ def _scrollTo(browser, element):
 def _waitUntilTextPresent(browser, text, timeout=TIMEOUT):
     try:
         _waitUntilTrue(lambda : browser.is_text_present(text), timeout)
+    except TimeOutException:
+        raise BaseException('Timeout waiting for text to be present: '+text)
+        
+def _waitUntilLinkTextPresent(browser, text, timeout=TIMEOUT):
+    try:
+        _waitUntilTrue(lambda : browser.find_link_by_partial_text(text).visible, timeout)
     except TimeOutException:
         raise BaseException('Timeout waiting for text to be present: '+text)
