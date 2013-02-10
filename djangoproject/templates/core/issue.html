@@ -25,7 +25,7 @@
     </h3>
     <hr style="margin-top:2px; margin-bottom:2px;">
     <div id="issue-info">
-      {% trans "Created by" %}: <a href="{{issue.createdByUser.get_view_link}}">{{issue.createdByUser.getUserInfo.screenName}}</a>
+      {% trans "Created by" %}: <a href="{{issue.createdByUser.get_view_link}}"><img src="{{issue.createdByUser.gravatar_url_small}}"> {{issue.createdByUser.getUserInfo.screenName}}</a>
       {% if issue.project %}
        | {% trans "Project" %}: <a target="_project" href="{{issue.project.homeURL}}">{{issue.project.name}}</a>
       {% endif %}
