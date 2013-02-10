@@ -204,7 +204,7 @@
     </div>
 
     {% if user.is_authenticated %}
-      <form method="post" class="well form-horizontal" action="/core/issue/comment/add/submit">
+      <form method="post" class="well form-horizontal" style="margin:20px" action="/core/issue/comment/add/submit">
       {% csrf_token %}
         <fieldset>
 
