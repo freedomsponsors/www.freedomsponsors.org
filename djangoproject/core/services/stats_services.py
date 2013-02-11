@@ -3,25 +3,50 @@ import math
 from core.models import *
 from django.db import connection, transaction
 
-SELECT_SPONSORS = """select t.user_id, t."screenName", sum(p1), sum(p2), coalesce(sum(p1), 0) + coalesce(sum(p2), 0) as s3
-from (select o.id, ui.user_id, ui."screenName", o.price as p1, null as p2
-    from core_userinfo ui, core_offer o
-    where o.sponsor_id = user_id 
-    and o.status = 'OPEN' 
-    and (o."expirationDate" > now() or o."expirationDate" is null)
-    union
-    select o.id, ui.user_id, ui."screenName", null as p1, o.price as p2
-    from core_userinfo ui, core_offer o
-    where o.sponsor_id = user_id 
-    and o.status = 'PAID') t
-group by t.user_id, t."screenName"
-order by s3 desc"""
+SELECT_SPONSORS = """
+select 
+  ui.user_id, 
+  ui."screenName",
+  count(o.id) cOffer,
+  sum(case when (o.status = 'PAID' and o.currency = 'USD') then o.price else 0 end) spaidUSD,
+  sum(case when (o.status = 'OPEN' and (o."expirationDate" is null or o."expirationDate" > now()) and o.currency = 'USD') then o.price else 0 end) sopenUSD,
+  sum(case when (o.status = 'PAID' and o.currency = 'BTC') then o.price else 0 end) spaidBTC,
+  sum(case when (o.status = 'OPEN' and (o."expirationDate" is null or o."expirationDate" > now()) and o.currency = 'BTC') then o.price else 0 end) sopenBTC
+from core_userinfo ui, core_offer o
+where
+  o.sponsor_id = ui.user_id
+group by ui.user_id, ui."screenName"
+having sum(case when (o.status = 'PAID' and o.currency = 'USD') then o.price else 0 end) > 0
+    or sum(case when (o.status = 'OPEN' and (o."expirationDate" is null or o."expirationDate" > now()) and o.currency = 'USD') then o.price else 0 end) > 0
+    or sum(case when (o.status = 'PAID' and o.currency = 'BTC') then o.price else 0 end) > 0
+    or sum(case when (o.status = 'OPEN' and (o."expirationDate" is null or o."expirationDate" > now()) and o.currency = 'BTC') then o.price else 0 end) > 0
+order by sum(case when (o.status = 'PAID' and o.currency = 'USD') then o.price else 0 end) +
+     sum(case when (o.status = 'OPEN' and (o."expirationDate" is null or o."expirationDate" > now()) and o.currency = 'USD') then o.price else 0 end)
+     desc
+"""
 
-SELECT_SPONSORED_PROJECTS = """select pr.id, pr.name, count(i.id) c, sum(o.price) s
+SELECT_SPONSORED_PROJECTS = """
+select 
+  pr.id, 
+  pr.name, 
+  count(distinct i.id) cIssues, 
+  count(o.id) cOffers, 
+  sum(case when (o.status = 'PAID' and o.currency = 'USD') then o.price else 0 end) spaidUSD,
+  sum(case when (o.status = 'OPEN' and (o."expirationDate" is null or o."expirationDate" > now()) and o.currency = 'USD') then o.price else 0 end) sopenUSD,
+  sum(case when (o.status = 'PAID' and o.currency = 'BTC') then o.price else 0 end) spaidBTC,
+  sum(case when (o.status = 'OPEN' and (o."expirationDate" is null or o."expirationDate" > now()) and o.currency = 'BTC') then o.price else 0 end) sopenBTC
 from core_project pr, core_issue i, core_offer o
-where pr.id = i.project_id and i.id = o.issue_id
+where pr.id = i.project_id 
+and i.id = o.issue_id
 group by pr.id, pr.name
-order by s desc"""
+having sum(case when (o.status = 'PAID' and o.currency = 'USD') then o.price else 0 end) > 0
+    or sum(case when (o.status = 'OPEN' and (o."expirationDate" is null or o."expirationDate" > now()) and o.currency = 'USD') then o.price else 0 end) > 0
+    or sum(case when (o.status = 'PAID' and o.currency = 'BTC') then o.price else 0 end) > 0
+    or sum(case when (o.status = 'OPEN' and (o."expirationDate" is null or o."expirationDate" > now()) and o.currency = 'BTC') then o.price else 0 end) > 0
+order by sum(case when (o.status = 'PAID' and o.currency = 'USD') then o.price else 0 end) + 
+     sum(case when (o.status = 'OPEN' and (o."expirationDate" is null or o."expirationDate" > now()) and o.currency = 'USD') then o.price else 0 end)
+     desc
+"""
 
 COUNT_SPONSORS = "select count(distinct sponsor_id) from core_offer"
 COUNT_PROGRAMMERS = "select count(distinct programmer_id) from core_solution"

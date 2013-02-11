@@ -27,17 +27,28 @@
 
   <div>
     <h2> Here's how the offers are distributed among projects </h2>
-    <table>
+    <table class="table-striped table-condensed">
       <tr>
         <th style="text-align:left">Project</th>
-        <th>Sponsored issues</th>
-        <th>Total offers</th>
+        <th>Issues</th>
+        <th>Offers</th>
+        <th>Total offered
+        <i class="icon-question-sign popopo" rel="popover" data-content="Green means paid. Orange means open." data-original-title="Colors meaning"></i>
+        </th>
       </tr>
       {% for project in stats.projects %}
       <tr>
         <td><a href="/core/issue/?s=&project_id={{project.0}}">{{project.1}}</td>
         <td style="text-align:right">{{project.2}}</td>
         <td style="text-align:right">{{project.3}}</td>
+        <td style="text-align:right">
+          <div>
+          {% include 'core/include/green_and_orange.html' with currency="US$" vOrange=project.4 vGreen=project.5 %}
+          </div>
+          <div>
+          {% include 'core/include/green_and_orange.html' with currency="BTC" vOrange=project.6 vGreen=project.7 %}
+          </div>
+        </td>
       </tr>
       {% endfor %}
     </table>
@@ -46,18 +57,25 @@
 
   <div>
     <h2> And here's a list of our top sponsors </h2>
-    <table>
+    <table class="table-striped table-condensed">
       <tr>
         <th style="text-align:left">Sponsor</th>
-        <th>Open offers
+        <th style="text-align:right">Offers</th>
+        <th>Total offered
         <i class="icon-question-sign popopo" rel="popover" data-content="Green means paid. Orange means open." data-original-title="Colors meaning"></i>
       </th>
       </tr>
       {% for sponsor in stats.sponsors %}
       <tr>
         <td><a href="/core/user/{{sponsor.0}}/{{sponsor.1}}">{{sponsor.1}}</td>
+        <td>{{sponsor.2}}</td>
         <td style="text-align:right">
-          {% include 'core/green_and_orange.html' with vOrange=sponsor.2 vGreen=sponsor.3 %}
+          <div>
+          {% include 'core/include/green_and_orange.html' with currency="US$" vOrange=sponsor.3 vGreen=sponsor.4 %}
+          </div>
+          <div>
+          {% include 'core/include/green_and_orange.html' with currency="BTC" vOrange=sponsor.5 vGreen=sponsor.6 %}
+          </div>
         </td>
       </tr>
       {% endfor %}
@@ -69,21 +87,3 @@
   </div>
 
 {% endblock mainContent%}
-
-def get_stats():
-    return {
-        'age' : _age(),
-        'user_count' : UserInfo.objects.count(),
-        'sponsor_count' : _count(COUNT_SPONSORS),
-        'programmer_count' : _count(COUNT_PROGRAMMERS),
-        'offer_count' : _count(COUNT_OFFERS),
-        'issue_count' : _count(COUNT_ISSUES),
-        'paid_offer_count' : _count(COUNT_OFFERS_PAID),
-        'open_offer_count' : _count(COUNT_OFFERS_OPEN),
-        'revoked_offer_count' : _count(COUNT_OFFERS_REVOKED),
-        'paid_sum' : _sum(SUM_PAID),
-        'open_sum' : _sum(SUM_OPEN),
-        'expired_sum' : _sum(SUM_EXPIRED),
-        'revoked_sum' : _sum(SUM_REVOKED),
-        'sponsors' : _select(SELECT_SPONSORS),
-    }
