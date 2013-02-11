@@ -64,13 +64,17 @@ COUNT_OFFERS_OPEN = "select count(*) from core_offer where status = 'OPEN'"
 COUNT_OFFERS_REVOKED = "select count(*) from core_offer where status = 'REVOKED'"
 COUNT_PROJECTS = "select count(distinct project_id) from core_issue where is_feedback = false"
 
-SUM_PAID = "select sum (price) from core_offer where status = 'PAID'"
+SUM_PAID_USD = "select sum (price) from core_offer where status = 'PAID' and currency = 'USD'"
+SUM_PAID_BTC = "select sum (price) from core_offer where status = 'PAID' and currency = 'BTC'"
 
-SUM_OPEN = """select sum (price) from core_offer where status = 'OPEN' and ("expirationDate" is null or "expirationDate" > now())"""
+SUM_OPEN_USD = """select sum (price) from core_offer where status = 'OPEN' and currency = 'USD' and ("expirationDate" is null or "expirationDate" > now())"""
+SUM_OPEN_BTC = """select sum (price) from core_offer where status = 'OPEN' and currency = 'BTC' and ("expirationDate" is null or "expirationDate" > now())"""
 
-SUM_EXPIRED = """select sum (price) from core_offer where status = 'OPEN' and "expirationDate" <= now()"""
+SUM_EXPIRED_USD = """select sum (price) from core_offer where status = 'OPEN' and currency = 'USD' and "expirationDate" <= now()"""
+SUM_EXPIRED_BTC = """select sum (price) from core_offer where status = 'OPEN' and currency = 'BTC' and "expirationDate" <= now()"""
 
-SUM_REVOKED = "select sum (price) from core_offer where status = 'REVOKED'"
+SUM_REVOKED_USD = "select sum (price) from core_offer where status = 'REVOKED' and currency = 'USD'"
+SUM_REVOKED_BTC = "select sum (price) from core_offer where status = 'REVOKED' and currency = 'BTC'"
 
 LAUNCH_DATE = datetime(2012, 7, 8)
 
@@ -89,10 +93,14 @@ def get_stats():
         'paid_offer_count' : _count(COUNT_OFFERS_PAID),
         'open_offer_count' : _count(COUNT_OFFERS_OPEN),
         'revoked_offer_count' : _count(COUNT_OFFERS_REVOKED),
-        'paid_sum' : _sum(SUM_PAID),
-        'open_sum' : _sum(SUM_OPEN),
-        'expired_sum' : _sum(SUM_EXPIRED),
-        'revoked_sum' : _sum(SUM_REVOKED),
+        'paid_sum_usd' : _sum(SUM_PAID_USD),
+        'paid_sum_btc' : _sum(SUM_PAID_BTC),
+        'open_sum_usd' : _sum(SUM_OPEN_USD),
+        'open_sum_btc' : _sum(SUM_OPEN_BTC),
+        'expired_sum_usd' : _sum(SUM_EXPIRED_USD),
+        'expired_sum_btc' : _sum(SUM_EXPIRED_BTC),
+        'revoked_sum_usd' : _sum(SUM_REVOKED_USD),
+        'revoked_sum_btc' : _sum(SUM_REVOKED_BTC),
         'sponsors' : _select(SELECT_SPONSORS),
         'projects' : _select(SELECT_SPONSORED_PROJECTS),
     }
