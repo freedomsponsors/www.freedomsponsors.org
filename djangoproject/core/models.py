@@ -26,6 +26,7 @@ class UserInfo(models.Model):
     is_paypal_email_verified = models.BooleanField()
     hide_from_userlist = models.BooleanField()
     preferred_language_code = models.CharField(max_length=10, null=True, blank=True)
+    bitcoin_receive_address = models.CharField(max_length=128, blank=True)
 
     @classmethod
     def newUserInfo(cls, user):

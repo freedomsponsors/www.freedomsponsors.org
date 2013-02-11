@@ -3,6 +3,7 @@ from emailmgr import utils as emailmgr_utils
 from emailmgr.models import EmailAddress
 from django.contrib.auth.models import User
 from core.models import *
+from django.conf import settings
 
 __author__ = 'tony'
 
@@ -48,6 +49,8 @@ def edit_existing_user(user, dict):
     userinfo.brazilianPaypal = dict.has_key('brazilianPaypal')
     userinfo.hide_from_userlist = dict.has_key('hide_from_userlist')
     userinfo.preferred_language_code = dict['preferred_language_code']
+    if(settings.BITCOIN_ENABLED):
+        userinfo.bitcoin_receive_address = dict['bitcoin_receive_address']
     newEmail = dict['primaryEmail']
     newPaypalEmail = dictOrEmpty(dict, 'paypalEmail')
     if(not newPaypalEmail):

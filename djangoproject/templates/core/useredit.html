@@ -101,10 +101,25 @@
 				Why are you asking me this <i class="icon-question-sign popopo" rel="popover" data-content="Paypal works a little different with brazilian accounts, in such a way that it changes how FreedomSponsors should behave." data-original-title="Because..."></i>
 			</p>
 		</div>
+		{% if BITCOIN_ENABLED %}
+		<div class="control-group">
+		    <script src="/static/js/2.5.3-crypto-sha256.js"></script>
+		    <script src="/static/js/jsbn.js"></script>
+		    <script src="/static/js/jsbn2.js"></script>
+			<script src="/static/js/validate_bitcoin.js"></script>
+			<label class="control-label" for="bitcoin_receive_address">Bitcoin receive address</label>
+			<div class="controls">
+				<input type="text" id="bitcoin_receive_address" name="bitcoin_receive_address" value="{{userinfo.bitcoin_receive_address}}"/>
+				<p class="help-block">
+					Your address to receive Bitcoin payments
+				</p>
+			</div>
+		</div>
+		{% endif %}
 		<div class="control-group">
 			<label class="control-label" for="preferred_language_code">Preferred Language</label>
 			<div class="controls">
-				<select id="preferred_language_code" name="preferred_language_code" value="es">
+				<select id="preferred_language_code" name="preferred_language_code">
 				{% for lang in available_languages %}
 					<option value="{{lang.code}}"
 					{% ifequal lang.code userinfo.preferred_language_code %}
@@ -181,6 +196,11 @@
 		}
 		if(!$('#realName').val().trim()){
 			alert('Real name is required')
+			return false;
+		}
+		bitcoin_addr = $('#bitcoin_receive_address').val()
+		if(bitcoin_addr && !check_address(bitcoin_addr)){
+			alert('Bitcoin address invalid')
 			return false;
 		}
 	}
