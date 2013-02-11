@@ -307,8 +307,18 @@ def _payWithBitcoinForm(offer):
         return redirect(offer.get_view_link())
     solutions_accepting_payments = offer.issue.getSolutionsAcceptingPayments()
     solutions_with_bitcoin = []
+    solutions_without_bitcoin = []
     for solution in solutions_accepting_payments:
         if solution.programmer.getUserInfo().bitcoin_receive_address:
             solutions_with_bitcoin.push(solution)
-            
-    
+        else:
+            solutions_without_bitcoin.push(solution)
+    if solutions_accepting_payments.count() == 0:
+        messages.error(request, 'Currently no programmers are accepting payments for this issue.')
+        return redirect(offer.get_view_link())
+    if solutions_with_bitcoin.count() == 0:
+        messages.error(request, "The programmer(s) who solved this issue have not registered a Bitcoin address yet, so you cannot pay them at this time.<br>"+
+            "Please leave a comment for them, asking them to update this info on their profile page, then come back here again.")
+        return redirect(offer.get_view_link())
+    if solutions_without_bitcoin.count() > 0:
+        
