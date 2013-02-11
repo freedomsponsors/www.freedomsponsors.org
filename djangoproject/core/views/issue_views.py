@@ -270,6 +270,12 @@ def listProjects(request):
 @login_required
 def payOfferForm(request, offer_id):
     offer = Offer.objects.get(pk=offer_id)
+    if(offer.currency == 'USD'):
+        return _payWithPaypalForm(offer)
+    else:
+        return _payWithBitcoinForm(offer)
+
+def _payWithPaypalForm(offer):
     solutions_accepting_payments = offer.issue.getSolutionsAcceptingPayments()
     shared_price = None
 
