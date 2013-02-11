@@ -300,3 +300,15 @@ def _payWithPaypalForm(offer):
          'alert_brazil' : alert_brazil,
          },
         context_instance = RequestContext(request))
+
+def _payWithBitcoinForm(offer):
+    if not settings.BITCOIN_ENABLED:
+        messages.error(request, 'Payments with bitcoin have been disabled')
+        return redirect(offer.get_view_link())
+    solutions_accepting_payments = offer.issue.getSolutionsAcceptingPayments()
+    solutions_with_bitcoin = []
+    for solution in solutions_accepting_payments:
+        if solution.programmer.getUserInfo().bitcoin_receive_address:
+            solutions_with_bitcoin.push(solution)
+            
+    
