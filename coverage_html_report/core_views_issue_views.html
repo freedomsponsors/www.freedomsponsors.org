@@ -5,7 +5,7 @@
     
     
     <meta http-equiv='X-UA-Compatible' content='IE=emulateIE7' />
-    <title>Coverage for core/views/issue_views: 66%</title>
+    <title>Coverage for core/views/issue_views: 56%</title>
     <link rel='stylesheet' href='style.css' type='text/css'>
     
     <script type='text/javascript' src='jquery-1.4.3.min.js'></script>
@@ -21,13 +21,13 @@
 <div id='header'>
     <div class='content'>
         <h1>Coverage for <b>core/views/issue_views</b> :
-            <span class='pc_cov'>66%</span>
+            <span class='pc_cov'>56%</span>
         </h1>
         <img id='keyboard_icon' src='keybd_closed.png'>
         <h2 class='stats'>
-            184 statements &nbsp;
-            <span class='run hide_run shortkey_r button_toggle_run'>128 run</span>
-            <span class='mis shortkey_m button_toggle_mis'>56 missing</span>
+            210 statements &nbsp;
+            <span class='run hide_run shortkey_r button_toggle_run'>129 run</span>
+            <span class='mis shortkey_m button_toggle_mis'>81 missing</span>
             <span class='exc shortkey_x button_toggle_exc'>0 excluded</span>
             
                 <span class='par run hide_run shortkey_p button_toggle_par'>6 partial</span>
@@ -365,6 +365,47 @@
 <p id='n300' class='pln'><a href='#n300'>300</a></p>
 <p id='n301' class='pln'><a href='#n301'>301</a></p>
 <p id='n302' class='pln'><a href='#n302'>302</a></p>
+<p id='n303' class='pln'><a href='#n303'>303</a></p>
+<p id='n304' class='stm run hide_run'><a href='#n304'>304</a></p>
+<p id='n305' class='stm mis'><a href='#n305'>305</a></p>
+<p id='n306' class='stm mis'><a href='#n306'>306</a></p>
+<p id='n307' class='stm mis'><a href='#n307'>307</a></p>
+<p id='n308' class='stm mis'><a href='#n308'>308</a></p>
+<p id='n309' class='stm mis'><a href='#n309'>309</a></p>
+<p id='n310' class='stm mis'><a href='#n310'>310</a></p>
+<p id='n311' class='stm mis'><a href='#n311'>311</a></p>
+<p id='n312' class='stm mis'><a href='#n312'>312</a></p>
+<p id='n313' class='stm mis'><a href='#n313'>313</a></p>
+<p id='n314' class='pln'><a href='#n314'>314</a></p>
+<p id='n315' class='stm mis'><a href='#n315'>315</a></p>
+<p id='n316' class='stm mis'><a href='#n316'>316</a></p>
+<p id='n317' class='stm mis'><a href='#n317'>317</a></p>
+<p id='n318' class='stm mis'><a href='#n318'>318</a></p>
+<p id='n319' class='stm mis'><a href='#n319'>319</a></p>
+<p id='n320' class='stm mis'><a href='#n320'>320</a></p>
+<p id='n321' class='pln'><a href='#n321'>321</a></p>
+<p id='n322' class='stm mis'><a href='#n322'>322</a></p>
+<p id='n323' class='stm mis'><a href='#n323'>323</a></p>
+<p id='n324' class='stm mis'><a href='#n324'>324</a></p>
+<p id='n325' class='stm mis'><a href='#n325'>325</a></p>
+<p id='n326' class='pln'><a href='#n326'>326</a></p>
+<p id='n327' class='pln'><a href='#n327'>327</a></p>
+<p id='n328' class='pln'><a href='#n328'>328</a></p>
+<p id='n329' class='stm mis'><a href='#n329'>329</a></p>
+<p id='n330' class='stm mis'><a href='#n330'>330</a></p>
+<p id='n331' class='stm mis'><a href='#n331'>331</a></p>
+<p id='n332' class='stm mis'><a href='#n332'>332</a></p>
+<p id='n333' class='stm mis'><a href='#n333'>333</a></p>
+<p id='n334' class='pln'><a href='#n334'>334</a></p>
+<p id='n335' class='stm mis'><a href='#n335'>335</a></p>
+<p id='n336' class='pln'><a href='#n336'>336</a></p>
+<p id='n337' class='pln'><a href='#n337'>337</a></p>
+<p id='n338' class='pln'><a href='#n338'>338</a></p>
+<p id='n339' class='pln'><a href='#n339'>339</a></p>
+<p id='n340' class='pln'><a href='#n340'>340</a></p>
+<p id='n341' class='pln'><a href='#n341'>341</a></p>
+<p id='n342' class='pln'><a href='#n342'>342</a></p>
+<p id='n343' class='pln'><a href='#n343'>343</a></p>
                 
             </td>
             <td class='text' valign='top'>
@@ -641,11 +682,11 @@
 <p id='t271' class='pln'><span class='key'>def</span> <span class='nam'>payOfferForm</span><span class='op'>(</span><span class='nam'>request</span><span class='op'>,</span> <span class='nam'>offer_id</span><span class='op'>)</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
 <p id='t272' class='stm mis'>&nbsp; &nbsp; <span class='nam'>offer</span> <span class='op'>=</span> <span class='nam'>Offer</span><span class='op'>.</span><span class='nam'>objects</span><span class='op'>.</span><span class='nam'>get</span><span class='op'>(</span><span class='nam'>pk</span><span class='op'>=</span><span class='nam'>offer_id</span><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
 <p id='t273' class='stm mis'>&nbsp; &nbsp; <span class='key'>if</span><span class='op'>(</span><span class='nam'>offer</span><span class='op'>.</span><span class='nam'>currency</span> <span class='op'>==</span> <span class='str'>&#39;USD&#39;</span><span class='op'>)</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
-<p id='t274' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='key'>return</span> <span class='nam'>_payWithPaypalForm</span><span class='op'>(</span><span class='nam'>offer</span><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
+<p id='t274' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='key'>return</span> <span class='nam'>_payWithPaypalForm</span><span class='op'>(</span><span class='nam'>request</span><span class='op'>,</span> <span class='nam'>offer</span><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
 <p id='t275' class='pln'>&nbsp; &nbsp; <span class='key'>else</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
-<p id='t276' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='key'>return</span> <span class='nam'>_payWithBitcoinForm</span><span class='op'>(</span><span class='nam'>offer</span><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
+<p id='t276' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='key'>return</span> <span class='nam'>_payWithBitcoinForm</span><span class='op'>(</span><span class='nam'>request</span><span class='op'>,</span> <span class='nam'>offer</span><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
 <p id='t277' class='pln'><span class='strut'>&nbsp;</span></p>
-<p id='t278' class='stm run hide_run'><span class='key'>def</span> <span class='nam'>_payWithPaypalForm</span><span class='op'>(</span><span class='nam'>offer</span><span class='op'>)</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
+<p id='t278' class='stm run hide_run'><span class='key'>def</span> <span class='nam'>_payWithPaypalForm</span><span class='op'>(</span><span class='nam'>request</span><span class='op'>,</span> <span class='nam'>offer</span><span class='op'>)</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
 <p id='t279' class='stm mis'>&nbsp; &nbsp; <span class='nam'>solutions_accepting_payments</span> <span class='op'>=</span> <span class='nam'>offer</span><span class='op'>.</span><span class='nam'>issue</span><span class='op'>.</span><span class='nam'>getSolutionsAcceptingPayments</span><span class='op'>(</span><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
 <p id='t280' class='stm mis'>&nbsp; &nbsp; <span class='nam'>shared_price</span> <span class='op'>=</span> <span class='nam'>None</span><span class='strut'>&nbsp;</span></p>
 <p id='t281' class='pln'><span class='strut'>&nbsp;</span></p>
@@ -670,6 +711,47 @@
 <p id='t300' class='pln'>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; <span class='str'>&#39;alert_brazil&#39;</span> <span class='op'>:</span> <span class='nam'>alert_brazil</span><span class='op'>,</span><span class='strut'>&nbsp;</span></p>
 <p id='t301' class='pln'>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; <span class='op'>}</span><span class='op'>,</span><span class='strut'>&nbsp;</span></p>
 <p id='t302' class='pln'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='nam'>context_instance</span> <span class='op'>=</span> <span class='nam'>RequestContext</span><span class='op'>(</span><span class='nam'>request</span><span class='op'>)</span><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
+<p id='t303' class='pln'><span class='strut'>&nbsp;</span></p>
+<p id='t304' class='stm run hide_run'><span class='key'>def</span> <span class='nam'>_payWithBitcoinForm</span><span class='op'>(</span><span class='nam'>request</span><span class='op'>,</span> <span class='nam'>offer</span><span class='op'>)</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
+<p id='t305' class='stm mis'>&nbsp; &nbsp; <span class='key'>if</span> <span class='key'>not</span> <span class='nam'>settings</span><span class='op'>.</span><span class='nam'>BITCOIN_ENABLED</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
+<p id='t306' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='nam'>messages</span><span class='op'>.</span><span class='nam'>error</span><span class='op'>(</span><span class='nam'>request</span><span class='op'>,</span> <span class='str'>&#39;Payments with bitcoin have been disabled&#39;</span><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
+<p id='t307' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='key'>return</span> <span class='nam'>redirect</span><span class='op'>(</span><span class='nam'>offer</span><span class='op'>.</span><span class='nam'>get_view_link</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
+<p id='t308' class='stm mis'>&nbsp; &nbsp; <span class='nam'>solutions_accepting_payments</span> <span class='op'>=</span> <span class='nam'>offer</span><span class='op'>.</span><span class='nam'>issue</span><span class='op'>.</span><span class='nam'>getSolutionsAcceptingPayments</span><span class='op'>(</span><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
+<p id='t309' class='stm mis'>&nbsp; &nbsp; <span class='nam'>solutions_with_bitcoin</span> <span class='op'>=</span> <span class='op'>[</span><span class='op'>]</span><span class='strut'>&nbsp;</span></p>
+<p id='t310' class='stm mis'>&nbsp; &nbsp; <span class='nam'>solutions_without_bitcoin</span> <span class='op'>=</span> <span class='op'>[</span><span class='op'>]</span><span class='strut'>&nbsp;</span></p>
+<p id='t311' class='stm mis'>&nbsp; &nbsp; <span class='key'>for</span> <span class='nam'>solution</span> <span class='key'>in</span> <span class='nam'>solutions_accepting_payments</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
+<p id='t312' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='key'>if</span> <span class='nam'>solution</span><span class='op'>.</span><span class='nam'>programmer</span><span class='op'>.</span><span class='nam'>getUserInfo</span><span class='op'>(</span><span class='op'>)</span><span class='op'>.</span><span class='nam'>bitcoin_receive_address</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
+<p id='t313' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class='nam'>solutions_with_bitcoin</span><span class='op'>.</span><span class='nam'>append</span><span class='op'>(</span><span class='nam'>solution</span><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
+<p id='t314' class='pln'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='key'>else</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
+<p id='t315' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class='nam'>solutions_without_bitcoin</span><span class='op'>.</span><span class='nam'>append</span><span class='op'>(</span><span class='nam'>solution</span><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
+<p id='t316' class='stm mis'>&nbsp; &nbsp; <span class='key'>if</span> <span class='nam'>len</span><span class='op'>(</span><span class='nam'>solutions_accepting_payments</span><span class='op'>)</span> <span class='op'>==</span> <span class='num'>0</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
+<p id='t317' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='nam'>messages</span><span class='op'>.</span><span class='nam'>error</span><span class='op'>(</span><span class='nam'>request</span><span class='op'>,</span> <span class='str'>&#39;Currently no programmers are accepting payments for this issue.&#39;</span><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
+<p id='t318' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='key'>return</span> <span class='nam'>redirect</span><span class='op'>(</span><span class='nam'>offer</span><span class='op'>.</span><span class='nam'>get_view_link</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
+<p id='t319' class='stm mis'>&nbsp; &nbsp; <span class='key'>if</span> <span class='nam'>len</span><span class='op'>(</span><span class='nam'>solutions_with_bitcoin</span><span class='op'>)</span> <span class='op'>==</span> <span class='num'>0</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
+<p id='t320' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='nam'>messages</span><span class='op'>.</span><span class='nam'>error</span><span class='op'>(</span><span class='nam'>request</span><span class='op'>,</span> <span class='str'>&quot;The programmer(s) who solved this issue have not registered a Bitcoin address yet, so you cannot pay them at this time.\n&quot;</span><span class='op'>+</span><span class='strut'>&nbsp;</span></p>
+<p id='t321' class='pln'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class='str'>&quot;Please leave a comment for them, asking them to update this info on their profile page, then come back here again.&quot;</span><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
+<p id='t322' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='key'>return</span> <span class='nam'>redirect</span><span class='op'>(</span><span class='nam'>offer</span><span class='op'>.</span><span class='nam'>get_view_link</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
+<p id='t323' class='stm mis'>&nbsp; &nbsp; <span class='key'>if</span> <span class='nam'>len</span><span class='op'>(</span><span class='nam'>solutions_without_bitcoin</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='num'>0</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
+<p id='t324' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='nam'>names</span> <span class='op'>=</span> <span class='str'>&#39;, &#39;</span><span class='op'>.</span><span class='nam'>join</span><span class='op'>(</span><span class='nam'>map</span><span class='op'>(</span><span class='key'>lambda</span> <span class='nam'>solution</span><span class='op'>:</span><span class='nam'>solution</span><span class='op'>.</span><span class='nam'>programmer</span><span class='op'>.</span><span class='nam'>getUserInfo</span><span class='op'>(</span><span class='op'>)</span><span class='op'>.</span><span class='nam'>screenName</span><span class='op'>,</span> <span class='nam'>solutions_without_bitcoin</span><span class='op'>)</span><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
+<p id='t325' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='nam'>messages</span><span class='op'>.</span><span class='nam'>warning</span><span class='op'>(</span><span class='nam'>request</span><span class='op'>,</span> <span class='str'>&quot;The following programmer(s) have not registered a Bitcoin address: %s\n&quot;</span> <span class='op'>%</span> <span class='nam'>names</span><span class='op'>+</span><span class='strut'>&nbsp;</span></p>
+<p id='t326' class='pln'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class='str'>&quot;Therefore, you won&#39;t be able to make a payment to them at this time.\n&quot;</span><span class='op'>+</span><span class='strut'>&nbsp;</span></p>
+<p id='t327' class='pln'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class='str'>&quot;If you want, you can leave a comment for them, asking them to update this info on their profile page, then come back here again.&quot;</span><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
+<p id='t328' class='pln'><span class='strut'>&nbsp;</span></p>
+<p id='t329' class='stm mis'>&nbsp; &nbsp; <span class='nam'>convert_rate</span> <span class='op'>=</span> <span class='num'>1</span><span class='strut'>&nbsp;</span></p>
+<p id='t330' class='stm mis'>&nbsp; &nbsp; <span class='nam'>currency_symbol</span> <span class='op'>=</span> <span class='str'>&quot;BTC&quot;</span><span class='strut'>&nbsp;</span></p>
+<p id='t331' class='stm mis'>&nbsp; &nbsp; <span class='nam'>alert_brazil</span> <span class='op'>=</span> <span class='nam'>False</span><span class='strut'>&nbsp;</span></p>
+<p id='t332' class='stm mis'>&nbsp; &nbsp; <span class='nam'>shared_price</span> <span class='op'>=</span> <span class='nam'>convert_rate</span> <span class='op'>*</span> <span class='nam'>float</span><span class='op'>(</span><span class='nam'>offer</span><span class='op'>.</span><span class='nam'>price</span><span class='op'>)</span> <span class='op'>/</span> <span class='nam'>len</span><span class='op'>(</span><span class='nam'>solutions_with_bitcoin</span><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
+<p id='t333' class='stm mis'>&nbsp; &nbsp; <span class='nam'>shared_price</span> <span class='op'>=</span> <span class='nam'>twoplaces</span><span class='op'>(</span><span class='nam'>Decimal</span><span class='op'>(</span><span class='nam'>str</span><span class='op'>(</span><span class='nam'>shared_price</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
+<p id='t334' class='pln'><span class='strut'>&nbsp;</span></p>
+<p id='t335' class='stm mis'>&nbsp; &nbsp; <span class='key'>return</span> <span class='nam'>render_to_response</span><span class='op'>(</span><span class='str'>&#39;core/pay_offer.html&#39;</span><span class='op'>,</span><span class='strut'>&nbsp;</span></p>
+<p id='t336' class='pln'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='op'>{</span><span class='str'>&#39;offer&#39;</span><span class='op'>:</span><span class='nam'>offer</span><span class='op'>,</span><span class='strut'>&nbsp;</span></p>
+<p id='t337' class='pln'>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; <span class='str'>&#39;solutions_accepting_payments&#39;</span> <span class='op'>:</span> <span class='nam'>solutions_with_bitcoin</span><span class='op'>,</span><span class='strut'>&nbsp;</span></p>
+<p id='t338' class='pln'>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; <span class='str'>&#39;shared_price&#39;</span> <span class='op'>:</span> <span class='nam'>shared_price</span><span class='op'>,</span><span class='strut'>&nbsp;</span></p>
+<p id='t339' class='pln'>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; <span class='str'>&#39;convert_rate&#39;</span> <span class='op'>:</span> <span class='nam'>convert_rate</span><span class='op'>,</span><span class='strut'>&nbsp;</span></p>
+<p id='t340' class='pln'>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; <span class='str'>&#39;currency_symbol&#39;</span> <span class='op'>:</span> <span class='nam'>currency_symbol</span><span class='op'>,</span><span class='strut'>&nbsp;</span></p>
+<p id='t341' class='pln'>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; <span class='str'>&#39;alert_brazil&#39;</span> <span class='op'>:</span> <span class='nam'>alert_brazil</span><span class='op'>,</span><span class='strut'>&nbsp;</span></p>
+<p id='t342' class='pln'>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; <span class='op'>}</span><span class='op'>,</span><span class='strut'>&nbsp;</span></p>
+<p id='t343' class='pln'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='nam'>context_instance</span> <span class='op'>=</span> <span class='nam'>RequestContext</span><span class='op'>(</span><span class='nam'>request</span><span class='op'>)</span><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
                 
             </td>
         </tr>
