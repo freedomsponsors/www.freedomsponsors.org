@@ -54,7 +54,7 @@
       <div class="alert fade in {% if message.tags %} alert-{{ message.tags }} {% endif %} ">
           <button type="button" class="close" data-dismiss="alert">×</button>
           <ul class="messages">
-              <li>{{ message }}</li>
+              <li>{{ message|linebreaks }}</li>
           </ul>
       </div>
       {% endfor %}

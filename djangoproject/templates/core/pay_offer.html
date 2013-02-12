@@ -1,4 +1,5 @@
 {% extends "core/base.html" %}
+{% load l10n %}
 {% block mainContent%}
 
 <script src="/static/bootstrap/js/jquery.numeric.js"></script>
@@ -61,7 +62,9 @@
 			  <img src="{{solution.programmer.gravatar_url_small}}"/> {{ solution.programmer.getUserInfo.screenName }}
 	      </div>
 	      <div class="span2 input-prepend">
+        {% localize off %}
 		     <span class="add-on">{{currency_symbol}}</span><input type="text" id="pay_{{forloop.counter0}}" name="pay_{{forloop.counter0}}" class="span6 positive" value="{{shared_price}}">
+        {% endlocalize %}
 		  </div>
 		  <div class="span8"></div>
 	    </div><br><br>
@@ -118,7 +121,9 @@
 
   stage = {
     offer_price : {{offer.price}},
+    {% localize off %}
     convert_rate : {{convert_rate}},
+    {% endlocalize %}
   	count : {{solutions_accepting_payments.count}},
     solutions : [
     {% for solution in solutions_accepting_payments %}
