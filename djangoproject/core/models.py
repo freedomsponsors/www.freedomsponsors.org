@@ -65,16 +65,18 @@ class UserInfo(models.Model):
 
 def gravatar_url_small(self):
     gravatar_url = "http://www.gravatar.com/avatar/" + hashlib.md5(self.email.lower()).hexdigest() + "?"
-    # return gravatar_url + urllib.urlencode({'d':"http://dl.dropbox.com/u/2683925/glyphicons_003_user.png", 's':"23"})
-    return gravatar_url + urllib.urlencode({'d':settings.SITE_HOME+"/static/img/user_23.png", 's':"23"})
+    # return gravatar_url + urllib.urlencode({'d':settings.SITE_HOME+"/static/img/user_23.png", 's':"23"})
+    return gravatar_url + "d=identicon&s=23"
 
 def gravatar_url_medium(self):
     gravatar_url = "http://www.gravatar.com/avatar/" + hashlib.md5(self.email.lower()).hexdigest() + "?"
-    return gravatar_url + urllib.urlencode({'d':settings.SITE_HOME+"/static/img/user_48.png", 's':"48"})
+    # return gravatar_url + urllib.urlencode({'d':settings.SITE_HOME+"/static/img/user_48.png", 's':"48"})
+    return gravatar_url + "d=identicon&s=48"
 
 def gravatar_url_big(self):
     gravatar_url = "http://www.gravatar.com/avatar/" + hashlib.md5(self.email.lower()).hexdigest() + "?"
-    return gravatar_url + urllib.urlencode({'d':settings.SITE_HOME+"/static/img/user_128.png", 's':"128"})
+    # return gravatar_url + urllib.urlencode({'d':settings.SITE_HOME+"/static/img/user_128.png", 's':"128"})
+    return gravatar_url + "d=identicon&s=128"
 
 def getUserInfo(self):
     return get_or_none(UserInfo, user=self)
