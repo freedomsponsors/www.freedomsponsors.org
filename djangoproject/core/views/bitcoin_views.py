@@ -8,6 +8,7 @@ from decimal import Decimal
 from django.contrib import messages
 from django.shortcuts import redirect, render_to_response
 from core.services import bitcoin_frespo_services
+from core.utils.frespo_utils import dictOrEmpty
 
 logger = logging.getLogger(__name__)
 
@@ -17,7 +18,13 @@ def bitcoinIPN(request):
     destination_address = request.GET["destination_address"]
     transaction_hash = request.GET["transaction_hash"]
     confirmations = int(request.GET["confirmations"])
-    logger.info("bitcoin IPN confirmation: value = %s, destination_address=%s, transaction_hash = %s, confirmations = %s" % (value, destination_address, transaction_hash, confirmations))
+    logger.info("bitcoin IPN confirmation: host = %s(%s), value = %s, destination_address=%s, transaction_hash = %s, confirmations = %s" %
+                (dictOrEmpty(request.META,'REMOTE_HOST'),
+                 dictOrEmpty(request.META,'REMOTE_ADDR'),
+                 value,
+                 destination_address,
+                 transaction_hash,
+                 confirmations))
     if value > 0:
         bitcoin_frespo_services.bitcoin_ipn_received(value, destination_address, transaction_hash, confirmations)
     elif value < 0:
