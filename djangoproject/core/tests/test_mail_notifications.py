@@ -68,6 +68,7 @@ class TestMailNotifications(unittest.TestCase):
         email_asserts.clear_sent()
         response = client2.post('/core/offer/edit/submit',
             {'offer_id': offer_id,
+             'currency':'USD',
              'price':'30.00',
              'acceptanceCriteria':'some criteria',})
         self.assertEqual(response.status_code, 302)
