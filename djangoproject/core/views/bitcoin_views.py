@@ -1,6 +1,11 @@
 from django.http import HttpResponse
 from core.utils.frespo_utils import dictOrEmpty
+from bitcoin_frespo.services import bitcoin_services
+from bitcoin_frespo.services.bitcoin_services import BitcoinFrespoException
+from django.template import RequestContext
 import logging
+from django.contrib import messages
+from django.shortcuts import redirect, render_to_response
 
 logger = logging.getLogger(__name__)
 
@@ -17,7 +22,18 @@ def bitcoinIPN(request):
     return HttpResponse("*ok*")
 
 def payOffer(request, offer, payment):
-    pass
+    try:
+        receive_address = bitcoin_services.get_available_receive_address()
+        payment.bitcoin_receive_address = receive_address
+        payment.save()
+        return render_to_response('core/waitPaymentBitcoin.html',
+            {'payment' : payment,
+             'bitcoin_address' : receive_address.address,},
+            context_instance = RequestContext(request))
+    except BitcoinFrespoException as e:
+        messages.error(request, e.value)
+        return redirect(offer.get_view_link())
+
 
 
 # non-anonymous

@@ -284,7 +284,6 @@ def payOffer(request):
     if(offer.status == Offer.PAID):
         raise BaseException('offer %s is already paid' % offer.id + '. User %s' % user)
     payment = _generate_payment_entity(offer, count, request.POST, request.user)
-    print('gen payment entity')
 
     if(offer.currency == 'USD'):
         return paypal_views.payOffer(request, offer, payment)
@@ -299,7 +298,7 @@ def _generate_payment_entity(offer, receiver_count, dict, user):
     for i in range(receiver_count):
         check = dict.has_key('check_%s' % i)
         if(check):
-            pay = Decimal(dict['pay_%s' % i]) #twoplaces
+            pay = Decimal(dict['pay_%s' % i])
             if(pay > 0):
                 solution = Solution.objects.get(pk=int(dict['solutionId_%s' % i]))
                 realPay = Decimal(pay * Decimal(1 - settings.FS_FEE)) #twoplaces
@@ -307,9 +306,9 @@ def _generate_payment_entity(offer, receiver_count, dict, user):
                 parts.append(part)
                 sum += pay
                 realSum += realPay
-    payment.fee = sum - realSum #twoplaces
-    payment.total = sum #twoplaces
-    convert_twoplaces = offer.currency = 'USD'
+    payment.fee = sum - realSum
+    payment.total = sum
+    convert_twoplaces = offer.currency == 'USD'
     if convert_twoplaces:
         payment.fee = twoplaces(payment.fee)
         payment.total = twoplaces(payment.total)

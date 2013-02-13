@@ -22,7 +22,6 @@ def payOffer(request, offer, payment):
 
     paypal_adapter.generate_paypal_payment(payment)
     payment.save()
-    print('gen paykey %s' % payment.paykey)
 
     request.session['current_payment_id'] = payment.id
 

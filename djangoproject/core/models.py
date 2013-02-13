@@ -3,13 +3,14 @@ from django.db import models
 from django.utils import timezone
 from datetime import timedelta
 from django.contrib.auth.models import User
-import urllib, hashlib, time, random
+import hashlib, time, random
 from core.utils.frespo_utils import get_or_none, socialImages, socialImages_small
 from social_auth.models import UserSocialAuth
 from django.utils.http import urlquote
 from django.template.defaultfilters import slugify
 from decimal import Decimal
 from core.utils.frespo_utils import twoplaces, CURRENCY_SYMBOLS
+from bitcoin_frespo.models import *
 
 
 class UserInfo(models.Model): 
@@ -676,11 +677,14 @@ class Payment(models.Model):
     fee = models.DecimalField(max_digits=16, decimal_places=8)
     total = models.DecimalField(max_digits=9, decimal_places=2)
     currency = models.CharField(max_length=10)
+    bitcoin_receive_address = models.ForeignKey(ReceiveAddress, null=True)
+    bitcoin_transaction_hash = models.CharField(max_length=128, null=True)
 
     CREATED = 'CREATED'
     CANCELED = 'CANCELED'
     CONFIRMED_WEB = 'CONFIRMED_WEB'
     CONFIRMED_IPN = 'CONFIRMED_IPN'
+    CONFIRMED_TRN = 'CONFIRMED_TRN'
     FORGOTTEN = 'FORGOTTEN'
     
     @classmethod

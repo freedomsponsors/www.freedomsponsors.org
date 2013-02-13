@@ -37,7 +37,7 @@
 
 
 {% if solutions_accepting_payments %}
-  {% if solutions_accepting_payments.count == 1 %}
+  {% if solutions_accepting_payments|length == 1 %}
   Confirm amount to pay
   {% else %}
   More than one developer claims to have resolved the issue. 
@@ -48,7 +48,7 @@
 {% csrf_token %}
   <div id="div_step1">
 	<input type="hidden" id="offer_id" name="offer_id" value="{{offer.id}}">
-  	<input type="hidden" name="count" value="{{solutions_accepting_payments.count}}">
+  	<input type="hidden" name="count" value="{{solutions_accepting_payments|length}}">
 	<!-- <table class="table table-condensed table-striped">
 	  <tbody> -->
 	{% for solution in solutions_accepting_payments %}
@@ -124,7 +124,7 @@
     {% localize off %}
     convert_rate : {{convert_rate}},
     {% endlocalize %}
-  	count : {{solutions_accepting_payments.count}},
+  	count : {{solutions_accepting_payments|length}},
     solutions : [
     {% for solution in solutions_accepting_payments %}
       {id : {{solution.id}}, status : '{{solution.status}}'},
