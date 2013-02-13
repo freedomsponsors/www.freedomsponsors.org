@@ -107,9 +107,9 @@ def notifyWatchers_offeradded(offer, watches):
 
 def notifyWatchers_offerchanged(old_offer, new_offer, watches):
     action = 'changed'
-    if(new_offer.price > old_offer.price):
+    if new_offer.currency == old_offer.currency and new_offer.price > old_offer.price:
         action = 'raised'
-    elif(new_offer.price < old_offer.price):
+    elif new_offer.currency == old_offer.currency and new_offer.price < old_offer.price:
         action = 'lowered'
     elif(not new_offer.acceptanceCriteria == old_offer.acceptanceCriteria):
         action = 'changed the acceptance criteria for'

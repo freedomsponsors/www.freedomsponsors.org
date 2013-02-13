@@ -460,6 +460,7 @@ class Offer(models.Model):
     def changeOffer(self, offerdict):
         event = OfferHistEvent.newChangeEvent(offer=self, event=OfferHistEvent.EDIT)
         event.save()
+        self.currency = offerdict['currency']
         self.price = Decimal(offerdict['price'])
         self.acceptanceCriteria = offerdict['acceptanceCriteria']
         self.no_forking = offerdict.has_key('no_forking')
@@ -695,7 +696,9 @@ class Payment(models.Model):
         return payment
     
     def selectCurrency(self):
-        if(self.offer.sponsor.getUserInfo().brazilianPaypal):
+        if self.offer.currency == 'BTC':
+            self.currency = 'BTC'
+        elif self.offer.sponsor.getUserInfo().brazilianPaypal:
             self.currency = 'BRL'
         else:
             self.currency = 'USD'

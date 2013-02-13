@@ -3,29 +3,26 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, redirect
-from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import ugettext as _
 from core.utils import paypal_adapter
 from core.utils.frespo_utils import  dictOrEmpty
 from core.models import  Payment
-from core.services import payment_services
+from core.services import paypal_services
 import logging
 
 logger = logging.getLogger(__name__)
 
 __author__ = 'tony'
 
-
-@login_required
-def payOffer(request):
-    offer_id = int(request.POST['offer_id'])
-    count = int(request.POST['count'])
+def payOffer(request, offer, payment):
     current_payment_id = dictOrEmpty(request.session, 'current_payment_id')
     if(current_payment_id):
-        payment_services.forget_payment(int(current_payment_id))
+        paypal_services.forget_payment(int(current_payment_id))
 
-    offer, payment = payment_services.generate_payment(offer_id, count, request.POST, request.user)
+    paypal_adapter.generate_paypal_payment(payment)
+    payment.save()
+    print('gen paykey %s' % payment.paykey)
 
     request.session['current_payment_id'] = payment.id
 
@@ -69,7 +66,7 @@ def paypalIPN(request):
         paykey = request.POST['pay_key']
         status = request.POST['status']
         tracking_id = request.POST['tracking_id']
-        payment_services.process_ipn_return(paykey, status, tracking_id)
+        paypal_services.process_ipn_return(paykey, status, tracking_id)
 
         return HttpResponse(_("OK"))
     else:
@@ -81,7 +78,7 @@ def paypalIPN(request):
 def paypalReturn(request):
     current_payment_id = dictOrEmpty(request.session, 'current_payment_id')
     if(current_payment_id):
-        curr_payment, msg = payment_services.payment_confirmed_web(current_payment_id)
+        curr_payment, msg = paypal_services.payment_confirmed_web(current_payment_id)
         del request.session['current_payment_id']
         logger.info('CONFIRM_WEB successful for payment %s'%curr_payment.id)
     else :

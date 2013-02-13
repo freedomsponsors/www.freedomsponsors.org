@@ -17,37 +17,6 @@ def forget_payment(payment_id):
     if(curr_payment.status != Payment.CONFIRMED_WEB and curr_payment.status != Payment.CONFIRMED_IPN):
         curr_payment.forget()
 
-
-def generate_payment(offer_id, receiver_count, dict, user):
-    offer = Offer.objects.get(pk=offer_id)
-    if(offer.status == Offer.PAID):
-        raise BaseException('offer %s is already paid' % offer.id + '. User %s' % user)
-    payment = Payment.newPayment(offer)
-    parts = []
-    sum = Decimal(0)
-    realSum = Decimal(0)
-    for i in range(receiver_count):
-        check = dict.has_key('check_%s' % i)
-        if(check):
-            pay = twoplaces(Decimal(dict['pay_%s' % i]))
-            if(pay > 0):
-                solution = Solution.objects.get(pk=int(dict['solutionId_%s' % i]))
-                realPay = twoplaces(Decimal(pay * Decimal(1 - settings.FS_FEE)))
-                part = PaymentPart.newPart(payment, solution, pay, realPay)
-                parts.append(part)
-                sum += pay
-                realSum += realPay
-    payment.fee = twoplaces(sum - realSum)
-    payment.total = twoplaces(sum)
-    payment.save()
-    for part in parts:
-        part.payment = payment
-        part.save()
-    generate_paypal_payment(payment)
-    payment.save()
-    return offer, payment
-
-
 def payment_confirmed_web(current_payment_id):
     curr_payment = Payment.objects.get(pk=int(current_payment_id))
     curr_payment.confirm_web()

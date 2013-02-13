@@ -1,6 +1,6 @@
 from core.models import *
 from django.utils import unittest
-from core.services import payment_services, watch_services
+from core.services import paypal_services, watch_services
 from helpers import test_data, email_asserts
 from django.conf import settings
 
@@ -13,7 +13,7 @@ class TestPaymentService(unittest.TestCase):
         watcher = test_data.create_dummy_programmer()
         watch_services.watch_issue(watcher, payment.offer.issue.id, IssueWatch.WATCHED)
         email_asserts.clear_sent()
-        payment_services.process_ipn_return(payment.paykey, 'COMPLETED', 'abcd1234')
+        paypal_services.process_ipn_return(payment.paykey, 'COMPLETED', 'abcd1234')
         payment = Payment.objects.get(id=payment.id);
         self.assertEquals(Payment.CONFIRMED_IPN, payment.status)
         email_asserts.send_emails()

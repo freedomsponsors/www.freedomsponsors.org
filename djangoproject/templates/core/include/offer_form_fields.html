@@ -57,6 +57,7 @@
 <script>
 
   function setOfferData(offer){
+    $('input[name=currency]').filter('[value='+offer.currency+']').attr('checked', true)
     $('#price').val(''+offer.price);
     $('#no_forking').attr('checked', offer.no_forking)
     $('#require_release').attr('checked', offer.require_release)

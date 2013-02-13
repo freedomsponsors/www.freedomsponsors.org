@@ -16,6 +16,9 @@ def bitcoinIPN(request):
     logger.info('----- bitcoinIPN end ------')
     return HttpResponse("*ok*")
 
+def payOffer(request, offer, payment):
+    pass
+
 
 # non-anonymous
 # 2013-02-04 23:59:31,170 [INFO] core.views.bitcoin_views: ----- bitcoinIPN ------

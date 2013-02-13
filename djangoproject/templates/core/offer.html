@@ -1,4 +1,5 @@
 {% extends "core/base.html" %}
+{% load l10n %}
 
 {% block og_meta_description %}
     <meta property="og:description"
@@ -9,7 +10,7 @@
 {% block mainContent%}
 
 
-<h3>[ Offer ] US$ {{offer.price_2}} for issue - {{offer.issue.title}} 
+<h3>[ Offer ] {{offer.get_currency_symbol}} {{offer.price_2}} for issue - {{offer.issue.title}} 
 {% if issue.trackerURL %}
 <a href="{{offer.issue.trackerURL}}" class="btn btn-primary" target="_issue">Open original issue</a>
 {% endif %}
@@ -140,7 +141,9 @@
   offer = {
   	id : {{offer.id}},
   	sponsor_id : {{offer.sponsor_id}},
+    {% localize off %}
   	price : {{offer.price}},
+    {% endlocalize %}
   	issue_trackerURL : '{{offer.issue.trackerURL}}'
   }
 

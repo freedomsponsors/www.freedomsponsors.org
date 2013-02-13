@@ -7,7 +7,8 @@ from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from core.utils.frespo_utils import get_or_none, dictOrEmpty, twoplaces
 from core.models import *
-from core.services import issue_services, watch_services, payment_services
+from core.services import issue_services, watch_services, paypal_services
+from core.views import paypal_views, bitcoin_views
 from decimal import Decimal
 import logging
 from django.conf import settings
@@ -275,6 +276,52 @@ def payOfferForm(request, offer_id):
     else:
         return _payWithBitcoinForm(request, offer)
 
+@login_required
+def payOffer(request):
+    offer_id = int(request.POST['offer_id'])
+    count = int(request.POST['count'])
+    offer = Offer.objects.get(pk=offer_id)
+    if(offer.status == Offer.PAID):
+        raise BaseException('offer %s is already paid' % offer.id + '. User %s' % user)
+    payment = _generate_payment_entity(offer, count, request.POST, request.user)
+    print('gen payment entity')
+
+    if(offer.currency == 'USD'):
+        return paypal_views.payOffer(request, offer, payment)
+    else:
+        return bitcoin_views.payOffer(request, offer, payment)
+
+def _generate_payment_entity(offer, receiver_count, dict, user):
+    payment = Payment.newPayment(offer)
+    parts = []
+    sum = Decimal(0)
+    realSum = Decimal(0)
+    for i in range(receiver_count):
+        check = dict.has_key('check_%s' % i)
+        if(check):
+            pay = Decimal(dict['pay_%s' % i]) #twoplaces
+            if(pay > 0):
+                solution = Solution.objects.get(pk=int(dict['solutionId_%s' % i]))
+                realPay = Decimal(pay * Decimal(1 - settings.FS_FEE)) #twoplaces
+                part = PaymentPart.newPart(payment, solution, pay, realPay)
+                parts.append(part)
+                sum += pay
+                realSum += realPay
+    payment.fee = sum - realSum #twoplaces
+    payment.total = sum #twoplaces
+    convert_twoplaces = offer.currency = 'USD'
+    if convert_twoplaces:
+        payment.fee = twoplaces(payment.fee)
+        payment.total = twoplaces(payment.total)
+    payment.save()
+    for part in parts:
+        part.payment = payment
+        if convert_twoplaces:
+            part.price = twoplaces(part.price)
+            part.realprice = twoplaces(part.realprice)
+        part.save()
+    return payment
+
 def _payWithPaypalForm(request, offer):
     solutions_accepting_payments = offer.issue.getSolutionsAcceptingPayments()
     shared_price = None
@@ -283,7 +330,7 @@ def _payWithPaypalForm(request, offer):
     currency_symbol = "US$"
     alert_brazil = False
     if(offer.sponsor.getUserInfo().brazilianPaypal):
-        convert_rate = payment_services.usd_2_brl_convert_rate()
+        convert_rate = paypal_services.usd_2_brl_convert_rate()
         currency_symbol = "R$"
         alert_brazil = True
 
