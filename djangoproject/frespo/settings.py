@@ -47,6 +47,7 @@ PAYPAL_IPNNOTIFY_URL = SITE_HOME+'/core/paypal/'+PAYPAL_IPNNOTIFY_URL_TOKEN
 
 BITCOIN_IPNNOTIFY_URL_TOKEN = 'megablasteripn'
 BITCOIN_ENABLED = False
+BITCOIN_RECEIVE_ADDRESS_POOL_SIZE = 20
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
