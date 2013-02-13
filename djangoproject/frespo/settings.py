@@ -183,7 +183,8 @@ INSTALLED_APPS = (
     'mailer',
     'south',
     'emailmgr',
-    'registration',    
+    'registration',
+    'bitcoin_frespo',
 )
 
 
