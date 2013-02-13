@@ -175,6 +175,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
+    'bitcoin_frespo',
     'core',
     'core_splinter_tests',
     'gh_frespo_integration',
@@ -185,7 +186,6 @@ INSTALLED_APPS = (
     'south',
     'emailmgr',
     'registration',
-    'bitcoin_frespo',
 )
 
 

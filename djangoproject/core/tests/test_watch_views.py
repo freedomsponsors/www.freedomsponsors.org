@@ -27,7 +27,7 @@ class TestWatchViews(unittest.TestCase):
         self.assertTrue(not watch_services.is_watching_issue(self.user, issue.id))
 
     def test_watch_unwatch_offer(self):
-        offer = test_data.create_dummy_offer()
+        offer = test_data.create_dummy_offer_usd()
         self.assertTrue(not watch_services.is_watching_offer(self.user, offer.id))
 
         response = self.client.get('/core/watch/offer/%s'%offer.id)

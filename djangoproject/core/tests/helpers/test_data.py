@@ -1,4 +1,5 @@
 from core.models import *
+from bitcoin_frespo.models import *
 from decimal import Decimal
 from random import randint
 
@@ -44,9 +45,15 @@ def create_dummy_issue():
     issue.save()
     return issue
 
-def create_dummy_offer():
+def create_dummy_offer_usd():
+    return _create_dummy_offer_with_currency(Decimal('10.00'), 'USD')
+
+def create_dummy_offer_btc():
+    return _create_dummy_offer_with_currency(Decimal('5.00'), 'BTC')
+
+def _create_dummy_offer_with_currency(value, currency):
     issue = create_dummy_issue()
-    offer = Offer.newOffer(issue, issue.createdByUser, Decimal('10.00'), 'USD', 'comita aih', True, True, None)
+    offer = Offer.newOffer(issue, issue.createdByUser, value, currency, 'comita aih', True, True, None)
     offer.save()
     return offer
 
@@ -57,8 +64,8 @@ def create_dummy_solution():
     solution.save()
     return solution
 
-def create_dummy_payment():
-    offer = create_dummy_offer()
+def create_dummy_payment_usd():
+    offer = create_dummy_offer_usd()
     payment = Payment.newPayment(offer)
     payment.setPaykey('PK_ABCDEFG')
     payment.fee = Decimal('0.30')
@@ -69,3 +76,7 @@ def create_dummy_payment():
     part = PaymentPart.newPart(payment, solution, Decimal('10.00'), Decimal('9.70'))
     part.save()
     return payment
+
+def create_dummy_bitcoin_receive_address_available():
+    receive_address = ReceiveAddress.newAddress('dummy_bitcoin_address_fs')
+    receive_address.save()

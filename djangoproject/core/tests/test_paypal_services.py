@@ -6,10 +6,10 @@ from django.conf import settings
 
 __author__ = 'tony'
 
-class TestPaymentService(unittest.TestCase):
+class TestPaypalService(unittest.TestCase):
 
     def test_process_ipn_return(self):
-        payment = test_data.create_dummy_payment()
+        payment = test_data.create_dummy_payment_usd()
         watcher = test_data.create_dummy_programmer()
         watch_services.watch_issue(watcher, payment.offer.issue.id, IssueWatch.WATCHED)
         email_asserts.clear_sent()

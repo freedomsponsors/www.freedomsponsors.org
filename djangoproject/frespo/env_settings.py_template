@@ -11,3 +11,5 @@ AUTO_EMAIL_PASSWORD = 'ThisIsNotTheRealPassword_obviously'
 SITE_HOST = 'localhost:8000' # www.freedomsponsors.org
 SITE_NAME = 'FreedomSponsors_test' # FreedomSponsors
 PAYPAL_USE_SANDBOX = True
+BITCOIN_IPNNOTIFY_URL_TOKEN = 'secretipn'
+BITCOIN_ENABLED = True

@@ -679,11 +679,13 @@ class Payment(models.Model):
     currency = models.CharField(max_length=10)
     bitcoin_receive_address = models.ForeignKey(ReceiveAddress, null=True)
     bitcoin_transaction_hash = models.CharField(max_length=128, null=True)
+    total_bitcoin_received = models.DecimalField(max_digits=16, decimal_places=8, null=True)
 
     CREATED = 'CREATED'
     CANCELED = 'CANCELED'
     CONFIRMED_WEB = 'CONFIRMED_WEB'
     CONFIRMED_IPN = 'CONFIRMED_IPN'
+    CONFIRMED_IPN_UNDERPAY = 'CONFIRMED_IPN_UNDERPAY'
     CONFIRMED_TRN = 'CONFIRMED_TRN'
     FORGOTTEN = 'FORGOTTEN'
     

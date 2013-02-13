@@ -14,7 +14,7 @@ class TestMailNotifications(unittest.TestCase):
         self.client.login(username=self.user.username, password='abc123')
 
     def test_should_send_mail_for_new_comments(self):
-        offer = test_data.create_dummy_offer()
+        offer = test_data.create_dummy_offer_usd()
         issue = offer.issue
         response = self.client.get('/core/watch/issue/%s'%issue.id)
         self.assertEqual(response.status_code, 200)
@@ -42,7 +42,7 @@ class TestMailNotifications(unittest.TestCase):
         email_asserts.assert_sent(self, to=self.user.email, subject="%s added a comment on offer [US$ %s / %s]"%(user2.getUserInfo().screenName, '10.00', issue.title))
 
     def test_should_send_mail_for_adding_or_changing_or_revoking_offer(self):
-        offer = test_data.create_dummy_offer()
+        offer = test_data.create_dummy_offer_usd()
         issue = offer.issue
         response = self.client.get('/core/watch/issue/%s'%issue.id)
         self.assertEqual(response.status_code, 200)
@@ -86,7 +86,7 @@ class TestMailNotifications(unittest.TestCase):
         email_asserts.assert_sent(self, to=self.user.email, subject="%s revoked his US$ 30.00 offer for issue [%s]"%(user2ScreenName, issue.title))
 
     def test_should_send_mail_for_starting_or_aborting_or_finishing_work(self):
-        offer = test_data.create_dummy_offer()
+        offer = test_data.create_dummy_offer_usd()
         issue = offer.issue
         response = self.client.get('/core/watch/issue/%s'%issue.id)
         self.assertEqual(response.status_code, 200)

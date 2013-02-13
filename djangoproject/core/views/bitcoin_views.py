@@ -4,21 +4,34 @@ from bitcoin_frespo.services import bitcoin_services
 from bitcoin_frespo.services.bitcoin_services import BitcoinFrespoException
 from django.template import RequestContext
 import logging
+from decimal import Decimal
 from django.contrib import messages
 from django.shortcuts import redirect, render_to_response
+from core.services import bitcoin_frespo_services
 
 logger = logging.getLogger(__name__)
 
 def bitcoinIPN(request):
-    logger.info('----- bitcoinIPN ------')
-    logger.info("value: %s" % dictOrEmpty(request.GET, "value"))
-    logger.info("input_address: %s" % dictOrEmpty(request.GET, "input_address"))
-    logger.info("confirmations: %s" % dictOrEmpty(request.GET, "confirmations"))
-    logger.info("transaction_hash: %s" % dictOrEmpty(request.GET, "transaction_hash"))
-    logger.info("destination_address: %s" % dictOrEmpty(request.GET, "destination_address"))
-    logger.info("input_transaction_hash: %s" % dictOrEmpty(request.GET, "input_transaction_hash"))
-    logger.info("GET params: %s" % request.GET)
-    logger.info('----- bitcoinIPN end ------')
+    # logger.info('----- bitcoinIPN ------')
+    value = Decimal(request.GET["value"]) * Decimal('1e-8')
+    destination_address = request.GET["destination_address"]
+    transaction_hash = request.GET["transaction_hash"]
+    confirmations = int(request.GET["confirmations"])
+    logger.info("bitcoin IPN confirmation: value = %s, destination_address=%s, transaction_hash = %s, confirmations = %s" % (value, destination_address, transaction_hash, confirmations))
+    if value > 0:
+        bitcoin_frespo_services.bitcoin_ipn_received(value, destination_address, transaction_hash, confirmations)
+    elif value < 0:
+        bitcoin_frespo_services.bitcoin_ipn_sent(value, destination_address, transaction_hash, confirmations)
+    else :
+        raise BaseException('Received 0 - value IPN confirmation')
+    # logger.info("value: %s" % dictOrEmpty(request.GET, "value"))
+    # logger.info("input_address: %s" % dictOrEmpty(request.GET, "input_address"))
+    # logger.info("confirmations: %s" % dictOrEmpty(request.GET, "confirmations"))
+    # logger.info("transaction_hash: %s" % dictOrEmpty(request.GET, "transaction_hash"))
+    # logger.info("destination_address: %s" % dictOrEmpty(request.GET, "destination_address"))
+    # logger.info("input_transaction_hash: %s" % dictOrEmpty(request.GET, "input_transaction_hash"))
+    # logger.info("GET params: %s" % request.GET)
+    # logger.info('----- bitcoinIPN end ------')
     return HttpResponse("*ok*")
 
 def payOffer(request, offer, payment):
