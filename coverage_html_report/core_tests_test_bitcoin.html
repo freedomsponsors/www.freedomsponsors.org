@@ -66,40 +66,44 @@
 <p id='n1' class='stm run hide_run'><a href='#n1'>1</a></p>
 <p id='n2' class='stm run hide_run'><a href='#n2'>2</a></p>
 <p id='n3' class='stm run hide_run'><a href='#n3'>3</a></p>
-<p id='n4' class='stm run hide_run'><a href='#n4'>4</a></p>
+<p id='n4' class='pln'><a href='#n4'>4</a></p>
 <p id='n5' class='stm run hide_run'><a href='#n5'>5</a></p>
 <p id='n6' class='pln'><a href='#n6'>6</a></p>
 <p id='n7' class='stm run hide_run'><a href='#n7'>7</a></p>
-<p id='n8' class='stm run hide_run'><a href='#n8'>8</a></p>
+<p id='n8' class='pln'><a href='#n8'>8</a></p>
 <p id='n9' class='stm run hide_run'><a href='#n9'>9</a></p>
-<p id='n10' class='stm mis'><a href='#n10'>10</a></p>
-<p id='n11' class='stm mis'><a href='#n11'>11</a></p>
+<p id='n10' class='stm run hide_run'><a href='#n10'>10</a></p>
+<p id='n11' class='stm run hide_run'><a href='#n11'>11</a></p>
 <p id='n12' class='stm mis'><a href='#n12'>12</a></p>
-<p id='n13' class='pln'><a href='#n13'>13</a></p>
-<p id='n14' class='pln'><a href='#n14'>14</a></p>
+<p id='n13' class='stm mis'><a href='#n13'>13</a></p>
+<p id='n14' class='stm mis'><a href='#n14'>14</a></p>
 <p id='n15' class='pln'><a href='#n15'>15</a></p>
 <p id='n16' class='pln'><a href='#n16'>16</a></p>
 <p id='n17' class='pln'><a href='#n17'>17</a></p>
+<p id='n18' class='pln'><a href='#n18'>18</a></p>
+<p id='n19' class='pln'><a href='#n19'>19</a></p>
                 
             </td>
             <td class='text' valign='top'>
 <p id='t1' class='stm run hide_run'><span class='key'>from</span> <span class='nam'>django</span><span class='op'>.</span><span class='nam'>test</span> <span class='key'>import</span> <span class='nam'>TestCase</span><span class='strut'>&nbsp;</span></p>
 <p id='t2' class='stm run hide_run'><span class='key'>from</span> <span class='nam'>django</span><span class='op'>.</span><span class='nam'>utils</span><span class='op'>.</span><span class='nam'>unittest</span> <span class='key'>import</span> <span class='nam'>skipIf</span><span class='strut'>&nbsp;</span></p>
-<p id='t3' class='stm run hide_run'><span class='key'>from</span> <span class='nam'>core</span><span class='op'>.</span><span class='nam'>utils</span> <span class='key'>import</span> <span class='nam'>bitcoin_adapter</span><span class='strut'>&nbsp;</span></p>
-<p id='t4' class='stm run hide_run'><span class='key'>from</span> <span class='nam'>django</span><span class='op'>.</span><span class='nam'>conf</span> <span class='key'>import</span> <span class='nam'>settings</span><span class='strut'>&nbsp;</span></p>
-<p id='t5' class='stm run hide_run'><span class='nam'>__author__</span> <span class='op'>=</span> <span class='str'>&#39;tony&#39;</span><span class='strut'>&nbsp;</span></p>
+<p id='t3' class='stm run hide_run'><span class='key'>from</span> <span class='nam'>django</span><span class='op'>.</span><span class='nam'>conf</span> <span class='key'>import</span> <span class='nam'>settings</span><span class='strut'>&nbsp;</span></p>
+<p id='t4' class='pln'><span class='strut'>&nbsp;</span></p>
+<p id='t5' class='stm run hide_run'><span class='key'>from</span> <span class='nam'>bitcoin_frespo</span><span class='op'>.</span><span class='nam'>utils</span> <span class='key'>import</span> <span class='nam'>bitcoin_adapter</span><span class='strut'>&nbsp;</span></p>
 <p id='t6' class='pln'><span class='strut'>&nbsp;</span></p>
-<p id='t7' class='stm run hide_run'><span class='op'>@</span><span class='nam'>skipIf</span><span class='op'>(</span><span class='nam'>settings</span><span class='op'>.</span><span class='nam'>ENVIRONMENT</span> <span class='op'>!=</span> <span class='str'>&#39;DEV&#39;</span><span class='op'>,</span> <span class='str'>&#39;not supported in this environment&#39;</span><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
-<p id='t8' class='stm run hide_run'><span class='key'>class</span> <span class='nam'>BitcoinAdapter</span><span class='op'>(</span><span class='nam'>TestCase</span><span class='op'>)</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
-<p id='t9' class='stm run hide_run'>&nbsp; &nbsp; <span class='key'>def</span> <span class='nam'>test_get_balance</span><span class='op'>(</span><span class='nam'>self</span><span class='op'>)</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
-<p id='t10' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='nam'>c</span> <span class='op'>=</span> <span class='nam'>bitcoin_adapter</span><span class='op'>.</span><span class='nam'>_connect</span><span class='op'>(</span><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
-<p id='t11' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='nam'>bal</span> <span class='op'>=</span> <span class='nam'>c</span><span class='op'>.</span><span class='nam'>getbalance</span><span class='op'>(</span><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
-<p id='t12' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='key'>print</span><span class='op'>(</span><span class='nam'>bal</span><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
-<p id='t13' class='pln'><span class='strut'>&nbsp;</span></p>
-<p id='t14' class='pln'><span class='strut'>&nbsp;</span></p>
+<p id='t7' class='stm run hide_run'><span class='nam'>__author__</span> <span class='op'>=</span> <span class='str'>&#39;tony&#39;</span><span class='strut'>&nbsp;</span></p>
+<p id='t8' class='pln'><span class='strut'>&nbsp;</span></p>
+<p id='t9' class='stm run hide_run'><span class='op'>@</span><span class='nam'>skipIf</span><span class='op'>(</span><span class='nam'>settings</span><span class='op'>.</span><span class='nam'>ENVIRONMENT</span> <span class='op'>!=</span> <span class='str'>&#39;DEV&#39;</span><span class='op'>,</span> <span class='str'>&#39;not supported in this environment&#39;</span><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
+<p id='t10' class='stm run hide_run'><span class='key'>class</span> <span class='nam'>BitcoinAdapter</span><span class='op'>(</span><span class='nam'>TestCase</span><span class='op'>)</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
+<p id='t11' class='stm run hide_run'>&nbsp; &nbsp; <span class='key'>def</span> <span class='nam'>test_get_balance</span><span class='op'>(</span><span class='nam'>self</span><span class='op'>)</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
+<p id='t12' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='nam'>c</span> <span class='op'>=</span> <span class='nam'>bitcoin_adapter</span><span class='op'>.</span><span class='nam'>_connect</span><span class='op'>(</span><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
+<p id='t13' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='nam'>bal</span> <span class='op'>=</span> <span class='nam'>c</span><span class='op'>.</span><span class='nam'>getbalance</span><span class='op'>(</span><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
+<p id='t14' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='key'>print</span><span class='op'>(</span><span class='nam'>bal</span><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
 <p id='t15' class='pln'><span class='strut'>&nbsp;</span></p>
 <p id='t16' class='pln'><span class='strut'>&nbsp;</span></p>
 <p id='t17' class='pln'><span class='strut'>&nbsp;</span></p>
+<p id='t18' class='pln'><span class='strut'>&nbsp;</span></p>
+<p id='t19' class='pln'><span class='strut'>&nbsp;</span></p>
                 
             </td>
         </tr>
