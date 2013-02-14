@@ -14,3 +14,4 @@ class Command(NoArgsCommand):
 
     def handle_noargs(self, **options):
         bitcoin_frespo_services.bitcoin_active_receive_confirmation()
+        bitcoin_frespo_services.bitcoin_pay_programmers()
