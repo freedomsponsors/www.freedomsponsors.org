@@ -2,8 +2,8 @@ language: python
 python:
   - "2.6"
 install: 
- - sudo aptitude -y -q install unzip chromium-browser
-# - sudo apt-get install chromium-browser
+# - sudo aptitude -y -q install unzip chromium-browser
+ - sudo apt-get install -qq chromium-browser
  - mkdir -p ./tmp/bin 
  - cd ./tmp/bin 
  - wget http://chromium.googlecode.com/files/chromedriver_linux32_16.0.902.0.zip 
