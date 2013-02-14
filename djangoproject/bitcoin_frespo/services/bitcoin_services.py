@@ -29,3 +29,9 @@ def refill_receive_address_pool():
         address_entity = ReceiveAddress.newAddress(address)
         address_entity.save()
         logger.info('Added bitcoin address to pool: %s' % address)
+
+def make_payment(from_address, to_address, value):
+    hash = bitcoin_adapter.make_payment(from_address, to_address, float(value))
+    money_sent = MoneySent.newMoneySent(from_address, to_address, value)
+    money_sent.sent(hash)
+    return money_sent

@@ -8,6 +8,7 @@ import logging
 from django.db.models import Q
 import datetime
 from django.utils import timezone
+from bitcoin_frespo.services import bitcoin_services
 
 logger = logging.getLogger(__name__)
 
@@ -78,4 +79,28 @@ def _validate_payment_for_active_receive_confirmation(payment):
         return False, 'invalid status: %s' % payment.status
     if payment.status in [Payment.CONFIRMED_TRN, Payment.CONFIRMED_TRN_UNDERPAY] and (not payment.bitcoin_transaction_hash or not payment.total_bitcoin_received):
         return False, 'expected a transaction hash and a total_bitcoin_value'
+    return True, None
+
+def bitcoin_pay_programmers():
+    parts = _filter_paymentparts_pending_payment()
+    for part in parts:
+        valid, verr = _validate_paymentpart_for_send_money(part)
+        if valid:
+            part.money_sent = bitcoin_services.make_payment(from_address = part.payment.bitcoin_receive_address.address,
+                to_address = part.solution.programmer.getUserInfo().bitcoin_receive_address,
+                value = part.realprice)
+            part.save()
+        else:
+            logger.error('invalid paymentpart sending money: %s / %s' % (part.id, verr))
+
+def _filter_paymentparts_pending_payment():
+    return PaymentPart.objects.filter(payment__currency = 'BTC', payment__status = Payment.CONFIRMED_TRN, money_sent = None)
+
+def _validate_paymentpart_for_send_money(part):
+    if part.money_sent:
+        return False, "Part should not have MoneySent"
+    if not part.payment.status == Payment.CONFIRMED_TRN:
+        return False, "Part payment status should be CONFIRMED_TRN"
+    if not part.payment.currency == 'BTC':
+        return False, "Part payment currency should be BTC"
     return True, None
