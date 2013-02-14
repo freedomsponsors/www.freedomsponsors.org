@@ -5,7 +5,7 @@ from bitcoin_frespo.utils import bitcoin_adapter
 from core.tests.helpers import test_data
 from core.models import *
 from django.test.client import Client
-from django.conf import settings
+from core.services import bitcoin_frespo_services
 
 __author__ = 'tony'
 
@@ -66,3 +66,11 @@ class BitcoinReceiveTests(TestCase):
         payment = Payment.objects.get(bitcoin_receive_address__address = 'dummy_bitcoin_address_fs')
         self.assertEqual(payment.status, Payment.CONFIRMED_IPN)
 
+        def get_received_by_address_mock(address):
+            return 5.0
+
+        bitcoin_adapter.get_received_by_address = get_received_by_address_mock
+        bitcoin_frespo_services.bitcoin_active_receive_confirmation()
+
+        payment = Payment.objects.get(pk = payment.id)
+        self.assertEqual(payment.status, Payment.CONFIRMED_TRN)
