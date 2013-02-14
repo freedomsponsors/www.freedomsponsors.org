@@ -687,6 +687,7 @@ class Payment(models.Model):
     CONFIRMED_IPN = 'CONFIRMED_IPN'
     CONFIRMED_IPN_UNDERPAY = 'CONFIRMED_IPN_UNDERPAY'
     CONFIRMED_TRN = 'CONFIRMED_TRN'
+    CONFIRMED_TRN_UNDERPAY = 'CONFIRMED_TRN_UNDERPAY'
     FORGOTTEN = 'FORGOTTEN'
     
     @classmethod
@@ -720,12 +721,15 @@ class Payment(models.Model):
     def is_confirmed(self):
         return self.status == Payment.CONFIRMED_WEB or self.status == Payment.CONFIRMED_IPN
 
+    def touch(self):
+        self.lastChangeDate = timezone.now()
+
     def cancel(self):
         event = PaymentHistEvent.newChangeEvent(payment=self, event=PaymentHistEvent.CANCEL)
         event.save()
         if(not self.is_confirmed()):
             self.status = Payment.CANCELED
-            self.lastChangeDate = timezone.now()
+            self.touch()
             self.save()
         else:
             #TODO: logar coisas melhor
@@ -736,7 +740,7 @@ class Payment(models.Model):
         event.save()
         if(self.status == Payment.CREATED):
             self.status = Payment.FORGOTTEN
-            self.lastChangeDate = timezone.now()
+            self.touch()
             self.save()
         else:
             #TODO: logar coisas melhor
@@ -747,21 +751,35 @@ class Payment(models.Model):
         event.save()
         if(self.status != Payment.CONFIRMED_IPN):
             self.status = Payment.CONFIRMED_WEB
-            self.lastChangeDate = timezone.now()
+            self.touch()
             self.save()
-        if(self.status == Payment.CANCELED or self.status == Payment.CONFIRMED_WEB):
-            #TODO: logar coisas melhor
-            print ('warning: confirmed_web '+self.status+' payment %s'%self.id)
 
     def confirm_ipn(self):
         event = PaymentHistEvent.newChangeEvent(payment=self, event=PaymentHistEvent.CONFIRM_IPN)
         event.save()
         self.status = Payment.CONFIRMED_IPN
-        self.lastChangeDate = timezone.now()
+        self.touch()
         self.save()
-        if(self.status == Payment.CANCELED):
-            #TODO: logar coisas melhor
-            print ('warning: confirmed_ipn '+self.status+' payment %s'%self.id)
+
+    def confirm_bitcoin_ipn(self, value, transaction_hash):
+        if self.status == Payment.CREATED:
+            if value >= self.total:
+                self.status = Payment.CONFIRMED_IPN
+            else:
+                self.status = Payment.CONFIRMED_IPN_UNDERPAY
+            self.total_bitcoin_received = value
+        self.bitcoin_transaction_hash = transaction_hash
+        self.touch()
+        self.save()
+
+    def confirm_bitcoin_trn(self, value):
+        self.total_bitcoin_received = Decimal(str(value))
+        if self.total_bitcoin_received >= self.total:
+            self.status = Payment.CONFIRMED_TRN
+        else:
+            self.status = Payment.CONFIRMED_TRN_UNDERPAY
+        self.touch()
+        self.save()
 
 class PaymentHistEvent(models.Model):
     payment = models.ForeignKey(Payment)
