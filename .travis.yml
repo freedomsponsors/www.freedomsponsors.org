@@ -10,8 +10,9 @@ install:
  - wget http://chromedriver.googlecode.com/files/chromedriver_linux64_26.0.1383.0.zip
  - unzip chromedriver_linux64_26.0.1383.0.zip
  - cd ../..
- - pip install -r requirements.txt --use-mirrors
+# - pip install -r requirements.txt --use-mirrors
  - ls ./tmp/bin 
+ - chromedriver
 
 before_script:
  - cd djangoproject 
@@ -22,8 +23,8 @@ before_script:
  - /sbin/start-stop-daemon --start --quiet --pidfile /tmp/cucumber_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16
  - export PATH=../tmp/bin:$PATH
 # - chromedriver
-script: ./coverage.sh
-#script: echo ./coverage.sh
+#script: ./coverage.sh
+script: echo ./coverage.sh
 
 after_script: ./upload_travis_reports.sh
 
