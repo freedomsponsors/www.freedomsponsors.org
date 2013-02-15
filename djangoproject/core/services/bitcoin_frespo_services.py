@@ -90,6 +90,11 @@ def bitcoin_pay_programmers():
                 to_address = part.solution.programmer.getUserInfo().bitcoin_receive_address,
                 value = part.realprice)
             part.save()
+            logger.info('MoneySent_%s %s bitcoins to programmer %s on address %s' %
+                        (part.money_sent.id,
+                         part.money_sent.value,
+                         part.solution.programmer.getUserInfo().screenName,
+                         part.money_sent.to_address))
         else:
             logger.error('invalid paymentpart sending money: %s / %s' % (part.id, verr))
 
