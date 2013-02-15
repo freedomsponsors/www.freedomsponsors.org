@@ -18,7 +18,7 @@ class BitcoinAdapterTest(TestCase):
 
 class BitcoinReceiveTests(TestCase):
 
-    def test_wait_bitcoin_payment(self):
+    def test_bitcoin_payment_complete(self):
         offer = test_data.create_dummy_offer_btc()
         programmer = test_data.create_dummy_programmer()
         test_data.create_dummy_bitcoin_receive_address_available()
@@ -67,6 +67,7 @@ class BitcoinReceiveTests(TestCase):
         self.assertEqual(payment.status, Payment.CONFIRMED_IPN)
 
         def get_received_by_address_mock(address):
+            print('mock get received by address: %s' % address)
             return 5.0
 
         bitcoin_adapter.get_received_by_address = get_received_by_address_mock
@@ -74,3 +75,15 @@ class BitcoinReceiveTests(TestCase):
 
         payment = Payment.objects.get(pk = payment.id)
         self.assertEqual(payment.status, Payment.CONFIRMED_TRN)
+
+        def make_payment_mock(from_address, to_address, value):
+            print('mock send bitcoins: %s ---(%s)---> %s' % (from_address, value, to_address))
+            return 'dummy_txn_hash_2'
+
+        bitcoin_adapter.make_payment = make_payment_mock
+        bitcoin_frespo_services.bitcoin_pay_programmers()
+        part = PaymentPart.objects.get(payment__id = payment.id)
+        self.assertTrue(part.money_sent is not None)
+        self.assertEqual(part.money_sent.value, Decimal('4.85'))
+        self.assertEqual(part.money_sent.status, MoneySent.SENT)
+        self.assertEqual(part.money_sent.transaction_hash, 'dummy_txn_hash_2')
