@@ -24,6 +24,9 @@ def bitcoin_ipn_received(value, destination_address, transaction_hash, confirmat
         else :
             _notify_ipn_receive_double_payment(payment, transaction_hash, value)
 
+def bitcoin_ipn_sent(value, destination_address, transaction_hash, confirmations):
+    pass
+
 def _notify_ipn_receive_double_payment(payment, transaction_hash, value):
         mail_services.notify_admin('bitcoin IPN RECEIVE double payment',
             """payment id: %s
