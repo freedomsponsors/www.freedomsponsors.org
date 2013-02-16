@@ -136,7 +136,7 @@ def _filter_paymentparts_pending_send_confirmation():
         Q(money_sent__status = MoneySent.CONFIRMED_IPN)
         | (
             Q(money_sent__status = MoneySent.SENT)
-            & Q(money_sent__lastChangeDate__gte=timezone.now() - datetime.timedelta(days=10))
+            & Q(money_sent__lastChangeDate__lte=timezone.now() - datetime.timedelta(hours=1))
         )
     ).order_by('payment__id')
 
