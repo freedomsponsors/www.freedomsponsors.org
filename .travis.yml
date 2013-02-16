@@ -22,8 +22,7 @@ before_script:
  - /sbin/start-stop-daemon --start --quiet --pidfile /tmp/cucumber_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16
  - export PATH=../tmp/bin:$PATH
  - which chromium-browser
- - sudo cp /usr/bin/chromium-browser /user/bin/chromium-browser2
- - chromium-browser2
+ - df
 #script: ./coverage.sh
 script: echo ./coverage.sh
 
