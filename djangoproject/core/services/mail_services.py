@@ -182,7 +182,7 @@ def notifyWatchers_newissuecomment(comment, watches):
 def notifyWatchers_newoffercomment(comment, watches):
     def send_func(watch):
         if(watch.user.id != comment.author.id):
-            subject = "%s added a comment on offer [%S %s / %s]" % (
+            subject = "%s added a comment on offer [%s %s / %s]" % (
                 comment.author.getUserInfo().screenName,
                 comment.offer.get_currency_symbol(),
                 str(twoplaces(comment.offer.price)),
