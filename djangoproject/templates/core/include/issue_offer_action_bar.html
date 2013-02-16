@@ -136,7 +136,7 @@
 {% if myoffer and myoffer.status == 'OPEN' %}
 
   function showModal_revokeThisOffer(){
-    document.getElementById('commentFormModal_title').innerHTML = 'Revoke US$ {{offer.price}} offer';
+    document.getElementById('commentFormModal_title').innerHTML = 'Revoke {{offer.get_currency_symbol}} {{offer.price}} offer';
     document.getElementById('commentFormModal_form').action = '/core/offer/revoke/submit';
     document.getElementById('commentFormModal_comment').placeholder = "Add a comment to let everyone know that you're not willing to pay for this issue anymore";
     document.getElementById('commentFormModal_submit').innerHTML = 'Revoke offer!';

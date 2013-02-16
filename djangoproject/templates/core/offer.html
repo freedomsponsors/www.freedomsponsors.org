@@ -3,7 +3,7 @@
 
 {% block og_meta_description %}
     <meta property="og:description"
-          content="[ Offer ] US$ {{offer.price}} for issue - {{offer.issue.title}}"/>
+          content="[ Offer ] {{offer.get_currency_symbol}} {{offer.price}} for issue - {{offer.issue.title}}"/>
 {% endblock og_meta_description %}
 
 

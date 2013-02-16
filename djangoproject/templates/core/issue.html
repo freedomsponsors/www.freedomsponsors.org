@@ -164,7 +164,7 @@
         <table class="table table-condensed table-striped">
           <thead>
             <tr>
-              <th>{% trans "Offer" %} (US$)</th>
+              <th>{% trans "Offer" %}</th>
               <th>{% trans "Sponsor" %}</th>
               <th style="width:50px">{% trans "Acceptance" %}</th>
               <th>{% trans "Status" %}</th>
@@ -175,7 +175,7 @@
           <tbody>
         {% for offer in issue.getOffers %}
             <tr>
-              <td><a href="{{ offer.get_view_link }}">{{offer.price_2}}</a></td>
+              <td><a href="{{ offer.get_view_link }}">{{offer.get_currency_symbol}} {{offer.price_2}}</a></td>
               <td><a href="{{ offer.sponsor.get_view_link }}"><img src="{{offer.sponsor.gravatar_url_medium}}"> {{ offer.sponsor.getUserInfo.screenName }}</a></td>
               <td style="text-align:center">
                 {% if offer.no_forking %}
