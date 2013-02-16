@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.utils.unittest import skipIf
 from django.conf import settings
 from bitcoin_frespo.utils import bitcoin_adapter
-from core.tests.helpers import test_data
+from core.tests.helpers import test_data, email_asserts
 from core.models import *
 from django.test.client import Client
 from core.services import bitcoin_frespo_services
@@ -19,6 +19,8 @@ class BitcoinAdapterTest(TestCase):
 class BitcoinReceiveTests(TestCase):
 
     def test_bitcoin_payment_complete(self):
+
+        #setup
         offer = test_data.create_dummy_offer_btc()
         programmer = test_data.create_dummy_programmer()
         test_data.create_dummy_bitcoin_receive_address_available()
@@ -29,6 +31,7 @@ class BitcoinReceiveTests(TestCase):
         solution.accepting_payments = True
         solution.save()
 
+        #get pay form
         client = Client()
         client.login(username=offer.sponsor.username, password='abcdef')
 
@@ -45,6 +48,7 @@ class BitcoinReceiveTests(TestCase):
         self.assertEqual(float(response_convert_rate), 1.0)
         self.assertEqual(response_currency_symbol, 'BTC')
 
+        #submit pay form
         response = client.post('/core/offer/pay/submit',
             {'offer_id' : str(offer.id),
              'count' : '1',
@@ -55,6 +59,7 @@ class BitcoinReceiveTests(TestCase):
         self.assertTrue('Please make a BTC <strong>5.00</strong> transfer to the following bitcoin address' in response.content)
         self.assertTrue('dummy_bitcoin_address_fs' in response.content)
 
+        #RECEIVE ipn confirmation
         client2 = Client()
         response = client2.get('/core/bitcoin/'+settings.BITCOIN_IPNNOTIFY_URL_TOKEN,
             {'value' : '500000000',
@@ -66,6 +71,7 @@ class BitcoinReceiveTests(TestCase):
         payment = Payment.objects.get(bitcoin_receive_address__address = 'dummy_bitcoin_address_fs')
         self.assertEqual(payment.status, Payment.CONFIRMED_IPN)
 
+        #active RECEIVE confirmation
         def get_received_by_address_mock(address):
             print('mock get received by address: %s' % address)
             return 5.0
@@ -76,6 +82,7 @@ class BitcoinReceiveTests(TestCase):
         payment = Payment.objects.get(pk = payment.id)
         self.assertEqual(payment.status, Payment.CONFIRMED_TRN)
 
+        #Pay programmer
         def make_payment_mock(from_address, to_address, value):
             print('mock send bitcoins: %s ---(%s)---> %s' % (from_address, value, to_address))
             return 'dummy_txn_hash_2'
@@ -87,3 +94,39 @@ class BitcoinReceiveTests(TestCase):
         self.assertEqual(part.money_sent.value, Decimal('4.85'))
         self.assertEqual(part.money_sent.status, MoneySent.SENT)
         self.assertEqual(part.money_sent.transaction_hash, 'dummy_txn_hash_2')
+
+        #SEND ipn confirmation
+        response = client2.get('/core/bitcoin/'+settings.BITCOIN_IPNNOTIFY_URL_TOKEN,
+                               {'value' : '-485000000',
+                                'destination_address' : 'fake_receive_address_programmer',
+                                'transaction_hash' : 'dummy_txn_hash_2',
+                                'confirmations' : '3',})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content, '*ok*')
+        part = PaymentPart.objects.get(payment__id = payment.id)
+        self.assertEqual(part.money_sent.status, MoneySent.CONFIRMED_IPN)
+
+        def get_transaction_mock(hash):
+            class X:
+                pass
+
+            txn = X()
+            txn.confirmations = 3
+            txn.details = []
+            txn.details.append({
+                'address':'fake_receive_address_programmer',
+                'amount' : Decimal('4.85')
+            })
+            txn.details.append({
+                'address':'dummy_bitcoin_address_fs',
+                'amount' : Decimal('-4.85')
+            })
+            return txn
+
+        bitcoin_adapter.get_transaction = get_transaction_mock
+        bitcoin_frespo_services.bitcoin_active_send_confirmation()
+        email_asserts.send_emails()
+        email_asserts.assert_sent_count(self, 2)
+        email_asserts.assert_sent(self, to=programmer.email, subject='%s has made you a BTC 5.00 payment' % offer.sponsor.getUserInfo().screenName)
+        email_asserts.assert_sent(self, to=offer.sponsor.email, subject='You have made a BTC 5.00 payment')
+

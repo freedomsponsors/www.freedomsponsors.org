@@ -26,3 +26,7 @@ def get_received_by_address(address):
 def make_payment(from_address, to_address, value):
     c = _connect()
     return c.sendfrom(from_address, to_address, value)
+
+def get_transaction(hash):
+    c = _connect()
+    return c.gettransaction(hash)

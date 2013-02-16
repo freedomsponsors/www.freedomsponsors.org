@@ -86,7 +86,12 @@ def notifyWatchers_offerrevoked(offer, comment, watches):
     def send_func(watch):
         if(watch.user.id != offer.sponsor.id):
             _send_mail_to_user(user = watch.user,
-                subject = offer.sponsor.getUserInfo().screenName+" revoked his US$ "+str(twoplaces(offer.price))+" offer for issue [%s]"%offer.issue.title,
+                subject = "%s revoked his %s %s offer for issue [%s]" % (
+                    offer.sponsor.getUserInfo().screenName,
+                    offer.get_currency_symbol(),
+                    str(twoplaces(offer.price)),
+                    offer.issue.title
+                ),
                 templateName = 'email/offerrevoked.html',
                 contextData = {"you" : watch.user,
                                "offer" : offer,
@@ -98,7 +103,12 @@ def notifyWatchers_offeradded(offer, watches):
     def send_func(watch):
         if(watch.user.id != offer.sponsor.id):
             _send_mail_to_user(user = watch.user,
-                subject = offer.sponsor.getUserInfo().screenName+" made a US$ "+str(offer.price)+" offer for issue [%s]"%offer.issue.title,
+                subject = "%s made a %s %s offer for issue [%s]" % (
+                    offer.sponsor.getUserInfo().screenName,
+                    offer.get_currency_symbol(),
+                    str(offer.price),
+                    offer.issue.title
+                ),
                 templateName = 'email/offeradded.html',
                 contextData = {"you" : watch.user,
                                "theirOffer" : offer,
@@ -118,7 +128,7 @@ def notifyWatchers_offerchanged(old_offer, new_offer, watches):
         def send_func(watch):
             if(watch.user.id != new_offer.sponsor.id):
                 _send_mail_to_user(user = watch.user,
-                    subject = old_offer.sponsor.getUserInfo().screenName+" "+action+" the US$ "+str(twoplaces(old_offer.price))+" offer on issue [%s]"%old_offer.issue.title,
+                    subject = old_offer.sponsor.getUserInfo().screenName+" "+action+" the "+old_offer.get_currency_symbol()+" "+str(twoplaces(old_offer.price))+" offer on issue [%s]"%old_offer.issue.title,
                     templateName = 'email/offerchanged.html',
                     contextData = {"you" : watch.user,
                                    "old_offer" : old_offer,
@@ -144,8 +154,11 @@ def notify_payment_parties_and_watchers_paymentconfirmed(payment, watches):
         "SITE_HOME" : settings.SITE_HOME})
     already_sent_to[payment.offer.sponsor.email] = True
     def send_func(watch):
-        subject = "%s has paid his offer [US$ %s / %s]" % (
-            payment.offer.sponsor.getUserInfo().screenName, str(twoplaces(payment.offer.price)), payment.offer.issue.title)
+        subject = "%s has paid his offer [%s %s / %s]" % (
+            payment.offer.sponsor.getUserInfo().screenName,
+            payment.offer.get_currency_symbol(),
+            str(twoplaces(payment.offer.price)),
+            payment.offer.issue.title)
         contextData = {"you": watch.user,
                        "issue": payment.offer.issue,
                        "offer": payment.offer,
@@ -169,8 +182,11 @@ def notifyWatchers_newissuecomment(comment, watches):
 def notifyWatchers_newoffercomment(comment, watches):
     def send_func(watch):
         if(watch.user.id != comment.author.id):
-            subject = "%s added a comment on offer [US$ %s / %s]" % (
-                comment.author.getUserInfo().screenName, str(twoplaces(comment.offer.price)), comment.offer.issue.title)
+            subject = "%s added a comment on offer [%S %s / %s]" % (
+                comment.author.getUserInfo().screenName,
+                comment.offer.get_currency_symbol(),
+                str(twoplaces(comment.offer.price)),
+                comment.offer.issue.title)
             contextData = {"you": watch.user,
                            "issue": comment.offer.issue,
                            "offer": comment.offer,

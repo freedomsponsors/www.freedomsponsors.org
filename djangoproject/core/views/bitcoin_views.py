@@ -28,7 +28,7 @@ def bitcoinIPN(request):
     if value > 0:
         bitcoin_frespo_services.bitcoin_ipn_received(value, destination_address, transaction_hash, confirmations)
     elif value < 0:
-        bitcoin_frespo_services.bitcoin_ipn_sent(value, destination_address, transaction_hash, confirmations)
+        bitcoin_frespo_services.bitcoin_ipn_sent(-value, destination_address, transaction_hash, confirmations)
     else :
         raise BaseException('Received 0 - value IPN confirmation')
     # logger.info("value: %s" % dictOrEmpty(request.GET, "value"))

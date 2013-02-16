@@ -49,3 +49,13 @@ class MoneySent(models.Model):
         self.transaction_hash = transaction_hash
         self.touch()
         self.save()
+
+    def confirm_ipn(self):
+        self.status = MoneySent.CONFIRMED_IPN
+        self.touch()
+        self.save()
+
+    def confirm_trn(self):
+        self.status = MoneySent.CONFIRMED_TRN
+        self.touch()
+        self.save()

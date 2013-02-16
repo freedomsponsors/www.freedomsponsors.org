@@ -8,6 +8,13 @@ This is the issue:
   <a href="{{SITE_HOME}}{{ payment.offer.issue.get_view_link }}" style="color: #08C;text-decoration: none;cursor: auto;">
     {{ payment.offer.issue.title }}</a>
 </div>
+
+{% ifequal payment.currency 'BTC' %}
+<div>
+    Bitcoin transaction hash: {{part.money_sent.transaction_hash}}
+</div>
+{% endifequal %}
+
 Thank you for using FreedomSponsors.<br>
 We will let you know if there are any updates.
 {% endblock mainContent%}
