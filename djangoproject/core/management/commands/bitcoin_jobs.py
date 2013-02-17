@@ -24,5 +24,5 @@ class Command(NoArgsCommand):
             bitcoin_frespo_services.bitcoin_pay_programmers()
             bitcoin_frespo_services.bitcoin_active_send_confirmation()
         except:
-            logger.exception('Error running bitcoin jobs')
-            mail_services.notify_admin('Error running bitcoin jobs', traceback.format_exc())
+            logger.exception('Error running bitcoin jobs') #log configuration will ensure that e-mail is sent
+            # mail_services.notify_admin('Error running bitcoin jobs', traceback.format_exc())
