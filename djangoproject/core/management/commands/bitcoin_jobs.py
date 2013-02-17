@@ -1,6 +1,10 @@
 from django.core.management.base import NoArgsCommand
 from optparse import make_option
 from core.services import bitcoin_frespo_services
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 __author__ = 'tony'
 
@@ -13,5 +17,10 @@ class Command(NoArgsCommand):
     )
 
     def handle_noargs(self, **options):
-        bitcoin_frespo_services.bitcoin_active_receive_confirmation()
-        bitcoin_frespo_services.bitcoin_pay_programmers()
+        try:
+            raise Exception('test')
+            bitcoin_frespo_services.bitcoin_active_receive_confirmation()
+            bitcoin_frespo_services.bitcoin_pay_programmers()
+            bitcoin_frespo_services.bitcoin_active_send_confirmation()
+        except:
+            logger.exception('Error running bitcoin jobs')
