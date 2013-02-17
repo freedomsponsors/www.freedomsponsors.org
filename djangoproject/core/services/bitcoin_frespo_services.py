@@ -32,7 +32,7 @@ def bitcoin_ipn_received(value, destination_address, transaction_hash, confirmat
 def bitcoin_ipn_sent(value, destination_address, transaction_hash, confirmations):
     part = get_or_none(PaymentPart, money_sent__transaction_hash = transaction_hash)
     if part:
-        values_equal = Decimal(str(value)) == part.realprice
+        values_equal = abs(Decimal(str(value)) - part.realprice) < Decimal('0.002')
         if values_equal:
             part.money_sent.confirm_ipn()
             _log_info_ipn_send_confirmation(part)
@@ -169,7 +169,7 @@ def _match_transaction_with_money_sent(money_sent, trn):
             trn_map[key] += detail['amount']
     if not trn_map.has_key(money_sent.from_address) or not trn_map.has_key(money_sent.to_address):
         return False, 'Adresses dont match'
-    if not (money_sent.value == -trn_map[money_sent.from_address] and money_sent.value == trn_map[money_sent.to_address]):
+    if not (abs(money_sent.value + trn_map[money_sent.from_address]) < Decimal(0.002) and abs(money_sent.value - trn_map[money_sent.to_address]) < Decimal('0.002')):
         return False, 'Values dont match'
     return True, None
 
