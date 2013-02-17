@@ -80,7 +80,8 @@ def bitcoin_active_send_confirmation():
         else:
             _log_error_invalid_payment_part_for_active_send_confirmation(part, verr)
         previous_payment_id = current_payment_id
-    _notify_payment_finished_if_applicable(previous_payment_id)
+    if previous_payment_id:
+        _notify_payment_finished_if_applicable(previous_payment_id)
 
 
 
