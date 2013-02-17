@@ -1,7 +1,8 @@
 from django.core.management.base import NoArgsCommand
 from optparse import make_option
-from core.services import bitcoin_frespo_services
+from core.services import bitcoin_frespo_services, mail_services
 import logging
+import traceback
 
 logger = logging.getLogger(__name__)
 
@@ -24,3 +25,4 @@ class Command(NoArgsCommand):
             bitcoin_frespo_services.bitcoin_active_send_confirmation()
         except:
             logger.exception('Error running bitcoin jobs')
+            mail_services.notify_admin('Error running bitcoin jobs', traceback.format_exc())
