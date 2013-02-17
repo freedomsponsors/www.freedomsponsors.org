@@ -107,6 +107,7 @@ def _notify_payment_finished_if_applicable(payment_id):
             is_finished = False
             break
     if is_finished:
+        payment.offer.paid()
         watches = watch_services.find_issue_and_offer_watches(payment.offer)
         mail_services.notify_payment_parties_and_watchers_paymentconfirmed(payment, watches)
 
