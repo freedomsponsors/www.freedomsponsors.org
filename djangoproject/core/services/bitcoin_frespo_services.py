@@ -110,6 +110,11 @@ def _notify_payment_finished_if_applicable(payment_id):
         payment.offer.paid()
         watches = watch_services.find_issue_and_offer_watches(payment.offer)
         mail_services.notify_payment_parties_and_watchers_paymentconfirmed(payment, watches)
+        msg = 'payment_id=%s, value=%s, issue=%s' % (
+            payment.id,
+            payment.total_bitcoin_received,
+            payment.offer.issue.title)
+        mail_services.notify_admin('Bitcoin payment made - %s'%payment.total_bitcoin_received, )
 
 def _filter_payments_pending_active_receive_confirmation():
     return Payment.objects.filter(
@@ -118,7 +123,7 @@ def _filter_payments_pending_active_receive_confirmation():
             Q(status=Payment.CONFIRMED_IPN)
             | ( (Q(status=Payment.CREATED) | Q(status=Payment.CONFIRMED_IPN_UNDERPAY) | Q(status=Payment.CONFIRMED_TRN_UNDERPAY))
                 & Q(lastChangeDate__gte=timezone.now() - datetime.timedelta(days=10))
-                & Q(lastChangeDate__lte=timezone.now() - datetime.timedelta(hours=1))
+                & Q(lastChangeDate__lte=timezone.now() - datetime.timedelta(minutes=10))
             )
         )
     )

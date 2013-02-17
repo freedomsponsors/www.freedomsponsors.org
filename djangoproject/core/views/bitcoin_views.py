@@ -31,14 +31,6 @@ def bitcoinIPN(request):
         bitcoin_frespo_services.bitcoin_ipn_sent(-value, destination_address, transaction_hash, confirmations)
     else :
         raise BaseException('Received 0 - value IPN confirmation')
-    # logger.info("value: %s" % dictOrEmpty(request.GET, "value"))
-    # logger.info("input_address: %s" % dictOrEmpty(request.GET, "input_address"))
-    # logger.info("confirmations: %s" % dictOrEmpty(request.GET, "confirmations"))
-    # logger.info("transaction_hash: %s" % dictOrEmpty(request.GET, "transaction_hash"))
-    # logger.info("destination_address: %s" % dictOrEmpty(request.GET, "destination_address"))
-    # logger.info("input_transaction_hash: %s" % dictOrEmpty(request.GET, "input_transaction_hash"))
-    # logger.info("GET params: %s" % request.GET)
-    # logger.info('----- bitcoinIPN end ------')
     return HttpResponse("*ok*")
 
 def payOffer(request, offer, payment):
