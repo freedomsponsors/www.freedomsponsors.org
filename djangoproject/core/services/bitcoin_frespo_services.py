@@ -114,7 +114,7 @@ def _notify_payment_finished_if_applicable(payment_id):
             payment.id,
             payment.total_bitcoin_received,
             payment.offer.issue.title)
-        mail_services.notify_admin('Bitcoin payment made - %s'%payment.total_bitcoin_received, )
+        mail_services.notify_admin('Bitcoin payment made - %s'%payment.total_bitcoin_received, msg)
 
 def _filter_payments_pending_active_receive_confirmation():
     return Payment.objects.filter(
