@@ -169,7 +169,7 @@ def _match_transaction_with_money_sent(money_sent, trn):
             trn_map[key] += detail['amount']
     if not trn_map.has_key(money_sent.from_address) or not trn_map.has_key(money_sent.to_address):
         return False, 'Adresses dont match'
-    if not (abs(money_sent.value + trn_map[money_sent.from_address]) < Decimal(0.002) and abs(money_sent.value - trn_map[money_sent.to_address]) < Decimal('0.002')):
+    if not (abs(money_sent.value + trn_map[money_sent.from_address]) < Decimal('0.002') and abs(money_sent.value - trn_map[money_sent.to_address]) < Decimal('0.002')):
         return False, 'Values dont match'
     return True, None
 
