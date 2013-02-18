@@ -51,7 +51,8 @@ class MoneySent(models.Model):
         self.save()
 
     def confirm_ipn(self):
-        self.status = MoneySent.CONFIRMED_IPN
+        if self.status == MoneySent.CREATED or self.status == MoneySent.SENT:
+            self.status = MoneySent.CONFIRMED_IPN
         self.touch()
         self.save()
 
