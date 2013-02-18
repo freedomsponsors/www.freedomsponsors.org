@@ -5,7 +5,7 @@ test_settings.py*
 .pydevproject
 fakeMail
 .settings
-logs
+logs/*.log
 chromedriver.log
 .idea
 .coverage
