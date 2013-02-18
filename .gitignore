@@ -6,6 +6,7 @@ test_settings.py*
 fakeMail
 .settings
 logs/*.log
+djangoproject/logs/*.log
 chromedriver.log
 .idea
 .coverage

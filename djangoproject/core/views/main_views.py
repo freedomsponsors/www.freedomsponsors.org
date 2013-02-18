@@ -43,10 +43,10 @@ def admail(request):
                 emails = dictOrEmpty(request.POST, 'emails').split(',')
                 count = 0
                 for email in emails:
-                    plain_send_mail(email.strip(), subject, body)
+                    plain_send_mail(email.strip(), subject, body, settings.ADMAIL_FROM_EMAIL)
                     count += 1
             elif(mail_to == 'all'):
-                count = send_mail_to_all_users(subject, body)
+                count = send_mail_to_all_users(subject, body, settings.ADMAIL_FROM_EMAIL)
             messages.info(request, 'mail sent to %s users'%count)
     else:
         messages.info(request, 'nice try :-). If you do find a hole, please have the finesse to let us know though.')

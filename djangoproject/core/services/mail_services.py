@@ -7,14 +7,14 @@ from core.utils.frespo_utils import twoplaces
 
 ADMINS_EMAILS = map((lambda x: x[1]), settings.ADMINS)
 
-def plain_send_mail(to, subject, body):
-    send_html_mail(subject, body, body, settings.DEFAULT_FROM_EMAIL, [to])
+def plain_send_mail(to, subject, body, from_email=settings.DEFAULT_FROM_EMAIL):
+    send_html_mail(subject, body, body, from_email, [to])
 
-def send_mail_to_all_users(subject, body):
+def send_mail_to_all_users(subject, body, from_email=settings.DEFAULT_FROM_EMAIL):
     count = 0
     for user in User.objects.all():
         if(user.getUserInfo() and user.getUserInfo().receiveAllEmail):
-            plain_send_mail(user.email, subject, body)
+            plain_send_mail(user.email, subject, body, from_email)
             count += 1
     return count
 
