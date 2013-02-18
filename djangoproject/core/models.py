@@ -492,7 +492,7 @@ class Offer(models.Model):
 
     def get_payment(self):
         if self.status == Offer.PAID:
-            return get_or_none(Payment, offer__id = self.id, status = Payment.CONFIRMED_IPN)
+            return get_or_none(Payment, offer__id = self.id, status__in = [Payment.CONFIRMED_IPN, Payment.CONFIRMED_TRN] )
         return None
 
     def get_view_link(self):
