@@ -29,8 +29,8 @@ def generate_paypal_payment(payment):
         cancelUrl = settings.PAYPAL_CANCEL_URL,
         currencyCode = payment.currency,
 #       senderEmail = offer.sponsor.email, //pelo jeito nao precisa disso aqui - ou melhor, nao pode
-        feesPayer = 'SENDER',
-        # feesPayer = 'EACHRECEIVER',
+        # feesPayer = 'SENDER',
+        feesPayer = 'EACHRECEIVER',
         receiverList = { 'receiver': receivers},
         returnUrl = settings.PAYPAL_RETURN_URL,
         ipnNotificationUrl = settings.PAYPAL_IPNNOTIFY_URL,
