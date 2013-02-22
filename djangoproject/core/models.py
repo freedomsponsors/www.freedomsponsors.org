@@ -27,6 +27,7 @@ class UserInfo(models.Model):
     hide_from_userlist = models.BooleanField()
     preferred_language_code = models.CharField(max_length=10, null=True, blank=True)
     bitcoin_receive_address = models.CharField(max_length=128, blank=True)
+    paypal_verified = models.BooleanField()
 
     @classmethod
     def newUserInfo(cls, user):
@@ -42,6 +43,7 @@ class UserInfo(models.Model):
         userinfo.receiveAllEmail = True
         userinfo.brazilianPaypal = False
         userinfo.hide_from_userlist = False
+        userinfo.paypal_verified = False
         return userinfo
 
     def is_differentPaypalEmail(self):

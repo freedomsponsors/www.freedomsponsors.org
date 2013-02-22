@@ -49,16 +49,7 @@
     <div class="container-fluid">
       
       <!-- messages -->
-      {% if messages %}
-      {% for message in messages %}
-      <div class="alert fade in {% if message.tags %} alert-{{ message.tags }} {% endif %} ">
-          <button type="button" class="close" data-dismiss="alert">×</button>
-          <ul class="messages">
-              <li>{{ message|linebreaks }}</li>
-          </ul>
-      </div>
-      {% endfor %}
-      {% endif %}
+      {% include "core/popup/popup_messages.html" %}
 
       <!-- 3tops -->
       <div id="base-top" class="row-fluid" style="">

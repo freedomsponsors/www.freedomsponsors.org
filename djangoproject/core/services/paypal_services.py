@@ -1,8 +1,7 @@
 from decimal import Decimal
-from django.conf import settings
 from core.services.mail_services import notify_payment_parties_and_watchers_paymentconfirmed, notify_admin
 from core.services import watch_services
-from core.utils.paypal_adapter import generate_paypal_payment
+from core.utils import paypal_adapter
 from core.utils.frespo_utils import get_or_none, twoplaces
 from core.models import Payment, Offer, Solution, PaymentPart
 from core.utils import google_calc_adapter
@@ -46,3 +45,13 @@ def notify_admin_payment_confirmed(payment):
 def usd_2_brl_convert_rate():
     return google_calc_adapter.usd2brl() * 1.045
 
+def accepts_paypal_payments(user):
+    if user.getUserInfo().paypal_verified:
+        return True
+    _check_whether_user_has_verified_paypal(user)
+    return user.getUserInfo().paypal_verified
+
+def _check_whether_user_has_verified_paypal(user):
+    userinfo = user.getUserInfo()
+    userinfo.paypal_verified = paypal_adapter.is_verified_account(userinfo.paypalEmail)
+    userinfo.save()

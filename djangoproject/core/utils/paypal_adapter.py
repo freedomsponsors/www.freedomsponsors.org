@@ -1,7 +1,8 @@
 from django.conf import settings
-from paypalx import AdaptivePayments
+from paypalx import AdaptivePayments, PaypalError
 from urllib import urlencode
 from urllib2 import urlopen, Request
+from core.services import mail_services
 import logging
 
 logger = logging.getLogger(__name__)
@@ -28,9 +29,9 @@ def generate_paypal_payment(payment):
         actionType = 'PAY',
         cancelUrl = settings.PAYPAL_CANCEL_URL,
         currencyCode = payment.currency,
-#       senderEmail = offer.sponsor.email, //pelo jeito nao precisa disso aqui - ou melhor, nao pode
+#       senderEmail = offer.sponsor.getUserInfo().paypalEmail, //seems like we shouldn't use this
         # feesPayer = 'SENDER',
-        feesPayer = 'EACHRECEIVER',
+        feesPayer = 'SENDER',
         receiverList = { 'receiver': receivers},
         returnUrl = settings.PAYPAL_RETURN_URL,
         ipnNotificationUrl = settings.PAYPAL_IPNNOTIFY_URL,
@@ -59,3 +60,21 @@ def verify_ipn(data):
         return False
 
     return True
+
+def is_verified_account(email):
+    try:
+        response = paypal.pay(
+            actionType = 'PAY',
+            cancelUrl = settings.PAYPAL_CANCEL_URL,
+            currencyCode = 'USD',
+            feesPayer = 'SENDER',
+            receiverList = { 'receiver': { 'amount' : '10.00', 'email' : email } },
+            returnUrl = settings.PAYPAL_RETURN_URL,
+            ipnNotificationUrl = settings.PAYPAL_IPNNOTIFY_URL
+        )
+        return True
+    except PaypalError as e:
+        if e.code != '520009':
+            msg = 'email:%s, error:%s' % (email, e)
+            mail_services.notify_admin("Unexpected error from Paypal when trying to see if account exists", msg)
+        return False

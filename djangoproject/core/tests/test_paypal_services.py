@@ -28,14 +28,14 @@ class TestPaypalService(unittest.TestCase):
 @skipIf(settings.ENVIRONMENT != 'DEV', 'not supported in this environment')
 class TestPaypalAPI(unittest.TestCase):
 
-    def test_x(self):
+    def test_with_feesPayer_SENDER(self):
 
         fees_payer = 'SENDER'           #A
         # fees_payer = 'EACHRECEIVER'       #B
 
-        # receiver_email = 'receiver@somewhere.com'           #C
+        receiver_email = 'receiver@somewhere.com'           #C
         # receiver_email = 'spon1_1348457115_per@gmail.com'   #D
-        receiver_email = 'tonylampada@gmail.com'   #E
+        # receiver_email = 'tonylampada@gmail.com'   #E
 
 
         paypal = AdaptivePayments(settings.PAYPAL_API_USERNAME, 

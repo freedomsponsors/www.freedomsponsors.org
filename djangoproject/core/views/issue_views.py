@@ -204,7 +204,7 @@ def viewIssue(request, issue_id):
     show_sponsor_popup = (dictOrEmpty(request.GET, 'show_sponsor') == 'true')
     alert = dictOrEmpty(request.GET, 'alert')
     if(alert == 'KICKSTART'):
-        show_alert = 'core/popup_just_kickstarted.html'
+        show_alert = 'core/popup/popup_just_kickstarted.html'
     alert_reputation_revoking = mysolution and mysolution.status == Solution.IN_PROGRESS and mysolution.get_received_payments().count() > 0
 
     invoke_parent_callback = (dictOrEmpty(request.GET, 'c') == 's')
@@ -237,7 +237,7 @@ def viewOffer(request, offer_id):
 
     alert = dictOrEmpty(request.GET, 'alert')
     if(alert == 'SPONSOR' and offer.issue.project):
-        show_alert = 'core/popup_just_sponsored.html'
+        show_alert = 'core/popup/popup_just_sponsored.html'
     alert_reputation_revoking = mysolution and mysolution.status == Solution.IN_PROGRESS and mysolution.get_received_payments().count() > 0
     invoke_parent_callback = (dictOrEmpty(request.GET, 'c') == 's')
 
@@ -336,7 +336,24 @@ def _generate_payment_entity(offer, receiver_count, dict, user):
 
 def _payWithPaypalForm(request, offer):
     solutions_accepting_payments = offer.issue.getSolutionsAcceptingPayments()
-    shared_price = None
+
+    solutions_with_paypal = []
+    solutions_without_paypal = []
+    for solution in solutions_accepting_payments:
+        if paypal_services.accepts_paypal_payments(solution.programmer):
+            solutions_with_paypal.append(solution)
+        else:
+            solutions_without_paypal.append(solution)
+
+    if len(solutions_with_paypal) == 0:
+        messages.error(request, "The programmer(s) who solved this issue do not have a verified Paypal account yet, so you cannot pay them at this time.\n"+
+                                "Please leave a comment for them, asking them to update their profile page with an email of a verified Paypal account, then come back here again.")
+        return redirect(offer.get_view_link())
+    if len(solutions_without_paypal) > 0:
+        names = ', '.join(map(lambda solution:solution.programmer.getUserInfo().screenName, solutions_without_paypal))
+        messages.warning(request, "The following programmer(s) do not have a verified Paypal account yet: %s\n" % names+
+                                  "Therefore, you won't be able to make a payment to them at this time.\n"+
+                                  "If you want, you can leave a comment for them, asking them to update their profile page with an email of a verified Paypal account, then come back here again.")
 
     convert_rate = 1
     currency_symbol = "US$"
@@ -346,13 +363,12 @@ def _payWithPaypalForm(request, offer):
         currency_symbol = "R$"
         alert_brazil = True
 
-    if(solutions_accepting_payments.count() > 0):
-        shared_price = convert_rate * float(offer.price) / solutions_accepting_payments.count()
-        shared_price = twoplaces(Decimal(str(shared_price)))
+    shared_price = convert_rate * float(offer.price) / solutions_accepting_payments.count()
+    shared_price = twoplaces(Decimal(str(shared_price)))
 
     return render_to_response('core/pay_offer.html',
         {'offer':offer,
-         'solutions_accepting_payments' : solutions_accepting_payments,
+         'solutions_accepting_payments' : solutions_with_paypal,
          'shared_price' : shared_price,
          'convert_rate' : convert_rate,
          'currency_symbol' : currency_symbol,
@@ -365,6 +381,11 @@ def _payWithBitcoinForm(request, offer):
         messages.error(request, 'Payments with bitcoin have been disabled')
         return redirect(offer.get_view_link())
     solutions_accepting_payments = offer.issue.getSolutionsAcceptingPayments()
+
+    if len(solutions_accepting_payments) == 0:
+        messages.error(request, 'Currently no programmers are accepting payments for this issue.')
+        return redirect(offer.get_view_link())
+
     solutions_with_bitcoin = []
     solutions_without_bitcoin = []
     for solution in solutions_accepting_payments:
@@ -372,9 +393,6 @@ def _payWithBitcoinForm(request, offer):
             solutions_with_bitcoin.append(solution)
         else:
             solutions_without_bitcoin.append(solution)
-    if len(solutions_accepting_payments) == 0:
-        messages.error(request, 'Currently no programmers are accepting payments for this issue.')
-        return redirect(offer.get_view_link())
     if len(solutions_with_bitcoin) == 0:
         messages.error(request, "The programmer(s) who solved this issue have not registered a Bitcoin address yet, so you cannot pay them at this time.\n"+
             "Please leave a comment for them, asking them to update this info on their profile page, then come back here again.")
