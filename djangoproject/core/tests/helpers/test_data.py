@@ -5,6 +5,9 @@ from random import randint
 
 __author__ = 'tony'
 
+paypal_credentials_1 = {'email':'spon1_1348457115_per@gmail.com',
+                        'password' : '12345678'}
+
 def createDummyUserRandom(login, password):
     randomnum = randint(0,100000)
     random_login = '%s_%s'%(login, randomnum)

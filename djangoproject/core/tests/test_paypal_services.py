@@ -5,25 +5,74 @@ from helpers import test_data, email_asserts
 from django.conf import settings
 from django.utils.unittest import skipIf
 from paypalx import AdaptivePayments
+from django.test.client import Client
+from core.utils import paypal_adapter
 
 __author__ = 'tony'
 
-class TestPaypalService(unittest.TestCase):
+class TestPaypalPayment(unittest.TestCase):
 
-    def test_process_ipn_return(self):
-        payment = test_data.create_dummy_payment_usd()
-        watcher = test_data.create_dummy_programmer()
-        watch_services.watch_issue(watcher, payment.offer.issue.id, IssueWatch.WATCHED)
-        email_asserts.clear_sent()
-        paypal_services.process_ipn_return(payment.paykey, 'COMPLETED', 'abcd1234')
-        payment = Payment.objects.get(id=payment.id);
-        self.assertEquals(Payment.CONFIRMED_IPN, payment.status)
-        email_asserts.send_emails()
-        email_asserts.assert_sent_count(self, 4)
-        email_asserts.assert_sent(self, to=payment.offer.sponsor.email, subject="You have made a US$ 10.00 payment")
-        email_asserts.assert_sent(self, to=payment.getParts()[0].programmer.email, subject="User One has made you a US$ 10.00 payment")
-        email_asserts.assert_sent(self, to=watcher.email, subject="User One has paid his offer [US$ 10.00 / Compiled native SQL queries are not cached]")
-        email_asserts.assert_sent(self, to=settings.ADMINS[0][1], subject="payment confirmed: [US$ 10.00 / Compiled native SQL queries are not cached]")
+    def test_paypal_payment_complete(self):
+
+        #setup
+        offer = test_data.create_dummy_offer_usd()
+        programmer = test_data.create_dummy_programmer()
+        programmer_userinfo = programmer.getUserInfo()
+        programmer_userinfo.paypalEmail = test_data.paypal_credentials_1['email']
+        programmer_userinfo.save()
+        solution = Solution.newSolution(offer.issue, programmer, False)
+        solution.accepting_payments = True
+        solution.save()
+
+        #get pay form
+        client = Client()
+        client.login(username=offer.sponsor.username, password='abcdef')
+
+        response = client.get('/core/offer/%s/pay' % offer.id)
+        self.assertEqual(response.status_code, 200)
+        response_offer = response.context['offer']
+        response_solutions_accepting_payments = response.context['solutions_accepting_payments']
+        response_shared_price = response.context['shared_price']
+        response_convert_rate = response.context['convert_rate']
+        response_currency_symbol = response.context['currency_symbol']
+        self.assertEqual(offer.id, response_offer.id)
+        self.assertEqual(len(response_solutions_accepting_payments), 1)
+        self.assertEqual(float(response_shared_price), 10.0)
+        self.assertEqual(float(response_convert_rate), 1.0)
+        self.assertEqual(response_currency_symbol, 'US$')
+
+        #submit pay form
+        response = client.post('/core/offer/pay/submit',
+                               {'offer_id' : str(offer.id),
+                                'count' : '1',
+                                'check_0' : 'true',
+                                'pay_0' : '10.00',
+                                'solutionId_0' : str(solution.id)})
+        self.assertEqual(response.status_code, 302)
+        prefix = 'https://www.sandbox.paypal.com/webscr?cmd=_ap-payment&paykey='
+        location = response.get('location')
+        self.assertTrue(prefix in location)
+        paykey = location.split(prefix)[1]
+        self.assertTrue(paykey is not None)
+
+        #RECEIVE ipn confirmation
+        def mock_verify_ipn(data):
+            return True
+
+        paypal_adapter.verify_ipn = mock_verify_ipn
+
+        payment = Payment.objects.get(paykey = paykey)
+        client2 = Client()
+        response = client2.post('/core/paypal/'+settings.PAYPAL_IPNNOTIFY_URL_TOKEN,
+           {'pay_key' : paykey,
+            'status' : 'COMPLETED',
+            'tracking_id' : payment.confirm_key,})
+            # 'tracking_id' : 'BLAU',})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content, 'OK')
+        payment = Payment.objects.get(pk = payment.id)
+        self.assertEqual(payment.status, Payment.CONFIRMED_IPN)
+
 
 @skipIf(settings.ENVIRONMENT != 'DEV', 'not supported in this environment')
 class TestPaypalAPI(unittest.TestCase):
