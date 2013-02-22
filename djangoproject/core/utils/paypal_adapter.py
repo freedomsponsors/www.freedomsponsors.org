@@ -23,7 +23,7 @@ else:
 def generate_paypal_payment(payment):
     receivers = []
     for part in payment.getParts():
-        receivers.append({'amount' : str(part.realprice), 'email' : part.programmer.getUserInfo().paypalEmail})
+        receivers.append({'amount' : str(part.price), 'email' : part.programmer.getUserInfo().paypalEmail})
     receivers.append({'amount' : "%.2f"%payment.fee, 'email' : settings.PAYPAL_FRESPO_RECEIVER_EMAIL})
     response = paypal.pay(
         actionType = 'PAY',

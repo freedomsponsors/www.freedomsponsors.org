@@ -307,19 +307,16 @@ def _generate_payment_entity(offer, receiver_count, dict, user):
     payment = Payment.newPayment(offer)
     parts = []
     sum = Decimal(0)
-    realSum = Decimal(0)
     for i in range(receiver_count):
         check = dict.has_key('check_%s' % i)
         if(check):
             pay = Decimal(dict['pay_%s' % i])
             if(pay > 0):
                 solution = Solution.objects.get(pk=int(dict['solutionId_%s' % i]))
-                realPay = Decimal(pay * Decimal(1 - settings.FS_FEE)) #twoplaces
-                part = PaymentPart.newPart(payment, solution, pay, realPay)
+                part = PaymentPart.newPart(payment, solution, pay)
                 parts.append(part)
                 sum += pay
-                realSum += realPay
-    payment.fee = sum - realSum
+    payment.fee = sum * settings.FS_FEE
     payment.total = sum
     convert_twoplaces = offer.currency == 'USD'
     if convert_twoplaces:
@@ -330,7 +327,6 @@ def _generate_payment_entity(offer, receiver_count, dict, user):
         part.payment = payment
         if convert_twoplaces:
             part.price = twoplaces(part.price)
-            part.realprice = twoplaces(part.realprice)
         part.save()
     return payment
 

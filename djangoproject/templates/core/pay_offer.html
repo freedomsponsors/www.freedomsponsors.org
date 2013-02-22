@@ -172,7 +172,6 @@
 
   function next1_click(){
     var sum = 0;
-    var realSum = 0;
     var paying_unfinished = false;
   	for(var i=0; i < stage.solutions.length; i++){
   		var ischecked = $('#check_'+i+':checked').val() != undefined;
@@ -182,10 +181,8 @@
   			var $pay = $('#pay_'+i);
   			var _amt = document.getElementById('amt_'+i);
   			var pay = parseFloat($pay.val());
-        var realPay = parseFloat((pay * (1-stage.fs_fee)).toFixed(2));
-  			_amt.innerHTML = realPay.toFixed(2);
+  			_amt.innerHTML = pay.toFixed(2);
   			sum += pay;
-        realSum += realPay;
         if(stage.solutions[i].status != 'DONE' && pay > 0){
           paying_unfinished = true;
         }
@@ -195,9 +192,9 @@
   	}
     var _amt_fs = document.getElementById('amt_fs');
     var _amt_sum = document.getElementById('amt_sum');
-    var fee = sum - realSum
+    var fee = sum * stage.fs_fee
     _amt_fs.innerHTML = fee.toFixed(2);
-    _amt_sum.innerHTML = sum.toFixed(2);
+    _amt_sum.innerHTML = (sum + fee).toFixed(2);
 
   	stage.step = 2;
   	updateStage();

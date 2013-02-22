@@ -32,7 +32,7 @@ def bitcoin_ipn_received(value, destination_address, transaction_hash, confirmat
 def bitcoin_ipn_sent(value, destination_address, transaction_hash, confirmations):
     part = get_or_none(PaymentPart, money_sent__transaction_hash = transaction_hash)
     if part:
-        values_equal = abs(Decimal(str(value)) - part.realprice) < Decimal('0.002')
+        values_equal = abs(Decimal(str(value)) - part.price) < Decimal('0.002')
         if values_equal:
             part.money_sent.confirm_ipn()
             _log_info_ipn_send_confirmation(part)
@@ -92,7 +92,7 @@ def bitcoin_pay_programmers():
         if valid:
             part.money_sent = bitcoin_services.make_payment(from_address = part.payment.bitcoin_receive_address.address,
                                                             to_address = part.solution.programmer.getUserInfo().bitcoin_receive_address,
-                                                            value = part.realprice)
+                                                            value = part.price)
             part.save()
             _log_info_money_sent(part)
         else:
@@ -253,9 +253,9 @@ new value: %s""" % (
         logger.error(msg)
 
 def _log_error_difference_between_sent_values(part, value):
-    msg = 'Theres a difference between bitcoin sent values. part id = %s,\n part realprice = %s,\n value sent = %s, \nissue = %s' % (
+    msg = 'Theres a difference between bitcoin sent values. part id = %s,\n part price = %s,\n value sent = %s, \nissue = %s' % (
         part.id,
-        part.realprice,
+        part.price,
         value,
         part.payment.offer.issue.title)
     mail_services.notify_admin('Theres a difference between bitcoin sent values', msg)

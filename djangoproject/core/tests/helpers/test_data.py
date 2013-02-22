@@ -76,7 +76,7 @@ def create_dummy_payment_usd():
     payment.confirm_key = 'abcd1234'
     payment.save()
     solution = create_dummy_solution()
-    part = PaymentPart.newPart(payment, solution, Decimal('10.00'), Decimal('9.70'))
+    part = PaymentPart.newPart(payment, solution, Decimal('10.00'))
     part.save()
     return payment
 

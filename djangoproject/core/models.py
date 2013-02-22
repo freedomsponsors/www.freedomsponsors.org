@@ -812,16 +812,14 @@ class PaymentPart(models.Model):
     solution = models.ForeignKey(Solution)
     paypalEmail = models.EmailField(max_length=256, null=True)
     price = models.DecimalField(max_digits=16, decimal_places=8)
-    realprice = models.DecimalField(max_digits=16, decimal_places=8)
     money_sent = models.ForeignKey(MoneySent, null = True)
 
     @classmethod
-    def newPart(cls, payment, solution, price, realprice):
+    def newPart(cls, payment, solution, price):
         part = cls()
         part.payment = payment
         part.solution = solution
         part.programmer = solution.programmer
         part.paypalEmail = part.programmer.getUserInfo().paypalEmail
         part.price = Decimal(price)
-        part.realprice = Decimal(realprice)
         return part
