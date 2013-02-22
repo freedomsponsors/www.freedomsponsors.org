@@ -65,7 +65,7 @@ class TrackerUtilsTest(TestCase):
         assert(issueInfo.key == '14')
         assert(issueInfo.project_trackerURL == 'https://github.com/zetaweb/www.gittip.com/issues')
         assert(issueInfo.project_name == 'www.gittip.com')
-        assert(issueInfo.issue_title == 'pay with bitcoin, litecoin')
+        assert(issueInfo.issue_title == 'pay in with bitcoin')
 
     def test_coveragepy_bitbucket(self):
         issueInfo = fetchIssueInfo("https://bitbucket.org/ned/coveragepy/issue/193/unicodedecodeerror-on-htmlpy")
