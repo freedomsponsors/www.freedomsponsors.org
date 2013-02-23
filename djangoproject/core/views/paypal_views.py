@@ -8,8 +8,9 @@ from django.utils.translation import ugettext as _
 from core.utils import paypal_adapter
 from core.utils.frespo_utils import  dictOrEmpty
 from core.models import  Payment
-from core.services import paypal_services
+from core.services import paypal_services, mail_services
 import logging
+import traceback
 
 logger = logging.getLogger(__name__)
 
@@ -20,7 +21,12 @@ def payOffer(request, offer, payment):
     if(current_payment_id):
         paypal_services.forget_payment(int(current_payment_id))
 
-    paypal_adapter.generate_paypal_payment(payment)
+    try:
+        paypal_adapter.generate_paypal_payment(payment)
+    except BaseException as e:
+        messages.error(request, 'Error communicating with Paypal: %s' % e)
+        mail_services.notify_admin('Error generating paypal payment', traceback.format_exc())
+        return redirect(offer.get_view_link())
     payment.save()
 
     request.session['current_payment_id'] = payment.id

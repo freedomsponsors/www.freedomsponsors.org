@@ -336,7 +336,13 @@ def _payWithPaypalForm(request, offer):
     solutions_with_paypal = []
     solutions_without_paypal = []
     for solution in solutions_accepting_payments:
-        if paypal_services.accepts_paypal_payments(solution.programmer):
+        try: 
+            accepts_paypal = paypal_services.accepts_paypal_payments(solution.programmer)
+        except BaseException as e:
+            messages.error(request, 'Error communicating with Paypal: %s' % e)
+            mail_services.notify_admin('Error determining if user accepts paypal', traceback.format_exc())
+            return redirect(offer.get_view_link())
+        if accepts_paypal:
             solutions_with_paypal.append(solution)
         else:
             solutions_without_paypal.append(solution)

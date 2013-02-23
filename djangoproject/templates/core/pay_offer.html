@@ -88,17 +88,17 @@
 
       <tr id="div_summary_{{forloop.counter0}}">
         <td> <img src="{{solution.programmer.gravatar_url_small}}"/> {{ solution.programmer.getUserInfo.screenName }} </td>
-        <td style="width:80px;text-align:right"> {{currency_symbol}} <span id="amt_{{forloop.counter0}}"></span> </td>
+        <td style="width:100px;text-align:right"> {{currency_symbol}} <span id="amt_{{forloop.counter0}}"></span> </td>
       </tr>
 
   	{% endfor %}
       <tr id="div_summary_fs">
         <td> <img src="/static/img/FS_logo_32x32.png"/> Freedom Sponsors </td>
-        <td style="width:80px;text-align:right"> {{currency_symbol}} <span id="amt_fs"></span> </td>
+        <td style="width:100px;text-align:right"> {{currency_symbol}} <span id="amt_fs"></span> </td>
       </tr>
       <tr id="div_summary_sum">
         <td> Total </td>
-        <td style="width:80px;text-align:right">{{currency_symbol}} <span id="amt_sum"></span></td>
+        <td style="width:100px;text-align:right">{{currency_symbol}} <span id="amt_sum"></span></td>
       </tr>
     </table>
 	  <div class="span6">
@@ -129,7 +129,14 @@
     {% endfor %}
     ],
   	step:1,
-  	fs_fee:{{FS_FEE}}
+    {% localize off %}
+  	fs_fee:{{FS_FEE}},
+    {% endlocalize %}
+    {% ifequal offer.currency 'USD' %}
+    decimals:2
+    {% else %}
+    decimals:4
+    {% endifequal %}
   };
 
   function setVisibleSliding($div, visible){
@@ -155,7 +162,7 @@
   	}
   	var price = '';
   	if(checked_count > 0){
-		price = (parseFloat(stage.offer_price) * stage.convert_rate / checked_count).toFixed(2);
+		price = (parseFloat(stage.offer_price) * stage.convert_rate / checked_count).toFixed(stage.decimals);
   	}
 
   	for(var i=0; i < stage.solutions.length; i++){
@@ -181,7 +188,7 @@
   			var $pay = $('#pay_'+i);
   			var _amt = document.getElementById('amt_'+i);
   			var pay = parseFloat($pay.val());
-  			_amt.innerHTML = pay.toFixed(2);
+  			_amt.innerHTML = pay.toFixed(stage.decimals);
   			sum += pay;
         if(stage.solutions[i].status != 'DONE' && pay > 0){
           paying_unfinished = true;
@@ -193,8 +200,8 @@
     var _amt_fs = document.getElementById('amt_fs');
     var _amt_sum = document.getElementById('amt_sum');
     var fee = sum * stage.fs_fee
-    _amt_fs.innerHTML = fee.toFixed(2);
-    _amt_sum.innerHTML = (sum + fee).toFixed(2);
+    _amt_fs.innerHTML = fee.toFixed(stage.decimals);
+    _amt_sum.innerHTML = (sum + fee).toFixed(stage.decimals);
 
   	stage.step = 2;
   	updateStage();

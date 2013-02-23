@@ -714,6 +714,9 @@ class Payment(models.Model):
     def get_currency_symbol(self):
         return CURRENCY_SYMBOLS[self.currency]
 
+    def total_with_fee(self):
+        return self.total + self.fee
+
     def setPaykey(self, paykey):
         self.paykey = paykey
 
@@ -765,7 +768,7 @@ class Payment(models.Model):
 
     def confirm_bitcoin_ipn(self, value, transaction_hash):
         if self.status == Payment.CREATED:
-            if value >= self.total:
+            if value >= self.total + self.fee - Decimal('0.002'):
                 self.status = Payment.CONFIRMED_IPN
             else:
                 self.status = Payment.CONFIRMED_IPN_UNDERPAY
@@ -776,7 +779,7 @@ class Payment(models.Model):
 
     def confirm_bitcoin_trn(self, value):
         self.total_bitcoin_received = Decimal(str(value))
-        if self.total_bitcoin_received >= self.total:
+        if self.total_bitcoin_received >= self.total + self.fee - Decimal('0.002'):
             self.status = Payment.CONFIRMED_TRN
         else:
             self.status = Payment.CONFIRMED_TRN_UNDERPAY
