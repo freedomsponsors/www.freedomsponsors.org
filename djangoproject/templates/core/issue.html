@@ -72,10 +72,96 @@
 
 <div class="row">
   <div class="span12">
+    <div id="tab1">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#whos_involved" data-toggle="tab">{% trans "Who's involved" %}</a></li>
+      </ul>
+    </div>
+    <div class="tab-pane fade active in" id="whos_involved">
+      <div class="row">
+        <div class="span8">
+          {% if issue.getOffers %}
+          <div id="issue-offers">
+          <h3> {% trans "Offers" %} </h3>
+          <table class="table table-condensed table-striped">
+            <thead>
+              <tr>
+                <th>{% trans "Sponsor" %}</th>
+                <th>{% trans "Offer" %}</th>
+                <th>{% trans "Acceptance" %}</th>
+                <th>{% trans "Status" %}</th>
+                <th>{% trans "Added" %}</th>
+                <th>{% trans "Expires" %}</th>
+              </tr>
+            </thead>
+            <tbody>
+          {% for offer in issue.getOffers %}
+              <tr>
+                <td><a href="{{ offer.sponsor.get_view_link }}"><img src="{{offer.sponsor.gravatar_url_small}}"> {{ offer.sponsor.getUserInfo.screenName }}</a></td>
+                <td><a href="{{ offer.get_view_link }}">{{offer.get_currency_symbol}} {{offer.price_2}}</a></td>
+                <td style="text-align:left">
+                  {% if offer.no_forking %}
+                    <div>
+                      <i class="icon-home popopo" rel="popover" data-content="{% trans "Solution must be available in the main project codebase. Forking is not OK." %}" data-original-title="{% trans "No forking" %}"></i> No forking
+                    </div>
+                  {% endif %}
+                  {% if offer.require_release %}
+                    <div>
+                      <i class="icon-gift popopo" rel="popover" data-content="{% trans "Solution must be available as a new released version. Just commiting is not enough." %}" data-original-title="{% trans "Release required" %}"></i> Release required
+                    </div>
+                  {% endif %}
+                </td>
+                <td>{% if offer.is_expired %}{% trans "EXPIRED" %}{% else %}{{offer.status}}{% endif %}</td>
+                <td><span title="{{ offer.creationDate }}">{{ offer.creationDate|date:"M/d/Y" }}</span></td>
+                <td>
+                  {% if offer.is_expired %}
+                    <span title="{% trans "Expired" %}!"><i class="icon-warning-sign"></i></span>
+                  {% endif %}
+                  <span title="{{ offer.expirationDate }}">{{ offer.expirationDate|date:"M/d/Y" }}</span>
+                </td>
+              </tr>
+              <tr>
+          {% endfor %}
+            </tbody>
+          </table>
+          </div>
+          {% endif %}
+        </div>
+        <div class="span4">
+          {% if issue.getSolutions %}
+          <div id="issue-solutions">
+            <h3> {% trans "People working on this issue" %} </h3>
+            <table class="table table-condensed table-striped">
+              <thead>
+                <tr>
+                  <th>{% trans "Programmer" %}</th>
+                  <th>{% trans "Status" %}</th>
+                  <th>{% trans "Added" %}</th>
+                </tr>
+              </thead>
+              <tbody>
+            {% for solution in issue.getSolutions %}
+                <tr>
+                  <td><a href="{{solution.programmer.get_view_link}}"><img src="{{solution.programmer.gravatar_url_small}}"> {{ solution.programmer.getUserInfo.screenName }}</a></td>
+                  <td>{{solution.status}}
+                  {% if solution.accepting_payments %}
+                    / {% trans "Accepting payments" %}
+                  {% endif %}
+                  </td>
+                  <td><span title="{{ solution.creationDate }}">{{ solution.creationDate|date:"D, d/M/Y" }}</span></td>
+                </tr>
+                <tr>
+            {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
     <div id="tab2">
       <ul class="nav nav-tabs">
         <li class="active"><a href="#comments" data-toggle="tab">{% trans "Comments" %}</a></li>
-        <li><a href="#whos_involved" data-toggle="tab">{% trans "Who's involved" %}</a></li>
       </ul>
     </div>
     <div id="tab2content" class="tab-content">
@@ -126,80 +212,6 @@
               $(divid).html(html)
             }
         </script>
-      </div>
-      <div class="tab-pane fade" id="whos_involved">
-
-        {% if issue.getSolutions %}
-        <div id="issue-solutions">
-          <h3> {% trans "People working on this issue" %} </h3>
-          <table class="table table-condensed table-striped">
-            <thead>
-              <tr>
-                <th>{% trans "Programmer" %}</th>
-                <th>{% trans "Status" %}</th>
-                <th>{% trans "Added" %}</th>
-              </tr>
-            </thead>
-            <tbody>
-          {% for solution in issue.getSolutions %}
-              <tr>
-                <td><a href="{{solution.programmer.get_view_link}}"><img src="{{solution.programmer.gravatar_url_medium}}"> {{ solution.programmer.getUserInfo.screenName }}</a></td>
-                <td>{{solution.status}}
-                {% if solution.accepting_payments %}
-                  / {% trans "Accepting payments" %}
-                {% endif %}
-                </td>
-                <td><span title="{{ solution.creationDate }}">{{ solution.creationDate|date:"D, d/M/Y" }}</span></td>
-              </tr>
-              <tr>
-          {% endfor %}
-            </tbody>
-          </table>
-        </div>
-        {% endif %}
-
-        {% if issue.getOffers %}
-        <div id="issue-offers">
-        <h3> {% trans "Offers" %} </h3>
-        <table class="table table-condensed table-striped">
-          <thead>
-            <tr>
-              <th>{% trans "Offer" %}</th>
-              <th>{% trans "Sponsor" %}</th>
-              <th style="width:50px">{% trans "Acceptance" %}</th>
-              <th>{% trans "Status" %}</th>
-              <th>{% trans "Added" %}</th>
-              <th>{% trans "Expires" %}</th>
-            </tr>
-          </thead>
-          <tbody>
-        {% for offer in issue.getOffers %}
-            <tr>
-              <td><a href="{{ offer.get_view_link }}">{{offer.get_currency_symbol}} {{offer.price_2}}</a></td>
-              <td><a href="{{ offer.sponsor.get_view_link }}"><img src="{{offer.sponsor.gravatar_url_medium}}"> {{ offer.sponsor.getUserInfo.screenName }}</a></td>
-              <td style="text-align:center">
-                {% if offer.no_forking %}
-                  <i class="icon-home popopo" rel="popover" data-content="{% trans "Solution must be available in the main project codebase. Forking is not OK." %}" data-original-title="{% trans "No forking" %}"></i>
-                {% endif %}
-                {% if offer.require_release %}
-                  <i class="icon-gift popopo" rel="popover" data-content="{% trans "Solution must be available as a new released version. Just commiting is not enough." %}" data-original-title="{% trans "Release required" %}"></i>
-                {% endif %}
-              </td>
-              <td>{% if offer.is_expired %}{% trans "EXPIRED" %}{% else %}{{offer.status}}{% endif %}</td>
-              <td><span title="{{ offer.creationDate }}">{{ offer.creationDate|date:"M/d/Y" }}</span></td>
-              <td>
-                {% if offer.is_expired %}
-                  <span title="{% trans "Expired" %}!"><i class="icon-warning-sign"></i></span>
-                {% endif %}
-                <span title="{{ offer.expirationDate }}">{{ offer.expirationDate|date:"M/d/Y" }}</span>
-              </td>
-            </tr>
-            <tr>
-        {% endfor %}
-          </tbody>
-        </table>
-        </div>
-        {% endif %}
       </div>
     </div>
 
