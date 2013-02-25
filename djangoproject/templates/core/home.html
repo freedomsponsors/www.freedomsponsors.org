@@ -19,13 +19,13 @@
     <!-- miniform sponsor/kickstart -->
     <div style="margin-top:30px;">
       <form class="well form-inline" id="the_form" method="GET" action="/core/issue/add" style="width:600px;margin: 0 auto;">
-        <legend>{% trans "Sponsor/Kickstart a new issue" %}</legend>
+        <legend>{% trans "Sponsor/Propose a new issue" %}</legend>
         <label>{% trans "Issue URL" %}</label>
         <input type="text" name="trackerURL" id="trackerURL" class="input-xlarge" placeholder="{% trans 'Paste the issue URL' %}">
         <input type="hidden" name="operation" id="operation">
         <button id="btnSponsor" class="btn btn-primary ">{% trans "Sponsor &gt;&gt;" %}</button>
-        <a id="btnKickstart" class="btn">{% trans "Kickstart &gt;&gt;" %}</a>
-        <i class="icon-question-sign icon-black popopo_stay" style="margin-top:3px;" rel="popover" data-content="Create an issue without an offer, just to draw everyone's attention to it. <a href='http://blog.freedomsponsors.org/kickstarting-issues/'>See more in the blog</a>!" data-original-title="What's kickstart?" data-placement="bottom"></i>
+        <a id="btnKickstart" class="btn">{% trans "Propose &gt;&gt;" %}</a>
+        <i class="icon-question-sign icon-black popopo_stay" style="margin-top:3px;" rel="popover" data-content="Create an issue without an offer, just to draw everyone's attention to it. <a href='http://blog.freedomsponsors.org/kickstarting-issues/'>See more in the blog</a>!" data-original-title="What's propose?" data-placement="bottom"></i>
         <div class="btn-toolbar">
           <div class="btn-group pull-right">
           </div>
@@ -89,7 +89,7 @@
             <div id="tab2">
               <ul class="nav nav-tabs">
                 <li class="active"><a href="#sponsoring" data-toggle="tab">{% trans "Sponsored" %}</a></li>
-                <li><a href="#kickstarting" data-toggle="tab">{% trans "Kickstarting" %}</a></li>
+                <li><a href="#kickstarting" data-toggle="tab">{% trans "Proposed" %}</a></li>
               </ul>
             </div>
             <div id="tab2content" class="tab-content">
