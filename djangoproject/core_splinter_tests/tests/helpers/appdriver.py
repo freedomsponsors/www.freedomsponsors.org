@@ -133,7 +133,7 @@ class AppDriver:
             btnSubmit=browser.find_by_id('btnSubmitKickstart')
             _scrollTo(browser, btnSubmit)
             btnSubmit.click()
-            _waitUntilTextPresent(browser, "Kickstarting! Now what?")
+            _waitUntilTextPresent(browser, "Proposed! Now what?")
             browser.click_link_by_text('OK')
         else:
             if(offer_dict.has_key('step4')):
@@ -176,7 +176,7 @@ class AppDriver:
     def followKickstartingIssueLinkOnHomeByTitle(self, title):
         browser = self.browser
         browser.visit(self.home_url) 
-        browser.click_link_by_partial_text('Kickstarting')
+        browser.click_link_by_partial_text('Proposed')
         _waitUntilLinkTextPresent(browser, title, 1)
         browser.click_link_by_partial_text(title)
 
