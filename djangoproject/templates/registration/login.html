@@ -5,7 +5,7 @@
 <h1>Log in</h1>
 
 {% if form.errors %}
-<div class="alert alert-error">Your username and password didn't match. Please try again.</div>
+<div class="alert alert-error">Your username and password didn't match. Please try again or <a href="/accounts/password/reset">reset your password</a>.</div>
 {% endif %}
 
 <form method="post" action="?next={{ next|default:"/" }}">{% csrf_token %}
