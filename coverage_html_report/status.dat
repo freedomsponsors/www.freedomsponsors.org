@@ -1094,19 +1094,19 @@ NtRp272
 g18
 I1
 sg19
-I8
+I10
 sg20
-I45
+I47
 sg21
 I0
 sg22
-I3
+I4
 sg23
-I12
+I13
 sg24
-I5
+I6
 sbssg25
-S'\x8f+\xe7Rs\xf3\x8b\xd0p\x00\xe0\xf1\xcd\xf65\xf3'
+S'J\xd2\x7f\xaa\x95\\\x80x\x0c[\x05>\x1coZ '
 p274
 ssS'core_management_commands_loadProjects'
 p275
