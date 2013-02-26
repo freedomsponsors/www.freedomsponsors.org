@@ -27,8 +27,10 @@ def payment_confirmed_web(current_payment_id):
 def process_ipn_return(paykey, status, tracking_id):
     if(status == 'COMPLETED'):
         payment = get_or_none(Payment, paykey=paykey, confirm_key=tracking_id)
-        if(not payment):
+        if not payment:
             raise BaseException('payment not found ' + paykey)
+        if payment.status == Payment.CONFIRMED_IPN:
+            return #double notification, nothing to do
         payment.confirm_ipn()
         payment.offer.paid()
         payment.offer.issue.touch()
