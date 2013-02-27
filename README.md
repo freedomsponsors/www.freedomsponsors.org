@@ -91,7 +91,6 @@ Instructions to run application locally:
   # DATABASE_USER = 'frespo'
   # DATABASE_PASS = 'frespo'  
   $ nano frespo/env_settings.py 
-  $ mkdir logs # create the logs folder manually
   ```
 5. Create a virtualenv and install dependencies.
 
