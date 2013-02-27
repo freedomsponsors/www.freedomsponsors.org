@@ -14,7 +14,7 @@
   <div class="span1">
     <a href="{{comment.author.get_view_link}}"><img src="{{comment.author.gravatar_url_medium}}"></a>
   </div>
-  <div class="span11" style="border-style:solid; border-width:1px; border-radius:10px; padding:10px;">
+  <div class="span11 issueComment" id="comment-{{ comment.id }}">
     <div style="background-color: #eeeeee;">
       <span>
         <a href="{{comment.author.get_view_link}}">{{ comment.author.getUserInfo.screenName }}</a>
@@ -26,6 +26,7 @@
           | <a href="#" onclick="loadCommentHistory({{ comment.id }})" style="color:red">{% trans "edited"%}</a>
         {% endif %}
       </span>
+      <span class="pull-right" title="permalink"><a href="#comment-{{ comment.id }}"><i class="icon-map-marker"></i></a></span>
       <span class="pull-right" title="{{ comment.creationDate }}">{{ comment.creationDate|date:"D, d/M/Y" }}</span>
     </div>
     <div style="margin-top:10px;" id="div_comment_r_{{counter}}">

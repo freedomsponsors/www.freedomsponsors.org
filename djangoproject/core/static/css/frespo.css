@@ -30,6 +30,17 @@ td._favoriteIssuesDollar{
   font-size: 30px;
 }
 
+.issueComment{
+  border-style: solid; 
+  border-width: 1px; 
+  border-radius: 10px; 
+  padding: 10px;
+}
+
+.issueComment:target {
+  background-color: rgb(235, 242, 249);
+}
+
 .newLogoBeta{
 font-size: 14px;
 }
