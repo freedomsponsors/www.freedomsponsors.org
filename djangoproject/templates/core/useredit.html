@@ -161,25 +161,41 @@
 					<ul>
 						<li>
 							<label class="checkbox">
-								<input type="checkbox">
+								<input type="checkbox" id="receiveEmail_issue_comments" name="receiveEmail_issue_comments" value="receiveEmail_issue_comments" 
+								{% if userinfo.receiveEmail_issue_comments %}
+								checked
+								{% endif %}
+								>
 								A new comment is added
 							</label>
 						</li>
 						<li>
 							<label class="checkbox">
-								<input type="checkbox">
+								<input type="checkbox" id="receiveEmail_issue_work" name="receiveEmail_issue_work" value="receiveEmail_issue_work" 
+								{% if userinfo.receiveEmail_issue_work %}
+								checked
+								{% endif %}
+								>
 								Someone starts or stop working on it
 							</label>
 						</li>
 						<li>
 							<label class="checkbox">
-								<input type="checkbox">
+								<input type="checkbox" id="receiveEmail_issue_offer" name="receiveEmail_issue_offer" value="receiveEmail_issue_offer" 
+								{% if userinfo.receiveEmail_issue_offer %}
+								checked
+								{% endif %}
+								>
 								An offer is added or changed
 							</label>
 						</li>
 						<li>
 							<label class="checkbox">
-								<input type="checkbox">
+								<input type="checkbox" id="receiveEmail_issue_payment" name="receiveEmail_issue_payment" value="receiveEmail_issue_payment" 
+								{% if userinfo.receiveEmail_issue_payment %}
+								checked
+								{% endif %}
+								>
 								An offer is paid
 							</label>
 						</li>
@@ -192,7 +208,11 @@
 					<ul>
 						<li>
 							<label class="checkbox">
-								<input type="checkbox">
+								<input type="checkbox" id="receiveEmail_announcements" name="receiveEmail_announcements" value="receiveEmail_announcements" 
+								{% if userinfo.receiveEmail_announcements %}
+								checked
+								{% endif %}
+								>
 								Send me important announcements regarding the FreedomSponsors platform
 							</label>
 						</li>

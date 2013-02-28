@@ -38,14 +38,17 @@ def getAlertsForViewUser(logged_user, user_to_view, changedPrimaryEmail, changed
 
     return None, None
 
-
 def edit_existing_user(user, dict):
     userinfo = user.getUserInfo()
     userinfo.screenName = dict['screenName']
     userinfo.website = dict['website']
     userinfo.about = dict['about']
     userinfo.realName = dict['realName']
-    userinfo.receiveAllEmail = dict.has_key('receiveAllEmail')
+    userinfo.receiveEmail_issue_comments = dict.has_key('receiveEmail_issue_comments')
+    userinfo.receiveEmail_issue_work = dict.has_key('receiveEmail_issue_work')
+    userinfo.receiveEmail_issue_offer = dict.has_key('receiveEmail_issue_offer')
+    userinfo.receiveEmail_issue_payment = dict.has_key('receiveEmail_issue_payment')
+    userinfo.receiveEmail_announcements = dict.has_key('receiveEmail_announcements')
     userinfo.brazilianPaypal = dict.has_key('brazilianPaypal')
     userinfo.hide_from_userlist = dict.has_key('hide_from_userlist')
     userinfo.preferred_language_code = dict['preferred_language_code']
