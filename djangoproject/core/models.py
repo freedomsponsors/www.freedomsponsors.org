@@ -28,6 +28,11 @@ class UserInfo(models.Model):
     preferred_language_code = models.CharField(max_length=10, null=True, blank=True)
     bitcoin_receive_address = models.CharField(max_length=128, blank=True)
     paypal_verified = models.BooleanField()
+    receiveEmail_issue_comments = models.BooleanField()
+    receiveEmail_issue_work = models.BooleanField()
+    receiveEmail_issue_offer = models.BooleanField()
+    receiveEmail_issue_payment = models.BooleanField()
+    receiveEmail_announcements = models.BooleanField()
 
     @classmethod
     def newUserInfo(cls, user):

@@ -153,15 +153,60 @@
 	            </p>
 			</div>
 		</div>
-		<div class="control-group controls">
-			<label class="checkbox">
+		<div class="control-group controls well">
+			<span style="text-decoration:underline">Email notification settings</span>
+			<ul style="margin-top:10px">
+				<li> 
+					When I watch an issue, I want to be notified when
+					<ul>
+						<li>
+							<label class="checkbox">
+								<input type="checkbox">
+								A new comment is added
+							</label>
+						</li>
+						<li>
+							<label class="checkbox">
+								<input type="checkbox">
+								Someone starts or stop working on it
+							</label>
+						</li>
+						<li>
+							<label class="checkbox">
+								<input type="checkbox">
+								An offer is added or changed
+							</label>
+						</li>
+						<li>
+							<label class="checkbox">
+								<input type="checkbox">
+								An offer is paid
+							</label>
+						</li>
+					</ul>
+				</li>
+			</ul>
+			<ul style="margin-top:10px">
+				<li> 
+					Other notifications
+					<ul>
+						<li>
+							<label class="checkbox">
+								<input type="checkbox">
+								Send me important announcements regarding the FreedomSponsors platform
+							</label>
+						</li>
+					</ul>
+				</li>
+			</ul>
+<!-- 			<label class="checkbox">
 				<input type="checkbox" id="receiveAllEmail" name="receiveAllEmail" value="receiveAllEmail" 
 				{% if userinfo.receiveAllEmail %}
 				checked
 				{% endif %}
 				>
 				Send me notification mail about the issues that I'm involved with
-			</label>
+			</label> -->
 		</div>
 		<div class="control-group controls">
 			<label class="checkbox">
