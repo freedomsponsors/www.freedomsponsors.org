@@ -177,7 +177,11 @@ def _defaultUserInfo(user):
     userInfo.realName = user.first_name + ' ' + user.last_name
     userInfo.website = ''
     userInfo.about = ''
-    userInfo.receiveAllEmail = True
+    userInfo.receiveEmail_issue_comments = True
+    userInfo.receiveEmail_issue_work = True
+    userInfo.receiveEmail_issue_offer = True
+    userInfo.receiveEmail_issue_payment = True
+    userInfo.receiveEmail_announcements = True
     userInfo.brazilianPaypal = False
     return userInfo
     

@@ -45,7 +45,11 @@ class UserInfo(models.Model):
         userinfo.website = ''
         userinfo.about = ''
         userinfo.realName = user.first_name+' '+user.last_name
-        userinfo.receiveAllEmail = True
+        userinfo.receiveEmail_issue_comments = True
+        userinfo.receiveEmail_issue_work = True
+        userinfo.receiveEmail_issue_offer = True
+        userinfo.receiveEmail_issue_payment = True
+        userinfo.receiveEmail_announcements = True
         userinfo.brazilianPaypal = False
         userinfo.hide_from_userlist = False
         userinfo.paypal_verified = False
