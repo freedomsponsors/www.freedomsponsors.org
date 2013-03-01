@@ -21,5 +21,9 @@ And this is the comment
   {{ comment.content|linebreaks }}
 </div>
 We will let you know if there are any updates.
+
+<br><br>
+{% include 'email/include/email_settings_notice.html' %}
+
 {% endblock mainContent%}
 

@@ -10,5 +10,9 @@ This is the issue:
 </div>
 That issue is now worth a total of US$ {{theirOffer.issue.getTotalOffersPriceUSD}} + BTC {{theirOffer.issue.getTotalOffersPriceBTC}}. <br><br>
 We will let you know if there are any updates.
+
+<br><br>
+{% include 'email/include/email_settings_notice.html' %}
+
 {% endblock mainContent%}
 
