@@ -110,6 +110,10 @@ def getSolutions(self):
 def getKickstartingIssues(self):
     return Issue.objects.filter(createdByUser=self, is_public_suggestion=True).order_by('-creationDate')
 
+def getWatchedIssues(self):
+    print('watched %s' % Issue.objects.filter(issuewatch__user=self))
+    return Issue.objects.filter(issuewatch__user=self)
+
 def set_email_verified(self, is_primary):
     userinfo = self.getUserInfo()
     if is_primary:
@@ -165,6 +169,7 @@ User.github_username = github_username
 User.getOffers = getOffers
 User.getSolutions = getSolutions
 User.getKickstartingIssues = getKickstartingIssues
+User.getWatchedIssues = getWatchedIssues
 User.getStats = getStats
 User.is_registration_complete = is_registration_complete
 User.get_view_link = get_view_link

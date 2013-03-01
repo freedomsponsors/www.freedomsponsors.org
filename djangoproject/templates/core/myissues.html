@@ -12,6 +12,12 @@
   {% include 'core/include/solution_grid.html' with solutions=user.getSolutions %}
 {% endif %}
 
+{% if user.getWatchedIssues %}
+  <hr>
+  <h3>Watched Issues</h3>
+  {% include 'core/include/issue_grid.html' with issues=user.getWatchedIssues %}
+{% endif %}
+
 {% if not user.getSolutions and not user.getOffers %}
 <h3>You are not sponsoring nor working on any issues</h3>
 <a href="/core/issue">Find some</a>
