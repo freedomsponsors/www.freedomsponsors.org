@@ -13,13 +13,13 @@ def plain_send_mail(to, subject, body, from_email=settings.DEFAULT_FROM_EMAIL):
 def send_mail_to_all_users(subject, body, from_email=settings.DEFAULT_FROM_EMAIL):
     count = 0
     for user in User.objects.all():
-        if(user.getUserInfo() and user.getUserInfo().receiveAllEmail):
+        if(user.getUserInfo() and user.getUserInfo().receiveEmail_announcements):
             plain_send_mail(user.email, subject, body, from_email)
             count += 1
     return count
 
-def _send_mail_to_user(user, subject, templateName, contextData):
-    if(user.getUserInfo() and user.getUserInfo().receiveAllEmail):
+def _send_mail_to_user(user, subject, templateName, contextData, whentrue):
+    if(user.getUserInfo() and whentrue and getattr(user.getUserInfo(), whentrue)):
         template = get_template(templateName)
         context = Context(contextData)
         html_content = template.render(context)
@@ -34,7 +34,8 @@ def notifyWatchers_workbegun(solution, comment, watches):
                 contextData = {"solution" : solution,
                                "you" : watch.user,
                                "SITE_HOME" : settings.SITE_HOME,
-                               "comment" : comment})
+                               "comment" : comment},
+                whentrue='receiveEmail_issue_work')
     _notify_watchers(send_func, watches)
 
 def notifyWatchers_acceptingpayments(solution, watches):
@@ -45,7 +46,8 @@ def notifyWatchers_acceptingpayments(solution, watches):
                 templateName = 'email/acceptingpayments.html',
                 contextData = {"solution" : solution,
                                "you" : watch.user,
-                               "SITE_HOME" : settings.SITE_HOME,})
+                               "SITE_HOME" : settings.SITE_HOME,},
+                whentrue='receiveEmail_issue_work')
     _notify_watchers(send_func, watches)
 
 
@@ -53,7 +55,8 @@ def welcome(user):
     _send_mail_to_user(user=user,
         subject='Welcome to FreedomSponsors',
         templateName='email/welcome.html',
-        contextData={"you" : user})
+        contextData={"you" : user},
+        whentrue=None)
 
 def notifyWatchers_workstopped(solution, comment, watches):
     def send_func(watch):
@@ -64,7 +67,8 @@ def notifyWatchers_workstopped(solution, comment, watches):
                 contextData = {"solution" : solution,
                                "you" : watch.user,
                                "SITE_HOME" : settings.SITE_HOME,
-                               "comment" : comment})
+                               "comment" : comment},
+                whentrue='receiveEmail_issue_work')
     _notify_watchers(send_func, watches)
 
 def notifyWatchers_workdone(solution, comment, watches):
@@ -76,7 +80,8 @@ def notifyWatchers_workdone(solution, comment, watches):
                 contextData = {"theirSolution" : solution,
                                "you" : watch.user,
                                "SITE_HOME" : settings.SITE_HOME,
-                               "comment" : comment})
+                               "comment" : comment},
+                whentrue='receiveEmail_issue_work')
     _notify_watchers(send_func, watches)
 
 #    for otherSolution in solution.issue.getSolutions():
@@ -96,7 +101,8 @@ def notifyWatchers_offerrevoked(offer, comment, watches):
                 contextData = {"you" : watch.user,
                                "offer" : offer,
                                "SITE_HOME" : settings.SITE_HOME,
-                               "comment" : comment})
+                               "comment" : comment},
+                whentrue='receiveEmail_issue_offer')
     _notify_watchers(send_func, watches)
 
 def notifyWatchers_offeradded(offer, watches):
@@ -112,7 +118,8 @@ def notifyWatchers_offeradded(offer, watches):
                 templateName = 'email/offeradded.html',
                 contextData = {"you" : watch.user,
                                "theirOffer" : offer,
-                               "SITE_HOME" : settings.SITE_HOME})
+                               "SITE_HOME" : settings.SITE_HOME},
+                whentrue='receiveEmail_issue_offer')
     _notify_watchers(send_func, watches)
 
 def notifyWatchers_offerchanged(old_offer, new_offer, watches):
@@ -134,7 +141,8 @@ def notifyWatchers_offerchanged(old_offer, new_offer, watches):
                                    "old_offer" : old_offer,
                                    "new_offer" : new_offer,
                                    "action" : action,
-                                   "SITE_HOME" : settings.SITE_HOME})
+                                   "SITE_HOME" : settings.SITE_HOME},
+                    whentrue='receiveEmail_issue_offer')
         _notify_watchers(send_func, watches)
 
 def notify_payment_parties_and_watchers_paymentconfirmed(payment, watches):
@@ -145,13 +153,15 @@ def notify_payment_parties_and_watchers_paymentconfirmed(payment, watches):
             templateName = 'email/payment_received.html',
             contextData = {"payment" : payment,
             "part" : part,
-            "SITE_HOME" : settings.SITE_HOME})
+            "SITE_HOME" : settings.SITE_HOME},
+            whentrue=None)
         already_sent_to[part.programmer.email] = True
     _send_mail_to_user(user = payment.offer.sponsor,
         subject = "You have made a "+payment.get_currency_symbol()+" "+str(twoplaces(payment.total))+" payment",
         templateName = 'email/payment_sent.html',
         contextData = {"payment" : payment,
-        "SITE_HOME" : settings.SITE_HOME})
+        "SITE_HOME" : settings.SITE_HOME},
+        whentrue=None)
     already_sent_to[payment.offer.sponsor.email] = True
     def send_func(watch):
         subject = "%s has paid his offer [%s %s / %s]" % (
@@ -163,7 +173,11 @@ def notify_payment_parties_and_watchers_paymentconfirmed(payment, watches):
                        "issue": payment.offer.issue,
                        "offer": payment.offer,
                        "SITE_HOME": settings.SITE_HOME,}
-        _send_mail_to_user(watch.user, subject, 'email/payment_made.html', contextData)
+        _send_mail_to_user(user = watch.user,
+            subject = subject,
+            templateName = 'email/payment_made.html',
+            contextData = contextData,
+            whentrue='receiveEmail_issue_payment')
     _notify_watchers(send_func, watches, already_sent_to)
 
 
@@ -176,7 +190,11 @@ def notifyWatchers_newissuecomment(comment, watches):
                            "comment" : comment,
                            "SITE_HOME" : settings.SITE_HOME,
                            "type" : "issue"}
-            _send_mail_to_user(watch.user, subject, 'email/comment_added.html', contextData)
+            _send_mail_to_user(user = watch.user,
+                subject = subject,
+                templateName = 'email/comment_added.html',
+                contextData = contextData,
+                whentrue='receiveEmail_issue_comments')
     _notify_watchers(send_func, watches)
 
 def notifyWatchers_newoffercomment(comment, watches):
@@ -193,7 +211,11 @@ def notifyWatchers_newoffercomment(comment, watches):
                            "comment": comment,
                            "SITE_HOME": settings.SITE_HOME,
                            "type": "offer"}
-            _send_mail_to_user(watch.user, subject, 'email/comment_added.html', contextData)
+            _send_mail_to_user(user = watch.user,
+                subject = subject,
+                templateName = 'email/comment_added.html',
+                contextData = contextData,
+                whentrue='receiveEmail_issue_comments')
     _notify_watchers(send_func, watches)
 
 def _notify_watchers(send_func, watches, already_sent_to = None):
