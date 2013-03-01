@@ -19,7 +19,7 @@ def send_mail_to_all_users(subject, body, from_email=settings.DEFAULT_FROM_EMAIL
     return count
 
 def _send_mail_to_user(user, subject, templateName, contextData, whentrue):
-    if(user.getUserInfo() and whentrue and getattr(user.getUserInfo(), whentrue)):
+    if(user.getUserInfo() and (not whentrue or getattr(user.getUserInfo(), whentrue))):
         template = get_template(templateName)
         context = Context(contextData)
         html_content = template.render(context)
