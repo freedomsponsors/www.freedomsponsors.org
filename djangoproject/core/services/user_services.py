@@ -31,10 +31,10 @@ def getAlertsForViewUser(logged_user, user_to_view, changedPrimaryEmail, changed
 
         userinfo = user_to_view.getUserInfo()
         if(not (userinfo.is_primary_email_verified and userinfo.is_paypal_email_verified)):
-            return "You still have unverified emails. Please check you inbox and click the confirmation link to complete email address verification. To re-send the verification email, just edit and save your profile."
+            return ["You still have unverified emails. Please check you inbox and click the confirmation link to complete email address verification. To re-send the verification email, just edit and save your profile."]
 
     if emailVerified:
-        return "Your email was verified successfully. Thanks ^_^"
+        return ["Your email was verified successfully. Thanks ^_^"]
 
     return None, None
 
