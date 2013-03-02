@@ -13,6 +13,8 @@ urlpatterns = patterns('',
     url(r'^bladmin/', include(admin.site.urls)),
     url(r'^accounts/', include('registration.backends.default.urls')),
     url(r'', include('social_auth.urls')),
+    url(r'^email/$', 'core.views.user_views.redirect_to_user_page',
+        {'email_verified': 'true'}, name='emailmgr_email_list'),
     url(r'^email/activate/(?P<identifier>\w+)/$',
         'emailmgr.views.email_activate',
         name='emailmgr_email_activate'
