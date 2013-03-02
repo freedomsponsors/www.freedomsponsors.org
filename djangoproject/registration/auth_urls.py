@@ -27,13 +27,6 @@ from django.conf.urls.defaults import *
 
 from django.contrib.auth import views as auth_views
 
-# from registration.forms import MailerPasswordResetForm
-from django.conf import settings
-
-
-custom_password_reset = lambda request: auth_views.password_reset(request, 
-  # password_reset_form=MailerPasswordResetForm,
-  extra_context={'SITE_HOME':settings.SITE_HOME})
 
 urlpatterns = patterns('',
                        url(r'^login/$',
@@ -52,7 +45,6 @@ urlpatterns = patterns('',
                            name='auth_password_change_done'),
                        url(r'^password/reset/$',
                            auth_views.password_reset,
-                           # custom_password_reset,
                            name='auth_password_reset'),
                        url(r'^password/reset/confirm/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$',
                            auth_views.password_reset_confirm,
