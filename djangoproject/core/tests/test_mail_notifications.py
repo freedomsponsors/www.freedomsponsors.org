@@ -29,7 +29,6 @@ class TestMailNotifications(unittest.TestCase):
         response = client2.post('/core/issue/comment/add/submit', {'issue_id': str(issue.id), 'content': 'Im adding a comment'})
         self.assertEqual(response.status_code, 302)
 
-        email_asserts.send_emails()
         email_asserts.assert_sent_count(self, 1)
         email_asserts.assert_sent(self, to=self.user.email, subject="%s added a comment on issue [%s]"%(user2.getUserInfo().screenName, issue.title))
 
@@ -37,7 +36,6 @@ class TestMailNotifications(unittest.TestCase):
         response = client2.post('/core/offer/comment/add/submit', {'offer_id': str(offer.id), 'content': 'Im adding another comment'})
         self.assertEqual(response.status_code, 302)
 
-        email_asserts.send_emails()
         email_asserts.assert_sent_count(self, 1)
         email_asserts.assert_sent(self, to=self.user.email, subject="%s added a comment on offer [US$ %s / %s]"%(user2.getUserInfo().screenName, '10.00', issue.title))
 
@@ -61,7 +59,6 @@ class TestMailNotifications(unittest.TestCase):
         self.assertEqual(response.status_code, 302)
         offer_id = response.get('location').split('/')[-2]
 
-        email_asserts.send_emails()
         email_asserts.assert_sent_count(self, 2) #one to the watcher, other to the site admin
         email_asserts.assert_sent(self, to=self.user.email, subject="%s made a US$ 20.00 offer for issue [%s]"%(user2ScreenName, issue.title))
 
@@ -72,7 +69,6 @@ class TestMailNotifications(unittest.TestCase):
              'price':'30.00',
              'acceptanceCriteria':'some criteria',})
         self.assertEqual(response.status_code, 302)
-        email_asserts.send_emails()
         email_asserts.assert_sent_count(self, 1)
         email_asserts.assert_sent(self, to=self.user.email, subject="%s raised the US$ 20.00 offer on issue [%s]"%(user2ScreenName, issue.title))
 
@@ -81,7 +77,6 @@ class TestMailNotifications(unittest.TestCase):
             {'offer_id': offer_id,
              'comment' : ''})
         self.assertEqual(response.status_code, 302)
-        email_asserts.send_emails()
         email_asserts.assert_sent_count(self, 1)
         email_asserts.assert_sent(self, to=self.user.email, subject="%s revoked his US$ 30.00 offer for issue [%s]"%(user2ScreenName, issue.title))
 
@@ -106,7 +101,6 @@ class TestMailNotifications(unittest.TestCase):
         response = client2.get('/core/issue/%s/blah'%issue_id)
         solution_id = str(response.context['mysolution'].id)
 
-        email_asserts.send_emails()
         email_asserts.assert_sent_count(self, 1)
         email_asserts.assert_sent(self, to=self.user.email, subject="%s has just begun working on issue [%s]"%(user2ScreenName, issue.title))
 
@@ -117,7 +111,6 @@ class TestMailNotifications(unittest.TestCase):
              'comment':''})
         self.assertEqual(response.status_code, 302)
 
-        email_asserts.send_emails()
         email_asserts.assert_sent_count(self, 1)
         email_asserts.assert_sent(self, to=self.user.email, subject="%s has stopped working on issue [%s]"%(user2ScreenName, issue.title))
 
@@ -132,7 +125,6 @@ class TestMailNotifications(unittest.TestCase):
         solution_id2 = str(response.context['mysolution'].id)
         self.assertEqual(solution_id, solution_id2)
 
-        email_asserts.send_emails()
         email_asserts.assert_sent_count(self, 1)
         email_asserts.assert_sent(self, to=self.user.email, subject="%s has just begun working on issue [%s]"%(user2ScreenName, issue.title))
 
@@ -143,6 +135,5 @@ class TestMailNotifications(unittest.TestCase):
              'comment':''})
         self.assertEqual(response.status_code, 302)
 
-        email_asserts.send_emails()
         email_asserts.assert_sent_count(self, 1)
         email_asserts.assert_sent(self, to=self.user.email, subject="%s resolved issue [%s]"%(user2ScreenName, issue.title))
