@@ -1,6 +1,9 @@
-import registration
+from django import forms
+from django.contrib.auth.models import User
+from django.utils.translation import ugettext_lazy as _
+from registration.forms import RegistrationForm as _Form
 
-class RegistrationForm(registration.forms.RegistrationForm):
+class RegistrationForm(_Form):
 
     def clean_email(self):
         """
