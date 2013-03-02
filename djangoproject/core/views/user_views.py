@@ -1,3 +1,4 @@
+import urllib
 from core.models import *
 from django.contrib import messages
 from django.template import  RequestContext
@@ -76,8 +77,9 @@ def listUsers(request):
         {'users':users,},
         context_instance = RequestContext(request))
 
-
-
-
-
-
+@login_required
+def redirect_to_user_page(request, **kwargs):
+    link = request.user.get_view_link()
+    if kwargs:
+        link += '?' + urllib.urlencode(kwargs)
+    return redirect(link)

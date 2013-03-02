@@ -1,12 +1,6 @@
 from django.core import mail
-from mailer.management.commands import send_mail
-from django.core.mail.backends import locmem
 
 __author__ = 'tony'
-
-def send_emails():
-	cmd = send_mail.Command()
-	cmd.handle_noargs()
 
 def clear_sent():
     mail.outbox = []
