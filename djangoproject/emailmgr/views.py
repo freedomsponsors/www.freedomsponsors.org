@@ -109,13 +109,9 @@ def email_activate(request, identifier="somekey"):
             email.save()
             user_activated_email.send(sender=EmailAddress, email_address=email)
             Msg.add_message (request, Msg.SUCCESS, _('email address is now active'))
-        _notify_email_activation(email)
             
     # return HttpResponseRedirect(reverse('emailmgr_email_list'))
     return HttpResponseRedirect(email.user.get_view_link()+'?email_verified=true')
-
-def _notify_email_activation(email):
-    email.user.set_email_verified(email.is_primary)
 
 @login_required
 def email_delete(request, identifier="somekey"):

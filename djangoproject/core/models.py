@@ -8,6 +8,8 @@ from core.utils.frespo_utils import get_or_none, socialImages, socialImages_smal
 from social_auth.models import UserSocialAuth
 from django.utils.http import urlquote
 from django.template.defaultfilters import slugify
+from django.dispatch import receiver
+from emailmgr.signals import user_activated_email
 from decimal import Decimal
 from core.utils.frespo_utils import twoplaces, CURRENCY_SYMBOLS
 from bitcoin_frespo.models import *
@@ -114,9 +116,11 @@ def getWatchedIssues(self):
     print('watched %s' % Issue.objects.filter(issuewatch__user=self))
     return Issue.objects.filter(issuewatch__user=self)
 
-def set_email_verified(self, is_primary):
-    userinfo = self.getUserInfo()
-    if is_primary:
+@receiver(user_activated_email)
+def set_email_verified(sender, **kwargs):
+    email = kwargs.get('email_address')
+    userinfo = email.user.getUserInfo()
+    if email.is_primary:
         userinfo.is_primary_email_verified = True
     else:
         userinfo.is_paypal_email_verified = True
@@ -173,7 +177,6 @@ User.getWatchedIssues = getWatchedIssues
 User.getStats = getStats
 User.is_registration_complete = is_registration_complete
 User.get_view_link = get_view_link
-User.set_email_verified = set_email_verified
 
 def getSocialIcon(self):
     if(socialImages.has_key(self.provider)):
