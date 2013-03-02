@@ -17,7 +17,10 @@ urlpatterns = patterns('',
     }, name='registration_register'),
     url(r'^accounts/', include('registration.backends.default.urls')),
     url(r'', include('social_auth.urls')),
-    url(r'', include('emailmgr.urls')),
+    url(r'^email/activate/(?P<identifier>\w+)/$',
+        'emailmgr.views.email_activate',
+        name='emailmgr_email_activate'
+    ),
 )
 
 urlpatterns += staticfiles_urlpatterns()
