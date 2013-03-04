@@ -17,3 +17,4 @@ requests==0.14.1
 django-pagination==1.0.7
 south==0.7.5
 bitcoin-python==0.2
+django-emailmgr==0.9

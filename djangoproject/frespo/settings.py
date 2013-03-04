@@ -182,7 +182,6 @@ INSTALLED_APPS = (
 #    'bootstrap-pagination'
     'pagination',
     'social_auth',
-    'mailer',
     'south',
     'emailmgr',
     'registration',
