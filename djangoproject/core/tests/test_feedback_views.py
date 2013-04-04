@@ -18,7 +18,6 @@ class TestFeedbackViews(unittest.TestCase):
         email_asserts.clear_sent()
         response = self.client.post('/core/feedback/submit', data = data)
         self.assertEqual(response.status_code, 302)
-        email_asserts.send_emails()
         email_asserts.assert_sent_count(self, 1)
 
         response = self.client.get('/core/feedback')

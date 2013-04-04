@@ -125,7 +125,6 @@ class BitcoinPaymentTests(TestCase):
 
         bitcoin_adapter.get_transaction = get_transaction_mock
         bitcoin_frespo_services.bitcoin_active_send_confirmation()
-        email_asserts.send_emails()
         email_asserts.assert_sent_count(self, 3)
         email_asserts.assert_sent(self, to=programmer.email, subject='%s has made you a BTC 5.00 payment' % offer.sponsor.getUserInfo().screenName)
         email_asserts.assert_sent(self, to=offer.sponsor.email, subject='You have made a BTC 5.00 payment')

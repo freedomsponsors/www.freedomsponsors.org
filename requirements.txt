@@ -20,3 +20,4 @@ bitcoin-python==0.2
 git+git://github.com/pinax/django-mailer.git@887ec2c9d8e05d061293b56ff913a9b293c42aa0#egg=django-mailer
 git+git://github.com/e-loue/python-paypalx.git@fa061980e3e23cfa96feee61296ef097d32ca015#egg=paypalx
 django-registration==0.8
+django-emailmgr==0.9
