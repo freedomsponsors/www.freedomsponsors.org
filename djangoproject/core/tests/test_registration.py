@@ -1,5 +1,5 @@
 from django.utils import unittest
-from core.forms import RegistrationForm
+from registration.forms import RegistrationForm
 from django.test.client import Client
 
 class TestRegistration(unittest.TestCase):
