@@ -7,7 +7,7 @@ from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from core.utils.frespo_utils import get_or_none, dictOrEmpty, twoplaces
 from core.models import *
-from core.services import issue_services, watch_services, paypal_services
+from core.services import issue_services, watch_services, paypal_services, mail_services
 from core.views import paypal_views, bitcoin_views
 from decimal import Decimal
 import logging
