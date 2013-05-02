@@ -3,6 +3,8 @@ python:
   - "2.6"
 install: 
 # - sudo aptitude -y -q install unzip chromium-browser
+ - wget https://www.sandbox.paypal.com
+ - wget https://www.paypal.com
  - sudo apt-get update -y
  - sudo apt-get install -y unzip chromium-browser
  - sudo chmod 1777 /dev/shm  # see https://github.com/travis-ci/travis-ci/issues/938

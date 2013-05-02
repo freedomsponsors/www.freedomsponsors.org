@@ -26,19 +26,19 @@ def generate_paypal_payment(payment):
         receivers.append({'amount' : str(part.price), 'email' : part.programmer.getUserInfo().paypalEmail})
     receivers.append({'amount' : "%.2f"%payment.fee, 'email' : settings.PAYPAL_FRESPO_RECEIVER_EMAIL})
     response = paypal.pay(
-        actionType = 'PAY',
-        cancelUrl = settings.PAYPAL_CANCEL_URL,
-        currencyCode = payment.currency,
+        actionType= 'PAY',
+        cancelUrl= settings.PAYPAL_CANCEL_URL,
+        currencyCode= payment.currency,
 #       senderEmail = offer.sponsor.getUserInfo().paypalEmail, //seems like we shouldn't use this
-        # feesPayer = 'SENDER',
-        feesPayer = 'SENDER',
-        receiverList = { 'receiver': receivers},
-        returnUrl = settings.PAYPAL_RETURN_URL,
-        ipnNotificationUrl = settings.PAYPAL_IPNNOTIFY_URL,
-        trackingId = str(payment.confirm_key)
+        feesPayer= 'SENDER',
+        receiverList= { 'receiver': receivers},
+        returnUrl= settings.PAYPAL_RETURN_URL,
+        ipnNotificationUrl= settings.PAYPAL_IPNNOTIFY_URL,
+        trackingId= str(payment.confirm_key)
     )
     logger.info('Paypal PAYREQUEST RECEIVERS=['+str(receivers)+'] / RESPONSE=['+str(response)+']')
     payment.setPaykey(response['payKey'])
+
 
 def verify_ipn(data):
     # prepares provided data set to inform PayPal we wish to validate the response
