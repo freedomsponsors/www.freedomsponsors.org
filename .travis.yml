@@ -5,8 +5,9 @@ install:
 # - sudo aptitude -y -q install unzip chromium-browser
  - sudo apt-get update -y
  - sudo apt-get install -y unzip chromium-browser
- - mkdir -p ./tmp/bin 
- - cd ./tmp/bin 
+ - sudo chmod 1777 /dev/shm  # see https://github.com/travis-ci/travis-ci/issues/938
+ - mkdir -p ./tmp/bin
+ - cd ./tmp/bin
  #- wget http://chromedriver.googlecode.com/files/chromedriver_linux64_26.0.1383.0.zip
  - wget http://chromedriver.googlecode.com/files/experimental_chromedriver2_linux64_0.2.zip
  - unzip experimental_chromedriver2_linux64_0.2.zip

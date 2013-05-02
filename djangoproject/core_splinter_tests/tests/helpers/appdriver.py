@@ -11,12 +11,29 @@ def paradinha(time=0.4):
     sleep(time)
     # sleep(2)
 
+def _build_browser():
+    from selenium.webdriver import Chrome
+    from selenium.webdriver.chrome.options import Options
+    from splinter.driver.webdriver import BaseWebDriver, WebDriverElement
+    from splinter.driver.webdriver.cookie_manager import ChromeCookieManager
+
+    browser = BaseWebDriver()
+    browser.driver_name = "Chrome"
+    options = Options()
+    options.add_argument("--no-sandbox")
+    browser.driver = Chrome(chrome_options=options)
+    browser.element_class = WebDriverElement
+    browser._cookie_manager = ChromeCookieManager(browser.driver)
+
+    return browser
+
+
 class AppDriver:
     @classmethod
     def build(cls):
         driver = cls()
-        driver.browser = Browser('chrome')
-        # driver.browser = Browser()
+        # driver.browser = Browser(driver_name='chrome')
+        driver.browser = _build_browser()
         return driver
 
     def reset(self, home_url):
