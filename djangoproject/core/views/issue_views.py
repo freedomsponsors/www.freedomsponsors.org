@@ -365,7 +365,7 @@ def _payWithPaypalForm(request, offer):
         currency_symbol = "R$"
         alert_brazil = True
 
-    shared_price = convert_rate * float(offer.price) / solutions_with_paypal.count()
+    shared_price = convert_rate * float(offer.price) / len(solutions_with_paypal)
     shared_price = twoplaces(Decimal(str(shared_price)))
 
     return render_to_response('core/pay_offer.html',
