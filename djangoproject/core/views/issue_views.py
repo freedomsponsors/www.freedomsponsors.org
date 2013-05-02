@@ -339,6 +339,7 @@ def _payWithPaypalForm(request, offer):
         try: 
             accepts_paypal = paypal_services.accepts_paypal_payments(solution.programmer)
         except BaseException as e:
+            traceback.print_exc()
             messages.error(request, 'Error communicating with Paypal: %s' % e)
             mail_services.notify_admin('Error determining if user accepts paypal', traceback.format_exc())
             return redirect(offer.get_view_link())

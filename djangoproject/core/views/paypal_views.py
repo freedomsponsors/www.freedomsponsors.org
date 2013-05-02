@@ -24,6 +24,7 @@ def payOffer(request, offer, payment):
     try:
         paypal_adapter.generate_paypal_payment(payment)
     except BaseException as e:
+        traceback.print_exc()
         messages.error(request, 'Error communicating with Paypal: %s' % e)
         mail_services.notify_admin('Error generating paypal payment', traceback.format_exc())
         return redirect(offer.get_view_link())
