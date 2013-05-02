@@ -80,14 +80,13 @@
         return false;
       }
       if(currency == 'BTC'){
-        if(price < 0.5){
-          alert('The minimum offer is BTC 0.50');
+        if(price < 0.1){
+          alert('The minimum offer is BTC 0.10');
           return false;
         }
       } else {
         if(price < 5){
           alert('The minimum offer is US$ 5.00');
-          alert('US$ '+price+"?! You're kidding, right? Come on...");
           return false;
         }
       }
