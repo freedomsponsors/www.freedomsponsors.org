@@ -28,7 +28,7 @@ class TestPaypalPayment(unittest.TestCase):
         solution = Solution.newSolution(offer.issue, programmer, False)
         solution.accepting_payments = True
         solution.save()
-        _mock_paypal_adapter()
+        # _mock_paypal_adapter()
 
         #get pay form
         client = Client()
