@@ -61,6 +61,10 @@ class TestPaypalPayment(unittest.TestCase):
         self.assertEqual(response.status_code, 302)
         prefix = 'https://www.sandbox.paypal.com/webscr?cmd=_ap-payment&paykey='
         location = response.get('location')
+        if prefix not in location:
+            print('ERROR - was expecting redirect to paypal, got %s' % location)
+            for message in list(response.context['messages']):
+                print('message: %s' % message)
         self.assertTrue(prefix in location)
         paykey = location.split(prefix)[1]
         self.assertTrue(paykey is not None)
