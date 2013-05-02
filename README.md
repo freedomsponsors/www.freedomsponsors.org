@@ -50,7 +50,7 @@ Instructions to run application locally:
  1.5 Install python-lxml.
  
  ```bash
- $ sudo apt-get install python-lxml
+ $ sudo apt-get install python-lxml libxslt-dev
  ```
  
  1.6 Install libpq-dev.
