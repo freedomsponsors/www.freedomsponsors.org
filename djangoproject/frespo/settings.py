@@ -334,17 +334,24 @@ LOGGING = {
 PAGINATION_DEFAULT_PAGINATION = 20
 PAGINATION_DEFAULT_WINDOW = 3
 
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-NOSE_ARGS = [
-    '--match=^(must|ensure|should|test|it_should)',
-    '--where=%s' % PROJECT_DIR,
-    '--id-file=%s' % PROJECT_DIR.child('.noseids'),
-    '--all-modules',
-    '--with-id',
-    '--verbosity=2',
-    '--nologcapture',
-    '--rednose',
-]
+os.environ.setdefault('TEST_WITH_NOSE', 'true')
+
+# pycharm is not able to run tests with nose runner
+# so, you might want to configure your pycharm environment variables with TEST_WITH_NOSE=false
+TEST_WITH_NOSE = os.environ['TEST_WITH_NOSE'] == 'true'
+
+if TEST_WITH_NOSE:
+    TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+    NOSE_ARGS = [
+        '--match=^(must|ensure|should|test|it_should)',
+        '--where=%s' % PROJECT_DIR,
+        '--id-file=%s' % PROJECT_DIR.child('.noseids'),
+        '--all-modules',
+        '--with-id',
+        '--verbosity=2',
+        '--nologcapture',
+        '--rednose',
+    ]
 
 os.environ.setdefault('ENV_SETTINGS', 'env_settings')
 try:

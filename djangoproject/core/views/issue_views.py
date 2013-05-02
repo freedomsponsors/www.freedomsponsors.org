@@ -368,6 +368,7 @@ def _payWithPaypalForm(request, offer):
     shared_price = convert_rate * float(offer.price) / len(solutions_with_paypal)
     shared_price = twoplaces(Decimal(str(shared_price)))
 
+    messages.error(request, 'oi')
     return render_to_response('core/pay_offer.html',
         {'offer':offer,
          'solutions_accepting_payments' : solutions_with_paypal,

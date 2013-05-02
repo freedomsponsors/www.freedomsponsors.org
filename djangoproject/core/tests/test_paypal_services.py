@@ -10,6 +10,11 @@ from core.utils import paypal_adapter
 
 __author__ = 'tony'
 
+def _mock_paypal_adapter():
+    def mock_is_verified_account(email):
+        return True
+    paypal_adapter.is_verified_account = mock_is_verified_account
+
 class TestPaypalPayment(unittest.TestCase):
 
     def test_paypal_payment_complete(self):
@@ -23,12 +28,17 @@ class TestPaypalPayment(unittest.TestCase):
         solution = Solution.newSolution(offer.issue, programmer, False)
         solution.accepting_payments = True
         solution.save()
+        _mock_paypal_adapter()
 
         #get pay form
         client = Client()
         client.login(username=offer.sponsor.username, password='abcdef')
 
         response = client.get('/core/offer/%s/pay' % offer.id)
+        if response.status_code != 200:
+            print('ERROR - was expecting 200, got %s' % response.status_code)
+            for message in list(response.context['messages']):
+                print('message: %s' % message)
         self.assertEqual(response.status_code, 200)
         response_offer = response.context['offer']
         response_solutions_accepting_payments = response.context['solutions_accepting_payments']

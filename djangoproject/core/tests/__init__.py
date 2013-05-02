@@ -1,11 +1,12 @@
-# from tests_trackerintegration import *
-# from test_mail_notifications import *
-# from test_model_entities import *
-# from test_paypal_services import *
-# from test_watch_services import *
-# from test_watch_views import *
-# from test_feedback_views import *
-# from test_bitcoin import *
+from django.conf import settings
 
-__author__ = 'tony'
+if not settings.TEST_WITH_NOSE:
+    from tests_trackerintegration import *
+    from test_mail_notifications import *
+    from test_model_entities import *
+    from test_paypal_services import *
+    from test_watch_services import *
+    from test_watch_views import *
+    from test_feedback_views import *
+    from test_bitcoin import *
 
