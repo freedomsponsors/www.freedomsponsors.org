@@ -3,7 +3,7 @@ python:
   - "2.6"
 install: 
 # - sudo aptitude -y -q install unzip chromium-browser
- - python debugtravis.py
+ # - python debugtravis.py
  - sudo apt-get update -y
  - sudo apt-get install -y unzip chromium-browser
  - sudo chmod 1777 /dev/shm  # see https://github.com/travis-ci/travis-ci/issues/938

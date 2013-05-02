@@ -18,6 +18,6 @@ django-pagination==1.0.7
 south==0.7.5
 bitcoin-python==0.2
 git+git://github.com/pinax/django-mailer.git@887ec2c9d8e05d061293b56ff913a9b293c42aa0#egg=django-mailer
-git+git://github.com/e-loue/python-paypalx.git@fa061980e3e23cfa96feee61296ef097d32ca015#egg=paypalx
+git+git://github.com/freedomsponsors/python-paypalx.git@34d624ed8a7b6505aa6e6e12c0a5b854cacbc612#egg=paypalx
 django-registration==0.8
 django-emailmgr==0.9
