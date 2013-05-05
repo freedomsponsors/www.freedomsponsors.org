@@ -7,6 +7,12 @@
 	<div class="span2">
 	  	<img src="{{le_user.gravatar_url_big}}"/><br>
 	  	Since {{le_user.date_joined|date:"N j, o"}}<br>
+        {% if le_user.getUserInfo.paypal_verified %}
+	  	<div style="margin-top: 10px">Paypal Verified</div>
+        {% endif %}
+        {% if le_user.getUserInfo.bitcoin_receive_address %}
+	  	<div style="margin-top: 10px">Accepts Bitcoin</div>
+        {% endif %}
 	</div>
 
 	<div class="span8">

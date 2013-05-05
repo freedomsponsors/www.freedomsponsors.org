@@ -62,10 +62,16 @@ def addSolution(request):
     issue = issue_services.add_solution_to_existing_issue(issue_id, comment_content, accepting_payments, request.user)
     watch_services.watch_issue(request.user, issue.id, IssueWatch.STARTED_WORKING)
     need_bitcoin_address = _need_to_set_bitcoin_address(request.user, issue)
+    need_verify_paypal = _need_to_verify_paypal_account(request.user, issue)
     if need_bitcoin_address:
         msg = """You just began working on an issue with a Bitcoin offer.
 You need to configure a Bitcoin address on your user profile, otherwise the sponsor will not be able to pay his offer to you.
 You can set your bitcoin address in your 'edit profile' page."""
+        messages.error(request, msg)
+    if need_verify_paypal:
+        msg = """You just began working on an issue with an offer in USD.
+FS has detected that the email '%s' is not associated with a verified Paypal account.
+You need to have a verified Paypal account before you can receive payments through Paypal.""" % request.user.getUserInfo().paypalEmail
         messages.error(request, msg)
     return redirect(issue.get_view_link())
 
@@ -74,6 +80,15 @@ def _need_to_set_bitcoin_address(user, issue):
         return False
     for offer in issue.getOffers():
         if offer.currency == 'BTC':
+            return True
+    return False
+
+def _need_to_verify_paypal_account(user, issue):
+    paypal_verified = paypal_services.accepts_paypal_payments(user)
+    if paypal_verified:
+        return False
+    for offer in issue.getOffers():
+        if offer.currency == 'USD':
             return True
     return False
 

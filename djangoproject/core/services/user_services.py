@@ -1,3 +1,4 @@
+from core.services import paypal_services
 from core.utils.frespo_utils import socialImages, dictOrEmpty
 from emailmgr import utils as emailmgr_utils
 from emailmgr.models import EmailAddress
@@ -58,9 +59,13 @@ def edit_existing_user(user, dict):
     newPaypalEmail = dictOrEmpty(dict, 'paypalEmail')
     if(not newPaypalEmail):
         newPaypalEmail = newEmail
+    changedPaypalEmail = newPaypalEmail != userinfo.paypalEmail
     primaryActivation = _changePrimaryEmailIfNeeded(userinfo, newEmail)
     paypalActivation = _changePaypalEmailIfNeeded(userinfo, newPaypalEmail)
+    if changedPaypalEmail:
+        userinfo.paypal_verified = False
     userinfo.save()
+    paypal_services.accepts_paypal_payments(user)
     return paypalActivation, primaryActivation
 
 def get_users_list():
@@ -69,7 +74,7 @@ def get_users_list():
 
 def _changePaypalEmailIfNeeded(userinfo, newPaypalEmail):
     oldPaypalEmail = userinfo.paypalEmail
-    if(newPaypalEmail != userinfo.paypalEmail):
+    if(newPaypalEmail != oldPaypalEmail):
         userinfo.paypalEmail = newPaypalEmail
     do_it = newPaypalEmail != userinfo.user.email and (
         newPaypalEmail != oldPaypalEmail or
