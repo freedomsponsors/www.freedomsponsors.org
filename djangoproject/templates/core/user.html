@@ -8,10 +8,16 @@
 	  	<img src="{{le_user.gravatar_url_big}}"/><br>
 	  	Since {{le_user.date_joined|date:"N j, o"}}<br>
         {% if le_user.getUserInfo.paypal_verified %}
-	  	<div style="margin-top: 10px">Paypal Verified</div>
+	  	<div style="margin-top: 10px">
+	  		<img src="/static/img/paypal_icon_32.png">
+	  		Paypal Verified
+	  	</div>
         {% endif %}
         {% if le_user.getUserInfo.bitcoin_receive_address %}
-	  	<div style="margin-top: 10px">Accepts Bitcoin</div>
+	  	<div style="margin-top: 10px">
+	  		<img src="/static/img/bitcoin_icon_32.png">
+	  		Accepts Bitcoin
+	  	</div>
         {% endif %}
 	</div>
 
