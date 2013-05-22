@@ -55,12 +55,6 @@ def get_or_none(model, **kwargs):
     except model.DoesNotExist:
         return None
 
-
-def dictOrEmpty(dict, key):
-    if(dict.has_key(key)):
-        return dict[key]
-    return ''
-
 def send_html_mail(subject, body_txt, body_html, from_email, to_addresses):
     try:
         for to_addr in to_addresses:

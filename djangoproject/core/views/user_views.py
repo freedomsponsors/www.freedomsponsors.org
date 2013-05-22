@@ -4,7 +4,6 @@ from django.contrib import messages
 from django.template import  RequestContext
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, redirect
-from core.utils.frespo_utils import  dictOrEmpty
 from django.utils.translation import ugettext as _
 from core.services import user_services, mail_services
 from django.conf import settings
@@ -16,9 +15,9 @@ def viewUser(request, user_id):
     if(user.id == request.user.id):
         unconnectedSocialAccounts = user_services.getUnconnectedSocialAccounts(user)
     alert_strings = user_services.getAlertsForViewUser(request.user, user,
-        changedPrimaryEmail=dictOrEmpty(request.GET, 'prim') == 'true',
-        changedPaypalEmail=dictOrEmpty(request.GET, 'payp') == 'true',
-        emailVerified=dictOrEmpty(request.GET, 'email_verified') == 'true')
+        changedPrimaryEmail=request.GET.get('prim') == 'true',
+        changedPaypalEmail=request.GET.get('payp') == 'true',
+        emailVerified=request.GET.get('email_verified') == 'true')
     for alert in alert_strings:
         messages.info(request, alert)
 
@@ -46,7 +45,7 @@ def editUserForm(request):
     return render_to_response('core/useredit.html',
         {'userinfo':userinfo,
          'available_languages' : available_languages,
-        'next':dictOrEmpty(request.GET, 'next')},
+        'next':request.GET.get('next', '')},
         context_instance = RequestContext(request))
 
 def _notify_admin_new_user(user):
@@ -57,7 +56,7 @@ def _notify_admin_new_user(user):
 def editUser(request):
     paypalActivation, primaryActivation = user_services.edit_existing_user(request.user, request.POST)
 
-    next = dictOrEmpty(request.POST, _('next'))
+    next = request.POST.get(_('next'))
     if(next):
         return redirect(next)
     else:
