@@ -1,0 +1,148 @@
+{% extends "core/base.html" %}
+{% load l10n %}
+
+{% block topright %}
+{% endblock %}
+
+{% block mainContent%}
+
+    <script src="/static/bootstrap/js/jquery.numeric.js"></script>
+    <script src="/static/js/angular.min.js"></script>
+    <script type="text/javascript">
+        var mod = angular.module('pay_offer', [])
+        mod.config(function($routeProvider, $interpolateProvider) {
+            $routeProvider.
+                when('/fill', {controller:FillCtrl, templateUrl:'/static/pay_offer/fill.html'}).
+                when('/confirm', {controller:ConfirmCtrl, templateUrl:'/static/pay_offer/confirm.html'}).
+                otherwise({redirectTo:'/fill'});
+
+            $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
+        });
+
+        function FillCtrl($scope) {
+            $scope.offer = {
+                'id': 1
+            }
+        }
+
+        function ConfirmCtrl($scope) {
+        }
+
+    </script>
+
+
+    <div class="span12">
+        <h3>
+            Pay for issue: Blabla blabla blabla
+        </h3>
+        <div class="row-fluid" style="margin-top: 10px;">
+            <div class="span6" >
+                <div style="border-width: 1px; border-style: solid; border-radius: 5px; padding: 10px; border-color: #ccc;">
+                    <div class="row-fluid">
+                        <div class="span6" style="text-align: right; font-weight: bold;">
+                            Select currency to pay
+                        </div>
+                        <div class="span6">
+                            <select>
+                                <option value="USD">US$, using Paypal</option>
+                                <option value="BTC">Bitcoin</option>
+                            </select>
+                        </div>
+                    </div> 
+                    <div class="alert alert-info">
+                        <p>Heads up: different currency <i class="icon-info-sign icon-blue popopo" rel="popover" data-content="You've made an offer in US$, and now you're choosing to pay with Bitcoins. FreedomSponsors simply forwards payments using the same currency that you pay. So, you should probably check with the developer if that's ok." data-original-title="Heads up"></i>
+                        </p>
+                        <p>Suggested conversion rate: <span style="font-weight: bold">BTC 1.0 = US$ 122.60001</span> <br>(fetched from <a href="http://blockchain.info">blockchain)</a></p>
+                    </div>
+                    <hr>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Programmer</th>
+                            <th>Accepted methods</th>
+                            <th>Amount (US$)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <img src="http://www.gravatar.com/avatar/0a8eb9426eb59a7d8481118403aee8ef?d=identicon&amp;s=23">
+                                    John Doe Doe Doe a quem Doer Demaisss
+                                </td>
+                                <td>
+                                    <img src="/static/img/paypal_icon_32.png" class="popopo" rel="popover" data-content="FreedomSponsors has verified that this user is able to receive payments via Paypal" data-original-title="Paypal verified">
+                                    <img src="/static/img/bitcoin_icon_32.png" class="popopo" rel="popover" data-content="This user may receive payments in Bitcoin" data-original-title="Accepts Bitcoin">
+                                </td>
+                                <td>
+                                    <input type="text" style="width: 100px;" value="10.00">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="http://www.gravatar.com/avatar/4dbc40e7a6fa89a3568a926378c22ace?d=identicon&amp;s=23">
+                                    Mike Eod
+                                </td>
+                                <td>
+                                    <img src="/static/img/bitcoin_icon_32.png" class="popopo" rel="popover" data-content="This user may receive payments in Bitcoin" data-original-title="Accepts Bitcoin">
+                                </td>
+                                <td>
+                                    <input type="text" style="width: 100px;" value="10.00">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="text-align:right; margin: 10px 0px;">
+                    <button class="btn btn-primary" type="button">Next &gt;</button>
+                </div>
+            </div>
+            <div class="span6" >
+                <div style="border-width: 1px; border-style: solid; border-radius: 5px; padding: 10px; ; border-color: #ccc;">
+                    <span style="font-weight:bold;">Confirm payment details</span>
+                    <hr>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Amount (US$)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <img src="http://www.gravatar.com/avatar/0a8eb9426eb59a7d8481118403aee8ef?d=identicon&amp;s=23">
+                                    John Doe Doe Doe a quem Doer Demaisss
+                                </td>
+                                <td style="text-align:right">10.00</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="http://www.gravatar.com/avatar/4dbc40e7a6fa89a3568a926378c22ace?d=identicon&amp;s=23">
+                                    Mike Eod
+                                </td>
+                                <td style="text-align:right">10.00</td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: middle;">
+                                    <img src="/static/img/FS_logo_32x32.png">
+                                    FreedomSponsors
+                                </td>
+                                <td style="text-align:right">0.60</td>
+                            </tr>
+                            <tr style="font-weight: bold;">
+                                <td>Total</td>
+                                <td style="text-align:right">20.60</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div style="text-align:right; margin: 10px 0px;">
+                    <button class="btn btn-primary" type="button">Proceed to payment with Paypal</button>
+                </div>
+            </div>
+        </div> 
+    </div>
+
+
+{% endblock mainContent%}

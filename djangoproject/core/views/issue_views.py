@@ -304,6 +304,12 @@ def payOfferForm(request, offer_id):
     else:
         return _payWithBitcoinForm(request, offer)
 
+
+def payOfferFormAngular(request):
+    return render_to_response('core/pay_offer_angular.html',
+                              {},
+                              context_instance=RequestContext(request))
+
 @login_required
 def payOffer(request):
     offer_id = int(request.POST['offer_id'])
