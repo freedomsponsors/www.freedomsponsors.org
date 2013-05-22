@@ -11,9 +11,10 @@ from django.template.defaultfilters import slugify
 from django.dispatch import receiver
 from emailmgr.signals import user_activated_email
 from decimal import Decimal
-from core.utils.frespo_utils import twoplaces, CURRENCY_SYMBOLS
+from core.utils.frespo_utils import twoplaces
 from bitcoin_frespo.models import *
 
+_CURRENCY_SYMBOLS = {'USD': 'US$', 'BRL': 'R$', 'BTC': 'BTC'}
 
 class UserInfo(models.Model): 
     user = models.ForeignKey(User)
@@ -469,7 +470,7 @@ class Offer(models.Model):
         return offer
 
     def get_currency_symbol(self):
-        return CURRENCY_SYMBOLS[self.currency]
+        return _CURRENCY_SYMBOLS[self.currency]
 
     def price_2(self):
         return twoplaces(self.price)
@@ -748,7 +749,7 @@ class Payment(models.Model):
             self.currency = 'USD'
     
     def get_currency_symbol(self):
-        return CURRENCY_SYMBOLS[self.currency]
+        return _CURRENCY_SYMBOLS[self.currency]
 
     def total_with_fee(self):
         return self.total + self.fee

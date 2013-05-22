@@ -2,10 +2,6 @@ from decimal import Decimal
 
 _TWOPLACES = Decimal(10) ** -2
 
-CURRENCY_SYMBOLS = {'USD' : 'US$',
-    'BRL' : 'R$',
-    'BTC' : 'BTC'}
-
 def get_or_none(model, **kwargs):
     try:
         return model.objects.get(**kwargs)
