@@ -6,24 +6,6 @@ CURRENCY_SYMBOLS = {'USD' : 'US$',
     'BRL' : 'R$',
     'BTC' : 'BTC'}
 
-socialImages = {'google' : '/static/img/google.gif',
-    'yahoo':'/static/img/yahoo.gif',
-    'facebook':'/static/img/facebook.gif',
-    'twitter':'/static/img/twitter.png',
-    'github' : '/static/img/github.png',
-    'bitbucket' : '/static/img/bitbucket.jpg',
-#    'myopenid' : '/static/img/myopenid.png'
-}
-
-socialImages_small = {'google' : '/static/img/google_small.png',
-    'yahoo':'/static/img/yahoo_small.png',
-    'facebook':'/static/img/facebook_small.png',
-    'twitter':'/static/img/twitter_small.png',
-    'github' : '/static/img/github_small.gif',
-    'bitbucket' : '/static/img/bitbucket_small.png',
-#    'myopenid' : '/static/img/myopenid.png'
-}
-
 def get_or_none(model, **kwargs):
     try:
         return model.objects.get(**kwargs)

@@ -1,5 +1,4 @@
 from core.services import paypal_services
-from core.utils.frespo_utils import socialImages
 from emailmgr import utils as emailmgr_utils
 from emailmgr.models import EmailAddress
 from django.contrib.auth.models import User
@@ -7,17 +6,6 @@ from core.models import *
 from django.conf import settings
 
 __author__ = 'tony'
-
-def getUnconnectedSocialAccounts(user):
-    imgs = socialImages.copy()
-    for auth in user.getSocialAuths():
-        if imgs.has_key(auth.provider):
-            del imgs[auth.provider]
-    res = []
-    for provider in imgs.keys():
-        res.append({'provider':provider, 'icon':imgs[provider]})
-    return res
-
 
 def getAlertsForViewUser(logged_user, user_to_view, changedPrimaryEmail, changedPaypalEmail, emailVerified):
     if(user_to_view.id == logged_user.id):

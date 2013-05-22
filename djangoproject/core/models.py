@@ -4,7 +4,7 @@ from django.utils import timezone
 from datetime import timedelta
 from django.contrib.auth.models import User
 import hashlib, time, random
-from core.utils.frespo_utils import get_or_none, socialImages, socialImages_small
+from core.utils.frespo_utils import get_or_none
 from social_auth.models import UserSocialAuth
 from django.utils.http import urlquote
 from django.template.defaultfilters import slugify
@@ -164,11 +164,36 @@ def getStats(self):
             stats['workingDoneCount'] += 1
     return stats
 
+_socialImages_small = {'google' : '/static/img/google_small.png',
+    'yahoo':'/static/img/yahoo_small.png',
+    'facebook':'/static/img/facebook_small.png',
+    'twitter':'/static/img/twitter_small.png',
+    'github' : '/static/img/github_small.gif',
+    'bitbucket' : '/static/img/bitbucket_small.png',
+#    'myopenid' : '/static/img/myopenid.png'
+}
+
+_socialImages = {'google' : '/static/img/google.gif',
+    'yahoo':'/static/img/yahoo.gif',
+    'facebook':'/static/img/facebook.gif',
+    'twitter':'/static/img/twitter.png',
+    'github' : '/static/img/github.png',
+    'bitbucket' : '/static/img/bitbucket.jpg',
+#    'myopenid' : '/static/img/myopenid.png'
+}
+
+def getUnconnectedSocialAccounts(self):
+    all_social_auths = set(_socialImages.keys())
+    user_social_auths = set(auth.provider for auth in self.getSocialAuths())
+    unconnected = all_social_auths - user_social_auths
+    return unconnected
+
 User.gravatar_url_small = gravatar_url_small
 User.gravatar_url_medium = gravatar_url_medium
 User.gravatar_url_big = gravatar_url_big
 User.getUserInfo = getUserInfo
 User.getSocialAuths = getSocialAuths
+User.getUnconnectedSocialAccounts = getUnconnectedSocialAccounts
 User.github_username = github_username
 User.getOffers = getOffers
 User.getSolutions = getSolutions
@@ -179,16 +204,10 @@ User.is_registration_complete = is_registration_complete
 User.get_view_link = get_view_link
 
 def getSocialIcon(self):
-    if(socialImages.has_key(self.provider)):
-        return socialImages[self.provider]
-    else:
-        return None
+    return _socialImages.get(self.provider)
 
 def getSocialIcon_small(self):
-    if(socialImages_small.has_key(self.provider)):
-        return socialImages_small[self.provider]
-    else:
-        return None
+    return _socialImages_small.get(self.provider)
 
 def getSocialProfileLink(self):
     if(self.provider == 'facebook'):
