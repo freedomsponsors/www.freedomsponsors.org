@@ -1,11 +1,14 @@
 from splinter.browser import Browser 
 from time import sleep, time
-from core.utils.frespo_utils import Struct
 import logging
 
 logger = logging.getLogger(__name__)
 
 TIMEOUT=5
+
+class Struct:
+    def __init__(self, **entries): 
+        self.__dict__.update(entries)
 
 def paradinha(time=0.4):
     sleep(time)
