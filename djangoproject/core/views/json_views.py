@@ -3,7 +3,6 @@
 from core.models import *
 from django.http import HttpResponse
 from django.utils.translation import ugettext as _
-from core.utils.frespo_utils import  dictOrEmpty
 import json
 from core.services import issue_services
 import traceback
@@ -35,10 +34,10 @@ def by_issue_url(request):
         return HttpResponse(_("Error: need trackerURL parameter."), status=404)
 
 def get_offers(request):
-    trackerURL = dictOrEmpty(request.GET, 'trackerURL')
+    trackerURL = request.GET.get('trackerURL')
     if(not trackerURL):
         return HttpResponse(_("Error: need trackerURL parameter."), status=404)
-    sponsor_id = dictOrEmpty(request.GET, 'sponsor_id')
+    sponsor_id = request.GET.get('sponsor_id')
     offers = Offer.objects.filter(issue__trackerURL__iexact=trackerURL)
     if(sponsor_id):
         offers = offers.filter(sponsor__id=int(sponsor_id))

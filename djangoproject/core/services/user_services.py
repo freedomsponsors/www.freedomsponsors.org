@@ -1,5 +1,5 @@
 from core.services import paypal_services
-from core.utils.frespo_utils import socialImages, dictOrEmpty
+from core.utils.frespo_utils import socialImages
 from emailmgr import utils as emailmgr_utils
 from emailmgr.models import EmailAddress
 from django.contrib.auth.models import User
@@ -56,7 +56,7 @@ def edit_existing_user(user, dict):
     if(settings.BITCOIN_ENABLED):
         userinfo.bitcoin_receive_address = dict['bitcoin_receive_address']
     newEmail = dict['primaryEmail']
-    newPaypalEmail = dictOrEmpty(dict, 'paypalEmail')
+    newPaypalEmail = dict.get('paypalEmail')
     if(not newPaypalEmail):
         newPaypalEmail = newEmail
     changedPaypalEmail = newPaypalEmail != userinfo.paypalEmail
