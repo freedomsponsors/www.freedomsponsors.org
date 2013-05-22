@@ -1,4 +1,3 @@
-from urlparse import urlparse
 from decimal import Decimal
 
 _TWOPLACES = Decimal(10) ** -2
@@ -24,24 +23,6 @@ socialImages_small = {'google' : '/static/img/google_small.png',
     'bitbucket' : '/static/img/bitbucket_small.png',
 #    'myopenid' : '/static/img/myopenid.png'
 }
-
-def validateIssueURL(url):
-    parsedURL = urlparse(url)
-    if(not parsedURL.scheme == 'http' and not parsedURL.scheme == 'https'):
-        return 'protocol must be http or https'
-    elif(not parsedURL.path or parsedURL.path == '/'):
-        return 'This is not a issue URL'
-    else:
-        return ''
-
-def validateURL(url):
-    parsedURL = urlparse(url)
-    if(not parsedURL.scheme == 'http' and not parsedURL.scheme == 'https'):
-        return 'protocol must be http or https'
-    elif(not parsedURL.netloc or parsedURL.netloc.find('.') < 0 ):
-        return 'invalid URL'
-    else:
-        return ''
 
 def get_or_none(model, **kwargs):
     try:

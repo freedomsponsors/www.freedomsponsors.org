@@ -1,8 +1,9 @@
+from urlparse import urlparse
 from decimal import Decimal
 from django.db.models import Q
 from core.services.mail_services import *
 from core.services import watch_services
-from core.utils.frespo_utils import validateURL, validateIssueURL, get_or_none
+from core.utils.frespo_utils import get_or_none
 from core.models import Issue, Project, Offer, Solution, IssueComment, OfferComment
 from core.utils.trackers_adapter import fetchIssueInfo
 import logging
@@ -315,3 +316,21 @@ def _create_project(issueInfo, createdByUser):
         "project : "+project.name+"\n<br>"+ \
         "project.trackerURL: "+project.trackerURL+"\n<br>")
     return project
+
+def validateIssueURL(url):
+    parsedURL = urlparse(url)
+    if parsedURL.scheme not in ('http', 'https'):
+        return 'protocol must be http or https'
+    elif not parsedURL.path or parsedURL.path == '/':
+        return 'This is not a issue URL'
+    else:
+        return ''
+
+def validateURL(url):
+    parsedURL = urlparse(url)
+    if parsedURL.scheme not in ('http', 'https'):
+        return 'protocol must be http or https'
+    elif not parsedURL.netloc or parsedURL.netloc.find('.') < 0:
+        return 'invalid URL'
+    else:
+        return ''
