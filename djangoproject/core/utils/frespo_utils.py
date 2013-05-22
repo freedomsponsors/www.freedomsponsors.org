@@ -11,8 +11,3 @@ def get_or_none(model, **kwargs):
 #TODO: use this in a bunch of places (needed because sqlite doesn't store the .00 Decimal places - and this breaks a few tests)
 def twoplaces(dec):
     return dec.quantize(_TWOPLACES)
-
-class Struct:
-    def __init__(self, **entries): 
-        self.__dict__.update(entries)
-
