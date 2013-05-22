@@ -1,14 +1,31 @@
+import logging
+
+from django.core.mail import EmailMultiAlternatives
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 from core.models import *
 from django.template.loader import get_template
 from django.template import Context
-from core.utils.frespo_utils import send_html_mail
 from django.conf import settings
 from core.utils.frespo_utils import twoplaces
+
+logger = logging.getLogger(__name__)
 
 ADMINS_EMAILS = map((lambda x: x[1]), settings.ADMINS)
 
 def plain_send_mail(to, subject, body, from_email=settings.DEFAULT_FROM_EMAIL):
     send_html_mail(subject, body, body, from_email, [to])
+
+def send_html_mail(subject, body_txt, body_html, from_email, to_addresses):
+    try:
+        for to_addr in to_addresses:
+            validate_email(to_addr)
+    except ValidationError:
+        logger.warn('Email not sent. Invalid email address in %s. subject = %s' % (to_addresses, subject))
+        return
+    msg = EmailMultiAlternatives(subject, body_txt, from_email, to_addresses)
+    msg.attach_alternative(body_html, "text/html")
+    msg.send()
 
 def send_mail_to_all_users(subject, body, from_email=settings.DEFAULT_FROM_EMAIL):
     count = 0
