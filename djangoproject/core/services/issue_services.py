@@ -2,7 +2,7 @@ from decimal import Decimal
 from django.db.models import Q
 from core.services.mail_services import *
 from core.services import watch_services
-from core.utils.frespo_utils import dictOrEmpty, validateURL, validateIssueURL, get_or_none
+from core.utils.frespo_utils import validateURL, validateIssueURL, get_or_none
 from core.models import Issue, Project, Offer, Solution, IssueComment, OfferComment
 from core.utils.trackers_adapter import fetchIssueInfo
 import logging
@@ -184,14 +184,14 @@ def _buildIssueFromDictionary(dict, user):
     check_noProject = dict.has_key('noProject')
     issue_trackerURL = dict['trackerURL']
     issue_projectId = dict['project_id']
-    issue_projectName = dictOrEmpty(dict, 'project_name')
+    issue_projectName = dict.get('project_name', '')
     check_createProject = dict.has_key('createProject')
-    newProject_name = dictOrEmpty(dict, 'newProjectName')
-    newProject_homeURL = dictOrEmpty(dict, 'newProjectHomeURL')
-    newProject_trackerURL = dictOrEmpty(dict, 'newProjectTrackerURL')
-    issue_key = dictOrEmpty(dict, 'key');
-    issue_title = dictOrEmpty(dict, 'title');
-    issue_description = dictOrEmpty(dict, 'description');
+    newProject_name = dict.get('newProjectName', '')
+    newProject_homeURL = dict.get('newProjectHomeURL', '')
+    newProject_trackerURL = dict.get('newProjectTrackerURL', '')
+    issue_key = dict.get('key', '');
+    issue_title = dict.get('title', '');
+    issue_description = dict.get('description', '');
     _throwIfIssueExists(issue_trackerURL, user)
     issue = None
     if(check_noProject):

@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render_to_response
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
-from core.utils.frespo_utils import get_or_none, dictOrEmpty, twoplaces
+from core.utils.frespo_utils import get_or_none, twoplaces
 from core.models import *
 from core.services import issue_services, watch_services, paypal_services, mail_services
 from core.views import paypal_views, bitcoin_views
@@ -27,7 +27,7 @@ def addIssue(request):
         traceback.print_exc()
         return HttpResponse(_("ERROR: ")+ex.message)
     params = '?alert=SPONSOR'
-    if(dictOrEmpty(request.POST, 'invoke_parent_callback') == 'true'):
+    if(request.POST.get('invoke_parent_callback') == 'true'):
         params += '&c=s' # c = Callback (iframe javascript callback)
 
     return redirect(offer.get_view_link()+params)
@@ -103,7 +103,7 @@ def _listIssues(request):
     project_id = request.GET.get('project_id')
     project_name = request.GET.get('project_name')
     search_terms = request.GET.get('s')
-    operation = dictOrEmpty(request.GET, 'operation')
+    operation = request.GET.get('operation', '')
     is_public_suggestion = None
     if(operation == 'SPONSOR'):
         is_public_suggestion = False
@@ -117,7 +117,7 @@ def listIssues(request):
     project_id = request.GET.get('project_id')
     project_name = request.GET.get('project_name')
     search_terms = request.GET.get('s')
-    operation = dictOrEmpty(request.GET, 'operation')
+    operation = request.GET.get('operation', '')
     return render_to_response('core/issue_list.html',
         {'issues':_listIssues(request),
          's':search_terms,
@@ -196,7 +196,7 @@ def sponsorIssue(request):
     offer = issue_services.sponsor_existing_issue(issue_id, request.POST, request.user)
     watch_services.watch_issue(request.user, issue_id, IssueWatch.SPONSORED)
 
-    invoke_parent_callback = dictOrEmpty(request.POST, 'invoke_parent_callback')
+    invoke_parent_callback = request.POST.get('invoke_parent_callback')
     if(invoke_parent_callback == 'true'):
         params = '?c=s' # c = Callback (iframe javascript callback)
     else:
@@ -216,13 +216,13 @@ def viewIssue(request, issue_id):
         myoffer = get_or_none(Offer, issue=issue,sponsor=request.user)
         mysolution = get_or_none(Solution, issue=issue,programmer=request.user)
 
-    show_sponsor_popup = (dictOrEmpty(request.GET, 'show_sponsor') == 'true')
-    alert = dictOrEmpty(request.GET, 'alert')
+    show_sponsor_popup = (request.GET.get('show_sponsor') == 'true')
+    alert = request.GET.get('alert')
     if(alert == 'KICKSTART'):
         show_alert = 'core/popup/popup_just_kickstarted.html'
     alert_reputation_revoking = mysolution and mysolution.status == Solution.IN_PROGRESS and mysolution.get_received_payments().count() > 0
 
-    invoke_parent_callback = (dictOrEmpty(request.GET, 'c') == 's')
+    invoke_parent_callback = (request.GET.get('c') == 's')
 
     is_watching = request.user.is_authenticated() and watch_services.is_watching_issue(request.user, issue.id)
 
@@ -250,11 +250,11 @@ def viewOffer(request, offer_id):
         mysolution = get_or_none(Solution, issue=offer.issue,programmer=request.user)
         myoffer = get_or_none(Offer, issue=offer.issue,sponsor=request.user)
 
-    alert = dictOrEmpty(request.GET, 'alert')
+    alert = request.GET.get('alert')
     if(alert == 'SPONSOR' and offer.issue.project):
         show_alert = 'core/popup/popup_just_sponsored.html'
     alert_reputation_revoking = mysolution and mysolution.status == Solution.IN_PROGRESS and mysolution.get_received_payments().count() > 0
-    invoke_parent_callback = (dictOrEmpty(request.GET, 'c') == 's')
+    invoke_parent_callback = (request.GET.get('c') == 's')
 
     is_watching = request.user.is_authenticated() and watch_services.is_watching_offer(request.user, offer.id)
 
@@ -272,8 +272,8 @@ def viewOffer(request, offer_id):
 
 @login_required
 def addIssueForm(request):
-    trackerURL = dictOrEmpty(request.GET, 'trackerURL')
-    operation = dictOrEmpty(request.GET, 'operation')
+    trackerURL = request.GET.get('trackerURL', '')
+    operation = request.GET.get('operation', '')
     if(trackerURL):
         issues = Issue.objects.filter(trackerURL__iexact=trackerURL)
         issue_already_exists = issues.count() >= 1

@@ -6,7 +6,6 @@ from django.shortcuts import render_to_response, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import ugettext as _
 from core.utils import paypal_adapter
-from core.utils.frespo_utils import  dictOrEmpty
 from core.models import  Payment
 from core.services import paypal_services, mail_services
 import logging
@@ -17,7 +16,7 @@ logger = logging.getLogger(__name__)
 __author__ = 'tony'
 
 def payOffer(request, offer, payment):
-    current_payment_id = dictOrEmpty(request.session, 'current_payment_id')
+    current_payment_id = request.session.get('current_payment_id')
     if(current_payment_id):
         paypal_services.forget_payment(int(current_payment_id))
 
@@ -82,7 +81,7 @@ def paypalIPN(request):
 @login_required
 @csrf_exempt
 def paypalReturn(request):
-    current_payment_id = dictOrEmpty(request.session, 'current_payment_id')
+    current_payment_id = request.session.get('current_payment_id')
     if(current_payment_id):
         curr_payment, msg = paypal_services.payment_confirmed_web(current_payment_id)
         del request.session['current_payment_id']

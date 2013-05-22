@@ -5,7 +5,6 @@ from django.contrib.auth import logout as auth_logout
 from django.template import  RequestContext
 from django.shortcuts import render_to_response, redirect
 from core.services import issue_services
-from core.utils.frespo_utils import  dictOrEmpty
 from core.services.mail_services import *
 from core.services import stats_services
 from django.contrib import messages
@@ -35,12 +34,12 @@ def login(request):
 
 def admail(request):
     if(request.user.is_superuser):
-        mail_to = dictOrEmpty(request.POST, 'mail_to')
+        mail_to = request.POST.get('mail_to')
         if(mail_to):
-            subject = dictOrEmpty(request.POST, 'subject')
-            body = dictOrEmpty(request.POST, 'body')
+            subject = request.POST.get('subject', '')
+            body = request.POST.get('body', '')
             if(mail_to == 'some'):
-                emails = dictOrEmpty(request.POST, 'emails').split(',')
+                emails = request.POST.get('emails', '').split(',')
                 count = 0
                 for email in emails:
                     plain_send_mail(email.strip(), subject, body, settings.ADMAIL_FROM_EMAIL)
