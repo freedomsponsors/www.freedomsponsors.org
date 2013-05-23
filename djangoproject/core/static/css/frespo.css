@@ -115,5 +115,15 @@ font-size: 14px;
   background-color:#b0e0e6;
 }
 
+table.projects .project-name, table.projects a.project-sponsors  {
+  display: block;
+  float: left;
+}
+table.projects  a.project-sponsors {
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAVklEQVR4Xn3PgQkAMQhDUXfqTu7kTtkpd5RA8AInfArtQ2iRXFWT2QedAfttj2FsPIOE1eCOlEuoWWjgzYaB/IkeGOrxXhqB+uA9Bfcm0lAZuh+YIeAD+cAqSz4kCMUAAAAASUVORK5CYII=") no-repeat scroll right center transparent;
+  padding-right: 13px;
+  display: block;
+  text-indent: -999em;
+}
 /*** Gregorio Benatti */
 

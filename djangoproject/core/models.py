@@ -250,6 +250,9 @@ class Project(models.Model):
         project.trackerURL = trackerURL
         return project
 
+    def get_view_link(self):
+        return '/core/issue/?s=&project_id=%s&project_name=%s' % (self.id,urlquote(self.name),)
+
     def __unicode__(self):
         return self.name
     
