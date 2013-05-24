@@ -1,5 +1,5 @@
 {% extends "core/base.html" %}
-
+{% load i18n %}
 {% block mainContent%}
 
 {% if projects %}
@@ -7,7 +7,7 @@
 <h3>Projects</h3>
 <span style="font-size:12px">To add a project, <a href="/core/issue/add">sponsor</a> a new Issue</span>
 <hr>
-<table class="table table-condensed table-striped">
+<table class="table table-condensed table-striped projects">
   <thead>
     <tr>
       <th>Project</th>
@@ -19,7 +19,7 @@
 {% autopaginate projects 50 %}
 {% for project in projects %}
     <tr>
-      <td>{{ project.name }}</td>
+      <td ><span class="project-name">{{ project.name }}</span><a href="{{project.get_view_link}}" title="{% trans 'Browser sponsors' %}" class="project-sponsors">{% trans "Browser sponsors" %}</a></td>
       <td><a href="{{ project.homeURL }}" target="_project">{{ project.homeURL }}</a></td>
       <td><a href="{{ project.trackerURL }}" target="_tracker">{{ project.trackerURL }}</a></td>
     </tr>
