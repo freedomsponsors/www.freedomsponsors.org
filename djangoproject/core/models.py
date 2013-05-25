@@ -532,10 +532,10 @@ class Offer(models.Model):
     def getComments(self):
         return OfferComment.objects.filter(offer=self).order_by('creationDate')
 
-    def get_payment(self):
+    def get_payments(self):
         if self.status == Offer.PAID:
-            return get_or_none(Payment, offer__id = self.id, status__in = [Payment.CONFIRMED_IPN, Payment.CONFIRMED_TRN] )
-        return None
+            return Payment.objects.filter(offer__id=self.id, status__in=[Payment.CONFIRMED_IPN, Payment.CONFIRMED_TRN])
+        return []
 
     def get_view_link(self):
         return '/core/offer/%s'%self.id+'/'+urlquote(slugify(self.issue.title))
