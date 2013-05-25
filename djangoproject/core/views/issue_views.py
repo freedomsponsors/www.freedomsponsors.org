@@ -213,7 +213,7 @@ def viewIssue(request, issue_id):
     show_alert = None
 
     if(request.user.is_authenticated()):
-        myoffer = get_or_none(Offer, issue=issue,sponsor=request.user)
+        myoffer = get_or_none(Offer, issue=issue, sponsor=request.user, status__in=[Offer.OPEN, Offer.REVOKED])
         mysolution = get_or_none(Solution, issue=issue,programmer=request.user)
 
     show_sponsor_popup = (request.GET.get('show_sponsor') == 'true')
@@ -247,8 +247,8 @@ def viewOffer(request, offer_id):
     show_alert = None
 
     if(request.user.is_authenticated()):
-        mysolution = get_or_none(Solution, issue=offer.issue,programmer=request.user)
-        myoffer = get_or_none(Offer, issue=offer.issue,sponsor=request.user)
+        mysolution = get_or_none(Solution, issue=offer.issue, programmer=request.user)
+        myoffer = get_or_none(Offer, issue=offer.issue, sponsor=request.user, status__in=[Offer.OPEN, Offer.REVOKED])
 
     alert = request.GET.get('alert')
     if(alert == 'SPONSOR' and offer.issue.project):
