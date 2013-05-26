@@ -33,7 +33,12 @@
                 'USD': 1,
                 'BTC': 0.00815661
             };
+            var CURRENCY_METHODS = {
+                USD: 'Paypal',
+                BTC: 'Bitcoin'
+            }
             var FEE_RATE = 0.03;
+            var BITCOIN_FEE = 0.0005;
 
             $scope.USD_2_BTC_RATE = 122.60001;
 
@@ -43,6 +48,10 @@
 
             $scope.getCurrencyName = function(currency){
                 return CURRENCY_NAMES[currency]
+            }
+
+            $scope.currentCurrencyMethod = function(){
+                return CURRENCY_METHODS[$scope.selectedCurrency];
             }
 
             $scope.offer = {
@@ -109,6 +118,15 @@
                 }
             }
 
+            $scope.getFormattedPrice = function(solution){
+                var decimalPlaces = DECIMAL_PLACES[$scope.selectedCurrency];
+                var price = parseFloat(solution.price);
+                if(!isNaN(price)){
+                    return price.toFixed(decimalPlaces);
+                } else {
+                    return '';
+                }
+            }
 
             $scope.onCurrencyChange = function(){
                 var showCurrencyAlert = $scope.selectedCurrency != $scope.offer.currency
@@ -138,13 +156,23 @@
                 var fee = totalPrice * FEE_RATE;
                 var decimalPlaces = DECIMAL_PLACES[$scope.selectedCurrency];
                 $scope.fsFee = fee.toFixed(decimalPlaces)
-                var totalPayment = totalPrice + fee
+
+                var isBitcoin = $scope.selectedCurrency == 'BTC'
+                if(isBitcoin){
+                    var count = selectedSolutions.length;
+                    $scope.f_bitcoinFee = BITCOIN_FEE * count
+                } else {
+                    $scope.f_bitcoinFee = 0;
+                }
+                $scope.bitcoinFee = $scope.f_bitcoinFee.toFixed(decimalPlaces)
+
+                var totalPayment = totalPrice + fee + $scope.f_bitcoinFee;
                 $scope.totalPayment = totalPayment.toFixed(decimalPlaces)
                 return selectedSolutions;
             }
 
             $scope.next = function(){
-
+                $scope.showConfirm = true;
             }
 
             initialize();
@@ -207,7 +235,7 @@
                     <button class="btn btn-primary" type="button" ng-click="next()">Next &gt;</button>
                 </div>
             </div>
-            <div class="span6" ng-animate="'fade'">
+            <div class="span6" data-ng-animate="'fade'" ng-show="showConfirm">
                 <div style="border-width: 1px; border-style: solid; border-radius: 5px; padding: 10px; ; border-color: #ccc;">
                     <span style="font-weight:bold;">Confirm payment details</span>
                     <hr>
@@ -215,7 +243,7 @@
                         <thead>
                             <tr>
                                 <th>Description</th>
-                                <th>Amount (US$)</th>
+                                <th style="text-align: right">Amount ({[{ getCurrencySymbol(selectedCurrency) }]})</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -224,7 +252,7 @@
                                     <img ng-src="{[{ solution.imglink }]}">
                                     {[{ solution.programmerScreenName }]}
                                 </td>
-                                <td style="text-align:right">{[{ solution.price }]}</td>
+                                <td style="text-align:right">{[{ getFormattedPrice(solution) }]}</td>
                             </tr>
                             <tr>
                                 <td style="vertical-align: middle;">
@@ -232,6 +260,13 @@
                                     FreedomSponsors
                                 </td>
                                 <td style="text-align:right">{[{ fsFee }]}</td>
+                            </tr>
+                            <tr ng-show="f_bitcoinFee > 0">
+                                <td style="vertical-align: middle;">
+                                    <img src="/static/img/bitcoin_icon_32.png">
+                                    Bitcoin miners' fee
+                                </td>
+                                <td style="text-align:right">{[{ bitcoinFee }]}</td>
                             </tr>
                             <tr style="font-weight: bold;">
                                 <td>Total</td>
@@ -242,7 +277,7 @@
                     </table>
                 </div>
                 <div style="text-align:right; margin: 10px 0px;">
-                    <button class="btn btn-primary" type="button">Proceed to payment with Paypal</button>
+                    <button class="btn btn-primary" type="button">Proceed to payment with {[{ currentCurrencyMethod() }]}</button>
                 </div>
             </div>
         </div> 
