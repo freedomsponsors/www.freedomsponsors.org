@@ -132,6 +132,7 @@
                 var showCurrencyAlert = $scope.selectedCurrency != $scope.offer.currency
                 if(showCurrencyAlert){
                     $('#divCurrencyAlert').slideDown();
+                    $('#alert_modal_currency').modal()
                 } else {
                     $('#divCurrencyAlert').slideUp();
                 }
@@ -182,106 +183,127 @@
     </script>
 
 
-    <div class="span12" ng-app="pay_offer" ng-controller="PayCtrl">
-        <h3>
-            Pay up offer: {[{ getCurrencySymbol(offer.currency) }]} {[{ offer.price }]} - {[{ offer.title }]}
-        </h3>
-        <div class="row-fluid" style="margin-top: 10px;">
-            <div class="span6" >
-                <div style="border-width: 1px; border-style: solid; border-radius: 5px; padding: 10px; border-color: #ccc;">
-                    <div class="row-fluid">
-                        <div class="span6" style="text-align: right; font-weight: bold; margin-top: 5px">
-                            Select currency to pay
-                        </div>
-                        <div class="span6">
-                            <select ng-model="selectedCurrency" ng-change="onCurrencyChange()">
-                                <option value="USD">US$, using Paypal</option>
-                                <option value="BTC">Bitcoin</option>
-                            </select>
-                        </div>
-                    </div> 
-                    <div id="divCurrencyAlert" class="alert alert-info hide">
-                        <p>Heads up: different currency <i class="icon-info-sign icon-blue popopo" rel="popover" data-content="You've made an offer in {[{ getCurrencyName(offer.currency) }]}, and now you're choosing to pay with {[{ getCurrencyName(selectedCurrency) }]}. FreedomSponsors simply forwards payments using the same currency that you pay. So, you might want to check with the developer if that's ok." data-original-title="Heads up"></i>
-                        </p>
-                        <p>Suggested conversion rate: <span style="font-weight: bold">BTC 1.0 = US$ {[{ USD_2_BTC_RATE }]}</span> <br>(fetched from <a href="http://blockchain.info">blockchain)</a></p>
-                    </div>
-                    <hr>
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Programmer</th>
-                            <th>Accepted methods</th>
-                            <th>Amount (US$)</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="solution in solutions">
-                                <td>
-                                    <img ng-src="{[{ solution.imglink }]}">
-                                    {[{ solution.programmerScreenName }]}
-                                </td>
-                                <td>
-                                    <img ng-show="{[{ solution.acceptsPaypal }]}" src="/static/img/paypal_icon_32.png" class="popopo" rel="popover" data-content="FreedomSponsors has verified that this user is able to receive payments via Paypal" data-original-title="Paypal verified">
-                                    <img ng-show="{[{ solution.acceptsBitcoin }]}" src="/static/img/bitcoin_icon_32.png" class="popopo" rel="popover" data-content="This user may receive payments in Bitcoin" data-original-title="Accepts Bitcoin">
-                                </td>
-                                <td>
-                                    <input type="text" style="width: 100px;" ng-disabled="!isEnabled(solution)" ng-model="solution.price">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div style="text-align:right; margin: 10px 0px;">
-                    <button class="btn btn-primary" type="button" ng-click="next()">Next &gt;</button>
-                </div>
-            </div>
-            <div class="span6" data-ng-animate="'fade'" ng-show="showConfirm">
-                <div style="border-width: 1px; border-style: solid; border-radius: 5px; padding: 10px; ; border-color: #ccc;">
-                    <span style="font-weight:bold;">Confirm payment details</span>
-                    <hr>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Description</th>
-                                <th style="text-align: right">Amount ({[{ getCurrencySymbol(selectedCurrency) }]})</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="solution in getSelectedSolutions()">
-                                <td>
-                                    <img ng-src="{[{ solution.imglink }]}">
-                                    {[{ solution.programmerScreenName }]}
-                                </td>
-                                <td style="text-align:right">{[{ getFormattedPrice(solution) }]}</td>
-                            </tr>
-                            <tr>
-                                <td style="vertical-align: middle;">
-                                    <img src="/static/img/FS_logo_32x32.png">
-                                    FreedomSponsors
-                                </td>
-                                <td style="text-align:right">{[{ fsFee }]}</td>
-                            </tr>
-                            <tr ng-show="f_bitcoinFee > 0">
-                                <td style="vertical-align: middle;">
-                                    <img src="/static/img/bitcoin_icon_32.png">
-                                    Bitcoin miners' fee
-                                </td>
-                                <td style="text-align:right">{[{ bitcoinFee }]}</td>
-                            </tr>
-                            <tr style="font-weight: bold;">
-                                <td>Total</td>
-                                <td style="text-align:right">{[{ totalPayment }]}</td>
-                            </tr>
+    <form>
+        <div class="span12" ng-app="pay_offer" ng-controller="PayCtrl">
 
-                        </tbody>
-                    </table>
+            <div class="modal hide fade in" id="alert_modal_currency">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h3>Heads up: different currency</h3>
                 </div>
-                <div style="text-align:right; margin: 10px 0px;">
-                    <button class="btn btn-primary" type="button">Proceed to payment with {[{ currentCurrencyMethod() }]}</button>
+                <div class="modal-body">
+                    <div class="alert alert-info">
+                        <p>
+                            You've made an offer in {[{ getCurrencyName(offer.currency) }]},
+                            and now you're choosing to pay with {[{ getCurrencyName(selectedCurrency) }]}.<br>
+                            FreedomSponsors simply forwards payments using the same currency that you pay.
+                            This means you can only pay in a currency that's accepted by the developer on the receiving side.<br>
+                        </p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-primary" data-dismiss="modal">OK</a>
                 </div>
             </div>
-        </div> 
-    </div>
+
+            <h3>
+                Pay up offer: {[{ getCurrencySymbol(offer.currency) }]} {[{ offer.price }]} - {[{ offer.title }]}
+            </h3>
+            <div class="row-fluid" style="margin-top: 10px;">
+                <div class="span6" >
+                    <div style="border-width: 1px; border-style: solid; border-radius: 5px; padding: 10px; border-color: #ccc;">
+                        <div class="row-fluid">
+                            <div class="span6" style="text-align: right; font-weight: bold; margin-top: 5px">
+                                Select currency to pay
+                            </div>
+                            <div class="span6">
+                                <select ng-model="selectedCurrency" ng-change="onCurrencyChange()">
+                                    <option value="USD">US$, using Paypal</option>
+                                    <option value="BTC">Bitcoin</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="divCurrencyAlert" class="alert alert-info hide">
+                            <p>Suggested conversion rate: <span style="font-weight: bold">BTC 1.0 = US$ {[{ USD_2_BTC_RATE }]}</span> <br>(fetched from <a href="http://blockchain.info">blockchain)</a></p>
+                        </div>
+                        <hr>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Programmer</th>
+                                <th>Accepted methods</th>
+                                <th>Amount (US$)</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="solution in solutions">
+                                    <td>
+                                        <img ng-src="{[{ solution.imglink }]}">
+                                        {[{ solution.programmerScreenName }]}
+                                    </td>
+                                    <td>
+                                        <img ng-show="{[{ solution.acceptsPaypal }]}" src="/static/img/paypal_icon_32.png" class="popopo" rel="popover" data-content="FreedomSponsors has verified that this user is able to receive payments via Paypal" data-original-title="Paypal verified">
+                                        <img ng-show="{[{ solution.acceptsBitcoin }]}" src="/static/img/bitcoin_icon_32.png" class="popopo" rel="popover" data-content="This user may receive payments in Bitcoin" data-original-title="Accepts Bitcoin">
+                                    </td>
+                                    <td>
+                                        <input type="text" style="width: 100px;" ng-disabled="!isEnabled(solution)" ng-model="solution.price">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="text-align:right; margin: 10px 0px;">
+                        <button class="btn btn-primary" type="button" ng-click="next()">Next &gt;</button>
+                    </div>
+                </div>
+                <div class="span6" data-ng-animate="'fade'" ng-show="showConfirm">
+                    <div style="border-width: 1px; border-style: solid; border-radius: 5px; padding: 10px; ; border-color: #ccc;">
+                        <span style="font-weight:bold;">Confirm payment details</span>
+                        <hr>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th style="text-align: right">Amount ({[{ getCurrencySymbol(selectedCurrency) }]})</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="solution in getSelectedSolutions()">
+                                    <td>
+                                        <img ng-src="{[{ solution.imglink }]}">
+                                        {[{ solution.programmerScreenName }]}
+                                    </td>
+                                    <td style="text-align:right">{[{ getFormattedPrice(solution) }]}</td>
+                                </tr>
+                                <tr>
+                                    <td style="vertical-align: middle;">
+                                        <img src="/static/img/FS_logo_32x32.png">
+                                        FreedomSponsors
+                                    </td>
+                                    <td style="text-align:right">{[{ fsFee }]}</td>
+                                </tr>
+                                <tr ng-show="f_bitcoinFee > 0">
+                                    <td style="vertical-align: middle;">
+                                        <img src="/static/img/bitcoin_icon_32.png">
+                                        Bitcoin miners' fee
+                                    </td>
+                                    <td style="text-align:right">{[{ bitcoinFee }]}</td>
+                                </tr>
+                                <tr style="font-weight: bold;">
+                                    <td>Total</td>
+                                    <td style="text-align:right">{[{ totalPayment }]}</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="text-align:right; margin: 10px 0px;">
+                        <button class="btn btn-primary" type="button">Proceed to payment with {[{ currentCurrencyMethod() }]}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 
 
 {% endblock mainContent%}
