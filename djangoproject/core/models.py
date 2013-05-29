@@ -187,7 +187,7 @@ def getUnconnectedSocialAccounts(self):
     all_social_auths = set(_socialImages.keys())
     user_social_auths = set(auth.provider for auth in self.getSocialAuths())
     unconnected = all_social_auths - user_social_auths
-    return unconnected
+    return [{'provider': p, 'icon': _socialImages.get(p)} for p in unconnected]
 
 User.gravatar_url_small = gravatar_url_small
 User.gravatar_url_medium = gravatar_url_medium

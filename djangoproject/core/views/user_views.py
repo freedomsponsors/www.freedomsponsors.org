@@ -11,10 +11,8 @@ from django.conf import settings
 def viewUser(request, user_id):
     user = User.objects.get(pk=user_id)
     unconnectedSocialAccounts = None
-    changedEmails = None
     if(user.id == request.user.id):
-        unconnectedSocialAccounts = [{'provider': p, 'icon': user.getSocialIcon(p)}
-            for p in user.getUnconnectedSocialAccounts()]
+        unconnectedSocialAccounts = user.getUnconnectedSocialAccounts()
     alert_strings = user_services.getAlertsForViewUser(request.user, user,
         changedPrimaryEmail=request.GET.get('prim') == 'true',
         changedPaypalEmail=request.GET.get('payp') == 'true',
