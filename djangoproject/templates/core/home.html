@@ -128,7 +128,7 @@
                   {% for issue in issues_kickstarting %}
                   <tr>
                     <td class="hometablecell" style="width:30px">{{forloop.counter}}.</td>
-                    <td class="hometablecell"><a href="{{issue.get_view_link}}" >{{issue}}</a></td>
+                    <td class="hometablecell fav-td fav-{{ issue.project.name|slugify }}"><a href="{{issue.get_view_link}}" >{{issue}}</a></td>
                   </tr>
                   {% endfor %}
                 </tbody></table>

@@ -34,7 +34,7 @@
     <tr>
 
       {% ifequal showProject "true" %}
-      <td><a href="{{ issue.get_view_link }}">{{ issue.project.name }}</a></td>
+      <td class="fav-td fav-{{ issue.project.name|slugify }}"><a href="{{ issue.get_view_link }}">{{ issue.project.name }}</a></td>
       {% endifequal %}
 
       {% ifequal showKey "true" %}
