@@ -1,0 +1,14 @@
+
+.fav-td:before {
+    background: url(/static/img/globe.png);
+    background-size: 16px 16px;
+    content: '';
+    width: 16px;
+    height: 16px;
+    float: left;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-right: 5px
+}
+
+.fav-wwwfreedomsponsorsorg:before {background: url(http://www.freedomsponsors.org/favicon.ico); background-size: 16px 16px; }

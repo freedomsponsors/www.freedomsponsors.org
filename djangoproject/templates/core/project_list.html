@@ -19,7 +19,7 @@
 {% autopaginate projects 50 %}
 {% for project in projects %}
     <tr>
-      <td ><span class="project-name">{{ project.name }}</span><a href="{{project.get_view_link}}" title="{% trans 'Browser sponsors' %}" class="project-sponsors">{% trans "Browser sponsors" %}</a></td>
+      <td class="fav-td fav-{{ project.name|slugify }}"><span class="project-name">{{ project.name }}</span><a href="{{project.get_view_link}}" title="{% trans 'Browser sponsors' %}" class="project-sponsors">{% trans "Browser sponsors" %}</a></td>
       <td><a href="{{ project.homeURL }}" target="_project">{{ project.homeURL }}</a></td>
       <td><a href="{{ project.trackerURL }}" target="_tracker">{{ project.trackerURL }}</a></td>
     </tr>

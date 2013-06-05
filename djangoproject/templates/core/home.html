@@ -106,7 +106,7 @@
                       {% include 'core/include/green_and_orange.html' with vOrange=issue.getTotalOffersPriceBTC vGreen=issue.getTotalPaidPriceBTC currency='BTC' %}
                       </div>
                     </td>
-                    <td class="hometablecell"><a href="{{issue.get_view_link}}"
+                    <td class="hometablecell fav-td fav-{{ issue.project.name|slugify }}" ><a href="{{issue.get_view_link}}"
                       {% if issue.getTotalPaidPrice %}
                        style="color:#090;"
                       {% endif %}

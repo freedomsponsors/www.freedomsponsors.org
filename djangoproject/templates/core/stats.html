@@ -38,7 +38,7 @@
       </tr>
       {% for project in stats.projects %}
       <tr>
-        <td><a href="/core/issue/?s=&project_id={{project.0}}">{{project.1}}</td>
+        <td class="fav-td fav-{{ project.1|slugify }}"><a href="/core/issue/?s=&project_id={{project.0}}">{{project.1}}</td>
         <td style="text-align:right">{{project.2}}</td>
         <td style="text-align:right">{{project.3}}</td>
         <td style="text-align:right">
