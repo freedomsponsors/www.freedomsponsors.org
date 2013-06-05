@@ -55,8 +55,8 @@
             }
 
             $scope.offer = {
-                id: 1,
-                title: 'Implement a time machine',
+                id: {{ offer.id }},
+                title: '{{ offer.issue.title }}',
                 price: '20.00',
                 currency: 'USD'
             }

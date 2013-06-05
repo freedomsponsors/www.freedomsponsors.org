@@ -299,10 +299,21 @@ def listProjects(request):
 @login_required
 def payOfferForm(request, offer_id):
     offer = Offer.objects.get(pk=offer_id)
-    if(offer.currency == 'USD'):
-        return _payWithPaypalForm(request, offer)
-    else:
-        return _payWithBitcoinForm(request, offer)
+    is_brazilian = offer.sponsor.getUserInfo().brazilianPaypal
+    usd_2_brl_rate = 0
+    if is_brazilian:
+        usd_2_brl_rate = paypal_services.usd_2_brl_convert_rate()
+
+    solutions_accepting_payments = offer.issue.getSolutionsAcceptingPayments()
+    return render_to_response('core/pay_offer_angular.html',
+                              {
+                                  'offer': offer,
+                                  'is_brazilian': is_brazilian,
+                                  'usd_2_brl_rate': usd_2_brl_rate,
+                                  'solutions': solutions_accepting_payments
+                              },
+                              context_instance=RequestContext(request))
+
 
 
 def payOfferFormAngular(request):
@@ -316,7 +327,7 @@ def payOffer(request):
     count = int(request.POST['count'])
     offer = Offer.objects.get(pk=offer_id)
     if(offer.status == Offer.PAID):
-        raise BaseException('offer %s is already paid' % offer.id + '. User %s' % user)
+        raise BaseException('offer %s is already paid' % offer.id + '. User %s' % request.user)
     payment = _generate_payment_entity(offer, count, request.POST, request.user)
 
     if(offer.currency == 'USD'):
