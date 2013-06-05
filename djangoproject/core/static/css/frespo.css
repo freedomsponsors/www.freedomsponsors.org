@@ -145,3 +145,55 @@ table.projects  a.project-sponsors {
 .fade-show.fade-show-active {
     opacity:1;
 }
+
+
+/*Common styles for all project links*/
+a[href*="/core/issue/?s=&project_id="]
+{background-size:16px 16px;padding:0px 0px 0px 20px;background-repeat:no-repeat;}
+
+/*Common styles for all links to projects on freespon.org*/
+a[target="_project"]
+{ background-image:url("https://dl.dropboxusercontent.com/s/j2fvk3nt872gbfi/website.png");
+  background-repeat:no-repeat; background-position:1px 1px; padding:0px 0px 0px 20px;}
+
+/*Individual project icons.
+Plugin-projects or other projects without own icons takes the parent project icon*/
+a[href$="project_id=1"]{background-image:url(http://www.freedomsponsors.org/favicon.ico);}
+a[href$="project_id=46"]{background-image:url(http://jenkins-ci.org/sites/default/files/jenkins_favicon.ico);}
+a[href$="project_id=56"]{background-image:url(https://maven.apache.org/favicon.ico);}
+a[href$="project_id=79"]{background-image:url(http://www.gnome.org/wp-content/themes/gnome-grass/images/favicon.png);}
+a[href$="project_id=93"]{background-image:url(http://demo.redmine.org/favicon.ico?1370075235);}
+a[href$="project_id=105"],a[href="https://www.gittip.com/"]
+{background-image:url(https://github.com/gittip/www.gittip.com/blob/master/img-src/gittip-logo-24.png?raw=true);}
+/*https://www.gittip.com/assets/9.0.2/logo.png*/
+a[href$="project_id=110"]{background-image:url(http://imgscalr.com/public/images/favicon.png);}
+a[href$="project_id=111"]{background-image:url(https://maven.apache.org/favicon.ico);}
+a[href$="project_id=115"]{background-image:url(https://activemq.apache.org/favicon.ico);}
+a[href$="project_id=116"]{background-image:url(http://github.com/favicon.ico);}
+a[href$="project_id=123"]{background-image:url(http://jenkins-ci.org/sites/default/files/jenkins_favicon.ico);}
+a[href$="project_id=125"]{background-image:url(http://www.gimp.org/images/wilber16.png);}
+a[href$="project_id=130"]{background-image:url(http://www.gimp.org/images/wilber16.png);}
+a[href$="project_id=135"]{background-image:url(https://raw.github.com/campadrenalin/EJTP-lib-python/stable/resources/bluethulu.png);}
+a[href$="project_id=136"]{background-image:url(http://jira.grails.org/secure/projectavatar?pid=10202&avatarId=10009&size=large);}
+a[href$="project_id=139"]{background-image:url(https://www.mozilla.org/thunderbird/img/favicon.ico);}
+a[href$="project_id=140"]{background-image:url(https://d3mbmfe8268ud7.cloudfront.net/assets/favicon-a15200a371573542232c9546210c4e69.png);}
+a[href$="project_id=141"]{background-image:url(http://s.wordpress.org/favicon.ico?3);}
+a[href$="project_id=142"]{background-image:url(http://scribus.net/wiki/skins/common/images/favicon.ico);}
+a[href$="project_id=143"]{background-image:url(http://activemq.apache.org/favicon.ico);}
+a[href$="project_id=144"]{background-image:url(http://inkscape.org/favicon.ico);}
+a[href$="project_id=146"]{background-image:url(http://sphinxsearch.com/favicon.ico);}
+a[href$="project_id=148"]{background-image:url(https://launchpadlibrarian.net/8569457/awn-64.png);}
+a[href$="project_id=149"]{background-image:url(http://www.libreoffice.org/favicon.ico);}
+a[href$="project_id=150"]{background-image:url(http://www.cyrusimap.org/images/favicon.ico);}
+a[href$="project_id=151"], a[href$="http://projects.gnome.org/evolution/"]
+{background-image:url(http://projects.gnome.org/evolution/images/evo-logo.ico);}
+a[href$="project_id=152"]{background-image:url(http://www.gnome.org/wp-content/themes/gnome-grass/images/favicon.png);}
+a[href$="project_id=153"]{background-image:url(http://code.google.com/p/k9mail/logo?cct=1363464038);}
+a[href$="project_id=154"]{background-image:url(https://www.mozilla.org/thunderbird/img/favicon.ico);}
+a[href$="project_id=155"]{background-image:url(http://banshee.fm/theme/images/favicon.ico);}
+a[href$="project_id=156"]{background-image:url(http://freecode.com/favicon.ico);}
+a[href$="project_id=160"]{background-image:url(http://rawtherapee.com/favicon.ico);}
+a[href$="project_id=164"]{background-image:url(http://python.org/favicon.ico);}
+a[href$="project_id=166"]{background-image:url(http://projects.gnome.org/gedit/images/icon.png);}
+a[href$="project_id=175"]{background-image:url(https://icons.duckduckgo.com/i/ftp.x.org.ico);}
+a[href$="project_id=176"]{background-image:url(http://github.com/favicon.ico);}
