@@ -3,6 +3,7 @@
 
 DEBUG = True
 ENVIRONMENT = 'NOT_DEV' #change to DEV in your machine
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 AUTO_EMAIL_USERNAME = 'noreply@freedomsponsors.com'
