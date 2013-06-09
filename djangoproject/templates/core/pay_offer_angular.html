@@ -9,6 +9,7 @@
     <script src="/static/bootstrap/js/jquery.numeric.js"></script>
     <script src="/static/js/angular.min.js"></script>
     <script type="text/javascript">
+
         var mod = angular.module('pay_offer', [])
         mod.config(
             function($interpolateProvider){
@@ -61,22 +62,24 @@
                 currency: 'USD'
             }
 
-            $scope.solutions = [
-                {
-                    id: 1,
-                    programmerScreenName: 'John Doe',
-                    acceptsPaypal: true,
-                    acceptsBitcoin: true,
-                    imglink: 'http://www.gravatar.com/avatar/0a8eb9426eb59a7d8481118403aee8ef?d=identicon&s=23'
-                },
-                {
-                    id: 2,
-                    programmerScreenName: 'Mike Eod',
-                    acceptsPaypal: false,
-                    acceptsBitcoin: true,
-                    imglink: 'http://www.gravatar.com/avatar/4dbc40e7a6fa89a3568a926378c22ace?d=identicon&s=23'
-                }
-            ]
+            $scope.solutions = {{ solutions_json|safe }}
+
+{#            $scope.solutions = [#}
+{#                {#}
+{#                    id: 1,#}
+{#                    programmerScreenName: 'John Doe',#}
+{#                    acceptsPaypal: true,#}
+{#                    acceptsBitcoin: true,#}
+{#                    imglink: 'http://www.gravatar.com/avatar/0a8eb9426eb59a7d8481118403aee8ef?d=identicon&s=23'#}
+{#                },#}
+{#                {#}
+{#                    id: 2,#}
+{#                    programmerScreenName: 'Mike Eod',#}
+{#                    acceptsPaypal: false,#}
+{#                    acceptsBitcoin: true,#}
+{#                    imglink: 'http://www.gravatar.com/avatar/4dbc40e7a6fa89a3568a926378c22ace?d=identicon&s=23'#}
+{#                }#}
+{#            ]#}
 
             var prefillForm = function(){
                 var enabledSolutions = []

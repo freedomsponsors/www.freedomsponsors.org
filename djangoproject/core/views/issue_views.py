@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render_to_response
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
+from bitcoin_frespo.utils import bitcoin_adapter
 from core.utils.frespo_utils import get_or_none, twoplaces
 from core.models import *
 from core.services import issue_services, watch_services, paypal_services, mail_services
@@ -303,13 +304,32 @@ def payOfferForm(request, offer_id):
     usd_2_brl_rate = 0
     if is_brazilian:
         usd_2_brl_rate = paypal_services.usd_2_brl_convert_rate()
+    btc_2_usd_rate = bitcoin_adapter.get_btc_to_usd_rate()
 
     solutions_accepting_payments = offer.issue.getSolutionsAcceptingPayments()
+    solutions_json = []
+    for solution in solutions_accepting_payments:
+        accepts_paypal = solution.programmer.getUserInfo().paypal_verified
+        try:
+            accepts_paypal = paypal_services.accepts_paypal_payments(solution.programmer)
+        except BaseException as e:
+            traceback.print_exc()
+            messages.error(request, 'Error communicating with Paypal: %s' % e)
+            mail_services.notify_admin('Error determining if user accepts paypal', traceback.format_exc())
+            return redirect(offer.get_view_link())
+        solutions_json.append({
+            'id': solution.id,
+            'programmerScreenName': solution.programmer.getUserInfo().screen_name
+            'acceptsPaypal': accepts_paypal
+            'acceptsBitcoin'
+            'imglink'
+        })
     return render_to_response('core/pay_offer_angular.html',
                               {
                                   'offer': offer,
                                   'is_brazilian': is_brazilian,
                                   'usd_2_brl_rate': usd_2_brl_rate,
+                                  'btc_2_usd_rate': btc_2_usd_rate,
                                   'solutions': solutions_accepting_payments
                               },
                               context_instance=RequestContext(request))

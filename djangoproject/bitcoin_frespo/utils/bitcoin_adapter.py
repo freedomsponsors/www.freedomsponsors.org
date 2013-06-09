@@ -1,5 +1,8 @@
 import bitcoinrpc
 from django.conf import settings
+import json
+import requests
+
 
 def _connect():
     "Returns a new connection to the bitcoin daemon"
@@ -30,3 +33,8 @@ def make_payment(from_address, to_address, value):
 def get_transaction(hash):
     c = _connect()
     return c.gettransaction(hash)
+
+def get_btc_to_usd_rate():
+    response = requests.get('http://blockchain.info/pt/ticker')
+    dict = json.loads(response.content)
+    return dict['USD']['sell']
