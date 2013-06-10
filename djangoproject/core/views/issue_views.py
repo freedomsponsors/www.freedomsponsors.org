@@ -324,7 +324,6 @@ def _currency_options(offer):
         return [usd, btc]
 
 
-
 @login_required
 def payOfferForm(request, offer_id):
     offer = Offer.objects.get(pk=offer_id)
@@ -335,6 +334,10 @@ def payOfferForm(request, offer_id):
     btc_2_usd_rate = bitcoin_adapter.get_btc_to_usd_rate()
 
     solutions_accepting_payments = offer.issue.getSolutionsAcceptingPayments()
+    if not solutions_accepting_payments:
+        messages.error(request, 'No developers are accepting payments for this issue yet')
+        return redirect(offer.get_view_link())
+
     solutions_dict = []
     for solution in solutions_accepting_payments:
         programmer_userinfo = solution.programmer.getUserInfo()
@@ -347,6 +350,7 @@ def payOfferForm(request, offer_id):
             return redirect(offer.get_view_link())
         solutions_dict.append({
             'id': solution.id,
+            'status': solution.status,
             'programmerScreenName': programmer_userinfo.screenName,
             'acceptsPaypal': accepts_paypal,
             'acceptsBitcoin': True and programmer_userinfo.bitcoin_receive_address,
@@ -363,13 +367,6 @@ def payOfferForm(request, offer_id):
                                   'btc_2_usd_rate': btc_2_usd_rate,
                                   'solutions_json': json.dumps(solutions_dict)
                               },
-                              context_instance=RequestContext(request))
-
-
-
-def payOfferFormAngular(request):
-    return render_to_response('core/pay_offer_angular.html',
-                              {},
                               context_instance=RequestContext(request))
 
 @login_required
@@ -413,94 +410,3 @@ def _generate_payment_entity(offer, receiver_count, dict, user):
         part.save()
     return payment
 
-def _payWithPaypalForm(request, offer):
-    solutions_accepting_payments = offer.issue.getSolutionsAcceptingPayments()
-
-    solutions_with_paypal = []
-    solutions_without_paypal = []
-    for solution in solutions_accepting_payments:
-        try: 
-            accepts_paypal = paypal_services.accepts_paypal_payments(solution.programmer)
-        except BaseException as e:
-            traceback.print_exc()
-            messages.error(request, 'Error communicating with Paypal: %s' % e)
-            mail_services.notify_admin('Error determining if user accepts paypal', traceback.format_exc())
-            return redirect(offer.get_view_link())
-        if accepts_paypal:
-            solutions_with_paypal.append(solution)
-        else:
-            solutions_without_paypal.append(solution)
-
-    if len(solutions_with_paypal) == 0:
-        messages.error(request, "The programmer(s) who solved this issue do not have a verified Paypal account yet, so you cannot pay them at this time.\n"+
-                                "Please leave a comment for them, asking them to update their profile page with an email of a verified Paypal account, then come back here again.")
-        return redirect(offer.get_view_link())
-    if len(solutions_without_paypal) > 0:
-        names = ', '.join(map(lambda solution:solution.programmer.getUserInfo().screenName, solutions_without_paypal))
-        messages.warning(request, "The following programmer(s) do not have a verified Paypal account yet: %s\n" % names+
-                                  "Therefore, you won't be able to make a payment to them at this time.\n"+
-                                  "If you want, you can leave a comment for them, asking them to update their profile page with an email of a verified Paypal account, then come back here again.")
-
-    convert_rate = 1
-    currency_symbol = "US$"
-    alert_brazil = False
-    if(offer.sponsor.getUserInfo().brazilianPaypal):
-        convert_rate = paypal_services.usd_2_brl_convert_rate()
-        currency_symbol = "R$"
-        alert_brazil = True
-
-    shared_price = convert_rate * float(offer.price) / len(solutions_with_paypal)
-    shared_price = twoplaces(Decimal(str(shared_price)))
-
-    return render_to_response('core/pay_offer.html',
-        {'offer':offer,
-         'solutions_accepting_payments' : solutions_with_paypal,
-         'shared_price' : shared_price,
-         'convert_rate' : convert_rate,
-         'currency_symbol' : currency_symbol,
-         'alert_brazil' : alert_brazil,
-         },
-        context_instance = RequestContext(request))
-
-def _payWithBitcoinForm(request, offer):
-    if not settings.BITCOIN_ENABLED:
-        messages.error(request, 'Payments with bitcoin have been disabled')
-        return redirect(offer.get_view_link())
-    solutions_accepting_payments = offer.issue.getSolutionsAcceptingPayments()
-
-    if len(solutions_accepting_payments) == 0:
-        messages.error(request, 'Currently no programmers are accepting payments for this issue.')
-        return redirect(offer.get_view_link())
-
-    solutions_with_bitcoin = []
-    solutions_without_bitcoin = []
-    for solution in solutions_accepting_payments:
-        if solution.programmer.getUserInfo().bitcoin_receive_address:
-            solutions_with_bitcoin.append(solution)
-        else:
-            solutions_without_bitcoin.append(solution)
-    if len(solutions_with_bitcoin) == 0:
-        messages.error(request, "The programmer(s) who solved this issue have not registered a Bitcoin address yet, so you cannot pay them at this time.\n"+
-            "Please leave a comment for them, asking them to update this info on their profile page, then come back here again.")
-        return redirect(offer.get_view_link())
-    if len(solutions_without_bitcoin) > 0:
-        names = ', '.join(map(lambda solution:solution.programmer.getUserInfo().screenName, solutions_without_bitcoin))
-        messages.warning(request, "The following programmer(s) have not registered a Bitcoin address: %s\n" % names+
-            "Therefore, you won't be able to make a payment to them at this time.\n"+
-            "If you want, you can leave a comment for them, asking them to update this info on their profile page, then come back here again.")
-            
-    convert_rate = 1
-    currency_symbol = "BTC"
-    alert_brazil = False
-    shared_price = convert_rate * float(offer.price) / len(solutions_with_bitcoin)
-    shared_price = twoplaces(Decimal(str(shared_price)))
-
-    return render_to_response('core/pay_offer.html',
-        {'offer':offer,
-         'solutions_accepting_payments' : solutions_with_bitcoin,
-         'shared_price' : shared_price,
-         'convert_rate' : convert_rate,
-         'currency_symbol' : currency_symbol,
-         'alert_brazil' : alert_brazil,
-         },
-        context_instance = RequestContext(request))
