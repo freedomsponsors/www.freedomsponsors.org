@@ -38,3 +38,8 @@ def get_btc_to_usd_rate():
     response = requests.get('http://blockchain.info/pt/ticker')
     dict = json.loads(response.content)
     return dict['USD']['sell']
+
+def get_btc_to_brl_rate():
+    response = requests.get('http://blockchain.info/pt/ticker')
+    dict = json.loads(response.content)
+    return dict['BRL']['sell']

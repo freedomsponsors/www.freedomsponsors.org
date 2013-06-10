@@ -8,6 +8,7 @@
 
     <script src="/static/bootstrap/js/jquery.numeric.js"></script>
     <script src="/static/js/angular.min.js"></script>
+    {% localize off %}
     <script type="text/javascript">
 
         var mod = angular.module('pay_offer', [])
@@ -18,68 +19,72 @@
         );
 
         function PayCtrl($scope) {
-            var CURRENCY_SYMBOLS = {
-                'USD': 'US$',
-                'BTC': 'BTC'
+            var is_brazilian = '{{ is_brazilian }}' == 'True';
+            var currency_options = {{ currency_options_json|safe }};
+            var currencies = {
+                USD : {
+                    symbol: 'US$',
+                    name: 'US dollars',
+                    decimalPlaces: 2,
+                    method: 'Paypal'
+                },
+                BRL : {
+                    symbol: 'R$',
+                    name: 'Real brasileiro',
+                    decimalPlaces: 2,
+                    method: 'Paypal'
+                },
+                BTC : {
+                    symbol: 'BTC',
+                    name: 'Bitcoin',
+                    decimalPlaces: 4,
+                    method: 'Bitcoin'
+                }
             };
-            var CURRENCY_NAMES = {
-                'USD': 'US dollars',
-                'BTC': 'Bitcoins'
-            };
-            var DECIMAL_PLACES = {
-                'USD': 2,
-                'BTC': 4
-            };
-            var CONVERSION_RATES = {
-                'USD': 1,
-                'BTC': 0.00815661
-            };
-            var CURRENCY_METHODS = {
-                USD: 'Paypal',
-                BTC: 'Bitcoin'
+            for(var i=0; i<currency_options.length; i++){
+                var currency = currency_options[i];
+                currencies[currency.currency].rate = currency.rate;
             }
+
             var FEE_RATE = 0.03;
             var BITCOIN_FEE = 0.0005;
 
-            $scope.USD_2_BTC_RATE = 122.60001;
-
             $scope.getCurrencySymbol = function(currency){
-                return CURRENCY_SYMBOLS[currency]
+                return currencies[currency].symbol;
+            }
+
+            $scope.getCurrencyRate = function(currency){
+                return currencies[currency].rate;
             }
 
             $scope.getCurrencyName = function(currency){
-                return CURRENCY_NAMES[currency]
+                return currencies[currency].name;
             }
 
             $scope.currentCurrencyMethod = function(){
-                return CURRENCY_METHODS[$scope.selectedCurrency];
+                return currencies[$scope.selectedCurrency].method;
+            }
+
+            if(is_brazilian){
+                $scope.availableCurrencies = ['BRL', 'BTC']
+            } else {
+                $scope.availableCurrencies = ['USD', 'BTC']
             }
 
             $scope.offer = {
                 id: {{ offer.id }},
                 title: '{{ offer.issue.title }}',
-                price: '20.00',
-                currency: 'USD'
+                price: {{ offer.price }},
+                currency: '{{ offer.currency }}'
+            }
+
+            if (is_brazilian && $scope.offer.currency == 'USD'){
+                $scope.currencyThatShouldPay = 'BRL';
+            } else {
+                $scope.currencyThatShouldPay = $scope.offer.currency;
             }
 
             $scope.solutions = {{ solutions_json|safe }}
-
-{#            $scope.solutions = [#}
-{#                {#}
-{#                    id: 1,#}
-{#                    programmerScreenName: 'John Doe',#}
-{#                    acceptsPaypal: true,#}
-{#                    acceptsBitcoin: true,#}
-{#                    imglink: 'http://www.gravatar.com/avatar/0a8eb9426eb59a7d8481118403aee8ef?d=identicon&s=23'#}
-{#                },#}
-{#                {#}
-{#                    id: 2,#}
-{#                    programmerScreenName: 'Mike Eod',#}
-{#                    acceptsPaypal: false,#}
-{#                    acceptsBitcoin: true,#}
-{#                    imglink: 'http://www.gravatar.com/avatar/4dbc40e7a6fa89a3568a926378c22ace?d=identicon&s=23'#}
-{#                }#}
-{#            ]#}
 
             var prefillForm = function(){
                 var enabledSolutions = []
@@ -93,10 +98,10 @@
                     }
                 }
                 var count = enabledSolutions.length;
-                var convRate = CONVERSION_RATES[$scope.selectedCurrency];
+                var convRate = currencies[$scope.selectedCurrency].rate;
                 var totalPrice = parseFloat($scope.offer.price) * convRate;
                 var sharedPrice = totalPrice / count;
-                var decimalPlaces = DECIMAL_PLACES[$scope.selectedCurrency];
+                var decimalPlaces = currencies[$scope.selectedCurrency].decimalPlaces;
                 sharedPrice = sharedPrice.toFixed(decimalPlaces);
                 for(var i=0; i < enabledSolutions.length; i++){
                     var solution = enabledSolutions[i];
@@ -105,7 +110,11 @@
             }
 
             var initialize = function(){
-                $scope.selectedCurrency = $scope.offer.currency;
+                if($scope.offer.currency == 'USD' && is_brazilian){
+                    $scope.selectedCurrency = 'BRL'
+                } else {
+                    $scope.selectedCurrency = $scope.offer.currency;
+                }
                 $scope.showCurrencyAlert = false;
                 $scope.showConfirm = false;
                 $scope.fsFee = '0'
@@ -114,7 +123,7 @@
             }
 
             $scope.isEnabled = function(solution){
-                if($scope.selectedCurrency == 'USD'){
+                if($scope.selectedCurrency == 'USD' || $scope.selectedCurrency == 'BRL'){
                     return solution.acceptsPaypal;
                 } else if ($scope.selectedCurrency == 'BTC'){
                     return solution.acceptsBitcoin;
@@ -122,7 +131,7 @@
             }
 
             $scope.getFormattedPrice = function(solution){
-                var decimalPlaces = DECIMAL_PLACES[$scope.selectedCurrency];
+                var decimalPlaces = currencies[$scope.selectedCurrency].decimalPlaces;
                 var price = parseFloat(solution.price);
                 if(!isNaN(price)){
                     return price.toFixed(decimalPlaces);
@@ -131,18 +140,30 @@
                 }
             }
 
+            var developer_accepted_currencies_conflict = function(){
+                for(var i=0; i<$scope.solutions.length; i++){
+                    var solution = $scope.solutions[i];
+                    if ($scope.isEnabled(solution)){
+                        return false;
+                    }
+                }
+                return true;
+            }
+
             $scope.onCurrencyChange = function(){
-                var showCurrencyAlert = $scope.selectedCurrency != $scope.offer.currency
+                var showCannotPayAlert = developer_accepted_currencies_conflict()
+                if(showCannotPayAlert){
+                    $('#alert_cannot_pay').modal()
+                }
+                var showCurrencyAlert = !showCannotPayAlert && $scope.selectedCurrency != $scope.currencyThatShouldPay
                 if(showCurrencyAlert){
-                    $('#divCurrencyAlert').slideDown();
                     $('#alert_modal_currency').modal()
-                } else {
-                    $('#divCurrencyAlert').slideUp();
                 }
                 prefillForm();
             }
 
             $scope.getSelectedSolutions = function(){
+                $scope.disablePayButton = true;
                 var selectedSolutions = [];
                 var totalPrice = 0;
                 for(var i=0; i < $scope.solutions.length; i++){
@@ -154,11 +175,12 @@
                         if(selected){
                             selectedSolutions.push(solution);
                             totalPrice += price;
+                            $scope.disablePayButton = false;
                         }
                     }
                 }
                 var fee = totalPrice * FEE_RATE;
-                var decimalPlaces = DECIMAL_PLACES[$scope.selectedCurrency];
+                var decimalPlaces = currencies[$scope.selectedCurrency].decimalPlaces;
                 $scope.fsFee = fee.toFixed(decimalPlaces)
 
                 var isBitcoin = $scope.selectedCurrency == 'BTC'
@@ -184,6 +206,7 @@
         }
 
     </script>
+    {% endlocalize %}
 
 
     <form>
@@ -208,6 +231,24 @@
                     <a href="#" class="btn btn-primary" data-dismiss="modal">OK</a>
                 </div>
             </div>
+            <div class="modal hide fade in" id="alert_cannot_pay">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h3>Cannot pay in {[{ getCurrencyName(selectedCurrency) }]}</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-info">
+                        <p>
+                            The developer is not able to receive payments in {[{ getCurrencyName(selectedCurrency) }]}.<br>
+                            <span ng-show="currentCurrencyMethod() == 'Bitcoin'">Please ask them to register a Bitcoin receive address.</span>
+                            <span ng-show="currentCurrencyMethod() == 'Paypal'">Please ask them to register a verified Paypal account.</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-primary" data-dismiss="modal">OK</a>
+                </div>
+            </div>
 
             <h3>
                 Pay up offer: {[{ getCurrencySymbol(offer.currency) }]} {[{ offer.price }]} - {[{ offer.title }]}
@@ -221,13 +262,14 @@
                             </div>
                             <div class="span6">
                                 <select ng-model="selectedCurrency" ng-change="onCurrencyChange()">
-                                    <option value="USD">US$, using Paypal</option>
-                                    <option value="BTC">Bitcoin</option>
+                                    {% for currency in currency_options %}
+                                        <option value="{{ currency.currency }}">{{ currency.selectLabel }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>
-                        <div id="divCurrencyAlert" class="alert alert-info hide">
-                            <p>Suggested conversion rate: <span style="font-weight: bold">BTC 1.0 = US$ {[{ USD_2_BTC_RATE }]}</span> <br>(fetched from <a href="http://blockchain.info">blockchain)</a></p>
+                        <div id="divCurrencyAlert" class="alert alert-info" ng-show="selectedCurrency != offer.currency">
+                            <p>Suggested conversion rate: <span style="font-weight: bold">{[{ offer.currency }]} 1.0 = {[{ getCurrencySymbol(selectedCurrency) }]} {[{ getCurrencyRate(selectedCurrency) }]}</span>
                         </div>
                         <hr>
                         <table class="table">
@@ -301,7 +343,7 @@
                         </table>
                     </div>
                     <div style="text-align:right; margin: 10px 0px;">
-                        <button class="btn btn-primary" type="button">Proceed to payment with {[{ currentCurrencyMethod() }]}</button>
+                        <button class="btn btn-primary" type="button" ng-disabled="disablePayButton">Proceed to payment with {[{ currentCurrencyMethod() }]}</button>
                     </div>
                 </div>
             </div>

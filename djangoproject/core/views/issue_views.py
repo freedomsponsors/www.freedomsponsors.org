@@ -1,3 +1,4 @@
+import json
 from django.contrib.auth.decorators import login_required
 from django.contrib.syndication.views import Feed
 from django.contrib import messages
@@ -297,6 +298,33 @@ def listProjects(request):
         context_instance = RequestContext(request))
 
 
+def _currency_options(offer):
+    is_brazilian = offer.sponsor.getUserInfo().brazilianPaypal
+    btc = {'currency': 'BTC',
+           'selectLabel': 'Bitcoin'}
+    if is_brazilian:
+        brl = {'currency': 'BRL',
+               'selectLabel': 'R$, usando Paypal'}
+        if offer.currency == 'USD':
+            brl['rate'] = paypal_services.usd_2_brl_convert_rate()
+            btc['rate'] = 1 / bitcoin_adapter.get_btc_to_usd_rate()
+        else:
+            brl['rate'] = bitcoin_adapter.get_btc_to_brl_rate()
+            btc['rate'] = 1
+        return [brl, btc]
+    else:
+        usd = {'currency': 'USD',
+               'selectLabel': 'US$, using Paypal'}
+        if offer.currency == 'USD':
+            usd['rate'] = 1
+            btc['rate'] = 1 / bitcoin_adapter.get_btc_to_usd_rate()
+        else:
+            usd['rate'] = bitcoin_adapter.get_btc_to_usd_rate()
+            btc['rate'] = 1
+        return [usd, btc]
+
+
+
 @login_required
 def payOfferForm(request, offer_id):
     offer = Offer.objects.get(pk=offer_id)
@@ -307,9 +335,9 @@ def payOfferForm(request, offer_id):
     btc_2_usd_rate = bitcoin_adapter.get_btc_to_usd_rate()
 
     solutions_accepting_payments = offer.issue.getSolutionsAcceptingPayments()
-    solutions_json = []
+    solutions_dict = []
     for solution in solutions_accepting_payments:
-        accepts_paypal = solution.programmer.getUserInfo().paypal_verified
+        programmer_userinfo = solution.programmer.getUserInfo()
         try:
             accepts_paypal = paypal_services.accepts_paypal_payments(solution.programmer)
         except BaseException as e:
@@ -317,20 +345,23 @@ def payOfferForm(request, offer_id):
             messages.error(request, 'Error communicating with Paypal: %s' % e)
             mail_services.notify_admin('Error determining if user accepts paypal', traceback.format_exc())
             return redirect(offer.get_view_link())
-        solutions_json.append({
+        solutions_dict.append({
             'id': solution.id,
-            'programmerScreenName': solution.programmer.getUserInfo().screen_name
-            'acceptsPaypal': accepts_paypal
-            'acceptsBitcoin'
-            'imglink'
+            'programmerScreenName': programmer_userinfo.screenName,
+            'acceptsPaypal': accepts_paypal,
+            'acceptsBitcoin': True and programmer_userinfo.bitcoin_receive_address,
+            'imglink': solution.programmer.gravatar_url_small()
         })
+    currency_options = _currency_options(offer)
     return render_to_response('core/pay_offer_angular.html',
                               {
                                   'offer': offer,
+                                  'currency_options': currency_options,
+                                  'currency_options_json': json.dumps(currency_options),
                                   'is_brazilian': is_brazilian,
                                   'usd_2_brl_rate': usd_2_brl_rate,
                                   'btc_2_usd_rate': btc_2_usd_rate,
-                                  'solutions': solutions_accepting_payments
+                                  'solutions_json': json.dumps(solutions_dict)
                               },
                               context_instance=RequestContext(request))
 
