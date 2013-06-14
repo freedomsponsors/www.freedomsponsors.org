@@ -13,11 +13,10 @@ from decimal import Decimal
 logger = logging.getLogger(__name__)
 
 
-
 def bitcoin_ipn_received(value, destination_address, transaction_hash, confirmations):
-    receive_address = get_or_none(ReceiveAddress, address = destination_address)
+    receive_address = get_or_none(ReceiveAddress, address=destination_address)
     if receive_address:
-        payment = Payment.objects.get(bitcoin_receive_address__id = receive_address.id)
+        payment = Payment.objects.get(bitcoin_receive_address__id=receive_address.id)
         double_payment = payment.bitcoin_transaction_hash and payment.bitcoin_transaction_hash != transaction_hash
         if not double_payment:
             payment.confirm_bitcoin_ipn(value, transaction_hash)
@@ -30,9 +29,9 @@ def bitcoin_ipn_received(value, destination_address, transaction_hash, confirmat
 
 
 def bitcoin_ipn_sent(value, destination_address, transaction_hash, confirmations):
-    part = get_or_none(PaymentPart, money_sent__transaction_hash = transaction_hash)
+    part = get_or_none(PaymentPart, money_sent__transaction_hash=transaction_hash)
     if part:
-        values_equal = abs(Decimal(str(value)) - part.price) < Decimal('0.002')
+        values_equal = abs(Decimal(str(value)) - part.price) < Decimal('0.001')
         if values_equal:
             part.money_sent.confirm_ipn()
             _log_info_ipn_send_confirmation(part)
@@ -40,7 +39,6 @@ def bitcoin_ipn_sent(value, destination_address, transaction_hash, confirmations
             _log_error_difference_between_sent_values(part, value)
     else:
         _log_warning_sent_bitcoins_outside_fs(destination_address, transaction_hash, value)
-
 
 
 def bitcoin_active_receive_confirmation():
@@ -84,7 +82,6 @@ def bitcoin_active_send_confirmation():
         _notify_payment_finished_if_applicable(previous_payment_id)
 
 
-
 def bitcoin_pay_programmers():
     parts = _filter_paymentparts_pending_payment()
     for part in parts:
@@ -97,6 +94,7 @@ def bitcoin_pay_programmers():
             _log_info_money_sent(part)
         else:
             _log_error_invalid_paymentpart_for_sending_money(part, verr)
+
 
 def _notify_payment_finished_if_applicable(payment_id):
     payment = Payment.objects.get(pk = payment_id)
@@ -116,6 +114,7 @@ def _notify_payment_finished_if_applicable(payment_id):
             payment.offer.issue.title)
         mail_services.notify_admin('Bitcoin payment made - %s'%payment.total_bitcoin_received, msg)
 
+
 def _filter_payments_pending_active_receive_confirmation():
     return Payment.objects.filter(
         Q(currency='BTC')
@@ -128,6 +127,7 @@ def _filter_payments_pending_active_receive_confirmation():
         )
     )
 
+
 def _filter_paymentparts_pending_send_confirmation():
     return PaymentPart.objects.filter(
         Q(money_sent__status = MoneySent.CONFIRMED_IPN)
@@ -137,8 +137,10 @@ def _filter_paymentparts_pending_send_confirmation():
         )
     ).order_by('payment__id')
 
+
 def _filter_paymentparts_pending_payment():
     return PaymentPart.objects.filter(payment__currency = 'BTC', payment__status = Payment.CONFIRMED_TRN, money_sent = None)
+
 
 def _validate_payment_for_active_receive_confirmation(payment):
     if not payment.currency == 'BTC':
@@ -149,12 +151,14 @@ def _validate_payment_for_active_receive_confirmation(payment):
         return False, 'expected a transaction hash and a total_bitcoin_value'
     return True, None
 
+
 def _validate_paymentpart_for_active_send_confirmation(part):
     if not part.payment.currency == 'BTC':
         return False, 'Payment currency should be bitcoin'
     if not part.money_sent.status in [MoneySent.SENT, MoneySent.CONFIRMED_IPN]:
         return False, 'Invalid status %s' % part.money_sent.status
     return True, None
+
 
 def _validate_paymentpart_for_send_money(part):
     if part.money_sent:
@@ -164,6 +168,7 @@ def _validate_paymentpart_for_send_money(part):
     if not part.payment.currency == 'BTC':
         return False, "Part payment currency should be BTC"
     return True, None
+
 
 def _match_transaction_with_money_sent(money_sent, trn):
     trn_map = {}
@@ -175,9 +180,10 @@ def _match_transaction_with_money_sent(money_sent, trn):
             trn_map[key] += detail['amount']
     if not trn_map.has_key(money_sent.from_address) or not trn_map.has_key(money_sent.to_address):
         return False, 'Adresses dont match'
-    if not (abs(money_sent.value + trn_map[money_sent.from_address]) < Decimal('0.002') and abs(money_sent.value - trn_map[money_sent.to_address]) < Decimal('0.002')):
+    if not (abs(money_sent.value + trn_map[money_sent.from_address]) < Decimal('0.001') and abs(money_sent.value - trn_map[money_sent.to_address]) < Decimal('0.001')):
         return False, 'Values dont match'
     return True, None
+
 
 def _log_info_ipn_receive_confirmation(payment):
     msg = 'IPN bitcoin receive confirmation for payment id=%s, amount=%s, issue=%s' % (
@@ -186,6 +192,7 @@ def _log_info_ipn_receive_confirmation(payment):
         payment.offer.issue.title)
     logger.info(msg)
 
+
 def _log_info_ipn_send_confirmation(part):
     msg = 'IPN bitcoin send confirmation for paymentpart id=%s, payment_id=%s, amount=%s, issue=%s' % (
         part.id,
@@ -193,6 +200,7 @@ def _log_info_ipn_send_confirmation(part):
         part.money_sent.value,
         part.payment.offer.issue.title)
     logger.info(msg)
+
 
 def _log_info_active_receive_confirmation(address, amount_received, payment):
     if payment.status == Payment.CONFIRMED_TRN:
@@ -212,6 +220,7 @@ def _log_info_active_receive_confirmation(address, amount_received, payment):
         mail_services.notify_admin('Received bitcoin underpay', msg)
     logger.info(msg)
 
+
 def _log_info_active_send_confirmation(part):
     msg = 'actively confirmed bitcoin send: paymentpart_id=%s, value=%s, to_addr=%s, programmer=%s, issue=%s' % (
         part.id,
@@ -220,6 +229,7 @@ def _log_info_active_send_confirmation(part):
         part.solution.programmer.getUserInfo().screenName,
         part.payment.offer.issue.title)
     logger.info(msg)
+
 
 def _log_info_money_sent(part):
     msg = 'MoneySent_%s %s bitcoins to programmer %s on address %s' % (
@@ -238,6 +248,7 @@ def _log_warning_sent_bitcoins_outside_fs(destination_address, transaction_hash,
     mail_services.notify_admin('Sent bitcoins outside FS', msg)
     logger.warning(msg)
 
+
 def _log_error_ipn_receive_double_payment(payment, transaction_hash, value):
         msg = """payment id: %s
 old txn hash: %s
@@ -252,6 +263,7 @@ new value: %s""" % (
         mail_services.notify_admin('bitcoin IPN RECEIVE double payment', msg)
         logger.error(msg)
 
+
 def _log_error_difference_between_sent_values(part, value):
     msg = 'Theres a difference between bitcoin sent values. part id = %s,\n part price = %s,\n value sent = %s, \nissue = %s' % (
         part.id,
@@ -260,6 +272,7 @@ def _log_error_difference_between_sent_values(part, value):
         part.payment.offer.issue.title)
     mail_services.notify_admin('Theres a difference between bitcoin sent values', msg)
     logger.error(msg)
+
 
 def _log_error_transaction_doesnt_match_money_sent(merr, part):
     msg = 'Bitcoin transaction doesnt match money sent. partid = %s, \n merr = %s' % (
@@ -273,6 +286,7 @@ def _log_error_invalid_payment_part_for_active_send_confirmation(part, verr):
     msg = 'invalid paymentpart for active send confirmation: %s / %s' % (part.id, verr)
     logger.error(msg)
     mail_services.notify_admin('invalid paymentpart for active send confirmation', msg)
+
 
 def _log_error_invalid_paymentpart_for_sending_money(part, verr):
     msg = 'invalid paymentpart sending money: %s / %s' % (part.id, verr)

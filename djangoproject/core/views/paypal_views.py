@@ -32,7 +32,7 @@ def payOffer(request, offer, payment):
 
     request.session['current_payment_id'] = payment.id
 
-    if(settings.PAYPAL_USE_SANDBOX):
+    if settings.PAYPAL_USE_SANDBOX:
         # form_action = 'https://www.sandbox.paypal.com/webapps/adaptivepayment/flow/pay'
         redirect_url = 'https://www.sandbox.paypal.com/webscr?cmd=_ap-payment&paykey=%s' % payment.paykey
     else:
@@ -43,28 +43,19 @@ def payOffer(request, offer, payment):
 
 @login_required
 def paypalCancel(request):
-    if(request.session.has_key('current_payment_id')):
+    if request.session.has_key('current_payment_id'):
         curr_payment = Payment.objects.get(pk=int(request.session['current_payment_id']))
-        if(curr_payment.status != Payment.CONFIRMED_WEB and curr_payment.status != Payment.CONFIRMED_IPN):
-            curr_payment.cancel()
-            msg = _('Payment canceled')
-            logger.info('CANCELED payment %s' % curr_payment.id)
-        else:
-            msg = _('Error: attempt to cancel a payment already processed')
-            curr_payment = None
-            logger.warn('attempt to cancel processed payment %s'%curr_payment.id)
+        curr_payment.cancel()
         del request.session['current_payment_id']
-    else :
-        msg = _('Session expired')
-        curr_payment = None
-        logger.warn('CANCEL received while no payment in session. user = %s'%request.user.id)
-    messages.error(request, "Payment canceled.")
-    #TODO: Show msg to user
-    # return render_to_response('core/paypal_canceled.html',
-    #     {'msg':msg,
-    #     'payment':curr_payment},
-    #     context_instance = RequestContext(request))
-    return redirect(curr_payment.offer.issue.get_view_link())
+        messages.error(request, _('Payment canceled'))
+        return redirect(curr_payment.offer.issue.get_view_link())
+    else:
+        logger.warn('CANCEL received while no payment in session. user = %s' % request.user.id)
+        logger.warn('GET %s' % request.GET)
+        logger.warn('POST %s' % request.POST)
+        messages.error(request, _('Session expired'))
+        return redirect('/')
+
 
 @csrf_exempt
 def paypalIPN(request):
@@ -76,24 +67,22 @@ def paypalIPN(request):
 
         return HttpResponse(_("OK"))
     else:
-        raise BaseException(_('unverified IPN ')+str(request.POST))
+        raise BaseException(_('unverified IPN %s') % request.POST)
 
 
 @login_required
 @csrf_exempt
 def paypalReturn(request):
     current_payment_id = request.session.get('current_payment_id')
-    if(current_payment_id):
+    if current_payment_id:
         curr_payment, msg = paypal_services.payment_confirmed_web(current_payment_id)
         del request.session['current_payment_id']
         logger.info('CONFIRM_WEB successful for payment %s'%curr_payment.id)
-    else :
-        msg = _('Session expired')
-        curr_payment = None
-        logger.warn('CONFIRM_WEB received while no payment in session. user = %s'%request.user.id)
-    messages.warning(request, "Your payment is being processed. You'll receive an email when your payment is confirmed.")
-    # return render_to_response('core/paypal_confirmed.html',
-    #     {'msg':msg,
-    #     'payment':curr_payment},
-    #     context_instance = RequestContext(request))
-    return redirect(curr_payment.offer.issue.get_view_link())
+        messages.warning(request, "Your payment is being processed. You'll receive an email when your payment is confirmed.")
+        return redirect(curr_payment.offer.issue.get_view_link())
+    else:
+        logger.warn('CONFIRM_WEB received while no payment in session. user = %s' % request.user.id)
+        logger.warn('GET %s' % request.GET)
+        logger.warn('POST %s' % request.POST)
+        messages.error(request, _('Session expired. Please check your offer status'))
+        return redirect('/')

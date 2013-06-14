@@ -765,29 +765,27 @@ class Payment(models.Model):
     def cancel(self):
         event = PaymentHistEvent.newChangeEvent(payment=self, event=PaymentHistEvent.CANCEL)
         event.save()
-        if(not self.is_confirmed()):
+        if not self.is_confirmed():
             self.status = Payment.CANCELED
             self.touch()
             self.save()
         else:
-            #TODO: logar coisas melhor
-            print('warning: canceled confirmed payment %s'%self.id)
+            raise BaseException('canceled confirmed payment %s' % self.id)
 
     def forget(self):
         event = PaymentHistEvent.newChangeEvent(payment=self, event=PaymentHistEvent.FORGET)
         event.save()
-        if(self.status == Payment.CREATED):
+        if self.status == Payment.CREATED:
             self.status = Payment.FORGOTTEN
             self.touch()
             self.save()
         else:
-            #TODO: logar coisas melhor
-            print ('warning: forgot '+self.status+' payment %s'%self.id)
+            raise BaseException('forgot %s payment %s' % (self.status, self.id))
 
     def confirm_web(self):
         event = PaymentHistEvent.newChangeEvent(payment=self, event=PaymentHistEvent.CONFIRM_WEB)
         event.save()
-        if(self.status != Payment.CONFIRMED_IPN):
+        if self.status != Payment.CONFIRMED_IPN:
             self.status = Payment.CONFIRMED_WEB
             self.touch()
             self.save()
@@ -801,7 +799,7 @@ class Payment(models.Model):
 
     def confirm_bitcoin_ipn(self, value, transaction_hash):
         if self.status == Payment.CREATED:
-            if value >= self.total + self.fee - Decimal('0.002'):
+            if value >= self.total_with_fee() - Decimal('0.001'):
                 self.status = Payment.CONFIRMED_IPN
             else:
                 self.status = Payment.CONFIRMED_IPN_UNDERPAY
@@ -812,12 +810,13 @@ class Payment(models.Model):
 
     def confirm_bitcoin_trn(self, value):
         self.total_bitcoin_received = Decimal(str(value))
-        if self.total_bitcoin_received >= self.total + self.fee - Decimal('0.002'):
+        if self.total_bitcoin_received >= self.total_with_fee() - Decimal('0.001'):
             self.status = Payment.CONFIRMED_TRN
         else:
             self.status = Payment.CONFIRMED_TRN_UNDERPAY
         self.touch()
         self.save()
+
 
 class PaymentHistEvent(models.Model):
     payment = models.ForeignKey(Payment)
