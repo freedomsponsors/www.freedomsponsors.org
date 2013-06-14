@@ -3,7 +3,7 @@ from django.shortcuts import redirect
 
 # This is not used anywhere.
 # Im leaving it here just to serve as an example of how to write a decorator
-def complete_registration_first(view_func):
+def complete_registration_first(view_func): #pragma: no cover
 	def _decorated(request, *args, **kwargs):
 		if(request.user.is_authenticated()):
 			user = request.user
