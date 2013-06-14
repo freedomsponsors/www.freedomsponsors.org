@@ -1,3 +1,4 @@
+import json
 from django.test import TestCase
 from django.utils.unittest import skipIf
 from django.conf import settings
@@ -15,6 +16,7 @@ class BitcoinAdapterTest(TestCase):
         c = bitcoin_adapter._connect()
         bal = c.getbalance()
         print(bal)
+
 
 class BitcoinPaymentTests(TestCase):
 
@@ -38,43 +40,44 @@ class BitcoinPaymentTests(TestCase):
         response = client.get('/core/offer/%s/pay' % offer.id)
         self.assertEqual(response.status_code, 200)
         response_offer = response.context['offer']
-        response_solutions_accepting_payments = response.context['solutions_accepting_payments']
-        response_shared_price = response.context['shared_price']
-        response_convert_rate = response.context['convert_rate']
-        response_currency_symbol = response.context['currency_symbol']
+        response_solutions = json.loads(response.context['solutions_json'])
+        response_currency_options = json.loads(response.context['currency_options_json'])
         self.assertEqual(offer.id, response_offer.id)
-        self.assertEqual(len(response_solutions_accepting_payments), 1)
-        self.assertEqual(float(response_shared_price), 5.0)
-        self.assertEqual(float(response_convert_rate), 1.0)
-        self.assertEqual(response_currency_symbol, 'BTC')
+        self.assertEqual(len(response_solutions), 1)
+        self.assertEqual(offer.price, 5.0)
+        self.assertEqual(response_currency_options[0]['currency'], 'USD')
+        self.assertTrue(response_currency_options[0]['rate'] > 1.0)
+        self.assertEqual(response_currency_options[1]['currency'], 'BTC')
+        self.assertEqual(response_currency_options[1]['rate'], 1.0)
 
         #submit pay form
         response = client.post('/core/offer/pay/submit',
-            {'offer_id' : str(offer.id),
-             'count' : '1',
-             'check_0' : 'true',
-             'pay_0' : '5.00',
-             'solutionId_0' : str(solution.id)})
+            {'offer_id': str(offer.id),
+             'count': '1',
+             'check_0': 'true',
+             'currency': 'BTC',
+             'pay_0': '5.00',
+             'solutionId_0': str(solution.id)})
         self.assertEqual(response.status_code, 200)
-        self.assertTrue('Please make a BTC <strong>5.1500</strong> transfer to the following bitcoin address' in response.content)
+        self.assertTrue('Please make a BTC <strong>5.1505</strong> transfer to the following bitcoin address' in response.content)
         self.assertTrue('dummy_bitcoin_address_fs' in response.content)
 
         #RECEIVE ipn confirmation
         client2 = Client()
         response = client2.get('/core/bitcoin/'+settings.BITCOIN_IPNNOTIFY_URL_TOKEN,
-            {'value' : '515000000',
-             'destination_address' : 'dummy_bitcoin_address_fs',
-             'transaction_hash' : 'dummy_txn_hash',
-             'confirmations' : '3',})
+            {'value': '515050000',
+             'destination_address': 'dummy_bitcoin_address_fs',
+             'transaction_hash': 'dummy_txn_hash',
+             'confirmations': '3'})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content, '*ok*')
-        payment = Payment.objects.get(bitcoin_receive_address__address = 'dummy_bitcoin_address_fs')
+        payment = Payment.objects.get(bitcoin_receive_address__address='dummy_bitcoin_address_fs')
         self.assertEqual(payment.status, Payment.CONFIRMED_IPN)
 
         #active RECEIVE confirmation
         def get_received_by_address_mock(address):
             print('mock get received by address: %s' % address)
-            return 5.15
+            return 5.1505
 
         bitcoin_adapter.get_received_by_address = get_received_by_address_mock
         bitcoin_frespo_services.bitcoin_active_receive_confirmation()
@@ -97,10 +100,10 @@ class BitcoinPaymentTests(TestCase):
 
         #SEND ipn confirmation
         response = client2.get('/core/bitcoin/'+settings.BITCOIN_IPNNOTIFY_URL_TOKEN,
-                               {'value' : '-500000000',
-                                'destination_address' : 'fake_receive_address_programmer',
-                                'transaction_hash' : 'dummy_txn_hash_2',
-                                'confirmations' : '3',})
+                               {'value': '-500000000',
+                                'destination_address': 'fake_receive_address_programmer',
+                                'transaction_hash': 'dummy_txn_hash_2',
+                                'confirmations': '3',})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content, '*ok*')
         part = PaymentPart.objects.get(payment__id = payment.id)
@@ -114,12 +117,12 @@ class BitcoinPaymentTests(TestCase):
             txn.confirmations = 3
             txn.details = []
             txn.details.append({
-                'address':'fake_receive_address_programmer',
-                'amount' : Decimal('5')
+                'address': 'fake_receive_address_programmer',
+                'amount': Decimal('5')
             })
             txn.details.append({
-                'address':'dummy_bitcoin_address_fs',
-                'amount' : Decimal('-5')
+                'address': 'dummy_bitcoin_address_fs',
+                'amount': Decimal('-5')
             })
             return txn
 
@@ -128,6 +131,6 @@ class BitcoinPaymentTests(TestCase):
         email_asserts.assert_sent_count(self, 3)
         email_asserts.assert_sent(self, to=programmer.email, subject='%s has made you a BTC 5.00 payment' % offer.sponsor.getUserInfo().screenName)
         email_asserts.assert_sent(self, to=offer.sponsor.email, subject='You have made a BTC 5.00 payment')
-        email_asserts.assert_sent(self, to=settings.ADMINS[0][1], subject='Bitcoin payment made - 5.15')
+        email_asserts.assert_sent(self, to=settings.ADMINS[0][1], subject='Bitcoin payment made - 5.1505')
 
 

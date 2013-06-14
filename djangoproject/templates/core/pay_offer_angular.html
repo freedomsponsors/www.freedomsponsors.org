@@ -65,12 +65,6 @@
                 return currencies[$scope.selectedCurrency].method;
             }
 
-            if(is_brazilian){
-                $scope.availableCurrencies = ['BRL', 'BTC']
-            } else {
-                $scope.availableCurrencies = ['USD', 'BTC']
-            }
-
             $scope.offer = {
                 id: {{ offer.id }},
                 title: '{{ offer.issue.title }}',

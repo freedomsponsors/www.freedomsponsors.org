@@ -1,3 +1,4 @@
+import json
 from core.models import *
 from django.utils import unittest
 from core.services import paypal_services, watch_services
@@ -41,23 +42,23 @@ class TestPaypalPayment(unittest.TestCase):
                 print('message: %s' % message)
         self.assertEqual(response.status_code, 200)
         response_offer = response.context['offer']
-        response_solutions_accepting_payments = response.context['solutions_accepting_payments']
-        response_shared_price = response.context['shared_price']
-        response_convert_rate = response.context['convert_rate']
-        response_currency_symbol = response.context['currency_symbol']
+        response_solutions = json.loads(response.context['solutions_json'])
+        response_currency_options = json.loads(response.context['currency_options_json'])
         self.assertEqual(offer.id, response_offer.id)
-        self.assertEqual(len(response_solutions_accepting_payments), 1)
-        self.assertEqual(float(response_shared_price), 10.0)
-        self.assertEqual(float(response_convert_rate), 1.0)
-        self.assertEqual(response_currency_symbol, 'US$')
+        self.assertEqual(len(response_solutions), 1)
+        self.assertEqual(response_offer.price, 10.0)
+        self.assertEqual(response_currency_options[0]['currency'], 'USD')
+        self.assertEqual(response_currency_options[0]['rate'], 1.0)
+        self.assertEqual(response_currency_options[1]['currency'], 'BTC')
+        self.assertTrue(response_currency_options[1]['rate'] < 1.0)
 
         #submit pay form
         response = client.post('/core/offer/pay/submit',
-                               {'offer_id' : str(offer.id),
-                                'count' : '1',
-                                'check_0' : 'true',
-                                'pay_0' : '10.00',
-                                'solutionId_0' : str(solution.id)})
+                               {'offer_id': str(offer.id),
+                                'count': '1',
+                                'currency': 'USD',
+                                'pay_0': '10.00',
+                                'solutionId_0': str(solution.id)})
         self.assertEqual(response.status_code, 302)
         prefix = 'https://www.sandbox.paypal.com/webscr?cmd=_ap-payment&paykey='
         location = response.get('location')
@@ -78,9 +79,9 @@ class TestPaypalPayment(unittest.TestCase):
         payment = Payment.objects.get(paykey = paykey)
         client2 = Client()
         response = client2.post('/core/paypal/'+settings.PAYPAL_IPNNOTIFY_URL_TOKEN,
-           {'pay_key' : paykey,
-            'status' : 'COMPLETED',
-            'tracking_id' : payment.confirm_key,})
+           {'pay_key': paykey,
+            'status': 'COMPLETED',
+            'tracking_id': payment.confirm_key})
             # 'tracking_id' : 'BLAU',})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content, 'OK')
