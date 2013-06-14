@@ -5,7 +5,7 @@
     
     
     <meta http-equiv='X-UA-Compatible' content='IE=emulateIE7' />
-    <title>Coverage for core/tests/__init__: 100%</title>
+    <title>Coverage for core/tests/__init__: 25%</title>
     <link rel='stylesheet' href='style.css' type='text/css'>
     
     <script type='text/javascript' src='jquery-1.4.3.min.js'></script>
@@ -21,16 +21,16 @@
 <div id='header'>
     <div class='content'>
         <h1>Coverage for <b>core/tests/__init__</b> :
-            <span class='pc_cov'>100%</span>
+            <span class='pc_cov'>25%</span>
         </h1>
         <img id='keyboard_icon' src='keybd_closed.png'>
         <h2 class='stats'>
-            1 statements &nbsp;
-            <span class='run hide_run shortkey_r button_toggle_run'>1 run</span>
-            <span class='mis shortkey_m button_toggle_mis'>0 missing</span>
+            10 statements &nbsp;
+            <span class='run hide_run shortkey_r button_toggle_run'>2 run</span>
+            <span class='mis shortkey_m button_toggle_mis'>8 missing</span>
             <span class='exc shortkey_x button_toggle_exc'>0 excluded</span>
             
-                <span class='par run hide_run shortkey_p button_toggle_par'>0 partial</span>
+                <span class='par run hide_run shortkey_p button_toggle_par'>1 partial</span>
             
         </h2>
     </div>
@@ -63,31 +63,33 @@
     <table cellspacing='0' cellpadding='0'>
         <tr>
             <td class='linenos' valign='top'>
-<p id='n1' class='pln'><a href='#n1'>1</a></p>
+<p id='n1' class='stm run hide_run'><a href='#n1'>1</a></p>
 <p id='n2' class='pln'><a href='#n2'>2</a></p>
-<p id='n3' class='pln'><a href='#n3'>3</a></p>
-<p id='n4' class='pln'><a href='#n4'>4</a></p>
-<p id='n5' class='pln'><a href='#n5'>5</a></p>
-<p id='n6' class='pln'><a href='#n6'>6</a></p>
-<p id='n7' class='pln'><a href='#n7'>7</a></p>
-<p id='n8' class='pln'><a href='#n8'>8</a></p>
-<p id='n9' class='pln'><a href='#n9'>9</a></p>
-<p id='n10' class='stm run hide_run'><a href='#n10'>10</a></p>
-<p id='n11' class='pln'><a href='#n11'>11</a></p>
+<p id='n3' class='stm par run hide_run'><a href='#n3'>3</a></p>
+<p id='n4' class='stm mis'><a href='#n4'>4</a></p>
+<p id='n5' class='stm mis'><a href='#n5'>5</a></p>
+<p id='n6' class='stm mis'><a href='#n6'>6</a></p>
+<p id='n7' class='stm mis'><a href='#n7'>7</a></p>
+<p id='n8' class='stm mis'><a href='#n8'>8</a></p>
+<p id='n9' class='stm mis'><a href='#n9'>9</a></p>
+<p id='n10' class='stm mis'><a href='#n10'>10</a></p>
+<p id='n11' class='stm mis'><a href='#n11'>11</a></p>
+<p id='n12' class='pln'><a href='#n12'>12</a></p>
                 
             </td>
             <td class='text' valign='top'>
-<p id='t1' class='pln'><span class='com'># from tests_trackerintegration import *</span><span class='strut'>&nbsp;</span></p>
-<p id='t2' class='pln'><span class='com'># from test_mail_notifications import *</span><span class='strut'>&nbsp;</span></p>
-<p id='t3' class='pln'><span class='com'># from test_model_entities import *</span><span class='strut'>&nbsp;</span></p>
-<p id='t4' class='pln'><span class='com'># from test_paypal_services import *</span><span class='strut'>&nbsp;</span></p>
-<p id='t5' class='pln'><span class='com'># from test_watch_services import *</span><span class='strut'>&nbsp;</span></p>
-<p id='t6' class='pln'><span class='com'># from test_watch_views import *</span><span class='strut'>&nbsp;</span></p>
-<p id='t7' class='pln'><span class='com'># from test_feedback_views import *</span><span class='strut'>&nbsp;</span></p>
-<p id='t8' class='pln'><span class='com'># from test_bitcoin import *</span><span class='strut'>&nbsp;</span></p>
-<p id='t9' class='pln'><span class='strut'>&nbsp;</span></p>
-<p id='t10' class='stm run hide_run'><span class='nam'>__author__</span> <span class='op'>=</span> <span class='str'>&#39;tony&#39;</span><span class='strut'>&nbsp;</span></p>
-<p id='t11' class='pln'><span class='strut'>&nbsp;</span></p>
+<p id='t1' class='stm run hide_run'><span class='key'>from</span> <span class='nam'>django</span><span class='op'>.</span><span class='nam'>conf</span> <span class='key'>import</span> <span class='nam'>settings</span><span class='strut'>&nbsp;</span></p>
+<p id='t2' class='pln'><span class='strut'>&nbsp;</span></p>
+<p id='t3' class='stm par run hide_run'><span class='annotate' title='no jump to this line number'>4</span><span class='key'>if</span> <span class='key'>not</span> <span class='nam'>settings</span><span class='op'>.</span><span class='nam'>TEST_WITH_NOSE</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
+<p id='t4' class='stm mis'>&nbsp; &nbsp; <span class='key'>from</span> <span class='nam'>tests_trackerintegration</span> <span class='key'>import</span> <span class='op'>*</span><span class='strut'>&nbsp;</span></p>
+<p id='t5' class='stm mis'>&nbsp; &nbsp; <span class='key'>from</span> <span class='nam'>test_mail_notifications</span> <span class='key'>import</span> <span class='op'>*</span><span class='strut'>&nbsp;</span></p>
+<p id='t6' class='stm mis'>&nbsp; &nbsp; <span class='key'>from</span> <span class='nam'>test_model_entities</span> <span class='key'>import</span> <span class='op'>*</span><span class='strut'>&nbsp;</span></p>
+<p id='t7' class='stm mis'>&nbsp; &nbsp; <span class='key'>from</span> <span class='nam'>test_paypal_services</span> <span class='key'>import</span> <span class='op'>*</span><span class='strut'>&nbsp;</span></p>
+<p id='t8' class='stm mis'>&nbsp; &nbsp; <span class='key'>from</span> <span class='nam'>test_watch_services</span> <span class='key'>import</span> <span class='op'>*</span><span class='strut'>&nbsp;</span></p>
+<p id='t9' class='stm mis'>&nbsp; &nbsp; <span class='key'>from</span> <span class='nam'>test_watch_views</span> <span class='key'>import</span> <span class='op'>*</span><span class='strut'>&nbsp;</span></p>
+<p id='t10' class='stm mis'>&nbsp; &nbsp; <span class='key'>from</span> <span class='nam'>test_feedback_views</span> <span class='key'>import</span> <span class='op'>*</span><span class='strut'>&nbsp;</span></p>
+<p id='t11' class='stm mis'>&nbsp; &nbsp; <span class='key'>from</span> <span class='nam'>test_bitcoin</span> <span class='key'>import</span> <span class='op'>*</span><span class='strut'>&nbsp;</span></p>
+<p id='t12' class='pln'><span class='strut'>&nbsp;</span></p>
                 
             </td>
         </tr>
