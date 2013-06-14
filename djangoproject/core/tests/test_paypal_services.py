@@ -46,7 +46,7 @@ class TestPaypalPayment(unittest.TestCase):
         response_currency_options = json.loads(response.context['currency_options_json'])
         self.assertEqual(offer.id, response_offer.id)
         self.assertEqual(len(response_solutions), 1)
-        self.assertEqual(response_offer.price, 10.0)
+        self.assertEqual(response_offer.price, Decimal('10.0'))
         self.assertEqual(response_currency_options[0]['currency'], 'USD')
         self.assertEqual(response_currency_options[0]['rate'], 1.0)
         self.assertEqual(response_currency_options[1]['currency'], 'BTC')
