@@ -722,6 +722,7 @@ class Payment(models.Model):
     bitcoin_receive_address = models.ForeignKey(ReceiveAddress, null=True)
     bitcoin_transaction_hash = models.CharField(max_length=128, null=True)
     total_bitcoin_received = models.DecimalField(max_digits=16, decimal_places=8, null=True)
+    bitcoin_fee = models.DecimalField(max_digits=16, decimal_places=8, null=True)
 
     CREATED = 'CREATED'
     CANCELED = 'CANCELED'
@@ -733,29 +734,21 @@ class Payment(models.Model):
     FORGOTTEN = 'FORGOTTEN'
     
     @classmethod
-    def newPayment(cls, offer):
+    def newPayment(cls, offer, currency):
         payment = cls()
         payment.offer = offer
+        payment.currency = currency
         payment.creationDate = timezone.now()
         payment.lastChangeDate = payment.creationDate
         payment.status = Payment.CREATED
-        payment.selectCurrency()
         payment.confirm_key = hashlib.md5(str(time.time()) + str(random.random())).hexdigest()
         return payment
-    
-    def selectCurrency(self):
-        if self.offer.currency == 'BTC':
-            self.currency = 'BTC'
-        elif self.offer.sponsor.getUserInfo().brazilianPaypal:
-            self.currency = 'BRL'
-        else:
-            self.currency = 'USD'
     
     def get_currency_symbol(self):
         return _CURRENCY_SYMBOLS[self.currency]
 
     def total_with_fee(self):
-        return self.total + self.fee
+        return self.total + self.fee + self.bitcoin_fee
 
     def setPaykey(self, paykey):
         self.paykey = paykey

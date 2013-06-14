@@ -15,6 +15,7 @@ logger = logging.getLogger(__name__)
 
 __author__ = 'tony'
 
+
 def payOffer(request, offer, payment):
     current_payment_id = request.session.get('current_payment_id')
     if(current_payment_id):

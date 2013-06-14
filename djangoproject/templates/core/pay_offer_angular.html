@@ -220,7 +220,10 @@
     {% endlocalize %}
 
 
-    <form>
+    <form method="post" action="/core/offer/pay/submit">
+        {% csrf_token %}
+        <input type="hidden" name="offer_id" value="{{ offer.id }}">
+        <input type="hidden" name="count" value="{{ count }}">
         <div class="span12" ng-app="pay_offer" ng-controller="PayCtrl">
 
             <div class="modal hide fade in" id="alert_modal_currency">
@@ -299,7 +302,7 @@
                                 Select currency to pay
                             </div>
                             <div class="span6">
-                                <select ng-model="selectedCurrency" ng-change="onCurrencyChange()">
+                                <select name="currency" ng-model="selectedCurrency" ng-change="onCurrencyChange()">
                                     {% for currency in currency_options %}
                                         <option value="{{ currency.currency }}">{{ currency.selectLabel }}</option>
                                     {% endfor %}
@@ -329,7 +332,8 @@
                                         <img ng-show="{[{ solution.acceptsBitcoin }]}" src="/static/img/bitcoin_icon_32.png" class="popopo" rel="popover" data-content="This user may receive payments in Bitcoin" data-original-title="Accepts Bitcoin">
                                     </td>
                                     <td>
-                                        <input type="text" style="width: 100px;" ng-disabled="!isEnabled(solution)" ng-model="solution.price">
+                                        <input type="hidden" name="solutionId_{[{ $index }]}" value="{[{ solution.id }]}">
+                                        <input type="text" style="width: 100px;" name="pay_{[{ $index }]}" ng-disabled="!isEnabled(solution)" ng-model="solution.price">
                                     </td>
                                 </tr>
                             </tbody>
@@ -381,7 +385,7 @@
                         </table>
                     </div>
                     <div style="text-align:right; margin: 10px 0px;">
-                        <button class="btn btn-primary" type="button" ng-disabled="disablePayButton">Proceed to payment with {[{ currentCurrencyMethod() }]}</button>
+                        <input type="submit" class="btn btn-primary" type="button" ng-disabled="disablePayButton" value="Proceed to payment with {[{ currentCurrencyMethod() }]}">
                     </div>
                 </div>
             </div>

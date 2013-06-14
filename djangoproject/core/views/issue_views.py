@@ -360,6 +360,7 @@ def payOfferForm(request, offer_id):
     return render_to_response('core/pay_offer_angular.html',
                               {
                                   'offer': offer,
+                                  'count': len(solutions_dict),
                                   'currency_options': currency_options,
                                   'currency_options_json': json.dumps(currency_options),
                                   'is_brazilian': is_brazilian,
@@ -372,33 +373,43 @@ def payOfferForm(request, offer_id):
 @login_required
 def payOffer(request):
     offer_id = int(request.POST['offer_id'])
-    count = int(request.POST['count'])
     offer = Offer.objects.get(pk=offer_id)
-    if(offer.status == Offer.PAID):
+    if offer.status == Offer.PAID:
         raise BaseException('offer %s is already paid' % offer.id + '. User %s' % request.user)
-    payment = _generate_payment_entity(offer, count, request.POST, request.user)
-
-    if(offer.currency == 'USD'):
+    if offer.sponsor.id != request.user.id:
+        raise BaseException('offer %s cannot be paid by user %s' % (offer.id, request.user.id))
+    payment = _generate_payment_entity(offer, request.POST)
+    if payment.currency == 'USD' or payment.currency == 'BRL':
         return paypal_views.payOffer(request, offer, payment)
-    else:
+    elif payment.currency == 'BTC':
         return bitcoin_views.payOffer(request, offer, payment)
+    else:
+        raise BaseException('Unknown currency: %s' % payment.currency)
 
-def _generate_payment_entity(offer, receiver_count, dict, user):
-    payment = Payment.newPayment(offer)
+
+def _generate_payment_entity(offer, dict):
+    count = int(dict['count'])
+    currency = dict['currency']
+    payment = Payment.newPayment(offer, currency)
     parts = []
     sum = Decimal(0)
-    for i in range(receiver_count):
-        check = dict.has_key('check_%s' % i)
-        if(check):
-            pay = Decimal(dict['pay_%s' % i])
-            if(pay > 0):
-                solution = Solution.objects.get(pk=int(dict['solutionId_%s' % i]))
+    btc_fee = Decimal(0)
+    for i in range(count):
+        pay_str = dict['pay_%s' % i]
+        solution_id = int(dict['solutionId_%s' % i])
+        if(pay_str):
+            pay = Decimal(pay_str)
+            if pay > 0:
+                solution = Solution.objects.get(pk=solution_id)
                 part = PaymentPart.newPart(payment, solution, pay)
                 parts.append(part)
                 sum += pay
+                if currency == 'BTC':
+                    btc_fee += settings.BITCOIN_FEE
     payment.fee = sum * settings.FS_FEE
     payment.total = sum
-    convert_twoplaces = offer.currency == 'USD'
+    payment.bitcoin_fee = btc_fee
+    convert_twoplaces = currency == 'USD' or currency == 'BRL'
     if convert_twoplaces:
         payment.fee = twoplaces(payment.fee)
         payment.total = twoplaces(payment.total)

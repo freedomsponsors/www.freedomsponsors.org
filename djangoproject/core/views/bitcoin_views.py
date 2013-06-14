@@ -27,9 +27,10 @@ def bitcoinIPN(request):
         bitcoin_frespo_services.bitcoin_ipn_received(value, destination_address, transaction_hash, confirmations)
     elif value < 0:
         bitcoin_frespo_services.bitcoin_ipn_sent(-value, destination_address, transaction_hash, confirmations)
-    else :
+    else:
         raise BaseException('Received 0 - value IPN confirmation')
     return HttpResponse("*ok*")
+
 
 def payOffer(request, offer, payment):
     try:
@@ -37,9 +38,9 @@ def payOffer(request, offer, payment):
         payment.bitcoin_receive_address = receive_address
         payment.save()
         return render_to_response('core/waitPaymentBitcoin.html',
-            {'payment' : payment,
-             'bitcoin_address' : receive_address.address,},
-            context_instance = RequestContext(request))
+            {'payment': payment,
+             'bitcoin_address': receive_address.address},
+            context_instance=RequestContext(request))
     except BitcoinFrespoException as e:
         messages.error(request, e.value)
         return redirect(offer.get_view_link())

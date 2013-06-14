@@ -8,36 +8,41 @@ import logging
 logger = logging.getLogger(__name__)
 
 paypal = AdaptivePayments(settings.PAYPAL_API_USERNAME, 
-    settings.PAYPAL_API_PASSWORD, 
-    settings.PAYPAL_API_SIGNATURE, 
-    settings.PAYPAL_API_APPLICATION_ID, 
-    settings.PAYPAL_API_EMAIL, 
-    sandbox=settings.PAYPAL_USE_SANDBOX)
+                          settings.PAYPAL_API_PASSWORD,
+                          settings.PAYPAL_API_SIGNATURE,
+                          settings.PAYPAL_API_APPLICATION_ID,
+                          settings.PAYPAL_API_EMAIL,
+                          sandbox=settings.PAYPAL_USE_SANDBOX)
 paypal.debug = settings.PAYPAL_DEBUG
 
-if(settings.PAYPAL_USE_SANDBOX):
+if settings.PAYPAL_USE_SANDBOX:
     WEBSCR_URL = 'https://www.sandbox.paypal.com/cgi-bin/webscr'
 else:
     WEBSCR_URL = 'https://www.paypal.com/cgi-bin/webscr'
 
+
 def generate_paypal_payment(payment):
     receivers = []
     for part in payment.getParts():
-        receivers.append({'amount' : str(part.price), 'email' : part.programmer.getUserInfo().paypalEmail})
-    receivers.append({'amount' : "%.2f"%payment.fee, 'email' : settings.PAYPAL_FRESPO_RECEIVER_EMAIL})
+        receivers.append({'amount': str(part.price), 'email': part.programmer.getUserInfo().paypalEmail})
+    receivers.append({'amount': "%.2f" % payment.fee, 'email': settings.PAYPAL_FRESPO_RECEIVER_EMAIL})
     response = paypal.pay(
-        actionType= 'PAY',
-        cancelUrl= settings.PAYPAL_CANCEL_URL,
-        currencyCode= payment.currency,
-#       senderEmail = offer.sponsor.getUserInfo().paypalEmail, //seems like we shouldn't use this
-        feesPayer= 'SENDER',
-        receiverList= { 'receiver': receivers},
-        returnUrl= settings.PAYPAL_RETURN_URL,
-        ipnNotificationUrl= settings.PAYPAL_IPNNOTIFY_URL,
-        trackingId= str(payment.confirm_key)
+        actionType='PAY',
+        cancelUrl=settings.PAYPAL_CANCEL_URL,
+        currencyCode=payment.currency,
+        # senderEmail = offer.sponsor.getUserInfo().paypalEmail, //seems like we shouldn't use this
+        feesPayer='SENDER',
+        receiverList={'receiver': receivers},
+        returnUrl=settings.PAYPAL_RETURN_URL,
+        ipnNotificationUrl=settings.PAYPAL_IPNNOTIFY_URL,
+        trackingId=str(payment.confirm_key)
     )
-    logger.info('Paypal PAYREQUEST RECEIVERS=['+str(receivers)+'] / RESPONSE=['+str(response)+']')
-    payment.setPaykey(response['payKey'])
+    paykey = response['payKey']
+    msg = '''Paypal PAYREQUEST paykey=%s
+        receivers = [%s]
+        response = [%s]''' % (paykey, str(receivers), str(response))
+    logger.info(msg)
+    payment.setPaykey(paykey)
 
 
 def verify_ipn(data):
