@@ -13,8 +13,10 @@ logger = logging.getLogger(__name__)
 
 ADMINS_EMAILS = map((lambda x: x[1]), settings.ADMINS)
 
+
 def plain_send_mail(to, subject, body, from_email=settings.DEFAULT_FROM_EMAIL):
     send_html_mail(subject, body, body, from_email, [to])
+
 
 def send_html_mail(subject, body_txt, body_html, from_email, to_addresses):
     try:
@@ -27,6 +29,7 @@ def send_html_mail(subject, body_txt, body_html, from_email, to_addresses):
     msg.attach_alternative(body_html, "text/html")
     msg.send()
 
+
 def send_mail_to_all_users(subject, body, from_email=settings.DEFAULT_FROM_EMAIL):
     count = 0
     for user in User.objects.all():
@@ -35,12 +38,14 @@ def send_mail_to_all_users(subject, body, from_email=settings.DEFAULT_FROM_EMAIL
             count += 1
     return count
 
+
 def _send_mail_to_user(user, subject, templateName, contextData, whentrue):
     if(user.getUserInfo() and (not whentrue or getattr(user.getUserInfo(), whentrue))):
         template = get_template(templateName)
         context = Context(contextData)
         html_content = template.render(context)
         send_html_mail(subject, html_content, html_content, settings.DEFAULT_FROM_EMAIL, [user.email])
+
 
 def notifyWatchers_workbegun(solution, comment, watches):
     def send_func(watch):
@@ -54,6 +59,7 @@ def notifyWatchers_workbegun(solution, comment, watches):
                                "comment" : comment},
                 whentrue='receiveEmail_issue_work')
     _notify_watchers(send_func, watches)
+
 
 def notifyWatchers_acceptingpayments(solution, watches):
     def send_func(watch):
@@ -75,6 +81,7 @@ def welcome(user):
         contextData={"you" : user},
         whentrue=None)
 
+
 def notifyWatchers_workstopped(solution, comment, watches):
     def send_func(watch):
         if(watch.user.id != solution.programmer.id):
@@ -87,6 +94,7 @@ def notifyWatchers_workstopped(solution, comment, watches):
                                "comment" : comment},
                 whentrue='receiveEmail_issue_work')
     _notify_watchers(send_func, watches)
+
 
 def notifyWatchers_workdone(solution, comment, watches):
     def send_func(watch):
@@ -103,6 +111,7 @@ def notifyWatchers_workdone(solution, comment, watches):
 
 #    for otherSolution in solution.issue.getSolutions():
 #        if(not solution.id == otherSolution.id):
+
 
 def notifyWatchers_offerrevoked(offer, comment, watches):
     def send_func(watch):
@@ -122,6 +131,7 @@ def notifyWatchers_offerrevoked(offer, comment, watches):
                 whentrue='receiveEmail_issue_offer')
     _notify_watchers(send_func, watches)
 
+
 def notifyWatchers_offeradded(offer, watches):
     def send_func(watch):
         if(watch.user.id != offer.sponsor.id):
@@ -138,6 +148,7 @@ def notifyWatchers_offeradded(offer, watches):
                                "SITE_HOME" : settings.SITE_HOME},
                 whentrue='receiveEmail_issue_offer')
     _notify_watchers(send_func, watches)
+
 
 def notifyWatchers_offerchanged(old_offer, new_offer, watches):
     action = 'changed'
@@ -161,6 +172,7 @@ def notifyWatchers_offerchanged(old_offer, new_offer, watches):
                                    "SITE_HOME" : settings.SITE_HOME},
                     whentrue='receiveEmail_issue_offer')
         _notify_watchers(send_func, watches)
+
 
 def notify_payment_parties_and_watchers_paymentconfirmed(payment, watches):
     already_sent_to = {}
@@ -214,6 +226,7 @@ def notifyWatchers_newissuecomment(comment, watches):
                 whentrue='receiveEmail_issue_comments')
     _notify_watchers(send_func, watches)
 
+
 def notifyWatchers_newoffercomment(comment, watches):
     def send_func(watch):
         if(watch.user.id != comment.author.id):
@@ -235,6 +248,7 @@ def notifyWatchers_newoffercomment(comment, watches):
                 whentrue='receiveEmail_issue_comments')
     _notify_watchers(send_func, watches)
 
+
 def _notify_watchers(send_func, watches, already_sent_to = None):
     if not already_sent_to:
         already_sent_to = {}
@@ -242,6 +256,7 @@ def _notify_watchers(send_func, watches, already_sent_to = None):
         if(not already_sent_to.has_key(watch.user.email)):
             send_func(watch)
             already_sent_to[watch.user.email] = True
+
 
 def notify_admin(subject, msg):
     send_html_mail(subject, msg, msg, settings.DEFAULT_FROM_EMAIL, ADMINS_EMAILS)

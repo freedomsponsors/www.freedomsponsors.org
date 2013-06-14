@@ -177,6 +177,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
     'bitcoin_frespo',
+    'frespo_currencies',
     'core',
     'core_splinter_tests',
     'gh_frespo_integration',

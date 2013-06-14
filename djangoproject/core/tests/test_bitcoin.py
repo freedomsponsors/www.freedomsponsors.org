@@ -20,8 +20,11 @@ class BitcoinAdapterTest(TestCase):
 
 class BitcoinPaymentTests(TestCase):
 
-    def _create_test_data(self):
-        offer = test_data.create_dummy_offer_btc()
+    def _create_test_data(self, usd_offer=False):
+        if usd_offer:
+            offer = test_data.create_dummy_offer_usd()
+        else:
+            offer = test_data.create_dummy_offer_btc()
         programmer = test_data.create_dummy_programmer()
         test_data.create_dummy_bitcoin_receive_address_available()
         solution = Solution.newSolution(offer.issue, programmer, False)
@@ -32,7 +35,7 @@ class BitcoinPaymentTests(TestCase):
         solution.save()
         return offer, programmer, solution
 
-    def _request_payment_form(self, client, offer):
+    def _request_payment_form(self, client, offer, expect_usd=False):
         response = client.get('/core/offer/%s/pay' % offer.id)
         self.assertEqual(response.status_code, 200)
         response_offer = response.context['offer']
@@ -41,23 +44,29 @@ class BitcoinPaymentTests(TestCase):
         self.assertEqual(offer.id, response_offer.id)
         self.assertEqual(len(response_solutions), 1)
         self.assertEqual(offer.price, response_offer.price)
-        self.assertEqual(response_currency_options[0]['currency'], 'USD')
-        self.assertTrue(response_currency_options[0]['rate'] > 1.0)
-        self.assertEqual(response_currency_options[1]['currency'], 'BTC')
-        self.assertEqual(response_currency_options[1]['rate'], 1.0)
+        if expect_usd:
+            self.assertEqual(response_currency_options[0]['currency'], 'USD')
+            self.assertTrue(response_currency_options[0]['rate'] == 1.0)
+            self.assertEqual(response_currency_options[1]['currency'], 'BTC')
+            self.assertTrue(response_currency_options[1]['rate'] < 1.0)
+        else:
+            self.assertEqual(response_currency_options[0]['currency'], 'USD')
+            self.assertTrue(response_currency_options[0]['rate'] > 1.0)
+            self.assertEqual(response_currency_options[1]['currency'], 'BTC')
+            self.assertEqual(response_currency_options[1]['rate'], 1.0)
         return response_offer, response_solutions
 
-    def _submitPayForm(self, client, offer, solutions):
+    def _submitPayForm(self, client, offer, solutions, pay, pay_email_admin):
         response = client.post('/core/offer/pay/submit',
                                {'offer_id': str(offer.id),
                                 'count': '1',
                                 'check_0': 'true',
                                 'currency': 'BTC',
-                                'pay_0': '5.00',
+                                'pay_0': pay,
                                 'solutionId_0': str(solutions[0]['id'])})
         self.assertEqual(response.status_code, 200)
         self.assertTrue(
-            'Please make a BTC <strong>5.1505</strong> transfer to the following bitcoin address' in response.content)
+            'Please make a BTC <strong>%s</strong> transfer to the following bitcoin address' % pay_email_admin in response.content)
         self.assertTrue('dummy_bitcoin_address_fs' in response.content)
 
     def _ipn_confirmation_receive(self, transfer_value):
@@ -138,19 +147,30 @@ class BitcoinPaymentTests(TestCase):
 
     def test_bitcoin_payment_complete(self):
 
-        #setup
         offer, programmer, solution = self._create_test_data()
 
-        #get pay form
         client = Client()
         client.login(username=offer.sponsor.username, password='abcdef')
 
         response_offer, response_solutions = self._request_payment_form(client, offer)
-        self._submitPayForm(client, response_offer, response_solutions)
+        self._submitPayForm(client, response_offer, response_solutions, '5.00', '5.1505')
         payment = self._ipn_confirmation_receive(Decimal('5.1505'))
         payment = self._confirm_received(payment, 5.1505)
         self._pay_programmer(payment, Decimal('5'))
         self._ipn_confirmation_send(payment, -Decimal('5'))
         self._confirm_sent(offer, programmer, Decimal('5'), '5.00', '5.1505')
 
+    def test_bitcoin_payment_complete_offer_usd(self):
 
+        offer, programmer, solution = self._create_test_data(usd_offer=True)
+
+        client = Client()
+        client.login(username=offer.sponsor.username, password='abcdef')
+
+        response_offer, response_solutions = self._request_payment_form(client, offer, expect_usd=True)
+        self._submitPayForm(client, response_offer, response_solutions, '0.10', '0.1035')
+        payment = self._ipn_confirmation_receive(Decimal('0.1035'))
+        payment = self._confirm_received(payment, 0.1035)
+        self._pay_programmer(payment, Decimal('0.1'))
+        self._ipn_confirmation_send(payment, -Decimal('0.1'))
+        self._confirm_sent(offer, programmer, Decimal('0.1'), '0.10', '0.1035')

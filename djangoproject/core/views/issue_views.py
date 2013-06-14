@@ -14,6 +14,7 @@ from core.views import paypal_views, bitcoin_views
 from decimal import Decimal
 import logging
 from django.conf import settings
+from frespo_currencies import currency_service
 import traceback
 
 logger = logging.getLogger(__name__)
@@ -301,26 +302,17 @@ def listProjects(request):
 def _currency_options(offer):
     is_brazilian = offer.sponsor.getUserInfo().brazilianPaypal
     btc = {'currency': 'BTC',
-           'selectLabel': 'Bitcoin'}
+           'selectLabel': 'Bitcoin',
+           'rate': currency_service.get_rate(offer.currency, 'BTC')}
     if is_brazilian:
         brl = {'currency': 'BRL',
-               'selectLabel': 'R$, usando Paypal'}
-        if offer.currency == 'USD':
-            brl['rate'] = paypal_services.usd_2_brl_convert_rate()
-            btc['rate'] = 1 / bitcoin_adapter.get_btc_to_usd_rate()
-        else:
-            brl['rate'] = bitcoin_adapter.get_btc_to_brl_rate()
-            btc['rate'] = 1
+               'selectLabel': 'R$, usando Paypal',
+               'rate': currency_service.get_rate(offer.currency, 'BRL')}
         return [brl, btc]
     else:
         usd = {'currency': 'USD',
-               'selectLabel': 'US$, using Paypal'}
-        if offer.currency == 'USD':
-            usd['rate'] = 1
-            btc['rate'] = 1 / bitcoin_adapter.get_btc_to_usd_rate()
-        else:
-            usd['rate'] = bitcoin_adapter.get_btc_to_usd_rate()
-            btc['rate'] = 1
+               'selectLabel': 'US$, using Paypal',
+               'rate': currency_service.get_rate(offer.currency, 'USD')}
         return [usd, btc]
 
 
@@ -328,10 +320,6 @@ def _currency_options(offer):
 def payOfferForm(request, offer_id):
     offer = Offer.objects.get(pk=offer_id)
     is_brazilian = offer.sponsor.getUserInfo().brazilianPaypal
-    usd_2_brl_rate = 0
-    if is_brazilian:
-        usd_2_brl_rate = paypal_services.usd_2_brl_convert_rate()
-    btc_2_usd_rate = bitcoin_adapter.get_btc_to_usd_rate()
 
     solutions_accepting_payments = offer.issue.getSolutionsAcceptingPayments()
     if not solutions_accepting_payments:
@@ -364,8 +352,6 @@ def payOfferForm(request, offer_id):
                                   'currency_options': currency_options,
                                   'currency_options_json': json.dumps(currency_options),
                                   'is_brazilian': is_brazilian,
-                                  'usd_2_brl_rate': usd_2_brl_rate,
-                                  'btc_2_usd_rate': btc_2_usd_rate,
                                   'solutions_json': json.dumps(solutions_dict)
                               },
                               context_instance=RequestContext(request))
