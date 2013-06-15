@@ -81,8 +81,10 @@ def paypalReturn(request):
         messages.warning(request, "Your payment is being processed. You'll receive an email when your payment is confirmed.")
         return redirect(curr_payment.offer.issue.get_view_link())
     else:
-        logger.warn('CONFIRM_WEB received while no payment in session. user = %s' % request.user.id)
-        logger.warn('GET %s' % request.GET)
-        logger.warn('POST %s' % request.POST)
+        subject = 'CONFIRM_WEB received while no payment in session. user = %s' % request.user.id
+        msg = 'GET %s\nPOST %s' % (request.GET, request.POST)
+        mail_services.notify_admin(subject, msg)
+        logger.warn(subject)
+        logger.warn(msg)
         messages.error(request, _('Session expired. Please check your offer status'))
         return redirect('/')

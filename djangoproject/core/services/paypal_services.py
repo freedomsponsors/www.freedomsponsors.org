@@ -1,5 +1,5 @@
 from core.services.mail_services import notify_payment_parties_and_watchers_paymentconfirmed, notify_admin
-from core.services import watch_services
+from core.services import watch_services, mail_services
 from core.utils import paypal_adapter
 from core.utils.frespo_utils import get_or_none, twoplaces
 from core.models import Payment
@@ -38,7 +38,11 @@ def process_ipn_return(paykey, status, tracking_id):
         notify_payment_parties_and_watchers_paymentconfirmed(payment, watches)
         notify_admin_payment_confirmed(payment)
     else:
-        logger.warn('received a ' + status + ' IPN confirmation')
+        subject = 'received a payment confirmation with status = %s' % status
+        msg = 'paykey = %s\nconfirm_key=%s' % (paykey, tracking_id)
+        mail_services.notify_admin(subject, msg)
+        logger.warn(subject)
+        logger.warn(msg)
 
 
 def notify_admin_payment_confirmed(payment):
