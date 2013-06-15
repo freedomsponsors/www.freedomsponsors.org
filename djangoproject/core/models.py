@@ -13,6 +13,7 @@ from emailmgr.signals import user_activated_email
 from decimal import Decimal
 from core.utils.frespo_utils import twoplaces
 from bitcoin_frespo.models import *
+from frespo_currencies import currency_service
 
 _CURRENCY_SYMBOLS = {'USD': 'US$', 'BRL': 'R$', 'BTC': 'BTC'}
 
@@ -707,6 +708,7 @@ class SolutionHistEvent(models.Model):
         evt.event = event
         return evt
 
+
 # Registro da finalização bem sucedida de uma Offer.
 # Note que pode haver mais de um Payment, se o sponsor iniciar um pagamento e nao finalizar
 class Payment(models.Model):
@@ -715,7 +717,7 @@ class Payment(models.Model):
     lastChangeDate = models.DateTimeField()
     paykey = models.CharField(max_length=128, null=True, blank=True)
     confirm_key = models.CharField(max_length=128, null=True, blank=True)
-    status = models.CharField(max_length=30) # IN_PROGRESS, DONE, ABORTED
+    status = models.CharField(max_length=30)
     fee = models.DecimalField(max_digits=16, decimal_places=8)
     total = models.DecimalField(max_digits=9, decimal_places=2)
     currency = models.CharField(max_length=10)
@@ -723,6 +725,9 @@ class Payment(models.Model):
     bitcoin_transaction_hash = models.CharField(max_length=128, null=True)
     total_bitcoin_received = models.DecimalField(max_digits=16, decimal_places=8, null=True)
     bitcoin_fee = models.DecimalField(max_digits=16, decimal_places=8, null=True)
+    offer_currency = models.CharField(max_length=10, null=True)
+    offer2payment_suggested_rate = models.DecimalField(max_digits=16, decimal_places=8, null=True)
+    usd2payment_rate = models.DecimalField(max_digits=16, decimal_places=8, null=True)
 
     CREATED = 'CREATED'
     CANCELED = 'CANCELED'
@@ -738,6 +743,9 @@ class Payment(models.Model):
         payment = cls()
         payment.offer = offer
         payment.currency = currency
+        payment.offer_currency = offer.currency
+        payment.offer2payment_suggested_rate = currency_service.get_rate(offer.currency, payment.currency)
+        payment.usd2payment_rate = currency_service.get_rate('USD', payment.currency)
         payment.creationDate = timezone.now()
         payment.lastChangeDate = payment.creationDate
         payment.status = Payment.CREATED
