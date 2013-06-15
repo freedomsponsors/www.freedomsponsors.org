@@ -29,6 +29,7 @@ def generate_paypal_payment(payment):
     response = paypal.pay(
         actionType='PAY',
         cancelUrl=settings.PAYPAL_CANCEL_URL,
+        reverseAllParallelPaymentsOnError=True,
         currencyCode=payment.currency,
         # senderEmail = offer.sponsor.getUserInfo().paypalEmail, //seems like we shouldn't use this
         feesPayer='SENDER',
