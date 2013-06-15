@@ -1,8 +1,9 @@
 import json
 from core.models import *
 from django.utils import unittest
-from core.services import paypal_services, watch_services
-from helpers import test_data, email_asserts
+from core.tests.helpers import mockers
+from frespo_currencies import currency_service
+from helpers import test_data
 from django.conf import settings
 from django.utils.unittest import skipIf
 from paypalx import AdaptivePayments
@@ -52,24 +53,24 @@ class TestPaypalPayment(unittest.TestCase):
         self.assertEqual(response_offer.price, offer.price)
         if expect_brl and not expect_btc:
             self.assertEqual(response_currency_options[0]['currency'], 'BRL')
-            self.assertTrue(response_currency_options[0]['rate'] > 1.4)
+            self.assertTrue(response_currency_options[0]['rate'] == 2.0)
             self.assertEqual(response_currency_options[1]['currency'], 'BTC')
-            self.assertTrue(response_currency_options[1]['rate'] < 1.0)
+            self.assertTrue(response_currency_options[1]['rate'] == 0.01)
         elif expect_btc and not expect_brl:
             self.assertEqual(response_currency_options[0]['currency'], 'USD')
-            self.assertTrue(response_currency_options[0]['rate'] > 20)
+            self.assertTrue(response_currency_options[0]['rate'] == 100.0)
             self.assertEqual(response_currency_options[1]['currency'], 'BTC')
             self.assertTrue(response_currency_options[1]['rate'] == 1.0)
         elif expect_btc and expect_brl:
             self.assertEqual(response_currency_options[0]['currency'], 'BRL')
-            self.assertTrue(response_currency_options[0]['rate'] > 40)
+            self.assertTrue(response_currency_options[0]['rate'] == 200.0)
             self.assertEqual(response_currency_options[1]['currency'], 'BTC')
             self.assertTrue(response_currency_options[1]['rate'] == 1.0)
         else:
             self.assertEqual(response_currency_options[0]['currency'], 'USD')
             self.assertEqual(response_currency_options[0]['rate'], 1.0)
             self.assertEqual(response_currency_options[1]['currency'], 'BTC')
-            self.assertTrue(response_currency_options[1]['rate'] < 1.0)
+            self.assertTrue(response_currency_options[1]['rate'] == 0.01)
         return client
 
     def _submit_pay_form(self, client, offer, solution, currency, pay):
@@ -107,6 +108,13 @@ class TestPaypalPayment(unittest.TestCase):
         self.assertEqual(response.content, 'OK')
         payment = Payment.objects.get(pk=payment.id)
         self.assertEqual(payment.status, Payment.CONFIRMED_IPN)
+
+    def setUp(self):
+        self.get_rate_old = currency_service.get_rate
+        mockers.mock_currency_service()
+
+    def tearDown(self):
+        currency_service.get_rate = self.get_rate_old
 
     def test_paypal_payment_complete(self):
         offer, solution = self._create_test_data()

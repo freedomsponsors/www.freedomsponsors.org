@@ -3,10 +3,11 @@ from django.test import TestCase
 from django.utils.unittest import skipIf
 from django.conf import settings
 from bitcoin_frespo.utils import bitcoin_adapter
-from core.tests.helpers import test_data, email_asserts
+from core.tests.helpers import test_data, email_asserts, mockers
 from core.models import *
 from django.test.client import Client
 from core.services import bitcoin_frespo_services
+from frespo_currencies import currency_service
 
 __author__ = 'tony'
 
@@ -48,10 +49,10 @@ class BitcoinPaymentTests(TestCase):
             self.assertEqual(response_currency_options[0]['currency'], 'USD')
             self.assertTrue(response_currency_options[0]['rate'] == 1.0)
             self.assertEqual(response_currency_options[1]['currency'], 'BTC')
-            self.assertTrue(response_currency_options[1]['rate'] < 1.0)
+            self.assertTrue(response_currency_options[1]['rate'] == 0.01)
         else:
             self.assertEqual(response_currency_options[0]['currency'], 'USD')
-            self.assertTrue(response_currency_options[0]['rate'] > 1.0)
+            self.assertTrue(response_currency_options[0]['rate'] == 100.0)
             self.assertEqual(response_currency_options[1]['currency'], 'BTC')
             self.assertEqual(response_currency_options[1]['rate'], 1.0)
         return response_offer, response_solutions
@@ -144,6 +145,13 @@ class BitcoinPaymentTests(TestCase):
                                   subject='%s has made you a BTC %s payment' % (offer.sponsor.getUserInfo().screenName, email_value1))
         email_asserts.assert_sent(self, to=offer.sponsor.email, subject='You have made a BTC %s payment' % email_value1)
         email_asserts.assert_sent(self, to=settings.ADMINS[0][1], subject='Bitcoin payment made - %s' % email_value2)
+
+    def setUp(self):
+        self.get_rate_old = currency_service.get_rate
+        mockers.mock_currency_service()
+
+    def tearDown(self):
+        currency_service.get_rate = self.get_rate_old
 
     def test_bitcoin_payment_complete(self):
 
