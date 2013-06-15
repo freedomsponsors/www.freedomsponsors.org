@@ -4,6 +4,7 @@ from south.db import db
 from south.v2 import DataMigration
 from django.db import models
 from frespo_currencies import currency_service
+from decimal import Decimal
 
 
 class Migration(DataMigration):
@@ -12,8 +13,8 @@ class Migration(DataMigration):
         "Write your forwards methods here."
         for payment in orm.Payment.objects.all():
             payment.offer_currency = payment.offer.currency
-            payment.offer2payment_suggested_rate = currency_service.get_rate(payment.offer_currency, payment.currency)
-            payment.usd2payment_rate = currency_service.get_rate('USD', payment.currency)
+            payment.offer2payment_suggested_rate = Decimal(str(currency_service.get_rate(payment.offer_currency, payment.currency)))
+            payment.usd2payment_rate = Decimal(str(currency_service.get_rate('USD', payment.currency)))
             payment.save()
 
     def backwards(self, orm):

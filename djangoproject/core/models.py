@@ -744,8 +744,8 @@ class Payment(models.Model):
         payment.offer = offer
         payment.currency = currency
         payment.offer_currency = offer.currency
-        payment.offer2payment_suggested_rate = currency_service.get_rate(offer.currency, payment.currency)
-        payment.usd2payment_rate = currency_service.get_rate('USD', payment.currency)
+        payment.offer2payment_suggested_rate = Decimal(str(currency_service.get_rate(offer.currency, payment.currency)))
+        payment.usd2payment_rate = Decimal(str(currency_service.get_rate('USD', payment.currency)))
         payment.creationDate = timezone.now()
         payment.lastChangeDate = payment.creationDate
         payment.status = Payment.CREATED
