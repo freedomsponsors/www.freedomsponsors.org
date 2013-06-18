@@ -264,7 +264,7 @@ def _setOfferAttributesFromDictionary(offer, dict):
 
 
 def _throwIfAlreadySponsoring(issue, user):
-    offer = get_or_none(Offer, issue=issue, sponsor=user)
+    offer = get_or_none(Offer, issue=issue, sponsor=user, status__in=[Offer.OPEN, Offer.REVOKED])
     if(offer):
         raise BaseException('Already sponsoring: '+str(issue.id)+','+str(user.id))
 
