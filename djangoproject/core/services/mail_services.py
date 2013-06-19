@@ -251,7 +251,8 @@ def notifyWatchers_newoffercomment(comment, watches):
 
 def notify_bitcoin_payment_was_sent_to_programmers_and_is_waiting_confirmation(payment):
     parts = PaymentPart.objects.filter(payment__id=payment.id)
-    contextData = {'payment': payment,
+    contextData = {'you': payment.offer.sponsor,
+                   'payment': payment,
                    'parts': parts}
     template = get_template('email/bitcoin_payment_was_sent_to_programmers_and_is_waiting_confirmation.html')
     context = Context(contextData)

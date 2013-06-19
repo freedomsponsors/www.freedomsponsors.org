@@ -2,12 +2,12 @@
 {% block mainContent%}
     Hello {{ you.getUserInfo.screenName }}<br>
 
-    We have received you BTC {{ payment.total_bitcoin_received }} payment, and have forwarded it to the programmer.<br>
+    We have received you BTC {{ payment.total_bitcoin_received }} payment, and we've forwarded it to the programmer.<br>
     Outgoing transaction details<br><br>
-    <table>
+    <table border="1" cellspacing="0" cellpadding="3">
         <tr>
             <th>Programmer</th>
-            <th>Value</th>
+            <th>Value (BTC)</th>
             <th>Transaction hash</th>
         </tr>
         {% for part in parts %}
@@ -19,7 +19,7 @@
         {% endfor %}
     </table>
     <br>
-    We are waiting until the transaction(s) above have 3 confirmations.<br>
+    We are waiting until the transaction(s) above reach 3 confirmations.<br>
     As soon as that happens, your payment will be complete (we'll send you another email then).<br>
     <br>
     Thank you for using FreedomSponsors.

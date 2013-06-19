@@ -1,0 +1,31 @@
+{% extends "core/base.html" %}
+{% block mainContent%}
+
+<form method="post" class="form-horizontal">
+{% csrf_token %}
+  <fieldset>
+
+      <div class="control-group">
+          <label class="control-label" for="to">Send mail to</label>
+          <div class="controls">
+              <input type="text" id="to" name="to" value="{{ to }}">
+          </div>
+      </div>
+      <div class="control-group">
+          <label class="control-label" for="test">Email</label>
+          <div class="controls">
+              <select id="test" name="test">
+                  <option value="bitcoin_payment_was_sent_to_programmers_and_is_waiting_confirmation">bitcoin_payment_was_sent_to_programmers_and_is_waiting_confirmation</option>
+              </select>
+          </div>
+      </div>
+    <div class="control-group">
+        <div class="span9">
+            <input type="submit" class="btn btn-primary pull-right" value="Vai!">
+        </div>
+    </div>
+
+  </fieldset>
+</form>
+
+{% endblock mainContent%}
