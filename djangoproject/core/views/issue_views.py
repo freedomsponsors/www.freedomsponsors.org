@@ -387,6 +387,7 @@ def _generate_payment_entity(offer, dict):
             pay = Decimal(pay_str)
             if pay > 0:
                 solution = Solution.objects.get(pk=solution_id)
+                solution = Solution.objects.get(pk=solution_id)
                 part = PaymentPart.newPart(payment, solution, pay)
                 parts.append(part)
                 sum += pay

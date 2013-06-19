@@ -91,14 +91,15 @@ def bitcoin_pay_programmers():
                                                             to_address = part.solution.programmer.getUserInfo().bitcoin_receive_address,
                                                             value = part.price)
             part.save()
+            _notify_payments_sent_if_applicable(part.payment)
             _log_info_money_sent(part)
         else:
             _log_error_invalid_paymentpart_for_sending_money(part, verr)
 
 
 def _notify_payment_finished_if_applicable(payment_id):
-    payment = Payment.objects.get(pk = payment_id)
-    parts = PaymentPart.objects.filter(payment__id = payment.id)
+    payment = Payment.objects.get(pk=payment_id)
+    parts = PaymentPart.objects.filter(payment__id=payment.id)
     is_finished = True
     for part in parts:
         if part.money_sent.status != MoneySent.CONFIRMED_TRN:
@@ -113,6 +114,17 @@ def _notify_payment_finished_if_applicable(payment_id):
             payment.total_bitcoin_received,
             payment.offer.issue.title)
         mail_services.notify_admin('Bitcoin payment made - %s'%payment.total_bitcoin_received, msg)
+
+
+def _notify_payments_sent_if_applicable(payment):
+    parts = PaymentPart.objects.filter(payment__id=payment.id)
+    notify_sent = parts and True
+    for part in parts:
+        if part.money_sent.status != MoneySent.SENT:
+            notify_sent = False
+            break
+    if notify_sent:
+        mail_services.notify_bitcoin_payment_was_sent_to_programmers_and_is_waiting_confirmation(payment)
 
 
 def _filter_payments_pending_active_receive_confirmation():

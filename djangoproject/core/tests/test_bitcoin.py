@@ -7,6 +7,7 @@ from core.tests.helpers import test_data, email_asserts, mockers
 from core.models import *
 from django.test.client import Client
 from core.services import bitcoin_frespo_services
+from core.utils import paypal_adapter
 from frespo_currencies import currency_service
 
 __author__ = 'tony'
@@ -37,6 +38,11 @@ class BitcoinPaymentTests(TestCase):
         return offer, programmer, solution
 
     def _request_payment_form(self, client, offer, expect_usd=False):
+
+        def is_verified_account_mock(email):
+            return True
+        paypal_adapter.is_verified_account = is_verified_account_mock
+
         response = client.get('/core/offer/%s/pay' % offer.id)
         self.assertEqual(response.status_code, 200)
         response_offer = response.context['offer']
@@ -94,19 +100,24 @@ class BitcoinPaymentTests(TestCase):
         self.assertEqual(payment.status, Payment.CONFIRMED_TRN)
         return payment
 
-    def _pay_programmer(self, payment, value):
+    def _pay_programmer(self, payment, value, email_value):
         #Pay programmer
         def make_payment_mock(from_address, to_address, value):
             print('mock send bitcoins: %s ---(%s)---> %s' % (from_address, value, to_address))
             return 'dummy_txn_hash_2'
 
         bitcoin_adapter.make_payment = make_payment_mock
+        email_asserts.clear_sent()
         bitcoin_frespo_services.bitcoin_pay_programmers()
         part = PaymentPart.objects.get(payment__id=payment.id)
         self.assertTrue(part.money_sent is not None)
         self.assertEqual(part.money_sent.value, value)
         self.assertEqual(part.money_sent.status, MoneySent.SENT)
         self.assertEqual(part.money_sent.transaction_hash, 'dummy_txn_hash_2')
+        email_asserts.assert_sent_count(self, 2)
+        subject = 'BTC %s payment received, and forwarded to programmer. Wating confirmation.' % email_value
+        email_asserts.assert_sent(self, to=payment.offer.sponsor.email, subject=subject)
+        email_asserts.assert_sent(self, to=settings.ADMINS[0][1], subject='[ADMIN NOTIFY] %s' % subject)
 
     def _ipn_confirmation_send(self, payment, transfer_value):
         client2 = Client()
@@ -139,6 +150,7 @@ class BitcoinPaymentTests(TestCase):
             return txn
 
         bitcoin_adapter.get_transaction = get_transaction_mock
+        email_asserts.clear_sent()
         bitcoin_frespo_services.bitcoin_active_send_confirmation()
         email_asserts.assert_sent_count(self, 3)
         email_asserts.assert_sent(self, to=programmer.email,
@@ -164,7 +176,7 @@ class BitcoinPaymentTests(TestCase):
         self._submitPayForm(client, response_offer, response_solutions, '5.00', '5.1505')
         payment = self._ipn_confirmation_receive(Decimal('5.1505'))
         payment = self._confirm_received(payment, 5.1505)
-        self._pay_programmer(payment, Decimal('5'))
+        self._pay_programmer(payment, Decimal('5'), '5.1505')
         self._ipn_confirmation_send(payment, -Decimal('5'))
         self._confirm_sent(offer, programmer, Decimal('5'), '5.00', '5.1505')
 
@@ -179,6 +191,6 @@ class BitcoinPaymentTests(TestCase):
         self._submitPayForm(client, response_offer, response_solutions, '0.10', '0.1035')
         payment = self._ipn_confirmation_receive(Decimal('0.1035'))
         payment = self._confirm_received(payment, 0.1035)
-        self._pay_programmer(payment, Decimal('0.1'))
+        self._pay_programmer(payment, Decimal('0.1'), '0.1035')
         self._ipn_confirmation_send(payment, -Decimal('0.1'))
         self._confirm_sent(offer, programmer, Decimal('0.1'), '0.10', '0.1035')

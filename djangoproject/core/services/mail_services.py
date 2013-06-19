@@ -249,6 +249,19 @@ def notifyWatchers_newoffercomment(comment, watches):
     _notify_watchers(send_func, watches)
 
 
+def notify_bitcoin_payment_was_sent_to_programmers_and_is_waiting_confirmation(payment):
+    parts = PaymentPart.objects.filter(payment__id=payment.id)
+    contextData = {'payment': payment,
+                   'parts': parts}
+    template = get_template('email/bitcoin_payment_was_sent_to_programmers_and_is_waiting_confirmation.html')
+    context = Context(contextData)
+    html_content = template.render(context)
+    subject = 'BTC %s payment received, and forwarded to programmer. Wating confirmation.' % payment.total_bitcoin_received
+    send_html_mail(subject, html_content, html_content, settings.DEFAULT_FROM_EMAIL, [payment.offer.sponsor.email])
+    adm_subject = '[ADMIN NOTIFY] %s' % subject
+    notify_admin(adm_subject, html_content)
+
+
 def _notify_watchers(send_func, watches, already_sent_to = None):
     if not already_sent_to:
         already_sent_to = {}
