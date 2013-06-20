@@ -52,21 +52,22 @@ def admail(request):
     else:
         messages.info(request, 'nice try :-). If you do find a hole, please have the finesse to let us know though.')
     return render_to_response('core/admail.html',
-        {},
+                              {},
                               context_instance = RequestContext(request))
 
-def testmail(request):
+
+def mailtest(request):
     to = ''
     if request.user.is_superuser:
         to = request.POST.get('to')
         test = request.POST.get('test')
         if test:
-            testmail_service.testmail(test, to)
+            testmail_service.mailtest(test, to)
             msg = 'test mail %s sent to %s.' % (test, to)
             messages.info(request, msg)
     else:
         messages.info(request, 'nice try :-). If you do find a hole, please have the finesse to let us know though.')
-    return render_to_response('core/testmail.html',
+    return render_to_response('core/mailtest.html',
                               {'to': to},
                               context_instance = RequestContext(request))
 

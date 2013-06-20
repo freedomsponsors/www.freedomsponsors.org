@@ -47,7 +47,7 @@ PAYMENT_BITCOIN = {
 }
 
 
-def testmail(test, to):
+def mailtest(test, to):
     if test == 'bitcoin_payment_was_sent_to_programmers_and_is_waiting_confirmation':
         template = loader.get_template('email/bitcoin_payment_was_sent_to_programmers_and_is_waiting_confirmation.html')
         contextData = {
