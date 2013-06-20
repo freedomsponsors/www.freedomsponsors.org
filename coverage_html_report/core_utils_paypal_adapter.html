@@ -5,7 +5,7 @@
     
     
     <meta http-equiv='X-UA-Compatible' content='IE=emulateIE7' />
-    <title>Coverage for core/utils/paypal_adapter: 61%</title>
+    <title>Coverage for core/utils/paypal_adapter: 48%</title>
     <link rel='stylesheet' href='style.css' type='text/css'>
     
     <script type='text/javascript' src='jquery-1.4.3.min.js'></script>
@@ -21,16 +21,16 @@
 <div id='header'>
     <div class='content'>
         <h1>Coverage for <b>core/utils/paypal_adapter</b> :
-            <span class='pc_cov'>61%</span>
+            <span class='pc_cov'>48%</span>
         </h1>
         <img id='keyboard_icon' src='keybd_closed.png'>
         <h2 class='stats'>
             44 statements &nbsp;
-            <span class='run hide_run shortkey_r button_toggle_run'>29 run</span>
-            <span class='mis shortkey_m button_toggle_mis'>15 missing</span>
+            <span class='run hide_run shortkey_r button_toggle_run'>23 run</span>
+            <span class='mis shortkey_m button_toggle_mis'>21 missing</span>
             <span class='exc shortkey_x button_toggle_exc'>0 excluded</span>
             
-                <span class='par run hide_run shortkey_p button_toggle_par'>2 partial</span>
+                <span class='par run hide_run shortkey_p button_toggle_par'>1 partial</span>
             
         </h2>
     </div>
@@ -133,8 +133,8 @@
 <p id='n68' class='stm mis'><a href='#n68'>68</a></p>
 <p id='n69' class='pln'><a href='#n69'>69</a></p>
 <p id='n70' class='stm run hide_run'><a href='#n70'>70</a></p>
-<p id='n71' class='stm run hide_run'><a href='#n71'>71</a></p>
-<p id='n72' class='stm run hide_run'><a href='#n72'>72</a></p>
+<p id='n71' class='stm mis'><a href='#n71'>71</a></p>
+<p id='n72' class='stm mis'><a href='#n72'>72</a></p>
 <p id='n73' class='pln'><a href='#n73'>73</a></p>
 <p id='n74' class='pln'><a href='#n74'>74</a></p>
 <p id='n75' class='pln'><a href='#n75'>75</a></p>
@@ -143,12 +143,12 @@
 <p id='n78' class='pln'><a href='#n78'>78</a></p>
 <p id='n79' class='pln'><a href='#n79'>79</a></p>
 <p id='n80' class='pln'><a href='#n80'>80</a></p>
-<p id='n81' class='stm run hide_run'><a href='#n81'>81</a></p>
-<p id='n82' class='stm run hide_run'><a href='#n82'>82</a></p>
-<p id='n83' class='stm par run hide_run'><a href='#n83'>83</a></p>
+<p id='n81' class='stm mis'><a href='#n81'>81</a></p>
+<p id='n82' class='stm mis'><a href='#n82'>82</a></p>
+<p id='n83' class='stm mis'><a href='#n83'>83</a></p>
 <p id='n84' class='stm mis'><a href='#n84'>84</a></p>
 <p id='n85' class='stm mis'><a href='#n85'>85</a></p>
-<p id='n86' class='stm run hide_run'><a href='#n86'>86</a></p>
+<p id='n86' class='stm mis'><a href='#n86'>86</a></p>
                 
             </td>
             <td class='text' valign='top'>
@@ -222,8 +222,8 @@
 <p id='t68' class='stm mis'>&nbsp; &nbsp; <span class='key'>return</span> <span class='nam'>True</span><span class='strut'>&nbsp;</span></p>
 <p id='t69' class='pln'><span class='strut'>&nbsp;</span></p>
 <p id='t70' class='stm run hide_run'><span class='key'>def</span> <span class='nam'>is_verified_account</span><span class='op'>(</span><span class='nam'>email</span><span class='op'>)</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
-<p id='t71' class='stm run hide_run'>&nbsp; &nbsp; <span class='key'>try</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
-<p id='t72' class='stm run hide_run'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='nam'>response</span> <span class='op'>=</span> <span class='nam'>paypal</span><span class='op'>.</span><span class='nam'>pay</span><span class='op'>(</span><span class='strut'>&nbsp;</span></p>
+<p id='t71' class='stm mis'>&nbsp; &nbsp; <span class='key'>try</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
+<p id='t72' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='nam'>response</span> <span class='op'>=</span> <span class='nam'>paypal</span><span class='op'>.</span><span class='nam'>pay</span><span class='op'>(</span><span class='strut'>&nbsp;</span></p>
 <p id='t73' class='pln'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class='nam'>actionType</span> <span class='op'>=</span> <span class='str'>&#39;PAY&#39;</span><span class='op'>,</span><span class='strut'>&nbsp;</span></p>
 <p id='t74' class='pln'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class='nam'>cancelUrl</span> <span class='op'>=</span> <span class='nam'>settings</span><span class='op'>.</span><span class='nam'>PAYPAL_CANCEL_URL</span><span class='op'>,</span><span class='strut'>&nbsp;</span></p>
 <p id='t75' class='pln'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class='nam'>currencyCode</span> <span class='op'>=</span> <span class='str'>&#39;USD&#39;</span><span class='op'>,</span><span class='strut'>&nbsp;</span></p>
@@ -232,12 +232,12 @@
 <p id='t78' class='pln'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class='nam'>returnUrl</span> <span class='op'>=</span> <span class='nam'>settings</span><span class='op'>.</span><span class='nam'>PAYPAL_RETURN_URL</span><span class='op'>,</span><span class='strut'>&nbsp;</span></p>
 <p id='t79' class='pln'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class='nam'>ipnNotificationUrl</span> <span class='op'>=</span> <span class='nam'>settings</span><span class='op'>.</span><span class='nam'>PAYPAL_IPNNOTIFY_URL</span><span class='strut'>&nbsp;</span></p>
 <p id='t80' class='pln'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='op'>)</span><span class='strut'>&nbsp;</span></p>
-<p id='t81' class='stm run hide_run'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='key'>return</span> <span class='nam'>True</span><span class='strut'>&nbsp;</span></p>
-<p id='t82' class='stm run hide_run'>&nbsp; &nbsp; <span class='key'>except</span> <span class='nam'>PaypalError</span> <span class='key'>as</span> <span class='nam'>e</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
-<p id='t83' class='stm par run hide_run'><span class='annotate' title='no jump to this line number'>84</span>&nbsp; &nbsp; &nbsp; &nbsp; <span class='key'>if</span> <span class='nam'>e</span><span class='op'>.</span><span class='nam'>code</span> <span class='op'>!=</span> <span class='str'>&#39;520009&#39;</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
+<p id='t81' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='key'>return</span> <span class='nam'>True</span><span class='strut'>&nbsp;</span></p>
+<p id='t82' class='stm mis'>&nbsp; &nbsp; <span class='key'>except</span> <span class='nam'>PaypalError</span> <span class='key'>as</span> <span class='nam'>e</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
+<p id='t83' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='key'>if</span> <span class='nam'>e</span><span class='op'>.</span><span class='nam'>code</span> <span class='op'>!=</span> <span class='str'>&#39;520009&#39;</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
 <p id='t84' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class='nam'>msg</span> <span class='op'>=</span> <span class='str'>&#39;email:%s, error:%s&#39;</span> <span class='op'>%</span> <span class='op'>(</span><span class='nam'>email</span><span class='op'>,</span> <span class='nam'>e</span><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
 <p id='t85' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class='nam'>mail_services</span><span class='op'>.</span><span class='nam'>notify_admin</span><span class='op'>(</span><span class='str'>&quot;Unexpected error from Paypal when trying to see if account exists&quot;</span><span class='op'>,</span> <span class='nam'>msg</span><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
-<p id='t86' class='stm run hide_run'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='key'>return</span> <span class='nam'>False</span><span class='strut'>&nbsp;</span></p>
+<p id='t86' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='key'>return</span> <span class='nam'>False</span><span class='strut'>&nbsp;</span></p>
                 
             </td>
         </tr>
