@@ -324,6 +324,7 @@
                                     <td>
                                         <img ng-show="{[{ solution.acceptsPaypal }]}" src="/static/img/paypal_icon_32.png" class="popopo" rel="popover" data-content="FreedomSponsors has verified that this user is able to receive payments via Paypal" data-original-title="Paypal verified">
                                         <img ng-show="{[{ solution.acceptsBitcoin }]}" src="/static/img/bitcoin_icon_32.png" class="popopo" rel="popover" data-content="This user may receive payments in Bitcoin" data-original-title="Accepts Bitcoin">
+                                        <img ng-show="{[{ !solution.acceptsBitcoin && !solution.acceptsPaypal }]}" src="/static/img/nopayment.png" class="popopo" rel="popover" data-content="This user is unable to receive payments of any sort because no Paypal account or Bitcoin receive address is available." data-original-title="No payment method available">
                                     </td>
                                     <td>
                                         <input type="hidden" name="solutionId_{[{ $index }]}" value="{[{ solution.id }]}">
