@@ -1,6 +1,6 @@
 
 .fav-td:before {
-    background: url(/static/img/globe.png);
+    background-image: url(/static/img/globe.png);
     background-size: 16px 16px;
     content: '';
     width: 16px;
@@ -11,39 +11,43 @@
     margin-right: 5px
 }
 
-.fav-wwwfreedomsponsorsorg:before {background: url(http://www.freedomsponsors.org/favicon.ico); background-size: 16px 16px; }
-.fav-jenkins:before {background: url(http://jenkins-ci.org/sites/default/files/jenkins_favicon.ico); background-size: 16px 16px; }
-.fav-maven-2-3:before {background: url(https://maven.apache.org/favicon.ico); background-size: 16px 16px; }
-.fav-gnome:before {background: url(http://www.gnome.org/wp-content/themes/gnome-grass/images/favicon.png); background-size: 16px 16px; }
-.fav-redmine:before {background: url(http://demo.redmine.org/favicon.ico?1370075235); background-size: 16px 16px; }
-.fav-gittip:before {background: url(https://github.com/gittip/www.gittip.com/blob/master/img-src/gittip-logo-24.png?raw=true); background-size: 16px 16px; }
-.fav-imgscalr:before {background: url(http://imgscalr.com/public/images/favicon.png); background-size: 16px 16px; }
-.fav-liquibase-core:before {background: url(https://maven.apache.org/favicon.ico); background-size: 16px 16px; }
-.fav-tahoe-lafs:before {background: url(https://activemq.apache.org/favicon.ico); background-size: 16px 16px; }
-.fav-playorm:before {background: url(http://github.com/favicon.ico); background-size: 16px 16px; }
-.fav-sb-jenkins-dynamicparameter:before {background: url(http://jenkins-ci.org/sites/default/files/jenkins_favicon.ico); background-size: 16px 16px; }
-.fav-gegl-the-new-gimp-engine:before {background: url(http://www.gimp.org/images/wilber16.png); background-size: 16px 16px; }
-.fav-gimp:before {background: url(http://www.gimp.org/images/wilber16.png); background-size: 16px 16px; }
-.fav-ejtp-lib-python:before {background: url(https://raw.github.com/campadrenalin/EJTP-lib-python/stable/resources/bluethulu.png); background-size: 16px 16px; }
-.fav-resources-plugin:before {background: url(http://jira.grails.org/secure/projectavatar?pid=10202&avatarId=10009&size=large); background-size: 16px 16px; }
-.fav-thunderbird:before {background: url(https://www.mozilla.org/thunderbird/img/favicon.ico); background-size: 16px 16px; }
-.fav-diaspora:before {background: url(https://d3mbmfe8268ud7.cloudfront.net/assets/favicon-a15200a371573542232c9546210c4e69.png); background-size: 16px 16px; }
-.fav-wordpress:before {background: url(http://s.wordpress.org/favicon.ico?3); background-size: 16px 16px; }
-.fav-scribus:before {background: url(http://scribus.net/wiki/skins/common/images/favicon.ico); background-size: 16px 16px; }
-.fav-activemq-net:before {background: url(http://activemq.apache.org/favicon.ico); background-size: 16px 16px; }
-.fav-inkscape:before {background: url(http://inkscape.org/favicon.ico); background-size: 16px 16px; }
-.fav-sphinxsearch:before {background: url(http://sphinxsearch.com/favicon.ico); background-size: 16px 16px; }
-.fav-avant-window-navigator:before {background: url(https://launchpadlibrarian.net/8569457/awn-64.png); background-size: 16px 16px; }
-.fav-libreoffice:before {background: url(http://www.libreoffice.org/favicon.ico); background-size: 16px 16px; }
-.fav-cyrus-imap:before {background: url(http://www.cyrusimap.org/images/favicon.ico); background-size: 16px 16px; }
-.fav-evolution:before {background: url(http://projects.gnome.org/evolution/images/evo-logo.ico); background-size: 16px 16px; }
-.fav-vinagre:before {background: url(http://www.gnome.org/wp-content/themes/gnome-grass/images/favicon.png); background-size: 16px 16px; }
-.fav-k9mail:before {background: url(http://code.google.com/p/k9mail/logo?cct=1363464038); background-size: 16px 16px; }
-.fav-mailnews-core:before {background: url(https://www.mozilla.org/thunderbird/img/favicon.ico); background-size: 16px 16px; }
-.fav-banshee:before {background: url(http://banshee.fm/theme/images/favicon.ico); background-size: 16px 16px; }
-.fav-opengroupware-coils:before {background: url(http://freecode.com/favicon.ico); background-size: 16px 16px; }
-.fav-rawtherapee:before {background: url(http://rawtherapee.com/favicon.ico); background-size: 16px 16px; }
-.fav-python-libdeje:before {background: url(http://python.org/favicon.ico); background-size: 16px 16px; }
-.fav-gtktextview:before {background: url(http://projects.gnome.org/gedit/images/icon.png); background-size: 16px 16px; }
-.fav-xorg:before {background: url(https://icons.duckduckgo.com/i/ftp.x.org.ico); background-size: 16px 16px; }
-.fav-kona:before {background: url(http://github.com/favicon.ico); background-size: 16px 16px; }
+.fav-akonadi:before {background-image:url(http://kde.org/media/images/favicon.ico)}
+.fav-drupal-recurly:before, .fav-recurly:before{background-image:url(https://drupal.org/misc/favicon.ico)}
+/*http://blog.golang.org/favicon.ico*/
+.fav-gentoo-linux:before{background-image:url(http://www.gentoo.org/favicon.ico)}
+.fav-wwwfreedomsponsorsorg:before {background-image: url(http://www.freedomsponsors.org/favicon.ico);  }
+.fav-jenkins:before {background-image: url(http://jenkins-ci.org/sites/default/files/jenkins_favicon.ico);  }
+.fav-maven-2-3:before {background-image: url(https://maven.apache.org/favicon.ico);  }
+.fav-gnome:before {background-image: url(http://www.gnome.org/wp-content/themes/gnome-grass/images/favicon.png);  }
+.fav-redmine:before {background-image: url(http://demo.redmine.org/favicon.ico?1370075235);  }
+.fav-gittip:before {background-image: url(https://github.com/gittip/www.gittip.com/blob/master/img-src/gittip-logo-24.png?raw=true);  }
+.fav-imgscalr:before {background-image: url(http://imgscalr.com/public/images/favicon.png);  }
+.fav-liquibase-core:before {background-image: url(https://maven.apache.org/favicon.ico);  }
+.fav-tahoe-lafs:before {background-image: url(https://activemq.apache.org/favicon.ico); }
+.fav-playorm:before {background-image: url(http://github.com/favicon.ico);  }
+.fav-sb-jenkins-dynamicparameter:before {background-image: url(http://jenkins-ci.org/sites/default/files/jenkins_favicon.ico);  }
+.fav-gegl-the-new-gimp-engine:before {background-image: url(http://www.gimp.org/images/wilber16.png); }
+.fav-gimp:before {background-image: url(http://www.gimp.org/images/wilber16.png);  }
+.fav-ejtp-lib-python:before {background-image: url(https://raw.github.com/campadrenalin/EJTP-lib-python/stable/resources/bluethulu.png);  }
+.fav-resources-plugin:before {background-image: url(http://jira.grails.org/secure/projectavatar?pid=10202&avatarId=10009&size=large);  }
+.fav-thunderbird:before {background-image: url(https://www.mozilla.org/thunderbird/img/favicon.ico); }
+.fav-diaspora:before {background-image: url(https://d3mbmfe8268ud7.cloudfront.net/assets/favicon-a15200a371573542232c9546210c4e69.png); }
+.fav-wordpress:before {background-image: url(http://s.wordpress.org/favicon.ico?3); }
+.fav-scribus:before {background-image: url(http://scribus.net/wiki/skins/common/images/favicon.ico);}
+.fav-activemq-net:before {background-image: url(http://activemq.apache.org/favicon.ico);}
+.fav-inkscape:before {background-image: url(http://inkscape.org/favicon.ico); }
+.fav-sphinxsearch:before {background-image: url(http://sphinxsearch.com/favicon.ico);  }
+.fav-avant-window-navigator:before {background-image: url(https://launchpadlibrarian.net/8569457/awn-64.png);  }
+.fav-libreoffice:before {background-image: url(http://www.libreoffice.org/favicon.ico); }
+.fav-cyrus-imap:before {background-image: url(http://www.cyrusimap.org/images/favicon.ico); }
+.fav-evolution:before {background-image: url(http://projects.gnome.org/evolution/images/evo-logo.ico);  }
+.fav-vinagre:before {background-image: url(http://www.gnome.org/wp-content/themes/gnome-grass/images/favicon.png); }
+.fav-k9mail:before {background-image: url(http://code.google.com/p/k9mail/logo?cct=1363464038);  }
+.fav-mailnews-core:before {background-image: url(https://www.mozilla.org/thunderbird/img/favicon.ico);  }
+.fav-banshee:before {background-image: url(http://banshee.fm/theme/images/favicon.ico);  }
+.fav-opengroupware-coils:before {background-image: url(http://freecode.com/favicon.ico);  }
+.fav-rawtherapee:before {background-image: url(http://rawtherapee.com/favicon.ico);  }
+.fav-python-libdeje:before {background-image: url(http://python.org/favicon.ico); }
+.fav-gtktextview:before {background-image: url(http://projects.gnome.org/gedit/images/icon.png);  }
+.fav-xorg:before {background-image: url(https://icons.duckduckgo.com/i/ftp.x.org.ico); }
+.fav-kona:before {background-image: url(http://github.com/favicon.ico); }
