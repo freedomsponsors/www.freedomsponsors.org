@@ -10,6 +10,7 @@ from core.services import stats_services
 from django.contrib import messages
 import logging
 from core.services import testmail_service
+from core.views import is_new_layout, template_folder
 
 logger = logging.getLogger(__name__)
 
@@ -75,24 +76,25 @@ def mailtest(request):
 def home(request):
     if(request.user.is_authenticated() and request.user.getUserInfo() == None):
         return redirect('/core/user/edit')
-    issues_sponsoring = issue_services.search_issues(is_public_suggestion = False)[0:20]
-    issues_kickstarting = issue_services.search_issues(is_public_suggestion = True)[0:20]
-    return render_to_response('core/home.html',
-        {'issues_sponsoring':issues_sponsoring,
-         'issues_kickstarting':issues_kickstarting},
-        context_instance = RequestContext(request))
+    size = 3 if is_new_layout(request) else 20
+    issues_sponsoring = issue_services.search_issues(is_public_suggestion=False)[0:size]
+    issues_kickstarting = issue_services.search_issues(is_public_suggestion=True)[0:size]
+    return render_to_response(template_folder(request) + 'home.html',
+        {'issues_sponsoring': issues_sponsoring,
+         'issues_kickstarting': issues_kickstarting},
+        context_instance=RequestContext(request))
 
 
 def stats(request):
     stats = stats_services.get_stats()
     return render_to_response('core/stats.html',
-        {'stats':stats,},
-        context_instance = RequestContext(request))
+        {'stats': stats},
+        context_instance=RequestContext(request))
 
 
-
-
-
-
-
-
+def toggle_layout(request):
+    if 'new_layout' in request.session:
+        del request.session['new_layout']
+    else:
+        request.session['new_layout'] = True
+    return redirect('/')

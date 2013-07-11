@@ -1,0 +1,77 @@
+{% extends "core/base.html" %}
+{% block mainContent%}
+
+  <h3>Feedback</h3>
+  We care a lot about what you think about our website.<br>
+  Please let us know if you have any problems, or have any idea on how we can serve the open source community better!<br>
+  We take feedback very seriously. If you're reporting a problem, we'll get back at you as soon as possible.
+  <hr>
+
+{% if user.is_authenticated %}
+
+<div class="accordion" id="accordion2">
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+        Write feedback
+      </a>
+    </div>
+    <div id="collapseTwo" class="accordion-body collapse">
+      <div class="accordion-inner">
+        <form method="post" class="form-horizontal" action="/core/feedback/submit">
+        {% csrf_token %}
+          <fieldset>
+              <div class="control-group">
+                <!-- issue title -->
+                <label class="control-label" for="title">Summary</label>
+                <div class="controls">
+                  <input type="text" class="input-xlarge span8" id="title" name="title" value="{{title}}" placeholder="A brief title">
+                </div>
+              </div>
+              <div id="div_description" class="control-group">
+                <!-- issue description -->
+                <label class="control-label" for="description">Description</label>
+                <div class="controls">
+                  <textarea class="input-xlarge span9" id="description" name="description" rows="10" placeholder="Your thoughts here">{{description}}</textarea>
+                </div>
+              </div>
+            <div class="form-actions">
+              <button id="btnSubmit" type="submit" class="btn btn-primary">Send feedback</button>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+  $(function(){
+    document.getElementById('btnSubmit').onclick = function(){
+      if(! $('#title').val()){
+        alert('Title is required');
+        return false;
+      }
+      if(! $('#description').val()){
+        alert('Description is required');
+        return false;
+      }
+    };
+  })
+
+</script>
+  <hr>
+{% else %}
+<div class="alert">
+  Log in to write your feedback.
+</div>
+{% endif %}
+{% if issues %}
+  {% include 'core/include/issue_grid.html' with showKey='false' showProject='false' showOffers='false' showWorking='true' showCreatedBy='true' %}
+{% else %}
+  <h3>No feedback so far</h3>
+{% endif %}
+
+
+{% endblock mainContent%}

@@ -23,6 +23,7 @@ DATABASES = {
         default='sqlite:///' + PROJECT_DIR.child('database.db'))
 }
 
+MEDIA_ROOT = PROJECT_DIR.child('core').child('static').child('media')
 
 GITHUB_BOT_USERNAME = 'freedomsponsors-bot'
 GITHUB_BOT_PASSWORD = '*********'
@@ -75,10 +76,6 @@ USE_L10N = True
 
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True
-
-# Absolute filesystem path to the directory that will hold user-uploaded files.
-# Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = ''
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.

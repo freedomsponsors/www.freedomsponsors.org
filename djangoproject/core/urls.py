@@ -6,6 +6,7 @@ from django.views.generic.simple import redirect_to
 urlpatterns = patterns('core.views.main_views',
     url(r'^$', 'home'),
     url(r'^home/$', 'home'),
+    url(r'^toggle_layout/$', 'toggle_layout'),
     url(r'^stats/$', 'stats'),
     url(r'^admail/$', 'admail'),
     url(r'^mailtest/$', 'mailtest'),
@@ -17,7 +18,6 @@ urlpatterns = patterns('core.views.main_views',
 )
 
 urlpatterns += patterns('core.views.issue_views',
-    url(r'^project/$', 'listProjects'),
     url(r'^myissues/$', 'myissues'),
     url(r'^issue/$', 'listIssues'),
     url(r'^issue/rss$', 'listIssuesFeed'),
@@ -37,6 +37,13 @@ urlpatterns += patterns('core.views.issue_views',
     url(r'^solution/add/submit$', 'addSolution'),
     url(r'^solution/abort/submit$', 'abortSolution'),
     url(r'^solution/resolve/submit$', 'resolveSolution'),
+)
+
+urlpatterns += patterns('core.views.project_views',
+    url(r'^project/$', 'list'),
+    url(r'^project/(?P<project_id>\d+)/$', 'view'),
+    url(r'^project/(?P<project_id>\d+)/edit$', 'edit_form'),
+    url(r'^project/submit$', 'edit'),
 )
 
 urlpatterns += patterns('core.views.comment_views',

@@ -1,0 +1,16 @@
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
+    <head>
+
+        <title>FreedomSponsors</title>
+        <link href='/static/css2/fs_style.css' rel='stylesheet' type='text/css'/>
+        <link href='/static/css2/fs_structure.css' rel='stylesheet' type='text/css'/>
+        <link href='/static/css2/fs_positioning.css' rel='stylesheet' type='text/css'/>
+    </head>
+
+    <body>
+    {% block body %}
+    {% endblock %}
+    </body>
+</html>

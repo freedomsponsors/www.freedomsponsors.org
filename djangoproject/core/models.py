@@ -226,6 +226,13 @@ UserSocialAuth.getSocialIcon_small = getSocialIcon_small
 UserSocialAuth.getSocialProfileLink = getSocialProfileLink
 
 
+def upload_to(name):
+    def f(project, filename):
+        extension = filename.split('.')[-1]
+        timestamp = timezone.now().strftime('%Y%m%d%H%M%S')
+        return '%s_%s_%s.%s' % (name, project.id, timestamp, extension)
+    return f
+
 # Tudo que estah marcado como "@Auditable" eh um lembrete que pode ter algum atributo que eh alterado pelo
 # usuário depois que a entidade eh criada.
 # Essas alteracoes precisam ser gravadas em tabelas auxiliares (que a gente cria depois)
@@ -240,7 +247,8 @@ class Project(models.Model):
     creationDate = models.DateTimeField()
     homeURL = models.URLField(null=True, blank=True)
     trackerURL = models.URLField(null=True, blank=True)
-    
+    image3x1 = models.ImageField(null=True, upload_to=upload_to('project_images/image3x1'))
+
     @classmethod
     def newProject(cls, name, createdByUser, homeURL, trackerURL):
         project = cls()
@@ -253,6 +261,9 @@ class Project(models.Model):
 
     def get_view_link(self):
         return '/core/issue/?s=&project_id=%s&project_name=%s' % (self.id,urlquote(self.name),)
+
+    def get_image3x1(self):
+        return '/static/media/%s' % self.image3x1
 
     def __unicode__(self):
         return self.name

@@ -1,0 +1,31 @@
+<div class="modal hide fade in" id="alert_modal">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">×</button>
+    <h3 id="offerDataFormModal_title">You're almost done</h3>
+  </div>
+  <div class="modal-body">
+    <p>You created this offer here on FreedomSponsors, but the guys working on <a href="{{offer.issue.project.homeURL}}" target="_project">{{offer.issue.project.name}}</a> don't know about it yet.</p>
+    <p>The best way to let them know is to post a comment on the <a href="{{offer.issue.trackerURL}}" target="_issue">original issue</a>.<br>
+      Go ahead and copy the text below if you like:
+    </p>
+    <div class="alert alert-info">
+      <p>
+          Hi everyone. <br>
+          This issue is a big deal for me, so I'm willing to pay {{offer.currency}} {{offer.price}} for it.<br>
+          This offer is registered on FreedomSponsors ({{SITE_HOME}}{{offer.issue.get_view_link}}).<br>
+          If you solve it (according to the acceptance criteria described there), please register on FreedomSponsors and mark it as resolved there<br>
+          I'll then check it out and gladly pay up!<br><br>
+          Oh, and if anyone else also wants throw in a few bucks on this, you should check out FreedomSponsors!
+      </p>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn btn-primary" data-dismiss="modal">OK</a>
+  </div>
+</div>
+
+<script>
+  $(function(){
+    $('#alert_modal').modal()
+  });
+</script>

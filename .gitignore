@@ -27,3 +27,4 @@ include/python2.6
 *.db
 .noseids
 nosetests.1
+djangoproject/core/static/media

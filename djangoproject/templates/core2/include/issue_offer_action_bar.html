@@ -1,0 +1,211 @@
+{% load i18n %}
+{% load l10n %}
+<script src="/static/bootstrap/js/jquery.numeric.js"></script>
+<div class="modal hide fade in" id="genericCommentFormModal">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">×</button>
+    <h3 id="commentFormModal_title">Some title</h3>
+  </div>
+  <form id="commentFormModal_form" method="post" class="form-horizontal" action="/">
+  {% csrf_token %}
+
+    <fieldset>
+      <div class="modal-body">
+        <input type="hidden" name="issue_id" value="{{issue.id}}">
+        <input type="hidden" name="offer_id" value="{{myoffer.id}}">
+        <input type="hidden" name="solution_id" value="{{mysolution.id}}">
+        <div class="control-group">
+          <!-- issue description -->
+          <label class="control-label" for="comment">{% trans "Add a comment" %}</label>
+          <div class="controls">
+            <textarea class="input-xlarge span11" placeholder="some placeholder" id="commentFormModal_comment" name="comment" rows="10"></textarea>
+          </div>
+          <div class="controls hide" id="div_accept_payments">
+            <label class="checkbox">
+              <input type="checkbox" id="accept_payments" name="accept_payments" value="accept_payments">
+              {% trans "Start accepting payments for this issue." %}
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="commentFormModal_submit" class="btn btn-primary">Some Action</button>
+      </div>
+    </fieldset>
+  </form>
+</div>
+
+<div class="modal hide fade in" id="offerDataFormModal">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">×</button>
+    <h3 id="offerDataFormModal_title">Some title</h3>
+  </div>
+  <form id="offerDataFormModal_form" method="post" class="form-horizontal" action="/">
+  {% csrf_token %}
+    <fieldset>
+      {% if invoke_parent_callback %}
+        <input type="hidden" name="invoke_parent_callback" value="true">
+      {% endif %}
+      <div class="modal-body">
+        <input type="hidden" name="issue_id" value="{{issue.id}}">
+        <input type="hidden" name="offer_id" value="{{myoffer.id}}">
+
+        {% include 'core/include/offer_form_fields.html' %}
+      </div>
+      <div class="modal-footer">
+        <button id="btnSubmitOffer" class="btn btn-primary">Sponsor this issue!</button>
+      </div>
+    </fieldset>
+  </form>
+</div>
+
+<div class="btn-toolbar" style="margin-top: 5px;">
+{% if not offer or not myoffer or myoffer.id == offer.id %}
+  {% if myoffer and myoffer.status == 'OPEN' %}
+    <div class="btn-group">
+      <a href="/core/offer/{{myoffer.id}}/pay" class="btn btn-success">{% trans "Pay Offer" %}</a>
+      <a href="javascript:showModal_editOffer()" class="btn btn-warning">{% trans "Change offer" %}</a>
+      <a href="javascript:showModal_revokeThisOffer()" class="btn btn-danger">{% trans "Revoke Offer" %}</a>
+    </div>
+  {% else %}
+    <div class="btn-group">
+    {% if user.is_authenticated %}
+      <a href="javascript:showModal_sponsorThisIssue()" class="btn btn-primary">{% trans "Sponsor this issue" %}</a>
+    {% else %}
+      <a href="/core/login/?next={{issue.get_view_link}}" class="btn btn-primary">{% trans "Sponsor this issue" %}</a>
+    {% endif %}
+    </div>
+  {% endif %}
+{% endif %}
+    <div class="btn-group">
+    {% if mysolution and mysolution.status == 'IN_PROGRESS' %}
+      <a href="javascript:showModal_resolveThisIssue()" class="btn btn-success">{% trans "Resolve issue" %}</a>
+      <a href="javascript:showModal_abortWorkOnThisIssue()" class="btn btn-danger">{% trans "Abort work" %}</a>
+    {% else %}
+      {% if user.is_authenticated %}
+        <a href="javascript:showModal_workOnThisIssue()" class="btn btn-primary">{% trans "Work on this issue" %}</a>
+      {% else %}
+        <a href="/core/login/?next={{issue.get_view_link}}" class="btn btn-primary">{% trans "Work on this issue" %}</a>
+      {% endif %}
+    {% endif %}
+    </div>
+    {% include 'core/include/watch_toggle_button.html' %}
+</div>
+
+<script>
+
+  function showModal(id){
+    $('#'+id).modal({
+        backdrop: true,
+        keyboard: true
+    }).css({
+        width: '70%',
+        'margin-left': function () {
+            return -($(this).width() / 2);
+        }
+    });
+  }
+
+  var myoffer = false;
+  var alert_reputation_revoking = '{{alert_reputation_revoking}}' == 'True'
+{% if myoffer %}
+  myoffer = {
+    id : "{{myoffer.id}}",
+    acceptanceCriteria : "{{myoffer.acceptanceCriteria|escapejs}}",
+    currency : '{{myoffer.currency}}',
+    {% localize off %}
+    price : {{myoffer.price}},
+    {% endlocalize %}
+    no_forking : '{{myoffer.no_forking}}' == 'True',
+    require_release : '{{myoffer.require_release}}' == 'True',
+    expires : '{{myoffer.expires}}' == 'True',
+    expiration_time : {{myoffer.expiration_time}}
+  }
+{% endif %}
+
+  function showModal_editOffer(){
+    document.getElementById('offerDataFormModal_title').innerHTML = 'Change offer';
+    document.getElementById('offerDataFormModal_form').action = '/core/offer/edit/submit';
+
+    setOfferData(myoffer); //setOfferData is defined inside offer_form_fields.html
+
+    document.getElementById('btnSubmitOffer').innerHTML = 'Change offer!';
+    showModal('offerDataFormModal');
+  }
+
+{% if myoffer and myoffer.status == 'OPEN' %}
+
+  function showModal_revokeThisOffer(){
+    document.getElementById('commentFormModal_title').innerHTML = 'Revoke {{offer.get_currency_symbol}} {{offer.price}} offer';
+    document.getElementById('commentFormModal_form').action = '/core/offer/revoke/submit';
+    document.getElementById('commentFormModal_comment').placeholder = "Add a comment to let everyone know that you're not willing to pay for this issue anymore";
+    document.getElementById('commentFormModal_submit').innerHTML = 'Revoke offer!';
+    $('#div_accept_payments').addClass("hide")
+    showModal('genericCommentFormModal');
+  }
+{% else %}
+  function showModal_sponsorThisIssue(){
+    if(myoffer){
+      showModal_editOffer();
+    } else {
+      document.getElementById('offerDataFormModal_title').innerHTML = 'Sponsor this issue';
+      document.getElementById('offerDataFormModal_form').action = '/core/issue/sponsor/submit';
+      document.getElementById('btnSubmitOffer').innerHTML = 'Sponsor this issue!';
+      showModal('offerDataFormModal');
+    }
+  }
+  {% if show_sponsor_popup %}
+    $(function(){
+      showModal_sponsorThisIssue();
+    });
+  {% endif %}
+{% endif %}
+
+{% if mysolution and mysolution.status == 'IN_PROGRESS' %}
+  function showModal_abortWorkOnThisIssue(){
+    if(alert_reputation_revoking){
+      var msg = 'You already received money for this issue. \nAborting work might be bad for your reputation. \nAre you sure you want to do this?'
+      if(!confirm(msg)){
+        return;
+      }
+    }
+
+    document.getElementById('commentFormModal_title').innerHTML = 'Abort work on this issue';
+    document.getElementById('commentFormModal_form').action = '/core/solution/abort/submit';
+    document.getElementById('commentFormModal_comment').placeholder = "Add a comment to let everyone know that you won't be working on this issue anymore";
+    document.getElementById('commentFormModal_submit').innerHTML = 'Abort work on this issue!';
+    $('#div_accept_payments').addClass("hide")
+    showModal('genericCommentFormModal');
+  }
+
+  function showModal_resolveThisIssue(){
+    document.getElementById('commentFormModal_title').innerHTML = 'Resolve issue';
+    document.getElementById('commentFormModal_form').action = '/core/solution/resolve/submit';
+    document.getElementById('commentFormModal_comment').placeholder = "Add a comment to let everyone know that you resolved the issue!";
+    document.getElementById('commentFormModal_submit').innerHTML = 'Resolve issue!';
+    $('#div_accept_payments').addClass("hide")
+    showModal('genericCommentFormModal');
+  }
+{% else %}
+  function showModal_workOnThisIssue(){
+    document.getElementById('commentFormModal_title').innerHTML = 'Begin working on this issue';
+    document.getElementById('commentFormModal_form').action = '/core/solution/add/submit';
+    document.getElementById('commentFormModal_comment').placeholder = "Add a comment to let everyone know that you'll be working on this issue";
+    document.getElementById('commentFormModal_submit').innerHTML = 'Work on this issue!';
+    $('#div_accept_payments').removeClass("hide")
+    showModal('genericCommentFormModal');
+  }
+{% endif %}
+
+  $(function(){
+    var offer_onsubmit = function(){
+      return validateOffer() //validateOffer is defined in offer_form_fields.html
+    };
+    
+    $(".positive").numeric({ negative: false }, function() { alert("No negative values"); this.value = ""; this.focus(); });
+
+    document.getElementById('btnSubmitOffer').onclick = offer_onsubmit;
+
+  });
+
+</script>

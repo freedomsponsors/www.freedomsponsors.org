@@ -1,0 +1,17 @@
+{% extends "core/base.html" %}
+{% block mainContent%}
+
+<div>
+	<p>Please make a BTC <strong>{{ payment.total_with_fee }}</strong> transfer to the following bitcoin address:</p>
+</div>
+
+<div id="div_canceled" class="alert alert-info">
+	<p>{{ bitcoin_address }}</p>
+</div>
+<div>
+    <p>As soon as your payment is confirmed, FreedomSponsors will transfer the appropriate bitcoins to the developer(s).<br>
+        You'll receive a confirmation email when it's done.</p>
+</div>
+
+
+{% endblock mainContent%}

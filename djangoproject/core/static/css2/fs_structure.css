@@ -1,0 +1,72 @@
+body{
+	background-image: url(../img2/fs_background.jpg);
+	margin: 0px;
+	font-family: Arial, sans-serif;
+	font-size: 10pt;
+	color:8C8C8C;
+}
+
+.header-top-section{
+	/* TODO: ajustar tamanho ao redimensionar*/
+	width:80%;
+	max-width:1000px;
+	height:38px;
+}
+
+.header-middle-section{
+	/* TODO: ajustar tamanho ao redimensionar*/
+	width:80%;
+	max-width:1000px;
+	height:50px;
+	position:relative;
+	line-height: 50px;
+	
+	background-color: #323232;
+	
+	font-family: 'Ubahn-Light', Arial, sans-serif;
+	
+	color: #BCBEC0;
+	
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-goog-ms-border-radius: 5px;
+	border-radius: 5px;
+	
+	-moz-box-shadow: 0px 2px 5px -1px rgba(0, 0, 0, .2);
+	-webkit-box-shadow: 0px 2px 5px -1px rgba(0, 0, 0, .2);
+	-goog-ms-box-shadow: 0px 2px 5px -1px rgba(0, 0, 0, .2);
+	box-shadow: 0px 2px 5px -1px rgba(0, 0, 0, .2);
+}
+
+.header-bottom-section{
+	/* TODO: ajustar tamanho ao redimensionar*/
+	width:80%;
+	max-width:1000px;
+	height:38px;
+	line-height:38px;
+	position:relative;
+}
+
+.content{
+	padding-top:30px;
+	padding-bottom:30px;
+}
+
+img.fs-logo{
+	/* TODO: ajustar tamanho ao redimensionar*/
+	width:65%;
+	margin-top:20px;
+}
+
+.home-content-section{
+	/* TODO: ajustar tamanho ao redimensionar*/
+	width:64%;
+	max-width:860px;
+}
+
+.home-search-box{
+	height:90px;
+	margin-top:40px;
+	margin-bottom:40px;
+	position:relative;
+}

@@ -1,0 +1,9 @@
+{% extends "core2/base.html" %}
+{% load i18n %}
+
+
+{% block mainContent%}
+    <h2> project: {{ project.name }}</h2>
+    <img src="{{ project.get_image3x1 }}">
+    <a href="/core/project/{{ project.id }}/edit">Edit</a>
+{% endblock mainContent%}

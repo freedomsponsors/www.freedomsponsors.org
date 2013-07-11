@@ -1,0 +1,43 @@
+{% load i18n %}
+<script>
+  $(function(){
+    // var comment_{{counter}} = '{{comment.content|escapejs}}';
+    // var converter = new Showdown.converter();
+    // var html = converter.makeHtml(comment_{{counter}});
+    // $("#div_comment_r_{{counter}}").html(html)
+
+    //leave this code here because we'll need somethink like this to add a js markdown preview
+  });
+</script>
+
+<div class="row" style="margin-top:10px;">
+  <div class="span1">
+    <a href="{{comment.author.get_view_link}}"><img src="{{comment.author.gravatar_url_medium}}"></a>
+  </div>
+  <div class="span11 issueComment" id="comment-{{ comment.id }}">
+    <div style="background-color: #eeeeee;">
+      <span>
+        <a href="{{comment.author.get_view_link}}">{{ comment.author.getUserInfo.screenName }}</a>
+        {% ifequal comment.author.id user.id %}
+          <a href="javascript:showEditComment({{counter}})" id="selector-edit-comment{{counter}}"><i class="icon-pencil"></i></a>
+        {% endifequal %}
+        {% if comment.was_edited %}
+            <!-- loadCommentHistory must be defined in the including page -->
+          | <a href="#" onclick="loadCommentHistory({{ comment.id }})" style="color:red">{% trans "edited"%}</a>
+        {% endif %}
+      </span>
+      <span class="pull-right" title="permalink"><a href="#comment-{{ comment.id }}"><i class="icon-map-marker"></i></a></span>
+      <span class="pull-right" title="{{ comment.creationDate }}">{{ comment.creationDate|date:"D, d/M/Y" }}</span>
+    </div>
+    <div style="margin-top:10px;" id="div_comment_r_{{counter}}">
+      {% load markdown %}
+      {% autoescape off %}
+      {{ comment.content|markdown }}    
+      {% endautoescape %}
+    </div>
+    {% ifequal comment.author.id user.id %}
+    {% include 'core/include/edit_comment_form.html' %}
+    {% endifequal %}
+  </div>
+</div>
+	

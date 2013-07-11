@@ -1,4 +1,8 @@
 import json
+from decimal import Decimal
+import logging
+import traceback
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.syndication.views import Feed
 from django.contrib import messages
@@ -6,16 +10,14 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render_to_response
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
-from bitcoin_frespo.utils import bitcoin_adapter
+from django.conf import settings
+
 from core.utils.frespo_utils import get_or_none, twoplaces
 from core.models import *
 from core.services import issue_services, watch_services, paypal_services, mail_services
 from core.views import paypal_views, bitcoin_views
-from decimal import Decimal
-import logging
-from django.conf import settings
 from frespo_currencies import currency_service
-import traceback
+
 
 logger = logging.getLogger(__name__)
 
@@ -288,14 +290,6 @@ def addIssueForm(request):
     return render_to_response('core/add_issue.html',
         {'trackerURL' : trackerURL,
         'operation' : operation,},
-        context_instance = RequestContext(request))
-
-
-def listProjects(request):
-    projects = Project.objects.all()
-    projects = projects.order_by('name')
-    return render_to_response('core/project_list.html',
-        {'projects':projects},
         context_instance = RequestContext(request))
 
 
