@@ -24,6 +24,7 @@ DATABASES = {
 }
 
 MEDIA_ROOT = PROJECT_DIR.child('core').child('static').child('media')
+MEDIA_ROOT_URL = '/static/media'
 
 GITHUB_BOT_USERNAME = 'freedomsponsors-bot'
 GITHUB_BOT_PASSWORD = '*********'

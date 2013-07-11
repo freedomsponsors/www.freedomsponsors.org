@@ -14,6 +14,7 @@ from decimal import Decimal
 from core.utils.frespo_utils import twoplaces
 from bitcoin_frespo.models import *
 from frespo_currencies import currency_service
+from django.conf import settings
 
 _CURRENCY_SYMBOLS = {'USD': 'US$', 'BRL': 'R$', 'BTC': 'BTC'}
 
@@ -263,7 +264,7 @@ class Project(models.Model):
         return '/core/issue/?s=&project_id=%s&project_name=%s' % (self.id,urlquote(self.name),)
 
     def get_image3x1(self):
-        return '/static/media/%s' % self.image3x1
+        return '%s/%s' % (settings.MEDIA_ROOT_URL, self.image3x1)
 
     def __unicode__(self):
         return self.name
