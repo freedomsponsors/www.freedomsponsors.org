@@ -1,4 +1,5 @@
 # Create your views here.
+import json
 
 from django.http import HttpResponseRedirect
 from django.contrib.auth import logout as auth_logout
@@ -74,11 +75,15 @@ def mailtest(request):
 
 
 def home(request):
-    if(request.user.is_authenticated() and request.user.getUserInfo() == None):
+    if request.user.is_authenticated() and request.user.getUserInfo() is None:
         return redirect('/core/user/edit')
-    size = 3 if is_new_layout(request) else 20
+    _is_new_layout = is_new_layout(request)
+    size = 3 if _is_new_layout else 20
     issues_sponsoring = issue_services.search_issues(is_public_suggestion=False)[0:size]
     issues_kickstarting = issue_services.search_issues(is_public_suggestion=True)[0:size]
+    if _is_new_layout:
+        issues_sponsoring = json.dumps(issue_services.to_card_dict(issues_sponsoring))
+        issues_kickstarting = json.dumps(issue_services.to_card_dict(issues_kickstarting))
     return render_to_response(template_folder(request) + 'home.html',
         {'issues_sponsoring': issues_sponsoring,
          'issues_kickstarting': issues_kickstarting},

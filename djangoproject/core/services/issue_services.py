@@ -168,7 +168,7 @@ def process_issue_url(trackerURL, user):
         if(issues.count() > 1):
             logger.warning("Database inconsistency: more than one issue found with url = %s"%trackerURL)
         if(issue_already_exists):
-            result["issue"] = {"id":issues[0].id}
+            result["issue"] = {"id": issues[0].id}
             return result
         else:
             issueInfo = fetchIssueInfo(trackerURL)
@@ -177,9 +177,34 @@ def process_issue_url(trackerURL, user):
     return result
 
 
+def to_card_dict(issues):
+    result = []
+    for issue in issues:
+        four_sponsors = []
+        dic = {'id': issue.id,
+               'title': issue.title,
+               'description': '',
+               'totalPaidPriceUSD': str(issue.getTotalPaidPriceUSD()),
+               'totalOffersPriceUSD': str(issue.getTotalOffersPriceUSD()),
+               'four_sponsors': four_sponsors,
+               'moresponsors': max(issue.getOffers().count() - 4, 0),
+               'image_link': issue.project.get_image3x1(),
+               'viewcount': -1,
+               'commentcount': issue.getComments().count()}
+        for offer in issue.getOffers()[0:4]:
+            sponsor = {
+                'image_link': offer.sponsor.gravatar_url_medium(),
+                'screen_name': offer.sponsor.getUserInfo().screenName
+            }
+            four_sponsors.append(sponsor)
+        result.append(dic)
+    return result
+
+
 def _buildOfferFromDictionary(dict, user):
     issue = _buildIssueFromDictionary(dict, user)
     return _buildOfferFromDictionary_and_issue(dict, user, issue);
+
 
 def _buildIssueFromDictionary(dict, user):
     check_noProject = dict.has_key('noProject')
