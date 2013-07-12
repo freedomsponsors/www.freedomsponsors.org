@@ -155,11 +155,12 @@
 <p id='n90' class='pln'><a href='#n90'>90</a></p>
 <p id='n91' class='pln'><a href='#n91'>91</a></p>
 <p id='n92' class='pln'><a href='#n92'>92</a></p>
-<p id='n93' class='stm run hide_run'><a href='#n93'>93</a></p>
-<p id='n94' class='pln'><a href='#n94'>94</a></p>
+<p id='n93' class='pln'><a href='#n93'>93</a></p>
+<p id='n94' class='stm run hide_run'><a href='#n94'>94</a></p>
 <p id='n95' class='pln'><a href='#n95'>95</a></p>
 <p id='n96' class='pln'><a href='#n96'>96</a></p>
 <p id='n97' class='pln'><a href='#n97'>97</a></p>
+<p id='n98' class='pln'><a href='#n98'>98</a></p>
                 
             </td>
             <td class='text' valign='top'>
@@ -249,17 +250,18 @@
 <p id='t84' class='pln'>&nbsp; &nbsp; <span class='nam'>url</span><span class='op'>(</span><span class='str'>r&#39;^json/project$&#39;</span><span class='op'>,</span> <span class='str'>&#39;project&#39;</span><span class='op'>)</span><span class='op'>,</span><span class='strut'>&nbsp;</span></p>
 <p id='t85' class='pln'>&nbsp; &nbsp; <span class='nam'>url</span><span class='op'>(</span><span class='str'>r&#39;^json/by_issue_url$&#39;</span><span class='op'>,</span> <span class='str'>&#39;by_issue_url&#39;</span><span class='op'>)</span><span class='op'>,</span><span class='strut'>&nbsp;</span></p>
 <p id='t86' class='pln'>&nbsp; &nbsp; <span class='nam'>url</span><span class='op'>(</span><span class='str'>r&#39;^json/get_offers$&#39;</span><span class='op'>,</span> <span class='str'>&#39;get_offers&#39;</span><span class='op'>)</span><span class='op'>,</span><span class='strut'>&nbsp;</span></p>
-<p id='t87' class='pln'><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
-<p id='t88' class='pln'><span class='strut'>&nbsp;</span></p>
-<p id='t89' class='pln'><span class='com'># urlpatterns += patterns(&#39;core.jiraviews&#39;,</span><span class='strut'>&nbsp;</span></p>
-<p id='t90' class='pln'><span class='com'>#&nbsp;&nbsp; url(r&#39;^issue/sponsor_jira$&#39;, &#39;sponsorJiraForm&#39;),</span><span class='strut'>&nbsp;</span></p>
-<p id='t91' class='pln'><span class='com'># )</span><span class='strut'>&nbsp;</span></p>
-<p id='t92' class='pln'><span class='strut'>&nbsp;</span></p>
-<p id='t93' class='stm run hide_run'><span class='nam'>urlpatterns</span> <span class='op'>+=</span> <span class='nam'>patterns</span><span class='op'>(</span><span class='str'>&#39;core.views.feedback_views&#39;</span><span class='op'>,</span><span class='strut'>&nbsp;</span></p>
-<p id='t94' class='pln'>&nbsp; &nbsp; <span class='nam'>url</span><span class='op'>(</span><span class='str'>r&#39;^feedback$&#39;</span><span class='op'>,</span> <span class='str'>&#39;feedback&#39;</span><span class='op'>)</span><span class='op'>,</span><span class='strut'>&nbsp;</span></p>
-<p id='t95' class='pln'>&nbsp; &nbsp; <span class='nam'>url</span><span class='op'>(</span><span class='str'>r&#39;^feedback/submit$&#39;</span><span class='op'>,</span> <span class='str'>&#39;addFeedback&#39;</span><span class='op'>)</span><span class='op'>,</span><span class='strut'>&nbsp;</span></p>
-<p id='t96' class='pln'><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
-<p id='t97' class='pln'><span class='strut'>&nbsp;</span></p>
+<p id='t87' class='pln'>&nbsp; &nbsp; <span class='nam'>url</span><span class='op'>(</span><span class='str'>r&#39;^json/list_issue_cards&#39;</span><span class='op'>,</span> <span class='str'>&#39;list_issue_cards&#39;</span><span class='op'>)</span><span class='op'>,</span><span class='strut'>&nbsp;</span></p>
+<p id='t88' class='pln'><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
+<p id='t89' class='pln'><span class='strut'>&nbsp;</span></p>
+<p id='t90' class='pln'><span class='com'># urlpatterns += patterns(&#39;core.jiraviews&#39;,</span><span class='strut'>&nbsp;</span></p>
+<p id='t91' class='pln'><span class='com'>#&nbsp;&nbsp; url(r&#39;^issue/sponsor_jira$&#39;, &#39;sponsorJiraForm&#39;),</span><span class='strut'>&nbsp;</span></p>
+<p id='t92' class='pln'><span class='com'># )</span><span class='strut'>&nbsp;</span></p>
+<p id='t93' class='pln'><span class='strut'>&nbsp;</span></p>
+<p id='t94' class='stm run hide_run'><span class='nam'>urlpatterns</span> <span class='op'>+=</span> <span class='nam'>patterns</span><span class='op'>(</span><span class='str'>&#39;core.views.feedback_views&#39;</span><span class='op'>,</span><span class='strut'>&nbsp;</span></p>
+<p id='t95' class='pln'>&nbsp; &nbsp; <span class='nam'>url</span><span class='op'>(</span><span class='str'>r&#39;^feedback$&#39;</span><span class='op'>,</span> <span class='str'>&#39;feedback&#39;</span><span class='op'>)</span><span class='op'>,</span><span class='strut'>&nbsp;</span></p>
+<p id='t96' class='pln'>&nbsp; &nbsp; <span class='nam'>url</span><span class='op'>(</span><span class='str'>r&#39;^feedback/submit$&#39;</span><span class='op'>,</span> <span class='str'>&#39;addFeedback&#39;</span><span class='op'>)</span><span class='op'>,</span><span class='strut'>&nbsp;</span></p>
+<p id='t97' class='pln'><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
+<p id='t98' class='pln'><span class='strut'>&nbsp;</span></p>
                 
             </td>
         </tr>
