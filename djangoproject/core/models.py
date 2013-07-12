@@ -378,6 +378,12 @@ class Issue(models.Model):
     def get_view_link(self):
         return '/core/issue/%s'%self.id+'/'+urlquote(slugify(self.title))
 
+    def get_card_image(self):
+        if self.project:
+            return self.project.get_image3x1()
+        else:
+            return ''
+
     def __unicode__(self):
         s = ''
         if(self.project):

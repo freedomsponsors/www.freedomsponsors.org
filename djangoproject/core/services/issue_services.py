@@ -188,7 +188,7 @@ def to_card_dict(issues):
                'totalOffersPriceUSD': str(issue.getTotalOffersPriceUSD()),
                'four_sponsors': four_sponsors,
                'moresponsors': max(issue.getOffers().count() - 4, 0),
-               'image_link': issue.project.get_image3x1(),
+               'image_link': issue.get_card_image(),
                'viewcount': -1,
                'commentcount': issue.getComments().count()}
         for offer in issue.getOffers()[0:4]:
