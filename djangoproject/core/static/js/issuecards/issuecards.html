@@ -4,7 +4,7 @@
         <a href="" class="fs-button square grey less" ng-class="{'disabled' : no_less()}" ng-click="less()">«</a>
         <a href="" class="fs-button square grey more" ng-class="{'disabled' : no_more()}" ng-click="more()">»</a>
         <img ng-show="is_loading" src="/static/img2/ajax-loader.gif">
-        <a href="" class="fs-button medium grey view-all">View All</a>
+        <a href="/core/issue?operation=SPONSOR" class="fs-button medium grey view-all">View All</a>
     </div>
     <div class="card-list">
         <div ng-repeat="issue in issues" class="fs-box issue-card" ng-class="{'middle':$index == 1}">
