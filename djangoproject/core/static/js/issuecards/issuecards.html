@@ -30,7 +30,9 @@
             </div>
             <p class="description">{[{ issue.description }]}</p>
             <div class="card-bottom-logo">
-                <img class="project-logo" ng-src="{{ issue.image_link }}"/>
+                <a href="{[{ issue.project_link }]}">
+                    <img class="project-logo" ng-src="{[{ issue.image_link }]}"/>
+                </a>
             </div>
             <div class="card-status done"></div>
             <div class="card-footer">

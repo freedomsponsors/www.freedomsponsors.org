@@ -184,6 +184,7 @@ def to_card_dict(issues):
         four_sponsors = []
         dic = {'id': issue.id,
                'title': issue.title,
+               'project_link': '#',
                'description': strip_markdown(issue.description),
                'totalPaidPriceUSD': str(issue.getTotalPaidPriceUSD()),
                'totalOffersPriceUSD': str(issue.getTotalOffersPriceUSD()),
@@ -192,6 +193,8 @@ def to_card_dict(issues):
                'image_link': issue.get_card_image(),
                'viewcount': -1,
                'commentcount': issue.getComments().count()}
+        if issue.project:
+            dic['project_link'] = issue.project.get_view_link()
         for offer in issue.getOffers()[0:4]:
             sponsor = {
                 'image_link': offer.sponsor.gravatar_url_medium(),
