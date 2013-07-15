@@ -3,6 +3,7 @@ from decimal import Decimal
 from django.db.models import Q
 from core.services.mail_services import *
 from core.services import watch_services
+from core.templatetags.markdown import strip_markdown
 from core.utils.frespo_utils import get_or_none
 from core.models import Issue, Project, Offer, Solution, IssueComment, OfferComment
 from core.utils.trackers_adapter import fetchIssueInfo
@@ -183,7 +184,7 @@ def to_card_dict(issues):
         four_sponsors = []
         dic = {'id': issue.id,
                'title': issue.title,
-               'description': '',
+               'description': strip_markdown(issue.description),
                'totalPaidPriceUSD': str(issue.getTotalPaidPriceUSD()),
                'totalOffersPriceUSD': str(issue.getTotalOffersPriceUSD()),
                'four_sponsors': four_sponsors,
