@@ -8,8 +8,14 @@
     <form method="POST" action="/core/project/submit" enctype="multipart/form-data">
         {% csrf_token %}
         <input type="hidden" name="id" value="{{ project.id }}">
-        <label for="image3x1">Image 3x1</label>
-        <input type="file" name="image3x1" id="image3x1">
+        <div>
+            <label for="image3x1">Image</label>
+            <input type="file" name="image3x1" id="image3x1">
+        </div>
+        <div>
+            <label for="description">Description</label>
+            <textarea name="description" id="description"></textarea>
+        </div>
         <input type="submit">
     </form>
 {% endblock mainContent%}
