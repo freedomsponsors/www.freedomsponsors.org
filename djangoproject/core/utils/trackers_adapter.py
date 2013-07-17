@@ -11,6 +11,7 @@ class IssueInfo(object):
         self.error = ''
         self.project_name = ''
         self.issue_title = ''
+        self.description = ''
         self.key = ''
         self.tracker = ''
         self.project_trackerURL = ''
