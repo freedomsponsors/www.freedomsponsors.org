@@ -264,6 +264,11 @@ class Project(models.Model):
         return '/core/issue/?s=&project_id=%s&project_name=%s' % (self.id,urlquote(self.name),)
 
     def get_image3x1(self):
+        if not self.image3x1:
+            if 'github' in self.trackerURL:
+                return '/static/img2/github_logo.jpg'
+            else:
+                return '/static/img2/default_project_logo.jpg'
         return '%s/%s' % (settings.MEDIA_ROOT_URL, self.image3x1)
 
     def __unicode__(self):
