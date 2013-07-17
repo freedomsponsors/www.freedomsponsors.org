@@ -58,7 +58,7 @@
 <div class="row" id="issue-description">
   <div class="span2"></div>
   <div class="span8">
-    {% if issue.description %}
+    {% if issue.description and not issue.project %}
     <br><br>
     <h3>{% trans "Issue Description" %}</h3>
     {% load markdown %}
