@@ -1,3 +1,4 @@
+[![Stories in Ready](http://badge.waffle.io/freedomsponsors/www.freedomsponsors.org.png)](http://waffle.io/freedomsponsors/www.freedomsponsors.org)  
 www.freedomsponsors.org 
 =======================
 
