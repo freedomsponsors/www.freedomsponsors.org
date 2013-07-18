@@ -184,6 +184,7 @@ def to_card_dict(issues):
         four_sponsors = []
         dic = {'id': issue.id,
                'title': issue.title,
+               'status': issue.get_status(),
                'project_link': '#',
                'description': strip_markdown(issue.description),
                'totalPaidPriceUSD': str(issue.getTotalPaidPriceUSD()),

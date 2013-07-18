@@ -389,6 +389,15 @@ class Issue(models.Model):
         else:
             return ''
 
+    def get_status(self):
+        working = False
+        for solution in self.getSolutions():
+            if solution.status == Solution.DONE:
+                return 'done'
+            elif solution.status == Solution.IN_PROGRESS:
+                working = True
+        return 'working' if working else 'open'
+
     def __unicode__(self):
         s = ''
         if(self.project):
