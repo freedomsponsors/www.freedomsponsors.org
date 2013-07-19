@@ -112,4 +112,4 @@ Instructions to run application locally:
 If you find that the steps above are not actually accurate, please [open a new issue to let us know](https://github.com/freedomsponsors/www.freedomsponsors.org/issues/new)!
 
 You should also verify if you can run all the automatic tests successfully.
-Please see: [Running unit tests](http://github.com/freedomsponsors/www.freedomsponsors.org)
+Please see: [Running unit tests](http://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/doc/testing.md)
