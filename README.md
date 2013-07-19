@@ -23,13 +23,13 @@ In this repo you'll find the full source code that powers FS (backend and fronte
 If you'd like to help (bug reports, suggestions, or even code), you are *very* welcome.
 
 Take a look at our Waffle board - [![Stories in Ready](http://badge.waffle.io/freedomsponsors/www.freedomsponsors.org.png)](http://waffle.io/freedomsponsors/www.freedomsponsors.org), 
-and make sure to check the ["I wanna help!"](http://github.com/freedomsponsors/www.freedomsponsors.org) section.
+and make sure to check the ["I wanna help!"](http://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/doc/iwannahelp.md) section.
 
 ## Useful resorces
 
 * [Test coverage report](http://freedomsponsors.github.com/www.freedomsponsors.org/coverage_html_report/)
-* [Setting up a development environment](http://github.com/freedomsponsors/www.freedomsponsors.org)
-* [Running unit tests](http://github.com/freedomsponsors/www.freedomsponsors.org)
+* [Setting up a development environment](http://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/doc/setup.md)
+* [Running unit tests](http://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/doc/testing.md)
 
 ## Licensing
 
