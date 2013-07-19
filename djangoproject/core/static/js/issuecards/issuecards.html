@@ -34,13 +34,15 @@
                     <img class="project-logo" ng-src="{[{ issue.image_link }]}"/>
                 </a>
             </div>
-            <div class="card-status {[{ issue.status }]}"></div>
+            <a href="/core/issue/{[{ issue.id }]}">
+                <div class="card-status {[{ issue.status }]}"></div>
+            </a>
             <div class="card-footer">
                 <span class="views">
                     <span class="views-number">{[{ issue.viewcount }]}</span><span> views</span>
                 </span>
                 <span class="comments">
-                    <span class="comments-number">{[{ issue.commentcount }]}</span><span> comments</span>
+                    <a href="/core/issue/{[{ issue.id }]}"><span class="comments-number">{[{ issue.commentcount }]}</span><span> comments</span></a>
                 </span>
             </div>
         </div>
