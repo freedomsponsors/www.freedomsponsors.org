@@ -42,13 +42,16 @@ There are many ways you can get in touch:
 ### Give feedback
 
 Want to report a bug or suggest a great new feature?
+
 Have a killer idea to help us with marketing?
+
 Besides the channels above, you can drop your thoughts in the [feedback section](http://www.freedomsponsors.org/core/feedback)
 We love feedback, really :-)
 
 ### Code!
 
 We have a lot of cool ideas to implement, and we got our hands full, so we'll take all the help we can get :-).
+
 If you want to help out, check out our Waffle board below to see what's going on and the most urgent issues that we need help with. 
 
 [![Stories in Ready](https://badge.waffle.io/freedomsponsors/www.freedomsponsors.org.png)](http://waffle.io/freedomsponsors/www.freedomsponsors.org)
