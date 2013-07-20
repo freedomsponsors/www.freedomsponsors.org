@@ -18,6 +18,8 @@ FreedomSponsors is a system strongly based on trust and reputation.
 
 In this repo you'll find the full source code that powers FS (backend and frontend).
 
+FreedomSponsors is a Python+Django application.
+
 ## Helping out
 
 Liked FreedomSponsors and want to help? Great! There are many ways you can help.
@@ -46,7 +48,6 @@ We love feedback, really :-)
 
 ### Code!
 
-FreedomSponsors is a Python+Django application.
 We have a lot of cool ideas to implement, and we got our hands full, so we'll take all the help we can get :-).
 If you want to help out, check out our Waffle board below to see what's going on and the most urgent issues that we need help with. 
 
