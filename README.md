@@ -26,7 +26,7 @@ Take a look at our Waffle board - [![Stories in Ready](https://badge.waffle.io/f
 
 Also make sure to check the ["I wanna help!"](http://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/doc/iwannahelp.md) section.
 
-## Useful resorces
+## Useful resources
 
 * [Test coverage report](http://freedomsponsors.github.com/www.freedomsponsors.org/coverage_html_report/)
 * [Setting up a development environment](http://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/doc/setup.md)
