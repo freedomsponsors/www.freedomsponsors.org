@@ -45,7 +45,7 @@ Want to report a bug or suggest a great new feature?
 
 Have a killer idea to help us with marketing?
 
-Besides the channels above, you can drop your thoughts in the [feedback section](http://www.freedomsponsors.org/core/feedback)
+Besides the channels above, you can drop your thoughts in the [feedback section](http://www.freedomsponsors.org/core/feedback).
 We love feedback, really :-)
 
 ### Code!
