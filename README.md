@@ -22,7 +22,7 @@ In this repo you'll find the full source code that powers FS (backend and fronte
 
 If you'd like to help (bug reports, suggestions, or even code), you are *very* welcome.
 
-Take a look at our Waffle board - [![Stories in Ready](http://badge.waffle.io/freedomsponsors/www.freedomsponsors.org.png)](http://waffle.io/freedomsponsors/www.freedomsponsors.org).
+Take a look at our Waffle board - [![Stories in Ready](https://badge.waffle.io/freedomsponsors/www.freedomsponsors.org.png)](http://waffle.io/freedomsponsors/www.freedomsponsors.org).
 
 Also make sure to check the ["I wanna help!"](http://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/doc/iwannahelp.md) section.
 
