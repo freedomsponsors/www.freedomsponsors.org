@@ -27,7 +27,7 @@ Liked FreedomSponsors and want to help? Great! There are many ways you can help.
 ### Spread the word.
 
 For crowdfunding to happen there must be a crowd in the first place.
-The easiest way you can help FreedomSponsors is talk about. Show it around at your workplace, 
+The easiest way you can help FreedomSponsors is talk about it. Show it around at your workplace, 
 [tweet](https://twitter.com/intent/tweet?url=http://www.freedomsponsors.org&text=Check%20this%20out!%20%23FreedomSponsors%20-%20crowdfunding%20Free%20Software,%20one%20issue%20at%20a%20time.) about it, share on [Facebook](https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.freedomsponsors.org) and [Google+](https://plus.google.com/share?url=http%3A%2F%2Fwww.freedomsponsors.org)
 
 ### Get in touch
