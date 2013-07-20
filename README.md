@@ -22,7 +22,7 @@ In this repo you'll find the full source code that powers FS (backend and fronte
 
 Liked FreedomSponsors and want to help? Great! There are many ways you can help.
 
-* Spread the word.
+### Spread the word.
 
 For crowdfunding to happen there must be a crowd in the first place.
 The easiest way you can help FreedomSponsors is talk about. Show it around at your workplace, 
