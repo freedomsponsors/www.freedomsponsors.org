@@ -49,6 +49,7 @@ We love feedback, really :-)
 FreedomSponsors is a Python+Django application.
 We have a lot of cool ideas to implement, and we got our hands full, so we'll take all the help we can get :-).
 If you want to help out, check out our Waffle board below to see what's going on and the most urgent issues that we need help with. 
+
 [![Stories in Ready](https://badge.waffle.io/freedomsponsors/www.freedomsponsors.org.png)](http://waffle.io/freedomsponsors/www.freedomsponsors.org)
 
 ## Useful resources
