@@ -13,6 +13,7 @@
         {% block head %}
         {% endblock %}
 
+        {% if ENABLE_PIWIK %}
         <!-- Piwik -->
         <script type="text/javascript">
             var pkBaseURL = (("https:" == document.location.protocol) ? "https://piwik-tonylampada.rhcloud.com/" : "http://piwik-tonylampada.rhcloud.com/");
@@ -27,6 +28,7 @@
         </script>
         <noscript><p><img src="http://piwik-tonylampada.rhcloud.com/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript>
         <!-- End Piwik Tracking Code -->
+        {% endif %}
     </head>
 
     <body>

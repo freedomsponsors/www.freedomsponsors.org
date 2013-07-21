@@ -18,6 +18,8 @@ ADMINS = (
 TEMPLATE_DEBUG = DEBUG
 MANAGERS = ADMINS
 
+ENABLE_PIWIK = False
+
 DATABASES = {
     'default': dj_database_url.config(
         default='sqlite:///' + PROJECT_DIR.child('database.db'))
