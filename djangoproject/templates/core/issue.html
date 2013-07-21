@@ -3,9 +3,11 @@
 
 {% block og_meta %}
     <meta property="og:title" content="US$ {{issue.getTotalOffersPriceUSD}} bounty on FreedomSponsors: {{issue.title}}"/>
+    <meta name="description" content="US$ {{issue.getTotalOffersPriceUSD}} bounty on FreedomSponsors: {{issue.title}}"/>
     <meta property="og:type" content="website" />
     <meta property="og:url" content="{{SITE_HOME}}{{request.path}}" />
     <meta property="og:image" content="http://www.freedomsponsors.org/static/img/FS_logo_512x512.png" />
+    <meta name="image" content="http://www.freedomsponsors.org/static/img/FS_logo_512x512.png" />
     <meta property="og:site_name" content="FreedomSponsors" />
     <meta property="fb:admins" content="1547283827" />
 {% endblock og_meta %}
