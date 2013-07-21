@@ -20,6 +20,8 @@ In this repo you'll find the full source code that powers FS (backend and fronte
 
 FreedomSponsors is a Python+Django application.
 
+Follow our [blog](http://blog.freedomsponsors.org/).
+
 ## Helping out
 
 Liked FreedomSponsors and want to help? Great! There are many ways you can help.
