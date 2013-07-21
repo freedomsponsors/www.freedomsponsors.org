@@ -5,16 +5,16 @@
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
 
-<meta property="og:title" content="FreedomSponsors" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="{{SITE_HOME}}{{request.path}}" />
-<meta property="og:image" content="http://a3.sphotos.ak.fbcdn.net/hphotos-ak-snc7/423864_519921904701003_122983314_n.png" />
-<meta property="og:site_name" content="FreedomSponsors" />
-<meta property="fb:admins" content="1547283827" />
-{% block og_meta_description %}
+{% block og_meta %}
+    <meta property="og:title" content="FreedomSponsors" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{SITE_HOME}}{{request.path}}" />
+    <meta property="og:image" content="http://www.freedomsponsors.org/static/img/FS_logo_512x512.png" />
+    <meta property="og:site_name" content="FreedomSponsors" />
+    <meta property="fb:admins" content="1547283827" />
     <meta property="og:description"
           content={% trans "Check this out: freedomsponsors.org - Crowdfunding Free Software, one issue at a time." %}/>
-{% endblock og_meta_description %}
+{% endblock og_meta %}
 
 
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

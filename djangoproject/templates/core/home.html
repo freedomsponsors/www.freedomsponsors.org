@@ -1,6 +1,19 @@
 {% extends "core/base.html" %}
 {% load i18n %}
 
+{% block topright %}
+    Share:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.freedomsponsors.org">
+        <img src="/static/img/facebook-42.png">
+    </a>
+    <a href="https://twitter.com/intent/tweet?url=http://www.freedomsponsors.org&text=Check%20this%20out!%20%23FreedomSponsors%20-%20crowdfunding%20Free%20Software,%20one%20issue%20at%20a%20time.">
+        <img src="/static/img/twitter-42.png">
+    </a>
+    <a href="https://plus.google.com/share?url=http%3A%2F%2Fwww.freedomsponsors.org">
+        <img src="/static/img/Google+-42.jpg">
+    </a>
+{% endblock %}
+
 {% block topmiddle %}
           <!-- logo / slogan -->
           <div style="margin: 0 auto; width:600px;">
