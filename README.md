@@ -18,17 +18,19 @@ FreedomSponsors is a system strongly based on trust and reputation.
 
 In this repo you'll find the full source code that powers FS (backend and frontend).
 
+FreedomSponsors is a Python+Django application.
+
 ## Helping out
 
 Liked FreedomSponsors and want to help? Great! There are many ways you can help.
 
-* Spread the word.
+### Spread the word.
 
 For crowdfunding to happen there must be a crowd in the first place.
-The easiest way you can help FreedomSponsors is talk about. Show it around at your workplace, 
+The easiest way you can help FreedomSponsors is talk about it. Show it around at your workplace, 
 [tweet](https://twitter.com/intent/tweet?url=http://www.freedomsponsors.org&text=Check%20this%20out!%20%23FreedomSponsors%20-%20crowdfunding%20Free%20Software,%20one%20issue%20at%20a%20time.) about it, share on [Facebook](https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.freedomsponsors.org) and [Google+](https://plus.google.com/share?url=http%3A%2F%2Fwww.freedomsponsors.org)
 
-* Get in touch
+### Get in touch
 
 Great things come up when people communicate and we'd love to hear from you. 
 There are many ways you can get in touch:
@@ -37,18 +39,21 @@ There are many ways you can get in touch:
 - join the [official mailing list](https://groups.google.com/forum/?hl=en#!forum/freedomsponsors)
 - Follow our [facebook page](https://www.facebook.com/freedomsponsors)
 
-* Give feedback
+### Give feedback
 
 Want to report a bug or suggest a great new feature?
+
 Have a killer idea to help us with marketing?
-Besides the channels above, you can drop your thoughts in the [feedback section](http://www.freedomsponsors.org/core/feedback)
+
+Besides the channels above, you can drop your thoughts in the [feedback section](http://www.freedomsponsors.org/core/feedback).
 We love feedback, really :-)
 
-* Code!
+### Code!
 
-FreedomSponsors is a Python+Django application.
 We have a lot of cool ideas to implement, and we got our hands full, so we'll take all the help we can get :-).
+
 If you want to help out, check out our Waffle board below to see what's going on and the most urgent issues that we need help with. 
+
 [![Stories in Ready](https://badge.waffle.io/freedomsponsors/www.freedomsponsors.org.png)](http://waffle.io/freedomsponsors/www.freedomsponsors.org)
 
 ## Useful resources
