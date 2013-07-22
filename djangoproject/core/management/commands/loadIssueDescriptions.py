@@ -1,3 +1,4 @@
+from time import sleep
 from django.core.management.base import NoArgsCommand
 from optparse import make_option
 from django.utils.html import strip_tags
@@ -27,3 +28,4 @@ class Command(NoArgsCommand):
                 issue.save()
             else:
                 logger.info('error fetching from: %s - %s' % (issue.trackerURL, info.error))
+            sleep(60)
