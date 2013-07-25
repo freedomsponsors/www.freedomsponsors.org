@@ -751,7 +751,7 @@ class Payment(models.Model):
     confirm_key = models.CharField(max_length=128, null=True, blank=True)
     status = models.CharField(max_length=30)
     fee = models.DecimalField(max_digits=16, decimal_places=8)
-    total = models.DecimalField(max_digits=9, decimal_places=2)
+    total = models.DecimalField(max_digits=16, decimal_places=8)
     currency = models.CharField(max_length=10)
     bitcoin_receive_address = models.ForeignKey(ReceiveAddress, null=True)
     bitcoin_transaction_hash = models.CharField(max_length=128, null=True)
