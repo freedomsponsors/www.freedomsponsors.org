@@ -1,10 +1,28 @@
+/* General
+----------------------------------------------- */
+
 body{
-	background-image: url(../img2/fs_background.jpg);
+	background-image: url(../images2/fs_background.jpg);
 	margin: 0px;
 	font-family: Arial, sans-serif;
 	font-size: 10pt;
 	color:8C8C8C;
 }
+
+/* clearfix floating elements children*/
+.clearfix-after:after{
+	clear: both;
+	content: "";
+	display: block;
+}
+
+/* clearfix floating elements*/
+.clearfix{
+	clear:both;
+}
+
+/* Header
+----------------------------------------------- */
 
 .header-top-section{
 	/* TODO: ajustar tamanho ao redimensionar*/
@@ -47,6 +65,9 @@ body{
 	position:relative;
 }
 
+/* Content
+----------------------------------------------- */
+
 .content{
 	padding-top:30px;
 	padding-bottom:30px;
@@ -69,4 +90,43 @@ img.fs-logo{
 	margin-top:40px;
 	margin-bottom:40px;
 	position:relative;
+}
+
+/* Footer
+----------------------------------------------- */
+
+.footer{
+	background-color:#F1F2F2;
+	height:90px;
+	width:100%;
+	
+	margin-top:20px;
+	
+	-webkit-box-shadow: inset 0px 4px 15px -8px #D1D3D4;
+	-moz-box-shadow: inset 0px 4px 15px -8px #D1D3D4;
+	box-shadow: inset 0px 4px 15px -8px #D1D3D4;
+	
+	display:-moz-box;
+	display:-webkit-box;
+	display:-ms-box;
+	display:box;
+}
+
+.footer-left-section, .footer-midle-section, .footer-right-section{
+	line-height:90px;
+	-moz-box-flex:1;
+	-webkit-box-flex:1;
+	-ms-box-flex:1;
+	box-flex:1;
+}
+
+.footer-left-section{
+}
+
+.footer-midle-section{
+	width:80%;
+	max-width:1000px;
+}
+
+.footer-right-section{
 }

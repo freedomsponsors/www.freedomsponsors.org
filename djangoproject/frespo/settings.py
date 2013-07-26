@@ -179,6 +179,7 @@ INSTALLED_APPS = (
     'bitcoin_frespo',
     'frespo_currencies',
     'core',
+    'sandbox',
     'core_splinter_tests',
     'gh_frespo_integration',
 #    'bootstrap-pagination'

@@ -1,3 +1,40 @@
+/* ----------------------- SUMMARY -----------------------
+
+- General
+
+- Header
+ 
+- Content
+	- Titles
+	- Boxes
+	- Dividers
+
+- Footer
+
+- FS Inputs
+	- Input syles
+	- Search input styles
+
+- FS Buttons
+	- Style
+	- Colors
+	- Sizes
+
+- FS Card List
+	- Card list header
+	- Card list
+	
+- FS Cards
+	- Card header
+	- Card content
+	- Card footer
+	- Sponsored card
+	- Proposed card
+	- Project card
+	- Card status
+   
+*/
+
 /* General
 ----------------------------------------------- */
 
@@ -63,20 +100,43 @@ a.social-login{
 }
 
 a.social-login.google{
-	background:transparent url(../img2/social_login_google.png) center top no-repeat;
+	background:transparent url(../images2/social_login_google.png) center top no-repeat;
 }
 a.social-login.github{
-	background:transparent url(../img2/social_login_github.png) center top no-repeat;
+	background:transparent url(../images2/social_login_github.png) center top no-repeat;
 }
 a.social-login.facebook{
-	background:transparent url(../img2/social_login_facebook.png) center top no-repeat;
+	background:transparent url(../images2/social_login_facebook.png) center top no-repeat;
 }
 a.social-login.twitter{
-	background:transparent url(../img2/social_login_twitter.png) center top no-repeat;
+	background:transparent url(../images2/social_login_twitter.png) center top no-repeat;
 }
 
 /* Content
 ----------------------------------------------- */
+
+/* Titles */
+
+.fs-title{
+	width:165px;
+	height:32px;
+	display: inline-block;
+	margin:1px;
+	
+	font-family: "Ubahn", Arial, sans-serif;
+	font-size:18px;
+	line-height:30px;
+	
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-goog-ms-border-radius: 3px;
+	border-radius: 3px;
+	
+	color: #FFF;
+	background-color: #323232;
+}
+
+/* Boxes */
 
 .fs-box{
 	background-color:#FFF;
@@ -93,9 +153,69 @@ a.social-login.twitter{
 	box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, .2);
 }
 
+/* Dividers */
+
+div.divider{
+	border-bottom: 1px solid rgba(200, 200, 200, .3);
+	box-shadow: 0px 10px 15px -10px #D1D1D1;
+	height: 20px;
+	width: 100%; /*TODO: rever tamanho padrao*/
+	position:relative;
+	margin-bottom:30px;
+	margin-top:15px;
+}
+
+div.divider:before{
+	content:"";
+	position:absolute;
+	border-bottom: 1px solid rgba(200, 200, 200, .1);
+	box-shadow: 0px 7px 15px -10px #D1D1D1;
+	width: 80%;
+	top:1px;
+	left:0;
+    right:0;
+    margin-left:auto;
+    margin-right:auto;
+	height:20px;
+}
+
+div.divider.small{
+	border-bottom: 1px solid rgba(200, 200, 200, .3);
+	box-shadow: 0px 4px 15px -7px #D1D1D1;
+	height: 15px;
+	width: 80%; /*TODO: rever tamanho padrao*/
+	position:relative;
+	margin-bottom:20px;
+	margin-top:0px;
+	margin-left:auto;
+    margin-right:auto;
+}
+
+div.divider.small:before{
+	content:"";
+	position:absolute;
+	border-bottom: 1px solid rgba(200, 200, 200, .1);
+	box-shadow: 0px 1px 15px -7px #D1D1D1;
+	width: 80%;
+	top:1px;
+	left:0;
+    right:0;
+    margin-left:auto;
+    margin-right:auto;
+	height:15px;
+}
+
+/* Footer
+----------------------------------------------- */
+
+.footer-link{
+	margin-right:20px;
+}
+
 /* FS Inputs
 ----------------------------------------------- */
 
+/* Input styles */ 
 input.fs-input{
 	color: #B9B9B9;
 	line-height: 10px;
@@ -124,15 +244,16 @@ input.fs-input.black{
 	box-shadow: inset 0px 4px 15px -5px #000;
 }
 
+/* Search input styles */ 
 input.fs-input.search{
-	background: url(../img2/search_icon.png) no-repeat;
+	background: url(../images2/search_icon.png) no-repeat;
 	background-position: -moz-calc(100% - 8px);
 	background-position: -webkit-calc(100% - 8px);
 	background-position: calc(100% - 8px);
 }
 
 input.fs-input.search.black{
-	background: url(../img2/search_icon_menu.png) no-repeat;
+	background: url(../images2/search_icon_menu.png) no-repeat;
 	background-position: -moz-calc(100% - 8px);
 	background-position: -webkit-calc(100% - 8px);
 	background-position: calc(100% - 8px);
@@ -147,6 +268,14 @@ input.fs-input.search.black{
 	position: relative;
 	margin:4px;
 	
+	width: -moz-calc(100% - 8px);
+	width: -webkit-calc(100% - 8px);
+	width: calc(100% - 8px);
+	height: 26px;
+	line-height: 26px;
+	
+	text-align:center;
+	font-size: 18px;
 	font-family: "Ubahn", Arial, sans-serif;
 	
 	color: #FFF;
@@ -169,7 +298,7 @@ input.fs-input.search.black{
     right: -3px; 
 }
 
-/* Collors */
+/* Colors */
 
 .fs-button.blue{
 	background-color: #27AAE1;
@@ -192,6 +321,14 @@ input.fs-input.search.black{
 	background-color: #E1E1E1;
 }
 
+.fs-button.orange:before{
+	border-color: #FFB92D;
+}
+
+.fs-button.orange{
+	background-color: #FFB92D;
+}
+
 .fs-button.grey:before{
 	border-color: #E1E1E1;
 }
@@ -200,91 +337,21 @@ input.fs-input.search.black{
 	color: #B4B4B4;
 }
 
+
+
 /* Sizes */
 .fs-button.medium{
 	width: 118px;
-	height: 26px;
-	font-size: 18px;
-	line-height: 26px;
 }
 
 .fs-button.square{
 	width: 26px;
-	height: 26px;
-	font-size: 18px;
-	line-height: 26px;
-}
-
-
-div.divider{
-	border-bottom: 1px solid rgba(200, 200, 200, .3);
-	box-shadow: 0px 10px 15px -10px #D1D1D1;
-	height: 20px;
-	width: 100%; /*TODO: rever tamanho padrao*/
-	position:relative;
-	margin-bottom:30px;
-}
-
-div.divider:before{
-	content:"";
-	position:absolute;
-	border-bottom: 1px solid rgba(200, 200, 200, .1);
-	box-shadow: 0px 7px 15px -10px #D1D1D1;
-	width: 80%;
-	top:1px;
-	left:0;
-    right:0;
-    margin-left:auto;
-    margin-right:auto;
-	height:20px;
-}
-
-div.divider.small{
-	border-bottom: 1px solid rgba(200, 200, 200, .3);
-	box-shadow: 0px 4px 15px -7px #D1D1D1;
-	height: 15px;
-	width: 80%; /*TODO: rever tamanho padrao*/
-	position:relative;
-	margin-bottom:20px;
-	margin-left:auto;
-    margin-right:auto;
-}
-
-div.divider.small:before{
-	content:"";
-	position:absolute;
-	border-bottom: 1px solid rgba(200, 200, 200, .1);
-	box-shadow: 0px 1px 15px -7px #D1D1D1;
-	width: 80%;
-	top:1px;
-	left:0;
-    right:0;
-    margin-left:auto;
-    margin-right:auto;
-	height:15px;
 }
 
 /* FS Card List
 ----------------------------------------------- */
 
-.fs-title{
-	width:165px;
-	height:32px;
-	display: inline-block;
-	margin:1px;
-	
-	font-family: "Ubahn", Arial, sans-serif;
-	font-size:18px;
-	line-height:30px;
-	
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	-goog-ms-border-radius: 3px;
-	border-radius: 3px;
-	
-	color: #FFF;
-	background-color: #323232;
-}
+/* Card list header */
 
 .card-list-header{
 	position:relative;
@@ -300,6 +367,8 @@ div.divider.small:before{
 	float: right;
 }
 
+/* Card list */
+
 .card-list{
 	clear:both;
 }
@@ -307,9 +376,12 @@ div.divider.small:before{
 .card-list .fs-box.middle{
 	margin-left: -moz-calc(100% - 8px);
 	margin-left: -webkit-calc(100% - 8px);
-	margin-left: calc((100% - 3*260px)/2);
-	margin-right: calc((100% - 3*260px)/2);
+	margin-left: calc((100% - 3*260px)/2); /*TODO: ajustar valores de acordo com numero de cards por linha*/
+	margin-right: calc((100% - 3*260px)/2); /*TODO: ajustar valores de acordo com numero de cards por linha*/
 }
+
+/* FS Cards
+----------------------------------------------- */
 
 .issue-card{
 	height: 365px;
@@ -322,29 +394,42 @@ div.divider.small:before{
 	position:relative;
 }
 
+/* Card header*/
+
 .issue-card .card-title{
 	color:#1C75BC;
 	font-family: "Ubahn", Arial, sans-serif;
 	font-size:18px;
 }
 
-.issue-card .card-offered-value{
+/* Card content*/
+
+.issue-card  .card-caption{
 	font-family: Arial, sans-serif;
 	font-size:12px;
-	float:right;
-	color:#FFB92D;
 }
 
-.issue-card .card-paid-value{
-	font-family: Arial, sans-serif;
-	font-size:12px;
-	float:left;
+.issue-card  .card-caption.orange{
+	color:#FFB92D;
 }
 
 .issue-card .description{
 	max-height:65px;
 	overflow: hidden;
+	word-wrap:break-word;
 }
+
+div.project-logo {
+	height:58px;
+	width:100%;
+}
+
+div.project-logo > img{
+	height:auto;
+	width:100%;
+}
+
+/* Card footer*/
 
 .issue-card .card-footer{
 	height:24px;
@@ -359,28 +444,6 @@ div.divider.small:before{
 	bottom:0px;
 	left:0px;
 	right:0px;
-	
-}
-
-.card-status{
-	width:72px;
-	height:72px;
-	display:inline-block;
-	position:absolute;
-	right:0px;
-	bottom:25px;
-}
-
-.card-status.open{
-	background: url(../img2/card_status_open.png)  no-repeat;
-}
-
-.card-status.working{
-	background: url(../img2/card_status_working.png)  no-repeat;
-}
-
-.card-status.done{
-	background: url(../img2/card_status_done.png)  no-repeat;
 }
 
 .card-footer .views{
@@ -393,21 +456,7 @@ div.divider.small:before{
 	right:10px;
 }
 
-.card-bottom-logo{
-	height:58px;
-	width:180px;
-		
-	position:absolute;
-	left:15px;
-	bottom:32px;
-}
-
-.card-bottom-logo .project-logo{
-	max-height:58px;
-	max-width:180px;
-	height:auto;
-	width:auto;
-}
+/* Sponsored card*/
 
 .issue-card .card-sponsors{
 	text-align:right;
@@ -427,6 +476,54 @@ div.divider.small:before{
 
 .sponsor-picture:first-child{
 	margin-left:0px!important;
+}
+
+.sponsored div.project-logo {
+	height:58px;
+	width:180px;
+		
+	position:absolute;
+	left:15px;
+	bottom:32px;
+}
+
+.sponsored div.project-logo > img{
+	max-height:58px;
+	max-width:180px;
+	height:auto;
+	width:auto;
+}
+
+/* Proposed card*/
+
+.proposed .description{
+	height:130px;
+	max-height:130px;
+	overflow: hidden;
+}
+
+/* Project card*/
+
+/* Card status */
+.card-status{
+	width:72px;
+	height:72px;
+	display:inline-block;
+	position:absolute;
+	right:0px;
+	bottom:25px;
+}
+
+.card-status.open{
+	background: url(../images2/card_status_open.png)  no-repeat;
+}
+
+.card-status.working{
+	background: url(../images2/card_status_working.png)  no-repeat;
+}
+
+.card-status.done{
+	background: url(../images2/card_status_done.png)  no-repeat;
 }
 
 
