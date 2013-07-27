@@ -1,15 +1,15 @@
 # coding: utf-8
 from decimal import Decimal
-import dj_database_url
-from unipath import Path
+#import dj_database_url
+#from unipath import Path
 import os
 
-PROJECT_DIR = Path(__file__).parent.parent
+#PROJECT_DIR = Path(__file__).parent.parent
 
 FS_FEE = Decimal('0.03')
 BITCOIN_FEE = Decimal('0.0005')
 
-DEBUG = False
+DEBUG = True
 FRESPO_PROJECT_ID = -1 # only needed for backwards compatibility with south patch 0008_set_isfeedback_true.py
 ADMINS = (
     ('Admin', 'admin@freedomsponsors.org'),
@@ -21,11 +21,16 @@ MANAGERS = ADMINS
 ENABLE_PIWIK = False
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default='sqlite:///' + PROJECT_DIR.child('database.db'))
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': '',                      # Or path to database file if using sqlite3.
+        'USER': '',                      # Not used with sqlite3.
+        'PASSWORD': '',                  # Not used with sqlite3.
+        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+    }
 }
 
-MEDIA_ROOT = PROJECT_DIR.child('core').child('static').child('media')
 MEDIA_ROOT_URL = '/static/media'
 
 GITHUB_BOT_USERNAME = 'freedomsponsors-bot'
@@ -46,13 +51,6 @@ PAYPAL_API_APPLICATION_ID = 'APP-80W284485P519543T' #see www.x.com
 PAYPAL_API_EMAIL = 'FP_1338073142_biz@gmail.com'
 PAYPAL_FRESPO_RECEIVER_EMAIL = 'FP_1338073142_biz@gmail.com'
 
-PAYPAL_CANCEL_URL = SITE_HOME+'/core/paypal/cancel'
-PAYPAL_RETURN_URL = SITE_HOME+'/core/paypal/return'
-PAYPAL_IPNNOTIFY_URL = SITE_HOME+'/core/paypal/'+PAYPAL_IPNNOTIFY_URL_TOKEN
-
-BITCOIN_IPNNOTIFY_URL_TOKEN = 'megablasteripn'
-BITCOIN_ENABLED = False
-BITCOIN_RECEIVE_ADDRESS_POOL_SIZE = 20
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -127,9 +125,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'core.middlewares.CompleteRegistrationFirst',
-    'core.middlewares.Translation',
-    'pagination.middleware.PaginationMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -143,10 +138,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.tz",
     "django.contrib.messages.context_processors.messages",
     'django.core.context_processors.request',
-    'social_auth.context_processors.social_auth_by_name_backends',
-    'social_auth.context_processors.social_auth_backends',
-    'social_auth.context_processors.social_auth_by_type_backends',
-    'core.context_processors.addAFewFrespoSettings',
 )
 
 ROOT_URLCONF = 'frespo.urls'
@@ -155,15 +146,16 @@ ROOT_URLCONF = 'frespo.urls'
 WSGI_APPLICATION = 'frespo.wsgi.application'
 
 TEMPLATE_DIRS = (
-    PROJECT_DIR.child("templates"),
+    'templates'
+#    PROJECT_DIR.child("templates"),
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
 
-LOCALE_PATHS = (
-    PROJECT_DIR.child("locale"),
-)
+#LOCALE_PATHS = (
+#    PROJECT_DIR.child("locale"),
+#)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -176,18 +168,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
-    'bitcoin_frespo',
-    'frespo_currencies',
-    'core',
     'sandbox',
-    'core_splinter_tests',
-    'gh_frespo_integration',
-#    'bootstrap-pagination'
-    'pagination',
-    'social_auth',
-    'south',
-    'emailmgr',
-    'registration',
 )
 
 
@@ -309,7 +290,7 @@ LOGGING = {
         'default': {
             'level':'DEBUG',
             'class':'logging.handlers.RotatingFileHandler',
-            'filename': PROJECT_DIR.child('logs', 'frespo.log'),
+            'filename': 'frespo.log',
             'maxBytes': 1024*1024*5, # 5 MB
             'backupCount': 5,
             'formatter':'standard',
@@ -333,31 +314,3 @@ LOGGING = {
         },
     }
 }
-
-PAGINATION_DEFAULT_PAGINATION = 20
-PAGINATION_DEFAULT_WINDOW = 3
-
-os.environ.setdefault('TEST_WITH_NOSE', 'true')
-
-# pycharm is not able to run tests with nose runner
-# so, you might want to configure your pycharm environment variables with TEST_WITH_NOSE=false
-TEST_WITH_NOSE = os.environ['TEST_WITH_NOSE'] == 'true'
-
-if TEST_WITH_NOSE:
-    TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-    NOSE_ARGS = [
-        '--match=^(must|ensure|should|test|it_should)',
-        '--where=%s' % PROJECT_DIR,
-        '--id-file=%s' % PROJECT_DIR.child('.noseids'),
-        '--all-modules',
-        '--with-id',
-        '--verbosity=2',
-        '--nologcapture',
-        '--rednose',
-    ]
-
-os.environ.setdefault('ENV_SETTINGS', 'env_settings')
-try:
-    exec('from %s import *' % os.environ['ENV_SETTINGS'])
-except ImportError:
-    print u'WARNING: %s not found.' % os.environ['ENV_SETTINGS']

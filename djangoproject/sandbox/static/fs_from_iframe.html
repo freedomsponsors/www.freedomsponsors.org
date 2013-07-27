@@ -1,0 +1,23 @@
+<html>
+	<body>
+        <div style="margin-left: auto; margin-right: auto; width: 853px; height: 800px">
+        	<iframe style="width:100%; height:100%" src="/core/issue/sponsor?trackerURL=https://hibernate.onjira.com/browse/HHH-1057"></iframe>
+
+        </div>
+
+    <script>
+    	document.frespo_sponsorissue_callback = function(offer){
+            /**
+             * Available attributes:
+             *   offer.id
+             *   offer.sponsor_id
+             *   offer.price
+             *   offer.issue_trackerURL
+             */
+    		alert('congratulations. You are a sponsor. YAY!\n Next step is that the server would access the json API to see if the issue was really created, which is located in the following location (click ok)');
+            document.location = 'core/json/get_offers?trackerURL='+offer.issue_trackerURL+'&sponsor_id='+offer.sponsor_id;
+    	}
+    </script>
+
+	</body>
+</html>
