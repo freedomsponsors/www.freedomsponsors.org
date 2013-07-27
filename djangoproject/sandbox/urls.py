@@ -5,5 +5,6 @@ __author__ = 'tony'
 
 urlpatterns = patterns('sandbox.views',
     url(r'^$', direct_to_template, {'template': 'sandbox/home.html'}),
+    url(r'^issue$', direct_to_template, {'template': 'sandbox/issue.html'}),
     # url(r'^home/$', 'home'),
 )
