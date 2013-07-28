@@ -107,13 +107,11 @@ def get_stats():
 
 def _age():
     delta = (datetime.today() - LAUNCH_DATE).days
-    months = int(delta/30.5)
-    weeks = (delta - int(months * 30.5))/7
-    s = "%s months" % months
-    if weeks > 0:
-        s += " and %s week" % weeks
-        if(weeks > 1):
-            s += "s"
+    years, days = divmod(delta, 365)
+    months = int(days/30.5)
+    s = "%d %s" % (years, 'year' if years == 1 else 'years')
+    if months > 0:
+        s += " and %d %s" % (months, 'month' if months == 1 else 'months')
     return s;
 
 def _count(query):
