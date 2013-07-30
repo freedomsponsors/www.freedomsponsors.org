@@ -3,7 +3,7 @@
 If you're a Windows user we suggest you set up a virtual machine using [VirtualBox](http://www.virtualbox.org) - Ubuntu
 virtual machines can be downloaded [here](http://virtualboxes.org/images/ubuntu/). 
 
-Alternatively, you can help us with #185
+Alternatively, you can help us with [#185 - Windows development environment](https://github.com/freedomsponsors/www.freedomsponsors.org/issues/185)
 
 ## Running
 
