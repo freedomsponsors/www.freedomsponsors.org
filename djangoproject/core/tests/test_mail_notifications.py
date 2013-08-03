@@ -3,6 +3,7 @@ from django.utils import unittest
 from core.services import watch_services
 from helpers import test_data, email_asserts
 from django.test.client import Client
+from django.core.urlresolvers import reverse
 
 __author__ = 'tony'
 
@@ -16,9 +17,9 @@ class TestMailNotifications(unittest.TestCase):
     def test_should_send_mail_for_new_comments(self):
         offer = test_data.create_dummy_offer_usd()
         issue = offer.issue
-        response = self.client.get('/core/watch/issue/%s'%issue.id)
+        response = self.client.get(reverse('core.views.watch_views.watchIssue', kwargs={'issue_id': issue.id }))
         self.assertEqual(response.status_code, 200)
-        response = self.client.get('/core/watch/offer/%s'%offer.id)
+        response = self.client.get(reverse('core.views.watch_views.watchOffer', kwargs={'offer_id': offer.id }))
         self.assertEqual(response.status_code, 200)
 
         user2 = test_data.createDummyUserRandom(login='marydoe', password='xyz456')
@@ -42,7 +43,7 @@ class TestMailNotifications(unittest.TestCase):
     def test_should_send_mail_for_adding_or_changing_or_revoking_offer(self):
         offer = test_data.create_dummy_offer_usd()
         issue = offer.issue
-        response = self.client.get('/core/watch/issue/%s'%issue.id)
+        response = self.client.get(reverse('core.views.watch_views.watchIssue', kwargs={'issue_id': issue.id }))
         self.assertEqual(response.status_code, 200)
 
         user2 = test_data.createDummyUserRandom(login='marydoe', password='xyz456')
@@ -83,7 +84,7 @@ class TestMailNotifications(unittest.TestCase):
     def test_should_send_mail_for_starting_or_aborting_or_finishing_work(self):
         offer = test_data.create_dummy_offer_usd()
         issue = offer.issue
-        response = self.client.get('/core/watch/issue/%s'%issue.id)
+        response = self.client.get(reverse('core.views.watch_views.watchIssue', kwargs={'issue_id': issue.id }))
         self.assertEqual(response.status_code, 200)
 
         user2 = test_data.createDummyUserRandom(login='marydoe', password='xyz456')

@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, include, url
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, RedirectView
 from django.conf import settings
 from django.views.generic.simple import redirect_to
 
@@ -55,11 +55,11 @@ urlpatterns += patterns('core.views.comment_views',
     url(r'^offer/comment/(?P<comment_id>\d+)/history$', 'viewOfferCommentHistory'),
 )
 
-urlpatterns += patterns('core.views.watch_views',
-    url(r'^watch/issue/(?P<issue_id>\d+)$', 'watchIssue'),
-    url(r'^unwatch/issue/(?P<issue_id>\d+)$', 'unwatchIssue'),
-    url(r'^watch/offer/(?P<offer_id>\d+)$', 'watchOffer'),
-    url(r'^unwatch/offer/(?P<offer_id>\d+)$', 'unwatchOffer'),
+urlpatterns += patterns('', # TODO: how to use reverse_lazy here?
+    url(r'^watch/issue/(?P<issue_id>\d+)$', RedirectView.as_view(url='/issue/%(issue_id)s/watch', permanent=True)),
+    url(r'^unwatch/issue/(?P<issue_id>\d+)$', RedirectView.as_view(url='/issue/%(issue_id)s/unwatch', permanent=True)),
+    url(r'^watch/offer/(?P<offer_id>\d+)$', RedirectView.as_view(url='/offer/%(offer_id)s/watch', permanent=True)),
+    url(r'^unwatch/offer/(?P<offer_id>\d+)$', RedirectView.as_view(url='/offer/%(offer_id)s/unwatch', permanent=True)),
 )
 
 urlpatterns += patterns('core.views.paypal_views',
