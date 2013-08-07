@@ -3,6 +3,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib import admin
 # TODO: remove core dependency
 from core.forms import RegistrationForm
+from core.urls import watch_urls
 
 admin.autodiscover()
 
@@ -26,6 +27,8 @@ urlpatterns = patterns('',
         name='emailmgr_email_activate'
     ),
 )
+
+urlpatterns += watch_urls.urlpatterns
 
 urlpatterns += staticfiles_urlpatterns()
 # urlpatterns += feedback_urlpatterns
