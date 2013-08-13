@@ -98,6 +98,15 @@ body{
 	max-width:1000px;
 }
 
+div.hgap-15{
+	width:15px;
+}
+
+div.vgap-15{
+	height:15px;
+}
+
+
 /* Footer
 ----------------------------------------------- */
 
@@ -166,23 +175,17 @@ div.column-wrapper{ /* Defines columns container */
 	-moz-box-sizing:border-box;
 }
 
-div.column-wrapper div.column.gap{ /* Add space between columns */
-	width:15px;
-}
-
 /* Sizes */
 
 div.column-wrapper div.column.medium{
 	width:220px;
 }
 
-div.column-wrapper div.column.fit{ /*column fit empty space*/
-
-	-webkit-box-flex: 1;      /* OLD - iOS 6-, Safari 3.1-6 */
-	-moz-box-flex: 1;         /* OLD - Firefox 19- */
-	-webkit-flex: 1;          /* Chrome */
-	-ms-flex: 1;              /* IE 10 */
-	flex: 1;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+div.column-wrapper div.column.fit{ /* Column fit empty space */
+	-webkit-flex: 1;
+	-moz-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
 }
 
 /* Home
@@ -210,12 +213,6 @@ img.fs-logo{
 /* -------------------------------- */
 /*           Issue Page             */
 /* -------------------------------- */
-
-.issue-overview > div{
-	position:relative;
-	padding-bottom:40px;
-	margin-bottom:15px;
-}
 
 .issue-overview .project-logo img{
 	width:100%;

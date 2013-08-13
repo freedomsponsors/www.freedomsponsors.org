@@ -143,6 +143,10 @@ body {
 
 /* ------ Text Sizes ------ */
 
+.font-size-11{
+	font-size: 11px;
+}
+
 .font-size-12{
 	font-size: 12px;
 }
@@ -221,15 +225,11 @@ a.social-login.twitter{
 /* ------ Buttons ------ */
 
 a.sponsor-new{
-	color: #8DC63F;
-	font-size: 14px;
 	margin-right: 8px;
 	margin-left: 8px;
 }
 
-a.propose-new{
-	color: #27AAE1;
-	font-size: 14px;
+a.propose-new{;
 	margin-right: 8px;
 	margin-left: 8px;
 }
@@ -237,6 +237,13 @@ a.propose-new{
 /* -------------------------------- */
 /*             Content              */
 /* -------------------------------- */
+
+.user-picture{
+	width:50px;
+	height:50px;
+	background-color: #F1F2F2;
+	display:inline-block;
+}
 
 /* ------ Titles ------ */
 
@@ -252,7 +259,7 @@ h1{font-size:24px; margin-bottom:35px;}
 h2{font-size:20px; margin-bottom:30px;}
 h3{font-size:18px; margin-bottom:15px;}
 h4{font-size:14px; margin-bottom:10px;}
-h5{font-size:11px;}
+h5{font-size:11px; margin-bottom:5px;}
 
 /* Boxes */
 
@@ -287,6 +294,7 @@ h3.boxed.medium{
 .fs-box{
 	background-color:#FFF;
 	
+	position:relative;
 	padding:15px;
 	
 	border: 1px solid #E6E7E8;
@@ -412,7 +420,7 @@ div.divider.small:before{
 
 
 /* -------------------------------- */
-/*             Footer              */
+/*             Footer               */
 /* -------------------------------- */
 
 .footer-link{
@@ -512,8 +520,12 @@ input.fs-input.search.black{
 	opacity: 0.7;
 }
 
-.fs-button:hover:before {
+.fs-button:hover:before{
 	opacity: 1;
+}
+
+.fs-button.disabled:hover:before {
+	opacity: 0.7;
 }
 
 /* ------ Colors ------ */
@@ -601,10 +613,11 @@ input.fs-input.search.black{
 .issue-card{
 	height: 340px;
 	width: 228px;
+	min-height: 340px;
+	min-width: 228px;
+	
 	text-align:left;
 	display: inline-block;
-	float:left;
-	position:relative;
 }
 
 /* ------ Card Header ------ */
@@ -637,13 +650,6 @@ input.fs-input.search.black{
 	text-align:right;
 	margin-top:20px;
 	margin-bottom:10px;
-}
-
-.sponsor-picture{
-	width:50px;
-	height:50px;
-	background-color: #F1F2F2;
-	display:inline-block;
 }
 
 .sponsored div.project-logo {
