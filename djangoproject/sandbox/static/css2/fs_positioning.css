@@ -1,3 +1,11 @@
+﻿/* ----------------------- SUMMARY -----------------------
+
+- General
+
+- Header
+   
+*/
+
 /* General
 ----------------------------------------------- */
 
@@ -19,11 +27,6 @@ input.menu-search-p{
 	right: 10px;
 }
 
-.breadcumb-p{
-	float:left;
-	margin-left:10px;
-}
-
 input.home-search-p{
 	width: -moz-calc(100% - 200px);
 	width: -webkit-calc(100% - 200px);
@@ -38,9 +41,4 @@ a.home-search-p{
 	position: absolute;
 	top: 27;
 	right: 30px;
-}
-
-.login-section-p{
-	float:right;
-	margin-right:10px;
 }

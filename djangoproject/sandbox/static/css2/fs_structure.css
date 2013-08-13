@@ -1,8 +1,26 @@
+﻿/* ----------------------- SUMMARY -----------------------
+
+- General
+
+- Header
+ 
+- Content
+
+- Footer
+	- Sticky Footer
+
+- Columns Layout
+	- Sizes
+
+- Home
+   
+*/
+
 /* General
 ----------------------------------------------- */
 
 body{
-	background-image: url(../images2/fs_background.jpg);
+	background-image: url(../img2/fs_background.jpg);
 	margin: 0px;
 	font-family: Arial, sans-serif;
 	font-size: 10pt;
@@ -29,6 +47,7 @@ body{
 	width:80%;
 	max-width:1000px;
 	height:38px;
+	line-height:38px;
 }
 
 .header-middle-section{
@@ -70,26 +89,13 @@ body{
 
 .content{
 	padding-top:30px;
-	padding-bottom:30px;
+	padding-bottom:140px; /*30px + 110px for footer height*/
+	width: 100%;
 }
 
-img.fs-logo{
-	/* TODO: ajustar tamanho ao redimensionar*/
-	width:65%;
-	margin-top:20px;
-}
-
-.home-content-section{
-	/* TODO: ajustar tamanho ao redimensionar*/
-	width:64%;
-	max-width:860px;
-}
-
-.home-search-box{
-	height:90px;
-	margin-top:40px;
-	margin-bottom:40px;
-	position:relative;
+.content-section{
+	width:80%;
+	max-width:1000px;
 }
 
 /* Footer
@@ -130,3 +136,100 @@ img.fs-logo{
 
 .footer-right-section{
 }
+
+/* Sticky Footer */
+.non-footer-wrapper{
+	width: 100%;
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0px 0px -110px 0px;
+ }
+
+/* Columns Layout
+----------------------------------------------- */
+
+div.column-wrapper{ /* Defines columns container */
+	width:100%;
+	
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: flex;	
+	
+	-webkit-justify-content: space-between;
+	-moz-justify-content: space-between;
+	-ms-justify-content: space-between;
+	justify-content: space-between;
+	
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+}
+
+div.column-wrapper div.column.gap{ /* Add space between columns */
+	width:15px;
+}
+
+/* Sizes */
+
+div.column-wrapper div.column.medium{
+	width:220px;
+}
+
+div.column-wrapper div.column.fit{ /*column fit empty space*/
+
+	-webkit-box-flex: 1;      /* OLD - iOS 6-, Safari 3.1-6 */
+	-moz-box-flex: 1;         /* OLD - Firefox 19- */
+	-webkit-flex: 1;          /* Chrome */
+	-ms-flex: 1;              /* IE 10 */
+	flex: 1;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+}
+
+/* Home
+----------------------------------------------- */
+
+img.fs-logo{
+	/* TODO: ajustar tamanho ao redimensionar*/
+	width:65%;
+	margin-top:20px;
+}
+
+.home-content-section{
+	/* TODO: ajustar tamanho ao redimensionar*/
+	width:64%;
+	max-width:860px;
+}
+
+.home-search-box{
+	height:60px;
+	margin-top:40px;
+	margin-bottom:40px;
+	position:relative;
+}
+
+/* -------------------------------- */
+/*           Issue Page             */
+/* -------------------------------- */
+
+.issue-overview > div{
+	position:relative;
+	padding-bottom:40px;
+	margin-bottom:15px;
+}
+
+.issue-overview .project-logo img{
+	width:100%;
+}
+
+.issue-overview h1{
+	margin: 0;
+}
+
+.issue-overview h4{
+	margin: 4px 0 0 0;
+}
+
+.issue-overview .sponsor-picture{
+	margin:0;
+}
+

@@ -1,0 +1,72 @@
+﻿{% extends "sandbox/base.html" %}
+{% block mainContent%}
+	<div class="content" align="center">
+		<div class="content-section" align="left">
+			<h1 class="blue-text">[ Issue ] 688892: Add other samplers that properly reduce (downsample) and warp images </h1>
+
+			<div class="column-wrapper">
+				<div class="column fit">
+					<div class="card-list-section">
+						<div class="card-list-header">
+							<h3 class="boxed medium">Description</h3>
+							<h3 class="boxed medium">Sponsors (10)</h3>
+							<h3 class="boxed medium">Developers (2)</h3>
+							<h3 class="boxed medium">Comments (5)</h3>
+						</div>
+					</div>
+					<div class="fs-box issue-description">
+						<p>I am putting this enhancement request here so I can point freedomcoders to it,
+						to get some funding to program it.</p>
+
+						<p>Right now, only one GEGL sampler is Jacobian-adaptive, which means that only
+						one sampler properly reduces as well as enlarge, and has the internal machinery
+						to deal with general affine transformations and non-affine warps. This sampler
+						is called "LoHalo", and no-one has never seen halo come out of its use, however
+						if is pretty jaggy when enlarging, and it does not suppress moire quite enough
+						when reducing, as well as being on the soft side in this situation.</p>
+					</div>
+				</div>
+				<div class="column gap"></div>
+				<div class="column medium issue-overview">
+					<h3 class="boxed">Overview</h3>
+						
+					<div class="fs-box">
+						<div class="project-logo">
+							<img src="/static/img2/project_logos/jenkins_logo.png"/>
+                        </div>
+						<div class="divider small"></div>
+						
+						<div class="issue-values">
+							<h1 class="orange-text arial">$1.000.000</h1>
+							<h4 class="orange-text arial">Offered</h4>
+							</br>
+							<h1 class="arial">$235</h1>
+							<h4 class="arial">Paid</h4>
+						</div>
+						
+						
+						<div class="card-status working"></div>
+						<div class="fs-box-footer">
+							<a href="">Watch</a>
+                        </div>
+					</div>
+					
+					<div class="fs-box issue-creator">
+						<div class="column-wrapper">
+							<div class="sponsor-picture"></div>
+							<div class="column gap"></div>
+							<div class="column fit">
+								<h5  class="arial">Created by</h5>
+								<h5><a href="" class="arial">Rafael Augusto dos Santos</a></h5>
+							</div>
+						</div>		
+					</div>
+					
+
+					<a href="" class="fs-button green">Sponsor this issue</a>
+					<a href="" class="fs-button blue">Work on this issue</a>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -1,7 +1,9 @@
 {% extends "sandbox/empty_base.html" %}
 {% block body %}
-    {% include "sandbox/include/navbar.html" %}
-    {% block mainContent%}
-    {% endblock mainContent%}
+	<div class="non-footer-wrapper">
+		{% include "sandbox/include/navbar.html" %}
+		{% block mainContent%}
+		{% endblock mainContent%}
+	</div>
     {% include "sandbox/include/footer.html" %}
 {% endblock body %}
