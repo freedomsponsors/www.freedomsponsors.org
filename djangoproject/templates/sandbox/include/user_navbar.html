@@ -1,9 +1,25 @@
 ﻿<div class="header" align="center">
     <div class="header-top-section" align="right">
-		<div class="dropdown-button">
-			<a href="">Rafael Augusto dos Santos</a>
-			<span class="arrow-down"></span>
-		</div>
+{#		<div class="dropdown-button">#}
+{#			<a href="">Rafael Augusto dos Santos</a>#}
+{#			<span class="arrow-down"></span>#}
+{#		</div>#}
+        <div class="dropdown-button">
+            <a id="drop_user" data-toggle="dropdown" href="#">
+                Rafael Augusto dos Santos
+                <span class="arrow-down"></span>
+            </a>
+            <ul id="menu1" class="dropdown-menu" aria-labelledby="drop_user">
+                <li><a href="#">View Profile</a></li>
+                <li><a href="#">Edit Profile</a></li>
+                <li class="divider"></li>
+                <li><a href="#">My issues</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Github Settings</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Sign Out</a></li>
+            </ul>
+        </div>
     </div>
     <div class="header-middle-section">
         <a href="" class="menu-option">Home</a>
