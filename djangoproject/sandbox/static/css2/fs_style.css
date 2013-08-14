@@ -434,6 +434,8 @@ div.divider.small:before{
 /* ------ Input Styles ------ */
  
 input.fs-input{
+	width:100%;
+	
 	color: #B9B9B9;
 	line-height: 10px;
 	
@@ -447,8 +449,16 @@ input.fs-input{
 	-moz-box-shadow: inset 0 4px 15px -5px #eee;
 	box-shadow: inset 0 4px 15px -5px #eee;
 
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	
 	padding: 5px 20px 5px 5px;
 	margin: 0;
+}
+
+input.fs-input.medium{
+	width:180px;
 }
 
 input.fs-input.black{

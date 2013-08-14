@@ -24,8 +24,14 @@ body{
 	margin: 0px;
 	font-family: Arial, sans-serif;
 	font-size: 10pt;
-	color:8C8C8C;
+	color:#8C8C8C;
 }
+
+.border-box{
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+ }
 
 /* clearfix floating elements children*/
 .clearfix-after:after{
@@ -37,6 +43,14 @@ body{
 /* clearfix floating elements*/
 .clearfix{
 	clear:both;
+}
+
+.left{
+	float:left;
+}
+
+.right{
+	float:right;
 }
 
 /* Header
@@ -54,9 +68,10 @@ body{
 	/* TODO: ajustar tamanho ao redimensionar*/
 	width:80%;
 	max-width:1000px;
+	
 	height:50px;
-	position:relative;
 	line-height: 50px;
+	padding:0 15px 0 0;
 	
 	background-color: #323232;
 	
@@ -171,8 +186,32 @@ div.column-wrapper{ /* Defines columns container */
 	-ms-justify-content: space-between;
 	justify-content: space-between;
 	
-	box-sizing:border-box;
-	-moz-box-sizing:border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.column-wrapper.vcenter-content{
+	height:100%;
+	
+	/* Vertical Align */
+	-webkit-align-content: center;
+	-moz-align-content: center;
+	-ms-align-content: center;
+	align-content: center;
+	
+	-webkit-align-items: center;
+	-moz-align-items: center;
+	-ms-align-items: center;
+	align-items: center;	
+}
+
+.column-wrapper.hcenter-content{
+	/* Horizontal Align */
+	-webkit-justify-content: center;
+	-moz-justify-content: center;
+	-ms-justify-content: center;
+	justify-content: center;
 }
 
 /* Sizes */
@@ -195,6 +234,9 @@ img.fs-logo{
 	/* TODO: ajustar tamanho ao redimensionar*/
 	width:65%;
 	margin-top:20px;
+	margin-left:auto;
+	margin-right:auto;
+	display:block;
 }
 
 .home-content-section{
@@ -205,9 +247,10 @@ img.fs-logo{
 
 .home-search-box{
 	height:60px;
-	margin-top:40px;
-	margin-bottom:40px;
 	position:relative;
+	margin:40px 0 40px 0;
+	padding-left:30px;
+	padding-right:30px;
 }
 
 /* -------------------------------- */

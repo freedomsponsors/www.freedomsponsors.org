@@ -8,8 +8,15 @@
 			
 			<!-- Home Search -->
             <div class="home-search-box fs-box">
-                <input type="text" value="Paste an issue tracker URL, search for an issue name or a project" class="fs-input search home-search-p"/>
-                <a href="" class="fs-button medium blue home-search-p">Search</a>
+				<div class="column-wrapper vcenter-content">
+					<div class="column fit">
+						<input type="text" value="Paste an issue tracker URL, search for an issue name or a project" class="fs-input search"/>
+					</div>
+					<div class="hgap-15"></div>
+					<div>
+						<a href="" class="fs-button medium blue">Search</a>
+					</div>
+				</div>    
             </div>
 			
             <div class="divider"><!-- Divider --></div>
@@ -22,10 +29,10 @@
                     <a href="" class="fs-button square grey more">»</a>
                     <a href="" class="fs-button medium grey view-all right">View All</a>
                 </div>
-                <div class="column-wrapper">
-                    {% include "sandbox/components/sponsored_issue_card.html" %}
-                    {% include "sandbox/components/sponsored_issue_card.html" %}
-                    {% include "sandbox/components/sponsored_issue_card.html" %}
+                <div class="column-wrapper"><!--a-->
+					{% include 'sandbox/components/sponsored_issue_card.html' %}<!--b-->
+					{% include 'sandbox/components/sponsored_issue_card.html' %}<!--c-->
+					{% include 'sandbox/components/sponsored_issue_card.html' %}
                 </div>
             </div>
 
@@ -40,9 +47,9 @@
                     <a href="" class="fs-button medium grey view-all right">View All</a>
                 </div>
                 <div class="column-wrapper">
-					{% include "sandbox/components/proposed_issue_card.html" %}
-                    {% include "sandbox/components/proposed_issue_card.html" %}
-                    {% include "sandbox/components/proposed_issue_card.html" %}
+					{% include 'sandbox/components/proposed_issue_card.html' %}
+					{% include 'sandbox/components/proposed_issue_card.html' %}
+					{% include 'sandbox/components/proposed_issue_card.html' %}
                     </div>
                 </div>
             </div>
