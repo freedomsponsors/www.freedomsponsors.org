@@ -1,0 +1,147 @@
+td._favoriteIssues{
+  width: 50px;
+  height: 30px;
+}
+
+td.favoriteIssues2{
+  width: 30px;
+  height: 30px;
+}
+
+td._favoriteIssuesDollar{
+  width: 20px;
+}
+
+#logo{ 
+  display: inline; 
+  float: left; 
+  text-align: center; 
+}
+
+.hometablecell{
+  vertical-align: top;
+  margin-left: 20px;
+}
+
+
+.newLogo{
+  font-style: bold;
+  font-size: 30px;
+}
+
+.issueComment{
+  border-style: solid; 
+  border-width: 1px; 
+  border-radius: 10px; 
+  padding: 10px;
+}
+
+.issueComment:target {
+  background-color: rgb(235, 242, 249);
+}
+
+.newLogoBeta{
+font-size: 14px;
+}
+
+#nav{ 
+  display: inline; 
+  float: right;
+  text-align: center;  
+  margin-top: 5px;
+}
+
+._favoriteIssues{ 
+  font-size: 16px; 
+  margin-right: 25px;
+  vertical-align: top;
+}
+
+.favoriteIssues2{ 
+  font-size: 16px; 
+  margin-right: 25px;
+  vertical-align: top;
+}
+
+._favoriteIssuesDescricao{
+  font-size: 16px; 
+  margin-right: 25px;
+  margin-left: 15px;
+  vertical-align: top;
+}
+
+._favoriteIssuesDollar{
+  font-size: 16px; 
+  margin-right: 5px;
+  vertical-align: top;
+}
+
+.sloganPai{
+  margin-top:10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
+.slogan{
+  text-shadow: -5px 5px 10px #fff;
+  font-size: 24px;
+  font-style: italic;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.introductionText{
+ /* text-align: justify; */
+  font-size:14px;
+}
+
+.topIssues{
+  display: inline; 
+  float: left; 
+  text-align: justify;
+  margin-left: 40px;
+  margin-right: 40px;
+  margin-top: 20px;
+  margin-bottom: -70px;
+}
+
+._topIssuesItens{
+  margin-bottom: 15px;
+}
+
+.center{
+  margin-left:auto;
+  margin-right:auto;
+  width:90%;
+  background-color:#b0e0e6;
+}
+
+table.projects .project-name, table.projects a.project-sponsors  {
+  display: block;
+  float: left;
+}
+table.projects  a.project-sponsors {
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAVklEQVR4Xn3PgQkAMQhDUXfqTu7kTtkpd5RA8AInfArtQ2iRXFWT2QedAfttj2FsPIOE1eCOlEuoWWjgzYaB/IkeGOrxXhqB+uA9Bfcm0lAZuh+YIeAD+cAqSz4kCMUAAAAASUVORK5CYII=") no-repeat scroll right center transparent;
+  padding-right: 13px;
+  display: block;
+  text-indent: -999em;
+}
+
+.fade-hide, .fade-show {
+    -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.8s;
+    -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.8s;
+    -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.8s;
+    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.8s;
+}
+
+.fade-hide {
+    opacity:1;
+}
+.fade-hide.fade-hide-active {
+    opacity:0;
+}
+
+.fade-show {
+    opacity:0;
+}
+.fade-show.fade-show-active {
+    opacity:1;
+}

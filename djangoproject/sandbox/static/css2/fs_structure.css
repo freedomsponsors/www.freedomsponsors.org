@@ -1,0 +1,275 @@
+﻿/* ----------------------- SUMMARY -----------------------
+
+- General
+
+- Header
+ 
+- Content
+
+- Footer
+	- Sticky Footer
+
+- Columns Layout
+	- Sizes
+
+- Home
+   
+*/
+
+/* General
+----------------------------------------------- */
+
+body{
+	background-image: url(../img2/fs_background.jpg);
+	margin: 0px;
+	font-family: Arial, sans-serif;
+	font-size: 10pt;
+	color:#8C8C8C;
+}
+
+.border-box{
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+ }
+
+/* clearfix floating elements children*/
+.clearfix-after:after{
+	clear: both;
+	content: "";
+	display: block;
+}
+
+/* clearfix floating elements*/
+.clearfix{
+	clear:both;
+}
+
+.left{
+	float:left;
+}
+
+.right{
+	float:right;
+}
+
+/* Header
+----------------------------------------------- */
+
+.header-top-section{
+	/* TODO: ajustar tamanho ao redimensionar*/
+	width:80%;
+	max-width:1000px;
+	height:38px;
+	line-height:38px;
+}
+
+.header-middle-section{
+	/* TODO: ajustar tamanho ao redimensionar*/
+	width:80%;
+	max-width:1000px;
+	
+	height:50px;
+	line-height: 50px;
+	padding:0 15px 0 0;
+	
+	background-color: #323232;
+	
+	font-family: 'Ubahn-Light', Arial, sans-serif;
+	
+	color: #BCBEC0;
+	
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-goog-ms-border-radius: 5px;
+	border-radius: 5px;
+	
+	-moz-box-shadow: 0px 2px 5px -1px rgba(0, 0, 0, .2);
+	-webkit-box-shadow: 0px 2px 5px -1px rgba(0, 0, 0, .2);
+	-goog-ms-box-shadow: 0px 2px 5px -1px rgba(0, 0, 0, .2);
+	box-shadow: 0px 2px 5px -1px rgba(0, 0, 0, .2);
+}
+
+.header-bottom-section{
+	/* TODO: ajustar tamanho ao redimensionar*/
+	width:80%;
+	max-width:1000px;
+	height:38px;
+	line-height:38px;
+	position:relative;
+}
+
+/* Content
+----------------------------------------------- */
+
+.content{
+	padding-top:30px;
+	padding-bottom:140px; /*30px + 110px for footer height*/
+	width: 100%;
+}
+
+.content-section{
+	width:80%;
+	max-width:1000px;
+}
+
+div.hgap-15{
+	width:15px;
+}
+
+div.vgap-15{
+	height:15px;
+}
+
+
+/* Footer
+----------------------------------------------- */
+
+.footer{
+	background-color:#F1F2F2;
+	height:90px;
+	width:100%;
+	
+	margin-top:20px;
+	
+	-webkit-box-shadow: inset 0px 4px 15px -8px #D1D3D4;
+	-moz-box-shadow: inset 0px 4px 15px -8px #D1D3D4;
+	box-shadow: inset 0px 4px 15px -8px #D1D3D4;
+	
+	display:-moz-box;
+	display:-webkit-box;
+	display:-ms-box;
+	display:box;
+}
+
+.footer-left-section, .footer-midle-section, .footer-right-section{
+	line-height:90px;
+	-moz-box-flex:1;
+	-webkit-box-flex:1;
+	-ms-box-flex:1;
+	box-flex:1;
+}
+
+.footer-left-section{
+}
+
+.footer-midle-section{
+	width:80%;
+	max-width:1000px;
+}
+
+.footer-right-section{
+}
+
+/* Sticky Footer */
+.non-footer-wrapper{
+	width: 100%;
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0px 0px -110px 0px;
+ }
+
+/* Columns Layout
+----------------------------------------------- */
+
+div.column-wrapper{ /* Defines columns container */
+	width:100%;
+	
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: flex;	
+	
+	-webkit-justify-content: space-between;
+	-moz-justify-content: space-between;
+	-ms-justify-content: space-between;
+	justify-content: space-between;
+	
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.column-wrapper.vcenter-content{
+	height:100%;
+	
+	/* Vertical Align */
+	-webkit-align-content: center;
+	-moz-align-content: center;
+	-ms-align-content: center;
+	align-content: center;
+	
+	-webkit-align-items: center;
+	-moz-align-items: center;
+	-ms-align-items: center;
+	align-items: center;	
+}
+
+.column-wrapper.hcenter-content{
+	/* Horizontal Align */
+	-webkit-justify-content: center;
+	-moz-justify-content: center;
+	-ms-justify-content: center;
+	justify-content: center;
+}
+
+/* Sizes */
+
+div.column-wrapper div.column.medium{
+	width:220px;
+}
+
+div.column-wrapper div.column.fit{ /* Column fit empty space */
+	-webkit-flex: 1;
+	-moz-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
+}
+
+/* Home
+----------------------------------------------- */
+
+img.fs-logo{
+	/* TODO: ajustar tamanho ao redimensionar*/
+	width:65%;
+	margin-top:20px;
+	margin-left:auto;
+	margin-right:auto;
+	display:block;
+}
+
+.home-content-section{
+	/* TODO: ajustar tamanho ao redimensionar*/
+	width:64%;
+	max-width:860px;
+}
+
+.home-search-box{
+	height:60px;
+	position:relative;
+	margin:40px 0 40px 0;
+	padding-left:30px;
+	padding-right:30px;
+}
+
+/* -------------------------------- */
+/*           Issue Page             */
+/* -------------------------------- */
+
+.issue-overview .project-logo img{
+	width:100%;
+}
+
+.issue-overview h1{
+	margin: 0;
+}
+
+.issue-overview h4{
+	margin: 4px 0 0 0;
+}
+
+.issue-overview .sponsor-picture{
+	margin:0;
+}
+

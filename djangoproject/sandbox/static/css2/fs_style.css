@@ -1,0 +1,745 @@
+﻿/* ----------------------- SUMMARY -----------------------
+
+- Informations
+
+- General
+
+- Header
+ 
+- Content
+	- Titles
+	- Boxes
+	- Dividers
+
+- Footer
+
+- FS Inputs
+	- Input syles
+	- Search input styles
+
+- FS Buttons
+	- Style
+	- Colors
+	- Sizes
+
+- FS Card List
+	- Card list header
+	- Card list
+	
+- FS Cards
+	- Card header
+	- Card content
+	- Card footer
+	- Sponsored card
+	- Proposed card
+	- Project card
+	- Card status
+   
+*/
+
+/* -------------------------------- */
+/*          Informations            */
+/* -------------------------------- */
+
+ /* ------ Colors ------
+ 
+ FS Green:        #8DC63F;
+ FS Blue:         #27AAE1;
+ FS Orange:       #FFB92D;
+ 
+ FS Dark Grey:    #323232;
+ FS Light Grey:   #E1E1E1;
+ 
+ FS Text:         #8C8C8C;
+ 
+ */
+
+/* -------------------------------- */
+/*             General              */
+/* -------------------------------- */
+
+html, body {
+       height: 100%;
+ }
+
+body {
+       margin: 0;
+       padding: 0;
+ }
+ 
+.no-padding{
+	padding: 0;
+}
+
+.no-margin{
+	margin: 0;
+}
+
+.disabled{
+	cursor:default;
+}
+ 
+/* ------ Fonts ------ */
+
+@font-face {
+    font-family: 'Ubahn';
+    src: url('../fonts/ubahn-webfont.eot');
+    src: url('../fonts/ubahn-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('../fonts/ubahn-webfont.svg#ubahnregular') format('svg'),
+         url('../fonts/ubahn-webfont.woff') format('woff'),
+         url('../fonts/ubahn-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Ubahn-Light';
+    src: url('../fonts/ubahn-light-webfont.eot');
+    src: url('../fonts/ubahn-light-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('../fonts/ubahn-light-webfont.svg#ubahn-lightregular') format('svg'),
+         url('../fonts/ubahn-light-webfont.woff') format('woff'),
+         url('../fonts/ubahn-light-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.ubahn{
+	font-family: "Ubahn", Arial, sans-serif;
+}
+
+.ubahn-light{
+	font-family: "Ubahn-Light", Arial, sans-serif;
+}
+
+.arial{
+	font-family: Arial, sans-serif;
+}
+
+/* ------ Text Colors ------ */
+
+.green-text{
+	 color:#8DC63F;  
+}
+
+.blue-text{
+	color:#27AAE1;
+}
+
+.darkblue-text{
+	color:#1C75BC;
+}
+
+.orange-text{
+	color:#FFB92D;
+}
+
+.grey-text{
+	color:#8C8C8C;
+}
+
+.darkgrey-text{
+	color:#323232;
+}
+
+/* ------ Text Sizes ------ */
+
+.font-size-11{
+	font-size: 11px;
+}
+
+.font-size-12{
+	font-size: 12px;
+}
+
+.font-size-14{
+	font-size: 14px;
+}
+
+.font-size-16{
+	font-size: 16px;
+}
+
+.font-size-18{
+	font-size: 18px;
+}
+
+.font-size-20{
+	font-size: 20px;
+}
+
+/* ------ Links ------ */
+
+a{
+	color: #27AAE1;
+	text-decoration:none;
+}
+
+/* -------------------------------- */
+/*             Header               */
+/* -------------------------------- */
+
+a.menu-option {
+	font-family: 'Ubahn', Arial, sans-serif;
+	font-size: 13pt;
+	color: #BCBEC0;
+	text-decoration:none;
+	float:left;
+	margin-left:15px;
+	margin-right:15px;
+}
+
+a.menu-option:hover {
+	color: #FFB92D;
+}
+
+/* ------ Social Login ------ */
+
+a.social-login{
+	width:20px;
+	height:20px;
+	display:inline-block;
+	vertical-align:-5px;
+	margin-left: 5px;
+	margin-right: 5px;
+	
+	opacity: 0.9;
+}
+
+a.social-login:hover{
+	opacity: 1;
+}
+
+a.social-login.google{
+	background:transparent url(../img2/social_login_google.png) center top no-repeat;
+}
+a.social-login.github{
+	background:transparent url(../img2/social_login_github.png) center top no-repeat;
+}
+a.social-login.facebook{
+	background:transparent url(../img2/social_login_facebook.png) center top no-repeat;
+}
+a.social-login.twitter{
+	background:transparent url(../img2/social_login_twitter.png) center top no-repeat;
+}
+
+/* ------ Buttons ------ */
+
+a.sponsor-new{
+	margin-right: 8px;
+	margin-left: 8px;
+}
+
+a.propose-new{;
+	margin-right: 8px;
+	margin-left: 8px;
+}
+
+/* -------------------------------- */
+/*             Content              */
+/* -------------------------------- */
+
+.user-picture{
+	width:50px;
+	height:50px;
+	background-color: #F1F2F2;
+	display:inline-block;
+}
+
+/* ------ Titles ------ */
+
+h1,h2,h3,h4,h5{
+	font-family: "Ubahn", Arial, sans-serif;
+	color: #8C8C8C;
+	margin: 0;
+	
+	font-weight:normal;
+}
+
+h1{font-size:24px; margin-bottom:35px;}
+h2{font-size:20px; margin-bottom:30px;}
+h3{font-size:18px; margin-bottom:15px;}
+h4{font-size:14px; margin-bottom:10px;}
+h5{font-size:11px; margin-bottom:5px;}
+
+/* Boxes */
+
+h3.boxed{
+	width:100%;
+	height:30px;
+	display: inline-block;
+	
+	line-height:30px;
+	text-align:center;
+	
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-goog-ms-border-radius: 3px;
+	border-radius: 3px;
+	
+	color: #FFF;
+	background-color: #323232;
+	cursor:default;
+}
+
+/* Colors */
+
+/* Sizes */
+
+h3.boxed.medium{
+	width:165px;
+}
+
+/* ------ Boxes ------ */
+
+.fs-box{
+	background-color:#FFF;
+	
+	position:relative;
+	padding:15px;
+	
+	border: 1px solid #E6E7E8;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-goog-ms-border-radius: 3px;
+	border-radius: 3px;
+	
+	-moz-box-shadow: 0 2px 5px -1px rgba(0, 0, 0, .2);
+	-webkit-box-shadow: 0 1px 3px -1px rgba(0, 0, 0, .2);
+	-goog-ms-box-shadow: 0 2px 5px -1px rgba(0, 0, 0, .2);
+	box-shadow: 0 1px 2px -1px rgba(0, 0, 0, .2);
+}
+
+.fs-box.push-footer{
+	padding-bottom:40px;
+}
+
+.fs-box-footer{
+	font-size:11px;
+	
+	height:24px;
+	line-height: 24px;
+	
+	background-color:#F1F2F2;
+	border-top: 1px solid #E6E7E8;
+	
+	padding: 0 10px;
+	
+	position:absolute;
+	bottom:0;
+	left:0;
+	right:0;
+}
+
+/* ------ Dividers ------ */
+
+div.divider{
+	border-bottom: 1px solid rgba(200, 200, 200, .3);
+	box-shadow: 0 10px 15px -10px #D1D1D1;
+	height: 20px;
+	width: 100%; /*TODO: rever tamanho padrao*/
+	position:relative;
+	margin-bottom:30px;
+	margin-top:15px;
+}
+
+div.divider:before{
+	content:"";
+	position:absolute;
+	border-bottom: 1px solid rgba(200, 200, 200, .1);
+	box-shadow: 0 7px 15px -10px #D1D1D1;
+	width: 80%;
+	top:1px;
+	left:0;
+    right:0;
+    margin-left:auto;
+    margin-right:auto;
+	height:20px;
+}
+
+div.divider.small{
+	border-bottom: 1px solid rgba(200, 200, 200, .3);
+	box-shadow: 0 4px 15px -7px #D1D1D1;
+	height: 15px;
+	width: 80%; /*TODO: rever tamanho padrao*/
+	position:relative;
+	margin-bottom:20px;
+	margin-top:0;
+	margin-left:auto;
+    margin-right:auto;
+}
+
+div.divider.small:before{
+	content:"";
+	position:absolute;
+	border-bottom: 1px solid rgba(200, 200, 200, .1);
+	box-shadow: 0 1px 15px -7px #D1D1D1;
+	width: 80%;
+	top:1px;
+	left:0;
+    right:0;
+    margin-left:auto;
+    margin-right:auto;
+	height:15px;
+}
+
+/* ------ Drowpdown Button ------ */
+
+.dropdown-button {
+	cursor:pointer;
+	display:inline-block;
+	
+	opacity: 0.7;
+}
+
+.dropdown-button:hover {
+	opacity: 1;
+}
+
+/* Link */
+
+.dropdown-button a {
+	color:#000;
+}
+
+/* Arrow */
+.dropdown-button .arrow-down {
+	width: 0;
+	height: 2px;
+	
+	display: inline-block;
+	vertical-align: middle;
+	
+	border-top: 4px solid #000;
+	border-right: 4px solid transparent;
+	border-left: 4px solid transparent;
+	
+	content: "";
+}
+
+/* Dropdown */
+
+
+/* -------------------------------- */
+/*             Footer               */
+/* -------------------------------- */
+
+.footer-link{
+	margin-right:20px;
+}
+
+/* -------------------------------- */
+/*            FS Input              */
+/* -------------------------------- */
+
+/* ------ Input Styles ------ */
+ 
+input.fs-input{
+	width:100%;
+	
+	color: #B9B9B9;
+	line-height: 10px;
+	
+	border: 1px solid #E6E7E8;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-goog-ms-border-radius: 3px;
+	border-radius: 3px;
+	
+	-webkit-box-shadow: inset 0 4px 15px -5px #eee;
+	-moz-box-shadow: inset 0 4px 15px -5px #eee;
+	box-shadow: inset 0 4px 15px -5px #eee;
+
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	
+	padding: 5px 20px 5px 5px;
+	margin: 0;
+}
+
+input.fs-input.medium{
+	width:180px;
+}
+
+input.fs-input.black{
+	background-color: #1E1E1E!important;
+	color: #939598;
+	border: 1px solid black;
+	
+	-webkit-box-shadow: inset 0 4px 15px -5px #000;
+	-moz-box-shadow: inset 0 4px 15px -5px #000;
+	box-shadow: inset 0 4px 15px -5px #000;
+}
+
+/* ------ Search Input Styles ------ */
+ 
+input.fs-input.search{
+	background: url(../img2/search_icon.png) no-repeat;
+	background-position: -moz-calc(100% - 8px);
+	background-position: -webkit-calc(100% - 8px);
+	background-position: calc(100% - 8px);
+}
+
+input.fs-input.search.black{
+	background: url(../img2/search_icon_menu.png) no-repeat;
+	background-position: -moz-calc(100% - 8px);
+	background-position: -webkit-calc(100% - 8px);
+	background-position: calc(100% - 8px);
+}
+
+/* -------------------------------- */
+/*           FS Buttons             */
+/* -------------------------------- */
+
+/* ------ Style ------ */
+
+.fs-button{
+	display: inline-block;
+	position: relative;
+	margin:4px;
+	
+	width: -moz-calc(100% - 8px);
+	width: -webkit-calc(100% - 8px);
+	width: calc(100% - 8px);
+	height: 26px;
+	line-height: 26px;
+	
+	text-align:center;
+	font-size: 18px;
+	font-family: "Ubahn", Arial, sans-serif;
+	
+	color: #FFF;
+	background-color: #000;
+}
+
+.fs-button:before {
+	content: "";/* Necessary to render the border*/
+	
+    border: 2px solid #000;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-goog-ms-border-radius: 3px;
+	border-radius: 3px;
+    
+    position: absolute;
+    top: -3px; 
+    bottom: -3px; 
+    left: -3px; 
+    right: -3px; 
+	
+	opacity: 0.7;
+}
+
+.fs-button:hover:before{
+	opacity: 1;
+}
+
+.fs-button.disabled:hover:before {
+	opacity: 0.7;
+}
+
+/* ------ Colors ------ */
+
+.fs-button.blue{
+	background-color: #27AAE1;
+}
+
+.fs-button.blue:before{
+	border-color: #27AAE1;
+}
+
+.fs-button.green{
+	background-color: #8DC63F;
+}
+
+.fs-button.green:before{
+	border-color: #8DC63F;
+}
+
+.fs-button.grey{
+	color: #505050;
+	background-color: #E1E1E1;
+}
+
+.fs-button.orange:before{
+	border-color: #FFB92D;
+}
+
+.fs-button.orange{
+	background-color: #FFB92D;
+}
+
+.fs-button.grey:before{
+	border-color: #E1E1E1;
+}
+
+.fs-button.grey.disabled{
+	color: #B4B4B4;
+}
+
+/* ------ Sizes ------ */
+
+.fs-button.mini{
+	height:22px;
+	line-height:22px;
+}
+
+.fs-button.square.mini{
+	height:18px;
+	width:18px;
+	line-height:17px;
+}
+
+.fs-button.large{
+	width: 180px;
+}
+
+.fs-button.medium{
+	width: 118px;
+}
+
+.fs-button.square{
+	width: 26px;
+}
+
+/* -------------------------------- */
+/*           FS Card List           */
+/* -------------------------------- */
+
+/* ------ Card List Header ------ */
+
+.card-list-header{
+	position:relative;
+
+}
+
+/* ------ Card List ------ */
+
+
+/* -------------------------------- */
+/*             FS Cards             */
+/* -------------------------------- */
+
+.issue-card{
+	height: 340px;
+	width: 228px;
+	min-height: 340px;
+	min-width: 228px;
+	
+	text-align:left;
+	display: inline-block;
+}
+
+/* ------ Card Header ------ */
+
+
+/* ------ Card Content ------ */
+
+.issue-card .description{
+	max-height:65px;
+	overflow: hidden;
+	word-wrap:break-word;
+}
+
+.issue-card  div.project-logo {
+	height:58px;
+	width:100%;
+}
+
+.issue-card  div.project-logo > img{
+	height:auto;
+	width:100%;
+}
+
+/* ------ Card Footer ------ */
+
+
+/* ------ Sponsored Card ------ */
+
+.issue-card .card-sponsors{
+	text-align:right;
+	margin-top:20px;
+	margin-bottom:10px;
+}
+
+.sponsored div.project-logo {
+	height:58px;
+	width:180px;
+		
+	position:absolute;
+	left:15px;
+	bottom:32px;
+}
+
+.sponsored div.project-logo > img{
+	max-height:58px;
+	max-width:180px;
+	height:auto;
+	width:auto;
+}
+
+/* ------ Proposed Card ------ */
+
+.proposed .description{
+	height:130px;
+	max-height:130px;
+	overflow: hidden;
+}
+
+/* ------ Project Card ------ */
+
+/* ------ Card Status ------ */
+.card-status{
+	width:72px;
+	height:72px;
+	display:inline-block;
+	position:absolute;
+	right:0;
+	bottom:25px;
+}
+
+.card-status.open{
+	background: url(../img2/card_status_open.png)  no-repeat;
+}
+
+.card-status.working{
+	background: url(../img2/card_status_working.png)  no-repeat;
+}
+
+.card-status.done{
+	background: url(../img2/card_status_done.png)  no-repeat;
+}
+
+
+
+[class^="icon-"],
+[class*=" icon-"] {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  line-height: 14px;
+  vertical-align: text-top;
+  background-image: url("../img2/glyphicons-halflings.png");
+  background-position: 14px 14px;
+  background-repeat: no-repeat;
+  opacity:0.8;
+}
+
+.icon-eye-open {
+  background-position: -96px -119px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

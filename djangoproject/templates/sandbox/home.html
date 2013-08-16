@@ -1,102 +1,55 @@
-{% extends "sandbox/base.html" %}
+﻿{% extends "sandbox/base.html" %}
 {% block mainContent%}
     <div class="content" align="center">
-        <div class="home-content-section">
-            <img class="fs-logo" src="/static/img2/fs_logo.png"/>
+        <div class="home-content-section" align="left">
+		
+			<!-- FS Home Logo -->
+			<img class="fs-logo" src="/static/img2/fs_logo.png"/>
+			
+			<!-- Home Search -->
             <div class="home-search-box fs-box">
-                <input type="text" value="Paste an issue tracker URL, search for an issue name or a project" class="fs-input search home-search-p"/>
-                <a href="" class="fs-button medium blue home-search-p">Search</a>
+				<div class="column-wrapper vcenter-content">
+					<div class="column fit">
+						<input type="text" value="Paste an issue tracker URL, search for an issue name or a project" class="fs-input search"/>
+					</div>
+					<div class="hgap-15"></div>
+					<div>
+						<a href="" class="fs-button medium blue">Search</a>
+					</div>
+				</div>    
             </div>
-        </div>
-        <div class="home-content-section">
-            <div class="divider"></div>
+			
+            <div class="divider"><!-- Divider --></div>
+			
+			<!-- Sponsored Issues -->
             <div class="card-list-section">
                 <div class="card-list-header">
-                    <div class="fs-title">Sponsored Issues</div>
+                    <h3 class="boxed medium">Sponsored Issues</h3>
                     <a href="" class="fs-button square grey disabled less">«</a>
                     <a href="" class="fs-button square grey more">»</a>
-                    <a href="" class="fs-button medium grey view-all">View All</a>
+                    <a href="" class="fs-button medium grey view-all right">View All</a>
                 </div>
-                <div class="card-list clearfix-after">
-                    <div class="fs-box issue-card sponsored">
-                        <a href="" class="card-title">Decouple offer currency and payment currency</a>
-                        <div class="divider small"></div>
-						<span class="card-caption left">
-							<span>$</span><span class="paid-value">1.000.000</span><span> Paid</span>
-						</span>
-						<span  class="card-caption orange right">
-							<span>$</span><span class="offered-value">2.000.000</span><span> Offered</span>
-						</span>
-                        <div class="clearfix"></div>
-                        <div class="card-sponsors">
-                            <div class="pictures">
-                                <div class="sponsor-picture"></div>
-                                <div class="sponsor-picture"></div>
-                                <div class="sponsor-picture"></div>
-                                <div class="sponsor-picture"></div>
-                            </div>
-                            <a href="" class="sponsors-label">and 10 more sponsors</a>
-                        </div>
-                        <p class="description">É um fato conhecido de todos que um leitor se distrairá com o conteúdo de texto legível de uma página quando estiver examinando sua diagramação. A vantagem de usar Lorem Ipsum é que ele tem uma distribuição normal de letras, ao contrário de "Conteúdo aqui, conteúdo aqui", fazendo com que ele tenha uma aparência similar a de um texto legível. Muitos softwares de publicação e editores de páginas na internet agora usam Lorem Ipsum como texto-modelo padrão, e uma rápida busca por 'lorem ipsum' mostra vários websites ainda em sua fase de construção. Várias versões novas surgiram ao longo dos anos, eventualmente por acidente, e às vezes de propósito (injetando humor, e coisas do gênero).</p>
-                        <div class="project-logo">
-                            <img src="/static/img2/project_logos/freedomsponsors_logo.png"/>
-                        </div>
-                        <div class="card-status done"></div>
-                        <div class="card-footer">
-							<span class="views">
-								<span class="views-number">23</span><span> views</span>
-							</span>
-							<span class="comments">
-								<span class="comments-number">33</span><span> comments</span>
-							</span>
-                        </div>
-                    </div>
-                    <div class="fs-box issue-card sponsored middle">
-                    </div>
-                    <div class="fs-box issue-card sponsored">
-                    </div>
+                <div class="column-wrapper"><!--a-->
+					{% include 'sandbox/components/sponsored_issue_card.html' %}<!--b-->
+					{% include 'sandbox/components/sponsored_issue_card.html' %}<!--c-->
+					{% include 'sandbox/components/sponsored_issue_card.html' %}
                 </div>
             </div>
 
-            <div class="divider"></div>
+            <div class="divider"><!-- Divider --></div>
 
+			<!-- Proposed Issues -->
             <div class="card-list-section">
                 <div class="card-list-header">
-                    <div class="fs-title">Proposed Issues</div>
+                    <h3 class="boxed medium">Proposed Issues</h3>
                     <a href="" class="fs-button square grey disabled less">«</a>
                     <a href="" class="fs-button square grey more">»</a>
-                    <a href="" class="fs-button medium grey view-all">View All</a>
+                    <a href="" class="fs-button medium grey view-all right">View All</a>
                 </div>
-                <div class="card-list clearfix-after">
-                    <div class="fs-box issue-card proposed">
-                        <a href="" class="card-title">Decouple offer currency and payment currency</a>
-                        <div class="divider small"></div>
-
-                        <div class="project-logo">
-                            <img src="/static/img2/project_logos/freedomsponsors_logo.png"/>
-                        </div>
-
-						<span  class="card-caption orange right">
-							<span>No sponsors yet</span>
-						</span>
-                        <div class="clearfix"></div>
-
-                        <p class="description">É um fato conhecido de todos que um leitor se distrairá com o conteúdo de texto legível de uma página quando estiver examinando sua diagramação. A vantagem de usar Lorem Ipsum é que ele tem uma distribuição normal de letras, ao contrário de "Conteúdo aqui, conteúdo aqui", fazendo com que ele tenha uma aparência similar a de um texto legível. Muitos softwares de publicação e editores de páginas na internet agora usam Lorem Ipsum como texto-modelo padrão, e uma rápida busca por 'lorem ipsum' mostra vários websites ainda em sua fase de construção. Várias versões novas surgiram ao longo dos anos, eventualmente por acidente, e às vezes de propósito (injetando humor, e coisas do gênero).</p>
-
-                        <a href="" class="fs-button green">Sponsor now!</a>
-
-                        <div class="card-footer">
-							<span class="views">
-								<span class="views-number">23</span><span> views</span>
-							</span>
-							<span class="comments">
-								<span class="comments-number">33</span><span> comments</span>
-							</span>
-                        </div>
-                    </div>
-                    <div class="fs-box issue-card proposed middle">
-                    </div>
-                    <div class="fs-box issue-card proposed">
+                <div class="column-wrapper">
+					{% include 'sandbox/components/proposed_issue_card.html' %}
+					{% include 'sandbox/components/proposed_issue_card.html' %}
+					{% include 'sandbox/components/proposed_issue_card.html' %}
                     </div>
                 </div>
             </div>
