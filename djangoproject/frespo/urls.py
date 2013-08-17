@@ -5,10 +5,11 @@ from django.conf import settings
 
 admin.autodiscover()
 
+urlpatterns = []
 if 'core' in settings.INSTALLED_APPS:
     from core.forms import RegistrationForm
     from core.urls import watch_urls
-    urlpatterns = patterns('',
+    urlpatterns += patterns('',
         url(r'^$', 'core.views.main_views.home', name='home'),
         url(r'^core/', include('core.urls')),
         url(r'^sandbox/', include('sandbox.urls')),
@@ -29,10 +30,10 @@ if 'core' in settings.INSTALLED_APPS:
         ),
     )
     urlpatterns += watch_urls.urlpatterns
-else:
-    urlpatterns = patterns('',
-        url(r'^sandbox/', include('sandbox.urls')),
-    )
+
+urlpatterns += patterns('',
+    url(r'^sandbox/', include('sandbox.urls')),
+)
 
 urlpatterns += staticfiles_urlpatterns()
 # urlpatterns += feedback_urlpatterns

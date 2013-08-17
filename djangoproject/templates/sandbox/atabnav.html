@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello tab navigator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="/static/bootstrap3/css/bootstrap.min.css" rel="stylesheet" media="screen">
+</head>
+<body>
+<h1>Hello tab navigator</h1>
+
+
+<ul class="nav nav-tabs" id="myTab">
+    <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+    <li><a href="#profile" data-toggle="tab">Profile</a></li>
+    <li><a href="#messages" data-toggle="tab">Messages</a></li>
+    <li><a href="#settings" data-toggle="tab">Settings</a></li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane active" id="home">Tab 1</div>
+    <div class="tab-pane" id="profile">Tab 2</div>
+    <div class="tab-pane" id="messages">Tab 3</div>
+    <div class="tab-pane" id="settings">Tab 4</div>
+</div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="/static/bootstrap/js/jquery.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/static/bootstrap3/js/bootstrap.min.js"></script>
+{#<script>#}
+{#    $(function () {#}
+{#        $('#myTab a:last').tab('show')#}
+{#    })#}
+{#</script>#}
+
+</body>
+</html>
