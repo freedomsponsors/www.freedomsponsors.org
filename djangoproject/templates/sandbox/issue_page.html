@@ -9,24 +9,40 @@
 			
 				<!-- Issue Details -->
 				<div class="column fit">
-					<div class="card-list-section">
-						<div class="card-list-header">
-							<h3 class="boxed medium">Description</h3>
-							<h3 class="boxed medium">Sponsors (10)</h3>
-							<h3 class="boxed medium">Developers (2)</h3>
-							<h3 class="boxed medium">Comments (5)</h3>
-						</div>
-					</div>
-					<div class="fs-box issue-description">
-						<p>I am putting this enhancement request here so I can point freedomcoders to it,
-						to get some funding to program it.</p>
 
-						<p>Right now, only one GEGL sampler is Jacobian-adaptive, which means that only
-						one sampler properly reduces as well as enlarge, and has the internal machinery
-						to deal with general affine transformations and non-affine warps. This sampler
-						is called "LoHalo", and no-one has never seen halo come out of its use, however
-						if is pretty jaggy when enlarging, and it does not suppress moire quite enough
-						when reducing, as well as being on the soft side in this situation.</p>
+{#                    --------#}
+{#                    pra usar tabnavigator, tem que ser com <ul>#}
+{#                    --------#}
+
+{#					<div class="card-list-section">#}
+{#						<div class="card-list-header">#}
+{#							<h3 class="boxed medium">Description</h3>#}
+{#							<h3 class="boxed medium">Sponsors (10)</h3>#}
+{#							<h3 class="boxed medium">Developers (2)</h3>#}
+{#						</div>#}
+{#					</div>#}
+                    <ul class="nav nav-tabs" id="myTab">
+                        <li class="active"><a href="#description" data-toggle="tab">Description</a></li>
+                        <li><a href="#sponsors" data-toggle="tab">Sponsors (10)</a></li>
+                        <li><a href="#developers" data-toggle="tab">Developers (2)</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="description">
+                            <div class="fs-box issue-description">
+                                <p>I am putting this enhancement request here so I can point freedomcoders to it,
+                                    to get some funding to program it.</p>
+
+                                <p>Right now, only one GEGL sampler is Jacobian-adaptive, which means that only
+                                    one sampler properly reduces as well as enlarge, and has the internal machinery
+                                    to deal with general affine transformations and non-affine warps. This sampler
+                                    is called "LoHalo", and no-one has never seen halo come out of its use, however
+                                    if is pretty jaggy when enlarging, and it does not suppress moire quite enough
+                                    when reducing, as well as being on the soft side in this situation.</p>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="sponsors">Tab 2</div>
+                        <div class="tab-pane" id="developers">Tab 3</div>
+
 					</div>
 				</div>
 				

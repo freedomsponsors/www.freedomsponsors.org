@@ -5,3 +5,15 @@
 .open>.dropdown-menu{
     display: block;
 }
+
+.tab-content>.tab-pane{ /* Hide content of unselected tabs */
+    display: none;
+}
+
+.tab-content>.active{ /* Show the contents of a selected tab */
+    display: block;
+}
+
+.nav-tabs>li.active>a { /* Style for a selected tab */
+    font-weight: bold;
+}
