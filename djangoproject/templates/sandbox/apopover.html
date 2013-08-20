@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello popover</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="/static/bootstrap3/css/bootstrap.min.css" rel="stylesheet" media="screen">
+</head>
+<body>
+<h1>Hello popover</h1>
+
+<div>
+    <button class="btn btn-default popopo" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." title="Lorem Ipsum">
+        Popover some
+    </button>
+</div>
+<div>
+    <button class="btn btn-default popopo_stay" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." title="Lorem Ipsum">
+        Popover fica
+    </button>
+</div>
+<div>
+    O que é isso <span class="glyphicon glyphicon-question-sign popopo" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." title="Lorem Ipsum"></span>
+</div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="/static/bootstrap/js/jquery.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/static/bootstrap3/js/bootstrap.min.js"></script>
+<script>
+    $(function(){
+        $('.popopo').popover({trigger:'hover'});
+        $(".popopo_stay")
+            .popover({
+                offset: 10,
+                trigger: 'manual',
+                animate: false,
+                html: true,
+{#                placement: 'right',#}
+                template: '<div class="popover" onmouseover="$(this).mouseleave(function() {$(this).hide(); });"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
+
+            }).click(function(e) {
+                e.preventDefault() ;
+            }).mouseenter(function(e) {
+                $(this).popover('show');
+            });
+    });
+</script>
+
+</body>
+</html>

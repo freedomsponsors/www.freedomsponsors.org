@@ -9,5 +9,6 @@ urlpatterns = patterns('sandbox.views',
     url(r'^adropdown', direct_to_template, {'template': 'sandbox/adropdown.html'}),
     url(r'^atabnav', direct_to_template, {'template': 'sandbox/atabnav.html'}),
     url(r'^amodal', direct_to_template, {'template': 'sandbox/amodal.html'}),
+    url(r'^apopover', direct_to_template, {'template': 'sandbox/apopover.html'}),
     # url(r'^home/$', 'home'),
 )
