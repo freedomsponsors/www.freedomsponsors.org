@@ -11,7 +11,7 @@ if 'core' in settings.INSTALLED_APPS:
     from core.forms import RegistrationForm
     from core.urls import watch_urls
     urlpatterns += patterns('',
-        url(r'^.*$', direct_to_template, {'template': 'core/maintainance.html'}),
+#        url(r'^.*$', direct_to_template, {'template': 'core/maintainance.html'}),
         url(r'^$', 'core.views.main_views.home', name='home'),
         url(r'^core/', include('core.urls')),
         url(r'^sandbox/', include('sandbox.urls')),
