@@ -12,7 +12,7 @@ dj-database-url==0.2.1
 django-nose==1.1
 rednose==0.3
 httplib2==0.7.7
-django-social-auth==0.7.20
+django-social-auth==0.7.27
 requests==0.14.1
 django-pagination==1.0.7
 south==0.7.5
