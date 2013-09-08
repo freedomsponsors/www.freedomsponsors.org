@@ -11,13 +11,14 @@ if 'core' in settings.INSTALLED_APPS:
     from core.forms import RegistrationForm
     from core.urls import watch_urls
     urlpatterns += patterns('',
-#        url(r'^.*$', direct_to_template, {'template': 'core/maintainance.html'}),
+        # url(r'^.*$', direct_to_template, {'template': 'core/maintainance.html'}),
         url(r'^$', 'core.views.main_views.home', name='home'),
         url(r'^core/', include('core.urls')),
         url(r'^sandbox/', include('sandbox.urls')),
         url(r'^github/', include('gh_frespo_integration.urls')),
         url(r'^bladmin/doc/', include('django.contrib.admindocs.urls')),
         url(r'^bladmin/', include(admin.site.urls)),
+        url(r'^accounts/password/reset/$', 'core.views.registration_views.reset_password'),
         url(r'^/accounts/register/$', 'registration.views.register', {
             'backend': 'registration.backends.default.DefaultBackend',
             'form_class': RegistrationForm
