@@ -10,43 +10,43 @@
 				<!-- Issue Details -->
 				<div class="column fit">
 
-{#                    --------#}
-{#                    pra usar tabnavigator, tem que ser com <ul>#}
-{#                    --------#}
+					
+					<!-- Tab Navigator -->
+					<div class="fs-tab-navigator">
+					
+						<!-- Tab's List -->
+						<ul class="tab-list" id="myTab">
+							<li class="active"><a href="#description" data-toggle="tab">Description</a></li>
+							<li><a href="#sponsors" data-toggle="tab">Sponsors (10)</a></li>
+							<li><a href="#developers" data-toggle="tab">Developers (2)</a></li>
+						</ul>
+						
+						<!-- Tab's Content -->
+						<div class="tab-content">
+							<div class="tab-pane active" id="description">
+								<div class="fs-box issue-description">
+									<p>I am putting this enhancement request here so I can point freedomcoders to it,
+										to get some funding to program it.</p>
 
-{#					<div class="card-list-section">#}
-{#						<div class="card-list-header">#}
-{#							<h3 class="boxed medium">Description</h3>#}
-{#							<h3 class="boxed medium">Sponsors (10)</h3>#}
-{#							<h3 class="boxed medium">Developers (2)</h3>#}
-{#						</div>#}
-{#					</div>#}
-                    <ul class="nav nav-tabs" id="myTab">
-                        <li class="active"><a href="#description" data-toggle="tab">Description</a></li>
-                        <li><a href="#sponsors" data-toggle="tab">Sponsors (10)</a></li>
-                        <li><a href="#developers" data-toggle="tab">Developers (2)</a></li>
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="description">
-                            <div class="fs-box issue-description">
-                                <p>I am putting this enhancement request here so I can point freedomcoders to it,
-                                    to get some funding to program it.</p>
+									<p>Right now, only one GEGL sampler is Jacobian-adaptive, which means that only
+										one sampler properly reduces as well as enlarge, and has the internal machinery
+										to deal with general affine transformations and non-affine warps. This sampler
+										is called "LoHalo", and no-one has never seen halo come out of its use, however
+										if is pretty jaggy when enlarging, and it does not suppress moire quite enough
+										when reducing, as well as being on the soft side in this situation.</p>
+								</div>
+							</div>
+							<div class="tab-pane" id="sponsors">
+								Tab 2
+								<span class="glyphicon glyphicon-question-sign popopo" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." title="Lorem Ipsum"></span>
+							</div>
+							<div class="tab-pane" id="developers">
+								Tab 3
+							</div>
 
-                                <p>Right now, only one GEGL sampler is Jacobian-adaptive, which means that only
-                                    one sampler properly reduces as well as enlarge, and has the internal machinery
-                                    to deal with general affine transformations and non-affine warps. This sampler
-                                    is called "LoHalo", and no-one has never seen halo come out of its use, however
-                                    if is pretty jaggy when enlarging, and it does not suppress moire quite enough
-                                    when reducing, as well as being on the soft side in this situation.</p>
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="sponsors">
-                            Tab 2
-                            <span class="glyphicon glyphicon-question-sign popopo" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." title="Lorem Ipsum"></span>
-                        </div>
-                        <div class="tab-pane" id="developers">Tab 3</div>
-
+						</div>
 					</div>
+                    
 				</div>
 				
 				<div class="hgap-15"><!-- Horizontal Gap 15px --></div>
@@ -107,22 +107,30 @@
 
     <!-- Modal -->
     <div class="modal fade in" id="sponsor_modal">
-        <div class="modal-dialog">
+        <div class="modal-dialog column-wrapper vertical">
+			<div class="column fit"></div>
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" onclick="fecha()" >&times;</button>
-                    <h4 class="modal-title">Sponsor issue</h4>
+                    <span class="modal-title font-size-20 ubahn grey-text">Sponsor issue</span>
                 </div>
+				<div class="divider small"></div> 
                 <div class="modal-body">
-                    Modal body
+                    <p>Modal body</p>
+					<p>Modal body</p>
+					<p>Modal body</p>
+					<p>Modal body</p>
+					<p>Modal body</p>
+					<p>Modal body</p>
+					<p>Modal body</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" onclick="fecha()">Close</button>
-                    <button type="button" class="btn btn-primary">Sponsor!</button>
+					<a href="javascript:fecha()" class="fs-button green medium">Sponsor!</a>
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+            </div>
+			<div class="column fit"></div>
+        </div>
+    </div>
     <script>
         function abre(){
             $('#sponsor_modal').modal()

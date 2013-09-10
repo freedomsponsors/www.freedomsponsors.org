@@ -191,6 +191,10 @@ div.column-wrapper{ /* Defines columns container */
 	box-sizing: border-box;
 }
 
+div.column-wrapper.vertical{ /* Defines columns container */
+	flex-direction: column;
+}
+
 .column-wrapper.vcenter-content{
 	height:100%;
 	
