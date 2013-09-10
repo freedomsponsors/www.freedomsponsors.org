@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.views.generic import TemplateView, RedirectView
 from django.conf import settings
-from django.views.generic.simple import redirect_to
+from django.views.generic.simple import redirect_to, direct_to_template
 
 urlpatterns = patterns('core.views.main_views',
     url(r'^$', 'home'),
@@ -15,6 +15,7 @@ urlpatterns = patterns('core.views.main_views',
     url(r'^dev/$', redirect_to, {'url': 'http://blog.freedomsponsors.org/developers/'}),
     url(r'^login/$', 'login'),
     url(r'^logout/$', 'logout'),
+    url(r'^jslic$', direct_to_template, {'template': 'core/jslic.html'}),
 )
 
 urlpatterns += patterns('core.views.issue_views',
