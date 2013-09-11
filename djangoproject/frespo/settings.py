@@ -178,6 +178,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'bitcoin_frespo',
     'frespo_currencies',
+    'statfiles',
     'core',
     'sandbox',
     'core_splinter_tests',
