@@ -203,7 +203,6 @@ div.vgap-60{
 
 div.column-wrapper{ /* Defines columns container */
 	width:100%;
-	height:100%;
 	
 	display: -webkit-flex;
 	display: -moz-flex;
@@ -248,10 +247,6 @@ div.column-wrapper.vertical{ /* Defines columns container */
 }
 
 /* Sizes */
-
-div.column-wrapper div.column{
-	height:100%;
-}
 
 div.column-wrapper div.column.small{
 	width:120px;
@@ -312,18 +307,4 @@ img.fs-logo{
 
 .issue-overview .sponsor-picture{
 	margin:0;
-}
-
-
-
-div.table-centered-content{
-	display:table;
-	width:100%;
-	height:100%;
-}
-
-div.table-centered-content div.table-content-cell{
-	width:100%;
-	display:table-cell;
-	vertical-align:middle
 }

@@ -792,8 +792,8 @@ input.fs-input.search.black{
 /* ------ Proposed Card ------ */
 
 .proposed .description{
-	height:130px;
-	max-height:130px;
+	height:140px;
+	max-height:140px;
 	overflow: hidden;
 }
 
