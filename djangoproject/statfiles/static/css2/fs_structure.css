@@ -53,6 +53,10 @@ body{
 	float:right;
 }
 
+.inline{
+	display:inline-block;
+}
+
 /* Header
 ----------------------------------------------- */
 
@@ -113,12 +117,36 @@ body{
 	max-width:1000px;
 }
 
+div.hgap-5{
+	width:5px;
+}
+
 div.hgap-15{
 	width:15px;
 }
 
+div.hgap-30{
+	width:30px;
+}
+
+div.hgap-60{
+	width:60px;
+}
+
+div.vgap-5{
+	height:5px;
+}
+
 div.vgap-15{
 	height:15px;
+}
+
+div.vgap-30{
+	height:30px;
+}
+
+div.vgap-60{
+	height:60px;
 }
 
 
@@ -175,6 +203,7 @@ div.vgap-15{
 
 div.column-wrapper{ /* Defines columns container */
 	width:100%;
+	height:100%;
 	
 	display: -webkit-flex;
 	display: -moz-flex;
@@ -219,6 +248,14 @@ div.column-wrapper.vertical{ /* Defines columns container */
 }
 
 /* Sizes */
+
+div.column-wrapper div.column{
+	height:100%;
+}
+
+div.column-wrapper div.column.small{
+	width:120px;
+}
 
 div.column-wrapper div.column.medium{
 	width:220px;
@@ -277,3 +314,16 @@ img.fs-logo{
 	margin:0;
 }
 
+
+
+div.table-centered-content{
+	display:table;
+	width:100%;
+	height:100%;
+}
+
+div.table-centered-content div.table-content-cell{
+	width:100%;
+	display:table-cell;
+	vertical-align:middle
+}

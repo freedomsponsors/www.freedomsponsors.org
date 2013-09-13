@@ -189,7 +189,9 @@ button.close{
 
 /* ------ Body ------ */
 
-.modal-body{	position:relative;	padding:0 10px;
+.modal-body{
+	position:relative;
+	padding:0 10px;
 }
 
 /* ------ Footer ------ */

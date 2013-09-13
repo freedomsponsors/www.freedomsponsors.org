@@ -69,6 +69,25 @@ body {
        padding: 0;
  }
  
+p{
+	line-height:20px;
+}
+
+textarea{
+	width:100%;
+	min-height:120px;
+	box-sizing:border-box;
+	border: 1px solid #D1D1D1;
+	resize: none;
+	
+	margin:5px 0;
+	
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-goog-ms-border-radius: 3px;
+	border-radius: 3px;
+}
+ 
 .no-padding{
 	padding: 0;
 }
@@ -115,6 +134,10 @@ body {
 
 .arial{
 	font-family: Arial, sans-serif;
+}
+
+.centered-text{
+	text-align:center;
 }
 
 /* ------ Text Colors ------ */
@@ -167,6 +190,16 @@ body {
 
 .font-size-20{
 	font-size: 20px;
+}
+
+/* ------ Text Align ------ */
+
+.text-align-right{
+	text-align:right;
+}
+
+.text-align-center{
+	text-align:center;
 }
 
 /* ------ Links ------ */
@@ -231,7 +264,7 @@ a.sponsor-new{
 	margin-left: 8px;
 }
 
-a.propose-new{;
+a.propose-new{
 	margin-right: 8px;
 	margin-left: 8px;
 }
@@ -243,7 +276,7 @@ a.propose-new{;
 .user-picture{
 	width:50px;
 	height:50px;
-	background-color: #F1F2F2;
+	background-color: #D8D8D8;
 	display:inline-block;
 }
 
@@ -340,7 +373,7 @@ div.divider{
 	height: 20px;
 	width: 100%; /*TODO: rever tamanho padrao*/
 	position:relative;
-	margin-bottom:30px;
+	margin-bottom:35px;
 	margin-top:15px;
 }
 
@@ -382,6 +415,27 @@ div.divider.small:before{
     margin-left:auto;
     margin-right:auto;
 	height:15px;
+}
+
+/* ------ Social Buttons ------ */
+
+.social-button{
+	display:inline-block;
+	width:32px;
+	height:32px;
+	background-size: contain!important;
+}
+
+.social-button.facebook{
+	background:transparent url(../img2/social_logos/facebook.png) center top no-repeat;
+}
+
+.social-button.twitter{
+	background:transparent url(../img2/social_logos/twitter.png) center top no-repeat;
+}
+
+.social-button.google{
+	background:transparent url(../img2/social_logos/google.png) center top no-repeat;
 }
 
 /* -------------------------------- */
@@ -526,6 +580,10 @@ input.fs-input.search.black{
 	background-color: #E1E1E1;
 }
 
+.fs-button.grey.disabled{
+	color: #B4B4B4;
+}
+
 .fs-button.orange:before{
 	border-color: #FFB92D;
 }
@@ -538,9 +596,6 @@ input.fs-input.search.black{
 	border-color: #E1E1E1;
 }
 
-.fs-button.grey.disabled{
-	color: #B4B4B4;
-}
 
 /* ------ Sizes ------ */
 
