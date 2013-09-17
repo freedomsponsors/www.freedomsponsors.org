@@ -27,7 +27,8 @@ mod.directive('issueCards', function() {
         restrict: 'E',
         replace: true,
         scope:{
-            issues: "="
+            issues: "=",
+            title: "@"
         },
         templateUrl: '/static/js/issuecards/issuecards.html',
         controller: function ($scope) {
@@ -71,6 +72,12 @@ mod.directive('issueCards', function() {
             $scope.no_less = function(){
                 return $scope.offset <= 0;
             };
+
+            $scope.getInclude = function(issue){
+                var template_sponsored = '/static/js/issuecards/issuecard_sponsored.html';
+                var template_proposed = '/static/js/issuecards/issuecard_proposed.html';
+                return issue.sponsor_status == 'SPONSORED' ? template_sponsored : template_proposed;
+            }
 
         }
     };

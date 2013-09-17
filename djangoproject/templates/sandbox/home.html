@@ -1,6 +1,140 @@
 ﻿{% extends "sandbox/base.html" %}
+
+{% block head %}
+    <script src="/static/js/angular.min.js"></script>
+    <script src="/static/js/issuecards/issuecards.js"></script>
+    <script type="text/javascript">
+
+        var dependencies = ['issuecards']
+
+        var mod = angular.module('home', dependencies)
+        mod.config(
+            function($interpolateProvider){
+                $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
+            }
+        );
+
+        function HomeCtrl($scope) {
+            $scope.issues_sponsoring = [
+                {
+                    "status": "working",
+                    "sponsor_status": "SPONSORED",
+                    "viewcount": -1,
+                    "four_sponsors": [
+                        {
+                            "image_link": "http://www.gravatar.com/avatar/7ae5b251f74c82d72b579fe6b4191bb9?d=identicon&s=48",
+                            "screen_name": "jay.shoemaker.75"
+                        }
+                    ],
+                    "description": "A prática cotidiana prova que a valorização de fatores subjetivos pode nos levar a considerar a reestruturação do fluxo de informações. Percebemos, cada vez mais, que a estrutura atual da organização talvez venha a ressaltar a relatividade dos procedimentos normalmente adotados. O incentivo ao avanço tecnológico, assim como a contínua expansão de nossa atividade possibilita uma melhor visão global de alternativas às soluções ortodoxas. No entanto, não podemos esquecer que a complexidade dos estudos efetuados ainda não demonstrou convincentemente que vai participar na mudança das diretrizes de desenvolvimento para o futuro. ",
+                    "project_link": "/core/issue/?s=&project_id=215&project_name=wsclient_views",
+                    "image_link": "/static/img2/default_project_logo.jpg",
+                    "totalOffersPriceUSD": "0.00",
+                    "moresponsors": 0,
+                    "id": 342,
+                    "title": "Results contain \"array\" instead of valid data",
+                    "totalPaidPriceUSD": "75.00",
+                    "commentcount": 1
+                },
+                {
+                    "status": "open",
+                    "sponsor_status": "SPONSORED",
+                    "viewcount": -1,
+                    "four_sponsors": [
+                        {
+                            "image_link": "http://www.gravatar.com/avatar/459565260da0ec7d06808c793c9c3d7d?d=identicon&s=48",
+                            "screen_name": "GiovaneLiberato"
+                        },
+                        {
+                            "image_link": "http://www.gravatar.com/avatar/ca2b5813ded9633f64cf1e276dd0e9dd?d=identicon&s=48",
+                            "screen_name": "DenisCosta"
+                        }
+                    ],
+                    "description": " O cuidado em identificar pontos críticos no novo modelo estrutural aqui preconizado estimula a padronização das novas proposições. Caros amigos, a necessidade de renovação processual assume importantes posições no estabelecimento das direções preferenciais no sentido do progresso. A nível organizacional, o comprometimento entre as equipes facilita a criação das diversas correntes de pensamento. ",
+                    "project_link": "/core/issue/?s=&project_id=219&project_name=sawpf",
+                    "image_link": "/static/img2/github_logo.jpg",
+                    "totalOffersPriceUSD": "10.00",
+                    "moresponsors": 0,
+                    "id": 350,
+                    "title": "ie11 é detectado como Firefox 0",
+                    "totalPaidPriceUSD": "0.00",
+                    "commentcount": 0
+                },
+                {
+                    "status": "open",
+                    "sponsor_status": "SPONSORED",
+                    "viewcount": -1,
+                    "four_sponsors": [
+                        {
+                            "image_link": "http://www.gravatar.com/avatar/65486ec4c1823e9ae03108693c5cb026?d=identicon&s=48",
+                            "screen_name": "SamMankiewicz"
+                        }
+                    ],
+                    "description": "Por conseguinte, a constante divulgação das informações obstaculiza a apreciação da importância da gestão inovadora da qual fazemos parte. É importante questionar o quanto o julgamento imparcial das eventualidades apresenta tendências no sentido de aprovar a manutenção dos níveis de motivação departamental. Todas estas questões, devidamente ponderadas, levantam dúvidas sobre se o aumento do diálogo entre os diferentes setores produtivos causa impacto indireto na reavaliação de todos os recursos funcionais envolvidos. Não obstante, a expansão dos mercados mundiais auxilia a preparação e a composição dos paradigmas corporativos. ",
+                    "project_link": "/core/issue/?s=&project_id=46&project_name=Jenkins",
+                    "image_link": "/static/img2/default_project_logo.jpg",
+                    "totalOffersPriceUSD": "250.00",
+                    "moresponsors": 0,
+                    "id": 349,
+                    "title": "OutOfMemory due to unbounded storage in OldDataMonitor",
+                    "totalPaidPriceUSD": "0.00",
+                    "commentcount": 0
+                }
+            ];
+                $scope.issues_kickstarting = [
+                    {
+                        "status": "open",
+                        "sponsor_status": "PROPOSED",
+                        "viewcount": -1,
+                        "four_sponsors": [],
+                        "description": "Todavia, a consulta aos diversos militantes prepara-nos para enfrentar situações atípicas decorrentes dos índices pretendidos. Pensando mais a longo prazo, o fenômeno da Internet acarreta um processo de reformulação e modernização do impacto na agilidade decisória. Assim mesmo, a hegemonia do ambiente político nos obriga à análise dos métodos utilizados na avaliação de resultados. Do mesmo modo, a execução dos pontos do programa representa uma abertura para a melhoria do processo de comunicação como um todo. ",
+                        "project_link": "/core/issue/?s=&project_id=46&project_name=Jenkins",
+                        "image_link": "/static/img2/default_project_logo.jpg",
+                        "totalOffersPriceUSD": "0.00",
+                        "moresponsors": 0,
+                        "id": 348,
+                        "title": "Loading Overlay",
+                        "totalPaidPriceUSD": "0.00",
+                        "commentcount": 0
+                    },
+                    {
+                        "status": "open",
+                        "sponsor_status": "PROPOSED",
+                        "viewcount": -1,
+                        "four_sponsors": [],
+                        "description": "Gostaria de enfatizar que o acompanhamento das preferências de consumo maximiza as possibilidades por conta dos modos de operação convencionais. O que temos que ter sempre em mente é que a mobilidade dos capitais internacionais estende o alcance e a importância das condições inegavelmente apropriadas. Acima de tudo, é fundamental ressaltar que o entendimento das metas propostas agrega valor ao estabelecimento dos relacionamentos verticais entre as hierarquias. No mundo atual, o início da atividade geral de formação de atitudes cumpre um papel essencial na formulação do retorno esperado a longo prazo. ",
+                        "project_link": "/core/issue/?s=&project_id=46&project_name=Jenkins",
+                        "image_link": "/static/img2/default_project_logo.jpg",
+                        "totalOffersPriceUSD": "0.00",
+                        "moresponsors": 0,
+                        "id": 339,
+                        "title": "$PROJECT_DEFAULT_SUBJECT and $PROJECT_DEFAULT_CONTENT don't resolve for some jobs",
+                        "totalPaidPriceUSD": "0.00",
+                        "commentcount": 0
+                    },
+                    {
+                        "status": "open",
+                        "sponsor_status": "PROPOSED",
+                        "viewcount": -1,
+                        "four_sponsors": [],
+                        "description": "Podemos já vislumbrar o modo pelo qual a crescente influência da mídia promove a alavancagem do orçamento setorial. O empenho em analisar a competitividade nas transações comerciais não pode mais se dissociar dos conhecimentos estratégicos para atingir a excelência. Nunca é demais lembrar o peso e o significado destes problemas, uma vez que o surgimento do comércio virtual exige a precisão e a definição do sistema de participação geral. Neste sentido, a revolução dos costumes garante a contribuição de um grupo importante na determinação do levantamento das variáveis envolvidas.",
+                        "project_link": "/core/issue/?s=&project_id=210&project_name=gravaty",
+                        "image_link": "/static/img2/default_project_logo.jpg",
+                        "totalOffersPriceUSD": "0.00",
+                        "moresponsors": 0,
+                        "id": 337,
+                        "title": "Gravaty GUI: GTK+",
+                        "totalPaidPriceUSD": "0.00",
+                        "commentcount": 0
+                    }
+                ];
+        }
+    </script>
+{% endblock %}
+
+
 {% block mainContent%}
-    <div class="content" align="center">
+    <div class="content" align="center" ng-app="home" ng-controller="HomeCtrl">
         <div class="home-content-section" align="left">
 		
 			<!-- FS Home Logo -->
@@ -20,39 +154,10 @@
             </div>
 			
             <div class="divider"><!-- Divider --></div>
-			
-			<!-- Sponsored Issues -->
-            <div class="card-list-section">
-                <div class="card-list-header">
-                    <h3 class="boxed medium">Sponsored Issues</h3>
-                    <a href="" class="fs-button square grey disabled less">«</a>
-                    <a href="" class="fs-button square grey more">»</a>
-                    <a href="" class="fs-button medium grey view-all right">View All</a>
-                </div>
-                <div class="column-wrapper"><!--a-->
-					{% include 'sandbox/components/sponsored_issue_card.html' %}<!--b-->
-					{% include 'sandbox/components/sponsored_issue_card.html' %}<!--c-->
-					{% include 'sandbox/components/sponsored_issue_card.html' %}
-                </div>
-            </div>
+            <issue-cards issues="issues_sponsoring" title="Sponsored Issues"></issue-cards>
 
             <div class="divider"><!-- Divider --></div>
-
-			<!-- Proposed Issues -->
-            <div class="card-list-section">
-                <div class="card-list-header">
-                    <h3 class="boxed medium">Proposed Issues</h3>
-                    <a href="" class="fs-button square grey disabled less">«</a>
-                    <a href="" class="fs-button square grey more">»</a>
-                    <a href="" class="fs-button medium grey view-all right">View All</a>
-                </div>
-                <div class="column-wrapper">
-					{% include 'sandbox/components/proposed_issue_card.html' %}
-					{% include 'sandbox/components/proposed_issue_card.html' %}
-					{% include 'sandbox/components/proposed_issue_card.html' %}
-                    </div>
-                </div>
-            </div>
+            <issue-cards issues="issues_sponsoring" title="Proposed Issues"></issue-cards>
         </div>
     </div>
 {% endblock %}
