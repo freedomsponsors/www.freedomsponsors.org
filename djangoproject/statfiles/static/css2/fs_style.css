@@ -280,6 +280,10 @@ a.propose-new{
 	display:inline-block;
 }
 
+.user-picture.placeholder{
+	background-color: transparent;
+}
+
 /* ------ Titles ------ */
 
 h1,h2,h3,h4,h5{
@@ -746,7 +750,15 @@ input.fs-input.search.black{
 
 /* ------ Card Content ------ */
 
-.issue-card .description{
+.issue-card .issue-title{
+	height:42px;
+	max-height:42px;
+	overflow: hidden;
+	word-wrap:break-word;
+	display: inline-block;
+}
+
+.issue-card .issue-description{
 	max-height:65px;
 	overflow: hidden;
 	word-wrap:break-word;
@@ -758,8 +770,10 @@ input.fs-input.search.black{
 }
 
 .issue-card  div.project-logo > img{
-	height:auto;
-	width:100%;
+	max-height: 50px;
+	max-width: 180px;
+	height: auto;
+	width: auto;
 }
 
 /* ------ Card Footer ------ */
@@ -782,19 +796,20 @@ input.fs-input.search.black{
 	bottom:32px;
 }
 
-.sponsored div.project-logo > img{
-	max-height:58px;
-	max-width:180px;
-	height:auto;
-	width:auto;
-}
-
 /* ------ Proposed Card ------ */
 
-.proposed .description{
-	height:140px;
-	max-height:140px;
+.proposed .issue-description{
+	height:120px;
+	max-height:120px;
 	overflow: hidden;
+}
+
+.proposed  div.project-logo {
+	text-align:center;
+}
+
+.proposed div.project-logo > img{
+	max-width: 100%;
 }
 
 /* ------ Project Card ------ */

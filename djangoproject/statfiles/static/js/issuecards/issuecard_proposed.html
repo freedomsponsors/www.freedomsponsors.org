@@ -1,6 +1,6 @@
 <div class="fs-box push-footer issue-card proposed">
     <!--Issue Title-->
-    <a href="{[{ issue_link(issue) }]}" class="font-size-18 darkblue-text ubahn">{[{ issue.title }]}</a>
+    <a href="{[{ issue_link(issue) }]}" class="font-size-18 darkblue-text ubahn issue-title">{[{ issue.title }]}</a>
 
     <div class="divider small"><!--Small Divider--></div>
 
@@ -13,9 +13,11 @@
 
     <!--Issue Sponsors-->
     <div class="orange-text sponsors-label" align="right">No sponsors yet</div>
-
+	
+	<div class="vgap-15"><!-- Vertical Gap 15px --></div>
+	
     <!--Issue Description-->
-    <p class="description">{[{ issue.description }]}</p>
+    <p class="issue-description">{[{ issue.description }]}</p>
 
     <div class="vgap-15"><!-- Vertical Gap 15px --></div>
 
@@ -24,13 +26,15 @@
 
     <!--Issue Card Footer-->
     <div class="fs-box-footer card-footer">
-		<span class="views">
-			<span class="views-number">{[{ issue.viewcount }]}</span><span> views</span>
-		</span>
-		<span class="comments">
-            <a href="{[{ issue_link(issue) }]}">
-    			<span class="comments-number">{[{ issue.commentcount }]}</span><span> comments</span>
-            </a>
-		</span>
+		<div class="column-wrapper">
+			<span class="views">
+				<span class="views-number">{[{ issue.viewcount }]}</span><span> views</span>
+			</span>
+			<span class="comments">
+				<a href="{[{ issue_link(issue) }]}">
+					<span class="comments-number">{[{ issue.commentcount }]}</span><span> comments</span>
+				</a>
+			</span>
+		</div>
     </div>
 </div>
