@@ -22,8 +22,8 @@
                 <img ng-src="{[{ sponsor.image_link }]}" alt="{[{ sponsor.screen_name }]}" title="{[{ sponsor.screen_name }]}">
             </div>
         </div>
-        <a ng-show="issue.moresponsors > 0" href="{[{ issue_link(issue) }]}" class="sponsors-label">
-            and {[{ issue.moresponsors }]} more sponsors
+        <a href="{[{ issue_link(issue) }]}" class="sponsors-label">
+            {[{ getMoreSponsors() }]}
         </a>
     </div>
 
