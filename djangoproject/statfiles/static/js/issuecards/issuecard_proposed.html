@@ -1,15 +1,15 @@
 <div class="fs-box push-footer issue-card proposed">
     <!--Issue Title-->
-    <a href="/core/issue/{[{ issue.id }]}" class="font-size-18 darkblue-text ubahn">{[{ issue.title }]}</a>
+    <a href="{[{ issue_link(issue) }]}" class="font-size-18 darkblue-text ubahn">{[{ issue.title }]}</a>
 
     <div class="divider small"><!--Small Divider--></div>
 
     <!--Issue Project Logo-->
-    <div class="project-logo">
-        <a href="{[{ issue.project_link }]}">
+    <a href="{[{ issue.project_link }]}">
+        <div class="project-logo">
             <img ng-src="{[{ issue.image_link }]}"/>
-        </a>
-    </div>
+        </div>
+    </a>
 
     <!--Issue Sponsors-->
     <div class="orange-text sponsors-label" align="right">No sponsors yet</div>
@@ -28,7 +28,7 @@
 			<span class="views-number">{[{ issue.viewcount }]}</span><span> views</span>
 		</span>
 		<span class="comments">
-            <a href="/core/issue/{[{ issue.id }]}">
+            <a href="{[{ issue_link(issue) }]}">
     			<span class="comments-number">{[{ issue.commentcount }]}</span><span> comments</span>
             </a>
 		</span>

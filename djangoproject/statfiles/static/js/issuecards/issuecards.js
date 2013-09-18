@@ -21,34 +21,32 @@
  */
 
 
-var mod = angular.module('issuecards', []);
+var mod = angular.module('issuecards', ['fsapi', 'fslinks']);
 mod.directive('issueCards', function() {
     return {
         restrict: 'E',
         replace: true,
         scope:{
             issues: "=",
-            title: "@"
+            title: "@",
+            sponsoring: '@'
         },
         templateUrl: '/static/js/issuecards/issuecards.html',
-        controller: function ($scope) {
+        controller: function ($scope, $rootScope, FSApi, FSLinks) {
+
+            var is_sponsoring = $scope.sponsoring == 'true';
 
             $scope.offset = 0;
             $scope.count = 100;
 
             function load(){
-                var params = {
-                    offset: $scope.offset,
-                    count: 3
-                };
                 $scope.is_loading = true;
-                $.get('/core/json/list_issue_cards', params).success(function(result){
-                    result = JSON.parse(result)
+                FSApi.list_issues(is_sponsoring, $scope.offset, 3).onResult(function(result){
                     $scope.count = result.count;
                     $scope.issues = result.issues;
                     $scope.is_loading = false;
-                    $scope.$digest();
-                })
+                    $rootScope.$digest();
+                });
             }
 
             $scope.more = function(){
@@ -77,6 +75,10 @@ mod.directive('issueCards', function() {
                 var template_sponsored = '/static/js/issuecards/issuecard_sponsored.html';
                 var template_proposed = '/static/js/issuecards/issuecard_proposed.html';
                 return issue.sponsor_status == 'SPONSORED' ? template_sponsored : template_proposed;
+            }
+
+            $scope.issue_link = function(issue){
+                return FSLinks.issue_link(issue);
             }
 
         }

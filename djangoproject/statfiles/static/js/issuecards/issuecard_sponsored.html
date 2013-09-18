@@ -1,7 +1,7 @@
 <!-- Sponsored Issue Card -->
 <div class="fs-box push-footer issue-card sponsored">
     <!--Issue Title-->
-    <a href="/core/issue/{[{ issue.id }]}" class="font-size-18 darkblue-text ubahn">{[{ issue.title }]}</a>
+    <a href="{[{ issue_link(issue) }]}" class="font-size-18 darkblue-text ubahn">{[{ issue.title }]}</a>
 
     <div class="divider small"><!--Small Divider--></div>
 
@@ -22,7 +22,7 @@
                 <img ng-src="{[{ sponsor.image_link }]}" alt="{[{ sponsor.screen_name }]}" title="{[{ sponsor.screen_name }]}">
             </div>
         </div>
-        <a ng-show="issue.moresponsors > 0" href="/core/issue/{[{ issue.id }]}" class="sponsors-label">
+        <a ng-show="issue.moresponsors > 0" href="{[{ issue_link(issue) }]}" class="sponsors-label">
             and {[{ issue.moresponsors }]} more sponsors
         </a>
     </div>
@@ -38,7 +38,7 @@
     </a>
 
     <!--Issue Status-->
-    <a href="/core/issue/{[{ issue.id }]}">
+    <a href="{[{ issue_link(issue) }]}">
         <div class="card-status {[{ issue.status }]}"></div>
     </a>
 
@@ -49,7 +49,7 @@
                 <span class="views-number">{[{ issue.viewcount }]}</span><span> views</span>
             </div>
             <div class="column fit" align="right">
-                <a href="/core/issue/{[{ issue.id }]}">
+                <a href="{[{ issue_link(issue) }]}">
                     <span class="comments-number">{[{ issue.commentcount }]}</span><span> comments</span>
                 </a>
             </div>
