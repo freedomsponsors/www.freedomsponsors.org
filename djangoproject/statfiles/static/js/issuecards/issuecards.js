@@ -71,6 +71,33 @@ mod.directive('issueCards', function() {
                 return $scope.offset <= 0;
             };
 
+            $scope.get4Sponsors = function(issue){
+                var empties = [];
+                for(var i=0; i<4 - issue.four_sponsors.length; i++){
+                    empties.push({empty:true});
+                }
+                return empties.concat(issue.four_sponsors)
+            }
+
+            $scope.getMoreSponsors = function(issue){
+                var n = issue.four_sponsors.length;
+                if(n == 0){
+                    return "No sponsors";
+                } else if (n == 1) {
+                    return "1 sponsor";
+                } else if (n < 4) {
+                    return n+" sponsors";
+                } else if (n == 4){
+                    if(issue.moresponsors){
+                        return "and "+issue.moresponsors+" more sponsors";
+                    } else {
+                        return "4 sponsors";
+                    }
+                } else {
+                    return 'ERROR';
+                }
+            }
+
             $scope.getInclude = function(issue){
                 var template_sponsored = '/static/js/issuecards/issuecard_sponsored.html';
                 var template_proposed = '/static/js/issuecards/issuecard_proposed.html';

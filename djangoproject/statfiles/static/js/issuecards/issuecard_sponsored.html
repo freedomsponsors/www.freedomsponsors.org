@@ -18,12 +18,12 @@
     <!--Issue Sponsors-->
     <div class="card-sponsors">
         <div class="column-wrapper">
-            <div class="user-picture" ng-repeat="sponsor in issue.four_sponsors">
-                <img ng-src="{[{ sponsor.image_link }]}" alt="{[{ sponsor.screen_name }]}" title="{[{ sponsor.screen_name }]}">
+            <div class="user-picture" ng-class="{placeholder: sponsor.empty}" ng-repeat="sponsor in get4Sponsors(issue)">
+                <img ng-hide="sponsor.empty" ng-src="{[{ sponsor.image_link }]}" alt="{[{ sponsor.screen_name }]}" title="{[{ sponsor.screen_name }]}">
             </div>
         </div>
         <a href="{[{ issue_link(issue) }]}" class="sponsors-label">
-            {[{ getMoreSponsors() }]}
+            {[{ getMoreSponsors(issue) }]}
         </a>
     </div>
 
