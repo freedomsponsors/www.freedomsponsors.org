@@ -48,13 +48,14 @@ def get_offers(request):
 
 
 def list_issue_cards(request):
+
     offset = int(request.GET.get('offset'))
     count = int(request.GET.get('count'))
     if not count:
         count = 3
-    proposed = 'proposed' in request.GET
+    sponsoring = request.GET.get('sponsoring').lower() == 'true'
     count = min(count, 100)
-    query = issue_services.search_issues(is_public_suggestion=proposed)
+    query = issue_services.search_issues(is_public_suggestion=not sponsoring)
     total_count = query.count()
     issues = query[offset: offset + count]
     issues = issue_services.to_card_dict(issues)

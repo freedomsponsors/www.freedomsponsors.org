@@ -185,6 +185,7 @@ def to_card_dict(issues):
         dic = {'id': issue.id,
                'title': issue.title,
                'status': issue.get_status(),
+               'sponsor_status': 'PROPOSED' if issue.is_public_suggestion else 'SPONSORED',
                'project_link': '#',
                'description': strip_markdown(issue.description),
                'totalPaidPriceUSD': str(issue.getTotalPaidPriceUSD()),

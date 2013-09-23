@@ -1,7 +1,11 @@
 {% extends "core2/empty_base.html" %}
 {% load i18n %}
 {% block body %}
-    {% include "core2/include/navbar.html" %}
-    {% block mainContent%}
-    {% endblock mainContent%}
+    <!-- Wrapper for sticky footer -->
+    <div class="non-footer-wrapper">
+        {% include "core2/include/navbar.html" %}
+        {% block mainContent%}
+        {% endblock mainContent%}
+    </div>
+    {% include "core2/include/footer.html" %}
 {% endblock body %}

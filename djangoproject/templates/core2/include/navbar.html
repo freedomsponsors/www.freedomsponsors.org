@@ -1,30 +1,45 @@
+<!-- Header -->
 <div class="header" align="center">
-    <div class="header-top-section">
+    <!-- Header Top Section-->
+    <div class="header-top-section" align="right">
+        <div class="login-section">
+            <a href="" >Login</a> or Sign in with:
+            <a href="" class="social-login google"></a>
+            <a href="" class="social-login github"></a>
+            <a href="" class="social-login facebook"></a>
+            <a href="" class="social-login twitter"></a>
+            <a href="">More »</a>
+        </div>
     </div>
-    <div class="header-middle-section">
-        <a href="/" class="menu-option">Home</a>
-        <a href="/core/issue" class="menu-option">Search</a>
-        <a href="/core/project" class="menu-option">Projects</a>
-        <a href="/core/stats" class="menu-option">Stats</a>
-        <a href="/faq" class="menu-option">Help</a>
-        <a href="/core/feedback" class="menu-option">Feedback</a>
-        <input type="text" placeholder="Quick search" class="fs-input black search menu-search-p"/>
+    <!-- Header Middle Section-->
+    <div class="header-middle-section  border-box">
+        <div class="column-wrapper vcenter-content">
+            <div class="column fit">
+                <a href="" class="menu-option">Home</a>
+                <a href="" class="menu-option">Search</a>
+                <a href="" class="menu-option">Projects</a>
+                <a href="" class="menu-option">Overview</a>
+                <a href="" class="menu-option">Help</a>
+                <a href="" class="menu-option">Feedback</a>
+            </div>
+            <div>
+                <input type="text" placeholder="Quick search" class="fs-input medium black search right"/>
+            </div>
+        </div>
     </div>
+    <!-- Header Bottom Section-->
     <div class="header-bottom-section">
-        <div class="breadcumb-p">
+        <div class="breadcumb-section left">
             You are here: {
 				<span class="breadcumbs-list">
-                    <a href="" >Home</a> / <a href="" >Project name</a> / <a href="" >Issue name</a>
-                </span>
+					<a href="" >Home</a> / <a href="" >Project name</a> / <a href="" >Issue name</a>
+				</span>
             };
         </div>
-        <div class="login-section-p">
-            Sign in with:
-            <a href="/login/google" class="social-login google"></a>
-            <a href="/login/github" class="social-login github"></a>
-            <a href="/login/facebook" class="social-login facebook"></a>
-            <a href="/login/twitter" class="social-login twitter"></a>
-            <a href="/core/login">More +</a>
+
+        <div class="buttons-section right">
+            <a href="" class="fs-button square green mini">+</a><a href="" class="sponsor-new font-size-14 green-text">Sponsor new issue</a>
+            <a href="" class="fs-button square blue mini">+</a><a href="" class="propose-new font-size-14 blue-text">Propose new issue</a>
         </div>
     </div>
 </div>
