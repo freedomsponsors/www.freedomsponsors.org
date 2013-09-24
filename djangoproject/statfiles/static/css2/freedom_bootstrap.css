@@ -155,7 +155,7 @@
   text-decoration: underline;
 }
 #bootstrap-content .row {
-  margin-left: -20px;
+  /*margin-left: -20px;*/
   *zoom: 1;
 }
 #bootstrap-content .row:before,
@@ -4351,7 +4351,7 @@
 }
 @media (min-width: 768px) and (max-width: 979px) {
   #bootstrap-content .row {
-    margin-left: -20px;
+    /*margin-left: -20px;*/
     *zoom: 1;
   }
   #bootstrap-content .row:before,
@@ -4562,7 +4562,7 @@
 }
 @media (min-width: 1200px) {
   #bootstrap-content .row {
-    margin-left: -30px;
+    /*margin-left: -30px;*/
     *zoom: 1;
   }
   #bootstrap-content .row:before,
