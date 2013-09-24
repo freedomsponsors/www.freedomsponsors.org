@@ -8,16 +8,18 @@
     <div class="non-footer-wrapper">
         {% include "core2/include/navbar.html" %}
         <div id="bootstrap-content" class="content" align="center">
-            <div class="row-fluid">
-                <div class="span1">
-                </div><!--/span-->
-                <div class="span10">
-                    {% block mainContent%}
-                    {% endblock mainContent%}
-                </div><!--/span-->
-                <div class="span1">
-                </div><!--/span-->
-            </div>
+			<div class="content-section" align="left">
+				<div class="row-fluid">
+					<div class="span1">
+					</div><!--/span-->
+					<div class="span10">
+						{% block mainContent%}
+						{% endblock mainContent%}
+					</div><!--/span-->
+					<div class="span1">
+					</div><!--/span-->
+				</div>
+			</div>
         </div>
     </div>
     {% include "core2/include/footer.html" %}
