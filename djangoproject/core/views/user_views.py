@@ -7,6 +7,8 @@ from django.shortcuts import render_to_response, redirect
 from django.utils.translation import ugettext as _
 from core.services import user_services, mail_services
 from django.conf import settings
+from core.views import template_folder
+
 
 def viewUser(request, user_id):
     user = User.objects.get(pk=user_id)
@@ -24,7 +26,7 @@ def viewUser(request, user_id):
         'stats': user.getStats(),
         'unconnectedSocialAccounts':unconnectedSocialAccounts,
         }
-    return render_to_response('core/user.html',
+    return render_to_response(template_folder(request) + 'user.html',
         context,
         context_instance = RequestContext(request))
 

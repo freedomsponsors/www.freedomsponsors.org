@@ -1,0 +1,24 @@
+{% extends "core2/empty_base.html" %}
+{% load i18n %}
+{% block head %}
+    <link href="/static/css2/freedom_bootstrap.css" rel="stylesheet" media="screen">
+{% endblock %}
+{% block body %}
+    <!-- Wrapper for sticky footer -->
+    <div class="non-footer-wrapper">
+        {% include "core2/include/navbar.html" %}
+        <div id="bootstrap-content" class="content" align="center">
+            <div class="row-fluid">
+                <div class="span1">
+                </div><!--/span-->
+                <div class="span10">
+                    {% block mainContent%}
+                    {% endblock mainContent%}
+                </div><!--/span-->
+                <div class="span1">
+                </div><!--/span-->
+            </div>
+        </div>
+    </div>
+    {% include "core2/include/footer.html" %}
+{% endblock body %}
