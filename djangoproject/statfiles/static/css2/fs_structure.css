@@ -27,6 +27,10 @@ body{
 	color:#8C8C8C;
 }
 
+div.inline-content > *{
+	display:inline-block;
+}
+
 .border-box{
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -249,7 +253,7 @@ div.column-wrapper.vertical{ /* Defines columns container */
 /* Sizes */
 
 div.column-wrapper div.column.small{
-	width:120px;
+	width:180px;
 }
 
 div.column-wrapper div.column.medium{

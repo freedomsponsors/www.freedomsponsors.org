@@ -442,6 +442,10 @@ div.divider.small:before{
 	background:transparent url(../img2/social_logos/google.png) center top no-repeat;
 }
 
+.social-button.rss{
+	background:transparent url(../img2/social_logos/rss.png) center top no-repeat;
+}
+
 /* -------------------------------- */
 /*             Footer               */
 /* -------------------------------- */
@@ -455,11 +459,21 @@ div.divider.small:before{
 /* -------------------------------- */
 
 /* ------ Input Styles ------ */
+
+/* Placeholder fixes */
+input.fs-input::-webkit-input-placeholder {
+   line-height: 16px;
+}
+
+input.fs-input.black::-webkit-input-placeholder {
+   color: #666;
+}
  
 input.fs-input{
 	width:100%;
 	
 	color: #B9B9B9;
+	background-color:#FFF!important;
 	line-height: 10px;
 	
 	border: 1px solid #E6E7E8;
@@ -508,6 +522,46 @@ input.fs-input.search.black{
 	background-position: -moz-calc(100% - 8px);
 	background-position: -webkit-calc(100% - 8px);
 	background-position: calc(100% - 8px);
+}
+
+/* ------ Checkbox and Radio Styles ------ */
+
+/* http://www.wufoo.com/2011/06/13/custom-radio-buttons-and-checkboxes/ */
+
+input[type='radio'], 
+input[type='checkbox'] {
+    opacity: 0; /* Hide the input, but have it still be clickable */
+    float: left;
+    width: 18px;
+}
+
+input[type='radio'] + label,
+input[type='checkbox'] + label {
+    margin: 0;
+    clear: none;
+	display:block;
+    padding: 5px 0 4px 24px; /* Left padding makes room for image */
+    cursor: pointer; /* Make look clickable because they are */
+    
+}
+
+/* Checkbox and Radio Unselected */
+
+input[type='radio'] + label{
+	background: url(img/radio_unchecked.png) left center no-repeat; 
+}
+
+input[type='checkbox'] + label{
+	background: url(img/checkbox_unchecked.png) left center no-repeat; 
+}
+
+/* Checkbox and Radio Selected */
+
+input[type='radio']:checked + label {
+    background-image: url(img/radio_checked.png);
+}
+input[type='checkbox']:checked + label {
+    background-image: url(img/checkbox_checked.png);
 }
 
 /* -------------------------------- */

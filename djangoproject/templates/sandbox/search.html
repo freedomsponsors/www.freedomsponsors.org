@@ -1,0 +1,195 @@
+{% extends "sandbox/base.html" %}
+
+{% block mainContent%}
+	<div class="content" align="center">
+		<div class="content-section" align="left">
+			<!-- Search term -->
+			<h1 class="green-text">You are looking for: Jenkins</h1>
+
+			<div class="column-wrapper">
+
+				<!-- Search result -->
+				<div class="column fit">
+
+					<div class="search-list-section">
+						<!-- Search list header -->
+						<div class="search-list-header ">
+							<h3 class="boxed medium">Search result</h3>
+							<a href class="fs-button square grey less" ng-class="{'disabled' : no_less()}" ng-click="less()">«</a>
+							<a href="" class="font-size-16">1</a>
+							<a href="" class="font-size-16">2</a>
+							<a href="" class="font-size-16">3</a>
+							<a href="" class="font-size-16">4</a>
+							<a href="" class="font-size-16">5</a>
+							<a href="" class="font-size-16">6</a>
+							<a href="" class="font-size-16">7</a>
+							<a href="" class="font-size-16">8</a>
+							<a href="" class="font-size-16">9</a>
+							<a href="" class="font-size-16">10</a>
+							<a href class="fs-button square grey more" ng-class="{'disabled' : no_more()}" ng-click="more()">»</a>
+						</div>
+						
+						<!-- Search input-->
+						<div class="column-wrapper vcenter-content">
+							<div class="column fit">
+								<input type="text" placeholder="Paste an issue tracker URL, search for an issue name or a project" class="fs-input search"/>
+							</div>
+							<div class="hgap-15"><!-- Horizontal Gap 15px --></div>
+							<div>
+								<a href="" class="fs-button medium blue">Search</a>
+							</div>
+						</div>    
+
+						<div class="vgap-15"><!-- Vertical Gap 15px --></div>
+						
+						<!-- Search result cards -->
+						<div class="column-wrapper vertical">
+							<!-- Search result row 1 -->
+							<div class="column-wrapper">
+								<div class="fs-box push-footer issue-card sponsored">
+									<div class="fs-box-footer card-footer"></div>
+								</div>
+								<div class="fs-box push-footer issue-card sponsored">
+									<div class="fs-box-footer card-footer"></div>
+								</div>
+								<div class="fs-box push-footer issue-card sponsored">
+									<div class="fs-box-footer card-footer"></div>
+								</div>
+							</div>
+							
+							<div class="vgap-15"><!-- Vertical Gap 15px --></div>
+							
+							<!-- Search result row 2 -->
+							<div class="column-wrapper">
+								<div class="fs-box push-footer issue-card sponsored">
+									<div class="fs-box-footer card-footer"></div>
+								</div>
+								<div class="fs-box push-footer issue-card sponsored">
+									<div class="fs-box-footer card-footer"></div>
+								</div>
+								<div class="fs-box push-footer issue-card sponsored">
+									<div class="fs-box-footer card-footer"></div>
+								</div>
+							</div>
+							
+							<div class="vgap-15"><!-- Vertical Gap 15px --></div>
+							
+							<!-- Search result row 3 -->
+							<div class="column-wrapper">
+								<div class="fs-box push-footer issue-card sponsored">
+									<div class="fs-box-footer card-footer"></div>
+								</div>
+								<div class="fs-box push-footer issue-card sponsored">
+									<div class="fs-box-footer card-footer"></div>
+								</div>
+								<div class="fs-box push-footer issue-card sponsored">
+									<div class="fs-box-footer card-footer"></div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="vgap-15"><!-- Vertical Gap 15px --></div>
+						
+						<!-- Search list footer -->
+						<div class="search-list-footer ">
+								<a href class="fs-button square grey less" ng-class="{'disabled' : no_less()}" ng-click="less()">«</a>
+								<a href="" class="font-size-16">1</a>
+								<a href="" class="font-size-16">2</a>
+								<a href="" class="font-size-16">3</a>
+								<a href="" class="font-size-16">4</a>
+								<a href="" class="font-size-16">5</a>
+								<a href="" class="font-size-16">6</a>
+								<a href="" class="font-size-16">7</a>
+								<a href="" class="font-size-16">8</a>
+								<a href="" class="font-size-16">9</a>
+								<a href="" class="font-size-16">10</a>
+								<a href class="fs-button square grey more" ng-class="{'disabled' : no_more()}" ng-click="more()">»</a>
+						</div>
+					</div>
+                    
+				</div>
+				
+				<div class="hgap-15"><!-- Horizontal Gap 15px --></div>
+				
+				<!-- Search options -->
+				<div class="column small issue-overview">
+					<h3 class="boxed">Search options</h3>
+					
+					<div class="fs-box">
+						<div class="issue-values">
+							<span class="font-size-20 ubahn orange-text">Status</span>
+							<div class="vgap-15"><!-- Vertical Gap 15px --></div>
+							<div>
+								<span>
+									<input id="open" name="open" type="checkbox" value="open" checked="checked">
+									<label for="open" class="ubahn font-size-14">Open</label>
+								</span>
+								<span>
+									<input id="working" name="working" type="checkbox" value="working" checked="checked">
+									<label for="working" class="ubahn font-size-14">Working</label>
+								</span>
+								<span>
+									<input id="done" name="done" type="checkbox" value="done" checked="checked">
+									<label for="done" class="ubahn font-size-14">Done</label>
+								</span>
+							</div>
+							<div class="vgap-15"><!-- Vertical Gap 15px --></div>
+							<span class="font-size-20 ubahn orange-text">Sort by</span>
+							<div class="vgap-15"><!-- Vertical Gap 15px --></div>
+							<div>
+								<span>
+									<input id="newer" name="sort_by_age" type="radio" value="newer" checked="checked">
+									<label for="newer" class="ubahn font-size-14">Newer</label>
+								</span>
+								<span>
+									<input id="older" name="sort_by_age" type="radio" value="older">
+									<label for="older" class="ubahn font-size-14">Older</label>
+								</span>
+							</div>
+							<div class="vgap-15"><!-- Vertical Gap 15px --></div>
+							<div>
+								<span>
+									<input id="most_popular" name="sort_by_popularity" type="radio" value="most_popular" checked="checked">
+									<label for="most_popular" class="ubahn font-size-14">Most Popular</label>
+								</span>
+								<span>
+									<input id="not_so_popular" name="sort_by_popularity" type="radio" value="not_so_popular">
+									<label for="not_so_popular" class="ubahn font-size-14">Not so Popular</label>
+								</span>
+							</div>
+							<div class="vgap-15"><!-- Vertical Gap 15px --></div>
+							<div>
+								<span>
+									<input id="highest_value" name="sort_by_value" type="radio" value="highest_value" checked="checked">
+									<label for="highest_value" class="ubahn font-size-14">Highest Values</label>
+								</span>
+								<span>
+									<input id="lowest_value" name="sort_by_value" type="radio" value="lowest_value">
+									<label for="lowest_value" class="ubahn font-size-14">Lowest Values</label>
+								</span>
+							</div>
+							
+						</div>
+					</div>
+					
+					<div class="vgap-15"><!-- Vertical Gap 15px --></div>
+					
+					<!-- Feed RSS -->
+					<div class="column-wrapper vcenter-content">
+						<div class="column fit"></div>
+						<div class="column">
+							<a href="" class="blue-text ubahn font-size-16">Subscribe to RSS</a>
+						</div>
+						<div class="hgap-5"><!-- Horizontal Gap 5px --></div>
+						<div class="column">
+							<a href="" class="social-button rss"></a>
+						</div>
+						<div class="column fit"></div>
+					</div>
+					
+				</div>
+
+			</div>
+		</div>
+	</div>
+{% endblock %}
