@@ -15,7 +15,7 @@ from django.conf import settings
 from core.utils.frespo_utils import get_or_none, twoplaces
 from core.models import *
 from core.services import issue_services, watch_services, paypal_services, mail_services
-from core.views import paypal_views, bitcoin_views
+from core.views import paypal_views, bitcoin_views, template_folder
 from frespo_currencies import currency_service
 
 
@@ -123,7 +123,7 @@ def listIssues(request):
     project_name = request.GET.get('project_name')
     search_terms = request.GET.get('s')
     operation = request.GET.get('operation', '')
-    return render_to_response('core/issue_list.html',
+    return render_to_response(template_folder(request) + 'issue_list.html',
         {'issues':_listIssues(request),
          's':search_terms,
          'project_id':project_id,
@@ -170,7 +170,7 @@ class LatestIssuesFeed(Feed):
 def myissues(request):
     if(request.user.is_authenticated() and request.user.getUserInfo() == None):
         return redirect('/core/user/edit')
-    return render_to_response('core/myissues.html',
+    return render_to_response(template_folder(request) + 'myissues.html',
         {},
         context_instance = RequestContext(request))
 
@@ -231,7 +231,7 @@ def viewIssue(request, issue_id):
 
     is_watching = request.user.is_authenticated() and watch_services.is_watching_issue(request.user, issue.id)
 
-    return render_to_response('core/issue.html',
+    return render_to_response(template_folder(request) + 'issue.html',
         {'issue':issue,
         'is_watching':is_watching,
         'myoffer':myoffer,
@@ -263,7 +263,7 @@ def viewOffer(request, offer_id):
 
     is_watching = request.user.is_authenticated() and watch_services.is_watching_offer(request.user, offer.id)
 
-    return render_to_response('core/offer.html',
+    return render_to_response(template_folder(request) + 'offer.html',
         {'offer':offer,
         'is_watching':is_watching,
         'issue':offer.issue,
@@ -287,7 +287,7 @@ def addIssueForm(request):
         if(issue_already_exists):
             return redirect(issues[0].get_view_link()+'?show_sponsor=true&c=s')
 
-    return render_to_response('core/add_issue.html',
+    return render_to_response(template_folder(request) + 'add_issue.html',
         {'trackerURL' : trackerURL,
         'operation' : operation,},
         context_instance = RequestContext(request))
@@ -339,7 +339,7 @@ def payOfferForm(request, offer_id):
             'imglink': solution.programmer.gravatar_url_small()
         })
     currency_options = _currency_options(offer)
-    return render_to_response('core/pay_offer_angular.html',
+    return render_to_response(template_folder(request) + 'pay_offer_angular.html',
                               {
                                   'offer': offer,
                                   'count': len(solutions_dict),

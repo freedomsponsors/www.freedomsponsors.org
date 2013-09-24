@@ -43,7 +43,7 @@ def editUserForm(request):
         userinfo.save()
         mail_services.welcome(request.user)
         _notify_admin_new_user(request.user)
-    return render_to_response('core/useredit.html',
+    return render_to_response(template_folder(request) + 'useredit.html',
         {'userinfo':userinfo,
          'available_languages' : available_languages,
         'next':request.GET.get('next', '')},
@@ -73,7 +73,7 @@ def editUser(request):
 
 def listUsers(request):
     users = user_services.get_users_list()
-    return render_to_response('core/userlist.html',
+    return render_to_response(template_folder(request) + 'userlist.html',
         {'users':users,},
         context_instance = RequestContext(request))
 

@@ -31,7 +31,7 @@ def login(request):
             return redirect(getparams)
         else:
             return redirect('/')
-    return render_to_response('core/login.html',
+    return render_to_response(template_folder(request) + 'login.html',
         {'getparams':getparams},
         context_instance = RequestContext(request))
 
@@ -53,7 +53,7 @@ def admail(request):
             messages.info(request, 'mail sent to %s users' % count)
     else:
         messages.info(request, 'nice try :-). If you do find a hole, please have the finesse to let us know though.')
-    return render_to_response('core/admail.html',
+    return render_to_response(template_folder(request) + 'admail.html',
                               {},
                               context_instance = RequestContext(request))
 
@@ -69,7 +69,7 @@ def mailtest(request):
             messages.info(request, msg)
     else:
         messages.info(request, 'nice try :-). If you do find a hole, please have the finesse to let us know though.')
-    return render_to_response('core/mailtest.html',
+    return render_to_response(template_folder(request) + 'mailtest.html',
                               {'to': to},
                               context_instance = RequestContext(request))
 
@@ -92,7 +92,7 @@ def home(request):
 
 def stats(request):
     stats = stats_services.get_stats()
-    return render_to_response('core/stats.html',
+    return render_to_response(template_folder(request) + 'stats.html',
         {'stats': stats},
         context_instance=RequestContext(request))
 

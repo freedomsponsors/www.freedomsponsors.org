@@ -1,6 +1,7 @@
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from core.models import Project
+from core.views import template_folder
 
 __author__ = 'tony'
 
@@ -31,6 +32,6 @@ def edit(request):
 def list(request):
     projects = Project.objects.all()
     projects = projects.order_by('name')
-    return render_to_response('core/project_list.html',
+    return render_to_response(template_folder(request) + 'project_list.html',
         {'projects':projects},
         context_instance = RequestContext(request))
