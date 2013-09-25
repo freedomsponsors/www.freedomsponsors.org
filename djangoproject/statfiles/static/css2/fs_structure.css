@@ -224,6 +224,9 @@ div.column-wrapper{ /* Defines columns container */
 }
 
 div.column-wrapper.vertical{ /* Defines columns container */
+	-webkit-flex-direction: column;
+	-moz-flex-direction: column;
+	-ms-flex-direction: column;
 	flex-direction: column;
 }
 
