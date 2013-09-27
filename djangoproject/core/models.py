@@ -87,7 +87,7 @@ def gravatar_url_small(self):
 def gravatar_url_medium(self):
     gravatar_url = "http://www.gravatar.com/avatar/" + hashlib.md5(self.email.lower()).hexdigest() + "?"
     # return gravatar_url + urllib.urlencode({'d':settings.SITE_HOME+"/static/img/user_48.png", 's':"48"})
-    return gravatar_url + "d=identicon&s=48"
+    return gravatar_url + "d=identicon&s=50"
 
 def gravatar_url_big(self):
     gravatar_url = "http://www.gravatar.com/avatar/" + hashlib.md5(self.email.lower()).hexdigest() + "?"
