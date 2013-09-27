@@ -11,7 +11,7 @@ from core.services import stats_services
 from django.contrib import messages
 import logging
 from core.services import testmail_service
-from core.views import is_new_layout, template_folder
+from core.views import is_new_layout, template_folder, HOME_CRUMB
 
 logger = logging.getLogger(__name__)
 
@@ -81,12 +81,14 @@ def home(request):
     size = 3 if _is_new_layout else 20
     issues_sponsoring = issue_services.search_issues(is_public_suggestion=False)[0:size]
     issues_kickstarting = issue_services.search_issues(is_public_suggestion=True)[0:size]
+    crumbs = [HOME_CRUMB]
     if _is_new_layout:
         issues_sponsoring = json.dumps(issue_services.to_card_dict(issues_sponsoring))
         issues_kickstarting = json.dumps(issue_services.to_card_dict(issues_kickstarting))
     return render_to_response(template_folder(request) + 'home.html',
         {'issues_sponsoring': issues_sponsoring,
-         'issues_kickstarting': issues_kickstarting},
+         'issues_kickstarting': issues_kickstarting,
+         'crumbs': crumbs},
         context_instance=RequestContext(request))
 
 

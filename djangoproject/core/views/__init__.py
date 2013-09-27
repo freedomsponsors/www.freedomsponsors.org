@@ -10,3 +10,8 @@ def template_folder(request):
         return 'core2/'
     else:
         return 'core/'
+
+HOME_CRUMB = {
+    'link': '/',
+    'name': 'Home'
+}

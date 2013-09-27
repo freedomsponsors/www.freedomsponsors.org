@@ -15,7 +15,7 @@ from django.conf import settings
 from core.utils.frespo_utils import get_or_none, twoplaces
 from core.models import *
 from core.services import issue_services, watch_services, paypal_services, mail_services
-from core.views import paypal_views, bitcoin_views, template_folder
+from core.views import paypal_views, bitcoin_views, template_folder, HOME_CRUMB
 from frespo_currencies import currency_service
 
 
@@ -230,6 +230,10 @@ def viewIssue(request, issue_id):
     invoke_parent_callback = (request.GET.get('c') == 's')
 
     is_watching = request.user.is_authenticated() and watch_services.is_watching_issue(request.user, issue.id)
+    crumbs = [HOME_CRUMB, {
+        'link': issue.get_view_link(),
+        'name': 'issue: ' + issue.title
+    }]
 
     return render_to_response(template_folder(request) + 'issue.html',
         {'issue':issue,
@@ -239,7 +243,8 @@ def viewIssue(request, issue_id):
         'invoke_parent_callback' : invoke_parent_callback,
         'show_sponsor_popup' : show_sponsor_popup,
         'show_alert' : show_alert,
-        'alert_reputation_revoking': alert_reputation_revoking},
+        'alert_reputation_revoking': alert_reputation_revoking,
+        'crumbs': crumbs},
 
         context_instance = RequestContext(request))
 
