@@ -36,6 +36,9 @@
         <div class="divider"><!-- Divider --></div>
 
         {% for comment in issue.getComments %}
+            {% if forloop.counter > 1 %}
+            <div class="vgap-15"><!-- Vertical Gap 15px --></div>
+            {% endif %}
             {% include 'core2/include/comment.html' with counter=forloop.counter formaction='/core/issue/comment/edit/submit' %}
         {% endfor %}
 
