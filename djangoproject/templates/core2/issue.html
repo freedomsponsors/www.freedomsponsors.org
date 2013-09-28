@@ -176,6 +176,7 @@
             </div>
         </div>
 
+        {% for solution in issue.getSolutions %}
         <!-- Issue Sponsor Row-->
         <div class="vgap-15"><!-- Vertical Gap 15px --></div>
         <div class="fs-box">
@@ -183,25 +184,30 @@
                 <!-- Sponsor-->
                 <div class="column" style="width:170px;padding-right:15px;">
                     <div class="column-wrapper vcenter-content">
-                        <div class="user-picture"></div>
+                        <div class="user-picture"><img src="{{ solution.programmer.gravatar_url_medium }}"></div>
                         <div class="hgap-15"><!-- Horizontal Gap 15px --></div>
                         <!-- Sponsor Name -->
                         <div class="column small">
-                            <a href="" class="arial">Rafael Augusto</a>
+                            <a href="{{ solution.programmer.get_view_link }}" class="arial">{{ solution.programmer.getUserInfo.screenName }}</a>
                         </div>
                     </div>
                 </div>
 
                 <!-- Status -->
                 <div class="column fit">
-                    <p>IN_PROGRESS / Accepting payments</p>
+                    <p>{{solution.status}}
+                        {% if solution.accepting_payments %}
+                            / {% trans "Accepting payments" %}
+                        {% endif %}
+                    </p>
                 </div>
                 <!-- Date -->
                 <div class="column" style="width:100px;">
-                    <p>Aug/20/2013</p>
+                    <p><span title="{{ solution.creationDate }}">{{ solution.creationDate|date:"D, d/M/Y" }}</span></p>
                 </div>
             </div>
         </div>
+        {% endfor %}
     </div>
 
     {% endif %}
