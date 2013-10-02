@@ -3,7 +3,8 @@ from django.contrib import admin
 
 
 class IssueAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'description')
+    list_display = ('id', 'title', 'description', 'trackerURL')
+    search_fields = ['title', 'description']
 
 
 admin.site.register(UserInfo)
