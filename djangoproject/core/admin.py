@@ -1,8 +1,14 @@
 from core.models import *
 from django.contrib import admin
 
+
+class IssueAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'description')
+
+
+admin.site.register(UserInfo)
 admin.site.register(Project)
-admin.site.register(Issue)
+admin.site.register(Issue, IssueAdmin)
 admin.site.register(IssueComment)
 admin.site.register(Offer)
 admin.site.register(OfferComment)
