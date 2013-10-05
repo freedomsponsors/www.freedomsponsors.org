@@ -12,14 +12,15 @@
       source: function (typeahead, query) {
         if(typeahead && query){
           $.ajax({
-            url: '{{ajaxpath}}'+query,
+            url: '{{ajaxpath}}',
+            data:{query:query},
             dataType: 'JSON',
             async: true,
             success: function(data){
               typeahead.process(data);
+                $('#bootstrap-content').append($('.typeahead'));
             },
             error: function(a,b,c){
-              // alert(query+' '+a+' '+b+' '+c);
             }
           });
         }

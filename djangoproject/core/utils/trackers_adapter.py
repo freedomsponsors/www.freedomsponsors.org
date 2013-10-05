@@ -57,7 +57,9 @@ def retriveJIRAInfo(url):
                 dom = parseString(content)
                 info.project_name = dom.getElementsByTagName('project')[0].childNodes[0].wholeText
                 info.issue_title = dom.getElementsByTagName('summary')[0].childNodes[0].wholeText
-                info.description = dom.getElementsByTagName('item')[0].getElementsByTagName('description')[0].childNodes[0].wholeText
+                info.description = ''
+                if dom.getElementsByTagName('item')[0].getElementsByTagName('description')[0].childNodes:
+                    info.description = dom.getElementsByTagName('item')[0].getElementsByTagName('description')[0].childNodes[0].wholeText
             except:
                 info.error = 'Could not parse XML view from: '+xmlviewURL
         else:
