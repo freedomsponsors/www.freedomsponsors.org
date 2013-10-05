@@ -1,15 +1,18 @@
+{% load markdown %}
+{% load i18n %}
 <!-- Comment -->
 <div class="column-wrapper">
     <div class="column">
         <div class="user-picture"><img src="{{comment.author.gravatar_url_medium}}"></div>
     </div>
     <div class="hgap-15"><!-- Horizontal Gap 15px --></div>
-    <div class="fs-box push-footer column fit">
+    <div class="fs-box push-footer column fit" id="div_comment_r_{{ comment.id }}">
         <h4 class="arial"><a href="{{comment.author.get_view_link}}">{{ comment.author.getUserInfo.screenName }}</a></h4>
-        {% load markdown %}
-        {% autoescape off %}
-        {{ comment.content|markdown }}
-        {% endautoescape %}
+        <div>
+            {% autoescape off %}
+                {{ comment.content|markdown }}
+            {% endautoescape %}
+        </div>
         <!-- Comment Footer -->
         <div class="fs-box-footer card-footer">
             <div class="column-wrapper">
@@ -18,12 +21,27 @@
                     <div class="hgap-5 inline"><!-- Horizontal Gap 5px --></div>
                     <a href="#comment-{{ comment.id }}">Permalink</a>
                 </div>
-                <div class="column fit" align="right">
-                    <a href="">Edit</a>
-                    <div class="hgap-5 inline"><!-- Horizontal Gap 5px --></div>
-                    <a href="">Delete</a>
-                </div>
+                {% ifequal comment.author.id user.id %}
+                    <div class="column fit" align="right">
+                        <a href ng-click="editComment({{ comment.id }}, true)">Edit</a>
+                        <div class="hgap-5 inline"><!-- Horizontal Gap 5px --></div>
+                        <a href="">Delete</a>
+                    </div>
+                {% endifequal %}
             </div>
         </div>
     </div>
+    {% ifequal comment.author.id user.id %}
+        <div id="div_comment_w_{{ comment.id }}" style="display: none">
+            <form method="post" class="well form-horizontal" action="/core/issue/comment/edit/submit">
+                {% csrf_token %}
+                <input type="hidden" name="comment_id" value="{{comment.id}}">
+                <text-with-markdown-preview model="comment_{{ comment.id }}" nameid="content"></text-with-markdown-preview>
+                <span>
+                    <a href ng-click="editComment({{ comment.id }}, false)">{% trans "Cancel"%}</a>
+                    <button type="submit">{% trans "Submit"%}</button>
+                </span>
+            </form>
+        </div>
+    {% endifequal %}
 </div>
