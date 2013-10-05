@@ -1,335 +1,363 @@
 {% extends "core2/base.html" %}
 {% load markdown %}
 {% load i18n %}
+
+{% block head %}
+    <script src="/static/js/angular.min.js"></script>
+    <script src="/static/js/angularutils/angularutils.js"></script>
+    <script src="/static/bootstrap/js/showdown.js"></script>
+    <script type="text/javascript">
+
+        var dependencies = ['angularutils'];
+
+        var mod = angular.module('issue', dependencies);
+        mod.config(
+            function($interpolateProvider){
+                $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
+            }
+        );
+
+        function IssueCtrl($scope) {
+            $scope.new_comment = '';
+        }
+    </script>
+{% endblock %}
+
 {% block mainContent%}
-    <div class="content" align="center">
-    <div class="content-section" align="left">
-    <!-- Issue Title -->
-    <h1 class="blue-text"><a href="">[ Issue ] {{ issue.key }}: {{ issue.title }}</a></h1>
 
-    <div class="column-wrapper">
+    <div ng-app="issue" ng-controller="IssueCtrl">
+        <div class="content" align="center">
+        <div class="content-section" align="left">
+        <!-- Issue Title -->
+        <h1 class="blue-text"><a href="">[ Issue ] {{ issue.key }}: {{ issue.title }}</a></h1>
 
-    <!-- Issue Details -->
-    <div class="column fit">
-
-
-    <!-- Tab Navigator -->
-    <div class="fs-tab-navigator">
-
-    <!-- Tab's List -->
-    <ul class="tab-list" id="myTab">
-        <li class="active"><a href="#description" data-toggle="tab">Description</a></li>
-        {% if issue.getOffers %}
-        <li><a href="#sponsors" data-toggle="tab">Sponsors ({{ issue.getOffers|length }})</a></li>
-        {% endif %}
-        {% if issue.getSolutions %}
-        <li><a href="#developers" data-toggle="tab">Developers ({{ issue.getSolutions|length }})</a></li>
-        {% endif %}
-    </ul>
-
-    <!-- Tab's Content -->
-    <div class="tab-content">
-
-    <!-- Description Tab -->
-    <div class="tab-pane active" id="description">
-        {% if issue.description %}
-        <div class="fs-box issue-description">
-            {{ issue.description }}
-        </div>
-        {% endif %}
-
-        <div class="divider"><!-- Divider --></div>
-
-        {% for comment in issue.getComments %}
-            {% if forloop.counter > 1 %}
-            <div class="vgap-15"><!-- Vertical Gap 15px --></div>
-            {% endif %}
-            {% include 'core2/include/comment.html' with counter=forloop.counter formaction='/core/issue/comment/edit/submit' %}
-        {% endfor %}
-
-        <!-- Leave a Comment -->
-        <div class="vgap-15"><!-- Vertical Gap 60px --></div>
-        {% if user and user.is_authenticated %}
         <div class="column-wrapper">
-            <div class="column">
-                <div class="user-picture"><img src="{{user.gravatar_url_medium}}"></div>
-            </div>
-            <div class="hgap-15"><!-- Horizontal Gap 15px --></div>
-            <div class="fs-box column fit">
-                <p>Leave your comment. You can use <a href="http://blog.freedomsponsors.org/markdown_formatting/">markdown</a> for formatting </p>
-                <form id="add_comment" action="/core/issue/comment/add/submit" method="post">
-                    {% csrf_token %}
-                    <input type="hidden" id="issue_id" name="issue_id" value="{{issue.id}}">
-                    <textarea id="content" name="content"></textarea>
-                    <p class="text-align-right">
-                        <a href="#" onclick="add_comment.submit()" class="fs-button blue medium">Submit</a>
-                    </p>
-                </form>
-            </div>
-        </div>
-        {% endif %}
 
-    </div>
+        <!-- Issue Details -->
+        <div class="column fit">
 
-    {% if issue.getOffers %}
-    <!-- Sponsors Tab -->
-    <div class="tab-pane" id="sponsors">
 
-        <!-- Issue Sponsor Header-->
-        <div class="fs-box">
-            <div class="column-wrapper">
-                <div class="column" style="width:185px">
-                    <span class="font-size-18 ubahn">Sponsor</span>
-                </div>
-                <div class="column fit">
-                    <span class="font-size-18 ubahn">Offer</span>
-                </div>
-                <div class="column fit">
-                    <span class="font-size-18 ubahn">Acceptance</span>
-                </div>
-                <div class="column fit centered-text">
-                    <span class="font-size-18 ubahn">Status</span>
-                </div>
-                <div class="column fit">
-                    <span class="font-size-18 ubahn">Date</span>
-                </div>
-                <div class="column fit">
-                    <span class="font-size-18 ubahn">Expire Date</span>
-                </div>
-            </div>
-        </div>
+        <!-- Tab Navigator -->
+        <div class="fs-tab-navigator">
 
-        {% for offer in issue.getOffers %}
-        <!-- Issue Sponsor Row-->
-        <div class="vgap-15"><!-- Vertical Gap 15px --></div>
-        <div class="fs-box">
-            <div class="column-wrapper vcenter-content" style="height:50px;">
-                <!-- Sponsor-->
-                <div class="column" style="width:170px;padding-right:15px;">
-                    <div class="column-wrapper vcenter-content">
-                        <div class="user-picture"><img src="{{offer.sponsor.gravatar_url_medium}}"></div>
-                        <div class="hgap-15"><!-- Horizontal Gap 15px --></div>
-                        <!-- Sponsor Name -->
-                        <div class="column small">
-                            <a href="{{ offer.sponsor.get_view_link }}" class="arial">{{ offer.sponsor.getUserInfo.screenName }}</a>
+            <!-- Tab's List -->
+            <ul class="tab-list" id="myTab">
+                <li class="active"><a href="#description" data-toggle="tab">Description</a></li>
+                {% if issue.getOffers %}
+                    <li><a href="#sponsors" data-toggle="tab">Sponsors ({{ issue.getOffers|length }})</a></li>
+                {% endif %}
+                {% if issue.getSolutions %}
+                    <li><a href="#developers" data-toggle="tab">Developers ({{ issue.getSolutions|length }})</a></li>
+                {% endif %}
+            </ul>
+
+            <!-- Tab's Content -->
+            <div class="tab-content">
+
+                <!-- Description Tab -->
+                <div class="tab-pane active" id="description">
+                    {% if issue.description %}
+                        <div class="fs-box issue-description">
+                            {{ issue.description }}
                         </div>
+                    {% endif %}
+
+                    <div class="divider"><!-- Divider --></div>
+
+                    {% for comment in issue.getComments %}
+                        {% if forloop.counter > 1 %}
+                            <div class="vgap-15"><!-- Vertical Gap 15px --></div>
+                        {% endif %}
+                        {% include 'core2/include/comment.html' with counter=forloop.counter formaction='/core/issue/comment/edit/submit' %}
+                    {% endfor %}
+
+                    <!-- Leave a Comment -->
+                    <div class="vgap-15"><!-- Vertical Gap 60px --></div>
+                    {% if user and user.is_authenticated %}
+                        <div class="column-wrapper">
+                            <div class="column">
+                                <div class="user-picture"><img src="{{user.gravatar_url_medium}}"></div>
+                            </div>
+                            <div class="hgap-15"><!-- Horizontal Gap 15px --></div>
+                            <div class="fs-box column fit">
+                                <p>Leave your comment. You can use <a href="http://blog.freedomsponsors.org/markdown_formatting/">markdown</a> for formatting </p>
+                                <form id="add_comment" action="/core/issue/comment/add/submit" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" id="issue_id" name="issue_id" value="{{issue.id}}">
+
+                                    <text-with-markdown-preview model="new_comment" nameid="content"></text-with-markdown-preview>
+
+                                    <p class="text-align-right">
+                                        <a href="#" onclick="add_comment.submit()" class="fs-button blue medium">Submit</a>
+                                    </p>
+                                </form>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                </div>
+
+                {% if issue.getOffers %}
+                    <!-- Sponsors Tab -->
+                    <div class="tab-pane" id="sponsors">
+
+                        <!-- Issue Sponsor Header-->
+                        <div class="fs-box">
+                            <div class="column-wrapper">
+                                <div class="column" style="width:185px">
+                                    <span class="font-size-18 ubahn">Sponsor</span>
+                                </div>
+                                <div class="column fit">
+                                    <span class="font-size-18 ubahn">Offer</span>
+                                </div>
+                                <div class="column fit">
+                                    <span class="font-size-18 ubahn">Acceptance</span>
+                                </div>
+                                <div class="column fit centered-text">
+                                    <span class="font-size-18 ubahn">Status</span>
+                                </div>
+                                <div class="column fit">
+                                    <span class="font-size-18 ubahn">Date</span>
+                                </div>
+                                <div class="column fit">
+                                    <span class="font-size-18 ubahn">Expire Date</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% for offer in issue.getOffers %}
+                            <!-- Issue Sponsor Row-->
+                            <div class="vgap-15"><!-- Vertical Gap 15px --></div>
+                            <div class="fs-box">
+                                <div class="column-wrapper vcenter-content" style="height:50px;">
+                                    <!-- Sponsor-->
+                                    <div class="column" style="width:170px;padding-right:15px;">
+                                        <div class="column-wrapper vcenter-content">
+                                            <div class="user-picture"><img src="{{offer.sponsor.gravatar_url_medium}}"></div>
+                                            <div class="hgap-15"><!-- Horizontal Gap 15px --></div>
+                                            <!-- Sponsor Name -->
+                                            <div class="column small">
+                                                <a href="{{ offer.sponsor.get_view_link }}" class="arial">{{ offer.sponsor.getUserInfo.screenName }}</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Offer -->
+                                    <div class="column fit">
+                                        <p>{{offer.get_currency_symbol}} {{offer.price_2}}</p>
+                                    </div>
+                                    <!-- Acceptance -->
+                                    <div class="column fit">
+                                        {% if offer.no_forking %}
+                                            <p>
+                                                {#                            <i class="icon-home popopo" rel="popover" data-content="{% trans "Solution must be available in the main project codebase. Forking is not OK." %}" data-original-title="{% trans "No forking" %}"></i>#}
+                                                No forking
+                                            </p>
+                                        {% endif %}
+                                        {% if offer.require_release %}
+
+                                            <p>
+                                                {#                            <i class="icon-gift popopo" rel="popover" data-content="{% trans "Solution must be available as a new released version. Just commiting is not enough." %}" data-original-title="{% trans "Release required" %}"></i>#}
+                                                Release required
+                                            </p>
+                                        {% endif %}
+                                        <p>
+                                            <a href="#">[More..]</a>
+                                        </p>
+                                    </div>
+                                    <!-- Status -->
+                                    <div class="column fit text-align-center">
+                                        <p>{% if offer.is_expired %}{% trans "EXPIRED" %}{% else %}{{offer.status}}{% endif %}</p>
+                                    </div>
+                                    <!-- Date -->
+                                    <div class="column fit">
+                                        <p><span title="{{ offer.creationDate }}">{{ offer.creationDate|date:"M/d/Y" }}</span></p>
+                                    </div>
+                                    <!-- Expire Date -->
+                                    <div class="column fit">
+                                        <p><span title="{{ offer.expirationDate }}">{{ offer.expirationDate|date:"M/d/Y" }}</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                    </div>
+
+                {% endif %}
+
+                {% if issue.getSolutions %}
+                    <!-- Developers Tab -->
+                    <div class="tab-pane" id="developers">
+                        <!-- Issue Developers Header-->
+                        <div class="fs-box">
+                            <div class="column-wrapper">
+                                <div class="column" style="width:185px">
+                                    <span class="font-size-18 ubahn">Developer</span>
+                                </div>
+                                <div class="column fit">
+                                    <span class="font-size-18 ubahn">Status</span>
+                                </div>
+                                <div class="column" style="width:100px;">
+                                    <span class="font-size-18 ubahn">Date</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% for solution in issue.getSolutions %}
+                            <!-- Issue Sponsor Row-->
+                            <div class="vgap-15"><!-- Vertical Gap 15px --></div>
+                            <div class="fs-box">
+                                <div class="column-wrapper vcenter-content" style="height:50px;">
+                                    <!-- Sponsor-->
+                                    <div class="column" style="width:170px;padding-right:15px;">
+                                        <div class="column-wrapper vcenter-content">
+                                            <div class="user-picture"><img src="{{ solution.programmer.gravatar_url_medium }}"></div>
+                                            <div class="hgap-15"><!-- Horizontal Gap 15px --></div>
+                                            <!-- Sponsor Name -->
+                                            <div class="column small">
+                                                <a href="{{ solution.programmer.get_view_link }}" class="arial">{{ solution.programmer.getUserInfo.screenName }}</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Status -->
+                                    <div class="column fit">
+                                        <p>{{solution.status}}
+                                            {% if solution.accepting_payments %}
+                                                / {% trans "Accepting payments" %}
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                    <!-- Date -->
+                                    <div class="column" style="width:100px;">
+                                        <p><span title="{{ solution.creationDate }}">{{ solution.creationDate|date:"D, d/M/Y" }}</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                {% endif %}
+
+            </div>
+        </div>
+
+        </div>
+
+        <div class="hgap-15"><!-- Horizontal Gap 15px --></div>
+
+        <!-- Issue Overview -->
+        <div class="column medium issue-overview">
+            <h3 class="boxed">Overview</h3>
+
+            <!-- Overview Info -->
+            <div class="fs-box push-footer">
+                <span class="font-size-18 darkblue-text ubahn issue-title"> {{ issue.project.name }}</span>
+                <div class="divider small"><!--Small Divider--></div>
+                <!-- Issue Project Logo -->
+                <div class="project-logo">
+                    <img src="{{ issue.get_card_image }}"/>
+                </div>
+                <div class="divider small"><!-- Small Divider --></div>
+                <!--Issue Values-->
+                <div class="issue-values">
+                    {% if issue.getTotalOffersPriceUSD or issue.getTotalOffersPriceBTC %}
+                        <h1 class="orange-text arial">
+                            {% if issue.getTotalOffersPriceUSD %}
+                                <span>US$ {{ issue.getTotalOffersPriceUSD }}</span>
+                            {% endif %}
+                            {% if issue.getTotalOffersPriceBTC %}
+                                <span>BTC {{ issue.getTotalOffersPriceBTC }}</span>
+                            {% endif %}
+                        </h1>
+                        <h4 class="orange-text arial">Offered</h4>
+                    {% endif %}
+                    </br>
+                    {% if issue.getTotalPaidPriceUSD or issue.getTotalPaidPriceBTC %}
+                        <h1 class="arial">
+                            {% if issue.getTotalPaidPriceUSD %}
+                                <span>US$ {{ issue.getTotalPaidPriceUSD }}</span>
+                            {% endif %}
+                            {% if issue.getTotalPaidPriceBTC %}
+                                <span>BTC {{ issue.getTotalPaidPriceBTC }}</span>
+                            {% endif %}
+                        </h1>
+                        <h4 class="arial">Paid</h4>
+                    {% endif %}
+                </div>
+                <!-- Issue Status -->
+                <div class="card-status {{ issue.get_status }}"></div>
+                <!-- Box Footer -->
+                <div class="fs-box-footer">
+                    <a href="">Watch</a>
+                </div>
+            </div>
+
+            <div class="vgap-15"><!-- Vertical Gap 15px --></div>
+
+            <!-- Issue Creator -->
+            <div class="fs-box issue-creator">
+                <div class="column-wrapper">
+                    <!-- Creator Picture-->
+                    <div class="user-picture"><img src="{{issue.createdByUser.gravatar_url_medium}}"></div>
+                    <div class="hgap-15"><!-- Horizotal Gap 15px --></div>
+                    <!-- Creator Name-->
+                    <div class="column fit">
+                        <h5 class="arial">Created by</h5>
+                        <a href="{{ issue.createdByUser.get_view_link }}" class="arial font-size-11">{{ issue.createdByUser.getUserInfo.screenName }}</a>
                     </div>
                 </div>
-                <!-- Offer -->
-                <div class="column fit">
-                    <p>{{offer.get_currency_symbol}} {{offer.price_2}}</p>
-                </div>
-                <!-- Acceptance -->
-                <div class="column fit">
-                    {% if offer.no_forking %}
-                        <p>
-{#                            <i class="icon-home popopo" rel="popover" data-content="{% trans "Solution must be available in the main project codebase. Forking is not OK." %}" data-original-title="{% trans "No forking" %}"></i>#}
-                            No forking
-                        </p>
-                    {% endif %}
-                    {% if offer.require_release %}
-
-                        <p>
-{#                            <i class="icon-gift popopo" rel="popover" data-content="{% trans "Solution must be available as a new released version. Just commiting is not enough." %}" data-original-title="{% trans "Release required" %}"></i>#}
-                            Release required
-                        </p>
-                    {% endif %}
-                    <p>
-                        <a href="#">[More..]</a>
-                    </p>
-                </div>
-                <!-- Status -->
-                <div class="column fit text-align-center">
-                    <p>{% if offer.is_expired %}{% trans "EXPIRED" %}{% else %}{{offer.status}}{% endif %}</p>
-                </div>
-                <!-- Date -->
-                <div class="column fit">
-                    <p><span title="{{ offer.creationDate }}">{{ offer.creationDate|date:"M/d/Y" }}</span></p>
-                </div>
-                <!-- Expire Date -->
-                <div class="column fit">
-                    <p><span title="{{ offer.expirationDate }}">{{ offer.expirationDate|date:"M/d/Y" }}</span></p>
-                </div>
             </div>
+
+            <div class="vgap-15"><!-- Vertical Gap 15px --></div>
+
+            <!-- Issue Buttons -->
+            <a href="javascript:abre()" class="fs-button green">Sponsor this issue</a>
+            <a href="javascript:abre()" class="fs-button blue">Work on this issue</a>
+
+            <div class="vgap-30"><!-- Vertical Gap 30px --></div>
+
+            <!-- Share Buttons -->
+            <h3 class="text-align-right">Help fund this issue. Share on:</h3>
+            <div class="text-align-right">
+                <a href="" class="social-button facebook"></a>
+                <div class="hgap-5 inline"><!-- Horizontal Gap 5px --></div>
+                <a href="" class="social-button twitter"></a>
+                <div class="hgap-5 inline"><!-- Horizontal Gap 5px --></div>
+                <a href="" class="social-button google"></a>
+            </div>
+
         </div>
-        {% endfor %}
-
-    </div>
-
-    {% endif %}
-
-    {% if issue.getSolutions %}
-    <!-- Developers Tab -->
-    <div class="tab-pane" id="developers">
-        <!-- Issue Developers Header-->
-        <div class="fs-box">
-            <div class="column-wrapper">
-                <div class="column" style="width:185px">
-                    <span class="font-size-18 ubahn">Developer</span>
-                </div>
-                <div class="column fit">
-                    <span class="font-size-18 ubahn">Status</span>
-                </div>
-                <div class="column" style="width:100px;">
-                    <span class="font-size-18 ubahn">Date</span>
-                </div>
-            </div>
+        </div>
+        </div>
         </div>
 
-        {% for solution in issue.getSolutions %}
-        <!-- Issue Sponsor Row-->
-        <div class="vgap-15"><!-- Vertical Gap 15px --></div>
-        <div class="fs-box">
-            <div class="column-wrapper vcenter-content" style="height:50px;">
-                <!-- Sponsor-->
-                <div class="column" style="width:170px;padding-right:15px;">
-                    <div class="column-wrapper vcenter-content">
-                        <div class="user-picture"><img src="{{ solution.programmer.gravatar_url_medium }}"></div>
-                        <div class="hgap-15"><!-- Horizontal Gap 15px --></div>
-                        <!-- Sponsor Name -->
-                        <div class="column small">
-                            <a href="{{ solution.programmer.get_view_link }}" class="arial">{{ solution.programmer.getUserInfo.screenName }}</a>
-                        </div>
+        <!-- Modal -->
+        <div class="modal fade in" id="sponsor_modal">
+            <div class="modal-dialog column-wrapper vertical">
+                <div class="column fit"></div>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="fecha()" >&times;</button>
+                        <span class="modal-title font-size-20 ubahn grey-text">Sponsor issue</span>
+                    </div>
+                    <div class="divider small"></div>
+                    <div class="modal-body">
+                        <p>Modal body</p>
+                        <p>Modal body</p>
+                        <p>Modal body</p>
+                        <p>Modal body</p>
+                        <p>Modal body</p>
+                        <p>Modal body</p>
+                        <p>Modal body</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="javascript:fecha()" class="fs-button green medium">Sponsor!</a>
                     </div>
                 </div>
-
-                <!-- Status -->
-                <div class="column fit">
-                    <p>{{solution.status}}
-                        {% if solution.accepting_payments %}
-                            / {% trans "Accepting payments" %}
-                        {% endif %}
-                    </p>
-                </div>
-                <!-- Date -->
-                <div class="column" style="width:100px;">
-                    <p><span title="{{ solution.creationDate }}">{{ solution.creationDate|date:"D, d/M/Y" }}</span></p>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-
-    {% endif %}
-
-    </div>
-    </div>
-
-    </div>
-
-    <div class="hgap-15"><!-- Horizontal Gap 15px --></div>
-
-    <!-- Issue Overview -->
-    <div class="column medium issue-overview">
-        <h3 class="boxed">Overview</h3>
-
-        <!-- Overview Info -->
-        <div class="fs-box push-footer">
-            <span class="font-size-18 darkblue-text ubahn issue-title"> {{ issue.project.name }}</span>
-            <div class="divider small"><!--Small Divider--></div>
-            <!-- Issue Project Logo -->
-            <div class="project-logo">
-                <img src="{{ issue.get_card_image }}"/>
-            </div>
-            <div class="divider small"><!-- Small Divider --></div>
-            <!--Issue Values-->
-            <div class="issue-values">
-                {% if issue.getTotalOffersPriceUSD or issue.getTotalOffersPriceBTC %}
-                    <h1 class="orange-text arial">
-                        {% if issue.getTotalOffersPriceUSD %}
-                            <span>US$ {{ issue.getTotalOffersPriceUSD }}</span>
-                        {% endif %}
-                        {% if issue.getTotalOffersPriceBTC %}
-                            <span>BTC {{ issue.getTotalOffersPriceBTC }}</span>
-                        {% endif %}
-                    </h1>
-                    <h4 class="orange-text arial">Offered</h4>
-                {% endif %}
-                </br>
-                {% if issue.getTotalPaidPriceUSD or issue.getTotalPaidPriceBTC %}
-                    <h1 class="arial">
-                        {% if issue.getTotalPaidPriceUSD %}
-                            <span>US$ {{ issue.getTotalPaidPriceUSD }}</span>
-                        {% endif %}
-                        {% if issue.getTotalPaidPriceBTC %}
-                            <span>BTC {{ issue.getTotalPaidPriceBTC }}</span>
-                        {% endif %}
-                    </h1>
-                    <h4 class="arial">Paid</h4>
-                {% endif %}
-            </div>
-            <!-- Issue Status -->
-            <div class="card-status {{ issue.get_status }}"></div>
-            <!-- Box Footer -->
-            <div class="fs-box-footer">
-                <a href="">Watch</a>
+                <div class="column fit"></div>
             </div>
         </div>
 
-        <div class="vgap-15"><!-- Vertical Gap 15px --></div>
-
-        <!-- Issue Creator -->
-        <div class="fs-box issue-creator">
-            <div class="column-wrapper">
-                <!-- Creator Picture-->
-                <div class="user-picture"><img src="{{issue.createdByUser.gravatar_url_medium}}"></div>
-                <div class="hgap-15"><!-- Horizotal Gap 15px --></div>
-                <!-- Creator Name-->
-                <div class="column fit">
-                    <h5 class="arial">Created by</h5>
-                    <a href="{{ issue.createdByUser.get_view_link }}" class="arial font-size-11">{{ issue.createdByUser.getUserInfo.screenName }}</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="vgap-15"><!-- Vertical Gap 15px --></div>
-
-        <!-- Issue Buttons -->
-        <a href="javascript:abre()" class="fs-button green">Sponsor this issue</a>
-        <a href="javascript:abre()" class="fs-button blue">Work on this issue</a>
-
-        <div class="vgap-30"><!-- Vertical Gap 30px --></div>
-
-        <!-- Share Buttons -->
-        <h3 class="text-align-right">Help fund this issue. Share on:</h3>
-        <div class="text-align-right">
-            <a href="" class="social-button facebook"></a>
-            <div class="hgap-5 inline"><!-- Horizontal Gap 5px --></div>
-            <a href="" class="social-button twitter"></a>
-            <div class="hgap-5 inline"><!-- Horizontal Gap 5px --></div>
-            <a href="" class="social-button google"></a>
-        </div>
-
-    </div>
-    </div>
-    </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade in" id="sponsor_modal">
-        <div class="modal-dialog column-wrapper vertical">
-            <div class="column fit"></div>
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" onclick="fecha()" >&times;</button>
-                    <span class="modal-title font-size-20 ubahn grey-text">Sponsor issue</span>
-                </div>
-                <div class="divider small"></div>
-                <div class="modal-body">
-                    <p>Modal body</p>
-                    <p>Modal body</p>
-                    <p>Modal body</p>
-                    <p>Modal body</p>
-                    <p>Modal body</p>
-                    <p>Modal body</p>
-                    <p>Modal body</p>
-                </div>
-                <div class="modal-footer">
-                    <a href="javascript:fecha()" class="fs-button green medium">Sponsor!</a>
-                </div>
-            </div>
-            <div class="column fit"></div>
-        </div>
     </div>
     <script>
         function abre(){
@@ -339,4 +367,5 @@
             $('#sponsor_modal').modal('hide')
         }
     </script>
+
 {% endblock %}
