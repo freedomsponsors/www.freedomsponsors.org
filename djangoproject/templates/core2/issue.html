@@ -1,6 +1,7 @@
 {% extends "core2/base.html" %}
 {% load markdown %}
 {% load i18n %}
+{% load l10n %}
 
 {% block head %}
     <script src="/static/js/angular.min.js"></script>
@@ -24,6 +25,23 @@
                 $scope.comment_{{ comment.id }} = '{{ comment.content|escapejs }}';
             {% endfor %}
 
+            $scope.actionmodal = {};
+
+            {% if myoffer %}
+                $scope.myoffer = {
+                    id : "{{myoffer.id}}",
+                    acceptanceCriteria : "{{myoffer.acceptanceCriteria|escapejs}}",
+                    currency : '{{myoffer.currency}}',
+                    {% localize off %}
+                        price : {{myoffer.price}},
+                    {% endlocalize %}
+                    no_forking : '{{myoffer.no_forking}}' == 'True',
+                    require_release : '{{myoffer.require_release}}' == 'True',
+                    expires : '{{myoffer.expires}}' == 'True',
+                    expiration_time : {{myoffer.expiration_time}}
+                };
+            {% endif %}
+
             $scope.editComment = function(comment_id, visible){
                 if(visible){
                     $('#div_comment_r_' + comment_id).slideUp();
@@ -35,26 +53,56 @@
             };
 
             $scope.sponsor = function(){
+                $scope.actionmodal.action = 'SPONSOR';
+                $scope.actionmodal.title = 'Sponsor issue';
+                $scope.actionmodal.formaction = '/core/issue/sponsor/submit';
+                $scope.actionmodal.buttonlabel = 'Sponsor!';
+                $scope.actionmodal.commentplaceholder = "Please put some thought into this one - it's a big help for the programmer who will work on this. What is your definition of 'done' for this task? Not just 'done', but 'so-done-that-I'm-willing-to-pay-for-it-done' :-)";
                 $('#action_modal').modal()
             };
 
             $scope.revoke = function(){
+                $scope.actionmodal.action = 'ACTION_AND_COMMENT';
+                $scope.actionmodal.title = 'Revoke offer';
+                $scope.actionmodal.formaction = '/core/offer/revoke/submit';
+                $scope.actionmodal.buttonlabel = 'Revoke offer';
+                $scope.actionmodal.commentplaceholder = "Add a comment to let everyone know that you're not willing to pay for this issue anymore.";
                 $('#action_modal').modal()
             };
 
             $scope.change = function(){
+                $scope.actionmodal.action = 'SPONSOR';
+                $scope.actionmodal.title = 'Change offer';
+                $scope.actionmodal.formaction = '/core/offer/edit/submit';
+                $scope.actionmodal.buttonlabel = 'Change offer';
+                $scope.actionmodal.commentplaceholder = "Please put some thought into this one - it's a big help for the programmer who will work on this. What is your definition of 'done' for this task? Not just 'done', but 'so-done-that-I'm-willing-to-pay-for-it-done' :-)";
                 $('#action_modal').modal()
             };
 
             $scope.work = function(){
+                $scope.actionmodal.action = 'ACTION_AND_COMMENT';
+                $scope.actionmodal.title = 'Work on issue';
+                $scope.actionmodal.formaction = '/core/solution/add/submit';
+                $scope.actionmodal.buttonlabel = 'Start work';
+                $scope.actionmodal.commentplaceholder = "Add a comment to let everyone know that you'll be working on this issue.";
                 $('#action_modal').modal()
             };
 
             $scope.resolve = function(){
+                $scope.actionmodal.action = 'ACTION_AND_COMMENT';
+                $scope.actionmodal.title = 'Resolve issue';
+                $scope.actionmodal.formaction = '/core/solution/resolve/submit';
+                $scope.actionmodal.buttonlabel = 'Resolve issue';
+                $scope.actionmodal.commentplaceholder = "Add a comment to let everyone know that you resolved the issue!";
                 $('#action_modal').modal()
             };
 
             $scope.abort = function(){
+                $scope.actionmodal.action = 'ACTION_AND_COMMENT';
+                $scope.actionmodal.title = 'Abort work';
+                $scope.actionmodal.formaction = '/core/solution/abort/submit';
+                $scope.actionmodal.buttonlabel = 'Abort work';
+                $scope.actionmodal.commentplaceholder = "Add a comment to let everyone know that you won't be working on this issue anymore.";
                 $('#action_modal').modal()
             };
 
@@ -123,7 +171,7 @@
                             </div>
                             <div class="hgap-15"><!-- Horizontal Gap 15px --></div>
                             <div class="fs-box column fit">
-                                <p>Leave your comment. You can use <a href="http://blog.freedomsponsors.org/markdown_formatting/">markdown</a> for formatting </p>
+                                <p>Leave your comment.</p>
                                 <form id="add_comment" action="/core/issue/comment/add/submit" method="post">
                                     {% csrf_token %}
                                     <input type="hidden" id="issue_id" name="issue_id" value="{{issue.id}}">

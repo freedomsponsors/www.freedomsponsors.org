@@ -40,21 +40,70 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" ng-click="close_modal()" >&times;</button>
-                <span class="modal-title font-size-20 ubahn grey-text">Sponsor issue</span>
+                <span class="modal-title font-size-20 ubahn grey-text">{[{ actionmodal.title }]}</span>
             </div>
             <div class="divider small"></div>
-            <div class="modal-body">
-                <p>Modal body</p>
-                <p>Modal body</p>
-                <p>Modal body</p>
-                <p>Modal body</p>
-                <p>Modal body</p>
-                <p>Modal body</p>
-                <p>Modal body</p>
-            </div>
-            <div class="modal-footer">
-                <a href ng-click="close_modal()" class="fs-button green medium">Sponsor!</a>
-            </div>
+            <form method="post" action="{[{ actionmodal.formaction }]}">
+                <input type="hidden" name="issue_id" value="{{issue.id}}">
+                <input type="hidden" name="offer_id" value="{{myoffer.id}}">
+                <input type="hidden" name="solution_id" value="{{mysolution.id}}">
+
+                <div class="modal-body">
+                    <div ng-switch on="actionmodal.action">
+                        <div ng-switch-when="SPONSOR">
+                            <div>
+                                <input type="radio" id="currency" name="currency" value="USD" checked> US$
+                                {% if BITCOIN_ENABLED %}
+                                    <input type="radio" id="currency" name="currency" value="BTC"> Bitcoin
+                                {% endif %}
+                            </div>
+                            <div>
+                                <input type="text" ng-model="myoffer.price" id="price" name="price" value="" class="positive" style="width:80px;">
+                                <label id="no_forking_label">
+                                    <input ng-model="myoffer.no_forking" type="checkbox" id="no_forking" name="no_forking" value="no_forking">
+                                    No Forking
+                                    <i class="icon-question-sign popopo" rel="popover" data-content="Having this checked means that you are only interested in solutions that are implemented on the main project's codebase. We recommended leaving it checked. It will enable you to benefit from new improvements that might get implemented in the future." data-original-title="Original vs. copies"></i>
+                                </label>
+                                <label id="require_release_label">
+                                    <input ng-model="myoffer.require_release" type="checkbox" id="require_release" name="require_release" value="require_release">
+                                    Require release
+                                    <i class="icon-question-sign popopo" rel="popover" data-content="By checking this one you are telling the developer that just commiting the code is not enough. The solution must be available in a released, easily installable version" data-original-title="Commiting is not enough!"></i>
+                                </label>
+                            </div>
+                            <div>
+                                <p class="help-block">
+                                    FreedomSponsors will charge a 3% fee on top of your payment. For offers in US$, Paypal's fees will also apply.
+                                </p>
+                            </div>
+                            <div>
+                                <label >
+                                    <input ng-model="myoffer.expires" type="checkbox" id="expires" name="expires" value="expires">
+                                    This offer will expire...
+                                </label>
+                                <span ng-show="myoffer.expires">
+                                    in
+                                    <input ng-model="myoffer.expiration_time" type="text" id="expiration_time" name="expiration_time" style="width:50px;">
+                                    Days
+                                </span>
+                            </div>
+                            <div>
+                                <label for="acceptanceCriteria">Acceptance criteria</label>
+                                <text-with-markdown-preview model="myoffer.acceptanceCriteria" nameid="acceptanceCriteria" placeholder="{[{ actionmodal.commentplaceholder }]}"></text-with-markdown-preview>
+                            </div>
+                        </div>
+                        <div ng-switch-when="ACTION_AND_COMMENT">
+                            <div>
+                                <label for="comment">Leave a comment</label>
+                                <text-with-markdown-preview model="actioncomment" nameid="comment" placeholder="{[{ actionmodal.commentplaceholder }]}"></text-with-markdown-preview>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href ng-click="close_modal()" class="fs-button green medium">Cancel</a>
+                    <a href ng-click="close_modal()" class="fs-button green medium">{[{ actionmodal.buttonlabel }]}</a>
+                </div>
+            </form>
         </div>
         <div class="column fit"></div>
     </div>
