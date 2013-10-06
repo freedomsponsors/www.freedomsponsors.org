@@ -211,6 +211,18 @@ def sponsorIssue(request):
     return redirect(offer.get_view_link()+params)
 
 
+def _actionbar(issue, myoffer, mysolution, user):
+    bar = {}
+    bar['sponsor'] = not user.is_authenticated() or not myoffer or myoffer.status != Offer.OPEN
+    bar['pay'] = myoffer and myoffer.status == Offer.OPEN
+    bar['change'] = bar['pay']
+    bar['revoke'] = bar['pay']
+    bar['work'] = not user.is_authenticated() or not mysolution or mysolution.status != Solution.IN_PROGRESS
+    bar['resolve'] = mysolution and mysolution.status == Solution.IN_PROGRESS
+    bar['abort'] = bar['resolve']
+    return bar
+
+
 def viewIssue(request, issue_id):
     issue = Issue.objects.get(pk=issue_id)
     myoffer = None
@@ -235,18 +247,19 @@ def viewIssue(request, issue_id):
         'name': 'issue: ' + issue.title
     }]
 
-    return render_to_response(template_folder(request) + 'issue.html',
-        {'issue':issue,
-        'is_watching':is_watching,
-        'myoffer':myoffer,
-        'mysolution':mysolution,
-        'invoke_parent_callback' : invoke_parent_callback,
-        'show_sponsor_popup' : show_sponsor_popup,
-        'show_alert' : show_alert,
+    context = {
+        'issue': issue,
+        'is_watching': is_watching,
+        'myoffer': myoffer,
+        'mysolution': mysolution,
+        'invoke_parent_callback': invoke_parent_callback,
+        'show_sponsor_popup': show_sponsor_popup,
+        'show_alert': show_alert,
         'alert_reputation_revoking': alert_reputation_revoking,
-        'crumbs': crumbs},
+        'crumbs': crumbs,
+        'actionbar': _actionbar(issue, myoffer, mysolution, request.user)}
 
-        context_instance = RequestContext(request))
+    return render_to_response(template_folder(request) + 'issue.html', context, context_instance=RequestContext(request))
 
 
 def viewOffer(request, offer_id):

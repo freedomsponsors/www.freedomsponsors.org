@@ -20,6 +20,10 @@
         function IssueCtrl($scope) {
             $scope.new_comment = '';
 
+            {% for comment in issue.getComments %}
+                $scope.comment_{{ comment.id }} = '{{ comment.content|escapejs }}';
+            {% endfor %}
+
             $scope.editComment = function(comment_id, visible){
                 if(visible){
                     $('#div_comment_r_' + comment_id).slideUp();
@@ -30,9 +34,34 @@
                 }
             };
 
-            {% for comment in issue.getComments %}
-                $scope.comment_{{ comment.id }} = '{{ comment.content|escapejs }}';
-            {% endfor %}
+            $scope.sponsor = function(){
+                $('#action_modal').modal()
+            };
+
+            $scope.revoke = function(){
+                $('#action_modal').modal()
+            };
+
+            $scope.change = function(){
+                $('#action_modal').modal()
+            };
+
+            $scope.work = function(){
+                $('#action_modal').modal()
+            };
+
+            $scope.resolve = function(){
+                $('#action_modal').modal()
+            };
+
+            $scope.abort = function(){
+                $('#action_modal').modal()
+            };
+
+            $scope.close_modal = function(){
+                $('#action_modal').modal('hide')
+            };
+
         }
     </script>
 {% endblock %}
@@ -324,9 +353,7 @@
 
             <div class="vgap-15"><!-- Vertical Gap 15px --></div>
 
-            <!-- Issue Buttons -->
-            <a href="javascript:abre()" class="fs-button green">Sponsor this issue</a>
-            <a href="javascript:abre()" class="fs-button blue">Work on this issue</a>
+            {% include 'core2/include/issue_offer_action_bar.html' %}
 
             <div class="vgap-30"><!-- Vertical Gap 30px --></div>
 
@@ -345,41 +372,7 @@
         </div>
         </div>
 
-        <!-- Modal -->
-        <div class="modal fade in" id="sponsor_modal">
-            <div class="modal-dialog column-wrapper vertical">
-                <div class="column fit"></div>
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" onclick="fecha()" >&times;</button>
-                        <span class="modal-title font-size-20 ubahn grey-text">Sponsor issue</span>
-                    </div>
-                    <div class="divider small"></div>
-                    <div class="modal-body">
-                        <p>Modal body</p>
-                        <p>Modal body</p>
-                        <p>Modal body</p>
-                        <p>Modal body</p>
-                        <p>Modal body</p>
-                        <p>Modal body</p>
-                        <p>Modal body</p>
-                    </div>
-                    <div class="modal-footer">
-                        <a href="javascript:fecha()" class="fs-button green medium">Sponsor!</a>
-                    </div>
-                </div>
-                <div class="column fit"></div>
-            </div>
-        </div>
 
     </div>
-    <script>
-        function abre(){
-            $('#sponsor_modal').modal()
-        }
-        function fecha(){
-            $('#sponsor_modal').modal('hide')
-        }
-    </script>
 
 {% endblock %}
