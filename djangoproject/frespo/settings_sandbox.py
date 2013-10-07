@@ -149,6 +149,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'statfiles',
     'sandbox',
+    'sandbox_mock',
 )
 
 
