@@ -28,7 +28,8 @@ mod.directive('textWithMarkdownPreview', function() {
         replace: true,
         scope:{
             model:'=',
-            nameid:'@'
+            nameid:'@',
+            placeholder:'@'
         },
         templateUrl: '/static/js/angularutils/textarea-and-markdownpreview.html',
         controller: function ($scope) {
