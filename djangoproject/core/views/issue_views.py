@@ -243,8 +243,9 @@ def viewIssue(request, issue_id):
 
     is_watching = request.user.is_authenticated() and watch_services.is_watching_issue(request.user, issue.id)
     crumbs = [HOME_CRUMB, {
-        'link': issue.get_view_link(),
-        'name': 'issue: ' + issue.title
+        'link': issue.trackerURL,
+        'name': 'issue: ' + issue.title,
+        'blank': True,
     }]
 
     context = {

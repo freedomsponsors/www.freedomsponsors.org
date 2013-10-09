@@ -60,7 +60,7 @@
                         {% if forloop.counter > 1 %}
                             /
                         {% endif %}
-                        <a href="{{ crumb.link }}" >{{ crumb.name }}</a>
+                        <a href="{{ crumb.link }}" {% if crumb.blank %}target="_blank"{% endif %} >{{ crumb.name }}</a>
                     {% endfor %}
 				</span>
             };
