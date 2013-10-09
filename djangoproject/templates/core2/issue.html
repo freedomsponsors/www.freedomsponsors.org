@@ -27,6 +27,14 @@
                 $scope.comment_{{ comment.id }} = '{{ comment.content|escapejs }}';
             {% endfor %}
 
+            $scope.offer_dic = {};
+            {% for offer in issue.getOffers %}
+                $scope.offer_dic[{{ offer.id }}] = {
+                    author: '{{ offer.sponsor.getUserInfo.screenName }}',
+                    acceptance_criteria: '{{ offer.acceptanceCriteria|markdown|escapejs }}'
+                };
+            {% endfor %}
+
             $scope.actionmodal = {};
 
             {% if myoffer %}
@@ -108,9 +116,14 @@
                 $('#action_modal').modal()
             };
 
-            $scope.close_modal = function(){
-                $('#action_modal').modal('hide')
+            $scope.close_modal = function(id){
+                $(id).modal('hide')
             };
+
+            $scope.acceptance_popup = function(offer_id){
+                $scope.current_offer = $scope.offer_dic[offer_id];
+                $('#acceptance_modal').modal()
+            }
 
         }
     </script>
@@ -254,7 +267,7 @@
                                             </p>
                                         {% endif %}
                                         <p>
-                                            <a href="#">[More..]</a>
+                                            <a href ng-click="acceptance_popup({{ offer.id }})">[More..]</a>
                                         </p>
                                     </div>
                                     <!-- Status -->
@@ -275,7 +288,30 @@
 
                     </div>
 
+                    <!-- Modal -->
+                    <div class="modal fade in" id="acceptance_modal">
+                        <div class="modal-dialog column-wrapper vertical">
+                            <div class="column fit"></div>
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" ng-click="close_modal('#acceptance_modal')" >&times;</button>
+                                    <span class="modal-title font-size-20 ubahn grey-text">{[{ current_offer.author }]}'s acceptance criteria</span>
+                                </div>
+                                <div class="divider small"></div>
+
+                                <div class="modal-body" ng-bind-html-unsafe="current_offer.acceptance_criteria">
+                                </div>
+                                <div class="modal-footer">
+                                    <a href ng-click="close_modal('#acceptance_modal')" class="fs-button green medium">Close</a>
+                                </div>
+                            </div>
+                            <div class="column fit"></div>
+                        </div>
+                    </div>
+
                 {% endif %}
+
+
 
                 {% if issue.getSolutions %}
                     <!-- Developers Tab -->
