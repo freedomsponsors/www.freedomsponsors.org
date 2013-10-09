@@ -101,7 +101,7 @@ def _need_to_verify_paypal_account(user, issue):
 def editOffer(request):
     offer_id = int(request.POST['offer_id'])
     offer = issue_services.change_existing_offer(offer_id, request.POST, request.user)
-    return redirect(offer.get_view_link())
+    return redirect(offer.issue.get_view_link())
 
 
 def _listIssues(request):
@@ -208,7 +208,7 @@ def sponsorIssue(request):
         params = '?alert=SPONSOR' # a = Alert
     if (issue.getSolutionsAcceptingPayments().count() > 0):
         messages.info(request, 'This issue is open for payments. You are free to choose: you can pay now, or you can wait until after the issue is finished. No pressure :-)')
-    return redirect(offer.get_view_link()+params)
+    return redirect(offer.issue.get_view_link() + params)
 
 
 def _actionbar(issue, myoffer, mysolution, user):
