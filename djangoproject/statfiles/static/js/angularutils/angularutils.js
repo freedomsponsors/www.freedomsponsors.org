@@ -40,3 +40,36 @@ mod.directive('textWithMarkdownPreview', function() {
         }
     }
 });
+
+mod.directive('watchIssue', function() {
+    return {
+        restrict: 'E',
+        replace: true,
+        scope:{
+            issueId:'@',
+            watching:'='
+        },
+        templateUrl: '/static/js/angularutils/watch-issue.html',
+        controller: function ($scope) {
+            $scope.action = function(){
+                return $scope.watching ? 'unwatch' : 'watch';
+            };
+
+            $scope.toggle = function(){
+                var url = '/core/' + $scope.action() + '/issue/'+$scope.issueId;
+                $scope.loading = true;
+                $.get(url).success(function(data){
+                    if(data == 'WATCHING'){
+                        $scope.watching = true;
+                    } else if (data == 'NOT_WATCHING'){
+                        $scope.watching = false;
+                    } else {
+                        alert('unrecognized watch response: '+data);
+                    }
+                    $scope.loading = false;
+                    $scope.$digest();
+                })
+            };
+        }
+    }
+});

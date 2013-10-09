@@ -21,6 +21,8 @@
         function IssueCtrl($scope) {
             $scope.new_comment = '';
 
+            $scope.watching = 'True' == '{{ is_watching }}';
+
             {% for comment in issue.getComments %}
                 $scope.comment_{{ comment.id }} = '{{ comment.content|escapejs }}';
             {% endfor %}
@@ -379,7 +381,7 @@
                 <div class="card-status {{ issue.get_status }}"></div>
                 <!-- Box Footer -->
                 <div class="fs-box-footer">
-                    <a href="">Watch</a>
+                    <watch-issue issue-id="{{ issue.id }}" watching="watching"></watch-issue>
                 </div>
             </div>
 
