@@ -30,17 +30,17 @@
             </div>
         </div>
     </div>
-    {% ifequal comment.author.id user.id %}
-        <div id="div_comment_w_{{ comment.id }}" style="display: none">
-            <form method="post" class="well form-horizontal" action="/core/issue/comment/edit/submit">
-                {% csrf_token %}
-                <input type="hidden" name="comment_id" value="{{comment.id}}">
-                <text-with-markdown-preview model="comment_{{ comment.id }}" nameid="content"></text-with-markdown-preview>
+</div>
+{% ifequal comment.author.id user.id %}
+    <div id="div_comment_w_{{ comment.id }}" style="display: none">
+        <form method="post" class="well form-horizontal" action="/core/issue/comment/edit/submit">
+            {% csrf_token %}
+            <input type="hidden" name="comment_id" value="{{comment.id}}">
+            <text-with-markdown-preview model="comment_{{ comment.id }}" nameid="content"></text-with-markdown-preview>
                 <span>
                     <a href ng-click="editComment({{ comment.id }}, false)">{% trans "Cancel"%}</a>
                     <button type="submit">{% trans "Submit"%}</button>
                 </span>
-            </form>
-        </div>
-    {% endifequal %}
-</div>
+        </form>
+    </div>
+{% endifequal %}
