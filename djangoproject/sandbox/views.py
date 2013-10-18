@@ -23,6 +23,8 @@ def issue(request):
         'abort': False,
     }
     _issue = {
+        'createdByUser': {'id': 1},
+        'description': 'Bla\nble',
         'title': 'Build a time machine',
         'project': {'name': 'Impossibilities'},
         'get_card_image': '/static/img2/github_logo.jpg',
@@ -35,7 +37,9 @@ def issue(request):
             {'id': 2, 'content': 'Hoo'},
         ],
         'getOffers':[
-            {'sponsor': {'getUserInfo': {'screenName': 'Demi Moore'}},
+            {
+             'id': 1,
+             'sponsor': {'getUserInfo': {'screenName': 'Demi Moore'}},
              'get_currency_symbol': 'US$',
              'price_2': '60.00',
              'no_forking': True,
@@ -43,7 +47,9 @@ def issue(request):
              'status': 'OPEN',
              'creationDate': datetime.now(),
             },
-            {'sponsor': {'getUserInfo': {'screenName': 'Johnny Depp'}},
+            {
+             'id': 2,
+             'sponsor': {'getUserInfo': {'screenName': 'Johnny Depp'}},
              'get_currency_symbol': 'BTC',
              'price_2': '3.00',
              'no_forking': True,
