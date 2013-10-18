@@ -36,13 +36,15 @@
             <!-- Home Search -->
             <div class="home-search-box fs-box">
                 <div class="column-wrapper vcenter-content">
-                    <div class="column fit">
-                        <input type="text" value="Paste an issue tracker URL, search for an issue name or a project" class="fs-input search"/>
-                    </div>
-                    <div class="hgap-15"></div>
-                    <div>
-                        <a href="" class="fs-button medium blue">Search</a>
-                    </div>
+                    <form method="get" action="/core/issue">
+                        <div class="column fit">
+                            <input name="s" type="text" placeholder="Paste an issue tracker URL, search for an issue name or a project" class="fs-input search"/>
+                        </div>
+                        <div class="hgap-15"></div>
+                        <div>
+                            <a href onclick="submit()" class="fs-button medium blue">Search</a>
+                        </div>
+                    </form>
                 </div>
             </div>
 
