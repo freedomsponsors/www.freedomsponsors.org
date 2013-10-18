@@ -263,6 +263,12 @@ def viewIssue(request, issue_id):
     return render_to_response(template_folder(request) + 'issue.html', context, context_instance=RequestContext(request))
 
 
+def editIssue(request):
+    issue_id = int(request.POST['issue_id'])
+    issue = issue_services.change_existing_issue(issue_id, request.POST, request.user)
+    return redirect(issue.get_view_link())
+
+
 def viewOffer(request, offer_id):
     offer = Offer.objects.get(pk=offer_id)
     payment = None

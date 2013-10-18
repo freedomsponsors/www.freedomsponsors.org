@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+import json
 from django.db import models
 from django.utils import timezone
 from datetime import timedelta
@@ -328,6 +329,30 @@ class Issue(models.Model):
         issue.is_feedback = True
         return issue
 
+    def changeIssue(self, issuedict):
+        old_json = self.to_json()
+        if issuedict.get('description'):
+            self.description = issuedict.get('description')
+        if issuedict.get('title'):
+            self.title = issuedict.get('title')
+        self.touch()
+        new_json = self.to_json()
+        ActionLog(
+            creationDate=timezone.now(),
+            action='EDIT_ISSUE',
+            entity='ISSUE',
+            old_json=old_json,
+            new_json=new_json,
+            issue=self
+        ).save()
+
+    def to_json(self):
+        return json.dumps({
+            'id': self.id,
+            'title': self.title,
+            'description': self.description
+        })
+
     def getTotalOffersPriceUSD(self):
         return self.getTotalOffersPrice_by_currency('USD')
 
@@ -406,6 +431,7 @@ class Issue(models.Model):
             s += self.key+': '
         s += self.title
         return s
+
 
 # A record that indicates that a user is watching an issue
 class IssueWatch(models.Model):
@@ -898,3 +924,18 @@ class PaymentPart(models.Model):
         part.paypalEmail = part.programmer.getUserInfo().paypalEmail
         part.price = Decimal(price)
         return part
+
+
+# A historical log event
+class ActionLog(models.Model):
+    action = models.CharField(max_length=128, null=False, blank=False)
+    entity = models.CharField(max_length=30, null=False, blank=False)
+    old_json = models.TextField()
+    new_json = models.TextField()
+    creationDate = models.DateTimeField(null=False)
+    user = models.ForeignKey(User, null=True)
+    project = models.ForeignKey(Project, null=True)
+    issue = models.ForeignKey(Issue, null=True)
+    offer = models.ForeignKey(Offer, null=True)
+    solution = models.ForeignKey(Solution, null=True)
+    issue_comment = models.ForeignKey(IssueComment, null=True)

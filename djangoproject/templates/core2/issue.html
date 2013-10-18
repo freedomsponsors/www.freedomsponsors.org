@@ -23,6 +23,8 @@
 
             $scope.watching = 'True' == '{{ is_watching }}';
 
+            $scope.description = '{{ issue.description|escapejs }}'
+
             {% for comment in issue.getComments %}
                 $scope.comment_{{ comment.id }} = '{{ comment.content|escapejs }}';
             {% endfor %}
@@ -51,6 +53,16 @@
                     expiration_time : {{myoffer.expiration_time}}
                 };
             {% endif %}
+
+            $scope.editDescription = function(visible){
+                if(visible){
+                    $('#div_description_r').slideUp();
+                    $('#div_description_w').slideDown();
+                } else {
+                    $('#div_description_r').slideDown();
+                    $('#div_description_w').slideUp();
+                }
+            };
 
             $scope.editComment = function(comment_id, visible){
                 if(visible){
@@ -162,9 +174,32 @@
 
                 <!-- Description Tab -->
                 <div class="tab-pane active" id="description">
-                    {% if issue.description %}
-                        <div class="fs-box issue-description">
-                            {{ issue.description }}
+                    <div class="fs-box issue-description push-footer" id="div_description_r">
+                        {% if issue.description %}
+                            {{ issue.description|markdown|safe }}
+                        {% else %}
+                            [No description]
+                        {% endif %}
+                        {% if issue.createdByUser.id == user.id %}
+                            <div class="fs-box-footer">
+                                <div class="column fit" align="right">
+                                    <a href ng-click="editDescription(true)">Edit</a>
+                                    <div class="hgap-5 inline"><!-- Horizontal Gap 5px --></div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                    {% if issue.createdByUser.id == user.id %}
+                        <div id="div_description_w" style="display: none">
+                            <form method="post" class="well form-horizontal" action="/core/issue/edit/submit">
+                                {% csrf_token %}
+                                <input type="hidden" name="issue_id" value="{{issue.id}}">
+                                <text-with-markdown-preview model="description" nameid="description"></text-with-markdown-preview>
+                                <span>
+                                <a href ng-click="editDescription(false)">{% trans "Cancel"%}</a>
+                                <button type="submit">{% trans "Submit"%}</button>
+                                </span>
+                            </form>
                         </div>
                     {% endif %}
 

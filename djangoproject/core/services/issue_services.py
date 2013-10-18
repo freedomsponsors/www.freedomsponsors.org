@@ -13,6 +13,7 @@ logger = logging.getLogger(__name__)
 
 __author__ = 'tony'
 
+
 def search_issues(project_id=None, project_name=None, search_terms='', is_public_suggestion=None):
     issues = Issue.objects.filter(Q(is_feedback=False) | Q(offer__isnull=False)).distinct()
     if is_public_suggestion != None:
@@ -82,10 +83,17 @@ def sponsor_existing_issue(issue_id, dict, user):
     return offer
 
 
+def change_existing_issue(issue_id, issuedict, user):
+    issue = Issue.objects.get(pk=issue_id)
+    _throwIfNotIssueCreator(issue, user)
+    issue.changeIssue(issuedict)
+    return issue
+
+
 def change_existing_offer(offer_id, offerdict, user):
     offer = Offer.objects.get(pk=offer_id)
-    offer.issue.touch()
     _throwIfNotOfferOwner(offer, user)
+    offer.issue.touch()
     old_offer = offer.clone()
     offer.changeOffer(offerdict)
     watches = watch_services.find_issue_and_offer_watches(offer)
@@ -298,6 +306,12 @@ def _throwIfAlreadySponsoring(issue, user):
     offer = get_or_none(Offer, issue=issue, sponsor=user, status__in=[Offer.OPEN, Offer.REVOKED])
     if(offer):
         raise BaseException('Already sponsoring: '+str(issue.id)+','+str(user.id))
+
+
+def _throwIfNotIssueCreator(issue, user):
+    if issue.createdByUser.id != user.id:
+        raise BaseException('Security error. ' + str(user.id) + ' is not issue (' + str(issue.id) + ') creator. (Hey, if you do hack us, have the finesse to let us know, please - we are all firends here, right? ;-)')
+
 
 def _throwIfNotOfferOwner(offer, user):
     if(not offer.sponsor.id == user.id):
