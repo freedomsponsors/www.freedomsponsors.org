@@ -23,6 +23,18 @@ Copyright (C) 2013  FreedomSponsors
 <html lang="{{ LANGUAGE_CODE }}">
     <head>
 
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="{{SITE_HOME}}{{request.path}}" />
+        <meta property="og:site_name" content="FreedomSponsors" />
+        <meta property="fb:admins" content="1547283827" />
+        {% block og_meta %}
+            <meta property="og:title" content="Check this out! freedomsponsors.org - Crowdfunding Free Software, one issue at a time." />
+            <meta name="description" content="Check this out! freedomsponsors.org - Crowdfunding Free Software, one issue at a time." />
+            <meta property="og:image" content="http://www.freedomsponsors.org/static/img/FS_logo_512x512.png" />
+            <meta name="image" content="http://www.freedomsponsors.org/static/img/FS_logo_512x512.png" />
+        {% endblock og_meta %}
+
+
         <title>FreedomSponsors</title>
         <link href='/static/css2/reset.css' rel='stylesheet' type='text/css'/>
         <link href='/static/css2/fs_style.css' rel='stylesheet' type='text/css'/>
