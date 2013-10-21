@@ -528,15 +528,15 @@ input.fs-input.search.black{
 
 /* http://www.wufoo.com/2011/06/13/custom-radio-buttons-and-checkboxes/ */
 
-input[type='radio'], 
-input[type='checkbox'] {
+input[type='radio'].fs-input, 
+input[type='checkbox'].fs-input{
     opacity: 0; /* Hide the input, but have it still be clickable */
     float: left;
     width: 18px;
 }
 
-input[type='radio'] + label,
-input[type='checkbox'] + label {
+input[type='radio'].fs-input + label,
+input[type='checkbox'].fs-input + label {
     margin: 0;
     clear: none;
 	display:block;
@@ -547,20 +547,20 @@ input[type='checkbox'] + label {
 
 /* Checkbox and Radio Unselected */
 
-input[type='radio'] + label{
+input[type='radio'].fs-input + label{
 	background: url(img/radio_unchecked.png) left center no-repeat; 
 }
 
-input[type='checkbox'] + label{
+input[type='checkbox'].fs-input + label{
 	background: url(img/checkbox_unchecked.png) left center no-repeat; 
 }
 
 /* Checkbox and Radio Selected */
 
-input[type='radio']:checked + label {
+input[type='radio'].fs-input:checked + label {
     background-image: url(img/radio_checked.png);
 }
-input[type='checkbox']:checked + label {
+input[type='checkbox'].fs-input:checked + label {
     background-image: url(img/checkbox_checked.png);
 }
 
