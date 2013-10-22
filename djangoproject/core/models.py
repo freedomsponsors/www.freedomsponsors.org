@@ -292,11 +292,11 @@ class Issue(models.Model):
     is_public_suggestion = models.BooleanField()
 
     @classmethod
-    def newIssue(cls, project, key, title, createdByUser, trackerURL):
+    def newIssue(cls, project, key, title, description, createdByUser, trackerURL):
         issue = cls()
         issue.project = project
         issue.key = key
-        issue.description = ''
+        issue.description = description
         issue.title = title
         issue.creationDate = timezone.now()
         issue.updatedDate = issue.creationDate

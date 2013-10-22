@@ -1900,7 +1900,7 @@
   *margin-right: .3em;
   line-height: 14px;
   vertical-align: text-top;
-  background-image: url("../img/glyphicons-halflings.png");
+  background-image: url("img/glyphicons-halflings.png");
   background-position: 14px 14px;
   background-repeat: no-repeat;
 }
@@ -1909,7 +1909,7 @@
   *margin-left: 0;
 }
 #bootstrap-content .icon-white {
-  background-image: url("../img/glyphicons-halflings-white.png");
+  background-image: url("img/glyphicons-halflings-white.png");
 }
 #bootstrap-content .icon-glass {
   background-position: 0      0;

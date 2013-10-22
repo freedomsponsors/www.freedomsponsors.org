@@ -97,7 +97,8 @@ def buildOfferForHHH1052(createdByUser):
     hibernate = Project.objects.filter(name='Hibernate')[0]
     issue = Issue.newIssue(project=hibernate, 
         key='HHH-1052', 
-        title='Allow CalendarType.set to accept Date objects', 
+        title='Allow CalendarType.set to accept Date objects',
+        description='meh',
         createdByUser=createdByUser, 
         trackerURL='https://hibernate.onjira.com/browse/HHH-1052')
     offer = Offer.newOffer(issue=issue, 

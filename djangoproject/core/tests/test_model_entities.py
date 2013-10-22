@@ -11,6 +11,7 @@ PROJECT_BUGTRACKER = 'http://localhost/bugtracker'
 
 ISSUE_KEY = 'ISSUEID'
 ISSUE_TITLE = 'first_issue'
+ISSUE_DESCRIPTION = 'a description'
 
 class TestUser(unittest.TestCase):
     
@@ -60,7 +61,7 @@ class TestIssue(unittest.TestCase):
         except:
             self.user = User.objects.create_user(USER_NAME, USER_MAIL, USER_PASS)
         self.project = Project.newProject(PROJECT_NAME, self.user, PROJECT_URL, PROJECT_BUGTRACKER)
-        self.issue = Issue.newIssue(self.project, ISSUE_KEY, ISSUE_TITLE, self.project.createdByUser, self.project.trackerURL)
+        self.issue = Issue.newIssue(self.project, ISSUE_KEY, ISSUE_TITLE, ISSUE_DESCRIPTION, self.project.createdByUser, self.project.trackerURL)
         
     def test_issue_project(self):
         self.assertEquals(self.issue.project, self.project)

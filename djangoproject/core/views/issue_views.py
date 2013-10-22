@@ -33,9 +33,9 @@ def addIssue(request):
         return HttpResponse(_("ERROR: ")+ex.message)
     params = '?alert=SPONSOR'
     if(request.POST.get('invoke_parent_callback') == 'true'):
-        params += '&c=s' # c = Callback (iframe javascript callback)
+        params += '&c=s'  # c = Callback (iframe javascript callback)
 
-    return redirect(offer.get_view_link()+params)
+    return redirect(offer.issue.get_view_link() + params)
 
 @login_required
 def kickstartIssue(request):

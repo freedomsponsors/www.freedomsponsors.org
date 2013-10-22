@@ -44,7 +44,7 @@ def create_dummy_project():
 
 def create_dummy_issue():
     project = create_dummy_project()
-    issue = Issue.newIssue(project, 'HHH-1051', 'Compiled native SQL queries are not cached', project.createdByUser, 'https://hibernate.onjira.com/browse/HHH-1051')
+    issue = Issue.newIssue(project, 'HHH-1051', 'Compiled native SQL queries are not cached', 'meh', project.createdByUser, 'https://hibernate.onjira.com/browse/HHH-1051')
     issue.save()
     return issue
 

@@ -268,7 +268,7 @@ def _buildIssueFromDictionary(dict, user):
         if(issueURLValidationError):
             raise BaseException('invalid issue URL (' + issue_trackerURL + ') - ' + issueURLValidationError)
 
-        issue = Issue.newIssue(project, issue_key, issue_title, user, issue_trackerURL)
+        issue = Issue.newIssue(project, issue_key, issue_title, issue_description, user, issue_trackerURL)
     return issue
 
 

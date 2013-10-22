@@ -4,7 +4,7 @@ from core.models import *
 from django.contrib.auth.models import User
 
 def newIssue(project, key, title, createdByUser, trackerURLPrefix):
-    return Issue.newIssue(project, key, title, createdByUser, trackerURLPrefix+key)
+    return Issue.newIssue(project, key, title, '', createdByUser, trackerURLPrefix+key)
 
 def newUser(username, email):
     user = User()
