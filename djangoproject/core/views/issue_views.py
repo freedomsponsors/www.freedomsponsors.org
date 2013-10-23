@@ -23,6 +23,7 @@ logger = logging.getLogger(__name__)
 
 __author__ = 'tony'
 
+
 @login_required
 def addIssue(request):
     try:
@@ -30,12 +31,11 @@ def addIssue(request):
         watch_services.watch_issue(request.user, offer.issue.id, IssueWatch.SPONSORED)
     except BaseException as ex:
         traceback.print_exc()
-        return HttpResponse(_("ERROR: ")+ex.message)
+        return HttpResponse(_("ERROR: ") + ex.message)
     params = '?alert=SPONSOR'
-    if(request.POST.get('invoke_parent_callback') == 'true'):
-        params += '&c=s'  # c = Callback (iframe javascript callback)
+    to = offer if template_folder(request) == 'core/' else offer.issue
+    return  redirect(to.get_view_link() + params)
 
-    return redirect(offer.issue.get_view_link() + params)
 
 @login_required
 def kickstartIssue(request):
@@ -46,7 +46,7 @@ def kickstartIssue(request):
         traceback.print_exc()
         return HttpResponse(_("ERROR: ")+ex.message)
 
-    params= '?alert=KICKSTART'
+    params = '?alert=KICKSTART'
     return redirect(issue.get_view_link()+params)
 
 
@@ -80,6 +80,7 @@ You need to have a verified Paypal account before you can receive payments throu
         messages.error(request, msg)
     return redirect(issue.get_view_link())
 
+
 def _need_to_set_bitcoin_address(user, issue):
     if user.getUserInfo().bitcoin_receive_address:
         return False
@@ -87,6 +88,7 @@ def _need_to_set_bitcoin_address(user, issue):
         if offer.currency == 'BTC':
             return True
     return False
+
 
 def _need_to_verify_paypal_account(user, issue):
     paypal_verified = paypal_services.accepts_paypal_payments(user)
@@ -96,6 +98,7 @@ def _need_to_verify_paypal_account(user, issue):
         if offer.currency == 'USD':
             return True
     return False
+
 
 @login_required
 def editOffer(request):

@@ -835,12 +835,12 @@ input[type='checkbox'].fs-input:checked + label {
 	word-wrap:break-word;
 }
 
-.issue-card  div.project-logo {
+div.project-logo {
 	height:58px;
 	width:100%;
 }
 
-.issue-card  div.project-logo > img{
+div.project-logo > img{
 	max-height: 50px;
 	max-width: 180px;
 	height: auto;
@@ -879,6 +879,9 @@ input[type='checkbox'].fs-input:checked + label {
 	text-align:center;
 }
 
+.overview-card div.project-logo {
+    text-align:center;
+}
 .proposed div.project-logo > img{
 	max-width: 100%;
 }

@@ -183,11 +183,13 @@
                 <!-- Description Tab -->
                 <div class="tab-pane active" id="description">
                     <div class="fs-box issue-description push-footer" id="div_description_r">
-                        {% if issue.description %}
-                            {{ issue.description|markdown|safe }}
-                        {% else %}
-                            [No description]
-                        {% endif %}
+                        <div id="bootstrap-content">
+                            {% if issue.description %}
+                                {{ issue.description|markdown|safe }}
+                            {% else %}
+                                [No description]
+                            {% endif %}
+                        </div>
                         {% if issue.createdByUser.id == user.id %}
                             <div class="fs-box-footer">
                                 <div class="column fit" align="right">
@@ -422,7 +424,7 @@
             <h3 class="boxed">Overview</h3>
 
             <!-- Overview Info -->
-            <div class="fs-box push-footer">
+            <div class="fs-box push-footer overview-card">
                 <span class="font-size-18 darkblue-text ubahn issue-title"> {{ issue.project.name }}</span>
                 <div class="divider small"><!--Small Divider--></div>
                 <!-- Issue Project Logo -->
