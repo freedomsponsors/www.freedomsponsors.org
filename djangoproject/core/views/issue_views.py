@@ -238,8 +238,10 @@ def viewIssue(request, issue_id):
 
     show_sponsor_popup = (request.GET.get('show_sponsor') == 'true')
     alert = request.GET.get('alert')
-    if(alert == 'KICKSTART'):
-        show_alert = 'core/popup/popup_just_kickstarted.html'
+    if alert == 'KICKSTART':
+        show_alert = template_folder(request) + 'popup/popup_just_kickstarted.html'
+    if alert == 'SPONSOR':
+        show_alert = template_folder(request) + 'popup/popup_just_sponsored.html'
     alert_reputation_revoking = mysolution and mysolution.status == Solution.IN_PROGRESS and mysolution.get_received_payments().count() > 0
 
     invoke_parent_callback = (request.GET.get('c') == 's')

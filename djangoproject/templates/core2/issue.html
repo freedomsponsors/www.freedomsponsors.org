@@ -145,6 +145,11 @@
                 $('#acceptance_modal').modal()
             }
 
+            {% if show_sponsor_popup %}
+                $scope.sponsor();
+            {% endif %}
+
+
         }
     </script>
 {% endblock %}

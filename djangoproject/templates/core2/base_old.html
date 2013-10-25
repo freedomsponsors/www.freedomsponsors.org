@@ -3,6 +3,9 @@
 {% block head %}
 {% endblock %}
 {% block body %}
+    {% if show_alert %}
+        {% include show_alert %}
+    {% endif %}
     <!-- Wrapper for sticky footer -->
     <div class="non-footer-wrapper">
         {% include "core2/include/navbar.html" %}

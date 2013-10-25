@@ -1,27 +1,55 @@
-<div class="modal hide fade in" id="alert_modal">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal">×</button>
-    <h3 id="offerDataFormModal_title">You're almost done</h3>
-  </div>
-  <div class="modal-body">
-    <p>You created this offer here on FreedomSponsors, but the guys working on <a href="{{offer.issue.project.homeURL}}" target="_project">{{offer.issue.project.name}}</a> don't know about it yet.</p>
-    <p>The best way to let them know is to post a comment on the <a href="{{offer.issue.trackerURL}}" target="_issue">original issue</a>.<br>
-      Go ahead and copy the text below if you like:
-    </p>
-    <div class="alert alert-info">
-      <p>
-          Hi everyone. <br>
-          This issue is a big deal for me, so I'm willing to pay {{offer.currency}} {{offer.price}} for it.<br>
-          This offer is registered on FreedomSponsors ({{SITE_HOME}}{{offer.issue.get_view_link}}).<br>
-          If you solve it (according to the acceptance criteria described there), please register on FreedomSponsors and mark it as resolved there<br>
-          I'll then check it out and gladly pay up!<br><br>
-          Oh, and if anyone else also wants throw in a few bucks on this, you should check out FreedomSponsors!
-      </p>
+<div class="modal fade in" id="alert_modal">
+    <div class="modal-dialog column-wrapper vertical">
+        <div class="column fit"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" onclick="$('#alert_modal').modal('hide')">&times;</button>
+                <span class="modal-title font-size-20 ubahn grey-text">You're almost done</span>
+            </div>
+            <div class="divider small"></div>
+            <div class="modal-body">
+                <ul>
+                    <li>
+                        <p>Encourage more people to join you as a sponsor</p>
+                        <div class="text-align-right">
+                            <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.freedomsponsors.org/core/issue/{{ issue.id }}" class="social-button facebook"></a>
+                            <div class="hgap-5 inline"><!-- Horizontal Gap 5px --></div>
+                            <a target="_blank" href="https://twitter.com/intent/tweet?url=http://www.freedomsponsors.org/core/issue/{{ issue.id }}&text=I'm sponsoring an issue on #FreedomSponsors. Show your support for Free Software and join me as a sponsor! [{{ issue.title }}]" class="social-button twitter"></a>
+                            <div class="hgap-5 inline"><!-- Horizontal Gap 5px --></div>
+                            <a target="_blank" href="https://plus.google.com/share?url=http%3A%2F%2Fwww.freedomsponsors.org/core/issue/{{ issue.id }}" class="social-button google"></a>
+                        </div>
+
+                    </li>
+                    <li>
+                        <p>
+                            Tell
+                            <a href="{{issue.project.homeURL}}" target="_project">{{issue.project.name}}</a>'s
+                            developers about your sponsorship.
+                        </p
+                        <p>
+                            The best way to do that is to drop a comment on the
+                            <a href="{{issue.trackerURL}}" target="_issue">original issue</a>.<br>
+                            Go ahead and copy the text below if you like:
+                        </p>
+                        <div class="alert alert-info">
+                            <p>
+                                Hi everyone. <br>
+                                This issue is a big deal for me, so I'm willing to pay {{offer.currency}} {{offer.price}} for it.<br>
+                                This offer is registered on FreedomSponsors ({{SITE_HOME}}{{issue.get_view_link}}).<br>
+                                If you solve it (according to the acceptance criteria described there), please register on FreedomSponsors and mark it as resolved there<br>
+                                I'll then check it out and gladly pay up!<br><br>
+                                Oh, and if anyone else also wants throw in a few bucks on this, you should check out FreedomSponsors!
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <a href="#" onclick="$('#alert_modal').modal('hide')" class="fs-button green medium">OK</a>
+            </div>
+        </div>
+        <div class="column fit"></div>
     </div>
-  </div>
-  <div class="modal-footer">
-    <a href="#" class="btn btn-primary" data-dismiss="modal">OK</a>
-  </div>
 </div>
 
 <script>

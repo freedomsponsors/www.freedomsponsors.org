@@ -2,6 +2,9 @@
 {% load i18n %}
 {% block body %}
     <!-- Wrapper for sticky footer -->
+    {% if show_alert %}
+        {% include show_alert %}
+    {% endif %}
     <div class="non-footer-wrapper">
         {% include "core2/include/navbar.html" %}
         {% block mainContent%}
