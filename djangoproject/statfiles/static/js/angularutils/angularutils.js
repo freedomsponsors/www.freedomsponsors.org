@@ -74,3 +74,25 @@ mod.directive('watchIssue', function() {
         }
     }
 });
+
+mod.directive('multilineEllipsis', function () {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attr) {
+            var $container = $(element).find('.ellipsis');
+            var divh = $(element).height();
+            setTimeout(function(){
+                while ($container.outerHeight() > divh) {
+                    $container.text(function (index, text) {
+                        var result = text.replace(/\W*\s(\S)*$/, '...');
+                        if (result == text){
+                            result = text.substring(0, text.length - 4)+'...';
+                        }
+                        return result;
+                    });
+                }
+            }, 0);
+
+        }
+    };
+});

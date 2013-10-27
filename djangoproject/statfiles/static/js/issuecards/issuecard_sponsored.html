@@ -1,7 +1,9 @@
 <!-- Sponsored Issue Card -->
 <div class="fs-box push-footer issue-card sponsored">
     <!--Issue Title-->
-    <a href="{[{ issue_link(issue) }]}" class="font-size-18 darkblue-text ubahn issue-title">{[{ issue.title }]}</a>
+    <a href="{[{ issue_link(issue) }]}" multiline-ellipsis class="font-size-18 darkblue-text ubahn issue-title">
+        <div class="ellipsis">{[{ issue.title }]}</div>
+    </a>
 
     <div class="divider small"><!--Small Divider--></div>
 
@@ -18,7 +20,7 @@
     <!--Issue Sponsors-->
     <div class="card-sponsors">
         <div class="column-wrapper">
-            <div class="user-picture" ng-class="{placeholder: sponsor.empty}" ng-repeat="sponsor in get4Sponsors(issue)">
+            <div class="user-picture" ng-class="{placeholder: sponsor.empty}" ng-repeat="sponsor in issue.four_sponsors_places">
                 <img ng-hide="sponsor.empty" ng-src="{[{ sponsor.image_link }]}" alt="{[{ sponsor.screen_name }]}" title="{[{ sponsor.screen_name }]}">
             </div>
         </div>
@@ -28,7 +30,10 @@
     </div>
 
     <!--Issue Description-->
-    <p class="issue-description">{[{ issue.description }]}</p>
+    <div multiline-ellipsis class="issue-description">
+        <p class="ellipsis">{[{ issue.description }]}</p>
+    </div>
+
 
     <!--Issue Project Logo-->
     <a href="{[{ issue.project_link }]}">

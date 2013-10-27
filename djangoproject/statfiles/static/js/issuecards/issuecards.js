@@ -21,7 +21,7 @@
  */
 
 
-var mod = angular.module('issuecards', ['fsapi', 'fslinks']);
+var mod = angular.module('issuecards', ['fsapi', 'fslinks', 'angularutils']);
 mod.directive('issueCards', function() {
     return {
         restrict: 'E',
@@ -77,7 +77,7 @@ mod.directive('issueCards', function() {
                     empties.push({empty:true});
                 }
                 return empties.concat(issue.four_sponsors)
-            }
+            };
 
             $scope.getMoreSponsors = function(issue){
                 var n = issue.four_sponsors.length;
@@ -98,10 +98,10 @@ mod.directive('issueCards', function() {
                 }
             }
 
-            $scope.getInclude = function(issue){
+            $scope.getInclude = function(){
                 var template_sponsored = '/static/js/issuecards/issuecard_sponsored.html';
                 var template_proposed = '/static/js/issuecards/issuecard_proposed.html';
-                return issue.sponsor_status == 'SPONSORED' ? template_sponsored : template_proposed;
+                return is_sponsoring ? template_sponsored : template_proposed;
             }
 
             $scope.issue_link = function(issue){

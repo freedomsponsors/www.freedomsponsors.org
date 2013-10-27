@@ -830,7 +830,8 @@ input[type='checkbox'].fs-input:checked + label {
 }
 
 .issue-card .issue-description{
-	max-height:65px;
+    max-height:65px;
+    height:65px;
 	overflow: hidden;
 	word-wrap:break-word;
 }
