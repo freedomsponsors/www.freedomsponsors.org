@@ -1,10 +1,76 @@
-{% extends "core/base.html" %}
+{% extends "core2/base_old.html" %}
 {% block mainContent%}
+    <style type="text/css">
+    .contributor {
+        line-height: 33px;
+    }
+    </style>
+
 
         <div class="span1"></div>
         <div class="span8">
           <h1>FAQ</h1>
+
           <hr>
+          <ul>
+              <li><a href="#What is FreedomSponsors?">What is FreedomSponsors?</a></li>
+              <li><a href="#What makes FreedomSponsors unique?">What makes FreedomSponsors unique?</a></li>
+              <li><a href="#Do you really think that idea could work?">Do you really think that idea could work?</a></li>
+              <li><a href="#How do I change my profile picture?">How do I change my profile picture?</a></li>
+              <li><a href="#How can I tell if a sponsor is serious about his offer?">How can I tell if a sponsor is serious about his offer?</a></li>
+              <li><a href="#So you have a reputation system?">So you have a reputation system?</a></li>
+              <li><a href="#How do I add credits to FreedomSponsors?">How do I add credits to FreedomSponsors?</a></li>
+              <li><a href="#What about privacy?">What about privacy?</a></li>
+              <li><a href="#How does payment work?">How does payment work?</a></li>
+              <li><a href="#I don't have a Paypal account or a Bitcoin wallet, is that ok?">I don't have a Paypal account or a Bitcoin wallet, is that ok?</a></li>
+              <li><a href="#Two developers are claiming to have resolved my issue. How should I pay?">Two developers are claiming to have resolved my issue. How should I pay?</a></li>
+              <li><a href="#How a fix done by an independent developer will return back to the main project (trunk)?">How a fix done by an independent developer will return back to the main project (trunk)?</a></li>
+              <li><a href="#I resolved an issue, but the sponsor just didn't pay me. Is there anything I can do?">I resolved an issue, but the sponsor just didn't pay me. Is there anything I can do?</a></li>
+              <li><a href="#Can I pay the developer before he actually finishes the issue?">Can I pay the developer before he actually finishes the issue?</a></li>
+              <li><a href="#I paid for an unfinished issue, and the developer won't deliver. Is there anything I can do?">I paid for an unfinished issue, and the developer won't deliver. Is there anything I can do?</a></li>
+              <li><a href="#Does FreedomSponsors have any kind of integration API?">Does FreedomSponsors have any kind of integration API?</a></li>
+              <li><a href="#Who is behind FreedomSponsors?">Who is behind FreedomSponsors?</a></li>
+              <li><a href="#Tell me more about FreedomSponsors!">Tell me more about FreedomSponsors!</a></li>
+              <li><a href="#This is great, what can I do to help?">This is great, what can I do to help?</a></li>
+              <li><a href="#I have more questions!">I have more questions!</a></li>
+          </ul>
+          <hr>
+          <a name="What is FreedomSponsors?"></a>
+          <h3>What is FreedomSponsors?</h3>
+          <p>
+              FreedomSponsors is a crowdfunding platform for programming tasks of Free and Open Source Software.<br>
+            You can place money bounties for issues that you care about getting fixed, and you can collect bounties by working on open issues.
+          </p>
+
+          <hr>
+          <a name="What makes FreedomSponsors unique?"></a>
+          <h3>What makes FreedomSponsors unique?</h3>
+
+          <p>
+              We have a strong philosophy based on openness and freedom, so we try to put the community first in everything we do. That philosophy also shows in how our platform works. Here's a few examples:
+              <ul>
+                  <li>
+                      We want to build a community based on trust and reputation.
+                      So sponsors only have to pay their bounty <strong>after the developer solves the issue</strong> (but they can choose to pay before if they want too)
+                  </li>
+                  <li>
+                      FreedomSponsors is not only <a href="github.com/freedomsponsors/www.freedomsponsors.org">open-source</a> (front-end <strong>and back-end</strong>), we're "open-everything",
+                      having a lot in common with Gittip's <a href="http://blog.gittip.com/post/26350459746/the-first-open-company">"open company"</a> concept.<br>
+                      Everything we do is out in the open:
+                      You can see our <a href="http://freedomsponsors.org/core/stats/">site stats</a>, we're constantly <a href="http://blog.freedomsponsors.org/">blogging</a> about stuff, and we're wide open for users <a href="http://freedomsponsors.org/core/feedback">feedback</a>.
+                  </li>
+                  <li>
+                      We value our users software freedom.<br>
+                      For instance, we don't use third party javascript code that can allow our users online activities to be tracked by those
+                      third parties - meaning Google Analytics, the Facebook like button and things like that.<br>
+                      We also follow <a href="https://www.gnu.org/philosophy/javascript-trap.html">FSF's conventions for publishing free javascript code</a> - because we believe those things are important.
+                  </li>
+              </ul>
+              And last but not least, FreedomSponsors is made in Brazil. If you ever come visit, let's have some caipirinhas together! :-)
+          </p>
+
+          <hr>
+          <a name="Do you really think that idea could work?"></a>
           <h3>Do you really think that idea could work? </h3>
           <p>
             We really do. Because we believe that the amount of decent honest people in the world is way higher then the minimum required for something like this to work.<br>
@@ -13,13 +79,13 @@
             <ul>
             <li>"<strong>Customer collaboration</strong> over contract negotiation".</li>
             </ul>
-            We think this tool we're providing will give people the ability to give the right push to open source projects, so that things go faster; while also enabling programmers to do more work on the projects they love.
+            We believe FreedomSponsors will give people the ability to give the right push to open source projects, so that things go faster; while also enabling programmers to do more work on the projects they love.
           </p>
           <hr>
+          <a name="How do I change my profile picture?"></a>
           <h3>How do I change my profile picture?</h3>
           <p>
-            We don't store images in our database.<br>
-            Instead we pull user pictures from <a href="http://gravatar.com">Gravatar</a>.<br>
+            We pull user pictures from <a href="http://gravatar.com">Gravatar</a>.<br>
             Gravatar is a nice and simple online service that will let you upload avatar pictures and associate them with your email(s). Here's an example:
             <ul>
               <li>email - tony@freedomsponsors.org</li>
@@ -27,52 +93,78 @@
             </ul>
              Please go ahead, and create your Gravatar account, and associate an avatar with your primary email here on FS.
           </p>
-          <hr>
-          <h3>How can I tell if a "sponsor" is serious about his offer?</h3>
+
+          <a name="How can I tell if a sponsor is serious about his offer?"></a>
+          <h3>How can I tell if a sponsor is serious about his offer?</h3>
           <p>
-            You can't. But you can take a look at his/her history. Everything you do at FreedomSponsors is public.<br>
+            You can take a look at his/her history. Everything you do at FreedomSponsors is public.<br>
             Check out their profile. If there are a lot of unpaid offers on resolved issues, that's a bad sign.
           </p>
           <hr>
+
+          <a name="So you have a reputation system?"></a>
           <h3>So you have a reputation system?</h3>
           <p>
             Not yet. We just display the users history attached to their profiles.<br>
             But we intend to have something like that in the future.
           </p>
           <hr>
-          <h3>How do I add "credits" to FreedomSponsors?</h3>
+
+          <a name="How do I add credits to FreedomSponsors?"></a>
+          <h3>How do I add credits to FreedomSponsors?</h3>
           <p>
-            YOU DON'T!<br/>
-            Payments are made directly from sponsors to developers.<br>
-            Our wish is that sponsors pay the developers not because they have to, but because they feel grateful for their work.<br>
-            For that reason, there is nothing on the system that forces nobody to pay anything. There are no escrows and no pre paid credits - this is not an implementation detail - it's by philosophy.
+            You don't.<br/>
+            Payments go directly to the developer you choose to pay.<br>
           </p>
           <hr>
+
+          <a name="What about privacy?"></a>
           <h3>What about privacy?</h3>
           <p>
             We don't show your email address.
             Everything else that you do here - offers, working, commenting - is public for the world to see.
           </p>
           <hr>
+
+          <a name="How does payment work?"></a>
           <h3>How does payment work?</h3>
           <p>
-            We use <a href="https://www.paypal.com/cgi-bin/webscr?cmd=xpt/Marketing/general/what-is-paypal-outside&nav=0.0">Paypal</a>. You don't need to have an account right away, but you'll need one when you want to send or receive payments, so we suggest you go ahead and <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_registration-run">create your account</a>.<br>
-            On the payment page (in Paypal's website) you'll see that 3% of what you're paying is going to FreedomSponsors (we don't mind being transparent).<br> For example, when you're paying a US$ 10.00 offer, you'll see something like:<br>
-            <ul>
-              <li>Mr. Developer ........... US$ 9.70</li>
-              <li>FreedomSponsors ......... US$ 0.30</li>
-            </ul>
+              Payments can be made either in US$, via Paypal or in <a href="http://bitcoin.org/">Bitcoins</a>.<br>
+              Before you can send or receive payments, you’re going to need one or the other.<br>
+              If you’re a developer who will receive payments, it’s best that you have both a Paypal account and a Bitcoin wallet – that way, you’ll be able to receive offers in US$ and in Bitcoins.<br><br>
+
+              Regardless of the payment method/currency, FreedomSponsors will charge an extra 3% fee of top of payments.<br>
+              This is very much visible on the payment page.<br><br>
+
+              For Paypal payments, we use Paypal’s Parallel payment type. On a parallel payment an account A can make a single payment that will be distributed to two or more receiver accounts.<br><br>
+
+              Suppose a sponsor wants to pay a US$10 bounty to two developers and decides to give US$5 to each. On the payment page (on Paypal’s website) the sponsor will see:<br>
+
+              <ul>
+                <li>Developer A ....... US$ 5.00</li>
+                <li>Developer B ....... US$ 5.00</li>
+                <li>FREEDOMSPONSORS ... US$ 0.30</li>
+              </ul>
+
+              And there’s also Paypal's fee on top of that.<br>
+              Also, FreedomSponsors actually verifies whether a receiving Paypal account is valid before allowing a sponsor to make a payment to it.<br><br>
+
+              For Bitcoin payments, the same principles apply, except that there’s no “parallel payment” – you send the bitcoins FreedomSponsors wallet.<br>
+              Once the transaction is verified, FreedomSponsors will keep the 3% fee and transfer the remaining bitcoins to the developer(s) being paid.<br><br>
+
+              Since FreedomSponsors backend is open source, anyone can review the code that processes transactions, both for Paypal and Bitcoin.
           </p>
           <hr>
-          <h3>I don't have a Paypal account, is that ok?</h3>
-          <p>
-            Well, you're gonna need one to send or receive payments.<br>
-            <a href="/core/user/edit">Your profile</a> has a "primary email" and an optional "Paypal email" field.<br> 
-            If you leave "Paypal email" field blank, and someone tries to send you a payment, FS will consider your primary email as the Paypal account email.<br> 
-            Please note that Paypal will accept that payment *even if the account doesn't exist*. In that case, Paypal will send you an email and you'll have the opportunity to create your account and claim your prize then.<br>
-            If you intend to send or receive payments, we encourage you to create your Paypal account now.
-          </p>
+
+          <a name="I don't have a Paypal account or a Bitcoin wallet, is that ok?"></a>
+          <h3>I don't have a Paypal account or a Bitcoin wallet, is that ok?</h3>
+            <p>
+                You’ll need one or the other before you can send or receive payments.<br>
+                You can set your Paypal email and your Bitcoin wallet address in <a href="/core/user/edit">your profile page</a>.
+            </p>
           <hr>
+
+          <a name="Two developers are claiming to have resolved my issue. How should I pay?"></a>
           <h3>Two developers are claiming to have resolved my issue. How should I pay? </h3>
           <p>
             First you should verify whether the issue is really solved. We encourage sponsors to pay only after their problem is gone!<br><br>
@@ -81,6 +173,8 @@
             You'll have the option to select how much you pay to whom. The choice is yours.
           </p>
           <hr>
+
+          <a name="How a fix done by an independent developer will return back to the main project (trunk)?"></a>
           <h3>How a fix done by an independent developer will return back to the main project (trunk)?</h3>
           <p>
             Ideally, there should be no "independent developers". The best way for a developer to contribute to an open source project is to actually get involved with the corresponding community.<br>
@@ -89,29 +183,135 @@
             We want to encourage sponsors to actually fund the original projects, so that checkbox comes checked by default.
           </p>
           <hr>
+
+          <a name="I resolved an issue, but the sponsor just didn't pay me. Is there anything I can do?"></a>
           <h3>I resolved an issue, but the sponsor just didn't pay me. Is there anything I can do?</h3>
           <p>
-            Well, to actually get paid, no, not really.<br>
-            But you can add comments to every issue and every offer (offer, and issues are separate things. One issue can have many offers.)<br>
-            So you can add a comment to that offer and write whatever you want. It will be forever linked to that sponsor's account.
+            Fortunately this doesn't happen very often. What we've seen so far is an atmosphere of gratitude and collaboration among sponsors and developers.<br>
+            When problems like this arise, we encourage our users to use the issue comment system to try to sort it out.<br>
+            That way, if a sponsor really cannot be trusted, that issue - and its comment history - will be publicly linked to the sponsor's account.
           </p>
           <hr>
+
+          <a name="Can I pay the developer before he actually finishes the issue?"></a>
+          <h3>
+              Can I pay the developer before he actually finishes the issue?
+          </h3>
+          <p>
+              It depends.<br>
+              When the developer starts working on an issue, he/she can check a flag: “start accepting payments”.<br>
+              Sponsors can only make payments to issues in the “DONE” state, or issues in the “IN_PROGRESS” state that are accepting payments.
+          </p>
+          <hr>
+
+          <a name="I paid for an unfinished issue, and the developer won't deliver. Is there anything I can do?"></a>
+          <h3>I paid for an unfinished issue, and the developer won't deliver. Is there anything I can do?</h3>
+          <p>
+              Since payments are made directly to developers, FreedomSponsors is unable to refund you in this case.<br>
+              We encourage you to only pay for unfinished issues if you really trust the developer will meet your requirements.
+          </p>
+          <hr>
+
+          <a name="Does FreedomSponsors have any kind of integration API?"></a>
           <h3>Does FreedomSponsors have any kind of integration API?</h3>
           <p>
             Yes, but it's not much though - so far.<br>
             Please visit the <a href="/core/dev">Developers section</a>
           </p>
           <hr>
+
+          <a name="Who is behind FreedomSponsors?"></a>
+          <h3>Who is behind FreedomSponsors?</h3>
+          <p>
+              Calleri Informática is the legal entity behind FreedomSponsors.
+
+              <div class="well">
+                CNPJ: 10.522.445/0001-95
+                Address: Rua Araçuaí, 89, Bosque dos Eucaliptos.
+                São José dos Campos - São Paulo - Brazil.
+                CEP: 12233-380
+                Phone numbers: +55 12 39371638 / +55 12 81440013
+              </div>
+
+              <a href="http://freedomsponsors.org/core/user/2/tonylampada">
+                  <img src="http://www.gravatar.com/avatar/4dbc40e7a6fa89a3568a926378c22ace?d=identicon&s=24">
+                  tonylampada
+              </a> is the CEO, and currently the only person with production database access.
+              You can get in touch directly by sending an email to <a href="mailto:tony@freedomsponsors.org">tony@freedomsponsors.org</a> <br>
+              We've also had a lot of help from awesome people who love Open Source, to whom we're deeply grateful.<br>
+              Here's a few of them:
+              <ul>
+                  <li style="line-height: 31px">
+                      <a href="/core/user/162/rafael-augusto-dos-santos">
+                          <img src="http://www.gravatar.com/avatar/82f8e1b821d570a689d407335de9b540?d=identicon&s=24">
+                          Rafael Augusto dos Santos
+                      </a>: Our favorite designer / front-end developer.
+                  </li>
+                  <li style="line-height: 31px">
+                      <a href="/core/user/165/iuri-de-silvio">
+                          <img src="http://www.gravatar.com/avatar/a4f43fa1eeac26199907acd3dde52328?d=identicon&s=24">
+                          iurisilvio
+                      </a>: Number 1 in pull requests
+                  </li>
+                  <li style="line-height: 31px">
+                      <a href="/core/user/10/arthur-casals">
+                          <img src="http://www.gravatar.com/avatar/6313ba8e0125421f953fad0c33dab74a?d=identicon&s=24">
+                          Arthur Casals
+                      </a>: Always provides great advice
+                  </li>
+                  <li style="line-height: 31px">
+                      <a href="/core/user/420/campadrenalin">
+                          <img src="http://www.gravatar.com/avatar/15e648f5b6b105f3ec0d084388df365f?d=identicon&s=24">
+                          Campadrenalin
+                      </a>: Heavy user and great feedback
+                  </li>
+                  <li style="line-height: 31px">
+                      <a href="/core/user/443/jarl-arntzen">
+                          <img src="http://www.gravatar.com/avatar/cb272743ae9bbcab103b8589b5475173?d=identicon&s=24">
+                          Jarl Arntzen
+                      </a>: Valuable help in our front-end
+                  </li>
+                  <li style="line-height: 31px">
+                      <a href="/core/user/348/zooko">
+                          <img src="http://www.gravatar.com/avatar/3b7e6c77a5412587152c9e3f22b41c2a?d=identicon&s=24">
+                          zooko
+                      </a>: Great help with Bitcoin support
+                  </li>
+                  <li style="line-height: 31px">
+                      <a href="/core/user/1317/henrique-bastos">
+                          <img src="http://www.gravatar.com/avatar/d47e5a6a94e793ad1a1c315d6ab63877?d=identicon&s=24">
+                          Henrique Bastos
+                      </a>: Killer improvements to application architecture
+                  </li>
+              </ul>
+          </p>
+
+          <hr>
+
+          <a name="Tell me more about FreedomSponsors!"></a>
           <h3>Tell me more about FreedomSponsors!</h3>
           <p>
-            Sure thing, but this is not the best place for it.
-            <ul>
+              Sure,
+          <ul>
               <li>Have you seen the <a href="http://blog.freedomsponsors.org/about">"aboout page"</a> already? </li>
               <li>Check out <a href="http://www.facebook.com/freedomsponsors">Facebook page</a> to know more about our history, and what are our plans to the future.</li>
-              <li>Follow us on <a href="http://twitter.com/freedomsponsors">Twitter</a>, to get more realtime updates about what we're up to.</li>              
-            </ul>
+              <li>Follow <a href="http://twitter.com/tonylampada">tonylampada</a> on Twitter, to get more realtime updates about what we're up to.</li>
+              <li>Join the official <a href="https://groups.google.com/forum/?hl=en#!forum/freedomsponsors">mailing list</a>.
+          </ul>
+          </p>
+
+          <hr>
+
+          <a name="This is great, what can I do to help?"></a>
+          <h3>This is great, what can I do to help?</h3>
+          <p>
+              Helping Free and Open Source Software is a huge task, and we'll take all the help we can get.<br>
+              Our Github readme has more complete <a href="https://github.com/freedomsponsors/www.freedomsponsors.org#helping-out" >"Helping out"</a> section.<br>
+              Please check it out. Note: It's not all about coding.
           </p>
           <hr>
+
+          <a name="I have more questions!"></a>
           <h3>I have more questions!</h3>
           <p>
             Please drop it on our <a href="/core/feedback">feedback section</a>.<br>

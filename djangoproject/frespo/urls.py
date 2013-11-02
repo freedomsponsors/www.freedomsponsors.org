@@ -13,6 +13,7 @@ if 'core' in settings.INSTALLED_APPS:
     urlpatterns += patterns('',
         # url(r'^.*$', direct_to_template, {'template': 'core/maintainance.html'}),
         url(r'^$', 'core.views.main_views.home', name='home'),
+        url(r'^faq$', direct_to_template, {'template': 'core2/faq.html'}),
         url(r'^core/', include('core.urls')),
         url(r'^sandbox/', include('sandbox.urls')),
         url(r'^github/', include('gh_frespo_integration.urls')),
