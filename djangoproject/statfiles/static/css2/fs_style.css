@@ -472,7 +472,7 @@ div.divider.small:before{
 }
 
 /* -------------------------------- */
-/*            FS Input              */
+/*            FS Inputs             */
 /* -------------------------------- */
 
 /* ------ Input Styles ------ */
@@ -507,7 +507,7 @@ input.fs-input{
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	
-	padding: 5px 20px 5px 5px;
+	padding: 5px;
 	margin: 0;
 }
 
@@ -528,6 +528,7 @@ input.fs-input.black{
 /* ------ Search Input Styles ------ */
  
 input.fs-input.search{
+	padding-right:20px;
 	background: url(../img2/search_icon.png) no-repeat;
 	background-position: -moz-calc(100% - 8px);
 	background-position: -webkit-calc(100% - 8px);

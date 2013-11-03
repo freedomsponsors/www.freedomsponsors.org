@@ -53,14 +53,16 @@
                     <div ng-switch on="actionmodal.action">
                         <div ng-switch-when="SPONSOR">
                             <div class="inline-content">
+								Offer value:
 								<input type="text" ng-model="myoffer.price" id="price" name="price" value="" class="positive fs-input text-align-right" style="width:100px;">
-								<div class="hgap-15"><!-- Horizontal Gap 15px --></div>
+								<div class="hgap-5"><!-- Horizontal Gap 5px --></div>
                                 <!-- FS Radio -->
 								<span>
 									<input id="currency" class="fs-input" name="currency" type="radio" value="USD" checked="checked">
 									<label for="currency" class="ubahn font-size-14"> US$</label>
 								</span>
                                 {% if BITCOIN_ENABLED %}
+								<div class="hgap-5"><!-- Horizontal Gap 5px --></div>
                                 <!-- FS Radio -->
 								<span>
 									<input id="currency" class="fs-input" name="currency" type="radio" value="BTC">
@@ -69,25 +71,24 @@
                                 {% endif %}
                             </div>
                             <div class="vgap-15"><!-- Vertical Gap 15px --></div>
-                            <div>
+                            <div class="inline-content">
 								<!-- FS Checkbox -->
 								<span>
 									<input ng-model="myoffer.no_forking" type="checkbox" id="no_forking" name="no_forking" value="no_forking" class="fs-input">
 									<label id="no_forking_label" for="no_forking" class="ubahn font-size-14">No Forking</label>
-									 <i class="icon-question-sign popopo" rel="popover" data-content="Having this checked means that you are only interested in solutions that are implemented on the main project's codebase. We recommended leaving it checked. It will enable you to benefit from new improvements that might get implemented in the future." data-original-title="Original vs. copies"></i>
 								</span>
+								<i class="icon-question-sign popopo" rel="popover" data-content="Having this checked means that you are only interested in solutions that are implemented on the main project's codebase. We recommended leaving it checked. It will enable you to benefit from new improvements that might get implemented in the future." data-original-title="Original vs. copies"></i>
 								<!-- FS Checkbox -->
 								<span>
 									<input ng-model="myoffer.require_release" type="checkbox" id="require_release" name="require_release" value="require_release">
 									<label id="require_release_label" for="require_release" class="ubahn font-size-14">Require release</label>
-									<i class="icon-question-sign popopo" rel="popover" data-content="By checking this one you are telling the developer that just commiting the code is not enough. The solution must be available in a released, easily installable version" data-original-title="Commiting is not enough!"></i>
 								</span>
+								<i class="icon-question-sign popopo" rel="popover" data-content="By checking this one you are telling the developer that just commiting the code is not enough. The solution must be available in a released, easily installable version" data-original-title="Commiting is not enough!"></i>
 								<!-- FS Checkbox -->
 								<span>
 									<input ng-model="myoffer.expires" type="checkbox" id="expires" name="expires" value="expires" class="fs-input">
 									<label id="require_release_label" for="expires" class="ubahn font-size-14">This offer will expire...</label>
 								</span>
-								
                                 <span ng-show="myoffer.expires">
                                     in
                                     <input ng-model="myoffer.expiration_time" type="text" id="expiration_time" name="expiration_time" style="width:50px;" class="fs-input text-align-right">
@@ -116,7 +117,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a href ng-click="close_modal('#action_modal')" class="fs-button green medium">Cancel</a>
+                    <a href ng-click="close_modal('#action_modal')" class="fs-button grey medium">Cancel</a>
                     <a href onclick="submit()" class="fs-button green medium">{[{ actionmodal.buttonlabel }]}</a>
                 </div>
             </form>
