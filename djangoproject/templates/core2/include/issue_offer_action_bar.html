@@ -52,44 +52,59 @@
                 <div class="modal-body">
                     <div ng-switch on="actionmodal.action">
                         <div ng-switch-when="SPONSOR">
-                            <div>
-                                <input type="radio" id="currency" name="currency" value="USD" checked> US$
+                            <div class="inline-content">
+								<input type="text" ng-model="myoffer.price" id="price" name="price" value="" class="positive fs-input text-align-right" style="width:100px;">
+								<div class="hgap-15"><!-- Horizontal Gap 15px --></div>
+                                <!-- FS Radio -->
+								<span>
+									<input id="currency" class="fs-input" name="currency" type="radio" value="USD" checked="checked">
+									<label for="currency" class="ubahn font-size-14"> US$</label>
+								</span>
                                 {% if BITCOIN_ENABLED %}
-                                    <input type="radio" id="currency" name="currency" value="BTC"> Bitcoin
+                                <!-- FS Radio -->
+								<span>
+									<input id="currency" class="fs-input" name="currency" type="radio" value="BTC">
+									<label for="currency" class="ubahn font-size-14"> Bitcoin</label>
+								</span>
                                 {% endif %}
                             </div>
+                            <div class="vgap-15"><!-- Vertical Gap 15px --></div>
                             <div>
-                                <input type="text" ng-model="myoffer.price" id="price" name="price" value="" class="positive" style="width:80px;">
-                                <label id="no_forking_label">
-                                    <input ng-model="myoffer.no_forking" type="checkbox" id="no_forking" name="no_forking" value="no_forking">
-                                    No Forking
-                                    <i class="icon-question-sign popopo" rel="popover" data-content="Having this checked means that you are only interested in solutions that are implemented on the main project's codebase. We recommended leaving it checked. It will enable you to benefit from new improvements that might get implemented in the future." data-original-title="Original vs. copies"></i>
-                                </label>
-                                <label id="require_release_label">
-                                    <input ng-model="myoffer.require_release" type="checkbox" id="require_release" name="require_release" value="require_release">
-                                    Require release
-                                    <i class="icon-question-sign popopo" rel="popover" data-content="By checking this one you are telling the developer that just commiting the code is not enough. The solution must be available in a released, easily installable version" data-original-title="Commiting is not enough!"></i>
-                                </label>
-                            </div>
-                            <div>
-                                <p class="help-block">
-                                    FreedomSponsors will charge a 3% fee on top of your payment. For offers in US$, Paypal's fees will also apply.
-                                </p>
-                            </div>
-                            <div>
-                                <label >
-                                    <input ng-model="myoffer.expires" type="checkbox" id="expires" name="expires" value="expires">
-                                    This offer will expire...
-                                </label>
+								<!-- FS Checkbox -->
+								<span>
+									<input ng-model="myoffer.no_forking" type="checkbox" id="no_forking" name="no_forking" value="no_forking" class="fs-input">
+									<label id="no_forking_label" for="no_forking" class="ubahn font-size-14">No Forking</label>
+									 <i class="icon-question-sign popopo" rel="popover" data-content="Having this checked means that you are only interested in solutions that are implemented on the main project's codebase. We recommended leaving it checked. It will enable you to benefit from new improvements that might get implemented in the future." data-original-title="Original vs. copies"></i>
+								</span>
+								<!-- FS Checkbox -->
+								<span>
+									<input ng-model="myoffer.require_release" type="checkbox" id="require_release" name="require_release" value="require_release">
+									<label id="require_release_label" for="require_release" class="ubahn font-size-14">Require release</label>
+									<i class="icon-question-sign popopo" rel="popover" data-content="By checking this one you are telling the developer that just commiting the code is not enough. The solution must be available in a released, easily installable version" data-original-title="Commiting is not enough!"></i>
+								</span>
+								<!-- FS Checkbox -->
+								<span>
+									<input ng-model="myoffer.expires" type="checkbox" id="expires" name="expires" value="expires" class="fs-input">
+									<label id="require_release_label" for="expires" class="ubahn font-size-14">This offer will expire...</label>
+								</span>
+								
                                 <span ng-show="myoffer.expires">
                                     in
-                                    <input ng-model="myoffer.expiration_time" type="text" id="expiration_time" name="expiration_time" style="width:50px;">
+                                    <input ng-model="myoffer.expiration_time" type="text" id="expiration_time" name="expiration_time" style="width:50px;" class="fs-input text-align-right">
                                     Days
                                 </span>
                             </div>
+							<div class="vgap-15"><!-- Vertical Gap 15px --></div>
                             <div>
                                 <label for="acceptanceCriteria">Acceptance criteria</label>
                                 <text-with-markdown-preview model="myoffer.acceptanceCriteria" nameid="acceptanceCriteria" placeholder="{[{ actionmodal.commentplaceholder }]}"></text-with-markdown-preview>
+                            </div>
+							<div class="vgap-15"><!-- Vertical Gap 15px --></div>
+							<div>
+                                <p class="help-block green-text font-size-11">
+                                    FreedomSponsors will charge a 3% fee on top of your payment. For offers in US$, Paypal's fees will also apply.
+									<a href=""> Learn more!</a>
+                                </p>
                             </div>
                         </div>
                         <div ng-switch-when="ACTION_AND_COMMENT">
