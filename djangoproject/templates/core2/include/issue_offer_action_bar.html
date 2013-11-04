@@ -58,15 +58,15 @@
 								<div class="hgap-5"><!-- Horizontal Gap 5px --></div>
                                 <!-- FS Radio -->
 								<span>
-									<input id="currency" class="fs-input" name="currency" type="radio" value="USD" checked="checked">
-									<label for="currency" class="ubahn font-size-14"> US$</label>
+									<input id="currency_usd" class="fs-input" name="currency" type="radio" value="USD" checked="checked">
+									<label for="currency_usd" class="ubahn font-size-14"> US$</label>
 								</span>
                                 {% if BITCOIN_ENABLED %}
 								<div class="hgap-5"><!-- Horizontal Gap 5px --></div>
                                 <!-- FS Radio -->
 								<span>
-									<input id="currency" class="fs-input" name="currency" type="radio" value="BTC">
-									<label for="currency" class="ubahn font-size-14"> Bitcoin</label>
+									<input id="currency_btc" class="fs-input" name="currency" type="radio" value="BTC">
+									<label for="currency_btc" class="ubahn font-size-14"> Bitcoin</label>
 								</span>
                                 {% endif %}
                             </div>
@@ -87,7 +87,7 @@
 								<!-- FS Checkbox -->
 								<span>
 									<input ng-model="myoffer.expires" type="checkbox" id="expires" name="expires" value="expires" class="fs-input">
-									<label id="require_release_label" for="expires" class="ubahn font-size-14">This offer will expire...</label>
+									<label id="expires_label" for="expires" class="ubahn font-size-14">This offer will expire...</label>
 								</span>
                                 <span ng-show="myoffer.expires">
                                     in

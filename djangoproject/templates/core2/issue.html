@@ -60,6 +60,11 @@
                     expires : '{{myoffer.expires}}' == 'True',
                     expiration_time : {{myoffer.expiration_time}}
                 };
+            {% else %}
+                $scope.myoffer = {
+                    no_forking: true,
+                    require_release: true
+                }
             {% endif %}
 
             $scope.editDescription = function(visible){

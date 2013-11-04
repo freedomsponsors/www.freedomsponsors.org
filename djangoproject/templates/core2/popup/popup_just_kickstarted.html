@@ -11,11 +11,11 @@
                 <p class="ubahn font-size-20 orange-text text-align-center">Let the world know about it. Share on:</p>
 				<div class="vgap-15"><!-- Vertical Gap 15px --></div>
                 <div class="text-align-center">
-                    <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.freedomsponsors.org/core/issue/{{ issue.id }}" class="social-button facebook" style="width:60px;height:60px;"></a>
+                    <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{SITE_HOME}}{{ issue.get_view_link }}" class="social-button facebook" style="width:60px;height:60px;"></a>
                     <div class="hgap-5 inline"><!-- Horizontal Gap 5px --></div>
-                    <a target="_blank" href="https://twitter.com/intent/tweet?url=http://www.freedomsponsors.org/core/issue/{{ issue.id }}&text=I just proposed a Free Software issue on #FreedomSponsors ({{issue.title}})." class="social-button twitter" style="width:60px;height:60px;"></a>
+                    <a target="_blank" href="https://twitter.com/intent/tweet?url={{SITE_HOME}}{{ issue.get_view_link }}&text=I just proposed a Free Software issue on FreedomSponsors." class="social-button twitter" style="width:60px;height:60px;"></a>
                     <div class="hgap-5 inline"><!-- Horizontal Gap 5px --></div>
-                    <a target="_blank" href="https://plus.google.com/share?url=http%3A%2F%2Fwww.freedomsponsors.org/core/issue/{{ issue.id }}" class="social-button google" style="width:60px;height:60px;"></a>
+                    <a target="_blank" href="https://plus.google.com/share?url={{SITE_HOME}}{{ issue.get_view_link }}" class="social-button google" style="width:60px;height:60px;"></a>
                 </div>
             </div>
             <div class="modal-footer">
