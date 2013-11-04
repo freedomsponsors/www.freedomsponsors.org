@@ -153,10 +153,6 @@ body.loading .modal_ajax {
 	font-family: Arial, sans-serif;
 }
 
-.centered-text{
-	text-align:center;
-}
-
 /* ------ Text Colors ------ */
 
 .green-text{
@@ -211,12 +207,20 @@ body.loading .modal_ajax {
 
 /* ------ Text Align ------ */
 
+.text-align-left{
+	text-align:left;
+}
+
 .text-align-right{
 	text-align:right;
 }
 
 .text-align-center{
 	text-align:center;
+}
+
+.bold{
+	font-weight:bold;
 }
 
 /* ------ Links ------ */
@@ -528,7 +532,7 @@ input.fs-input.black{
 /* ------ Search Input Styles ------ */
  
 input.fs-input.search{
-	padding-right:20px;
+	padding-right:30px;
 	background: url(../img2/search_icon.png) no-repeat;
 	background-position: -moz-calc(100% - 8px);
 	background-position: -webkit-calc(100% - 8px);

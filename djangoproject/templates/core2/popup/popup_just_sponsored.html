@@ -10,40 +10,44 @@
             <div class="modal-body">
                 <ul>
                     <li>
-                        <p>Encourage more people to join you as a sponsor</p>
-                        <div class="text-align-right">
-                            <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.freedomsponsors.org/core/issue/{{ issue.id }}" class="social-button facebook"></a>
-                            <div class="hgap-5 inline"><!-- Horizontal Gap 5px --></div>
-                            <a target="_blank" href="https://twitter.com/intent/tweet?url=http://www.freedomsponsors.org/core/issue/{{ issue.id }}&text=I just placed a bounty for a Free Software issue on #FreedomSponsors ({{issue.title}})." class="social-button twitter"></a>
-                            <div class="hgap-5 inline"><!-- Horizontal Gap 5px --></div>
-                            <a target="_blank" href="https://plus.google.com/share?url=http%3A%2F%2Fwww.freedomsponsors.org/core/issue/{{ issue.id }}" class="social-button google"></a>
-                        </div>
-
+                        <p>
+							<span>Encourage more people to join you as a sponsor</span>. The best way to do that is to leave a comment on the
+							<a href="{{issue.trackerURL}}" target="_issue">original issue</a>.
+						</p>
+						<div class="vgap-15"><!-- Vertical Gap 15px --></div>
                     </li>
                     <li>
                         <p>
-                            Tell
-                            <a href="{{issue.project.homeURL}}" target="_project">{{issue.project.name}}</a>'s
-                            developers about your sponsorship.
-                        </p>
-                        <p>
-                            The best way to do that is to drop a comment on the
-                            <a href="{{issue.trackerURL}}" target="_issue">original issue</a>.<br>
-                            Go ahead and copy the text below if you like:
+                            Tell <a href="{{issue.project.homeURL}}" target="_project">{{issue.project.name}}</a>'s developers about your sponsorship:
                         </p>
                         <div class="alert alert-info">
-                            <p>
-                                I care about getting this fixed, so I'm offering {{myoffer.currency}} {{myoffer.price}} to the first person to fix it. <br> <br>
+                            <textarea spellcheck="false" style="height:133px;line-height: 13px;">I care about getting this fixed, so I'm offering {{myoffer.currency}} {{myoffer.price}} via FreedomSponsors to the first person who fix it.
+							
+Offer link: {{SITE_HOME}}{{offer.issue.get_view_link}}
 
-                                If you're not able to fix this yourself but you care about it too, throw in a few bucks with me and we'll get it fixed faster :) <br> <br>
+If you fix this issue (see my acceptance criteria there) I would gladly pay you.
 
-                                The offer is made at {{SITE_HOME}}{{offer.issue.get_view_link}} so if you fix this issue (according to the acceptance criteria described there) please use that site to let everyone know.
-                            </p>
+You can also join me and throw in a few bucks there and we'll get it fixed faster :)
+                            </textarea>
+							<p class="text-align-right"><a href="">Copy text and open original issue</a></p>
                         </div>
+						
                     </li>
                 </ul>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer inline-content">
+				<div class="column-wrapper vcenter-content" style="height:28px;">
+					<div class="column-fit text-align-left">
+						You can also share this on social network:
+						<div class="hgap-5 inline"><!-- Horizontal Gap 5px --></div>
+						<a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.freedomsponsors.org/core/issue/{{ issue.id }}" class="social-button facebook" style="height:28px"></a>
+						<div class="hgap-5 inline"><!-- Horizontal Gap 5px --></div>
+						<a target="_blank" href="https://twitter.com/intent/tweet?url=http://www.freedomsponsors.org/core/issue/{{ issue.id }}&text=I just placed a bounty for a Free Software issue on #FreedomSponsors ({{issue.title}})." class="social-button twitter" style="height:28px"></a>
+						<div class="hgap-5 inline"><!-- Horizontal Gap 5px --></div>
+						<a target="_blank" href="https://plus.google.com/share?url=http%3A%2F%2Fwww.freedomsponsors.org/core/issue/{{ issue.id }}" class="social-button google" style="height:28px"></a>
+					</div>
+				</div>
+				<div class="hgap-15 inline"><!-- Horizontal Gap 15px --></div>
                 <a href="#" onclick="$('#alert_modal').modal('hide')" class="fs-button green medium">OK</a>
             </div>
         </div>
