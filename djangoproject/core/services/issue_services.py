@@ -15,6 +15,11 @@ __author__ = 'tony'
 
 
 def search_issues(project_id=None, project_name=None, search_terms='', is_public_suggestion=None):
+    if search_terms:
+        issue = _find_by_tracker_url(search_terms)
+        if issue:
+            return issue
+
     issues = Issue.objects.filter(Q(is_feedback=False) | Q(offer__isnull=False)).distinct()
     if is_public_suggestion != None:
         issues = issues.filter(is_public_suggestion=is_public_suggestion)
@@ -23,9 +28,14 @@ def search_issues(project_id=None, project_name=None, search_terms='', is_public
     elif project_name:
         issues = issues.filter(project__name__icontains=project_name)
     if search_terms:
-        issues = issues.filter(title__icontains=search_terms)
+        issues = issues.filter(Q(title__icontains=search_terms) | Q(trackerURL__icontains=search_terms))
     issues = issues.order_by('-updatedDate')
     return issues
+
+
+def _find_by_tracker_url(url):
+    url = strip_protocol(url)
+    return get_or_none(Issue, trackerURL_noprotocol__iexact=url)
 
 
 def sponsor_new_issue(dict, user):

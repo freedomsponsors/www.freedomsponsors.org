@@ -126,12 +126,21 @@ def listIssues(request):
     project_name = request.GET.get('project_name')
     search_terms = request.GET.get('s')
     operation = request.GET.get('operation', '')
+
+    issues = _listIssues(request)
+    if isinstance(issues, Issue):
+        issue = issues
+        return redirect(issue.get_view_link())
+    if issues.count() == 1:
+        issue = issues[0]
+        return redirect(issue.get_view_link())
+
     return render_to_response(template_folder(request) + 'issue_list.html',
-        {'issues':_listIssues(request),
-         's':search_terms,
-         'project_id':project_id,
-         'project_name':project_name,
-         'operation':operation,
+        {'issues': issues,
+         's': search_terms,
+         'project_id': project_id,
+         'project_name': project_name,
+         'operation': operation,
         },
         context_instance = RequestContext(request))
 
