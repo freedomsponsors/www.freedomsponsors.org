@@ -5,7 +5,7 @@ from django.utils import timezone
 from datetime import timedelta
 from django.contrib.auth.models import User
 import hashlib, time, random
-from core.utils.frespo_utils import get_or_none
+from core.utils.frespo_utils import get_or_none, strip_protocol
 from social_auth.models import UserSocialAuth
 from django.utils.http import urlquote
 from django.template.defaultfilters import slugify
@@ -288,6 +288,7 @@ class Issue(models.Model):
     creationDate = models.DateTimeField()
     updatedDate = models.DateTimeField(null=True, blank=True)
     trackerURL = models.URLField(null=True, blank=True)
+    trackerURL_noprotocol = models.URLField(null=True, blank=True)
     is_feedback = models.BooleanField()
     is_public_suggestion = models.BooleanField()
 
@@ -302,6 +303,7 @@ class Issue(models.Model):
         issue.updatedDate = issue.creationDate
         issue.createdByUser = createdByUser
         issue.trackerURL = trackerURL
+        issue.trackerURL_noprotocol = strip_protocol(trackerURL)
         issue.is_feedback = False
         return issue
 
