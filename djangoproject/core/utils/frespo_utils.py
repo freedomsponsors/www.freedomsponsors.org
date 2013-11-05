@@ -20,7 +20,9 @@ def twoplaces(dec):
 def strip_protocol(url):
     if not url:
         return url
-    if url.startswith('http://') or url.startswith('https://'):
-        u = urlparse(url)
-        return u.netloc + u.path + '?' + u.query
-    return url
+    elif url.startswith('http://'):
+        return url[7:]
+    elif url.startswith('https://'):
+        return url[8:]
+    else:
+        return url
