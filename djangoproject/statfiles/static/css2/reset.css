@@ -35,7 +35,7 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
-ul ol{
+ul, ol{
 	list-style: none;
 }
 blockquote, q {
