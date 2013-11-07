@@ -171,6 +171,10 @@ body.loading .modal_ajax {
 	color:#FFB92D;
 }
 
+.light-grey-text{
+	color:#AAAAAA;
+}
+
 .grey-text{
 	color:#8C8C8C;
 }
@@ -221,6 +225,10 @@ body.loading .modal_ajax {
 
 .bold{
 	font-weight:bold;
+}
+
+.italic{
+	font-style:italic;
 }
 
 /* ------ Links ------ */
@@ -517,6 +525,10 @@ input.fs-input{
 
 input.fs-input.medium{
 	width:180px;
+}
+
+input.fs-input.small{
+	width:100px;
 }
 
 input.fs-input.black{

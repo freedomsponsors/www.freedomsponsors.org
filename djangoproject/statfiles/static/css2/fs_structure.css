@@ -125,6 +125,10 @@ div.hgap-5{
 	width:5px;
 }
 
+div.hgap-10{
+	width:10px;
+}
+
 div.hgap-15{
 	width:15px;
 }
@@ -139,6 +143,10 @@ div.hgap-60{
 
 div.vgap-5{
 	height:5px;
+}
+
+div.vgap-10{
+	height:10px;
 }
 
 div.vgap-15{
@@ -276,7 +284,6 @@ div.column-wrapper div.column.fit{ /* Column fit empty space */
 img.fs-logo{
 	/* TODO: ajustar tamanho ao redimensionar*/
 	width:65%;
-	margin-top:20px;
 	margin-left:auto;
 	margin-right:auto;
 	display:block;
@@ -291,7 +298,7 @@ img.fs-logo{
 .home-search-box{
 	height:60px;
 	position:relative;
-	margin:40px 0 40px 0;
+	margin:30px 0;
 	padding-left:30px;
 	padding-right:30px;
 }

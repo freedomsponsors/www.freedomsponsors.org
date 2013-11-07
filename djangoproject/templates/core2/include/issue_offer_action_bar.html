@@ -53,20 +53,20 @@
                     <div ng-switch on="actionmodal.action">
                         <div ng-switch-when="SPONSOR">
                             <div class="inline-content">
-								Offer value:
-								<input type="text" ng-model="myoffer.price" id="price" name="price" value="" class="positive fs-input text-align-right" style="width:100px;">
+								<span class="bold">Offer value:</span>
+								<input type="text" ng-model="myoffer.price" id="price" name="price" value="" class="positive fs-input small text-align-right">
 								<div class="hgap-5"><!-- Horizontal Gap 5px --></div>
                                 <!-- FS Radio -->
 								<span>
 									<input id="currency_usd" class="fs-input" name="currency" type="radio" value="USD" checked="checked">
-									<label for="currency_usd" class="ubahn font-size-14"> US$</label>
+									<label for="currency_usd"> US$</label>
 								</span>
                                 {% if BITCOIN_ENABLED %}
 								<div class="hgap-5"><!-- Horizontal Gap 5px --></div>
                                 <!-- FS Radio -->
 								<span>
 									<input id="currency_btc" class="fs-input" name="currency" type="radio" value="BTC">
-									<label for="currency_btc" class="ubahn font-size-14"> Bitcoin</label>
+									<label for="currency_btc"> Bitcoin</label>
 								</span>
                                 {% endif %}
                             </div>
@@ -75,19 +75,19 @@
 								<!-- FS Checkbox -->
 								<span>
 									<input ng-model="myoffer.no_forking" type="checkbox" id="no_forking" name="no_forking" value="no_forking" class="fs-input">
-									<label id="no_forking_label" for="no_forking" class="ubahn font-size-14">No Forking</label>
+									<label id="no_forking_label" for="no_forking">No Forking</label>
 								</span>
 								<i class="icon-question-sign popopo" rel="popover" data-content="Having this checked means that you are only interested in solutions that are implemented on the main project's codebase. We recommended leaving it checked. It will enable you to benefit from new improvements that might get implemented in the future." data-original-title="Original vs. copies"></i>
 								<!-- FS Checkbox -->
 								<span>
 									<input ng-model="myoffer.require_release" type="checkbox" id="require_release" name="require_release" value="require_release" class="fs-input">
-									<label id="require_release_label" for="require_release" class="ubahn font-size-14">Require release</label>
+									<label id="require_release_label" for="require_release">Require release</label>
 								</span>
 								<i class="icon-question-sign popopo" rel="popover" data-content="By checking this one you are telling the developer that just commiting the code is not enough. The solution must be available in a released, easily installable version" data-original-title="Commiting is not enough!"></i>
 								<!-- FS Checkbox -->
 								<span>
 									<input ng-model="myoffer.expires" type="checkbox" id="expires" name="expires" value="expires" class="fs-input">
-									<label id="expires_label" for="expires" class="ubahn font-size-14">This offer will expire...</label>
+									<label id="expires_label" for="expires">This offer will expire...</label>
 								</span>
                                 <span ng-show="myoffer.expires">
                                     in
@@ -97,7 +97,7 @@
                             </div>
 							<div class="vgap-15"><!-- Vertical Gap 15px --></div>
                             <div>
-                                <label for="acceptanceCriteria">Acceptance criteria</label>
+                                <label class="bold" for="acceptanceCriteria">Acceptance criteria</label>
                                 <text-with-markdown-preview model="myoffer.acceptanceCriteria" nameid="acceptanceCriteria" placeholder="{[{ actionmodal.commentplaceholder }]}"></text-with-markdown-preview>
                             </div>
 							<div class="vgap-15"><!-- Vertical Gap 15px --></div>

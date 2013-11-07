@@ -38,8 +38,12 @@ footer, header, hgroup, menu, nav, section {
 /*body {
 	line-height: 1;
 }*/
-ol, ul {
+ul {
 	list-style: none;
+}
+ol{
+	list-style-type: decimal;
+	margin-left:34px;
 }
 blockquote, q {
 	quotes: none;
