@@ -35,15 +35,8 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
-/*body {
-	line-height: 1;
-}*/
-ul {
+ul ol{
 	list-style: none;
-}
-ol{
-	list-style-type: decimal;
-	margin-left:34px;
 }
 blockquote, q {
 	quotes: none;

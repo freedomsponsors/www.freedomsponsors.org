@@ -71,6 +71,21 @@ body {
  
 p{
 	line-height:20px;
+	margin-bottom:10px;
+}
+
+ol.decimal{
+	list-style-type: decimal;
+	margin-left:34px;
+}
+
+ul.bullet{
+	list-style-type: circle;
+	margin-left:34px;
+}
+
+li{
+	margin-bottom:10px;
 }
 
 textarea{
