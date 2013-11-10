@@ -43,7 +43,7 @@
                 <span class="modal-title font-size-20 ubahn grey-text">{[{ actionmodal.title }]}</span>
             </div>
             <div class="divider small"></div>
-            <form method="post" action="{[{ actionmodal.formaction }]}">
+            <form method="post" id="action_form" action="{[{ actionmodal.formaction }]}">
                 {% csrf_token %}
                 <input type="hidden" name="issue_id" value="{{issue.id}}">
                 <input type="hidden" name="offer_id" value="{{myoffer.id}}">
@@ -58,14 +58,14 @@
 								<div class="hgap-5"><!-- Horizontal Gap 5px --></div>
                                 <!-- FS Radio -->
 								<span>
-									<input id="currency_usd" class="fs-input" name="currency" type="radio" value="USD" checked="checked">
+									<input id="currency_usd" class="fs-input" name="currency" type="radio" value="USD" ng-model="myoffer.currency">
 									<label for="currency_usd"> US$</label>
 								</span>
                                 {% if BITCOIN_ENABLED %}
 								<div class="hgap-5"><!-- Horizontal Gap 5px --></div>
                                 <!-- FS Radio -->
 								<span>
-									<input id="currency_btc" class="fs-input" name="currency" type="radio" value="BTC">
+									<input id="currency_btc" class="fs-input" name="currency" type="radio" value="BTC" ng-model="myoffer.currency">
 									<label for="currency_btc"> Bitcoin</label>
 								</span>
                                 {% endif %}
@@ -124,7 +124,7 @@
                 </div>
                 <div class="modal-footer">
                     <a href ng-click="close_modal('#action_modal')" class="fs-button grey medium">Cancel</a>
-                    <a href onclick="submit()" class="fs-button green medium">{[{ actionmodal.buttonlabel }]}</a>
+                    <a href ng-click="actionmodal.validate_and_submit()" class="fs-button green medium">{[{ actionmodal.buttonlabel }]}</a>
                 </div>
             </form>
         </div>

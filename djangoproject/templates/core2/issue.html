@@ -63,8 +63,9 @@
             {% else %}
                 $scope.myoffer = {
                     no_forking: true,
-                    require_release: true
-                }
+                    require_release: true,
+                    currency: 'USD'
+                };
             {% endif %}
 
             $scope.editDescription = function(visible){
@@ -87,11 +88,42 @@
                 }
             };
 
+            function validate_submit_sponsor(){
+                var price = parseFloat($scope.myoffer.price);
+                var currency = $scope.myoffer.currency;
+                var acceptance = $scope.myoffer.acceptanceCriteria;
+                var expires = $scope.myoffer.expires;
+                if(isNaN(price)){
+                    alert('please specify an offer value');
+                    return false;
+                }
+                if(currency == 'USD'){
+                    if(price < 5){
+                        alert('The minimum offer is US$ 5.00');
+                        return false;
+                    }
+                }
+                if(!acceptance){
+                    alert('please specify your acceptance criteria for this offer');
+                    return false;
+                }
+                if(expires && !$('#expiration_time').val()){
+                    alert('please specify an expiration time (in days)');
+                    return false;
+                }
+                $('#action_form').submit()
+            }
+
+            function validate_submit_others(){
+                $('#action_form').submit()
+            }
+
             $scope.sponsor = function(){
                 if($scope.myoffer.id){
                     return $scope.change();
                 }
                 $scope.actionmodal.action = 'SPONSOR';
+                $scope.actionmodal.validate_and_submit = validate_submit_sponsor;
                 $scope.actionmodal.title = 'Sponsor issue';
                 $scope.actionmodal.formaction = '/core/issue/sponsor/submit';
                 $scope.actionmodal.buttonlabel = 'Sponsor!';
@@ -101,6 +133,7 @@
 
             $scope.revoke = function(){
                 $scope.actionmodal.action = 'ACTION_AND_COMMENT';
+                $scope.actionmodal.validate_and_submit = validate_submit_others;
                 $scope.actionmodal.show_accept_payments = false;
                 $scope.actionmodal.title = 'Revoke offer';
                 $scope.actionmodal.formaction = '/core/offer/revoke/submit';
@@ -111,6 +144,7 @@
 
             $scope.change = function(){
                 $scope.actionmodal.action = 'SPONSOR';
+                $scope.actionmodal.validate_and_submit = validate_submit_sponsor;
                 $scope.actionmodal.title = 'Change offer';
                 $scope.actionmodal.formaction = '/core/offer/edit/submit';
                 $scope.actionmodal.buttonlabel = 'Change offer';
@@ -120,6 +154,7 @@
 
             $scope.work = function(){
                 $scope.actionmodal.action = 'ACTION_AND_COMMENT';
+                $scope.actionmodal.validate_and_submit = validate_submit_others;
                 $scope.actionmodal.show_accept_payments = true;
                 $scope.actionmodal.title = 'Work on issue';
                 $scope.actionmodal.formaction = '/core/solution/add/submit';
@@ -130,6 +165,7 @@
 
             $scope.resolve = function(){
                 $scope.actionmodal.action = 'ACTION_AND_COMMENT';
+                $scope.actionmodal.validate_and_submit = validate_submit_others;
                 $scope.actionmodal.show_accept_payments = false;
                 $scope.actionmodal.title = 'Resolve issue';
                 $scope.actionmodal.formaction = '/core/solution/resolve/submit';
@@ -140,6 +176,7 @@
 
             $scope.abort = function(){
                 $scope.actionmodal.action = 'ACTION_AND_COMMENT';
+                $scope.actionmodal.validate_and_submit = validate_submit_others;
                 $scope.actionmodal.show_accept_payments = false;
                 $scope.actionmodal.title = 'Abort work';
                 $scope.actionmodal.formaction = '/core/solution/abort/submit';
