@@ -112,6 +112,10 @@ mod.directive('issueCards', function() {
                 return is_sponsoring ? template_sponsored : template_proposed;
             }
 
+            $scope.getViewAllOperation = function(){
+                return is_sponsoring ? 'SPONSOR' : 'KICKSTART';
+            }
+
             $scope.issue_link = function(issue){
                 return FSLinks.issue_link(issue);
             }
