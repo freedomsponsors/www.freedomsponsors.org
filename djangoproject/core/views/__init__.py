@@ -7,7 +7,7 @@ def is_old_layout(request):
 
 
 def template_folder(request):
-    return 'core2'
+    return 'core2/'
     # if is_old_layout(request):
     #     return 'core/'
     # else:
