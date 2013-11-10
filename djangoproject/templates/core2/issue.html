@@ -304,7 +304,7 @@
                                             <div class="user-picture"><img src="{{offer.sponsor.gravatar_url_medium}}"></div>
                                             <div class="hgap-15"><!-- Horizontal Gap 15px --></div>
                                             <!-- Sponsor Name -->
-                                            <div class="column small">
+                                            <div class="column small" style="margin-left: 2em;">
                                                 <a href="{{ offer.sponsor.get_view_link }}" class="arial">{{ offer.sponsor.getUserInfo.screenName }}</a>
                                             </div>
                                         </div>
@@ -316,21 +316,20 @@
                                     <!-- Acceptance -->
                                     <div class="column fit">
                                         {% if offer.no_forking %}
-                                            <p>
+                                            <div>
                                                 {#                            <i class="icon-home popopo" rel="popover" data-content="{% trans "Solution must be available in the main project codebase. Forking is not OK." %}" data-original-title="{% trans "No forking" %}"></i>#}
                                                 No forking
-                                            </p>
+                                            </div>
                                         {% endif %}
                                         {% if offer.require_release %}
-
-                                            <p>
+                                            <div>
                                                 {#                            <i class="icon-gift popopo" rel="popover" data-content="{% trans "Solution must be available as a new released version. Just commiting is not enough." %}" data-original-title="{% trans "Release required" %}"></i>#}
                                                 Release required
-                                            </p>
+                                            </div>
                                         {% endif %}
-                                        <p>
-                                            <a href ng-click="acceptance_popup({{ offer.id }})">[More..]</a>
-                                        </p>
+                                        <div>
+                                            <a href ng-click="acceptance_popup({{ offer.id }})">[More...]</a>
+                                        </div>
                                     </div>
                                     <!-- Status -->
                                     <div class="column fit text-align-center">
@@ -404,7 +403,7 @@
                                             <div class="user-picture"><img src="{{ solution.programmer.gravatar_url_medium }}"></div>
                                             <div class="hgap-15"><!-- Horizontal Gap 15px --></div>
                                             <!-- Sponsor Name -->
-                                            <div class="column small">
+                                            <div class="column small" style="margin-left: 2em;">
                                                 <a href="{{ solution.programmer.get_view_link }}" class="arial">{{ solution.programmer.getUserInfo.screenName }}</a>
                                             </div>
                                         </div>
