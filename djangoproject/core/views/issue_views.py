@@ -357,7 +357,7 @@ def payOfferForm(request, offer_id):
     solutions_accepting_payments = offer.issue.getSolutionsAcceptingPayments()
     if not solutions_accepting_payments:
         messages.error(request, 'No developers are accepting payments for this issue yet')
-        return redirect(offer.get_view_link())
+        return redirect(offer.issue.get_view_link())
 
     solutions_dict = []
     for solution in solutions_accepting_payments:
@@ -368,7 +368,7 @@ def payOfferForm(request, offer_id):
             traceback.print_exc()
             messages.error(request, 'Error communicating with Paypal: %s' % e)
             mail_services.notify_admin('Error determining if user accepts paypal', traceback.format_exc())
-            return redirect(offer.get_view_link())
+            return redirect(offer.issue.get_view_link())
         solutions_dict.append({
             'id': solution.id,
             'status': solution.status,

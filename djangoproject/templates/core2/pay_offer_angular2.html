@@ -30,7 +30,6 @@
     <h2>Pay US$ {{offer.price}} for issue - {{offer.issue.title}} </h2>
 
     <a href="{{offer.issue.get_view_link}}">View issue</a>
-    | <a href="{{offer.get_view_link}}">View offer</a>
     {% if issue.trackerURL %}
         | <a href="{{offer.issue.trackerURL}}" target="_issue">View original</a>
     {% endif %}

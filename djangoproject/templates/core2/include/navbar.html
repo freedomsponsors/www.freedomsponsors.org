@@ -43,10 +43,13 @@
                 <a href="/core/issue" class="menu-option">Search</a>
                 <a href="/core/stats" class="menu-option">Stats</a>
                 <a href="/core/user" class="menu-option">Users</a>
+                <a href="/faq" class="menu-option">FAQ</a>
                 <a href="/core/feedback" class="menu-option">Feedback</a>
             </div>
             <div>
-                <input type="text" placeholder="Quick search" class="fs-input medium black search right"/>
+                <form method="get" action="/core/issue">
+                    <input name="s" type="text" placeholder="Quick search" class="fs-input medium black search right"/>
+                </form>
             </div>
         </div>
     </div>

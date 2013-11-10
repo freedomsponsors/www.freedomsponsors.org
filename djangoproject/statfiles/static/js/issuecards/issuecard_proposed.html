@@ -20,7 +20,8 @@
 	
     <!--Issue Description-->
     <div multiline-ellipsis class="issue-description">
-        <p class="ellipsis">{[{ issue.description }]}</p>
+        <p class="ellipsis" ng-show="issue.description">{[{ issue.description }]}</p>
+        <p ng-hide="issue.description">[No description]</p>
     </div>
 
     <div class="vgap-15"><!-- Vertical Gap 15px --></div>
@@ -32,7 +33,7 @@
     <div class="fs-box-footer card-footer">
 		<div class="column-wrapper">
 			<span class="views">
-				<span class="views-number">{[{ issue.viewcount }]}</span><span> views</span>
+				<!-- <span class="views-number">{[{ issue.viewcount }]}</span><span> views</span> -->
 			</span>
 			<span class="comments">
 				<a href="{[{ issue_link(issue) }]}">

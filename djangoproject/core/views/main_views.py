@@ -11,7 +11,7 @@ from core.services import stats_services
 from django.contrib import messages
 import logging
 from core.services import testmail_service
-from core.views import is_new_layout, template_folder, HOME_CRUMB
+from core.views import is_old_layout, template_folder, HOME_CRUMB
 
 logger = logging.getLogger(__name__)
 
@@ -77,12 +77,12 @@ def mailtest(request):
 def home(request):
     if request.user.is_authenticated() and request.user.getUserInfo() is None:
         return redirect('/core/user/edit')
-    _is_new_layout = is_new_layout(request)
-    size = 3 if _is_new_layout else 20
+    _is_old_layout = is_old_layout(request)
+    size = 20 if _is_old_layout else 3
     issues_sponsoring = issue_services.search_issues(is_public_suggestion=False)[0:size]
     issues_kickstarting = issue_services.search_issues(is_public_suggestion=True)[0:size]
     crumbs = [HOME_CRUMB]
-    if _is_new_layout:
+    if not _is_old_layout:
         issues_sponsoring = json.dumps(issue_services.to_card_dict(issues_sponsoring))
         issues_kickstarting = json.dumps(issue_services.to_card_dict(issues_kickstarting))
     return render_to_response(template_folder(request) + 'home.html',
@@ -100,8 +100,8 @@ def stats(request):
 
 
 def toggle_layout(request):
-    if 'new_layout' in request.session:
-        del request.session['new_layout']
+    if 'old_layout' in request.session:
+        del request.session['old_layout']
     else:
-        request.session['new_layout'] = True
+        request.session['old_layout'] = True
     return redirect('/')

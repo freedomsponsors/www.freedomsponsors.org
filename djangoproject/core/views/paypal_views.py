@@ -27,7 +27,7 @@ def payOffer(request, offer, payment):
         traceback.print_exc()
         messages.error(request, 'Error communicating with Paypal: %s' % e)
         mail_services.notify_admin('Error generating paypal payment', traceback.format_exc())
-        return redirect(offer.get_view_link())
+        return redirect(offer.issue.get_view_link())
     payment.save()
 
     request.session['current_payment_id'] = payment.id

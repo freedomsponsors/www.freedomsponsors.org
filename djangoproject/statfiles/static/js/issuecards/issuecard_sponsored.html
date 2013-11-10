@@ -31,7 +31,8 @@
 
     <!--Issue Description-->
     <div multiline-ellipsis class="issue-description">
-        <p class="ellipsis">{[{ issue.description }]}</p>
+        <p class="ellipsis" ng-show="issue.description">{[{ issue.description }]}</p>
+        <p ng-hide="issue.description">[No description]</p>
     </div>
 
 
@@ -51,7 +52,7 @@
     <div class="fs-box-footer card-footer">
         <div class="column-wrapper">
             <div class="column fit">
-                <span class="views-number">{[{ issue.viewcount }]}</span><span> views</span>
+                <!-- <span class="views-number">{[{ issue.viewcount }]}</span><span> views</span> -->
             </div>
             <div class="column fit" align="right">
                 <a href="{[{ issue_link(issue) }]}">

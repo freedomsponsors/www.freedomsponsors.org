@@ -156,7 +156,7 @@ def revoke_existing_offer(offer_id, comment_content, user):
     offer.revoke()
     comment = None
     if(comment_content):
-        comment = OfferComment.newComment(offer, user, comment_content)
+        comment = IssueComment.newComment(offer.issue, user, comment_content)
         comment.save()
     watches = watch_services.find_issue_and_offer_watches(offer)
     notifyWatchers_offerrevoked(offer, comment, watches)

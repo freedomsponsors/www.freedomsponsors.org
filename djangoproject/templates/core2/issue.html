@@ -88,6 +88,9 @@
             };
 
             $scope.sponsor = function(){
+                if($scope.myoffer.id){
+                    return $scope.change();
+                }
                 $scope.actionmodal.action = 'SPONSOR';
                 $scope.actionmodal.title = 'Sponsor issue';
                 $scope.actionmodal.formaction = '/core/issue/sponsor/submit';
@@ -98,6 +101,7 @@
 
             $scope.revoke = function(){
                 $scope.actionmodal.action = 'ACTION_AND_COMMENT';
+                $scope.actionmodal.show_accept_payments = false;
                 $scope.actionmodal.title = 'Revoke offer';
                 $scope.actionmodal.formaction = '/core/offer/revoke/submit';
                 $scope.actionmodal.buttonlabel = 'Revoke offer';
@@ -116,6 +120,7 @@
 
             $scope.work = function(){
                 $scope.actionmodal.action = 'ACTION_AND_COMMENT';
+                $scope.actionmodal.show_accept_payments = true;
                 $scope.actionmodal.title = 'Work on issue';
                 $scope.actionmodal.formaction = '/core/solution/add/submit';
                 $scope.actionmodal.buttonlabel = 'Start work';
@@ -125,6 +130,7 @@
 
             $scope.resolve = function(){
                 $scope.actionmodal.action = 'ACTION_AND_COMMENT';
+                $scope.actionmodal.show_accept_payments = false;
                 $scope.actionmodal.title = 'Resolve issue';
                 $scope.actionmodal.formaction = '/core/solution/resolve/submit';
                 $scope.actionmodal.buttonlabel = 'Resolve issue';
@@ -134,6 +140,7 @@
 
             $scope.abort = function(){
                 $scope.actionmodal.action = 'ACTION_AND_COMMENT';
+                $scope.actionmodal.show_accept_payments = false;
                 $scope.actionmodal.title = 'Abort work';
                 $scope.actionmodal.formaction = '/core/solution/abort/submit';
                 $scope.actionmodal.buttonlabel = 'Abort work';

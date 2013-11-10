@@ -44,7 +44,7 @@ def payOffer(request, offer, payment):
             context_instance=RequestContext(request))
     except BitcoinFrespoException as e:
         messages.error(request, e.value)
-        return redirect(offer.get_view_link())
+        return redirect(offer.issue.get_view_link())
 
 
 

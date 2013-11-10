@@ -113,6 +113,12 @@
                                 <label for="comment">Leave a comment</label>
                                 <text-with-markdown-preview model="actioncomment" nameid="comment" placeholder="{[{ actionmodal.commentplaceholder }]}"></text-with-markdown-preview>
                             </div>
+                            <div class="inline-content">
+								<span ng-show="actionmodal.show_accept_payments">
+									<input id="accept_payments" class="fs-input" name="accept_payments" type="checkbox">
+									<label for="accept_payments"> Start accepting payments for this issue</label>
+								</span>
+                            </div>
                         </div>
                     </div>
                 </div>

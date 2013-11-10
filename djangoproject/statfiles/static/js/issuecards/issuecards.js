@@ -45,6 +45,14 @@ mod.directive('issueCards', function() {
                     $scope.count = result.count;
                     $scope.issues = result.issues;
                     $scope.is_loading = false;
+
+                    if(is_sponsoring){
+                        for(var i=0; i < $scope.issues.length; i++){
+                            var issue = $scope.issues[i];
+                            issue.four_sponsors_places = get4Sponsors(issue);
+                        }
+                    }
+
                     $rootScope.$digest();
                 });
             }

@@ -1,26 +1,37 @@
 {% if messages %}
-  <div class="modal hide fade in" id="alert_modal_messages">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal">×</button>
-      <h3 id="offerDataFormModal_title">Attention</h3>
+<div class="modal fade in" id="messages_modal">
+    <div class="modal-dialog column-wrapper vertical">
+        <div class="column fit"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" onclick="$('#messages_modal').modal('hide')">&times;</button>
+                <span class="modal-title font-size-20 ubahn grey-text">Attention.</span>
+            </div>
+            <div class="divider small"></div>
+            <div class="modal-body">
+                {% for message in messages %}
+                <div class="alert {% if message.tags %} alert-{{ message.tags }} {% endif %} ">
+                    <p>{{ message|linebreaks }}</p>
+                    <div class="vgap-15"><!-- Vertical Gap 15px --></div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="modal-footer inline-content">
+                <div class="column-wrapper vcenter-content" style="height:28px;">
+                    <div class="hgap-15 inline"><!-- Horizontal Gap 15px --></div>
+                    <div><a href="#" onclick="$('#messages_modal').modal('hide')" class="fs-button green medium">OK</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="column fit"></div>
     </div>
-    <div class="modal-body">
-      {% for message in messages %}
-      <div class="alert {% if message.tags %} alert-{{ message.tags }} {% endif %} ">
-          <p>{{ message|linebreaks }}</p>
-      </div>
-      {% endfor %}
-    </div>
-    <div class="modal-footer">
-      <a href="#" class="btn btn-primary" data-dismiss="modal">OK</a>
-    </div>
-  </div>
+</div>
 
-  <script>
+<script>
     $(function(){
-      $('#alert_modal_messages').modal()
+        $('#messages_modal').modal()
     });
-  </script>
+</script>
 {% endif %}
 
 
