@@ -2,14 +2,16 @@ __author__ = 'tony'
 
 
 def is_old_layout(request):
-    return 'old_layout' in request.session
+    return False
+    # return 'old_layout' in request.session
 
 
 def template_folder(request):
-    if is_old_layout(request):
-        return 'core/'
-    else:
-        return 'core2/'
+    return 'core2'
+    # if is_old_layout(request):
+    #     return 'core/'
+    # else:
+    #     return 'core2/'
 
 HOME_CRUMB = {
     'link': '/',
