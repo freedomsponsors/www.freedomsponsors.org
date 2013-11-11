@@ -4,9 +4,8 @@ from django.views.generic.simple import direct_to_template
 __author__ = 'tony'
 
 urlpatterns = patterns('sandbox.views',
-    url(r'^$', direct_to_template, {'template': 'sandbox/home.html'}),
+    url(r'^$', 'home'),
     url(r'^faq$', direct_to_template, {'template': 'core2/faq.html'}),
-    url(r'^issue_page_old$', direct_to_template, {'template': 'sandbox/issue_page.html'}),
     url(r'^issue_page$', 'issue'),
     url(r'^user_page$', direct_to_template, {'template': 'sandbox/user.html'}),
 	url(r'^search_page$', direct_to_template, {'template': 'sandbox/search.html'}), 
