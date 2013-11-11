@@ -283,6 +283,7 @@ def editIssue(request):
     return redirect(issue.get_view_link())
 
 
+# Deprecated. This method will be deleted eventually
 def viewOffer(request, offer_id):
     offer = Offer.objects.get(pk=offer_id)
     payment = None
