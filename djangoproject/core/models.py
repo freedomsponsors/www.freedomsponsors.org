@@ -269,7 +269,7 @@ class Project(models.Model):
             if 'github' in self.trackerURL:
                 return '/static/img2/github_logo.jpg'
             else:
-                return '/static/img2/default_project_logo.jpg'
+                return '/static/img2/default_project_logo.png'
         return '%s/%s' % (settings.MEDIA_ROOT_URL, self.image3x1)
 
     def __unicode__(self):
