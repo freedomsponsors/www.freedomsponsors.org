@@ -34,8 +34,13 @@ def send_mail_to_all_users(subject, body, from_email=settings.DEFAULT_FROM_EMAIL
     count = 0
     for user in User.objects.all():
         if(user.getUserInfo() and user.getUserInfo().receiveEmail_announcements):
-            plain_send_mail(user.email, subject, body, from_email)
-            count += 1
+            try:
+                plain_send_mail(user.email, subject, body, from_email)
+                count += 1
+            except BaseException, e:
+                logger.error('cannot send mail to user %s' % user.id)
+                logger.exception(e)
+
     return count
 
 
