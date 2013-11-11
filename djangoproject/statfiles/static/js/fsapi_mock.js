@@ -45,7 +45,7 @@ var usernames = [
     'DominikKupschke',
 ]
 var project_images = [
-    '/static/img2/default_project_logo.jpg',
+    '/static/img2/default_project_logo.png',
     '/static/img2/github_logo.jpg',
     '/static/img2/project_logos/freedomsponsors_logo.png'
 ]
