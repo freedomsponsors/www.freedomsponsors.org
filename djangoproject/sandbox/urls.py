@@ -6,7 +6,7 @@ __author__ = 'tony'
 urlpatterns = patterns('sandbox.views',
     url(r'^$', 'home'),
     url(r'^faq$', direct_to_template, {'template': 'core2/faq.html'}),
-    url(r'^issue_page$', 'issue'),
+    url(r'^issue$', 'issue'),
     url(r'^user_page$', direct_to_template, {'template': 'sandbox/user.html'}),
 	url(r'^search_page$', direct_to_template, {'template': 'sandbox/search.html'}), 
     url(r'^adropdown', direct_to_template, {'template': 'sandbox/adropdown.html'}),

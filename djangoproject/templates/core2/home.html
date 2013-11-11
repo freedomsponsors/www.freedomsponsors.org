@@ -5,7 +5,11 @@
     <script src="/static/js/angular.min.js"></script>
     <script src="/static/js/issuecards/issuecards.js"></script>
     <script src="/static/js/angularutils/angularutils.js"></script>
-    <script src="/static/js/fsapi.js"></script>
+    {% if sandbox %}
+        <script src="/static/js/fsapi_mock.js"></script>
+    {% else %}
+        <script src="/static/js/fsapi.js"></script>
+    {% endif %}
     <script src="/static/js/fslinks.js"></script>
     <script src="/static/js/fsutil.js"></script>
     <script type="text/javascript">
