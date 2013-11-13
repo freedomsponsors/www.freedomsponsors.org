@@ -28,7 +28,7 @@ mod.directive('issueCards', function() {
         replace: true,
         scope:{
             issues: "=",
-            title: "@",
+            label: "@",
             sponsoring: '@'
         },
         templateUrl: '/static/js/issuecards/issuecards.html',
@@ -104,21 +104,68 @@ mod.directive('issueCards', function() {
                 } else {
                     return 'ERROR';
                 }
-            }
+            };
 
             $scope.getInclude = function(){
                 var template_sponsored = '/static/js/issuecards/issuecard_sponsored.html';
                 var template_proposed = '/static/js/issuecards/issuecard_proposed.html';
                 return is_sponsoring ? template_sponsored : template_proposed;
-            }
+            };
 
             $scope.getViewAllOperation = function(){
                 return is_sponsoring ? 'SPONSOR' : 'KICKSTART';
-            }
+            };
 
             $scope.issue_link = function(issue){
                 return FSLinks.issue_link(issue);
+            };
+
+            function _mixedValue(usd, btc){
+                usd = parseFloat(usd);
+                btc = parseFloat(btc);
+                if(btc == 0){
+                    return "US$ " + usd.toFixed(2);
+                } else if(usd == 0){
+                    return "BTC " + btc + " *";
+                }
+                var btcusd = BTC2USD * btc;
+                var usdbtc = usd / BTC2USD;
+                if(usd > btcusd){
+                    return "US$ "+(usd + btcusd).toFixed(2)+" *";
+                } else {
+                    return "BTC "+(btc + usdbtc).toFixed(3)+" *";
+                }
             }
+
+            function _mixedTitle(usd, btc){
+                usd = parseFloat(usd);
+                btc = parseFloat(btc);
+                if(usd > 0 && btc == 0){
+                    return ""
+                } else if(btc > 0 && usd == 0) {
+                    return "(1BTC = US$" + BTC2USD.toFixed(2) + ")"
+                } else {
+                    return "BTC " + btc + " + " + "US$ " + usd + "(1BTC = US$" + BTC2USD.toFixed(2) + ")"
+                }
+            }
+
+
+            $scope.getPaidValue = function(issue){
+                return _mixedValue(issue.totalPaidPriceUSD, issue.totalPaidPriceBTC);
+            };
+
+            $scope.getOfferedValue = function(issue){
+                return _mixedValue(issue.totalOffersPriceUSD, issue.totalOffersPriceBTC);
+            };
+
+            $scope.getTitlePaid = function(issue){
+                return _mixedTitle(issue.totalPaidPriceUSD, issue.totalPaidPriceBTC);
+            };
+
+            $scope.getTitleOffered = function(issue){
+                return _mixedTitle(issue.totalOffersPriceUSD, issue.totalOffersPriceBTC);
+
+            };
 
         }
     };

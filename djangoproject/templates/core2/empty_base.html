@@ -19,6 +19,7 @@ Copyright (C) 2013  FreedomSponsors
     https://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/AGPL_license.txt
 -->
 {% load i18n %}
+{% load l10n %}
 {% get_current_language as LANGUAGE_CODE %}
 <html lang="{{ LANGUAGE_CODE }}">
     <head>
@@ -70,6 +71,15 @@ Copyright (C) 2013  FreedomSponsors
                     return this.indexOf(str) == 0;
                 };
             }
+        </script>
+        <script>
+            {% localize off %}
+                {% if BTC2USD %}
+                    var BTC2USD = {{ BTC2USD }};
+                {% else %}
+                    var BTC2USD = 100;
+                {% endif %}
+            {% endlocalize %}
         </script>
 
         {% block head %}

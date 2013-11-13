@@ -10,10 +10,10 @@
     <!--Issue Values-->
     <div class="column-wrapper">
         <div class="column fit font-size-12">
-            <span>$</span><span class="paid-value">{[{ issue.totalPaidPriceUSD }]}</span><span> Paid</span>
+            <span class="paid-value" title="{[{getTitlePaid(issue)}]}">{[{ getPaidValue(issue) }]}</span><span> Paid</span>
         </div>
         <div class="column fit font-size-12 orange-text" align="right">
-            <span>$</span><span class="offered-value">{[{ issue.totalOffersPriceUSD }]}</span><span> Offered</span>
+            <span class="offered-value" title="{[{getTitleOffered(issue)}]}">{[{ getOfferedValue(issue) }]}</span><span> Offered</span>
         </div>
     </div>
 
