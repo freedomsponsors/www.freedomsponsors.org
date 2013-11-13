@@ -29,7 +29,7 @@
 
 {% block mainContent%}
 
-<div class="row">
+<div class="row issue-{{issue.project.name|slugify}}">
   <div class="span9" id="issue-header">
     <h3 class="issue-header"> [ Issue ] 
       {% if issue.key %}
@@ -41,10 +41,10 @@
     <div id="issue-info">
       {% trans "Created by" %}: <a href="{{issue.createdByUser.get_view_link}}"><img src="{{issue.createdByUser.gravatar_url_small}}"> {{issue.createdByUser.getUserInfo.screenName}}</a>
       {% if issue.project %}
-       | {% trans "Project" %}: <a target="_project" href="{{issue.project.homeURL}}">{{issue.project.name}}</a>
+       | {% trans "Project" %}: <a target="_project" href="{{issue.project.homeURL}}" class="fav fav-{{issue.project.name|slugify}}" title="Go to project home page">{{issue.project.name}}</a>
       {% endif %}
       {% if issue.trackerURL %}
-       | <a href="{{issue.trackerURL}}" target="_issue"><i class="icon-share-alt"></i> <strong>{% trans "Open original issue" %}</strong></a>
+       | <a href="{{issue.trackerURL}}" target="_issue" title="Go to the original issue or bug report"><i class="icon-share-alt"></i> <strong>{% trans "Open original issue" %}</strong></a>
       {% endif %}
     </div>
     <hr style="margin-top:2px; margin-bottom:2px;">
