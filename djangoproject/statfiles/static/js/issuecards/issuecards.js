@@ -126,14 +126,14 @@ mod.directive('issueCards', function() {
                 if(btc == 0){
                     return "US$ " + usd.toFixed(2);
                 } else if(usd == 0){
-                    return "BTC " + btc + " *";
+                    return "BTC " + btc + "*";
                 }
                 var btcusd = BTC2USD * btc;
                 var usdbtc = usd / BTC2USD;
                 if(usd > btcusd){
-                    return "US$ "+(usd + btcusd).toFixed(2)+" *";
+                    return "US$ "+(usd + btcusd).toFixed(2)+"*";
                 } else {
-                    return "BTC "+(btc + usdbtc).toFixed(3)+" *";
+                    return "BTC "+(btc + usdbtc).toFixed(3)+"*";
                 }
             }
 
