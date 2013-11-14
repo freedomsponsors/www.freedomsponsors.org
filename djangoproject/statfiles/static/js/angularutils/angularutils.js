@@ -84,6 +84,9 @@ mod.directive('multilineEllipsis', function () {
             setTimeout(function(){
                 while ($container.outerHeight() > divh) {
                     $container.text(function (index, text) {
+                        if(text.length > 400){
+                            text = text.substring(0, 400);
+                        }
                         var result = text.replace(/\W*\s(\S)*$/, '...');
                         if (result == text){
                             result = text.substring(0, text.length - 4)+'...';
