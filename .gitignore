@@ -28,3 +28,6 @@ include/python2.6
 .noseids
 nosetests.1
 djangoproject/core/static/media
+ENV
+Include
+Scripts

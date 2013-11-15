@@ -341,7 +341,7 @@
                                             <div class="user-picture"><img src="{{offer.sponsor.gravatar_url_medium}}"></div>
                                             <div class="hgap-15"><!-- Horizontal Gap 15px --></div>
                                             <!-- Sponsor Name -->
-                                            <div class="column small" style="margin-left: 2em;">
+                                            <div class="column fit">
                                                 <a href="{{ offer.sponsor.get_view_link }}" class="arial">{{ offer.sponsor.getUserInfo.screenName }}</a>
                                             </div>
                                         </div>
@@ -440,7 +440,7 @@
                                             <div class="user-picture"><img src="{{ solution.programmer.gravatar_url_medium }}"></div>
                                             <div class="hgap-15"><!-- Horizontal Gap 15px --></div>
                                             <!-- Sponsor Name -->
-                                            <div class="column small" style="margin-left: 2em;">
+                                            <div class="column fit">
                                                 <a href="{{ solution.programmer.get_view_link }}" class="arial">{{ solution.programmer.getUserInfo.screenName }}</a>
                                             </div>
                                         </div>
@@ -484,7 +484,7 @@
                 <div class="project-logo">
                     <img src="{{ issue.get_card_image }}"/>
                 </div>
-                <div class="divider small"><!-- Small Divider --></div>
+                <div class="vgap-15"><!-- Vertical Gap 15px --></div>
                 <!--Issue Values-->
                 <div class="issue-values">
                     {% if issue.getTotalOffersPriceUSD or issue.getTotalOffersPriceBTC %}
