@@ -2,6 +2,9 @@ from frespo_currencies.models import Rates
 from datetime import timedelta
 from django.utils import timezone
 import requests
+import logging
+
+logger = logging.getLogger(__name__)
 
 __author__ = 'tony'
 
@@ -36,7 +39,10 @@ def _get_rates():
     if q.count() > 0:
         rates = Rates.objects.all()[0]
         if timezone.now() - rates.last_update > timedelta(minutes=3):
-            _populate_rates(rates)
+            try:
+                _populate_rates(rates)
+            except BaseException, e:
+                logger.error('error fetching currency rates: %s' % e)
     else:
         rates = Rates()
         _populate_rates(rates)
