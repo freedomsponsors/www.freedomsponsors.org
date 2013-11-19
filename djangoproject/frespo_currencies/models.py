@@ -10,7 +10,9 @@ class Rates(models.Model):
     blockchain_data = models.TextField(null=False)
 
     def usd2brl(self):
-        return float(self.google_data.split('rhs:')[1].split(',')[0].split('"')[1].split(' ')[0])
+        return 2.268
+        # float(self.google_data.split('rhs:')[1].split(',')[0].split('"')[1].split(' ')[0])
+        # PORRA GOOGLE!
 
     def btc2(self, to):
         dict = json.loads(self.blockchain_data)

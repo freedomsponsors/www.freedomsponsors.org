@@ -28,7 +28,7 @@ def get_rate(fron, to):
 
 
 def _populate_rates(rates):
-    rates.google_data = _get_google_data()
+    # rates.google_data = _get_google_data()
     rates.blockchain_data = _get_blockchain_data()
     rates.last_update = timezone.now()
     rates.save()
