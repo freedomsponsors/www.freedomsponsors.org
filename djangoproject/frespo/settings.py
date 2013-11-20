@@ -338,6 +338,8 @@ LOGGING = {
 PAGINATION_DEFAULT_PAGINATION = 20
 PAGINATION_DEFAULT_WINDOW = 3
 
+OPENEXCHANGERATES_API_KEY = '01ac624c42df447aa14a80f5844ee1d3'
+
 os.environ.setdefault('TEST_WITH_NOSE', 'true')
 
 # pycharm is not able to run tests with nose runner

@@ -8,5 +8,5 @@ def addAFewFrespoSettings(request):
         'FS_FEE': settings.FS_FEE,
         'BITCOIN_ENABLED': settings.BITCOIN_ENABLED,
         'ENABLE_PIWIK': settings.ENABLE_PIWIK,
-        'BTC2USD': currency_service.get_rate('BTC', 'USD')
+        'BTC2USD': currency_service.get_rate('BTC', 'USD', False)
     }

@@ -1,6 +1,7 @@
 from frespo_currencies.models import Rates
 from datetime import timedelta
 from django.utils import timezone
+from django.conf import settings
 import requests
 import logging
 
@@ -8,63 +9,73 @@ logger = logging.getLogger(__name__)
 
 __author__ = 'tony'
 
-def get_rate(fron, to):
+
+def get_rate(fron, to, for_payment=True):
     if fron == to:
         return 1
     rates = _get_rates()
     if fron == 'USD':
         if to == 'BRL':
-            return rates.usd2brl() * 1.045
+            r = rates.usd2brl()
+            if for_payment:
+                r *= 1.045
+            return r
         elif to == 'BTC':
-            return rates._2btc('USD') * 1.02
+            r = rates._2btc('USD')
+            if for_payment:
+                r *= 1.02
+            return r
         else:
             raise BaseException('Cannot convert %s -> %s' % (fron, to))
     elif fron == 'BTC' and to == 'BRL':
-        return rates.btc2('BRL') * 1.02
+        btc2usd = rates.btc2('USD')
+        usd2brl = rates.usd2brl()
+        r = btc2usd * usd2brl
+        if for_payment:
+            r *= 1.02
+        return r
     elif fron == 'BTC' and to == 'USD':
-        return rates.btc2('USD') * 1.02
+        r = rates.btc2('USD')
+        if for_payment:
+            r *= 1.02
+        return r
     else:
         raise BaseException('Cannot convert %s -> %s' % (fron, to))
-
-
-def _populate_rates(rates):
-    # rates.google_data = _get_google_data()
-    rates.blockchain_data = _get_blockchain_data()
-    rates.last_update = timezone.now()
-    rates.save()
 
 
 def _get_rates():
     q = Rates.objects.all()
     if q.count() > 0:
         rates = Rates.objects.all()[0]
-        if timezone.now() - rates.last_update > timedelta(minutes=3):
-            try:
-                _populate_rates(rates)
-            except BaseException, e:
-                logger.error('error fetching currency rates: %s' % e)
+        if timezone.now() - rates.last_update_blockchain > timedelta(minutes=3):
+            _get_blockchain_data(rates)
+        if timezone.now() - rates.last_update_oer > timedelta(minutes=240):
+            _get_oer_data(rates)
     else:
-        rates = Rates()
-        _populate_rates(rates)
+        rates = Rates.create_empty()
+        _get_blockchain_data(rates)
+        _get_oer_data(rates)
     return rates
 
 
-def _get_google_data():
-    url = 'http://www.google.com/ig/calculator?hl=en&q=1USD%3D%3FBRL'
-    response = requests.get(url)
-    return response.content
-
-
-def _get_blockchain_data():
+def _get_blockchain_data(rates):
     response = requests.get('http://blockchain.info/pt/ticker')
-    return response.content
+    content = response.content
+    if Rates.is_valid_blockchain_data(content):
+        rates.blockchain_data = content
+        rates.last_update_blockchain = timezone.now()
+        rates.save()
+    else:
+        logger.error('got invalid Blockchain data: %s' % content)
 
-    # def get_btc_to_usd_rate():
-    #     response = requests.get('http://blockchain.info/pt/ticker')
-    #     dict = json.loads(response.content)
-    #     return dict['USD']['sell']
-    #
-    # def get_btc_to_brl_rate():
-    #     response = requests.get('http://blockchain.info/pt/ticker')
-    #     dict = json.loads(response.content)
-    #     return dict['BRL']['sell']
+
+def _get_oer_data(rates):
+    response = requests.get('http://openexchangerates.org/api/latest.json?app_id=%s' % settings.OPENEXCHANGERATES_API_KEY)
+    content = response.content
+    if Rates.is_valid_oer_data(content):
+        rates.oer_data = content
+        rates.last_update_oer = timezone.now()
+        rates.save()
+    else:
+        logger.error('got invalid OpenExchangeRate data: %s' % content)
+
