@@ -22,3 +22,4 @@ git+git://github.com/freedomsponsors/python-paypalx.git@34d624ed8a7b6505aa6e6e12
 django-registration==0.8
 django-emailmgr==0.9
 PIL==1.1.7
+mock==1.0.1

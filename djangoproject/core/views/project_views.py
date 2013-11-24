@@ -26,7 +26,7 @@ def edit(request):
     if 'image3x1' in request.FILES and request.FILES['image3x1']:
         project.image3x1 = request.FILES['image3x1']
         project.save()
-    return redirect('/core/project/%s' % project.id)
+    return redirect('core.views.project_views.view', project_id=project.id)
 
 
 def list(request):
