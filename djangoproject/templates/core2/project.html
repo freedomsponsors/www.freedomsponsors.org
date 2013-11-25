@@ -5,5 +5,5 @@
 {% block mainContent%}
     <h2> project: {{ project.name }}</h2>
     <img src="{{ project.get_image3x1 }}">
-    <a href="/core/project/{{ project.id }}/edit">Edit</a>
+    <a href="{% url core.views.project_views.edit_form project_id=project.id %}">Edit</a>
 {% endblock mainContent%}

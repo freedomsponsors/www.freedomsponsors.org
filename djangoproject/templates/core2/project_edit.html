@@ -5,7 +5,7 @@
 {% block mainContent%}
     <h2> Editing project: {{ project.name }}</h2>
     <hr>
-    <form method="POST" action="/core/project/submit" enctype="multipart/form-data">
+    <form method="POST" action="{% url core.views.project_views.edit %}" enctype="multipart/form-data">
         {% csrf_token %}
         <input type="hidden" name="id" value="{{ project.id }}">
         <div>

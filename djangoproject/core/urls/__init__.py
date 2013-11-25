@@ -41,11 +41,10 @@ urlpatterns += patterns('core.views.issue_views',
     url(r'^solution/resolve/submit$', 'resolveSolution'),
 )
 
-urlpatterns += patterns('core.views.project_views',
-    url(r'^project/$', 'list'),
-    url(r'^project/(?P<project_id>\d+)/$', 'view'),
-    url(r'^project/(?P<project_id>\d+)/edit$', 'edit_form'),
-    url(r'^project/submit$', 'edit'),
+urlpatterns += patterns('',
+    url(r'^project/$', RedirectView.as_view(url='/project/', permanent=True)),
+    url(r'^project/(?P<project_id>\d+)/$', RedirectView.as_view(url='/project/%(project_id)s/', permanent=True)),
+    url(r'^project/(?P<project_id>\d+)/edit$', RedirectView.as_view(url='/project/%(project_id)s/edit', permanent=True)),
 )
 
 urlpatterns += patterns('core.views.comment_views',
