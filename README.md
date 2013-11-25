@@ -69,4 +69,3 @@ If you want to help out, check out our Waffle board below to see what's going on
 ## Licensing
 
 This software is licensed under the [AFFERO GENERAL PUBLIC LICENSE](http://www.gnu.org/licenses/agpl-3.0.html)
-.
