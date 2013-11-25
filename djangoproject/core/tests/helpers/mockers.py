@@ -4,7 +4,7 @@ __author__ = 'tony'
 
 
 def mock_currency_service():
-    def mocked_get_rate(fron, to):
+    def mocked_get_rate(fron, to, default=None):
         if fron == to:
             return 1.0
         ft = fron + to
@@ -14,6 +14,6 @@ def mock_currency_service():
             'BTCUSD': 100.0,
             'BTCBRL': 200.0
         }
-        return map[ft]
+        return map.get(ft, default)
 
     currency_service.get_rate = mocked_get_rate
