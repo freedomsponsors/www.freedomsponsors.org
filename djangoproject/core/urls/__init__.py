@@ -92,8 +92,6 @@ urlpatterns += patterns('core.views.json_views',
 #   url(r'^issue/sponsor_jira$', 'sponsorJiraForm'),
 # )
 
-urlpatterns += patterns('core.views.feedback_views',
-    url(r'^feedback$', 'feedback'),
-    url(r'^feedback/submit$', 'addFeedback'),
+urlpatterns += patterns('',
+    url(r'^feedback$', RedirectView.as_view(url='/feedback', permanent=True)),
 )
-

@@ -44,7 +44,7 @@
                 <a href="/core/stats" class="menu-option">Stats</a>
                 <a href="/core/user" class="menu-option">Users</a>
                 <a href="/faq" class="menu-option">FAQ</a>
-                <a href="/core/feedback" class="menu-option">Feedback</a>
+                <a href="{% url core.views.feedback_views.feedback %}" class="menu-option">Feedback</a>
             </div>
             <div>
                 <form method="get" action="/core/issue">

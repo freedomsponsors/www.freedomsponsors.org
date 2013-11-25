@@ -18,7 +18,7 @@
     </div>
     <div id="collapseTwo" class="accordion-body collapse">
       <div class="accordion-inner">
-        <form method="post" class="form-horizontal" action="/core/feedback/submit">
+        <form method="post" class="form-horizontal" action="{% url core.views.feedback_views.addFeedback %}">
         {% csrf_token %}
           <fieldset>
               <div class="control-group">
