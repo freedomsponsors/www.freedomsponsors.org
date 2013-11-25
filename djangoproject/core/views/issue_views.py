@@ -181,7 +181,7 @@ class LatestIssuesFeed(Feed):
 @login_required
 def myissues(request):
     if(request.user.is_authenticated() and request.user.getUserInfo() == None):
-        return redirect('/core/user/edit')
+        return redirect('core.views.user_views.editUserForm')
     return render_to_response(template_folder(request) + 'myissues.html',
         {},
         context_instance = RequestContext(request))

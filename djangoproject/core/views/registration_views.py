@@ -22,7 +22,7 @@ class CustomResetForm(PasswordResetForm):
             if user.password == UNUSABLE_PASSWORD:
                 raise forms.ValidationError(self.error_messages['unusable'] + 'This happens because the user account was '
                     'created with an OpenID or OAuth provider (tipically Google, Facebook, MyOpenID, etc). '
-                    'Try logging in with a login provider (see http://freedomsponsors.org/core/user/%s)' % user.id)
+                    'Try logging in with a login provider (see http://freedomsponsors.org%s)' % user.get_view_link())
         return email
 
 

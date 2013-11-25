@@ -76,7 +76,7 @@ urlpatterns += patterns('core.views.bitcoin_views',
 urlpatterns += patterns('core.views.user_views',
     url(r'^user/$', 'listUsers'),
     url(r'^user/(?P<user_id>\d+)/$', 'viewUser'),
-    url(r'^user/(?P<user_id>\d+)/.*$', 'viewUser'),
+    url(r'^user/(?P<user_id>\d+)/(?P<user_slug>.*)$', 'viewUser'),
     url(r'^user/edit$', 'editUserForm'),
     url(r'^user/edit/submit$', 'editUser'),
 )

@@ -67,7 +67,7 @@
       </tr>
       {% for sponsor in stats.sponsors %}
       <tr>
-        <td><a href="/core/user/{{sponsor.0}}/{{sponsor.1}}">{{sponsor.1}}</td>
+        <td><a href="{% url core.views.user_views.viewUser user_id=sponsor.0 user_slug=sponsor.1 %}">{{sponsor.1}}</td>
         <td>{{sponsor.2}}</td>
         <td style="text-align:right">
           <div>
