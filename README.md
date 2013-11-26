@@ -1,7 +1,7 @@
 www.freedomsponsors.org 
 =======================
 
-[![Build Status](https://jenkins.freedomsponsors.org/buildStatus/icon?job=FreedomSponsors)](http://jenkins.freedomsponsors.org/job/FreedomSponsors/)
+[![Build Status](http://jenkins.freedomsponsors.org/buildStatus/icon?job=FreedomSponsors)](http://jenkins.freedomsponsors.org/job/FreedomSponsors/)
 
 
 FreedomSponsors is a platform for supporting free/libre software projects through microcrowdfunding – that is, crowdfunding individual open source project’s issues.
