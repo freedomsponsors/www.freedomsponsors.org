@@ -4,6 +4,8 @@ import dj_database_url
 from unipath import Path
 import os
 
+ENVIRONMENT = 'NOTDEV'
+
 PROJECT_DIR = Path(__file__).parent.parent
 
 FS_FEE = Decimal('0.03')
