@@ -4,4 +4,6 @@ python:
 install: 
  - echo noop
 
-script: echo noop
+script: echo 
+
+bla
