@@ -1,7 +1,6 @@
 www.freedomsponsors.org 
 =======================
 
-[![Build Status](https://secure.travis-ci.org/freedomsponsors/www.freedomsponsors.org.png)](http://travis-ci.org/freedomsponsors/www.freedomsponsors.org)
 [![Build Status](https://jenkins.freedomsponsors.org/buildStatus/icon?job=FreedomSponsors)](http://jenkins.freedomsponsors.org/job/FreedomSponsors/)
 
 
