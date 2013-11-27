@@ -1,4 +1,3 @@
-exit 1
 python bootstrap
 source bin/activate
 cd djangoproject
