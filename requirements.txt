@@ -1,5 +1,5 @@
 django==1.4
-splinter==0.4.9
+splinter==0.5.4
 Pygments==1.5
 misaka==1.0.2
 psycopg2==2.4.5

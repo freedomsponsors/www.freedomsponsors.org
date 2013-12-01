@@ -83,7 +83,7 @@ class SoloUserIssueTests(FrespoSplinterTestCase):
             self.app.sponsorOrKickstartIssue_from_newIssuePage(offerDict)
             assert(self.app.is_text_present('[ Issue ] HHH-1052: Allow CalendarType.set to accept Date objects'))
             self.app.followSponsoringIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
-            self.app.followOfferLinkByValue(offerDict['step4']['price'])
+            # self.app.followOfferLinkByValue(offerDict['step4']['price'])
         except:
             traceback.print_exc()
             sleep(waitifbreak)

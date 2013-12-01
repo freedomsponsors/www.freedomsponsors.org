@@ -17,18 +17,18 @@ def paradinha(time=0.4):
     # sleep(2)
 
 def _build_browser():
-    from selenium.webdriver import Chrome
-    from selenium.webdriver.chrome.options import Options
-    from splinter.driver.webdriver import BaseWebDriver, WebDriverElement
-    from splinter.driver.webdriver.cookie_manager import ChromeCookieManager
+    # from selenium.webdriver import Chrome
+    # from selenium.webdriver.chrome.options import Options
+    # from splinter.driver.webdriver import BaseWebDriver, WebDriverElement
+    # from splinter.driver.webdriver.cookie_manager import ChromeCookieManager
 
-    browser = BaseWebDriver()
-    browser.driver_name = "Chrome"
-    options = Options()
+    browser = Browser('chrome')
+    # browser.driver_name = "Chrome"
+    # options = Options()
     # options.add_argument("--no-sandbox")
-    browser.driver = Chrome(chrome_options=options)
-    browser.element_class = WebDriverElement
-    browser._cookie_manager = ChromeCookieManager(browser.driver)
+    # browser.driver = Chrome(chrome_options=options)
+    # browser.element_class = WebDriverElement
+    # browser._cookie_manager = ChromeCookieManager(browser.driver)
 
     return browser
 
@@ -192,8 +192,9 @@ class AppDriver:
     
     def followSponsoringIssueLinkOnHomeByTitle(self, title):
         browser = self.browser
-        browser.visit(self.home_url) 
-        browser.click_link_by_partial_text(title)
+        browser.visit(self.home_url)
+        _find_link_by_partial_text(browser, title).click()
+        # browser.click_link_by_partial_text(title)
 
     def followKickstartingIssueLinkOnHomeByTitle(self, title):
         browser = self.browser
@@ -324,6 +325,14 @@ class AppDriver:
 
     def quit(self):
         self.browser.quit()
+
+
+def _find_link_by_partial_text(browser, text):
+    links = browser.find_link_by_partial_href('')
+    for link in links:
+        if text in link.text:
+            return link
+    return None
 
 def _waitAndFill(browser, name, text):
     element = browser.find_by_name(name)[0]
