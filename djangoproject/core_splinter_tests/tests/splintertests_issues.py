@@ -81,7 +81,7 @@ class SoloUserIssueTests(FrespoSplinterTestCase):
         try:
             offerDict = td.buildDefaultOfferDict14('https://hibernate.onjira.com/browse/HHH-1052')
             self.app.sponsorOrKickstartIssue_from_newIssuePage(offerDict)
-            assert(self.app.is_text_present('[ Offer ] US$ 10.00 for issue - Allow CalendarType.set to accept Date objects'))
+            assert(self.app.is_text_present('[ Issue ] HHH-1052: Allow CalendarType.set to accept Date objects'))
             self.app.followSponsoringIssueLinkOnHomeByTitle('Allow CalendarType.set to accept Date objects')
             self.app.followOfferLinkByValue(offerDict['step4']['price'])
         except:

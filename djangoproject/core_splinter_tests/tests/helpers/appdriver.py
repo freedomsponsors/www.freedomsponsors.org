@@ -1,4 +1,6 @@
-from splinter.browser import Browser 
+#coding: utf-8
+
+from splinter.browser import Browser
 from time import sleep, time
 import logging
 
@@ -23,7 +25,7 @@ def _build_browser():
     browser = BaseWebDriver()
     browser.driver_name = "Chrome"
     options = Options()
-    options.add_argument("--no-sandbox")
+    # options.add_argument("--no-sandbox")
     browser.driver = Chrome(chrome_options=options)
     browser.element_class = WebDriverElement
     browser._cookie_manager = ChromeCookieManager(browser.driver)
@@ -97,7 +99,7 @@ class AppDriver:
         browser = self.browser
 
         browser.visit(self.home_url)
-        browser.click_link_by_partial_text('Log in / Register')
+        browser.click_link_by_partial_text('More »')
         _waitAndFill(browser, 'username', userdict['username'])
         _waitAndFill(browser, 'password', userdict['password'])
         browser.find_by_id('submit_login_plain').click()
@@ -160,7 +162,7 @@ class AppDriver:
                 _waitUntilVisible_id(browser, 'div_step4_w')
                 self._fillOfferForm(offer.step4)
             if(offer.step1.has_key('trackerURL')):
-                assert(browser.is_text_present("You're almost done"))
+                assert(browser.is_text_present("You've placed your bounty. Now tell the world about it."))
                 browser.click_link_by_text('OK')
 
     def _fillStep2(self, step2dict):
