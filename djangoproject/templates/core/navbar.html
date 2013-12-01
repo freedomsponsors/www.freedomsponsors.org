@@ -48,7 +48,7 @@
               <li><a href="/core/issue">{% trans "Search" %}</a></li>
               <li><a href="/core/stats">{% trans "Stats" %}</a></li>
               <li><a href="/core/user">{% trans "Users" %}</a></li>
-              <li><a href="/core/feedback">{% trans "Feedback" %}</a></li>
+              <li><a href="{% url core.views.feedback_views.feedback %}">{% trans "Feedback" %}</a></li>
             </ul>
           </div><!--/.nav-collapse -->
           {% block menuItems %}

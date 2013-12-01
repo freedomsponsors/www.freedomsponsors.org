@@ -57,7 +57,7 @@
 					We're "open everything", so everything we do is out in the open: 
 					Check out our <a href="/core/stats/">website statistics</a>, 
 					browse our <a href="http://blog.freedomsponsors.org/">blog</a>, 
-					and see the way we handle all <a href="http://freedomsponsors.org/core/feedback">feedback</a>. 
+					and see the way we handle all <a href="{% url core.views.feedback_views.feedback %}">feedback</a>. 
 					It has a lot in common with the <a href="http://blog.gittip.com/post/26350459746/the-first-open-company">"open company" concept</a> 
 					pioneered by our friends at <a href="http://gittip.com">Gittip</a>.</p>
 				</li>
@@ -256,7 +256,7 @@
 		<div class="vgap-10"><!-- Vertical Gap 10px --></div>
 		<div class="fs-box">
 			<div style="height:80px;" class="column-wrapper vcenter-content">
-				<div><a href="/core/user/165/iuri-de-silvio"><img src="http://www.gravatar.com/avatar/4dbc40e7a6fa89a3568a926378c22ace?d=identicon&s=80"></a></div>
+				<div><a href="/core/user/2/tonylampada"><img src="http://www.gravatar.com/avatar/4dbc40e7a6fa89a3568a926378c22ace?d=identicon&s=80"></a></div>
 				<div class="hgap-15"><!-- Horizontal Gap 15px --></div>
 				<div class="column fit">
 					<p class="font-size-14"><a href="http://freedomsponsors.org/core/user/2/tonylampada">Tony Lampada</a></p>
@@ -275,7 +275,7 @@
 				<ul>
 					<li>
 						<div style="height:64px;" class="column-wrapper vcenter-content">
-							<div><a href="/core/user/165/iuri-de-silvio"><img src="http://www.gravatar.com/avatar/82f8e1b821d570a689d407335de9b540?d=identicon&s=64"></a></div>
+							<div><a href="/core/user/162/rafael-augusto-dos-santos"><img src="http://www.gravatar.com/avatar/82f8e1b821d570a689d407335de9b540?d=identicon&s=64"></a></div>
 							<div class="hgap-15"><!-- Horizontal Gap 15px --></div>
 							<div class="column fit">
 								<p class="no-margin font-size-14"><a href="/core/user/162/rafael-augusto-dos-santos">Rafael Augusto dos Santos</a></p>
@@ -387,7 +387,7 @@
 		<div class="vgap-30"><!-- Vertical Gap 30px --></div>
 		<div class="fs-box">
 			<h3 class="green-text">I have more questions!</h3>
-			<p>If you don't know what a Github is, but you found an issue with our website or have any suggestion or comment at all, we want to hear from you! Drop your thoughts on our <a href="/core/feedback">feedback section</a>.</p>
+			<p>If you don't know what a Github is, but you found an issue with our website or have any suggestion or comment at all, we want to hear from you! Drop your thoughts on our <a href="{% url core.views.feedback_views.feedback %}">feedback section</a>.</p>
 			<p>If you do know what Github is, log in and <!-- button this link --> <a href="https://github.com/FreedomSponsors/www.FreedomSponsors.org/issues/new">create a new issue</a> on our repo. Write what you wish to be better and we'll hop to it.</p>
 			<p>(If you don't know what a Github is but want to find out, spend 15 fun minutes on <a href="http://try.github.io">try.github.io</a>)</p>
 		</div>

@@ -5,7 +5,7 @@ from django.views.generic.simple import redirect_to, direct_to_template
 
 urlpatterns = patterns('core.views.main_views',
     url(r'^$', 'home'),
-    url(r'^home/$', 'home'),
+    url(r'^home/$', RedirectView.as_view(url='/', permanent=True)),
     url(r'^toggle_layout/$', 'toggle_layout'),
     url(r'^stats/$', 'stats'),
     url(r'^admail/$', 'admail'),
@@ -92,8 +92,6 @@ urlpatterns += patterns('core.views.json_views',
 #   url(r'^issue/sponsor_jira$', 'sponsorJiraForm'),
 # )
 
-urlpatterns += patterns('core.views.feedback_views',
-    url(r'^feedback$', 'feedback'),
-    url(r'^feedback/submit$', 'addFeedback'),
+urlpatterns += patterns('',
+    url(r'^feedback$', RedirectView.as_view(url='/feedback', permanent=True)),
 )
-
