@@ -57,7 +57,7 @@
 					We're "open everything", so everything we do is out in the open: 
 					Check out our <a href="/core/stats/">website statistics</a>, 
 					browse our <a href="http://blog.freedomsponsors.org/">blog</a>, 
-					and see the way we handle all <a href="http://freedomsponsors.org/core/feedback">feedback</a>. 
+					and see the way we handle all <a href="{% url core.views.feedback_views.feedback %}">feedback</a>. 
 					It has a lot in common with the <a href="http://blog.gittip.com/post/26350459746/the-first-open-company">"open company" concept</a> 
 					pioneered by our friends at <a href="http://gittip.com">Gittip</a>.</p>
 				</li>
@@ -387,7 +387,7 @@
 		<div class="vgap-30"><!-- Vertical Gap 30px --></div>
 		<div class="fs-box">
 			<h3 class="green-text">I have more questions!</h3>
-			<p>If you don't know what a Github is, but you found an issue with our website or have any suggestion or comment at all, we want to hear from you! Drop your thoughts on our <a href="/core/feedback">feedback section</a>.</p>
+			<p>If you don't know what a Github is, but you found an issue with our website or have any suggestion or comment at all, we want to hear from you! Drop your thoughts on our <a href="{% url core.views.feedback_views.feedback %}">feedback section</a>.</p>
 			<p>If you do know what Github is, log in and <!-- button this link --> <a href="https://github.com/FreedomSponsors/www.FreedomSponsors.org/issues/new">create a new issue</a> on our repo. Write what you wish to be better and we'll hop to it.</p>
 			<p>(If you don't know what a Github is but want to find out, spend 15 fun minutes on <a href="http://try.github.io">try.github.io</a>)</p>
 		</div>

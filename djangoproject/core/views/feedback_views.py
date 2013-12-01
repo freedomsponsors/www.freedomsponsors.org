@@ -1,8 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext as _
-from core.models import *
 from django.shortcuts import render_to_response, redirect
 from django.template import Context, loader, RequestContext
+
+from core.models import Issue, IssueWatch
 from core.services import watch_services
 from core.services.mail_services import notify_admin
 from core.views import template_folder
@@ -25,4 +26,4 @@ def addFeedback(request):
     issue.save()
     watch_services.watch_issue(request.user, issue.id, IssueWatch.CREATED)
     notify_admin(_('new Feedback: %s') % issue_title, issue_description)
-    return redirect('/core/feedback')
+    return redirect('core.views.feedback_views.feedback')

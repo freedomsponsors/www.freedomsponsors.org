@@ -16,6 +16,7 @@ if 'core' in settings.INSTALLED_APPS:
         url(r'^faq$', direct_to_template, {'template': 'core2/faq.html'}),
         url(r'^core/', include('core.urls')),
         url(r'^project/', include('core.urls.project_urls')),
+        url(r'^feedback', include('core.urls.feedback_urls')),
         url(r'^sandbox/', include('sandbox.urls')),
         url(r'^github/', include('gh_frespo_integration.urls')),
         url(r'^bladmin/doc/', include('django.contrib.admindocs.urls')),
