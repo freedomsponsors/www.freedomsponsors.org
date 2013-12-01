@@ -48,9 +48,15 @@ def _get_rates():
     if q.count() > 0:
         rates = Rates.objects.all()[0]
         if timezone.now() - rates.last_update_blockchain > timedelta(minutes=3):
-            _get_blockchain_data(rates)
+            try:
+                _get_blockchain_data(rates)
+            except BaseException, e:
+                logger.error('Error fetching blockchain data: %s' % e)
         if timezone.now() - rates.last_update_oer > timedelta(minutes=240):
-            _get_oer_data(rates)
+            try:
+                _get_oer_data(rates)
+            except BaseException, e:
+                logger.error('Error fetching OpenExchangeRates data: %s' % e)
     else:
         rates = Rates.create_empty()
         _get_blockchain_data(rates)
