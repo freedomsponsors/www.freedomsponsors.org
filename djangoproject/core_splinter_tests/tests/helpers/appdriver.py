@@ -328,12 +328,12 @@ class AppDriver:
 
 
 def _find_link_by_partial_text(browser, text):
-    logger.info('_find_link_by_partial_text(%s)' % text)
+    print('_find_link_by_partial_text(%s)' % text)
     links = browser.find_link_by_partial_href('')
     for link in links:
-        logger.info('link: %s' % link.text)
+        print('link: %s' % link.text)
         if text in link.text:
-            logger.info('returning: %s' % link.text)
+            print('returning: %s' % link.text)
             return link
     return None
 
