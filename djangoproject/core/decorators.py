@@ -1,5 +1,6 @@
 from exceptions import BaseException
 from django.shortcuts import redirect
+from django.core.urlresolvers import reverse
 
 # This is not used anywhere.
 # Im leaving it here just to serve as an example of how to write a decorator
@@ -10,8 +11,10 @@ def complete_registration_first(view_func): #pragma: no cover
 			if(user.is_registration_complete()):
 				return view_func(request, *args, **kwargs)
 			else:
-				return redirect('/core/user/edit?next='+request.get_full_path())
+				url = reverse('core.views.user_views.editUserForm')
+				return redirect('%s?next=%s' % (url, request.get_full_path()))
 				#TODO
 		else:
 			raise BaseException('decorator complete_registration_first invoked on unauthenticated session')
 	return _decorated
+

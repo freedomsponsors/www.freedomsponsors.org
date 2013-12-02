@@ -73,12 +73,11 @@ urlpatterns += patterns('core.views.bitcoin_views',
     url(r'^bitcoin/'+settings.BITCOIN_IPNNOTIFY_URL_TOKEN+'$', 'bitcoinIPN'),
 )
 
-urlpatterns += patterns('core.views.user_views',
-    url(r'^user/$', 'listUsers'),
-    url(r'^user/(?P<user_id>\d+)/$', 'viewUser'),
-    url(r'^user/(?P<user_id>\d+)/.*$', 'viewUser'),
-    url(r'^user/edit$', 'editUserForm'),
-    url(r'^user/edit/submit$', 'editUser'),
+urlpatterns += patterns('',
+    url(r'^user/$', RedirectView.as_view(url='/user/', permanent=True)),
+    url(r'^user/(?P<user_id>\d+)/$', RedirectView.as_view(url='/user/%(user_id)s/', permanent=True)),
+    url(r'^user/(?P<user_id>\d+)/(?P<user_slug>.*)$', RedirectView.as_view(url='/user/%(user_id)s/%(user_slug)s', permanent=True)),
+    url(r'^user/edit$', RedirectView.as_view(url='/user/edit', permanent=True)),
 )
 
 urlpatterns += patterns('core.views.json_views',

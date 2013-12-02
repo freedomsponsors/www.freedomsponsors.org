@@ -10,7 +10,7 @@ from django.conf import settings
 from core.views import template_folder
 
 
-def viewUser(request, user_id):
+def viewUser(request, user_id, user_slug=None):
     user = User.objects.get(pk=user_id)
     unconnectedSocialAccounts = None
     if(user.id == request.user.id):

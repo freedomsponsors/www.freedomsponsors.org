@@ -31,7 +31,7 @@
 	  	<a href="http://en.gravatar.com/" target="_gravatar">Change picture</a> <i class="icon-question-sign icon-white popopo" rel="popover" data-content="We display your picture as it is registered in Gravatar. Go ahead and create your account there if you still don't have one" data-original-title="No upload here!"></i>
 	</div>
 	<div class="span8">
-		<form method="post" class="form-horizontal" action="/core/user/edit/submit">
+		<form method="post" class="form-horizontal" action="{% url core.views.user_views.editUser %}">
 		{% csrf_token %}
 		<fieldset>
 		

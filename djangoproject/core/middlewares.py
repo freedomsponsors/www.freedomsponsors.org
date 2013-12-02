@@ -2,18 +2,23 @@ from exceptions import BaseException
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.utils import translation
+from django.core.urlresolvers import reverse
 
 class CompleteRegistrationFirst:
     def process_request(self, request):
-        if(request.user.is_authenticated()):
-            if(request.path in ['/core/user/edit', '/core/user/edit/submit']):
+        user = request.user
+        if user.is_authenticated() and not user.is_registration_complete():
+            whitelist = [
+                'core.views.user_views.editUserForm',
+                'core.views.user_views.editUser',
+            ]
+            _paths = [reverse(v) for v in whitelist]
+            if request.path in _paths:
                 return None
-            user = request.user
-            if(user.is_registration_complete()):
-                return None
-            else:
-                messages.info(request, 'Please complete your profile before proceeding.')
-                return redirect('/core/user/edit?next='+request.get_full_path())
+
+            messages.info(request, 'Please complete your profile before proceeding.')
+            url = reverse('core.views.user_views.editUserForm')
+            return redirect('%s?next=%s' % (url, request.get_full_path()))
         else:
             return None
 

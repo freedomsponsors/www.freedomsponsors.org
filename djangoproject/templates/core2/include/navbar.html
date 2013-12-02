@@ -10,7 +10,7 @@
                 </a>
                 <ul id="menu1" class="dropdown-menu" aria-labelledby="drop_user">
                     <li><a href="{{ user.get_view_link }}">View Profile</a></li>
-                    <li><a href="/core/user/edit">Edit Profile</a></li>
+                    <li><a href="{% url core.views.user_views.editUserForm %}">Edit Profile</a></li>
                     {% if user.has_usable_password %}
                         <li><a href="/accounts/password/change">Change password</a></li>
                     {% endif %}
@@ -42,7 +42,7 @@
                 <a href="/" class="menu-option">Home</a>
                 <a href="/core/issue" class="menu-option">Search</a>
                 <a href="/core/stats" class="menu-option">Stats</a>
-                <a href="/core/user" class="menu-option">Users</a>
+                <a href="{% url core.views.user_views.listUsers %}" class="menu-option">Users</a>
                 <a href="/faq" class="menu-option">FAQ</a>
                 <a href="{% url core.views.feedback_views.feedback %}" class="menu-option">Feedback</a>
             </div>

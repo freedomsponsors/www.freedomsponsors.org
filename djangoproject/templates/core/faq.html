@@ -67,7 +67,7 @@
           <h3>I don't have a Paypal account, is that ok?</h3>
           <p>
             Well, you're gonna need one to send or receive payments.<br>
-            <a href="/core/user/edit">Your profile</a> has a "primary email" and an optional "Paypal email" field.<br> 
+            <a href="{% url core.views.user_views.editUserForm %}">Your profile</a> has a "primary email" and an optional "Paypal email" field.<br> 
             If you leave "Paypal email" field blank, and someone tries to send you a payment, FS will consider your primary email as the Paypal account email.<br> 
             Please note that Paypal will accept that payment *even if the account doesn't exist*. In that case, Paypal will send you an email and you'll have the opportunity to create your account and claim your prize then.<br>
             If you intend to send or receive payments, we encourage you to create your Paypal account now.

@@ -147,7 +147,7 @@
 		<div class="vgap-30"><!-- Vertical Gap 30px --></div>
 		<div class="fs-box">
 			<h3 class="green-text">I don't have a Paypal account or a Bitcoin wallet, is that ok?</h3>
-			<p>It is okay for commenting. To send or receive payments, you’ll need to set up one of these options on <a href="/core/user/edit">your profile page</a>.</p>
+			<p>It is okay for commenting. To send or receive payments, you’ll need to set up one of these options on <a href="{% url core.views.user_views.editUserForm %}">your profile page</a>.</p>
 		</div>
 		<a name="Two developers are claiming to have resolved my issue. What should I do?"></a>
 		<div class="vgap-30"><!-- Vertical Gap 30px --></div>
@@ -256,10 +256,10 @@
 		<div class="vgap-10"><!-- Vertical Gap 10px --></div>
 		<div class="fs-box">
 			<div style="height:80px;" class="column-wrapper vcenter-content">
-				<div><a href="/core/user/2/tonylampada"><img src="http://www.gravatar.com/avatar/4dbc40e7a6fa89a3568a926378c22ace?d=identicon&s=80"></a></div>
+				<div><a href="{% url core.views.user_views.viewUser user_id=2 user_slug='tonylampada' %}"><img src="http://www.gravatar.com/avatar/4dbc40e7a6fa89a3568a926378c22ace?d=identicon&s=80"></a></div>
 				<div class="hgap-15"><!-- Horizontal Gap 15px --></div>
 				<div class="column fit">
-					<p class="font-size-14"><a href="http://freedomsponsors.org/core/user/2/tonylampada">Tony Lampada</a></p>
+					<p class="font-size-14"><a href="{% url core.views.user_views.viewUser user_id=2 user_slug='tonylampada' %}">Tony Lampada</a></p>
 					<p class="no-margin">Is the CEO and the only person with access to the production database.</p>
 					<p class="no-margin">You can get in touch directly by sending an email to <a href="mailto:tony@freedomsponsors.org">tony@freedomsponsors.org</a></p>
 				</div>
@@ -275,40 +275,40 @@
 				<ul>
 					<li>
 						<div style="height:64px;" class="column-wrapper vcenter-content">
-							<div><a href="/core/user/162/rafael-augusto-dos-santos"><img src="http://www.gravatar.com/avatar/82f8e1b821d570a689d407335de9b540?d=identicon&s=64"></a></div>
+							<div><a href="{% url core.views.user_views.viewUser user_id=162 user_slug='rafael-augusto-dos-santos' %}"><img src="http://www.gravatar.com/avatar/82f8e1b821d570a689d407335de9b540?d=identicon&s=64"></a></div>
 							<div class="hgap-15"><!-- Horizontal Gap 15px --></div>
 							<div class="column fit">
-								<p class="no-margin font-size-14"><a href="/core/user/162/rafael-augusto-dos-santos">Rafael Augusto dos Santos</a></p>
+								<p class="no-margin font-size-14"><a href="{% url core.views.user_views.viewUser user_id=162 user_slug='rafael-augusto-dos-santos' %}">Rafael Augusto dos Santos</a></p>
 								<p class="no-margin">Our favorite designer and front-end developer.</p>
 							</div>
 						</div>
 					</li>
 					<li>
 						<div style="height:64px;" class="column-wrapper vcenter-content">
-							<div><a href="/core/user/165/iuri-de-silvio"><img src="http://www.gravatar.com/avatar/a4f43fa1eeac26199907acd3dde52328?d=identicon&s=64"></a></div>
+							<div><a href="{% url core.views.user_views.viewUser user_id=165 user_slug='iuri-de-silvio' %}"><img src="http://www.gravatar.com/avatar/a4f43fa1eeac26199907acd3dde52328?d=identicon&s=64"></a></div>
 							<div class="hgap-15"><!-- Horizontal Gap 15px --></div>
 							<div class="column fit">
-								<p class="no-margin font-size-14"><a href="/core/user/165/iuri-de-silvio">iurisilvio</a></p>
+								<p class="no-margin font-size-14"><a href="{% url core.views.user_views.viewUser user_id=165 user_slug='iuri-de-silvio' %}">iurisilvio</a></p>
 								<p class="no-margin">#1 in pull requests.</p>
 							</div>
 						</div>
 					</li>
 					<li>
 						<div style="height:64px;" class="column-wrapper vcenter-content">
-							<div><a href="/core/user/10/arthur-casals"><img src="http://www.gravatar.com/avatar/6313ba8e0125421f953fad0c33dab74a?d=identicon&s=64"></a></div>
+							<div><a href="{% url core.views.user_views.viewUser user_id=10 user_slug='arthur-casals' %}"><img src="http://www.gravatar.com/avatar/6313ba8e0125421f953fad0c33dab74a?d=identicon&s=64"></a></div>
 							<div class="hgap-15"><!-- Horizontal Gap 15px --></div>
 							<div class="column fit">
-								<p class="no-margin font-size-14"><a href="/core/user/10/arthur-casals">Arthur Casals</a></p>
+								<p class="no-margin font-size-14"><a href="{% url core.views.user_views.viewUser user_id=10 user_slug='arthur-casals' %}">Arthur Casals</a></p>
 								<p class="no-margin">Always provides great advice.</p>
 							</div>
 						</div>
 					</li>
 					<li class="no-margin">
 						<div style="height:64px;" class="column-wrapper vcenter-content">
-							<div><a href="/core/user/420/campadrenalin"><img src="http://www.gravatar.com/avatar/15e648f5b6b105f3ec0d084388df365f?d=identicon&s=64"></a></div>
+							<div><a href="{% url core.views.user_views.viewUser user_id=420 user_slug='campadrenalin' %}"><img src="http://www.gravatar.com/avatar/15e648f5b6b105f3ec0d084388df365f?d=identicon&s=64"></a></div>
 							<div class="hgap-15"><!-- Horizontal Gap 15px --></div>
 							<div class="column fit">
-								<p class="no-margin font-size-14"><a href="/core/user/420/campadrenalin">Campadrenalin</a></p>
+								<p class="no-margin font-size-14"><a href="{% url core.views.user_views.viewUser user_id=420 user_slug='campadrenalin' %}">Campadrenalin</a></p>
 								<p class="no-margin">Heavy user and great feedback.</p>
 							</div>
 						</div>
@@ -318,30 +318,30 @@
 				<ul>
 					<li>
 						<div style="height:64px;" class="column-wrapper vcenter-content">
-							<div><a href="/core/user/443/jarl-arntzen"><img src="http://www.gravatar.com/avatar/cb272743ae9bbcab103b8589b5475173?d=identicon&s=64"></a> </div>
+							<div><a href="{% url core.views.user_views.viewUser user_id=443 user_slug='jarl-arntzen' %}"><img src="http://www.gravatar.com/avatar/cb272743ae9bbcab103b8589b5475173?d=identicon&s=64"></a> </div>
 							<div class="hgap-15"><!-- Horizontal Gap 15px --></div>
 							<div class="column fit">
-								<p class="no-margin font-size-14"><a href="/core/user/443/jarl-arntzen">Jarl Arntzen</a> </p>
+								<p class="no-margin font-size-14"><a href="{% url core.views.user_views.viewUser user_id=443 user_slug='jarl-arntzen' %}">Jarl Arntzen</a> </p>
 								<p class="no-margin">Valuable help with our front-end.</p>
 							</div>
 						</div>
 					</li>
 					<li>
 						<div style="height:64px;" class="column-wrapper vcenter-content">
-							<div><a href="/core/user/348/zooko"><img src="http://www.gravatar.com/avatar/3b7e6c77a5412587152c9e3f22b41c2a?d=identicon&s=64"></a></div>
+							<div><a href="{% url core.views.user_views.viewUser user_id=348 user_slug='zooko' %}"><img src="http://www.gravatar.com/avatar/3b7e6c77a5412587152c9e3f22b41c2a?d=identicon&s=64"></a></div>
 							<div class="hgap-15"><!-- Horizontal Gap 15px --></div>
 							<div class="column fit">
-								<p class="no-margin font-size-14"><a href="/core/user/348/zooko">zooko</a></p>
+								<p class="no-margin font-size-14"><a href="{% url core.views.user_views.viewUser user_id=348 user_slug='zooko' %}">zooko</a></p>
 								<p class="no-margin">Great help with the Bitcoin support.</p>
 							</div>
 						</div>
 					</li>
 					<li>
 						<div style="height:64px;" class="column-wrapper vcenter-content">
-							<div><a href="/core/user/1317/henrique-bastos"><img src="http://www.gravatar.com/avatar/d47e5a6a94e793ad1a1c315d6ab63877?d=identicon&s=64"></a></div>
+							<div><a href="{% url core.views.user_views.viewUser user_id=1317 user_slug='henrique-bastos' %}"><img src="http://www.gravatar.com/avatar/d47e5a6a94e793ad1a1c315d6ab63877?d=identicon&s=64"></a></div>
 							<div class="hgap-15"><!-- Horizontal Gap 15px --></div>
 							<div class="column fit">
-								<p class="no-margin font-size-14"><a href="/core/user/1317/henrique-bastos">Henrique Bastos</a></p>
+								<p class="no-margin font-size-14"><a href="{% url core.views.user_views.viewUser user_id=1317 user_slug='henrique-bastos' %}">Henrique Bastos</a></p>
 								<p class="no-margin">Killer improvements to application architecture.</p>
 							</div>
 						</div>
@@ -352,10 +352,10 @@
 					-->   
 					<li class="no-margin">
 						<div style="height:64px;" class="column-wrapper vcenter-content">
-							<div><a href="/core/user/1292/davelab6"><img src="http://www.gravatar.com/avatar/65c68dcaace6962cd1353c270eb0801b?d=identicon&s=64"></a></div>
+							<div><a href="{% url core.views.user_views.viewUser user_id=1292 user_slug='davelab6' %}"><img src="http://www.gravatar.com/avatar/65c68dcaace6962cd1353c270eb0801b?d=identicon&s=64"></a></div>
 							<div class="hgap-15"><!-- Horizontal Gap 15px --></div>
 							<div class="column fit">
-								<p class="no-margin font-size-14"><a href="/core/user/1292/davelab6">Dave Crossland</a></p>
+								<p class="no-margin font-size-14"><a href="{% url core.views.user_views.viewUser user_id=1292 user_slug='davelab6' %}">Dave Crossland</a></p>
 								<p class="no-margin">An eloquent English product manager who helps us sound good.</p>
 							</div>
 						</div> 

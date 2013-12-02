@@ -75,8 +75,6 @@ def mailtest(request):
 
 
 def home(request):
-    if request.user.is_authenticated() and request.user.getUserInfo() is None:
-        return redirect('/core/user/edit')
     _is_old_layout = is_old_layout(request)
     size = 20 if _is_old_layout else 3
     issues_sponsoring = issue_services.search_issues(is_public_suggestion=False)[0:size]
