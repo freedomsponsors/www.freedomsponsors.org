@@ -339,15 +339,7 @@ class Issue(models.Model):
         if issuedict.get('title'):
             self.title = issuedict.get('title')
         self.touch()
-        new_json = self.to_json()
-        ActionLog(
-            creationDate=timezone.now(),
-            action='EDIT_ISSUE',
-            entity='ISSUE',
-            old_json=old_json,
-            new_json=new_json,
-            issue=self
-        ).save()
+        ActionLog.log_edit_issue(issue=self, old_json)
 
     def to_json(self):
         return json.dumps({
@@ -942,3 +934,33 @@ class ActionLog(models.Model):
     offer = models.ForeignKey(Offer, null=True)
     solution = models.ForeignKey(Solution, null=True)
     issue_comment = models.ForeignKey(IssueComment, null=True)
+
+    @classmethod
+    def log_edit_issue(cls, issue, old_json):
+        new_json = issue.to_json()
+        ActionLog(
+            creationDate=timezone.now(),
+            action='EDIT_ISSUE',
+            entity='ISSUE',
+            old_json=old_json,
+            new_json=new_json,
+            issue=issue,
+            project=issue.project,
+            user=issue.createdByUser,
+        ).save()
+
+    @classmethod
+    def log_edit_project(cls, project, user, old_json):
+        pass
+
+    @classmethod
+    def log_sponsor(cls, offer):
+        pass
+
+    @classmethod
+    def log_propose(cls, offer):
+        pass
+
+    @classmethod
+    def log_change_offer(cls, offer, old_json):
+        pass
