@@ -4,12 +4,22 @@ import requests
 from django.conf import settings
 from gh_frespo_integration.models import *
 import dateutil.parser
+from urlparse import urlparse
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 BOT_AUTH = (settings.GITHUB_BOT_USERNAME, settings.GITHUB_BOT_PASSWORD)
 
 def _fetch_json_objects_from_url(url):
+    u = urlparse(url)
+    auth = 'client_id=%s&client_secret=%s' % (settings.GITHUB_APP_ID, settings.GITHUB_API_SECRET)
+    url += '&' if u.query else '?'
+    url += auth
     h = httplib2.Http(disable_ssl_certificate_validation=True)
     resp, content = h.request(url)
+    logger.debug('rate-limit-remaining: %s' % resp.get('x-ratelimit-remaining'))
     if(resp.status == 200):
         try:
             return json.loads(content)

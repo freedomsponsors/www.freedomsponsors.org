@@ -339,7 +339,7 @@ class Issue(models.Model):
         if issuedict.get('title'):
             self.title = issuedict.get('title')
         self.touch()
-        ActionLog.log_edit_issue(issue=self, old_json)
+        ActionLog.log_edit_issue(issue=self, old_json=old_json)
 
     def to_json(self):
         return json.dumps({
@@ -358,7 +358,7 @@ class Issue(models.Model):
         offers = Offer.objects.filter(issue=self, status=Offer.OPEN,currency=currency)
         s = Decimal(0)
         for offer in offers:
-            if (not offer.is_expired()):
+            if not offer.is_expired():
                 s = s + offer.price
         return twoplaces(s)
 
@@ -963,4 +963,8 @@ class ActionLog(models.Model):
 
     @classmethod
     def log_change_offer(cls, offer, old_json):
+        pass
+
+    @classmethod
+    def log_revoke(cls, offer):
         pass
