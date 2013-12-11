@@ -4,6 +4,7 @@ import re
 from xml.dom.minidom import parseString
 import json
 from core.services.mail_services import notify_admin
+from django.conf import settings
 
 class IssueInfo(object):
 
@@ -106,7 +107,8 @@ def retriveGithubInfo(url):
     info.tracker = 'GITHUB'
     info.project_name = pathTokens[2]
     info.project_trackerURL = parsedURL.scheme+'://'+parsedURL.netloc+'/'+pathTokens[1]+'/'+pathTokens[2]+'/'+pathTokens[3]
-    issueJsonURL = 'https://api.github.com/repos'+parsedURL.path
+    auth = 'client_id=%s&client_secret=%s' % (settings.GITHUB_APP_ID, settings.GITHUB_API_SECRET)
+    issueJsonURL = 'https://api.github.com/repos' + parsedURL.path + '?' + auth
     h = httplib2.Http(disable_ssl_certificate_validation=True)
     try: 
         resp, content = h.request(issueJsonURL)
