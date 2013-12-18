@@ -1,49 +1,61 @@
 ﻿/* ----------------------- SUMMARY -----------------------
 
-- Informations
+Informations
+	Informations > Color Scheme
 
-- General
+General
+	General > Fonts
+	General > Text Color
+	General > Text Sizes
+	General > Text Align
+	General > Links
 
-- Header
+Header
+	Header > Social Login
+	Header > Button
  
-- Content
-	- Titles
-	- Boxes
-	- Dividers
+Content
+	Content > Titles
+		Content > Titles > Boxes
+	Content > FS Box
+	Content > Dividers
+	Content > Social Buttons
 
-- Footer
+Icons
+	Icons > Types
 
-- FS Inputs
-	- Input syles
-	- Search input styles
+Footer
 
-- FS Buttons
-	- Style
-	- Colors
-	- Sizes
+FS Inputs
+	FS Inputs > Styles
+	FS Inputs > Search Input Styles
+	FS Inputs > Checkbox and Radio Styles
+
+FS Buttons
+	FS Buttons > Style
+	FS Buttons > Colors
+	FS Buttons > Sizes
 	
-- FS TabNavigator
+FS TabNavigator
+	FS TabNavigator > Tab List
+	FS TabNavigator > Tab Content
 
-- FS Card List
-	- Card list header
-	- Card list
+FS Card List
+	FS Card List > Card list header
+	FS Card List > Card list
 	
-- FS Cards
-	- Card header
-	- Card content
-	- Card footer
-	- Sponsored card
-	- Proposed card
-	- Project card
-	- Card status
+FS Cards
+	FS Cards > Card Content
+	FS Cards > Sponsored Card
+	FS Cards > Proposed Card
+	FS Cards > Card Status
    
 */
 
-/* -------------------------------- */
-/*          Informations            */
-/* -------------------------------- */
+/* Informations
+----------------------------------------------- */
 
- /* ------ Colors ------
+/* Informations > Color Scheme
  
  FS Green:        #8DC63F;
  FS Blue:         #27AAE1;
@@ -54,11 +66,10 @@
  
  FS Text:         #8C8C8C;
  
- */
+----------------------------------------------- */
 
-/* -------------------------------- */
-/*             General              */
-/* -------------------------------- */
+/* General
+----------------------------------------------- */
 
 html, body {
        height: 100%;
@@ -72,6 +83,7 @@ body {
 p{
 	line-height:20px;
 	margin-bottom:10px;
+	text-align:justify;
 }
 
 ol.decimal{
@@ -91,16 +103,34 @@ li{
 textarea{
 	width:100%;
 	min-height:120px;
-	box-sizing:border-box;
+	
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	
 	border: 1px solid #D1D1D1;
 	resize: none;
 	
 	margin:5px 0;
+	padding:2px;
 	
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	-goog-ms-border-radius: 3px;
 	border-radius: 3px;
+}
+
+textarea[rows]{
+	min-height:0;
+}
+textarea[rows="1"]{
+	height:22px;
+}
+textarea[rows="2"]{
+	height:44px;
+}
+textarea[rows="3"]{
+	height:66px;
 }
  
 .no-padding{
@@ -111,8 +141,25 @@ textarea{
 	margin: 0;
 }
 
+.content-box{
+	-webkit-box-sizing: content-box!important;
+	-moz-box-sizing: content-box!important;
+	box-sizing: content-box!important;
+}
+
+.border-box{
+	-webkit-box-sizing: border-box!important;
+	-moz-box-sizing: border-box!important;
+	box-sizing: border-box!important;
+}
+
+
 .disabled{
 	cursor:default;
+}
+
+.hidden{
+	display:none!important;
 }
 
 .modal_ajax {
@@ -132,7 +179,8 @@ body.loading .modal_ajax {
     display: block;
 }
 
-/* ------ Fonts ------ */
+/* General > Fonts
+----------------------------------------------- */
 
 @font-face {
     font-family: 'Ubahn';
@@ -168,7 +216,8 @@ body.loading .modal_ajax {
 	font-family: Arial, sans-serif;
 }
 
-/* ------ Text Colors ------ */
+/* General > Text Colors
+----------------------------------------------- */
 
 .green-text{
 	 color:#8DC63F;  
@@ -198,7 +247,8 @@ body.loading .modal_ajax {
 	color:#323232;
 }
 
-/* ------ Text Sizes ------ */
+/* General > Text Sizes
+----------------------------------------------- */
 
 .font-size-11{
 	font-size: 11px;
@@ -224,7 +274,8 @@ body.loading .modal_ajax {
 	font-size: 20px;
 }
 
-/* ------ Text Align ------ */
+/* General > Text Align
+----------------------------------------------- */
 
 .text-align-left{
 	text-align:left;
@@ -238,6 +289,10 @@ body.loading .modal_ajax {
 	text-align:center;
 }
 
+.text-align-justify{
+	text-align:justify;
+}
+
 .bold{
 	font-weight:bold;
 }
@@ -246,16 +301,17 @@ body.loading .modal_ajax {
 	font-style:italic;
 }
 
-/* ------ Links ------ */
+/* General > Links
+----------------------------------------------- */
 
 a{
 	color: #27AAE1;
 	text-decoration:none;
 }
 
-/* -------------------------------- */
-/*             Header               */
-/* -------------------------------- */
+
+/* Header
+----------------------------------------------- */
 
 a.menu-option {
 	font-family: 'Ubahn', Arial, sans-serif;
@@ -271,7 +327,8 @@ a.menu-option:hover {
 	color: #FFB92D;
 }
 
-/* ------ Social Login ------ */
+/* Header > Social Login
+----------------------------------------------- */
 
 a.social-login{
 	width:20px;
@@ -301,7 +358,8 @@ a.social-login.twitter{
 	background:transparent url(../img2/social_login_twitter.png) center top no-repeat;
 }
 
-/* ------ Buttons ------ */
+/* Header > Button
+----------------------------------------------- */
 
 a.sponsor-new{
 	margin-right: 8px;
@@ -313,9 +371,9 @@ a.propose-new{
 	margin-left: 8px;
 }
 
-/* -------------------------------- */
-/*             Content              */
-/* -------------------------------- */
+
+/* Content              
+----------------------------------------------- */
 
 .user-picture{
 	width:50px;
@@ -328,7 +386,18 @@ a.propose-new{
 	background-color: transparent;
 }
 
-/* ------ Titles ------ */
+.user-picture.thumb22{
+	width:22px;
+	height:22px;
+}
+
+.user-picture.thumb40{
+	width:40px;
+	height:40px;
+}
+
+/* Content > Titles
+----------------------------------------------- */
 
 h1,h2,h3,h4,h5{
 	font-family: "Ubahn", Arial, sans-serif;
@@ -344,7 +413,8 @@ h3{font-size:18px; margin-bottom:15px;}
 h4{font-size:14px; margin-bottom:10px;}
 h5{font-size:11px; margin-bottom:5px;}
 
-/* Boxes */
+/* Content > Titles > Boxes
+----------------------------------------------- */
 
 h3.boxed{
 	width:100%;
@@ -364,15 +434,12 @@ h3.boxed{
 	cursor:default;
 }
 
-/* Colors */
-
-/* Sizes */
-
 h3.boxed.medium{
 	width:165px;
 }
 
-/* ------ Boxes ------ */
+/* Content > FS Box
+----------------------------------------------- */
 
 .fs-box{
 	background-color:#FFF;
@@ -413,7 +480,22 @@ h3.boxed.medium{
 	right:0;
 }
 
-/* ------ Dividers ------ */
+.fs-box .reply-area{
+	background-color: #FAFAFA;
+	margin: 0 -15px -15px -15px;
+	padding: 15px;
+	border-top: 1px solid #f2f2f2;
+}
+
+.fs-box .add-reply{
+	background-color: #F5F5F5;
+	margin: 15px -15px -15px -15px;
+	padding: 18px 15px 15px 15px;
+	border-top: 1px solid #E4E4E4;
+}
+
+/* Content > Dividers
+----------------------------------------------- */
 
 div.divider{
 	border-bottom: 1px solid rgba(200, 200, 200, .3);
@@ -465,7 +547,8 @@ div.divider.small:before{
 	height:15px;
 }
 
-/* ------ Social Buttons ------ */
+/* Content > Social Buttons
+----------------------------------------------- */
 
 .social-button{
 	display:inline-block;
@@ -490,19 +573,64 @@ div.divider.small:before{
 	background:transparent url(../img2/social_logos/rss.png) center top no-repeat;
 }
 
-/* -------------------------------- */
-/*             Footer               */
-/* -------------------------------- */
+.social-button.mini{
+	width:18px;
+	height:18px;
+}
+
+/* Icons
+----------------------------------------------- */
+
+.iconized{
+	display:inline-block;
+	padding-left:20px;
+}
+
+.iconized.icon-only{
+	display:inline-block;
+	width:16px;
+	height:16px;
+	padding-left:0;
+}
+
+/* Icons > Types
+----------------------------------------------- */
+
+.iconized.edit{
+	background:transparent url(../img2/fs_edit_icon.png) left center no-repeat;
+}
+
+.iconized.watch{
+	background:transparent url(../img2/fs_watch_icon.png) left center no-repeat;
+}
+
+.iconized.unwatch{
+	background:transparent url(../img2/fs_unwatch_icon.png) left center no-repeat;
+}
+
+.iconized.link{
+	background:transparent url(../img2/fs_link_icon.png) left center no-repeat;
+}
+
+.iconized.delete{
+	background:transparent url(../img2/fs_delete_icon.png) left center no-repeat;
+}
+
+
+
+/* Footer
+----------------------------------------------- */
 
 .footer-link{
 	margin-right:20px;
 }
 
-/* -------------------------------- */
-/*            FS Inputs             */
-/* -------------------------------- */
 
-/* ------ Input Styles ------ */
+/* FS Inputs
+----------------------------------------------- */
+
+/* FS Inputs > Styles
+----------------------------------------------- */
 
 /* Placeholder fixes */
 input.fs-input::-webkit-input-placeholder {
@@ -556,7 +684,8 @@ input.fs-input.black{
 	box-shadow: inset 0 4px 15px -5px #000;
 }
 
-/* ------ Search Input Styles ------ */
+/* FS Inputs > Search Input Styles
+----------------------------------------------- */
  
 input.fs-input.search{
 	padding-right:30px;
@@ -573,7 +702,8 @@ input.fs-input.search.black{
 	background-position: calc(100% - 8px);
 }
 
-/* ------ Checkbox and Radio Styles ------ */
+/* FS Inputs > Checkbox and Radio Styles
+----------------------------------------------- */
 
 /* http://www.wufoo.com/2011/06/13/custom-radio-buttons-and-checkboxes/ */
 
@@ -595,7 +725,6 @@ input[type='checkbox'].fs-input + label {
 }
 
 /* Checkbox and Radio Unselected */
-
 input[type='radio'].fs-input + label{
 	background: url(img/radio_unchecked.png) left center no-repeat; 
 }
@@ -605,7 +734,6 @@ input[type='checkbox'].fs-input + label{
 }
 
 /* Checkbox and Radio Selected */
-
 input[type='radio'].fs-input:checked + label {
     background-image: url(img/radio_checked.png);
 }
@@ -613,11 +741,12 @@ input[type='checkbox'].fs-input:checked + label {
     background-image: url(img/checkbox_checked.png);
 }
 
-/* -------------------------------- */
-/*           FS Buttons             */
-/* -------------------------------- */
 
-/* ------ Style ------ */
+/* FS Buttons
+----------------------------------------------- */
+
+/* FS Buttons > Styles
+----------------------------------------------- */
 
 .fs-button{
 	display: inline-block;
@@ -664,7 +793,8 @@ input[type='checkbox'].fs-input:checked + label {
 	opacity: 0.7;
 }
 
-/* ------ Colors ------ */
+/* FS Buttons > Colors
+----------------------------------------------- */
 
 .fs-button.blue{
 	background-color: #27AAE1;
@@ -703,8 +833,8 @@ input[type='checkbox'].fs-input:checked + label {
 	border-color: #E1E1E1;
 }
 
-
-/* ------ Sizes ------ */
+/* FS Buttons > Sizes
+----------------------------------------------- */
 
 .fs-button.mini{
 	height:22px;
@@ -729,11 +859,11 @@ input[type='checkbox'].fs-input:checked + label {
 	width: 26px;
 }
 
-/* -------------------------------- */
-/*        FS TabNavigator           */
-/* -------------------------------- */
+/* FS TabNavigator
+----------------------------------------------- */
 
-/* ------ Tab List ------ */
+/* FS TabNavigator > Tab List
+----------------------------------------------- */
 
 .tab-list{
 	margin-bottom:15px;
@@ -810,7 +940,8 @@ input[type='checkbox'].fs-input:checked + label {
     right: 0;
 }
 
-/* ------ Tab Content ------ */
+/* FS TabNavigator > Tab Content
+----------------------------------------------- */
 
 .tab-content>.tab-pane{ 
     display: none; /* Hide content of unselected tabs */
@@ -820,23 +951,22 @@ input[type='checkbox'].fs-input:checked + label {
     display: block; /* Show the contents of a selected tab */
 }
 
-/* -------------------------------- */
-/*           FS Card List           */
-/* -------------------------------- */
+/* FS Card List
+----------------------------------------------- */
 
-/* ------ Card List Header ------ */
+/* FS Card List > Card List Header
+----------------------------------------------- */
 
 .card-list-header{
 	position:relative;
 
 }
 
-/* ------ Card List ------ */
+/* FS Card List > Card List
+----------------------------------------------- */
 
-
-/* -------------------------------- */
-/*             FS Cards             */
-/* -------------------------------- */
+/* FS Card List > Card List > FS Card
+----------------------------------------------- */
 
 .issue-card{
 	height: 340px;
@@ -848,10 +978,8 @@ input[type='checkbox'].fs-input:checked + label {
 	display: inline-block;
 }
 
-/* ------ Card Header ------ */
-
-
-/* ------ Card Content ------ */
+/* FS Cards > Card Content
+----------------------------------------------- */
 
 .issue-card .issue-title{
 	height:42px;
@@ -880,10 +1008,8 @@ div.project-logo > img{
 	width: auto;
 }
 
-/* ------ Card Footer ------ */
-
-
-/* ------ Sponsored Card ------ */
+/* FS Cards > Sponsored Card
+----------------------------------------------- */
 
 .issue-card .card-sponsors{
 	text-align:right;
@@ -900,7 +1026,8 @@ div.project-logo > img{
 	bottom:32px;
 }
 
-/* ------ Proposed Card ------ */
+/* FS Cards > Proposed Card
+----------------------------------------------- */
 
 .proposed .issue-description{
 	height:120px;
@@ -919,9 +1046,8 @@ div.project-logo > img{
 	max-width: 100%;
 }
 
-/* ------ Project Card ------ */
-
-/* ------ Card Status ------ */
+/* FS Cards > Card Status
+----------------------------------------------- */
 .card-status{
 	width:72px;
 	height:72px;
@@ -943,7 +1069,32 @@ div.project-logo > img{
 	background: url(../img2/card_status_done.png)  no-repeat;
 }
 
+/* FS BarGraph
+----------------------------------------------- */
 
+.fs-bargraph .bar{
+	display:inline-block;
+	width:24px;
+	background-color:#D8D8D8;
+	border:1px solid #BFBFBF;
+}
+
+/* FS BarGraph > Colors
+----------------------------------------------- */
+.fs-bargraph .bar.green{
+	background-color:#8DC63F;
+	border:1px solid #85BA2E;
+}
+
+
+
+.tag-list .tag{
+	display:inline-block;
+	padding:5px 10px;
+	margin:4px 0;
+	background-color:#F2F2F2;
+	border-bottom:1px solid #E6E6E6;
+}
 
 [class^="icon-"],
 [class*=" icon-"] {

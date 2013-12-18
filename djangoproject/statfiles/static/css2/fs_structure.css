@@ -253,6 +253,21 @@ div.column-wrapper.vertical{ /* Defines columns container */
 	align-items: center;	
 }
 
+.column-wrapper.bottom-align-content{
+	height:100%;
+	
+	/* Vertical Align */
+	-webkit-align-content: center;
+	-moz-align-content: center;
+	-ms-align-content: center;
+	align-content: center;
+	
+	-webkit-align-items: flex-end;
+	-moz-align-items: flex-end;
+	-ms-align-items: flex-end;
+	align-items: flex-end;	
+}
+
 .column-wrapper.hcenter-content{
 	/* Horizontal Align */
 	-webkit-justify-content: center;
