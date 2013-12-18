@@ -1,6 +1,7 @@
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from core.models import Project
+from core.services import stats_services
 from core.views import template_folder
 
 __author__ = 'tony'
@@ -8,8 +9,9 @@ __author__ = 'tony'
 
 def view(request, project_id):
     project = Project.objects.get(pk=project_id)
+    stats = stats_services.project_stats(project)
     return render_to_response('core2/project.html',
-                              {'project': project},
+                              {'project': project, 'stats': stats},
                               context_instance=RequestContext(request))
 
 

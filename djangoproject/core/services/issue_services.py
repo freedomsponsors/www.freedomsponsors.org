@@ -81,6 +81,7 @@ def sponsor_existing_issue(issue_id, dict, user):
     if issue.is_public_suggestion:
         issue.is_public_suggestion = False
         issue.save()
+    issue.update_redundant_fields()
     watches = watch_services.find_issue_watches(issue)
     notifyWatchers_offeradded(offer, watches)
     msg = "offer: " + str(offer.price) + "\n<br>" +\
@@ -103,7 +104,7 @@ def change_existing_issue(issue_id, issuedict, user):
 def change_existing_offer(offer_id, offerdict, user):
     offer = Offer.objects.get(pk=offer_id)
     _throwIfNotOfferOwner(offer, user)
-    offer.issue.touch()
+    offer.issue.update_redundant_fields()
     old_offer = offer.clone()
     offer.changeOffer(offerdict)
     watches = watch_services.find_issue_and_offer_watches(offer)
@@ -113,7 +114,6 @@ def change_existing_offer(offer_id, offerdict, user):
 
 def add_solution_to_existing_issue(issue_id, comment_content, accepting_payments, user):
     issue = Issue.objects.get(pk=issue_id)
-    issue.touch()
     solution = get_or_none(Solution, issue=issue, programmer=user)
     if(solution):
         _throwIfSolutionInProgress(solution, user, 'add solution')
@@ -121,6 +121,7 @@ def add_solution_to_existing_issue(issue_id, comment_content, accepting_payments
     else:
         solution = Solution.newSolution(issue, user, accepting_payments)
     solution.save()
+    issue.update_redundant_fields();
     comment = None
     if(comment_content):
         comment = IssueComment.newComment(issue, user, comment_content)
@@ -134,10 +135,10 @@ def add_solution_to_existing_issue(issue_id, comment_content, accepting_payments
 
 def abort_existing_solution(solution_id, comment_content, user):
     solution = Solution.objects.get(pk=solution_id)
-    solution.issue.touch()
     _throwIfNotSolutionOwner(solution, user)
     _throwIfSolutionNotInProgress(solution, user, 'abort solution')
     solution.abort()
+    solution.issue.update_redundant_fields();
     comment = None
     if(comment_content):
         comment = IssueComment.newComment(solution.issue, user, comment_content)
@@ -150,10 +151,10 @@ def abort_existing_solution(solution_id, comment_content, user):
 
 def revoke_existing_offer(offer_id, comment_content, user):
     offer = Offer.objects.get(pk=offer_id)
-    offer.issue.touch()
     _throwIfNotOfferOwner(offer, user)
     _throwIfOfferNotOpen(offer, user, 'revoke offer')
     offer.revoke()
+    offer.issue.update_redundant_fields()
     comment = None
     if(comment_content):
         comment = IssueComment.newComment(offer.issue, user, comment_content)
@@ -165,10 +166,10 @@ def revoke_existing_offer(offer_id, comment_content, user):
 
 def resolve_existing_solution(solution_id, comment_content, user):
     solution = Solution.objects.get(pk=solution_id)
-    solution.issue.touch()
     _throwIfNotSolutionOwner(solution, user)
     _throwIfSolutionNotInProgress(solution, user, 'resolve solution')
     solution.resolve()
+    solution.issue.update_redundant_fields()
     comment = None
     if(comment_content):
         comment = IssueComment.newComment(solution.issue, user, comment_content)

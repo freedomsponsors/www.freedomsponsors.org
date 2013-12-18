@@ -292,6 +292,7 @@ class Issue(models.Model):
     trackerURL_noprotocol = models.URLField(null=True, blank=True)
     is_feedback = models.BooleanField()
     is_public_suggestion = models.BooleanField()
+    status = models.CharField(max_length=40)
 
     @classmethod
     def newIssue(cls, project, key, title, description, createdByUser, trackerURL):
@@ -306,6 +307,7 @@ class Issue(models.Model):
         issue.trackerURL = trackerURL
         issue.trackerURL_noprotocol = strip_protocol(trackerURL)
         issue.is_feedback = False
+        issue.status = 'open'
         return issue
 
     @classmethod
@@ -318,6 +320,7 @@ class Issue(models.Model):
         issue.updatedDate = issue.creationDate
         issue.createdByUser = createdByUser
         issue.is_feedback = False
+        issue.status = 'open'
         return issue
 
     @classmethod
@@ -330,6 +333,7 @@ class Issue(models.Model):
         issue.updatedDate = issue.creationDate
         issue.createdByUser = createdByUser
         issue.is_feedback = True
+        issue.status = 'open'
         return issue
 
     def changeIssue(self, issuedict):
@@ -408,6 +412,11 @@ class Issue(models.Model):
             return self.project.get_image3x1()
         else:
             return ''
+
+    def update_redundant_fields(self):
+        self.status = self.get_status()
+        self.touch()
+        self.save()
 
     def get_status(self):
         working = False
