@@ -88,9 +88,9 @@
         <div class="column" style="width:200px;">
             <div class="fs-box border-box">
                 <h4 class="arial">Total Offered</h4>
-                <div><span class="green-text" title="US$ {{ stats.usd_open }} already paid to developers">US$ {{ stats.usd_open }}</span> / <span title="US$ {{ stats.total_usd }} offered to developers on issues">US$ {{ stats.total_usd }}</span></div>
+                <div><span class="green-text" title="US$ {{ stats.usd_open }} already paid to developers">US$ {{ stats.usd_open }}</span> / <span title="US$ {{ stats.total_usd }} offered to developers on issues">{{ stats.total_usd }}</span></div>
                 <div class="vgap-5"><!-- Vertical Gap 5px --></div>
-                <div><span class="green-text" title="BTC {{ stats.btc_open }} already paid to developers">BTC {{ stats.btc_open }}</span> / <span title="BTC {{ stats.total_btc }} being offered to developers on issues">BTC {{ stats.total_btc }}</span></div>
+                <div><span class="green-text" title="BTC {{ stats.btc_open }} already paid to developers">BTC {{ stats.btc_open }}</span> / <span title="BTC {{ stats.total_btc }} being offered to developers on issues">{{ stats.total_btc }}</span></div>
                 <div class="vgap-15"><!-- Vertical Gap 15px --></div>
                 <h4 class="arial">Total Issues</h4>
                 <p><span class="green-text" title="{{ stats.issues_done }} issues solved">{{ stats.issues_done }} Solved</span> / <span title="{{ stats.issues_open }} issues open">{{ stats.issues_open }} Open</span></p>

@@ -1,3 +1,4 @@
+# coding: utf-8
 __author__ = 'tony'
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -109,6 +110,9 @@ def project(request):
 
     _project = {
         'name': 'FreedomSponsors',
+        'description': u'Lorem Ipsum Dolor sit amet consectuis harem motion plus.\n'
+                       u'Coloque 200 ml de água em uma panela, adicione o miojo, deixe\n'
+                       u'ferver por 3 minutos. Adicione o tempero e pronto!',
         'get_image3x1': '/static/img2/fs_logo.png',
     }
     _stats = {
@@ -119,7 +123,7 @@ def project(request):
         'btc_paid': 4,
         'btc_open': 6,
         'total_issues': 10,
-        'total_usd': 10,
+        'total_usd': 100,
         'total_btc': 10,
         'percent_issues_open': 20,
         'percent_issues_done': 80,
