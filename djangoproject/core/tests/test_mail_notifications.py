@@ -54,11 +54,12 @@ class TestMailNotifications(unittest.TestCase):
         email_asserts.clear_sent()
         response = client2.post('/core/issue/sponsor/submit',
             {'issue_id': str(issue.id),
-             'price':'20.00',
-             'currency' : 'USD',
-             'acceptanceCriteria':'some criteria',})
+             'price': '20.00',
+             'currency': 'USD',
+             'acceptanceCriteria': 'some criteria'})
         self.assertEqual(response.status_code, 302)
-        offer_id = response.get('location').split('/')[-2]
+
+        offer_id = issue.getOffers()[0].id
 
         email_asserts.assert_sent_count(self, 2) #one to the watcher, other to the site admin
         email_asserts.assert_sent(self, to=self.user.email, subject="%s made a US$ 20.00 offer for issue [%s]"%(user2ScreenName, issue.title))
@@ -66,9 +67,9 @@ class TestMailNotifications(unittest.TestCase):
         email_asserts.clear_sent()
         response = client2.post('/core/offer/edit/submit',
             {'offer_id': offer_id,
-             'currency':'USD',
-             'price':'30.00',
-             'acceptanceCriteria':'some criteria',})
+             'currency': 'USD',
+             'price': '30.00',
+             'acceptanceCriteria': 'some criteria'})
         self.assertEqual(response.status_code, 302)
         email_asserts.assert_sent_count(self, 1)
         email_asserts.assert_sent(self, to=self.user.email, subject="%s raised the US$ 20.00 offer on issue [%s]"%(user2ScreenName, issue.title))

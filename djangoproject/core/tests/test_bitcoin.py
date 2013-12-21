@@ -176,9 +176,9 @@ class BitcoinPaymentTests(TestCase):
         self._submitPayForm(client, response_offer, response_solutions, '5.00', '5.1505')
         payment = self._ipn_confirmation_receive(Decimal('5.1505'))
         payment = self._confirm_received(payment, 5.1505)
-        self._pay_programmer(payment, Decimal('5'), '5.1505')
+        self._pay_programmer(payment, Decimal('5'), '5.15050000')
         self._ipn_confirmation_send(payment, -Decimal('5'))
-        self._confirm_sent(offer, programmer, Decimal('5'), '5.00', '5.1505')
+        self._confirm_sent(offer, programmer, Decimal('5'), '5.00', '5.15050000')
 
     def test_bitcoin_payment_complete_offer_usd(self):
 
@@ -191,6 +191,6 @@ class BitcoinPaymentTests(TestCase):
         self._submitPayForm(client, response_offer, response_solutions, '0.10', '0.1035')
         payment = self._ipn_confirmation_receive(Decimal('0.1035'))
         payment = self._confirm_received(payment, 0.1035)
-        self._pay_programmer(payment, Decimal('0.1'), '0.1035')
+        self._pay_programmer(payment, Decimal('0.1'), '0.10350000')
         self._ipn_confirmation_send(payment, -Decimal('0.1'))
-        self._confirm_sent(offer, programmer, Decimal('0.1'), '0.10', '0.1035')
+        self._confirm_sent(offer, programmer, Decimal('0.1'), '0.10', '0.10350000')

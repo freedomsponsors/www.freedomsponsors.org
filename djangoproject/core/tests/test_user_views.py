@@ -70,8 +70,11 @@ class TestUserAuthenticatedViews(TestCase):
             'primaryEmail': 'john@test.com',
             'bitcoin_receive_address': 'null'
         }, follow=True)
-        expected = [('http://testserver/user/1/john-doe?prim=true', 302)]
-        self.assertEqual(expected, response.redirect_chain)
+        redirect_url = response.redirect_chain[0][0]
+        redirect_status = response.redirect_chain[0][1]
+        self.assertEqual(302, redirect_status)
+        self.assertTrue(redirect_url.startswith('http://testserver/user/'))
+        self.assertTrue(redirect_url.endswith('/john-doe?prim=true'))
 
 
 class TestDeprecatedCoreUserViews(TestCase):
