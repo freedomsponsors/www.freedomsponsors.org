@@ -28,13 +28,13 @@ def home(request):
 
 def issue(request):
     _crumbs = [{
-        'link': '/',
-        'name': 'Home'
-    },
-    {
-        'link': '#',
-        'name': 'issue: ' + 'Build a time machine'
-    }]
+                   'link': '/',
+                   'name': 'Home'
+               },
+               {
+                   'link': '#',
+                   'name': 'issue: ' + 'Build a time machine'
+               }]
     _actionbar = {
         'sponsor': True,
         'work': True,
@@ -43,7 +43,7 @@ def issue(request):
         'revoke': False,
         'resolve': False,
         'abort': False,
-    }
+        }
     _issue = {
         'createdByUser': {'id': 1},
         'description': 'Bla\nble',
@@ -57,36 +57,36 @@ def issue(request):
         'getComments': [
             {'id': 1, 'content': 'Hey', 'author': {'id': 1}},
             {'id': 2, 'content': 'Hoo'},
-        ],
+            ],
         'getOffers':[
             {
-             'id': 1,
-             'sponsor': {'getUserInfo': {'screenName': 'Demi Moore'}},
-             'get_currency_symbol': 'US$',
-             'price_2': '60.00',
-             'no_forking': True,
-             'require_release': True,
-             'status': 'OPEN',
-             'creationDate': datetime.now(),
-            },
+                'id': 1,
+                'sponsor': {'getUserInfo': {'screenName': 'Demi Moore'}},
+                'get_currency_symbol': 'US$',
+                'price_2': '60.00',
+                'no_forking': True,
+                'require_release': True,
+                'status': 'OPEN',
+                'creationDate': datetime.now(),
+                },
             {
-             'id': 2,
-             'sponsor': {'getUserInfo': {'screenName': 'Johnny Depp'}},
-             'get_currency_symbol': 'BTC',
-             'price_2': '3.00',
-             'no_forking': True,
-             'require_release': True,
-             'status': 'OPEN',
-             'creationDate': datetime.now(),
-             },
-        ],
+                'id': 2,
+                'sponsor': {'getUserInfo': {'screenName': 'Johnny Depp'}},
+                'get_currency_symbol': 'BTC',
+                'price_2': '3.00',
+                'no_forking': True,
+                'require_release': True,
+                'status': 'OPEN',
+                'creationDate': datetime.now(),
+                },
+            ],
         'getSolutions': [
             {'programmer': {'getUserInfo': {'screenName': 'Nicholas Cage'}},
              'status': 'DONE',
              'accepting_payments': True,
              'creationDate': datetime.now()}
         ],
-    }
+        }
     _user = {'id': 1}
 
     context = {
@@ -102,4 +102,35 @@ def issue(request):
         'actionbar': _actionbar,
         'user': _user}
     return render_to_response('core2/issue.html',
+                              context, context_instance=RequestContext(request))
+
+
+def project(request):
+
+    _project = {
+        'name': 'FreedomSponsors',
+        'get_image3x1': '/static/img2/fs_logo.png',
+    }
+    _stats = {
+        'issues_open': 2,
+        'issues_done': 8,
+        'usd_paid': 30,
+        'usd_open': 70,
+        'btc_paid': 4,
+        'btc_open': 6,
+        'total_issues': 10,
+        'total_usd': 10,
+        'total_btc': 10,
+        'percent_issues_open': 20,
+        'percent_issues_done': 80,
+        'percent_usd_paid': 30,
+        'percent_usd_open': 70,
+        'percent_btc_paid': 40,
+        'percent_btc_open': 60,
+    }
+    context = {
+        'project': _project,
+        'stats': _stats,
+    }
+    return render_to_response('core2/project.html',
                               context, context_instance=RequestContext(request))
