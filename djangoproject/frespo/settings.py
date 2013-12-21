@@ -23,8 +23,16 @@ MANAGERS = ADMINS
 ENABLE_PIWIK = False
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default='sqlite:///' + PROJECT_DIR.child('database.db'))
+    # 'default': dj_database_url.config(
+    #     default='sqlite:///' + PROJECT_DIR.child('database.db'))
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'frespo',                      # Or path to database file if using sqlite3.
+        'USER': 'frespo',                      # Not used with sqlite3.
+        'PASSWORD': 'frespo',                  # Not used with sqlite3.
+        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
+    }
 }
 
 MEDIA_ROOT = PROJECT_DIR.child('core').child('static').child('media')

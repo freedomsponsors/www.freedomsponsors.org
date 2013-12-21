@@ -4,8 +4,7 @@ import mock
 from django.test import TestCase
 from helpers import test_data
 from django.test.client import Client
-from django.core.urlresolvers import reverse, resolve
-from django.conf import settings
+from django.core.urlresolvers import reverse
 
 
 __author__ = 'tony'
