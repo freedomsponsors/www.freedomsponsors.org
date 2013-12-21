@@ -27,7 +27,8 @@ def edit(request):
     project = Project.objects.get(pk=project_id)
     if 'image3x1' in request.FILES and request.FILES['image3x1']:
         project.image3x1 = request.FILES['image3x1']
-        project.save()
+    project.description = request.POST.get('description')
+    project.save()
     return redirect('core.views.project_views.view', project_id=project.id)
 
 

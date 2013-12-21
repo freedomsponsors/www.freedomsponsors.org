@@ -236,6 +236,7 @@ def upload_to(name):
         return '%s_%s_%s.%s' % (name, project.id, timestamp, extension)
     return f
 
+
 # Tudo que estah marcado como "@Auditable" eh um lembrete que pode ter algum atributo que eh alterado pelo
 # usuário depois que a entidade eh criada.
 # Essas alteracoes precisam ser gravadas em tabelas auxiliares (que a gente cria depois)
@@ -246,6 +247,7 @@ def upload_to(name):
 #@Auditable
 class Project(models.Model): 
     name = models.CharField(max_length=200)
+    description = models.TextField(null=True, blank=True)
     createdByUser = models.ForeignKey(User)
     creationDate = models.DateTimeField()
     homeURL = models.URLField(null=True, blank=True)
