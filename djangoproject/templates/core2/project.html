@@ -19,7 +19,6 @@
             <div class="column" style="width:200px;">
                 <!-- BarGraph -->
                 <div class="column-wrapper">
-                    {% if stats.total_usd %}
                     <div class="column">
                         <div class="column-wrapper fs-bargraph bottom-align-content" style="height:100px">
                             <div class="bar green" style="height:{{ stats.percent_usd_paid }}%" title="US$ {{ stats.usd_paid }} already paid to developers"><!-- US$ Paid GraphBar --></div>
@@ -29,8 +28,6 @@
                         <div class="vgap-15"><!-- Vertical Gap 15px --></div>
                         <h4 class="arial text-align-center">US$</h4>
                     </div>
-                    {% endif %}
-                    {% if stats.total_btc %}
                     <div class="column">
                         <div class="column-wrapper fs-bargraph bottom-align-content" style="height:100px">
                             <div class="bar green" style="height:{{ stats.percent_btc_paid }}%" title="BTC {{ stats.btc_paid }} already paid to developers"><!-- BTC Paid GraphBar --></div>
@@ -40,8 +37,6 @@
                         <div class="vgap-15"><!-- Vertical Gap 15px --></div>
                         <h4 class="arial text-align-center">BTC</h4>
                     </div>
-                    {% endif %}
-                    {% if stats.total_issues %}
                     <div class="column">
                         <div class="column-wrapper fs-bargraph bottom-align-content" style="height:100px">
                             <div class="bar green" style="height:{{ stats.percent_issues_done }}%" title="{{ stats.issues_done }} issues solved"><!-- Issues Solved GraphBar --></div>
@@ -51,7 +46,6 @@
                         <div class="vgap-15"><!-- Vertical Gap 15px --></div>
                         <h4 class="arial text-align-center">Issues</h4>
                     </div>
-                    {% endif %}
                 </div>
             </div>
         </div>
@@ -74,7 +68,7 @@
                     </div>
                 </div>
                 <!-- Project Description: Please limit to  characters -->
-                <p class="text-align-justify" style="min-height:52px;">{{ project.description }}</p>
+                <p class="text-align-justify" style="min-height:52px;">{{ project.description|markdown|safe }}</p>
                 <!-- Tags -->
                 <div class="tag-list">
                     {% for tag in project.get_tags %}

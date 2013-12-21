@@ -79,6 +79,8 @@ mdt = misaka.Markdown(text_renderer)
 
 
 def markdown(text):
+    if not text:
+        text = ""
     return md.render(text)
 
 

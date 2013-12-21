@@ -2,20 +2,44 @@
 {% load i18n %}
 
 
+{% block head %}
+    <script src="/static/js/angular.min.js"></script>
+    <script src="/static/js/angularutils/angularutils.js"></script>
+    <script src="/static/bootstrap/js/showdown.js"></script>
+    <script>
+
+        var dependencies = ['angularutils'];
+
+        var mod = angular.module('project', dependencies);
+        mod.config(
+            function($interpolateProvider){
+                $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
+            }
+        );
+
+        mod.controller("MyCtrl", function($scope){
+            $scope.description = '{{ project.description }}';
+        });
+    </script>
+{% endblock %}
+
 {% block mainContent%}
-    <h2> Editing project: {{ project.name }}</h2>
-    <hr>
-    <form method="POST" action="{% url core.views.project_views.edit %}" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="hidden" name="id" value="{{ project.id }}">
-        <div>
-            <label for="image3x1">Image</label>
-            <input type="file" name="image3x1" id="image3x1">
-        </div>
-        <div>
-            <label for="description">Description</label>
-            <textarea name="description" id="description">{{ project.description }}</textarea>
-        </div>
-        <input type="submit">
-    </form>
+    <div ng-app="project" ng-controller="MyCtrl">
+        <h2> Editing project: {{ project.name }}</h2>
+        <hr>
+        <form method="POST" action="{% url core.views.project_views.edit %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="id" value="{{ project.id }}">
+            <div>
+                <label for="image3x1">Image</label>
+                <input type="file" name="image3x1" id="image3x1">
+            </div>
+            <div>
+                <label for="description">Description</label>
+                <text-with-markdown-preview model="description" nameid="description"></text-with-markdown-preview>
+            </div>
+            <input type="submit">
+        </form>
+
+    </div>
 {% endblock mainContent%}
