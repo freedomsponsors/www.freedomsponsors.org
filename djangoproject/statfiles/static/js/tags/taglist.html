@@ -1,0 +1,12 @@
+<div>
+    <a href="" class="tag" ng-repeat="tag in tags" style="margin-right: 10px;">{[{tag}]}</a>
+    <div>
+        <input type="text" ng-model="newtag" ng-keypress="keypress()">
+        <div ng-show="poptags">
+            <ul>
+                <li ng-repeat="poptag in poptags" ng-click="addTag(poptag)">{{ poptag.name }}</li>
+            </ul>
+        </div>
+        <img src="/static/img2/ajax-loader.gif" ng-show="loading">
+    </div>
+</div>

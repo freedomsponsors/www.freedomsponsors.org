@@ -4,8 +4,31 @@
 {% load l10n %}
 
 
+{% block head %}
+    <script src="/static/js/angular.min.js"></script>
+    <script src="/static/js/angularutils/angularutils.js"></script>
+    <script src="/static/js/so/soapi.js"></script>
+    <script src="/static/js/tags/taglist.js"></script>
+    <script src="/static/bootstrap/js/showdown.js"></script>
+    <script>
+
+        var dependencies = ['angularutils', 'taglist'];
+
+        var mod = angular.module('project', dependencies);
+        mod.config(
+            function($interpolateProvider){
+                $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
+            }
+        );
+
+        mod.controller("MyCtrl", function($scope){
+        });
+    </script>
+{% endblock %}
+
+
 {% block mainContent%}
-    <div class="content" align="center">
+    <div class="content" align="center" ng-app="project" ng-controller="MyCtrl">
     <div class="home-content-section" align="left">
     <!-- Project Header -->
     <div style="height:160px">
@@ -72,8 +95,9 @@
                 <!-- Tags -->
                 <div class="tag-list">
                     {% for tag in project.get_tags %}
-                    <a href="" class="tag">{{ tag.name }}</a>
+                    <a href="" class="tag">{{ tag }}</a>
                     {% endfor %}
+                    <taglist type="Project" objid="{[{ project.id }]}"></taglist>
                 </div>
             </div>
         </div>

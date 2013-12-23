@@ -114,6 +114,7 @@ def project(request):
                        u'Coloque 200 ml de água em uma panela, adicione o miojo, deixe\n'
                        u'ferver por 3 minutos. Adicione o tempero e pronto!',
         'get_image3x1': '/static/img2/fs_logo.png',
+        'get_tags': ['tag1', 'tag2']
     }
     _stats = {
         'issues_open': 2,
