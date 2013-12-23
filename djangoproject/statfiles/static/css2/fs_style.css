@@ -104,9 +104,9 @@ textarea{
 	width:100%;
 	min-height:120px;
 	
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
+	-webkit-box-sizing: border-box!important;
+	-moz-box-sizing: border-box!important;
+	box-sizing: border-box!important;
 	
 	border: 1px solid #D1D1D1;
 	resize: none;
@@ -580,6 +580,12 @@ div.divider.small:before{
 
 /* Icons
 ----------------------------------------------- */
+
+.external-link{
+	display:inline-block;
+	padding-right:18px;
+	background:transparent url(../img2/fs_external_link_icon.png) right center no-repeat;
+}
 
 .iconized{
 	display:inline-block;
