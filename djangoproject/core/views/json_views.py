@@ -1,12 +1,14 @@
 # Create your views here.
+from django.views.decorators.csrf import csrf_exempt
 
 from core.models import *
 from django.http import HttpResponse
 from django.utils.translation import ugettext as _
 import json
-from core.services import issue_services
+from core.services import issue_services, tag_services
 import traceback
 import logging
+from django.contrib.auth.decorators import login_required
 
 logger = logging.getLogger(__name__)
 
@@ -66,6 +68,28 @@ def list_issue_cards(request):
     return HttpResponse(json.dumps(result))
 
 
+@login_required
+@csrf_exempt
+def add_tag(request):
+    name = request.POST.get('name')
+    objtype = request.POST.get('objtype')
+    objid = int(request.POST.get('objid'))
+    if not objtype in ['Project', 'Issue']:
+        raise BaseException('Wrong objtype: %s' % objtype)
+    tag_services.addTag(name, objtype, objid)
+    return HttpResponse('')
+
+
+@login_required
+@csrf_exempt
+def remove_tag(request):
+    name = request.POST.get('name')
+    objtype = request.POST.get('objtype')
+    objid = int(request.POST.get('objid'))
+    tag_services.removeTag(name, objtype, objid)
+    return HttpResponse('')
+
+
 def _convert_offers_to_dict(offers):
     result = []
     for offer in offers:
@@ -80,9 +104,6 @@ def _convert_offers_to_dict(offers):
             'require_release': str(offer.require_release),
             'status': offer.status})
     return result
-
-
-
 
 
 

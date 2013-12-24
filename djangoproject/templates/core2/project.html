@@ -9,6 +9,11 @@
     <script src="/static/js/angularutils/angularutils.js"></script>
     <script src="/static/js/so/soapi.js"></script>
     <script src="/static/js/tags/taglist.js"></script>
+    {% if sandbox %}
+        <script src="/static/js/tags/tag_api_mock.js"></script>
+    {% else %}
+        <script src="/static/js/tags/tag_api.js"></script>
+    {% endif %}
     <script src="/static/bootstrap/js/showdown.js"></script>
     <script>
 
@@ -22,8 +27,8 @@
         );
 
         mod.controller("MyCtrl", function($scope){
-            $scope.tags = [];
-            //tags {{ project.get_tags }}
+            $scope.tags = {{ tags|safe }};
+            $scope.authenticated = {% if user.is_authenticated %}true{% else %}false{% endif %};
         });
     </script>
 {% endblock %}
@@ -101,7 +106,7 @@
                     {% endfor %}
                 </div>
                 <div class="tag-list">
-                    <taglist tags="tags" type="Project" objid="{[{ project.id }]}"></taglist>
+                    <taglist tags="tags" type="Project" objid="{{ project.id }}" editable="authenticated"></taglist>
                 </div>
             </div>
         </div>

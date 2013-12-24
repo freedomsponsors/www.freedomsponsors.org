@@ -20,7 +20,7 @@
  https://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/AGPL_license.txt
  */
 
-var mod = angular.module('taglist', ['soapi' /*'tagsapi'*/]);
+var mod = angular.module('taglist', ['soapi', 'tagapi']);
 mod.directive('taglist', function() {
     return {
         restrict: 'E',
@@ -28,10 +28,11 @@ mod.directive('taglist', function() {
         scope:{
             tags: "=",
             type: "@",
-            objid: "@"
+            objid: "@",
+            editable: '='
         },
         templateUrl: '/static/js/tags/taglist.html',
-        controller: function ($scope, $timeout, SOApi /*, TagApi, SOApi*/) {
+        controller: function ($scope, $timeout, SOApi, TagApi) {
             $scope.poptags = [];
 
             var timer = undefined;
@@ -58,10 +59,12 @@ mod.directive('taglist', function() {
             $scope.addTag = function(t){
                 $scope.tags.push(t.name);
                 $scope.poptags = [];
+                TagApi.addTag(t.name, $scope.type, $scope.objid);
             };
 
             $scope.remove = function(index){
-                $scope.tags.splice(index, 1);
+                name = $scope.tags.splice(index, 1)[0];
+                TagApi.removeTag(name, $scope.type, $scope.objid);
             };
         }
     }

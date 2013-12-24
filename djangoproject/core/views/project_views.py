@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from core.models import Project
@@ -11,7 +12,9 @@ def view(request, project_id):
     project = Project.objects.get(pk=project_id)
     stats = stats_services.project_stats(project)
     return render_to_response('core2/project.html',
-                              {'project': project, 'stats': stats},
+                              {'project': project,
+                               'stats': stats,
+                               'tags': json.dumps([t.name for t in project.get_tags()])},
                               context_instance=RequestContext(request))
 
 

@@ -86,21 +86,26 @@ def gravatar_url_small(self):
     # return gravatar_url + urllib.urlencode({'d':settings.SITE_HOME+"/static/img/user_23.png", 's':"23"})
     return gravatar_url + "d=identicon&s=23"
 
+
 def gravatar_url_medium(self):
     gravatar_url = "http://www.gravatar.com/avatar/" + hashlib.md5(self.email.lower()).hexdigest() + "?"
     # return gravatar_url + urllib.urlencode({'d':settings.SITE_HOME+"/static/img/user_48.png", 's':"48"})
     return gravatar_url + "d=identicon&s=50"
+
 
 def gravatar_url_big(self):
     gravatar_url = "http://www.gravatar.com/avatar/" + hashlib.md5(self.email.lower()).hexdigest() + "?"
     # return gravatar_url + urllib.urlencode({'d':settings.SITE_HOME+"/static/img/user_128.png", 's':"128"})
     return gravatar_url + "d=identicon&s=128"
 
+
 def getUserInfo(self):
     return get_or_none(UserInfo, user=self)
 
+
 def getSocialAuths(self):
     return UserSocialAuth.objects.filter(user=self)
+
 
 def github_username(self):
     for social_auth in self.getSocialAuths():
@@ -108,18 +113,23 @@ def github_username(self):
             return social_auth.extra_data['social_username']
     return None
 
+
 def getOffers(self):
     return Offer.objects.filter(sponsor=self).order_by('status','-price')
+
 
 def getSolutions(self):
     return Solution.objects.filter(programmer=self).order_by('-creationDate')
 
+
 def getKickstartingIssues(self):
     return Issue.objects.filter(createdByUser=self, is_public_suggestion=True).order_by('-creationDate')
+
 
 def getWatchedIssues(self):
     print('watched %s' % Issue.objects.filter(issuewatch__user=self))
     return Issue.objects.filter(issuewatch__user=self)
+
 
 @receiver(user_activated_email)
 def set_email_verified(sender, **kwargs):
@@ -131,14 +141,17 @@ def set_email_verified(sender, **kwargs):
         userinfo.is_paypal_email_verified = True
     userinfo.save()
 
+
 def get_view_link(self):
     kwargs = {'user_id': self.id}
     if(self.getUserInfo() and self.getUserInfo().screenName):
         kwargs['user_slug'] = urlquote(slugify(self.getUserInfo().screenName))
     return reverse('core.views.user_views.viewUser', kwargs=kwargs)
 
+
 def is_registration_complete(self):
     return self.getUserInfo() and self.getUserInfo().is_complete()
+
 
 def getStats(self):
     stats = {'sponsoredOpenCount' : 0,
@@ -169,6 +182,7 @@ def getStats(self):
             stats['workingDoneCount'] += 1
     return stats
 
+
 _socialImages_small = {'google' : '/static/img/google_small.png',
     'yahoo':'/static/img/yahoo_small.png',
     'facebook':'/static/img/facebook_small.png',
@@ -177,6 +191,7 @@ _socialImages_small = {'google' : '/static/img/google_small.png',
     'bitbucket' : '/static/img/bitbucket_small.png',
 #    'myopenid' : '/static/img/myopenid.png'
 }
+
 
 _socialImages = {'google' : '/static/img/google.gif',
     'yahoo':'/static/img/yahoo.gif',
@@ -187,11 +202,13 @@ _socialImages = {'google' : '/static/img/google.gif',
 #    'myopenid' : '/static/img/myopenid.png'
 }
 
+
 def getUnconnectedSocialAccounts(self):
     all_social_auths = set(_socialImages.keys())
     user_social_auths = set(auth.provider for auth in self.getSocialAuths())
     unconnected = all_social_auths - user_social_auths
     return [{'provider': p, 'icon': _socialImages.get(p)} for p in unconnected]
+
 
 User.gravatar_url_small = gravatar_url_small
 User.gravatar_url_medium = gravatar_url_medium
@@ -208,11 +225,14 @@ User.getStats = getStats
 User.is_registration_complete = is_registration_complete
 User.get_view_link = get_view_link
 
+
 def getSocialIcon(self):
     return _socialImages.get(self.provider)
 
+
 def getSocialIcon_small(self):
     return _socialImages_small.get(self.provider)
+
 
 def getSocialProfileLink(self):
     if(self.provider == 'facebook'):
@@ -223,6 +243,7 @@ def getSocialProfileLink(self):
         return 'http://twitter.com/'+self.extra_data['social_username']
     else: 
         return None
+
 
 UserSocialAuth.getSocialIcon = getSocialIcon
 UserSocialAuth.getSocialIcon_small = getSocialIcon_small
@@ -276,11 +297,18 @@ class Project(models.Model):
         return '%s/%s' % (settings.MEDIA_ROOT_URL, self.image3x1)
 
     def get_tags(self):
-        return []  # TODO
+        return Tag.objects.filter(objtype="Project", objid=self.id)
 
     def __unicode__(self):
         return self.name
     
+
+# A tag on something
+class Tag(models.Model):
+    name = models.CharField(max_length=200)
+    objtype = models.CharField(max_length=200)
+    objid = models.IntegerField()
+
 
 # Uma issue de um projeto open source.
 # Isso aqui vai ser criado junto com a primeira "Offer" associada
