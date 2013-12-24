@@ -22,6 +22,8 @@
         );
 
         mod.controller("MyCtrl", function($scope){
+            $scope.tags = [];
+            //tags {{ project.get_tags }}
         });
     </script>
 {% endblock %}
@@ -93,11 +95,13 @@
                 <!-- Project Description: Please limit to  characters -->
                 <p class="text-align-justify" style="min-height:52px;">{{ project.description|markdown|safe }}</p>
                 <!-- Tags -->
-                <div class="tag-list">
+                <div class="tag-list" ng-show="false"> <!-- SEO -->
                     {% for tag in project.get_tags %}
                     <a href="" class="tag">{{ tag }}</a>
                     {% endfor %}
-                    <taglist type="Project" objid="{[{ project.id }]}"></taglist>
+                </div>
+                <div class="tag-list">
+                    <taglist tags="tags" type="Project" objid="{[{ project.id }]}"></taglist>
                 </div>
             </div>
         </div>

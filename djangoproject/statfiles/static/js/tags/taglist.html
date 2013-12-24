@@ -1,5 +1,5 @@
 <div>
-    <a href="" class="tag" ng-repeat="tag in tags" style="margin-right: 10px;">{[{tag}]}</a>
+    <span href class="tag" ng-repeat="tag in tags" style="margin-right: 10px;">{[{tag}]} <a href ng-click="remove($index)">x</a></span>
     <div>
         <input type="text" ng-model="newtag" ng-keypress="keypress()">
         <div ng-show="poptags">

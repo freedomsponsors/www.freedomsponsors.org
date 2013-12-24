@@ -26,12 +26,12 @@ mod.directive('taglist', function() {
         restrict: 'E',
         replace: true,
         scope:{
+            tags: "=",
             type: "@",
             objid: "@"
         },
         templateUrl: '/static/js/tags/taglist.html',
         controller: function ($scope, $timeout, SOApi /*, TagApi, SOApi*/) {
-            $scope.tags = ["java", "python"];
             $scope.poptags = [];
 
             var timer = undefined;
@@ -58,7 +58,11 @@ mod.directive('taglist', function() {
             $scope.addTag = function(t){
                 $scope.tags.push(t.name);
                 $scope.poptags = [];
-            }
+            };
+
+            $scope.remove = function(index){
+                $scope.tags.splice(index, 1);
+            };
         }
     }
 });

@@ -275,6 +275,9 @@ class Project(models.Model):
                 return '/static/img2/default_project_logo.png'
         return '%s/%s' % (settings.MEDIA_ROOT_URL, self.image3x1)
 
+    def get_tags(self):
+        return []  # TODO
+
     def __unicode__(self):
         return self.name
     
