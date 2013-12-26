@@ -5,6 +5,7 @@ from core.models import Project
 from core.services import stats_services, issue_services
 from core.signals import project_edited
 from core.views import template_folder
+from django.contrib.auth.decorators import login_required
 
 __author__ = 'tony'
 
@@ -25,6 +26,7 @@ def view(request, project_id):
                               context_instance=RequestContext(request))
 
 
+@login_required
 def edit_form(request, project_id):
     project = Project.objects.get(pk=project_id)
     return render_to_response('core2/project_edit.html',
@@ -32,6 +34,7 @@ def edit_form(request, project_id):
                               context_instance=RequestContext(request))
 
 
+@login_required
 def edit(request):
     project_id = int(request.POST.get('id'))
     project = Project.objects.get(pk=project_id)

@@ -33,6 +33,8 @@ class TestProjectViews(TestCase):
         self.assertEqual('Hibernate', project.name)
 
     def test_project_edit_form(self):
+        test_data.createDummyUserRandom(login='johndoe', password='abc123')
+        self.client.login(username='johndoe', password='abc123')
         response = self.client.get(_reverse('edit_form', project_id=self.project.id))
         self.assertTemplateUsed(response, 'core2/project_edit.html')
         project = response.context['project']
