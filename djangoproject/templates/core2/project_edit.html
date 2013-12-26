@@ -18,7 +18,7 @@
         );
 
         mod.controller("MyCtrl", function($scope){
-            $scope.description = '{{ project.description }}';
+            $scope.description = '{{ project.description|escapejs }}';
         });
     </script>
 {% endblock %}

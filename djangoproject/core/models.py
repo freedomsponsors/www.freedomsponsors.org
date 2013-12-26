@@ -299,6 +299,15 @@ class Project(models.Model):
     def get_tags(self):
         return Tag.objects.filter(objtype="Project", objid=self.id)
 
+    def to_json(self):
+        return json.dumps({
+            'id': self.id,
+            'name': self.name,
+            'homeURL': self.homeURL,
+            'trackerURL': self.trackerURL,
+            'image3x1': self.image3x1.url if self.image3x1 else None,
+        })
+
     def __unicode__(self):
         return self.name
     
@@ -993,7 +1002,38 @@ class ActionLog(models.Model):
 
     @classmethod
     def log_edit_project(cls, project, user, old_json):
-        pass
+        new_json = project.to_json()
+        ActionLog(
+            creationDate=timezone.now(),
+            action='EDIT_PROJECT',
+            entity='PROJECT',
+            old_json=old_json,
+            new_json=new_json,
+            project=project,
+            user=user,
+        ).save()
+
+    @classmethod
+    def log_project_tag_added(cls, user, project_id, tag_name):
+        ActionLog(
+            creationDate=timezone.now(),
+            action='PROJECT_ADD_TAG',
+            entity='PROJECT',
+            new_json=tag_name,
+            project=Project(id=project_id),
+            user=user,
+        ).save()
+
+    @classmethod
+    def log_project_tag_removed(cls, user, project_id, tag_name):
+        ActionLog(
+            creationDate=timezone.now(),
+            action='PROJECT_REMOVE_TAG',
+            entity='PROJECT',
+            new_json=tag_name,
+            project=Project(id=project_id),
+            user=user,
+        ).save()
 
     @classmethod
     def log_sponsor(cls, offer):
