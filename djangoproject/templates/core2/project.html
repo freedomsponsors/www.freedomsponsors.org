@@ -149,7 +149,9 @@
             <div class="column-wrapper">
                 {% for sponsor in top_sponsors %}
                     <div class="user-picture" title="{{ sponsor.getUserInfo.screenName }}">
-                        <img src="{{ sponsor.gravatar_url_medium }}">
+                        <a href="{{ sponsor.get_view_link }}">
+                            <img src="{{ sponsor.gravatar_url_medium }}">
+                        </a>
                     </div>
                 {% endfor %}
             </div>
@@ -161,7 +163,9 @@
             <div class="column-wrapper">
                 {% for programmer in top_programmers %}
                     <div class="user-picture" title="{{ programmer.getUserInfo.screenName }}">
-                        <img src="{{ programmer.gravatar_url_medium }}">
+                        <a href="{{ programmer.get_view_link }}">
+                            <img src="{{ programmer.gravatar_url_medium }}">
+                        </a>
                     </div>
                 {% endfor %}
             </div>
