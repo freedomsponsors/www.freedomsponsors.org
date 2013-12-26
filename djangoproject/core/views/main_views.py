@@ -21,7 +21,8 @@ def logout(request):
     """Logs out user"""
     auth_logout(request)
     return HttpResponseRedirect('/')
-    
+
+
 def login(request):
     getparams = ''
     if request.GET.has_key('next') : 
@@ -75,14 +76,11 @@ def mailtest(request):
 
 
 def home(request):
-    _is_old_layout = is_old_layout(request)
-    size = 20 if _is_old_layout else 3
-    issues_sponsoring = issue_services.search_issues(is_public_suggestion=False)[0:size]
-    issues_kickstarting = issue_services.search_issues(is_public_suggestion=True)[0:size]
+    issues_sponsoring = issue_services.search_issues(is_public_suggestion=False)[0:3]
+    issues_kickstarting = issue_services.search_issues(is_public_suggestion=True)[0:3]
     crumbs = [HOME_CRUMB]
-    if not _is_old_layout:
-        issues_sponsoring = json.dumps(issue_services.to_card_dict(issues_sponsoring))
-        issues_kickstarting = json.dumps(issue_services.to_card_dict(issues_kickstarting))
+    issues_sponsoring = json.dumps(issue_services.to_card_dict(issues_sponsoring))
+    issues_kickstarting = json.dumps(issue_services.to_card_dict(issues_kickstarting))
     return render_to_response(template_folder(request) + 'home.html',
         {'issues_sponsoring': issues_sponsoring,
          'issues_kickstarting': issues_kickstarting,

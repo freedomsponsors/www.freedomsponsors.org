@@ -68,7 +68,7 @@ def kickstart_new_issue(dict, user):
     if(issue.project):
         msg += "project : " + issue.project.name + "\n<br>" +\
                "project.trackerURL: " + issue.project.trackerURL + "\n<br>"
-    notify_admin("INFO: New issue kickstarted", msg)
+    notify_admin("INFO: New issue proposed", msg)
     return issue
 
 

@@ -61,3 +61,11 @@ function fs_ajax_async_result(func, url, params){
         });
     return r;
 }
+
+function get4Sponsors(issue){
+    var empties = [];
+    for(var i=0; i<4 - issue.four_sponsors.length; i++){
+        empties.push({empty:true});
+    }
+    return empties.concat(issue.four_sponsors)
+}

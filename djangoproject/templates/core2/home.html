@@ -24,14 +24,6 @@
             }
         );
 
-        function get4Sponsors(issue){
-            var empties = [];
-            for(var i=0; i<4 - issue.four_sponsors.length; i++){
-                empties.push({empty:true});
-            }
-            return empties.concat(issue.four_sponsors)
-        }
-
         function HomeCtrl($scope) {
             var issues_sponsoring = {{ issues_sponsoring|safe }};
             for(var i=0; i < issues_sponsoring.length; i++){

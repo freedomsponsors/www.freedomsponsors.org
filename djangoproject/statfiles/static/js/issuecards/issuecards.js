@@ -29,7 +29,8 @@ mod.directive('issueCards', function() {
         scope:{
             issues: "=",
             label: "@",
-            sponsoring: '@'
+            sponsoring: '@',
+            projectId: '@'
         },
         templateUrl: '/static/js/issuecards/issuecards.html',
         controller: function ($scope, $rootScope, FSApi, FSLinks) {
@@ -41,7 +42,7 @@ mod.directive('issueCards', function() {
 
             function load(){
                 $scope.is_loading = true;
-                FSApi.list_issues(is_sponsoring, $scope.offset, 3).onResult(function(result){
+                FSApi.list_issues($scope.projectId, is_sponsoring, $scope.offset, 3).onResult(function(result){
                     $scope.count = result.count;
                     $scope.issues = result.issues;
                     $scope.is_loading = false;

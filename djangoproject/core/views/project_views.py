@@ -2,7 +2,7 @@ import json
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from core.models import Project
-from core.services import stats_services
+from core.services import stats_services, issue_services
 from core.signals import project_edited
 from core.views import template_folder
 
@@ -12,10 +12,16 @@ __author__ = 'tony'
 def view(request, project_id):
     project = Project.objects.get(pk=project_id)
     stats = stats_services.project_stats(project)
+    issues_sponsoring = issue_services.search_issues(project_id=project_id, is_public_suggestion=False)[0:3]
+    issues_kickstarting = issue_services.search_issues(project_id=project_id, is_public_suggestion=True)[0:3]
+    issues_sponsoring = json.dumps(issue_services.to_card_dict(issues_sponsoring))
+    issues_kickstarting = json.dumps(issue_services.to_card_dict(issues_kickstarting))
     return render_to_response('core2/project.html',
                               {'project': project,
                                'stats': stats,
-                               'tags': json.dumps([t.name for t in project.get_tags()])},
+                               'tags': json.dumps([t.name for t in project.get_tags()]),
+                               'issues_sponsoring': issues_sponsoring,
+                               'issues_kickstarting': issues_kickstarting,},
                               context_instance=RequestContext(request))
 
 

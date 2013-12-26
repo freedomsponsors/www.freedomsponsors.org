@@ -147,7 +147,7 @@ var fsapi_mod = angular.module('fsapi', []);
 
 fsapi_mod.factory('FSApi', function(){
 
-    function list_issues(sponsoring, offset, count){
+    function list_issues(project_id, sponsoring, offset, count){
         var issues = [];
         for(var i=0; i < count; i++){
             var issue = sponsoring ? randomSponsoredIssue() : randomProposedIssue();

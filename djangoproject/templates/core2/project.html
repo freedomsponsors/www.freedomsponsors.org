@@ -9,15 +9,21 @@
     <script src="/static/js/angularutils/angularutils.js"></script>
     <script src="/static/js/so/soapi.js"></script>
     <script src="/static/js/tags/taglist.js"></script>
+    <script src="/static/js/issuecards/issuecards.js"></script>
+    <script src="/static/js/fsutil.js"></script>
     {% if sandbox %}
         <script src="/static/js/tags/tag_api_mock.js"></script>
+        <script src="/static/js/fsapi_mock.js"></script>
+        <script src="/static/js/fslinks_sandbox.js"></script>
     {% else %}
         <script src="/static/js/tags/tag_api.js"></script>
+        <script src="/static/js/fsapi.js"></script>
+        <script src="/static/js/fslinks.js"></script>
     {% endif %}
     <script src="/static/bootstrap/js/showdown.js"></script>
     <script>
 
-        var dependencies = ['angularutils', 'taglist'];
+        var dependencies = ['issuecards', 'angularutils', 'taglist'];
 
         var mod = angular.module('project', dependencies);
         mod.config(
@@ -29,6 +35,16 @@
         mod.controller("MyCtrl", function($scope){
             $scope.tags = {{ tags|safe }};
             $scope.authenticated = {% if user.is_authenticated %}true{% else %}false{% endif %};
+
+            var issues_sponsoring = {{ issues_sponsoring|safe }};
+            for(var i=0; i < issues_sponsoring.length; i++){
+                var issue = issues_sponsoring[i];
+                issue.four_sponsors_places = get4Sponsors(issue);
+            }
+
+            $scope.issues_sponsoring = issues_sponsoring;
+            $scope.issues_proposed = {{ issues_kickstarting|safe }};
+
         });
     </script>
 {% endblock %}
@@ -162,15 +178,27 @@
 
         <!-- Tab's List -->
         <ul class="tab-list" id="myTab">
-            <li class="active"><a href="#comunity" data-toggle="tab">Comunity</a></li>
+            <li class="active"><a href="#issues" data-toggle="tab">Issues</a></li>
+            <li><a href="#comunity" data-toggle="tab">Comunity</a></li>
             <li><a href="#activities" data-toggle="tab">Activities</a></li>
         </ul>
 
         <!-- Tab's Content -->
         <div class="tab-content">
 
+            <!-- Issues Tab -->
+            <div class="tab-pane active" id="issues">
+                <!-- Sponsored Issues -->
+                <issue-cards issues="issues_sponsoring" label="Sponsored Issues" sponsoring="true" project-id="{{ project.id }}"></issue-cards>
+
+                <div class="divider"><!-- Divider --></div>
+
+                <!-- Proposed Issues -->
+                <issue-cards issues="issues_proposed" label="Proposed Issues" sponsoring="false" project-id="{{ project.id }}"></issue-cards>
+            </div>
+
             <!-- Comunity Tab -->
-            <div class="tab-pane active" id="comunity">
+            <div class="tab-pane" id="comunity">
                 <div class="fs-box">
                     <p>Insert some text about the community tab here. What people can do here?</p>
                 </div>

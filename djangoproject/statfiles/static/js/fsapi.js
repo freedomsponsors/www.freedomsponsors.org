@@ -25,8 +25,9 @@ var fsapi_mod = angular.module('fsapi', []);
 
 fsapi_mod.factory('FSApi', function(){
 
-    function list_issues(sponsoring, offset, count){
+    function list_issues(project_id, sponsoring, offset, count){
         var params = {
+            project_id: project_id,
             sponsoring: sponsoring,
             offset: offset,
             count: count
