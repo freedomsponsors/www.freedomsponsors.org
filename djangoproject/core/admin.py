@@ -8,7 +8,7 @@ class IssueAdmin(admin.ModelAdmin):
 
 
 class PaymentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'creationDate', 'status', 'total', 'currency', 'usd2payment_rate')
+    list_display = ('id', 'creationDate', 'status', 'total', 'currency', 'offer_currency', 'usd2payment_rate')
 
 admin.site.register(UserInfo)
 admin.site.register(Project)

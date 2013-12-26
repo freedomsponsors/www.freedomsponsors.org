@@ -17,12 +17,17 @@ def view(request, project_id):
     issues_kickstarting = issue_services.search_issues(project_id=project_id, is_public_suggestion=True)[0:3]
     issues_sponsoring = json.dumps(issue_services.to_card_dict(issues_sponsoring))
     issues_kickstarting = json.dumps(issue_services.to_card_dict(issues_kickstarting))
+    top_sponsors = stats_services.project_top_sponsors(project_id)[0:5]
+    top_programmers = stats_services.project_top_programmers(project_id)[0:5]
     return render_to_response('core2/project.html',
                               {'project': project,
                                'stats': stats,
                                'tags': json.dumps([t.name for t in project.get_tags()]),
                                'issues_sponsoring': issues_sponsoring,
-                               'issues_kickstarting': issues_kickstarting,},
+                               'issues_kickstarting': issues_kickstarting,
+                               'top_sponsors': top_sponsors,
+                               'top_programmers': top_programmers,
+                               },
                               context_instance=RequestContext(request))
 
 

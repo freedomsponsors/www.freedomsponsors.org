@@ -1,7 +1,8 @@
-from datetime import datetime, timedelta
-import math
+from datetime import datetime
 from core.models import *
-from django.db import connection, transaction
+from django.db import connection
+import math
+from frespo_currencies import currency_service
 
 SELECT_SPONSORS = """
 select 
@@ -217,3 +218,143 @@ def project_stats(project):
             'percent_btc_open': percent_btc_open,
         })
     return result
+
+
+def project_top_sponsors(project_id):
+    btc2usd = currency_service.get_rate('BTC', 'USD', False)
+    SIZE = 10
+    query = Payment.objects.select_related('offer__sponsor').filter(
+        offer__issue__project__id=project_id,
+        status__in=[Payment.CONFIRMED_IPN, Payment.CONFIRMED_TRN]).extra(
+        {'total_usd': 'total / usd2payment_rate'}).order_by('-total_usd')
+    sponsors = {}
+    for payment in query:
+        sponsor_id = payment.offer.sponsor.id
+        sponsor = sponsors.get(sponsor_id)
+        if not sponsor:
+            sponsor = payment.offer.sponsor
+            sponsors[sponsor_id] = payment.offer.sponsor
+        if not hasattr(sponsor, 'paid_usd'):
+            setattr(sponsor, 'paid_usd', Decimal(0))
+        sponsor.paid_usd += payment.total_usd
+        if len(sponsors) >= SIZE:
+            break
+    if len(sponsors) < SIZE:
+        usd_offers = Offer.objects.select_related('sponsor').filter(
+            issue__project_id=project_id,
+            status=Offer.OPEN,
+            currency='USD'
+        ).order_by('-price')
+        btc_offers = Offer.objects.select_related('sponsor').filter(
+            issue__project_id=project_id,
+            status=Offer.OPEN,
+            currency='BTC'
+        ).order_by('-price')
+        def map_offer_sponsor(offer):
+            sponsor_id = offer.sponsor.id
+            sponsor = sponsors.get(sponsor_id)
+            if not sponsor:
+                sponsor = offer.sponsor
+                sponsors[sponsor_id] = sponsor
+            if not hasattr(sponsor, 'offered_usd'):
+                setattr(sponsor, 'offered_usd', Decimal(0))
+            offered_usd = offer.price
+            if offer.currency == 'BTC':
+                offered_usd *= Decimal(str(btc2usd))
+            sponsor.offered_usd += offered_usd
+        for offer_usd, offer_btc in zip(usd_offers, btc_offers):
+            map_offer_sponsor(offer_usd)
+            map_offer_sponsor(offer_btc)
+            if len(sponsors) >= SIZE:
+                break
+    for sponsor in sponsors.values():
+        if not hasattr(sponsor, 'paid_usd'):
+            setattr(sponsor, 'paid_usd', Decimal(0))
+        if not hasattr(sponsor, 'offered_usd'):
+            setattr(sponsor, 'offered_usd', Decimal(0))
+    def compare_sponsors(s1, s2):
+        dif = s1.paid_usd - s2.paid_usd
+        if dif != 0:
+            return int(math.copysign(1, dif))
+        dif = s1.offered_usd - s2.offered_usd
+        if dif != 0:
+            return int(math.copysign(1, dif))
+        return 0
+    sponsors = sorted(sponsors.values(), compare_sponsors, reverse=True)
+    return sponsors
+
+
+def project_top_programmers(project_id):
+    btc2usd = currency_service.get_rate('BTC', 'USD', False)
+    SIZE = 10
+    parts_usd = PaymentPart.objects.select_related('programmer', 'payment').filter(
+        payment__offer__issue__project__id=project_id,
+        payment__status__in=[Payment.CONFIRMED_IPN, Payment.CONFIRMED_TRN],
+        payment__currency='USD').order_by('-price')
+    parts_btc = PaymentPart.objects.select_related('programmer', 'payment').filter(
+        payment__offer__issue__project__id=project_id,
+        payment__status__in=[Payment.CONFIRMED_IPN, Payment.CONFIRMED_TRN],
+        payment__currency='BTC').order_by('-price')
+    programmers = {}
+    def map_part(part):
+        programmer_id = part.programmer.id
+        programmer = programmers.get(programmer_id)
+        if not programmer:
+            programmer = part.programmer
+            programmers[programmer_id] = programmer
+        if not hasattr(programmer, 'received_usd'):
+            setattr(programmer, 'received_usd', Decimal(0))
+        received_usd = part.price
+        if part.payment.currency == 'BTC':
+            received_usd *= Decimal(str(btc2usd))
+        programmer.received_usd += received_usd
+    for part_usd, part_btc in zip(parts_usd, parts_btc):
+        map_part(part_usd)
+        map_part(part_btc)
+        if len(programmers) > SIZE:
+            break
+    def add_solution(solution):
+        programmer_id = solution.programmer.id
+        programmer = programmers.get(programmer_id)
+        if not programmer:
+            programmer = solution.programmer
+            programmers[programmer_id] = programmer
+        if solution.status == Solution.DONE:
+            if not hasattr(programmer, 'done'):
+                setattr(programmer, 'done', 0)
+            programmer.done += 1
+    if len(programmers) < SIZE:
+        solutions_done = Solution.objects.select_related('programmer').filter(
+            issue__project__id=project_id,
+            status=Solution.DONE
+        ).order_by('-lastChangeDate')
+        for solution in solutions_done:
+            add_solution(solution)
+            if len(programmers) > SIZE:
+                break
+    if len(programmers) < SIZE:
+        solutions_open = Solution.objects.select_related('programmer').filter(
+            issue__project__id=project_id,
+            status=Solution.IN_PROGRESS
+        ).order_by('-lastChangeDate')
+        for solution in solutions_open:
+            add_solution(solution)
+            if len(programmers) > SIZE:
+                break
+    for programmer in programmers.values():
+        if not hasattr(programmer, 'received_usd'):
+            setattr(programmer, 'received_usd', Decimal(0))
+        if not hasattr(programmer, 'done'):
+            setattr(programmer, 'done', 0)
+    def compare_programmers(s1, s2):
+        dif = s1.received_usd - s2.received_usd
+        if dif != 0:
+            return int(math.copysign(1, dif))
+        dif = s1.done - s2.done
+        if dif != 0:
+            return int(math.copysign(1, dif))
+        return 0
+    programmers = sorted(programmers.values(), compare_programmers, reverse=True)
+    for programmer in programmers:
+        print('%s - %s - %s' % (programmer.getUserInfo().screenName, programmer.received_usd, programmer.done))
+    return programmers
