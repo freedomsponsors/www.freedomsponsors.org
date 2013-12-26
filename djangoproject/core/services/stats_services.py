@@ -355,6 +355,4 @@ def project_top_programmers(project_id):
             return int(math.copysign(1, dif))
         return 0
     programmers = sorted(programmers.values(), compare_programmers, reverse=True)
-    for programmer in programmers:
-        print('%s - %s - %s' % (programmer.getUserInfo().screenName, programmer.received_usd, programmer.done))
     return programmers
