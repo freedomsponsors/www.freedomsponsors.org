@@ -33,7 +33,8 @@ class TestProjectViews(TestCase):
         self.assertEqual('Hibernate', project.name)
 
     def test_project_edit_form(self):
-        test_data.createDummyUserRandom(login='johndoe', password='abc123')
+        self.user = test_data.createDummyUserRandom(login='johndoe', password='abc123')
+        self.client.login(username=self.user.username, password='abc123')
         self.client.login(username='johndoe', password='abc123')
         response = self.client.get(_reverse('edit_form', project_id=self.project.id))
         self.assertTemplateUsed(response, 'core2/project_edit.html')
@@ -41,6 +42,8 @@ class TestProjectViews(TestCase):
         self.assertEqual('Hibernate', project.name)
 
     def test_project_edit(self):
+        self.user = test_data.createDummyUserRandom(login='johndoe', password='abc123')
+        self.client.login(username=self.user.username, password='abc123')
         file_obj = StringIO()
         setattr(file_obj, 'name', 'mock.jpg')
         with mock.patch.object(self.project, 'save') as _save:
