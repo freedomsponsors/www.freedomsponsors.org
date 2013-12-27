@@ -642,8 +642,8 @@ class Offer(models.Model):
         self.save()
 
     def paid(self):
-        event = OfferHistEvent.newChangeEvent(offer=self, event=OfferHistEvent.PAY)
-        event.save()
+        # event = OfferHistEvent.newChangeEvent(offer=self, event=OfferHistEvent.PAY)
+        # event.save()
         self.status = Offer.PAID
         self.lastChangeDate = timezone.now()
         self.save()

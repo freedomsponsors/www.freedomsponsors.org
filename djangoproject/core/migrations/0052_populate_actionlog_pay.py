@@ -19,7 +19,7 @@ def part_to_dict_json(part):
 
 
 def payment_to_json(payment, orm):
-    json.dumps({
+    return json.dumps({
         'status': payment.status,
         'fee': float(str(payment.fee)) if payment.fee else None,
         'total': float(str(payment.total)) if payment.total else None,
