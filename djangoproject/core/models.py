@@ -619,8 +619,6 @@ class Offer(models.Model):
             return -1
 
     def changeOffer(self, offerdict):
-        # event = OfferHistEvent.newChangeEvent(offer=self, event=OfferHistEvent.EDIT)
-        # event.save()
         self.currency = offerdict['currency']
         self.price = Decimal(offerdict['price'])
         self.acceptanceCriteria = offerdict['acceptanceCriteria']
@@ -635,15 +633,11 @@ class Offer(models.Model):
         self.save()
 
     def revoke(self):
-        # event = OfferHistEvent.newChangeEvent(offer=self, event=OfferHistEvent.REVOKE)
-        # event.save()
         self.status = Offer.REVOKED
         self.lastChangeDate = timezone.now()
         self.save()
 
     def paid(self):
-        # event = OfferHistEvent.newChangeEvent(offer=self, event=OfferHistEvent.PAY)
-        # event.save()
         self.status = Offer.PAID
         self.lastChangeDate = timezone.now()
         self.save()
@@ -736,24 +730,18 @@ class Solution(models.Model):
         return solution
 
     def abort(self):
-        event = SolutionHistEvent.newChangeEvent(solution=self, event=SolutionHistEvent.ABORT)
-        event.save()
         self.status = Solution.ABORTED
         self.lastChangeDate = timezone.now()
         self.accepting_payments = False
         self.save()
 
     def resolve(self):
-        event = SolutionHistEvent.newChangeEvent(solution=self, event=SolutionHistEvent.RESOLVE)
-        event.save()
         self.status = Solution.DONE
         self.lastChangeDate = timezone.now()
         self.accepting_payments = True
         self.save()
 
     def reopen(self, accepting_payments):
-        event = SolutionHistEvent.newChangeEvent(solution=self, event=SolutionHistEvent.REOPEN)
-        event.save()
         self.status = Solution.IN_PROGRESS
         self.lastChangeDate = timezone.now()
         self.accepting_payments = accepting_payments
@@ -761,25 +749,6 @@ class Solution(models.Model):
 
     def get_received_payments(self):
         return PaymentPart.objects.filter(solution__id = self.id)
-
-class SolutionHistEvent(models.Model):
-    solution = models.ForeignKey(Solution)
-    eventDate = models.DateTimeField()
-    status = models.CharField(max_length=30)
-    event = models.CharField(max_length=30)
-
-    RESOLVE = "RESOLVE"
-    ABORT = "ABORT"
-    REOPEN = "REOPEN"
-
-    @classmethod
-    def newChangeEvent(cls, solution, event):
-        evt = cls()
-        evt.solution = solution
-        evt.eventDate = timezone.now()
-        evt.status = solution.status
-        evt.event = event
-        return evt
 
 
 # Registro da finalização bem sucedida de uma Offer.
