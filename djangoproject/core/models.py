@@ -635,8 +635,8 @@ class Offer(models.Model):
         self.save()
 
     def revoke(self):
-        event = OfferHistEvent.newChangeEvent(offer=self, event=OfferHistEvent.REVOKE)
-        event.save()
+        # event = OfferHistEvent.newChangeEvent(offer=self, event=OfferHistEvent.REVOKE)
+        # event.save()
         self.status = Offer.REVOKED
         self.lastChangeDate = timezone.now()
         self.save()
