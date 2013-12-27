@@ -619,8 +619,8 @@ class Offer(models.Model):
             return -1
 
     def changeOffer(self, offerdict):
-        event = OfferHistEvent.newChangeEvent(offer=self, event=OfferHistEvent.EDIT)
-        event.save()
+        # event = OfferHistEvent.newChangeEvent(offer=self, event=OfferHistEvent.EDIT)
+        # event.save()
         self.currency = offerdict['currency']
         self.price = Decimal(offerdict['price'])
         self.acceptanceCriteria = offerdict['acceptanceCriteria']
