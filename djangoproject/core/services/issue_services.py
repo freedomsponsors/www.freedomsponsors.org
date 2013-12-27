@@ -107,7 +107,7 @@ def change_existing_offer(offer_id, offerdict, user):
     offer.issue.update_redundant_fields()
     old_offer = offer.clone()
     offer.changeOffer(offerdict)
-    watches = watch_services.find_issue_and_offer_watches(offer)
+    watches = watch_services.find_issue_watches(offer.issue)
     notifyWatchers_offerchanged(old_offer, offer, watches)
     return offer
 
@@ -130,7 +130,7 @@ def add_solution_to_existing_issue(issue_id, comment_content, accepting_payments
     notifyWatchers_workbegun(solution, comment, watches)
     if(accepting_payments):
         notifyWatchers_acceptingpayments(solution, watches)
-    return issue
+    return solution, comment
 
 
 def abort_existing_solution(solution_id, comment_content, user):
@@ -146,7 +146,7 @@ def abort_existing_solution(solution_id, comment_content, user):
     watches = watch_services.find_issue_watches(solution.issue)
     notifyWatchers_workstopped(solution, comment, watches)
 
-    return solution
+    return solution, comment
 
 
 def revoke_existing_offer(offer_id, comment_content, user):
@@ -159,9 +159,9 @@ def revoke_existing_offer(offer_id, comment_content, user):
     if(comment_content):
         comment = IssueComment.newComment(offer.issue, user, comment_content)
         comment.save()
-    watches = watch_services.find_issue_and_offer_watches(offer)
+    watches = watch_services.find_issue_watches(offer.issue)
     notifyWatchers_offerrevoked(offer, comment, watches)
-    return offer
+    return offer, comment
 
 
 def resolve_existing_solution(solution_id, comment_content, user):
@@ -176,7 +176,7 @@ def resolve_existing_solution(solution_id, comment_content, user):
         comment.save()
     watches = watch_services.find_issue_watches(solution.issue)
     notifyWatchers_workdone(solution, comment, watches)
-    return solution
+    return solution, comment
 
 
 def process_issue_url(trackerURL, user):

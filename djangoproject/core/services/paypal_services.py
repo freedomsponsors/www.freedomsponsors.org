@@ -2,7 +2,7 @@ from core.services.mail_services import notify_payment_parties_and_watchers_paym
 from core.services import watch_services, mail_services
 from core.utils import paypal_adapter
 from core.utils.frespo_utils import get_or_none, twoplaces
-from core.models import Payment
+from core.models import Payment, ActionLog
 import logging
 
 logger = logging.getLogger(__name__)
@@ -34,9 +34,10 @@ def process_ipn_return(paykey, status, tracking_id):
         payment.confirm_ipn()
         payment.offer.paid()
         payment.offer.issue.touch()
-        watches = watch_services.find_issue_and_offer_watches(payment.offer)
+        watches = watch_services.find_issue_watches(payment.offer.issue)
         notify_payment_parties_and_watchers_paymentconfirmed(payment, watches)
         notify_admin_payment_confirmed(payment)
+        ActionLog.log_pay(payment)
     else:
         subject = 'received a payment confirmation with status = %s' % status
         msg = 'paykey = %s\nconfirm_key=%s' % (paykey, tracking_id)

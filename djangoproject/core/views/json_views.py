@@ -1,6 +1,5 @@
 # Create your views here.
 from django.views.decorators.csrf import csrf_exempt
-from core.signals import project_tag_added, project_tag_removed
 
 from core.models import *
 from django.http import HttpResponse
@@ -81,11 +80,7 @@ def add_tag(request):
     if not objtype in ['Project', 'Issue']:
         raise BaseException('Wrong objtype: %s' % objtype)
     tag_services.addTag(name, objtype, objid)
-    project_tag_added.send(
-        sender=None,
-        user=request.user,
-        project_id=objid,
-        tag_name=name)
+    ActionLog.log_project_tag_added(user=request.user, project_id=objid, tag_name=name)
     return HttpResponse('')
 
 
@@ -96,11 +91,7 @@ def remove_tag(request):
     objtype = request.POST.get('objtype')
     objid = int(request.POST.get('objid'))
     tag_services.removeTag(name, objtype, objid)
-    project_tag_removed.send(
-        sender=None,
-        user=request.user,
-        project_id=objid,
-        tag_name=name)
+    ActionLog.log_project_tag_removed(user=request.user, project_id=objid, tag_name=name)
     return HttpResponse('')
 
 

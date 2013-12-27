@@ -6,10 +6,8 @@ import traceback
 from django.contrib.auth.decorators import login_required
 from django.contrib.syndication.views import Feed
 from django.contrib import messages
-from django.http import HttpResponse
 from django.shortcuts import redirect, render_to_response
 from django.template import RequestContext
-from django.utils.translation import ugettext as _
 from django.conf import settings
 
 from core.utils.frespo_utils import get_or_none, twoplaces
@@ -26,35 +24,26 @@ __author__ = 'tony'
 
 @login_required
 def addIssue(request):
-    try:
-        offer = issue_services.sponsor_new_issue(request.POST, request.user)
-        watch_services.watch_issue(request.user, offer.issue.id, IssueWatch.SPONSORED)
-    except BaseException as ex:
-        traceback.print_exc()
-        return HttpResponse(_("ERROR: ") + ex.message)
-    params = '?alert=SPONSOR'
-    to = offer if template_folder(request) == 'core/' else offer.issue
-    return  redirect(to.get_view_link() + params)
+    offer = issue_services.sponsor_new_issue(request.POST, request.user)
+    watch_services.watch_issue(request.user, offer.issue.id, IssueWatch.SPONSORED)
+    ActionLog.log_sponsor(offer)
+    return  redirect(offer.issue.get_view_link() + '?alert=SPONSOR')
 
 
 @login_required
 def kickstartIssue(request):
-    try:
-        issue = issue_services.kickstart_new_issue(request.POST, request.user)
-        watch_services.watch_issue(request.user, issue.id, IssueWatch.CREATED)
-    except BaseException as ex:
-        traceback.print_exc()
-        return HttpResponse(_("ERROR: ")+ex.message)
-
-    params = '?alert=KICKSTART'
-    return redirect(issue.get_view_link()+params)
+    issue = issue_services.kickstart_new_issue(request.POST, request.user)
+    watch_services.watch_issue(request.user, issue.id, IssueWatch.CREATED)
+    ActionLog.log_propose(issue=issue, user=request.user)
+    return redirect(issue.get_view_link() + '?alert=KICKSTART')
 
 
 @login_required
 def abortSolution(request):
     solution_id = int(request.POST['solution_id'])
     comment_content = request.POST['comment']
-    solution = issue_services.abort_existing_solution(solution_id, comment_content, request.user)
+    solution, comment = issue_services.abort_existing_solution(solution_id, comment_content, request.user)
+    ActionLog.log_abort_work(solution=solution, issue_comment=comment)
     return redirect(solution.issue.get_view_link())
 
 
@@ -64,10 +53,11 @@ def addSolution(request):
     issue_id = int(request.POST['issue_id'])
     comment_content = request.POST['comment']
     accepting_payments = request.POST.has_key('accept_payments')
-    issue = issue_services.add_solution_to_existing_issue(issue_id, comment_content, accepting_payments, request.user)
-    watch_services.watch_issue(request.user, issue.id, IssueWatch.STARTED_WORKING)
-    need_bitcoin_address = _need_to_set_bitcoin_address(request.user, issue)
-    need_verify_paypal = _need_to_verify_paypal_account(request.user, issue)
+    solution, comment = issue_services.add_solution_to_existing_issue(issue_id, comment_content, accepting_payments, request.user)
+    watch_services.watch_issue(request.user, solution.issue.id, IssueWatch.STARTED_WORKING)
+    ActionLog.log_start_work(solution=solution, issue_comment=comment)
+    need_bitcoin_address = _need_to_set_bitcoin_address(request.user, solution.issue)
+    need_verify_paypal = _need_to_verify_paypal_account(request.user, solution.issue)
     if need_bitcoin_address:
         msg = """You just began working on an issue with a Bitcoin offer.
 You need to configure a Bitcoin address on your user profile, otherwise the sponsor will not be able to pay his offer to you.
@@ -78,7 +68,7 @@ You can set your bitcoin address in your 'edit profile' page."""
 FS has detected that the email '%s' is not associated with a verified Paypal account.
 You need to have a verified Paypal account before you can receive payments through Paypal.""" % request.user.getUserInfo().paypalEmail
         messages.error(request, msg)
-    return redirect(issue.get_view_link())
+    return redirect(solution.issue.get_view_link())
 
 
 def _need_to_set_bitcoin_address(user, issue):
@@ -103,7 +93,10 @@ def _need_to_verify_paypal_account(user, issue):
 @login_required
 def editOffer(request):
     offer_id = int(request.POST['offer_id'])
+    offer = Offer.objects.get(pk=offer_id)
+    old_json = offer.to_json()
     offer = issue_services.change_existing_offer(offer_id, request.POST, request.user)
+    ActionLog.log_change_offer(offer=offer, user=request.user, old_json=old_json)
     return redirect(offer.issue.get_view_link())
 
 
@@ -191,7 +184,8 @@ def myissues(request):
 def resolveSolution(request):
     solution_id = int(request.POST['solution_id'])
     comment_content = request.POST['comment']
-    solution = issue_services.resolve_existing_solution(solution_id, comment_content, request.user)
+    solution, comment = issue_services.resolve_existing_solution(solution_id, comment_content, request.user)
+    ActionLog.log_resolve(solution=solution, issue_comment=comment)
     return redirect(solution.issue.get_view_link())
 
 
@@ -199,9 +193,8 @@ def resolveSolution(request):
 def revokeOffer(request):
     offer_id = int(request.POST['offer_id'])
     comment_content = request.POST['comment']
-
-    offer = issue_services.revoke_existing_offer(offer_id, comment_content, request.user)
-
+    offer, comment = issue_services.revoke_existing_offer(offer_id, comment_content, request.user)
+    ActionLog.log_revoke(offer=offer, user=request.user, issue_comment=comment)
     return redirect(offer.issue.get_view_link())
 
 
@@ -209,18 +202,13 @@ def revokeOffer(request):
 def sponsorIssue(request):
     issue_id = int(request.POST['issue_id'])
 
-    issue = Issue.objects.get(pk = issue_id)
+    issue = Issue.objects.get(pk=issue_id)
     offer = issue_services.sponsor_existing_issue(issue_id, request.POST, request.user)
     watch_services.watch_issue(request.user, issue_id, IssueWatch.SPONSORED)
-
-    invoke_parent_callback = request.POST.get('invoke_parent_callback')
-    if(invoke_parent_callback == 'true'):
-        params = '?c=s' # c = Callback (iframe javascript callback)
-    else:
-        params = '?alert=SPONSOR' # a = Alert
-    if (issue.getSolutionsAcceptingPayments().count() > 0):
+    ActionLog.log_sponsor(offer)
+    if issue.getSolutionsAcceptingPayments().count() > 0:
         messages.info(request, 'This issue is open for payments. You are free to choose: you can pay now, or you can wait until after the issue is finished. No pressure :-)')
-    return redirect(offer.issue.get_view_link() + params)
+    return redirect(offer.issue.get_view_link() + '?alert=SPONSOR')
 
 
 def _actionbar(issue, myoffer, mysolution, user):
@@ -253,8 +241,6 @@ def viewIssue(request, issue_id):
         show_alert = template_folder(request) + 'popup/popup_just_sponsored.html'
     alert_reputation_revoking = mysolution and mysolution.status == Solution.IN_PROGRESS and mysolution.get_received_payments().count() > 0
 
-    invoke_parent_callback = (request.GET.get('c') == 's')
-
     is_watching = request.user.is_authenticated() and watch_services.is_watching_issue(request.user, issue.id)
     crumbs = [HOME_CRUMB, {
         'link': issue.trackerURL,
@@ -267,7 +253,6 @@ def viewIssue(request, issue_id):
         'is_watching': is_watching,
         'myoffer': myoffer,
         'mysolution': mysolution,
-        'invoke_parent_callback': invoke_parent_callback,
         'show_sponsor_popup': show_sponsor_popup,
         'show_alert': show_alert,
         'alert_reputation_revoking': alert_reputation_revoking,
@@ -279,40 +264,11 @@ def viewIssue(request, issue_id):
 
 def editIssue(request):
     issue_id = int(request.POST['issue_id'])
+    issue = Issue.objects.get(pk=issue_id)
+    old_json = issue.to_json()
     issue = issue_services.change_existing_issue(issue_id, request.POST, request.user)
+    ActionLog.log_edit_issue(issue=issue, user=request.user, old_json=old_json)
     return redirect(issue.get_view_link())
-
-
-# Deprecated. This method will be deleted eventually
-def viewOffer(request, offer_id):
-    offer = Offer.objects.get(pk=offer_id)
-    payment = None
-    myoffer = None
-    mysolution = None
-    show_alert = None
-
-    if(request.user.is_authenticated()):
-        mysolution = get_or_none(Solution, issue=offer.issue, programmer=request.user)
-        myoffer = get_or_none(Offer, issue=offer.issue, sponsor=request.user, status__in=[Offer.OPEN, Offer.REVOKED])
-
-    alert = request.GET.get('alert')
-    if(alert == 'SPONSOR' and offer.issue.project):
-        show_alert = 'core/popup/popup_just_sponsored.html'
-    alert_reputation_revoking = mysolution and mysolution.status == Solution.IN_PROGRESS and mysolution.get_received_payments().count() > 0
-    invoke_parent_callback = (request.GET.get('c') == 's')
-
-    is_watching = request.user.is_authenticated() and watch_services.is_watching_offer(request.user, offer.id)
-
-    return render_to_response(template_folder(request) + 'offer.html',
-        {'offer':offer,
-        'is_watching':is_watching,
-        'issue':offer.issue,
-        'show_alert':show_alert,
-        'myoffer':myoffer,
-        'mysolution':mysolution,
-        'alert_reputation_revoking': alert_reputation_revoking,
-        'invoke_parent_callback' : invoke_parent_callback},
-        context_instance = RequestContext(request))
 
 
 @login_required

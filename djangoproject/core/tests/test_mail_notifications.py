@@ -19,8 +19,6 @@ class TestMailNotifications(unittest.TestCase):
         issue = offer.issue
         response = self.client.get(reverse('core.views.watch_views.watchIssue', kwargs={'issue_id': issue.id }))
         self.assertEqual(response.status_code, 200)
-        response = self.client.get(reverse('core.views.watch_views.watchOffer', kwargs={'offer_id': offer.id }))
-        self.assertEqual(response.status_code, 200)
 
         user2 = test_data.createDummyUserRandom(login='marydoe', password='xyz456')
         client2 = Client()
@@ -34,11 +32,6 @@ class TestMailNotifications(unittest.TestCase):
         email_asserts.assert_sent(self, to=self.user.email, subject="%s added a comment on issue [%s]"%(user2.getUserInfo().screenName, issue.title))
 
         email_asserts.clear_sent()
-        response = client2.post('/core/offer/comment/add/submit', {'offer_id': str(offer.id), 'content': 'Im adding another comment'})
-        self.assertEqual(response.status_code, 302)
-
-        email_asserts.assert_sent_count(self, 1)
-        email_asserts.assert_sent(self, to=self.user.email, subject="%s added a comment on offer [US$ %s / %s]"%(user2.getUserInfo().screenName, '10.00', issue.title))
 
     def test_should_send_mail_for_adding_or_changing_or_revoking_offer(self):
         offer = test_data.create_dummy_offer_usd()

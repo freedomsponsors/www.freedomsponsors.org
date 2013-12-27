@@ -1,9 +1,8 @@
 import json
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
-from core.models import Project
+from core.models import Project, ActionLog
 from core.services import stats_services, issue_services
-from core.signals import project_edited
 from core.views import template_folder
 from django.contrib.auth.decorators import login_required
 
@@ -43,16 +42,12 @@ def edit_form(request, project_id):
 def edit(request):
     project_id = int(request.POST.get('id'))
     project = Project.objects.get(pk=project_id)
-    old_project_json = project.to_json()
+    old_json = project.to_json()
     if 'image3x1' in request.FILES and request.FILES['image3x1']:
         project.image3x1 = request.FILES['image3x1']
     project.description = request.POST.get('description')
     project.save()
-    project_edited.send(
-        sender=None,
-        user=request.user,
-        project=project,
-        old_json=old_project_json)
+    ActionLog.log_edit_project(project=project, user=request.user, old_json=old_json)
     return redirect('core.views.project_views.view', project_id=project.id)
 
 

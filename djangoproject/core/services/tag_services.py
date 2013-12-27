@@ -4,9 +4,12 @@ __author__ = 'tony'
 
 
 def addTag(name, objtype, objid):
-    tag = Tag(name=name, objtype=objtype, objid=objid)
-    tag.save()
-    return tag
+    query = Tag.objects.filter(name=name, objtype=objtype, objid=objid)
+    if query.count() == 0:
+        tag = Tag(name=name, objtype=objtype, objid=objid)
+        tag.save()
+        return tag
+    return None
 
 
 def removeTag(name, objtype, objid):

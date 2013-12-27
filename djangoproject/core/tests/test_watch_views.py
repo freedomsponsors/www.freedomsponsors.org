@@ -30,20 +30,6 @@ class TestWatchViews(TestCase):
         self.assertEqual(response.content, 'NOT_WATCHING')
         self.assertTrue(not watch_services.is_watching_issue(self.user, issue.id))
 
-    def test_watch_unwatch_offer(self):
-        offer = test_data.create_dummy_offer_usd()
-        self.assertTrue(not watch_services.is_watching_offer(self.user, offer.id))
-
-        response = self.client.get(_reverse('watchOffer', offer_id=offer.id))
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.content, 'WATCHING')
-        self.assertTrue(watch_services.is_watching_offer(self.user, offer.id))
-
-        response = self.client.get(_reverse('unwatchOffer', offer_id=offer.id))
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.content, 'NOT_WATCHING')
-        self.assertTrue(not watch_services.is_watching_offer(self.user, offer.id))
-
 
 class TestDeprecatedCoreWatchViews(TestCase):
 
@@ -65,13 +51,3 @@ class TestDeprecatedCoreWatchViews(TestCase):
         issue = test_data.create_dummy_issue()
         self.assert_permanent_redirect(_reverse('unwatchIssue', issue_id=issue.id),
             '/core/unwatch/issue/%s' % issue.id)
-
-    def test_watch_offer(self):
-        offer = test_data.create_dummy_offer_usd()
-        self.assert_permanent_redirect(_reverse('watchOffer', offer_id=offer.id),
-            '/core/watch/offer/%s' % offer.id)
-
-    def test_unwatch_offer(self):
-        offer = test_data.create_dummy_offer_usd()
-        self.assert_permanent_redirect(_reverse('unwatchOffer', offer_id=offer.id),
-            '/core/unwatch/offer/%s' % offer.id)

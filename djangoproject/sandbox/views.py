@@ -95,7 +95,6 @@ def issue(request):
         'is_watching': False,
         'myoffer': None,
         'mysolution': None,
-        'invoke_parent_callback': None,
         'show_sponsor_popup': None,
         'show_alert': None,
         'alert_reputation_revoking': None,

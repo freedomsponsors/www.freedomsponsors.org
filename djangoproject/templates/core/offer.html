@@ -150,12 +150,6 @@
     $('#div_comment_w_'+counter).slideDown();
   }
 
-  function invokeParentCallback(){
-  	if(parent && parent.document && parent.document.frespo_sponsorissue_callback){
-  		parent.document.frespo_sponsorissue_callback(offer);
-  	}
-  }
-
   function preview_add_comment(){
     preview_comment('#content', '#preview_0')
   }
@@ -166,13 +160,6 @@
     $(divid).html(html)
   }
 
-  {% if invoke_parent_callback %}
-
-  	$(function(){
-  		invokeParentCallback();
-  	})
-
-  {% endif %}
 </script>
 
 {% endblock mainContent%}

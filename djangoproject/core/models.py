@@ -379,13 +379,11 @@ class Issue(models.Model):
         return issue
 
     def changeIssue(self, issuedict):
-        old_json = self.to_json()
         if issuedict.get('description'):
             self.description = issuedict.get('description')
         if issuedict.get('title'):
             self.title = issuedict.get('title')
         self.touch()
-        ActionLog.log_edit_issue(issue=self, old_json=old_json)
 
     def to_json(self):
         return json.dumps({
@@ -507,6 +505,11 @@ class IssueComment(models.Model):
     creationDate = models.DateTimeField()
     content = models.TextField()
 
+    def to_json(self):
+        return json.dumps({
+            'content': self.content
+        })
+
     @classmethod
     def newComment(cls, issue, author, content):
         comment = cls()
@@ -560,6 +563,17 @@ class Offer(models.Model):
     OPEN = "OPEN"
     REVOKED = "REVOKED"
     PAID = "PAID"
+
+    def to_json(self):
+        return json.dumps({
+            'id': self.id,
+            'price': float(str(self.price)),
+            'currency': self.currency,
+            'acceptanceCriteria': self.acceptanceCriteria,
+            'no_forking': self.no_forking,
+            'require_release': self.require_release,
+            'status': self.status,
+        })
 
     @classmethod
     def newOffer(cls, issue, sponsor, price, currency, acceptanceCriteria, no_forking, require_release, expiration_days):
@@ -645,22 +659,6 @@ class Offer(models.Model):
     def get_view_link(self):
         return '/core/offer/%s'%self.id+'/'+urlquote(slugify(self.issue.title))
 
-# A record that indicates that a user is watching an offer
-class OfferWatch(models.Model):
-    offer = models.ForeignKey(Offer)
-    user = models.ForeignKey(User)
-    reason = models.CharField(max_length=30, null=False, blank=False)
-
-    COMMENTED = "COMMENTED"
-    WATCHED = "WATCHED"
-
-    @classmethod
-    def newOfferWatch(cls, offer, user, reason):
-        watch = cls()
-        watch.offer = offer
-        watch.user = user
-        watch.reason = reason
-        return watch
 
 class OfferHistEvent(models.Model):
     offer = models.ForeignKey(Offer)
@@ -841,7 +839,22 @@ class Payment(models.Model):
     CONFIRMED_TRN = 'CONFIRMED_TRN'
     CONFIRMED_TRN_UNDERPAY = 'CONFIRMED_TRN_UNDERPAY'
     FORGOTTEN = 'FORGOTTEN'
-    
+
+    def to_json(self):
+        return json.dumps({
+            'status': self.status,
+            'fee': float(str(self.fee)) if self.fee else None,
+            'total': float(str(self.total)) if self.total else None,
+            'total_bitcoin_received': float(str(self.total_bitcoin_received)) if self.total_bitcoin_received else None,
+            'bitcoin_fee': float(str(self.bitcoin_fee)) if self.bitcoin_fee else None,
+            'offer2payment_suggested_rate': float(str(self.offer2payment_suggested_rate)) if self.offer2payment_suggested_rate else None,
+            'usd2payment_rate': float(str(self.usd2payment_rate)) if self.usd2payment_rate else None,
+            'currency': self.currency,
+            'bitcoin_transaction_hash': self.bitcoin_transaction_hash,
+            'offer_currency': self.offer_currency,
+            'parts': [part.to_dict_json() for part in self.getParts()]
+        })
+
     @classmethod
     def newPayment(cls, offer, currency):
         payment = cls()
@@ -961,6 +974,13 @@ class PaymentPart(models.Model):
     price = models.DecimalField(max_digits=16, decimal_places=8)
     money_sent = models.ForeignKey(MoneySent, null = True)
 
+    def to_dict_json(self):
+        return {
+            'programmer_id': self.programmer.id,
+            'solution_id': self.solution.id,
+            'price': float(str(self.price)) if self.price else None,
+        }
+
     @classmethod
     def newPart(cls, payment, solution, price):
         part = cls()
@@ -986,18 +1006,33 @@ class ActionLog(models.Model):
     solution = models.ForeignKey(Solution, null=True)
     issue_comment = models.ForeignKey(IssueComment, null=True)
 
+    EDIT_ISSUE = 'EDIT_ISSUE'
+    EDIT_PROJECT = 'EDIT_PROJECT'
+    PROJECT_ADD_TAG = 'PROJECT_ADD_TAG'
+    PROJECT_REMOVE_TAG = 'PROJECT_REMOVE_TAG'
+    SPONSOR = 'SPONSOR'
+    CHANGE_OFFER = 'CHANGE_OFFER'
+    REVOKE = 'REVOKE'
+    PROPOSE = 'PROPOSE'
+    WORK = 'WORK'
+    ABORT = 'ABORT'
+    RESOLVE = 'RESOLVE'
+    PAY = 'PAY'
+    ADD_ISSUE_COMMENT = 'ADD_ISSUE_COMMENT'
+    EDIT_ISSUE_COMMENT = 'EDIT_ISSUE_COMMENT'
+
     @classmethod
-    def log_edit_issue(cls, issue, old_json):
+    def log_edit_issue(cls, issue, user, old_json):
         new_json = issue.to_json()
         ActionLog(
             creationDate=timezone.now(),
-            action='EDIT_ISSUE',
+            action=ActionLog.EDIT_ISSUE,
             entity='ISSUE',
             old_json=old_json,
             new_json=new_json,
             issue=issue,
             project=issue.project,
-            user=issue.createdByUser,
+            user=user,
         ).save()
 
     @classmethod
@@ -1005,7 +1040,7 @@ class ActionLog(models.Model):
         new_json = project.to_json()
         ActionLog(
             creationDate=timezone.now(),
-            action='EDIT_PROJECT',
+            action=ActionLog.EDIT_PROJECT,
             entity='PROJECT',
             old_json=old_json,
             new_json=new_json,
@@ -1017,7 +1052,7 @@ class ActionLog(models.Model):
     def log_project_tag_added(cls, user, project_id, tag_name):
         ActionLog(
             creationDate=timezone.now(),
-            action='PROJECT_ADD_TAG',
+            action=ActionLog.PROJECT_ADD_TAG,
             entity='PROJECT',
             new_json=tag_name,
             project=Project(id=project_id),
@@ -1028,7 +1063,7 @@ class ActionLog(models.Model):
     def log_project_tag_removed(cls, user, project_id, tag_name):
         ActionLog(
             creationDate=timezone.now(),
-            action='PROJECT_REMOVE_TAG',
+            action=ActionLog.PROJECT_REMOVE_TAG,
             entity='PROJECT',
             new_json=tag_name,
             project=Project(id=project_id),
@@ -1037,16 +1072,131 @@ class ActionLog(models.Model):
 
     @classmethod
     def log_sponsor(cls, offer):
-        pass
+        ActionLog(
+            creationDate=timezone.now(),
+            action=ActionLog.SPONSOR,
+            entity='OFFER',
+            new_json=offer.to_json(),
+            project=offer.issue.project,
+            issue=offer.issue,
+            offer=offer,
+            user=offer.sponsor,
+        ).save()
 
     @classmethod
-    def log_propose(cls, offer):
-        pass
+    def log_propose(cls, issue, user):
+        ActionLog(
+            creationDate=timezone.now(),
+            action=ActionLog.PROPOSE,
+            entity='ISSUE',
+            new_json=issue.to_json(),
+            project=issue.project,
+            issue=issue,
+            user=user,
+        ).save()
 
     @classmethod
-    def log_change_offer(cls, offer, old_json):
-        pass
+    def log_change_offer(cls, offer, user, old_json):
+        ActionLog(
+            creationDate=timezone.now(),
+            action=ActionLog.CHANGE_OFFER,
+            entity='OFFER',
+            old_json=old_json,
+            new_json=offer.to_json(),
+            project=offer.issue.project,
+            issue=offer.issue,
+            offer=offer,
+            user=user,
+        ).save()
 
     @classmethod
-    def log_revoke(cls, offer):
-        pass
+    def log_revoke(cls, offer, user, issue_comment):
+        ActionLog(
+            creationDate=timezone.now(),
+            action=ActionLog.REVOKE,
+            entity='OFFER',
+            new_json=offer.to_json(),
+            project=offer.issue.project,
+            issue=offer.issue,
+            offer=offer,
+            issue_comment=issue_comment,
+            user=user,
+        ).save()
+
+    @classmethod
+    def log_start_work(cls, solution, issue_comment):
+        ActionLog(
+            creationDate=timezone.now(),
+            action=ActionLog.WORK,
+            entity='SOLUTION',
+            project=solution.issue.project,
+            issue=solution.issue,
+            solution=solution,
+            issue_comment=issue_comment,
+            user=solution.programmer,
+        ).save()
+
+    @classmethod
+    def log_abort_work(cls, solution, issue_comment):
+        ActionLog(
+            creationDate=timezone.now(),
+            action=ActionLog.ABORT,
+            entity='SOLUTION',
+            project=solution.issue.project,
+            issue=solution.issue,
+            solution=solution,
+            issue_comment=issue_comment,
+            user=solution.programmer,
+        ).save()
+
+    @classmethod
+    def log_resolve(cls, solution, issue_comment):
+        ActionLog(
+            creationDate=timezone.now(),
+            action=ActionLog.RESOLVE,
+            entity='SOLUTION',
+            project=solution.issue.project,
+            issue=solution.issue,
+            solution=solution,
+            issue_comment=issue_comment,
+            user=solution.programmer,
+        ).save()
+
+    @classmethod
+    def log_add_issue_comment(cls, issue_comment):
+        ActionLog(
+            creationDate=timezone.now(),
+            action=ActionLog.ADD_ISSUE_COMMENT,
+            entity='ISSUE_COMMENT',
+            project=issue_comment.issue.project,
+            issue=issue_comment.issue,
+            issue_comment=issue_comment,
+            new_json=issue_comment.to_json(),
+            user=issue_comment.author,
+        ).save()
+
+    @classmethod
+    def log_edit_issue_comment(cls, issue_comment, old_json):
+        ActionLog(
+            creationDate=timezone.now(),
+            action=ActionLog.EDIT_ISSUE_COMMENT,
+            entity='ISSUE_COMMENT',
+            project=issue_comment.issue.project,
+            issue=issue_comment.issue,
+            issue_comment=issue_comment,
+            new_json=issue_comment.to_json(),
+            old_json=old_json,
+            user=issue_comment.author,
+        ).save()
+
+    @classmethod
+    def log_pay(cls, payment):
+        ActionLog(
+            creationDate=timezone.now(),
+            action=ActionLog.PAY,
+            entity='PAYMENT',
+            project=payment.offer.issue.project,
+            issue=payment.offer.issue,
+            new_json=payment.to_json(),
+            user=payment.offer.sponsor,
+        ).save()

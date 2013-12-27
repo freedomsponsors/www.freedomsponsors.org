@@ -35,10 +35,6 @@
 {% csrf_token %}
   <fieldset>
 
-    {% if trackerURL %}
-      <input type="hidden" name="invoke_parent_callback" value="true">
-    {% endif %}
-
     <!-- tracker URL -->
     <div id="div_step1_w" class="control-group">
       <div id="div_trackerURL">

@@ -20,7 +20,6 @@ def addIssueComment(request):
 def addOfferComment(request):
     offer_id = int(request.POST['offer_id'])
     comment_content = request.POST['content']
-    watch_services.watch_offer(request.user, offer_id, OfferWatch.COMMENTED)
     offer = comment_services.add_comment_to_offer(offer_id, comment_content, request.user)
     return redirect(offer.get_view_link())
 

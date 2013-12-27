@@ -14,14 +14,3 @@ def watchIssue(request, issue_id):
 def unwatchIssue(request, issue_id):
     watch_services.unwatch_issue(request.user, int(issue_id))
     return HttpResponse('NOT_WATCHING')
-
-@login_required
-def watchOffer(request, offer_id):
-    watch_services.watch_offer(request.user, int(offer_id), OfferWatch.WATCHED)
-    return HttpResponse('WATCHING')
-
-@login_required
-def unwatchOffer(request, offer_id):
-    watch_services.unwatch_offer(request.user, int(offer_id))
-    return HttpResponse('NOT_WATCHING')
-
