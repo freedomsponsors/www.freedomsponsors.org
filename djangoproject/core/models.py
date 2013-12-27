@@ -967,8 +967,8 @@ class PaymentPart(models.Model):
 class ActionLog(models.Model):
     action = models.CharField(max_length=128, null=False, blank=False)
     entity = models.CharField(max_length=30, null=False, blank=False)
-    old_json = models.TextField()
-    new_json = models.TextField()
+    old_json = models.TextField(null=True)
+    new_json = models.TextField(null=True)
     creationDate = models.DateTimeField(null=False)
     user = models.ForeignKey(User, null=True)
     project = models.ForeignKey(Project, null=True)
