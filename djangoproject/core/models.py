@@ -1140,15 +1140,3 @@ class ActionLog(models.Model):
             new_json=payment.to_json(),
             user=payment.offer.sponsor,
         ).save()
-
-
-class OfferHistEvent(models.Model):
-    offer = models.ForeignKey(Offer)
-    eventDate = models.DateTimeField()
-    price = models.DecimalField(max_digits=9, decimal_places=2) # Ateh 9999999.99 dolares
-    acceptanceCriteria = models.TextField(null=True, blank=True)
-    status = models.CharField(max_length=30)
-    expirationDate = models.DateField(null=True, blank=True)
-    no_forking = models.BooleanField(default=True)
-    require_release = models.BooleanField(default=True)
-    event = models.CharField(max_length=30)
