@@ -660,35 +660,6 @@ class Offer(models.Model):
         return '/core/offer/%s'%self.id+'/'+urlquote(slugify(self.issue.title))
 
 
-class OfferHistEvent(models.Model):
-    offer = models.ForeignKey(Offer)
-    eventDate = models.DateTimeField()
-    price = models.DecimalField(max_digits=9, decimal_places=2) # Ateh 9999999.99 dolares
-    acceptanceCriteria = models.TextField(null=True, blank=True)
-    status = models.CharField(max_length=30)
-    expirationDate = models.DateField(null=True, blank=True)
-    no_forking = models.BooleanField(default=True)
-    require_release = models.BooleanField(default=True)
-    event = models.CharField(max_length=30)
-
-    EDIT = "EDIT"
-    REVOKE = "REVOKE"
-    PAY = "PAY"
-
-    @classmethod
-    def newChangeEvent(cls, offer, event):
-        evt = cls()
-        evt.offer = offer
-        evt.eventDate = timezone.now()
-        evt.price = Decimal(offer.price)
-        evt.acceptanceCriteria = offer.acceptanceCriteria
-        evt.expirationDate = offer.expirationDate
-        evt.no_forking = offer.no_forking
-        evt.require_release = offer.require_release
-        evt.status = offer.status
-        evt.event = event
-        return evt
-
 # Um comentario que pode ser adicionado numa offer por qualquer pessoa.
 # É um fórum mais restrito do que os comentarios da issue. Pode ser util por exemplo 
 # quando o programador quiser por exemplo quiser tirar satisfação com um dos sponsors que ainda 
