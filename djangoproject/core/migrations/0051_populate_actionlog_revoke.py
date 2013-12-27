@@ -22,11 +22,10 @@ class Migration(DataMigration):
 
     def forwards(self, orm):
         for revoke in orm.OfferHistEvent.objects.filter(event='REVOKE'):
-            print('REVOKE: user(%s) revoked offer(%s) [%s/%s]' % (
+            print('REVOKE: user(%s) revoked offer(%s) - %s' % (
                 revoke.offer.sponsor.id,
                 revoke.offer.id,
                 revoke.price,
-                revoke.acceptanceCriteria,
             ))
             orm.ActionLog(
                 creationDate=revoke.eventDate,
