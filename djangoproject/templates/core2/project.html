@@ -10,6 +10,7 @@
     <script src="/static/js/so/soapi.js"></script>
     <script src="/static/js/tags/taglist.js"></script>
     <script src="/static/js/issuecards/issuecards.js"></script>
+    <script src="/static/js/activitylist/activitylist.js"></script>
     <script src="/static/js/fsutil.js"></script>
     {% if sandbox %}
         <script src="/static/js/tags/tag_api_mock.js"></script>
@@ -23,7 +24,7 @@
     <script src="/static/bootstrap/js/showdown.js"></script>
     <script>
 
-        var dependencies = ['issuecards', 'angularutils', 'taglist'];
+        var dependencies = ['issuecards', 'angularutils', 'taglist', 'activitylist'];
 
         var mod = angular.module('project', dependencies);
         mod.config(
@@ -385,7 +386,7 @@
 
             <!-- Activities Tab -->
             <div class="tab-pane" id="activities">
-
+                <activitylist project-id="{{ project.id }}"></activitylist>
             </div>
 
         </div>

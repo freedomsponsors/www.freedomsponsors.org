@@ -5,7 +5,7 @@ from core.models import *
 from django.http import HttpResponse
 from django.utils.translation import ugettext as _
 import json
-from core.services import issue_services, tag_services
+from core.services import issue_services, tag_services, activity_services
 import traceback
 import logging
 from django.contrib.auth.decorators import login_required
@@ -93,6 +93,12 @@ def remove_tag(request):
     tag_services.removeTag(name, objtype, objid)
     ActionLog.log_project_tag_removed(user=request.user, project_id=objid, tag_name=name)
     return HttpResponse('')
+
+
+def latest_activity(request):
+    project_id = int(request.GET.get('project_id')) if 'project_id' in request.GET else None
+    activities = activity_services.get_latest_activity(project_id)
+    return HttpResponse(json.dumps([activity.to_dict_json() for activity in activities]))
 
 
 def _convert_offers_to_dict(offers):

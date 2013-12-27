@@ -961,6 +961,22 @@ class ActionLog(models.Model):
     ADD_ISSUE_COMMENT = 'ADD_ISSUE_COMMENT'
     EDIT_ISSUE_COMMENT = 'EDIT_ISSUE_COMMENT'
 
+    def to_dict_json(self):
+        return {
+            'id': self.id,
+            'action': self.action,
+            'entity': self.entity,
+            # 'creationDate': self.id,
+            'user_id': self.user.id,
+            'project_id': self.project.id if self.project else None,
+            'issue_id': self.issue.id if self.issue else None,
+            'offer_id': self.offer.id if self.offer else None,
+            'solution_id': self.solution.id if self.solution else None,
+            'issue_comment_id': self.issue_comment.id if self.issue_comment else None,
+            'old_json': self.old_json,
+            'new_json': self.new_json,
+        }
+
     @classmethod
     def log_edit_issue(cls, issue, user, old_json):
         new_json = issue.to_json()

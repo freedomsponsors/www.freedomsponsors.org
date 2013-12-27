@@ -160,7 +160,12 @@ fsapi_mod.factory('FSApi', function(){
         return fs_timeout_async_result(result);
     }
 
+    function get_latest_activity(project_id){
+        return fs_timeout_async_result([]);
+    }
+
     return {
-        list_issues: list_issues
+        list_issues: list_issues,
+        get_latest_activity: get_latest_activity
     }
 });

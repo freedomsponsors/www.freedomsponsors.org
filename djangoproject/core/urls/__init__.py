@@ -85,6 +85,7 @@ urlpatterns += patterns('core.views.json_views',
     url(r'^json/list_issue_cards', 'list_issue_cards'),
     url(r'^json/add_tag', 'add_tag'),
     url(r'^json/remove_tag', 'remove_tag'),
+    url(r'^json/latest_activity', 'latest_activity'),
 )
 
 # urlpatterns += patterns('core.jiraviews',

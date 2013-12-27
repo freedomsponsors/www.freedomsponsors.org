@@ -20,30 +20,24 @@
  https://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/AGPL_license.txt
  */
 
-
-var fsapi_mod = angular.module('fsapi', []);
-
-fsapi_mod.factory('FSApi', function(){
-
-    function list_issues(project_id, sponsoring, offset, count){
-        var params = {
-            project_id: project_id,
-            sponsoring: sponsoring,
-            offset: offset,
-            count: count
-        };
-        return fs_ajax_async_result($.get, '/core/json/list_issue_cards', params)
-    }
-
-    function get_latest_activity(project_id){
-        var params = {
-            project_id: project_id
-        };
-        return fs_ajax_async_result($.get, '/core/json/latest_activity', params)
-    }
-
+var mod = angular.module('activitylist', ['fsapi']);
+mod.directive('activitylist', function() {
     return {
-        list_issues: list_issues,
-        get_latest_activity: get_latest_activity
+        restrict: 'E',
+        replace: true,
+        scope:{
+            projectId: '@'
+        },
+        templateUrl: '/static/js/activitylist/activitylist.html',
+        controller: function ($scope, FSApi) {
+            FSApi.get_latest_activity($scope.projectId).onResult(function(result){
+                $scope.activities=result;
+                $scope.$digest();
+            });
+
+            $scope.describe = function(activity){
+                return 'Action = ' + activity.action + '/ Entity = ' + activity.entity + '/ Old Value = ' + activity.old_json + '/ New Value = ' + activity.new_json;
+            }
+        }
     }
-})
+});
