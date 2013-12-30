@@ -12,6 +12,7 @@
     <script src="/static/js/issuecards/issuecards.js"></script>
     <script src="/static/js/activitylist/activitylist.js"></script>
     <script src="/static/js/fsutil.js"></script>
+    <script src="/static/js/angularutils/watch.js"></script>
     {% if sandbox %}
         <script src="/static/js/tags/tag_api_mock.js"></script>
         <script src="/static/js/fsapi_mock.js"></script>
@@ -24,7 +25,7 @@
     <script src="/static/bootstrap/js/showdown.js"></script>
     <script>
 
-        var dependencies = ['issuecards', 'angularutils', 'taglist', 'activitylist'];
+        var dependencies = ['issuecards', 'angularutils', 'taglist', 'activitylist', 'watch'];
 
         var mod = angular.module('project', dependencies);
         mod.config(
@@ -38,6 +39,11 @@
         mod.controller("MyCtrl", function($scope){
             $scope.tags = {{ tags|safe }};
             $scope.authenticated = {% if user.is_authenticated %}true{% else %}false{% endif %};
+            $scope.watching = 'True' == '{{ is_watching }}';
+            $scope.watchLink = '';
+            if(!$scope.authenticated){
+                $scope.watchLink = '/core/login?next=/project/{{ project.id }}';
+            }
 
             var issues_sponsoring = {{ issues_sponsoring|safe }};
             for(var i=0; i < issues_sponsoring.length; i++){
@@ -113,7 +119,8 @@
                     <div>
                         <a class="iconized edit" href="/project/{{ project.id }}/edit">edit project</a>
                         <div class="hgap-10 inline"><!-- Horizontal Gap 10px --></div>
-                        <a class="iconized watch" href="">watch</a>
+{#                        <a class="iconized watch" href="">watch</a>#}
+                        <watch-entity entity="PROJECT" objid="{{ project.id }}" watching="watching" watch-link="watchLink"></watch-entity>
                     </div>
                 </div>
                 <!-- Project Description: Please limit to  characters -->

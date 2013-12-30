@@ -24,8 +24,10 @@
 
         var mod = angular.module('issue', dependencies);
         mod.config(
-            function($interpolateProvider){
+            function($interpolateProvider, $httpProvider){
                 $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
+                $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+                $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
             }
         );
 
@@ -523,7 +525,7 @@
                 <div class="card-status {{ issue.get_status }}"></div>
                 <!-- Box Footer -->
                 <div class="fs-box-footer">
-                    <watch-issue entity="ISSUE" objid="{{ issue.id }}" watching="watching" watch-link="watchLink"></watch-issue>
+                    <watch-entity entity="ISSUE" objid="{{ issue.id }}" watching="watching" watch-link="watchLink"></watch-entity>
                 </div>
             </div>
 

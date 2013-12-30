@@ -25,7 +25,7 @@
 
 var mod = angular.module('watch', ['fsapi']);
 
-mod.directive('watchIssue', function() {
+mod.directive('watchEntity', function() {
     return {
         restrict: 'E',
         replace: true,

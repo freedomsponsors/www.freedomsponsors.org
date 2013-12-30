@@ -2,7 +2,7 @@ import json
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from core.models import Project, ActionLog
-from core.services import stats_services, issue_services
+from core.services import stats_services, issue_services, watch_services
 from core.views import template_folder
 from django.contrib.auth.decorators import login_required
 
@@ -18,6 +18,7 @@ def view(request, project_id):
     issues_kickstarting = json.dumps(issue_services.to_card_dict(issues_kickstarting))
     top_sponsors = stats_services.project_top_sponsors(project_id)[0:5]
     top_programmers = stats_services.project_top_programmers(project_id)[0:5]
+    is_watching = request.user.is_authenticated() and watch_services.is_watching_project(request.user, project.id)
     return render_to_response('core2/project.html',
                               {'project': project,
                                'stats': stats,
@@ -26,6 +27,7 @@ def view(request, project_id):
                                'issues_kickstarting': issues_kickstarting,
                                'top_sponsors': top_sponsors,
                                'top_programmers': top_programmers,
+                               'is_watching': is_watching,
                                },
                               context_instance=RequestContext(request))
 

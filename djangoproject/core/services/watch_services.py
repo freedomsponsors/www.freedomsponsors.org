@@ -32,6 +32,11 @@ def is_watching_issue(user, issue_id):
     return not watch is None
 
 
+def is_watching_project(user, project_id):
+    watch = _findWatchOrNone(user, 'PROJECT', project_id)
+    return not watch is None
+
+
 def _findWatchOrNone(user, entity, objid):
     watches = Watch.objects.filter(user__id=user.id, entity=entity, objid=objid)
     count = len(watches)
