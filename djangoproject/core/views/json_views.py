@@ -72,7 +72,6 @@ def list_issue_cards(request):
 
 
 @login_required
-@csrf_exempt
 def add_tag(request):
     name = request.POST.get('name')
     objtype = request.POST.get('objtype')
@@ -85,7 +84,6 @@ def add_tag(request):
 
 
 @login_required
-@csrf_exempt
 def remove_tag(request):
     name = request.POST.get('name')
     objtype = request.POST.get('objtype')
