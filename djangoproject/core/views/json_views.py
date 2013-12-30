@@ -5,7 +5,7 @@ from core.models import *
 from django.http import HttpResponse
 from django.utils.translation import ugettext as _
 import json
-from core.services import issue_services, tag_services, activity_services
+from core.services import issue_services, tag_services, activity_services, watch_services
 import traceback
 import logging
 from django.contrib.auth.decorators import login_required
@@ -91,6 +91,14 @@ def remove_tag(request):
     tag_services.removeTag(name, objtype, objid)
     ActionLog.log_project_tag_removed(user=request.user, project_id=objid, tag_name=name)
     return HttpResponse('')
+
+
+@login_required
+def toggle_watch(request):
+    objid = int(request.POST.get('objid'))
+    entity = request.POST.get('entity')
+    watching = watch_services.toggle_watch(request.user, entity, objid, Watch.WATCHED)
+    return HttpResponse('WATCHING' if watching else 'NOT_WATCHING')
 
 
 def latest_activity(request):

@@ -492,10 +492,10 @@ class Watch(models.Model):
     STARTED_WORKING = "STARTED_WORKING"
 
     @classmethod
-    def newIssueWatch(cls, issue, user, reason):
+    def newWatch(cls, user, entity, objid, reason):
         watch = cls()
-        watch.objid = issue.id
-        watch.entity = 'ISSUE'
+        watch.objid = objid
+        watch.entity = entity
         watch.user = user
         watch.reason = reason
         return watch

@@ -17,5 +17,5 @@ class TestWatchService(unittest.TestCase):
         watch_services.watch_issue(user, issue.id, Watch.WATCHED)
         self.assertTrue(watch_services.is_watching_issue(user, issue.id))
 
-        watch_services.unwatch_issue(user, issue.id)
+        watch_services.toggle_watch('ISSUE', issue.id, Watch.WATCHED)
         self.assertTrue(not watch_services.is_watching_issue(user, issue.id))

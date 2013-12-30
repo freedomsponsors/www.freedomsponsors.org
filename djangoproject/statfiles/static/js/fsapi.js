@@ -42,8 +42,17 @@ fsapi_mod.factory('FSApi', function(){
         return fs_ajax_async_result($.get, '/core/json/latest_activity', params)
     }
 
+    function toggle_watch(entity, objid){
+        var params = {
+            entity: entity,
+            objid: objid
+        };
+        return fs_ajax_async_result($.post, '/core/json/toggle_watch', params)
+    }
+
     return {
         list_issues: list_issues,
-        get_latest_activity: get_latest_activity
-    }
+        get_latest_activity: get_latest_activity,
+        toggle_watch: toggle_watch
+    };
 })

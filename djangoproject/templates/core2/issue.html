@@ -14,10 +14,13 @@
 {% block head %}
     <script src="/static/js/angular.min.js"></script>
     <script src="/static/js/angularutils/angularutils.js"></script>
+    <script src="/static/js/angularutils/watch.js"></script>
+    <script src="/static/js/fsapi.js"></script>
+    <script src="/static/js/fsutil.js"></script>
     <script src="/static/bootstrap/js/showdown.js"></script>
     <script type="text/javascript">
 
-        var dependencies = ['angularutils'];
+        var dependencies = ['angularutils', 'watch'];
 
         var mod = angular.module('issue', dependencies);
         mod.config(
@@ -31,6 +34,7 @@
 
             var is_authenticated = {% if user and user.is_authenticated %}true{% else %}false{% endif %};
             $scope.watching = 'True' == '{{ is_watching }}';
+            $scope.watchLink = '';
             if(!is_authenticated){
                 $scope.watchLink = '/core/login?next={{ issue.get_view_link }}';
             }
@@ -519,7 +523,7 @@
                 <div class="card-status {{ issue.get_status }}"></div>
                 <!-- Box Footer -->
                 <div class="fs-box-footer">
-                    <watch-issue issue-id="{{ issue.id }}" watching="watching" watch-link="{[{ watchLink }]}"></watch-issue>
+                    <watch-issue entity="ISSUE" objid="{{ issue.id }}" watching="watching" watch-link="watchLink"></watch-issue>
                 </div>
             </div>
 

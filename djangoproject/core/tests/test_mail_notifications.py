@@ -17,7 +17,7 @@ class TestMailNotifications(unittest.TestCase):
     def test_should_send_mail_for_new_comments(self):
         offer = test_data.create_dummy_offer_usd()
         issue = offer.issue
-        response = self.client.get(reverse('core.views.watch_views.watchIssue', kwargs={'issue_id': issue.id }))
+        response = self.client.post(reverse('core.views.json_views.toggle_watch'), {'entity': 'ISSUE', 'objid': issue.id})
         self.assertEqual(response.status_code, 200)
 
         user2 = test_data.createDummyUserRandom(login='marydoe', password='xyz456')
@@ -36,7 +36,7 @@ class TestMailNotifications(unittest.TestCase):
     def test_should_send_mail_for_adding_or_changing_or_revoking_offer(self):
         offer = test_data.create_dummy_offer_usd()
         issue = offer.issue
-        response = self.client.get(reverse('core.views.watch_views.watchIssue', kwargs={'issue_id': issue.id }))
+        response = self.client.post(reverse('core.views.json_views.toggle_watch'), {'entity': 'ISSUE', 'objid': issue.id})
         self.assertEqual(response.status_code, 200)
 
         user2 = test_data.createDummyUserRandom(login='marydoe', password='xyz456')
@@ -78,7 +78,7 @@ class TestMailNotifications(unittest.TestCase):
     def test_should_send_mail_for_starting_or_aborting_or_finishing_work(self):
         offer = test_data.create_dummy_offer_usd()
         issue = offer.issue
-        response = self.client.get(reverse('core.views.watch_views.watchIssue', kwargs={'issue_id': issue.id }))
+        response = self.client.post(reverse('core.views.json_views.toggle_watch'), {'entity': 'ISSUE', 'objid': issue.id})
         self.assertEqual(response.status_code, 200)
 
         user2 = test_data.createDummyUserRandom(login='marydoe', password='xyz456')

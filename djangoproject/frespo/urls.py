@@ -9,7 +9,6 @@ admin.autodiscover()
 urlpatterns = []
 if 'core' in settings.INSTALLED_APPS:
     from core.forms import RegistrationForm
-    from core.urls import watch_urls
     urlpatterns += patterns('',
         # url(r'^.*$', direct_to_template, {'template': 'core/maintainance.html'}),
         url(r'^$', 'core.views.main_views.home', name='home'),
@@ -36,7 +35,6 @@ if 'core' in settings.INSTALLED_APPS:
             name='emailmgr_email_activate'
         ),
     )
-    urlpatterns += watch_urls.urlpatterns
 
 urlpatterns += patterns('',
     url(r'^sandbox/', include('sandbox.urls')),

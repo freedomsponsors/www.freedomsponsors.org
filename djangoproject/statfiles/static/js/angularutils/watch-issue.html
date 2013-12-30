@@ -1,5 +1,8 @@
 <span>
-    <a href="{[{watchLink}]}" ng-click="toggle()">
+    <a ng-show="showWatchLink()" href="{[{watchLink}]}">
+        {[{ action() }]}
+    </a>
+    <a ng-hide="showWatchLink()" href ng-click="toggle()">
         {[{ action() }]}
     </a>
     <img src="/static/img2/ajax-loader.gif" ng-show="loading">

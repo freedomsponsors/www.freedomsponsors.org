@@ -49,7 +49,9 @@ function fs_ajax_async_result(func, url, params){
         .success(function(result){
             if (r.callback) {
                 if(result){
-                    result = JSON.parse(result);
+                    try {
+                        result = JSON.parse(result);
+                    } catch(err){}
                 }
                 r.callback(result)
             }
