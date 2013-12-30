@@ -124,7 +124,8 @@
                     </div>
                 </div>
                 <!-- Project Description: Please limit to  characters -->
-                <p class="text-align-justify" style="min-height:52px;">{{ project.description|markdown|safe }}</p>
+{#                <p class="text-align-justify" style="min-height:52px;">{{ project.description|markdown|safe }}</p>#}
+                <div id="bootstrap-content">{{ project.description|markdown|safe }}</div>
                 <!-- Tags -->
                 <div class="tag-list" ng-show="false"> <!-- SEO -->
                     {% for tag in project.get_tags %}
