@@ -79,8 +79,9 @@ def add_tag(request):
     if not objtype in ['Project', 'Issue']:
         raise BaseException('Wrong objtype: %s' % objtype)
     tag_services.addTag(name, objtype, objid)
-    watches = watch_services.find_project_watches(project)
-    mail_services.notifyWatchers_project_tag_added(request.user, project, name, watches)
+    _project = Project.objects.get(pk=objid)
+    watches = watch_services.find_project_watches(_project)  #TODO: in the future, not only projects!
+    mail_services.notifyWatchers_project_tag_added(request.user, _project, name, watches)
     ActionLog.log_project_tag_added(user=request.user, project_id=objid, tag_name=name)
     return HttpResponse('')
 
@@ -91,8 +92,9 @@ def remove_tag(request):
     objtype = request.POST.get('objtype')
     objid = int(request.POST.get('objid'))
     tag_services.removeTag(name, objtype, objid)
-    watches = watch_services.find_project_watches(project)
-    mail_services.notifyWatchers_project_tag_removed(request.user, project, name, watches)
+    _project = Project.objects.get(pk=objid)
+    watches = watch_services.find_project_watches(_project)
+    mail_services.notifyWatchers_project_tag_removed(request.user, _project, name, watches)
     ActionLog.log_project_tag_removed(user=request.user, project_id=objid, tag_name=name)
     return HttpResponse('')
 
