@@ -262,11 +262,15 @@ def project_top_sponsors(project_id):
             if offer.currency == 'BTC':
                 offered_usd *= Decimal(str(btc2usd))
             sponsor.offered_usd += offered_usd
-        for offer_usd, offer_btc in zip(usd_offers, btc_offers):
+        for offer_usd in usd_offers[0:10]:
             map_offer_sponsor(offer_usd)
+        for offer_btc in btc_offers[0:10]:
             map_offer_sponsor(offer_btc)
-            if len(sponsors) >= SIZE:
-                break
+        # for offer_usd, offer_btc in zip(usd_offers, btc_offers):
+        #     map_offer_sponsor(offer_usd)
+        #     map_offer_sponsor(offer_btc)
+        #     if len(sponsors) >= SIZE:
+        #         break
     for sponsor in sponsors.values():
         if not hasattr(sponsor, 'paid_usd'):
             setattr(sponsor, 'paid_usd', Decimal(0))
@@ -308,11 +312,15 @@ def project_top_programmers(project_id):
         if part.payment.currency == 'BTC':
             received_usd *= Decimal(str(btc2usd))
         programmer.received_usd += received_usd
-    for part_usd, part_btc in zip(parts_usd, parts_btc):
+    for part_usd in parts_usd[0:10]:
         map_part(part_usd)
+    for part_btc in parts_btc[0:10]:
         map_part(part_btc)
-        if len(programmers) > SIZE:
-            break
+    # for part_usd, part_btc in zip(parts_usd, parts_btc):
+    #     map_part(part_usd)
+    #     map_part(part_btc)
+    #     if len(programmers) > SIZE:
+    #         break
     def add_solution(solution):
         programmer_id = solution.programmer.id
         programmer = programmers.get(programmer_id)
