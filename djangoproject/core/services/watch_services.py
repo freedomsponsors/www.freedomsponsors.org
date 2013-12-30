@@ -8,6 +8,20 @@ def find_issue_watches(issue):
     return Watch.objects.filter(entity='ISSUE', objid=issue.id)
 
 
+def find_project_watches(project):
+    return Watch.objects.filter(entity='PROJECT', objid=project.id)
+
+
+def find_issue_and_project_watches(issue):
+    iwatches = Watch.objects.filter(entity='ISSUE', objid=issue.id)
+    watches = []
+    watches.extend(iwatches)
+    user_ids = set([w.user.id for w in watches])
+    pwatches = Watch.objects.filter(entity='PROJECT', objid=issue.project.id)
+    watches.extend([w for w in pwatches if not w.user.id in user_ids])
+    return watches
+
+
 def watch_issue(user, issue_id, reason):
     watch = _findWatchOrNone(user, 'ISSUE', issue_id)
     if not watch:

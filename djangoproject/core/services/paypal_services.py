@@ -34,7 +34,7 @@ def process_ipn_return(paykey, status, tracking_id):
         payment.confirm_ipn()
         payment.offer.paid()
         payment.offer.issue.touch()
-        watches = watch_services.find_issue_watches(payment.offer.issue)
+        watches = watch_services.find_issue_and_project_watches(payment.offer.issue)
         notify_payment_parties_and_watchers_paymentconfirmed(payment, watches)
         notify_admin_payment_confirmed(payment)
         ActionLog.log_pay(payment)

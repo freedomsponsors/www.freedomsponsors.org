@@ -1,3 +1,4 @@
+import json
 import logging
 
 from django.core.mail import EmailMultiAlternatives
@@ -63,6 +64,26 @@ def notifyWatchers_workbegun(solution, comment, watches):
                                "SITE_HOME" : settings.SITE_HOME,
                                "comment" : comment},
                 whentrue='receiveEmail_issue_work')
+    _notify_watchers(send_func, watches)
+
+
+def notifyWatchers_project_edited(user, project, old_json, watches):
+    old_dic = json.loads(old_json)
+    changed_description = old_dic['description'] != project.description
+    changed_image = old_dic['image3x1'] != project.image3x1.url
+    def send_func(watch):
+        if watch.user.id != user.id:
+            _send_mail_to_user(user=watch.user,
+                               subject=user.getUserInfo().screenName + " edited project [%s]" % project.name,
+                               templateName='email/project_edited.html',
+                               contextData={"project": project,
+                                            "user": user,
+                                            "you": watch.user,
+                                            "SITE_HOME": settings.SITE_HOME,
+                                            "changed_description": changed_description,
+                                            "changed_image": changed_image,
+                                            "old_dic": old_dic},
+                               whentrue='receiveEmail_issue_work')
     _notify_watchers(send_func, watches)
 
 

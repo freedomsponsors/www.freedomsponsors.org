@@ -303,6 +303,7 @@ class Project(models.Model):
         return json.dumps({
             'id': self.id,
             'name': self.name,
+            'description': self.description,
             'homeURL': self.homeURL,
             'trackerURL': self.trackerURL,
             'image3x1': self.image3x1.url if self.image3x1 else None,

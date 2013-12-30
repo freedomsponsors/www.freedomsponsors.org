@@ -2,7 +2,7 @@ import json
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from core.models import Project, ActionLog
-from core.services import stats_services, issue_services, watch_services
+from core.services import stats_services, issue_services, watch_services, mail_services
 from core.views import template_folder
 from django.contrib.auth.decorators import login_required
 
@@ -49,6 +49,8 @@ def edit(request):
         project.image3x1 = request.FILES['image3x1']
     project.description = request.POST.get('description')
     project.save()
+    watches = watch_services.find_project_watches(project)
+    mail_services.notifyWatchers_project_edited(request.user, project, old_json, watches)
     ActionLog.log_edit_project(project=project, user=request.user, old_json=old_json)
     return redirect('core.views.project_views.view', project_id=project.id)
 

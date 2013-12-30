@@ -107,7 +107,7 @@ def _notify_payment_finished_if_applicable(payment_id):
             break
     if is_finished:
         payment.offer.paid()
-        watches = watch_services.find_issue_watches(payment.offer.issue)
+        watches = watch_services.find_issue_and_project_watches(payment.offer.issue)
         mail_services.notify_payment_parties_and_watchers_paymentconfirmed(payment, watches)
         ActionLog.log_pay(payment)
         msg = 'payment_id=%s, value=%s, issue=%s' % (

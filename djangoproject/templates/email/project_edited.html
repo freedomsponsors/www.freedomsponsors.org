@@ -1,0 +1,27 @@
+{% extends "email/base.html" %}
+{% block mainContent%}
+Hello {{ you.getUserInfo.screenName }}<br>
+<a href="{{SITE_HOME}}{{ user.get_view_link }}" style="color: #08C;text-decoration: none;cursor: auto;">
+  {{ user.getUserInfo.screenName }}
+</a>
+has edited the
+<a href="{{SITE_HOME}}/project/{{ project.id }}">{{ project.name }}</a>
+project. Details below<br><br>
+
+Old project settings
+<div style="background-color: #D9EDF7;border-bottom-color: #BCE8F1;border-bottom-left-radius: 4px;border-bottom-right-radius: 4px;border-bottom-style: solid;border-bottom-width: 1px;border-left-color: #BCE8F1;border-left-style: solid;border-left-width: 1px;border-right-color: #BCE8F1;border-right-style: solid;border-right-width: 1px;border-top-color: #BCE8F1;border-top-left-radius: 4px;border-top-right-radius: 4px;border-top-style: solid;border-top-width: 1px;color: #3A87AD;line-height: 18px;margin-bottom: 18px;margin-left: 0px;margin-right: 0px;margin-top: 0px;padding-bottom: 8px;padding-left: 14px;padding-right: 35px;padding-top: 8px;">
+    <strong>description:</strong> {{old_dic.description|linebreaks}}<br>
+    <strong>image:</strong> {{old_dic.image3x1}}
+</div>
+New project settings
+<div style="background-color: #D9EDF7;border-bottom-color: #BCE8F1;border-bottom-left-radius: 4px;border-bottom-right-radius: 4px;border-bottom-style: solid;border-bottom-width: 1px;border-left-color: #BCE8F1;border-left-style: solid;border-left-width: 1px;border-right-color: #BCE8F1;border-right-style: solid;border-right-width: 1px;border-top-color: #BCE8F1;border-top-left-radius: 4px;border-top-right-radius: 4px;border-top-style: solid;border-top-width: 1px;color: #3A87AD;line-height: 18px;margin-bottom: 18px;margin-left: 0px;margin-right: 0px;margin-top: 0px;padding-bottom: 8px;padding-left: 14px;padding-right: 35px;padding-top: 8px;">
+    <strong>description:</strong> {{project.description|linebreaks}}<br>
+    <strong>image:</strong> {{project.image3x1.url}}
+</div>
+We will let you know if there are any updates.
+
+<br><br>
+{% include 'email/include/email_settings_notice.html' %}
+
+{% endblock mainContent%}
+
