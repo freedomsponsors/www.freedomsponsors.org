@@ -218,6 +218,7 @@ def to_card_dict(issues):
                'commentcount': issue.getComments().count()}
         if issue.project:
             dic['project_link'] = issue.project.get_view_link()
+            dic['project_name'] = issue.project.name
         for offer in issue.getOffers()[0:4]:
             sponsor = {
                 'image_link': offer.sponsor.gravatar_url_medium(),
