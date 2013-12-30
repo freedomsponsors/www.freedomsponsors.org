@@ -2,9 +2,9 @@ from core.models import *
 from django.utils import unittest
 from core.services import watch_services
 from helpers import test_data
-from django.test.client import Client
 
 __author__ = 'tony'
+
 
 class TestWatchService(unittest.TestCase):
 
@@ -14,7 +14,7 @@ class TestWatchService(unittest.TestCase):
 
         self.assertTrue(not watch_services.is_watching_issue(user, issue.id))
 
-        watch_services.watch_issue(user, issue.id, IssueWatch.WATCHED)
+        watch_services.watch_issue(user, issue.id, Watch.WATCHED)
         self.assertTrue(watch_services.is_watching_issue(user, issue.id))
 
         watch_services.unwatch_issue(user, issue.id)

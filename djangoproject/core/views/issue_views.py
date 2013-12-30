@@ -25,7 +25,7 @@ __author__ = 'tony'
 @login_required
 def addIssue(request):
     offer = issue_services.sponsor_new_issue(request.POST, request.user)
-    watch_services.watch_issue(request.user, offer.issue.id, IssueWatch.SPONSORED)
+    watch_services.watch_issue(request.user, offer.issue.id, Watch.SPONSORED)
     ActionLog.log_sponsor(offer)
     return  redirect(offer.issue.get_view_link() + '?alert=SPONSOR')
 
@@ -33,7 +33,7 @@ def addIssue(request):
 @login_required
 def kickstartIssue(request):
     issue = issue_services.kickstart_new_issue(request.POST, request.user)
-    watch_services.watch_issue(request.user, issue.id, IssueWatch.CREATED)
+    watch_services.watch_issue(request.user, issue.id, Watch.CREATED)
     ActionLog.log_propose(issue=issue, user=request.user)
     return redirect(issue.get_view_link() + '?alert=KICKSTART')
 
@@ -54,7 +54,7 @@ def addSolution(request):
     comment_content = request.POST['comment']
     accepting_payments = request.POST.has_key('accept_payments')
     solution, comment = issue_services.add_solution_to_existing_issue(issue_id, comment_content, accepting_payments, request.user)
-    watch_services.watch_issue(request.user, solution.issue.id, IssueWatch.STARTED_WORKING)
+    watch_services.watch_issue(request.user, solution.issue.id, Watch.STARTED_WORKING)
     ActionLog.log_start_work(solution=solution, issue_comment=comment)
     need_bitcoin_address = _need_to_set_bitcoin_address(request.user, solution.issue)
     need_verify_paypal = _need_to_verify_paypal_account(request.user, solution.issue)
@@ -204,7 +204,7 @@ def sponsorIssue(request):
 
     issue = Issue.objects.get(pk=issue_id)
     offer = issue_services.sponsor_existing_issue(issue_id, request.POST, request.user)
-    watch_services.watch_issue(request.user, issue_id, IssueWatch.SPONSORED)
+    watch_services.watch_issue(request.user, issue_id, Watch.SPONSORED)
     ActionLog.log_sponsor(offer)
     if issue.getSolutionsAcceptingPayments().count() > 0:
         messages.info(request, 'This issue is open for payments. You are free to choose: you can pay now, or you can wait until after the issue is finished. No pressure :-)')

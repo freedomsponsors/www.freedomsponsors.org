@@ -1,9 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext as _
 from django.shortcuts import render_to_response, redirect
-from django.template import Context, loader, RequestContext
+from django.template import RequestContext
 
-from core.models import Issue, IssueWatch
+from core.models import Issue, Watch
 from core.services import watch_services
 from core.services.mail_services import notify_admin
 from core.views import template_folder
@@ -24,6 +24,6 @@ def addFeedback(request):
         raise BaseException(_('title and description are required'))
     issue = Issue.newIssueFeedback(issue_title, issue_description, request.user)
     issue.save()
-    watch_services.watch_issue(request.user, issue.id, IssueWatch.CREATED)
+    watch_services.watch_issue(request.user, issue.id, Watch.CREATED)
     notify_admin(_('new Feedback: %s') % issue_title, issue_description)
     return redirect('core.views.feedback_views.feedback')

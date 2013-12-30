@@ -47,8 +47,9 @@ mod.directive('watchIssue', function() {
         restrict: 'E',
         replace: true,
         scope:{
-            issueId:'@',
-            watching:'='
+            watchLink: '@',
+            issueId: '@',
+            watching: '='
         },
         templateUrl: '/static/js/angularutils/watch-issue.html',
         controller: function ($scope) {
@@ -57,6 +58,9 @@ mod.directive('watchIssue', function() {
             };
 
             $scope.toggle = function(){
+                if($scope.watchLink){
+                    return;
+                }
                 var url = '/core/' + $scope.action() + '/issue/'+$scope.issueId;
                 $scope.loading = true;
                 $.get(url).success(function(data){

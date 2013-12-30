@@ -7,7 +7,7 @@ from django.utils.translation import ugettext as _
 
 @login_required
 def watchIssue(request, issue_id):
-    watch_services.watch_issue(request.user, int(issue_id), IssueWatch.WATCHED)
+    watch_services.watch_issue(request.user, int(issue_id), Watch.WATCHED)
     return HttpResponse('WATCHING')
 
 @login_required

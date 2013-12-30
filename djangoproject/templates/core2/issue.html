@@ -29,7 +29,11 @@
         function IssueCtrl($scope) {
             $scope.new_comment = '';
 
+            var is_authenticated = {% if user and user.is_authenticated %}true{% else %}false{% endif %};
             $scope.watching = 'True' == '{{ is_watching }}';
+            if(!is_authenticated){
+                $scope.watchLink = '/core/login?next={{ issue.get_view_link }}';
+            }
 
             $scope.description = '{{ issue.description|escapejs }}'
 
@@ -515,7 +519,7 @@
                 <div class="card-status {{ issue.get_status }}"></div>
                 <!-- Box Footer -->
                 <div class="fs-box-footer">
-                    <watch-issue issue-id="{{ issue.id }}" watching="watching"></watch-issue>
+                    <watch-issue issue-id="{{ issue.id }}" watching="watching" watch-link="{[{ watchLink }]}"></watch-issue>
                 </div>
             </div>
 

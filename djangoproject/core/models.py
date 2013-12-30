@@ -478,10 +478,12 @@ class Issue(models.Model):
 
 
 # A record that indicates that a user is watching an issue
-class IssueWatch(models.Model):
-    issue = models.ForeignKey(Issue)
+class Watch(models.Model):
+    issue = models.ForeignKey(Issue, null=True)
+    objid = models.IntegerField()
     user = models.ForeignKey(User)
     reason = models.CharField(max_length=30, null=False, blank=False)
+    entity = models.CharField(max_length=60)
 
     CREATED = "CREATED"
     COMMENTED = "COMMENTED"
@@ -492,7 +494,8 @@ class IssueWatch(models.Model):
     @classmethod
     def newIssueWatch(cls, issue, user, reason):
         watch = cls()
-        watch.issue = issue
+        watch.objid = issue.id
+        watch.entity = 'ISSUE'
         watch.user = user
         watch.reason = reason
         return watch
