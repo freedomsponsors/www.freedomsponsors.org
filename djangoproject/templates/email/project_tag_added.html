@@ -1,0 +1,17 @@
+{% extends "email/base.html" %}
+{% block mainContent%}
+Hello {{ you.getUserInfo.screenName }}<br>
+<a href="{{SITE_HOME}}{{ user.get_view_link }}" style="color: #08C;text-decoration: none;cursor: auto;">
+  {{ user.getUserInfo.screenName }}
+</a>
+added the tag <strong>{{ tag }}</strong> to project
+<a href="{{SITE_HOME}}/project/{{ project.id }}">{{ project.name }}</a>
+project.<br><br>
+
+We will let you know if there are any updates.
+
+<br><br>
+{% include 'email/include/email_settings_notice.html' %}
+
+{% endblock mainContent%}
+

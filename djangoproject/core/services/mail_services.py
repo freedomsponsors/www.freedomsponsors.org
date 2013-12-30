@@ -87,6 +87,38 @@ def notifyWatchers_project_edited(user, project, old_json, watches):
     _notify_watchers(send_func, watches)
 
 
+def notifyWatchers_project_tag_added(user, project, tag, watches):
+    def send_func(watch):
+        if watch.user.id != user.id:
+            _send_mail_to_user(user=watch.user,
+                               subject=user.getUserInfo().screenName + " added the tag [%s] to project [%s]" % (tag, project.name),
+                               templateName='email/project_tag_added.html',
+                               contextData={"project": project,
+                                            "user": user,
+                                            "you": watch.user,
+                                            "SITE_HOME": settings.SITE_HOME,
+                                            "tag": tag,
+                                            },
+                               whentrue='receiveEmail_issue_work')
+    _notify_watchers(send_func, watches)
+
+
+def notifyWatchers_project_tag_removed(user, project, tag, watches):
+    def send_func(watch):
+        if watch.user.id != user.id:
+            _send_mail_to_user(user=watch.user,
+                               subject=user.getUserInfo().screenName + " removed tag [%s] from project [%s]" % (tag, project.name),
+                               templateName='email/project_tag_removed.html',
+                               contextData={"project": project,
+                                            "user": user,
+                                            "you": watch.user,
+                                            "SITE_HOME": settings.SITE_HOME,
+                                            "tag": tag,
+                                            },
+                               whentrue='receiveEmail_issue_work')
+    _notify_watchers(send_func, watches)
+
+
 def notifyWatchers_acceptingpayments(solution, watches):
     def send_func(watch):
         if(watch.user.id != solution.programmer.id):
