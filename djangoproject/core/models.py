@@ -127,8 +127,7 @@ def getKickstartingIssues(self):
 
 
 def getWatchedIssues(self):
-    print('watched %s' % Issue.objects.filter(issuewatch__user=self))
-    return Issue.objects.filter(issuewatch__user=self)
+    return Issue.objects.filter(id__in=Watch.objects.filter(entity='ISSUE', user=self).values('objid'))
 
 
 @receiver(user_activated_email)
