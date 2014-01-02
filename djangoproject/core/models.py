@@ -1003,6 +1003,7 @@ class ActionLog(models.Model):
             'payment': self.payment.to_dict_json() if self.payment else None,
             'solution_id': self.solution.id if self.solution else None,
             'issue_comment_id': self.issue_comment.id if self.issue_comment else None,
+            'issue_comment_content': self.issue_comment.content if self.issue_comment else None,
             'old_json': self.old_json,
             'new_json': self.new_json,
         }

@@ -64,6 +64,11 @@ mod.directive('activitylist', function() {
             $scope.more = function(){
                 more();
             }
+
+            $scope.show_detail = function(activity){
+                $scope.selected_activity = activity;
+                $('#activity_detail').modal()
+            }
         }
     }
 });
