@@ -10,7 +10,7 @@
                 </a>
                 <ul id="menu1" class="dropdown-menu" aria-labelledby="drop_user">
                     <li><a href="{{ user.get_view_link }}">View Profile</a></li>
-                    <li><a href="{% url core.views.user_views.editUserForm %}">Edit Profile</a></li>
+                    <li><a href="/user/edit">Edit Profile</a></li>
                     {% if user.has_usable_password %}
                         <li><a href="/accounts/password/change">Change password</a></li>
                     {% endif %}

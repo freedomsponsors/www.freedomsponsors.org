@@ -132,9 +132,17 @@ def project(request):
         'percent_btc_paid': 40,
         'percent_btc_open': 60,
     }
+    _user = {'id': 1, 'is_authenticated': True}
     context = {
         'project': _project,
+        'tags': ['jujuba', 'biscoito', 'pudim'],
+        'issues_sponsoring': [],
+        'issues_kickstarting': [],
+        'top_sponsors': [],
+        'top_programmers': [],
         'stats': _stats,
+        'user': _user,
+        'sandbox': True,
     }
     return render_to_response('core2/project.html',
                               context, context_instance=RequestContext(request))
