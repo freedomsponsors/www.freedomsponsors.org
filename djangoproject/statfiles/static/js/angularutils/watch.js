@@ -23,7 +23,7 @@
  */
 
 
-var mod = angular.module('watch', ['fsapi']);
+var mod = angular.module('fswatch', ['fsapi']);
 
 mod.directive('watchEntity', function() {
     return {
