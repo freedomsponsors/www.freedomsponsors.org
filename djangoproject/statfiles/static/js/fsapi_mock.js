@@ -158,12 +158,12 @@ fsapi_mod.factory('FSApi', function(){
         var result = {
             count: 15,
             issues: issues
-        }
+        };
         return fs_timeout_async_result(result);
     }
 
     function get_latest_activity(project_id){
-        return fs_timeout_async_result(ACTIVITIES);
+        return fs_timeout_async_result({count: 25, activities: ACTIVITIES});
     }
 
     return {

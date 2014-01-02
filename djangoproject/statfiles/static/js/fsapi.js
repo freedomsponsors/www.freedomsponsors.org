@@ -35,9 +35,10 @@ fsapi_mod.factory('FSApi', function(){
         return fs_ajax_async_result($.get, '/core/json/list_issue_cards', params)
     }
 
-    function get_latest_activity(project_id){
+    function get_latest_activity(project_id, offset){
         var params = {
-            project_id: project_id
+            project_id: project_id,
+            offset: offset
         };
         return fs_ajax_async_result($.get, '/core/json/latest_activity', params)
     }

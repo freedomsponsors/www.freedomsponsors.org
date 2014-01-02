@@ -50,7 +50,6 @@ def get_offers(request):
 
 
 def list_issue_cards(request):
-
     project_id = None
     if 'project_id' in request.GET:
         project_id = int(request.GET.get('project_id'))
@@ -109,8 +108,13 @@ def toggle_watch(request):
 
 def latest_activity(request):
     project_id = int(request.GET.get('project_id')) if 'project_id' in request.GET else None
-    activities = activity_services.get_latest_activity(project_id)
-    return HttpResponse(json.dumps([activity.to_dict_json() for activity in activities]))
+    offset = int(request.GET.get('offset'))
+    activities, count = activity_services.get_latest_activity(project_id, offset)
+    result = {
+        'count': count,
+        'activities': [activity.to_dict_json() for activity in activities],
+    }
+    return HttpResponse(json.dumps(result))
 
 
 def _convert_offers_to_dict(offers):

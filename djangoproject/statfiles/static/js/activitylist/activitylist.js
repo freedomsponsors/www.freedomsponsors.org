@@ -31,6 +31,8 @@ mod.directive('activitylist', function() {
         templateUrl: '/static/js/activitylist/activitylist.html',
         controller: function ($scope, FSApi) {
 
+            $scope.activities = [];
+
             var instrument = function(activity){
                 try{
                     activity.new_dic = JSON.parse(activity.new_json);
@@ -40,16 +42,27 @@ mod.directive('activitylist', function() {
                 }
             };
 
-            FSApi.get_latest_activity($scope.projectId).onResult(function(result){
-                $scope.activities=result;
-                for(var i=0; i < $scope.activities.length; i++){
-                    instrument($scope.activities[i])
-                }
-                $scope.$digest();
-            });
+            var more = function(){
+                $scope.loading = true;
+                FSApi.get_latest_activity($scope.projectId, $scope.activities.length).onResult(function(result){
+                    $scope.loading = false;
+                    $scope.activities = $scope.activities.concat(result.activities);
+                    $scope.count = result.count;
+                    for(var i=0; i < $scope.activities.length; i++){
+                        instrument($scope.activities[i])
+                    }
+                    $scope.$digest();
+                });
+            };
 
-            $scope.describe = function(activity){
-                return 'Action = ' + activity.action + '/ Entity = ' + activity.entity + '/ Old Value = ' + activity.old_json + '/ New Value = ' + activity.new_json;
+            more();
+
+            $scope.show_more = function(){
+                return $scope.activities.length < $scope.count;
+            };
+
+            $scope.more = function(){
+                more();
             }
         }
     }
