@@ -30,8 +30,21 @@ mod.directive('activitylist', function() {
         },
         templateUrl: '/static/js/activitylist/activitylist.html',
         controller: function ($scope, FSApi) {
+
+            var instrument = function(activity){
+                try{
+                    activity.new_dic = JSON.parse(activity.new_json);
+                    activity.old_dic = JSON.parse(activity.old_json);
+                } catch(err){
+                    //that's ok
+                }
+            };
+
             FSApi.get_latest_activity($scope.projectId).onResult(function(result){
                 $scope.activities=result;
+                for(var i=0; i < $scope.activities.length; i++){
+                    instrument($scope.activities[i])
+                }
                 $scope.$digest();
             });
 

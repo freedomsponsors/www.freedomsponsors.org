@@ -298,15 +298,18 @@ class Project(models.Model):
     def get_tags(self):
         return Tag.objects.filter(objtype="Project", objid=self.id)
 
-    def to_json(self):
-        return json.dumps({
+    def to_dict_json(self):
+        return {
             'id': self.id,
             'name': self.name,
             'description': self.description,
             'homeURL': self.homeURL,
             'trackerURL': self.trackerURL,
             'image3x1': self.image3x1.url if self.image3x1 else None,
-        })
+        }
+
+    def to_json(self):
+        return json.dumps(self.to_dict_json())
 
     def __unicode__(self):
         return self.name
@@ -385,12 +388,16 @@ class Issue(models.Model):
             self.title = issuedict.get('title')
         self.touch()
 
-    def to_json(self):
-        return json.dumps({
+    def to_dict_json(self):
+        return {
             'id': self.id,
             'title': self.title,
-            'description': self.description
-        })
+            'description': self.description,
+            'link': self.get_view_link(),
+        }
+
+    def to_json(self):
+        return json.dumps(self.to_dict_json())
 
     def getTotalOffersPriceUSD(self):
         return self.getTotalOffersPrice_by_currency('USD')
@@ -567,8 +574,8 @@ class Offer(models.Model):
     REVOKED = "REVOKED"
     PAID = "PAID"
 
-    def to_json(self):
-        return json.dumps({
+    def to_dict_json(self):
+        return {
             'id': self.id,
             'price': float(str(self.price)),
             'currency': self.currency,
@@ -576,7 +583,10 @@ class Offer(models.Model):
             'no_forking': self.no_forking,
             'require_release': self.require_release,
             'status': self.status,
-        })
+        }
+
+    def to_json(self):
+        return json.dumps(self.to_dict_json())
 
     @classmethod
     def newOffer(cls, issue, sponsor, price, currency, acceptanceCriteria, no_forking, require_release, expiration_days):
@@ -915,11 +925,13 @@ class PaymentPart(models.Model):
     solution = models.ForeignKey(Solution)
     paypalEmail = models.EmailField(max_length=256, null=True)
     price = models.DecimalField(max_digits=16, decimal_places=8)
-    money_sent = models.ForeignKey(MoneySent, null = True)
+    money_sent = models.ForeignKey(MoneySent, null=True)
 
     def to_dict_json(self):
         return {
             'programmer_id': self.programmer.id,
+            'programmer_image': self.programmer.gravatar_url_small(),
+            'programmer_screenname': self.programmer.getUserInfo().screenname,
             'solution_id': self.solution.id,
             'price': float(str(self.price)) if self.price else None,
         }
@@ -970,10 +982,15 @@ class ActionLog(models.Model):
             'action': self.action,
             'entity': self.entity,
             # 'creationDate': self.id,
+            'user_image': self.user.gravatar_url_medium(),
+            'user_screenname': self.user.getUserInfo().screenName,
             'user_id': self.user.id,
             'project_id': self.project.id if self.project else None,
+            'project': self.project.to_dict_json() if self.project else None,
             'issue_id': self.issue.id if self.issue else None,
+            'issue': self.issue.to_dict_json() if self.issue else None,
             'offer_id': self.offer.id if self.offer else None,
+            'offer': self.offer.to_dict_json() if self.offer else None,
             'solution_id': self.solution.id if self.solution else None,
             'issue_comment_id': self.issue_comment.id if self.issue_comment else None,
             'old_json': self.old_json,
