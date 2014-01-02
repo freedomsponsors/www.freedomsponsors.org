@@ -2,69 +2,69 @@
     <div ng-repeat="activity in activities" style="border: solid 1px; margin-bottom: 20px">
         <div ng-switch on="activity.action">
             <div ng-switch-when="EDIT_PROJECT">
-                {[{ activity.when }]}<br>
+                <span title="{[{ activity.creationDate }]}"> {[{ activity.when }]}</span><br>
                 <img ng-src="{[{activity.user_image}]}"> {[{ activity.user_screenname }]}
                 has edited project details. <a href="#">More...</a>
             </div>
             <div ng-switch-when="PROJECT_ADD_TAG">
-                {[{ activity.when }]}<br>
+                <span title="{[{ activity.creationDate }]}"> {[{ activity.when }]}</span><br>
                 <img ng-src="{[{activity.user_image}]}"> {[{ activity.user_screenname }]}
                 added tag <strong>{[{ activity.new_json }]}</strong> to project.
             </div>
             <div ng-switch-when="PROJECT_REMOVE_TAG">
-                {[{ activity.when }]}<br>
+                <span title="{[{ activity.creationDate }]}"> {[{ activity.when }]}</span><br>
                 <img ng-src="{[{activity.user_image}]}"> {[{ activity.user_screenname }]}
                 removed tag <strong>{[{ activity.new_json }]}</strong> from project.
             </div>
             <div ng-switch-when="SPONSOR">
-                {[{ activity.when }]}<br>
+                <span title="{[{ activity.creationDate }]}"> {[{ activity.when }]}</span><br>
                 <img ng-src="{[{activity.user_image}]}"> {[{ activity.user_screenname }]}
                 sponsored issue <a href="{[{ activity.issue.link }]}">{[{ activity.issue.title }]}</a>,
                 with a {[{ activity.new_dic.currency }]} {[{ activity.new_dic.price }]} offer.
             </div>
             <div ng-switch-when="CHANGE_OFFER">
-                {[{ activity.when }]}<br>
+                <span title="{[{ activity.creationDate }]}"> {[{ activity.when }]}</span><br>
                 has changed his offer on issue <a href="{[{ activity.issue.link }]}">{[{ activity.issue.title }]} </a>
                 <a href="#">More...</a>
             </div>
             <div ng-switch-when="REVOKE">
-                {[{ activity.when }]}<br>
+                <span title="{[{ activity.creationDate }]}"> {[{ activity.when }]}</span><br>
                 <img ng-src="{[{activity.user_image}]}"> {[{ activity.user_screenname }]}
                 revoked his {[{ activity.new_dic.currency }]} {[{ activity.new_dic.price }]} offer
                 on issue <a href="{[{ activity.issue.link }]}">{[{ activity.issue.title }]} </a>
                 <a href="#">More...</a>
             </div>
             <div ng-switch-when="PROPOSE">
-                {[{ activity.when }]}<br>
+                <span title="{[{ activity.creationDate }]}"> {[{ activity.when }]}</span><br>
                 <img ng-src="{[{activity.user_image}]}"> {[{ activity.user_screenname }]}
                 proposed issue <a href="{[{ activity.issue.link }]}">{[{ activity.issue.title }]} </a>
             </div>
             <div ng-switch-when="WORK">
-                {[{ activity.when }]}<br>
+                <span title="{[{ activity.creationDate }]}"> {[{ activity.when }]}</span><br>
                 <img ng-src="{[{activity.user_image}]}"> {[{ activity.user_screenname }]}
                 started working on issue <a href="{[{ activity.issue.link }]}">{[{ activity.issue.title }]} </a>
                 <a href="#">More...</a>
             </div>
             <div ng-switch-when="ABORT">
-                {[{ activity.when }]}<br>
+                <span title="{[{ activity.creationDate }]}"> {[{ activity.when }]}</span><br>
                 <img ng-src="{[{activity.user_image}]}"> {[{ activity.user_screenname }]}
                 stopped working on issue <a href="{[{ activity.issue.link }]}">{[{ activity.issue.title }]} </a>
                 <a href="#">More...</a>
             </div>
             <div ng-switch-when="RESOLVE">
-                {[{ activity.when }]}<br>
+                <span title="{[{ activity.creationDate }]}"> {[{ activity.when }]}</span><br>
                 <img ng-src="{[{activity.user_image}]}"> {[{ activity.user_screenname }]}
                 resolved issue <a href="{[{ activity.issue.link }]}">{[{ activity.issue.title }]} </a>
             </div>
             <div ng-switch-when="PAY">
-                {[{ activity.when }]}<br>
+                <span title="{[{ activity.creationDate }]}"> {[{ activity.when }]}</span><br>
                 <img ng-src="{[{activity.user_image}]}"> {[{ activity.user_screenname }]}
-                made a {[{ activity.new_dic.currency }]} {[{ activity.new_dic.total }]} payment
+                made a {[{ activity.payment.currency }]} {[{ activity.payment.total }]} payment
                 for issue <a href="{[{ activity.issue.link }]}">{[{ activity.issue.title }]} </a><br>
                 Receivers:<br>
                 <ul>
-                    <li ng-repeat="part in activity.new_dic.parts">
-                        <img ng-src="{[{part.programmer_image}]}"> {[{ part.programmer_screenname }]}: {[{ activity.new_dic.currency }]} {[{ part.price }]}
+                    <li ng-repeat="part in activity.payment.parts">
+                        <img ng-src="{[{part.programmer_image}]}"> {[{ part.programmer_screenname }]}: {[{ activity.payment.currency }]} {[{ part.price }]}
                     </li>
                 </ul>
             </div>

@@ -5,7 +5,7 @@ from django.utils import timezone
 from datetime import timedelta
 from django.contrib.auth.models import User
 import hashlib, time, random
-from core.utils.frespo_utils import get_or_none, strip_protocol
+from core.utils.frespo_utils import get_or_none, strip_protocol, as_time_string
 from social_auth.models import UserSocialAuth
 from django.utils.http import urlquote
 from django.template.defaultfilters import slugify
@@ -793,8 +793,9 @@ class Payment(models.Model):
     CONFIRMED_TRN_UNDERPAY = 'CONFIRMED_TRN_UNDERPAY'
     FORGOTTEN = 'FORGOTTEN'
 
-    def to_json(self):
-        return json.dumps({
+    def to_dict_json(self):
+        return {
+            'id': self.id,
             'status': self.status,
             'fee': float(str(self.fee)) if self.fee else None,
             'total': float(str(self.total)) if self.total else None,
@@ -806,7 +807,10 @@ class Payment(models.Model):
             'bitcoin_transaction_hash': self.bitcoin_transaction_hash,
             'offer_currency': self.offer_currency,
             'parts': [part.to_dict_json() for part in self.getParts()]
-        })
+        }
+
+    def to_json(self):
+        return json.dumps(self.to_dict_json())
 
     @classmethod
     def newPayment(cls, offer, currency):
@@ -929,9 +933,10 @@ class PaymentPart(models.Model):
 
     def to_dict_json(self):
         return {
+            'id': self.id,
             'programmer_id': self.programmer.id,
             'programmer_image': self.programmer.gravatar_url_small(),
-            'programmer_screenname': self.programmer.getUserInfo().screenname,
+            'programmer_screenname': self.programmer.getUserInfo().screenName,
             'solution_id': self.solution.id,
             'price': float(str(self.price)) if self.price else None,
         }
@@ -959,6 +964,7 @@ class ActionLog(models.Model):
     issue = models.ForeignKey(Issue, null=True)
     offer = models.ForeignKey(Offer, null=True)
     solution = models.ForeignKey(Solution, null=True)
+    payment = models.ForeignKey(Payment, null=True)
     issue_comment = models.ForeignKey(IssueComment, null=True)
 
     EDIT_ISSUE = 'EDIT_ISSUE'
@@ -979,6 +985,8 @@ class ActionLog(models.Model):
     def to_dict_json(self):
         return {
             'id': self.id,
+            'creationDate': str(self.creationDate),
+            'when': as_time_string(self.creationDate),
             'action': self.action,
             'entity': self.entity,
             # 'creationDate': self.id,
@@ -991,6 +999,8 @@ class ActionLog(models.Model):
             'issue': self.issue.to_dict_json() if self.issue else None,
             'offer_id': self.offer.id if self.offer else None,
             'offer': self.offer.to_dict_json() if self.offer else None,
+            'payment_id': self.payment.id if self.payment else None,
+            'payment': self.payment.to_dict_json() if self.payment else None,
             'solution_id': self.solution.id if self.solution else None,
             'issue_comment_id': self.issue_comment.id if self.issue_comment else None,
             'old_json': self.old_json,
@@ -1173,6 +1183,7 @@ class ActionLog(models.Model):
             entity='PAYMENT',
             project=payment.offer.issue.project,
             issue=payment.offer.issue,
+            payment=payment,
             new_json=payment.to_json(),
             user=payment.offer.sponsor,
         ).save()
