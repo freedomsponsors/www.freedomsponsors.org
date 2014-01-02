@@ -285,7 +285,7 @@ class Project(models.Model):
         return project
 
     def get_view_link(self):
-        return '/core/issue/?s=&project_id=%s&project_name=%s' % (self.id,urlquote(self.name),)
+        return '/project/%s/%s' % (self.id, urlquote(self.name))
 
     def get_image3x1(self):
         if not self.image3x1:

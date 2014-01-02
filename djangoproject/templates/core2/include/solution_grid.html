@@ -11,7 +11,7 @@
   <tbody>
 {% for solution in solutions %}
     <tr>
-      <td><a href="{{ solution.issue.get_view_link }}">{{ solution.issue.project.name }}</a></td>
+      <td><a href="{{ solution.issue.project.get_view_link }}">{{ solution.issue.project.name }}</a></td>
       <td><a href="{{ solution.issue.get_view_link }}">{{ solution.issue.key }}</a></td>
       <td><a href="{{ solution.issue.get_view_link }}">{{ solution.issue.title }}</a></td>
       <td>{{solution.status}}</td>

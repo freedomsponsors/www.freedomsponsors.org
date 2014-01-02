@@ -13,7 +13,7 @@
   <tbody>
 {% for offer in offers %}
     <tr>
-      <td class="fav-td fav-{{ offer.issue.project.name|slugify }}"><a href="{{ offer.issue.get_view_link }}">{{ offer.issue.project.name }}</a></td>
+      <td class="fav-td fav-{{ offer.issue.project.name|slugify }}"><a href="{{ offer.issue.project.get_view_link }}">{{ offer.issue.project.name }}</a></td>
       <td><a href="{{ offer.issue.get_view_link }}">{{ offer.issue.key }}</a></td>
       <td><a href="{{ offer.issue.get_view_link }}">{{ offer.issue.title }}</a></td>
       <td><a href="{{ offer.issue.get_view_link }}">{{offer.get_currency_symbol}} {{offer.price|floatformat:2}}</a></td>

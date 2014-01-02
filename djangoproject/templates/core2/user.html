@@ -146,17 +146,17 @@
 {% if le_user.getOffers %}
   <hr>
   <h3>Sponsoring issues</h3>
-  {% include 'core/include/offer_grid.html' with offers=le_user.getOffers %}
+  {% include 'core2/include/offer_grid.html' with offers=le_user.getOffers %}
 {% endif %}
 {% if le_user.getSolutions %}
   <hr>
   <h3>Working on issues</h3>
-  {% include 'core/include/solution_grid.html' with solutions=le_user.getSolutions %}
+  {% include 'core2/include/solution_grid.html' with solutions=le_user.getSolutions %}
 {% endif %}
 {% if le_user.getKickstartingIssues %}
   <hr>
   <h3>Kickstarting issues</h3>
-  {% include 'core/include/issue_grid.html' with issues=le_user.getKickstartingIssues %}
+  {% include 'core2/include/issue_grid.html' with issues=le_user.getKickstartingIssues %}
 {% endif %}
 
 

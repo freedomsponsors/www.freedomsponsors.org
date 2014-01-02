@@ -4,18 +4,18 @@
 
 {% if user.getOffers %}
   <h3>Sponsoring issues</h3>
-  {% include 'core/include/offer_grid.html' with offers=user.getOffers %}
+  {% include 'core2/include/offer_grid.html' with offers=user.getOffers %}
 {% endif %}
 {% if user.getSolutions %}
   <hr>
   <h3>Working on issues</h3>
-  {% include 'core/include/solution_grid.html' with solutions=user.getSolutions %}
+  {% include 'core2/include/solution_grid.html' with solutions=user.getSolutions %}
 {% endif %}
 
 {% if user.getWatchedIssues %}
   <hr>
   <h3>Watched Issues</h3>
-  {% include 'core/include/issue_grid.html' with issues=user.getWatchedIssues %}
+  {% include 'core2/include/issue_grid.html' with issues=user.getWatchedIssues %}
 {% endif %}
 
 {% if not user.getSolutions and not user.getOffers %}

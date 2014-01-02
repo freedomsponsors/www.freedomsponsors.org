@@ -488,7 +488,7 @@
 
             <!-- Overview Info -->
             <div class="fs-box push-footer overview-card">
-                <span class="font-size-18 darkblue-text ubahn issue-title"> {{ issue.project.name }}</span>
+                <a href="{{ issue.project.get_view_link }}"> <span class="font-size-18 darkblue-text ubahn issue-title"> {{ issue.project.name }}</span> </a>
                 <div class="divider small"><!--Small Divider--></div>
                 <!-- Issue Project Logo -->
                 <div class="project-logo">
