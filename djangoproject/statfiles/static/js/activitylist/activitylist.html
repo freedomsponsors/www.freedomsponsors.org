@@ -66,6 +66,18 @@
                     and also left a comment - <a href ng-click="show_detail(activity)">See comment</a>
                 </span>
             </div>
+            <div ng-switch-when="ADD_ISSUE_COMMENT">
+                <span title="{[{ activity.creationDate }]}"> {[{ activity.when }]}</span><br>
+                <a href="{[{ activity.user_link }]}"><img ng-src="{[{activity.user_image}]}"> {[{ activity.user_screenname }]}</a>
+                added a comment on issue <a href="{[{ activity.issue.link }]}">{[{ activity.issue.title }]} </a>
+                - <a href ng-click="show_detail(activity)">See comment</a>
+            </div>
+            <div ng-switch-when="EDIT_ISSUE_COMMENT">
+                <span title="{[{ activity.creationDate }]}"> {[{ activity.when }]}</span><br>
+                <a href="{[{ activity.user_link }]}"><img ng-src="{[{activity.user_image}]}"> {[{ activity.user_screenname }]}</a>
+                edited his comment on issue <a href="{[{ activity.issue.link }]}">{[{ activity.issue.title }]} </a>
+                - <a href ng-click="show_detail(activity)">More</a>
+            </div>
             <div ng-switch-when="PAY">
                 <span title="{[{ activity.creationDate }]}"> {[{ activity.when }]}</span><br>
                 <a href="{[{ activity.user_link }]}"><img ng-src="{[{activity.user_image}]}"> {[{ activity.user_screenname }]}</a>
@@ -159,6 +171,24 @@
                             <pre>
                                 {[{ selected_activity.issue_comment_content }]}
                             </pre>
+                        </div>
+                        <div ng-switch-when="ADD_ISSUE_COMMENT">
+                            New comment:
+                            <pre>
+                                {[{ selected_activity.issue_comment_content }]}
+                            </pre>
+                        </div>
+                        <div ng-switch-when="EDIT_ISSUE_COMMENT">
+                            <ul>
+                                <li>
+                                    old comment:<br>
+                                    <pre>{[{ selected_activity.old_dic.content }]}</pre>
+                                </li>
+                                <li>
+                                    new comment:<br>
+                                    <pre>{[{ selected_activity.new_dic.content }]}</pre>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
