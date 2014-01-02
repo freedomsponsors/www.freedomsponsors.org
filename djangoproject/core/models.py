@@ -992,6 +992,7 @@ class ActionLog(models.Model):
             # 'creationDate': self.id,
             'user_image': self.user.gravatar_url_medium(),
             'user_screenname': self.user.getUserInfo().screenName,
+            'user_link': self.user.get_view_link(),
             'user_id': self.user.id,
             'project_id': self.project.id if self.project else None,
             'project': self.project.to_dict_json() if self.project else None,
