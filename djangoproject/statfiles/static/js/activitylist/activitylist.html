@@ -299,7 +299,7 @@
 									<span>received<span class="green-text"> {[{ activity.payment.currency }]} {[{ part.price }]}</span></span>
 								</div>
 							</div>
-							<div ng-repeat-end ng-if="!$last" class="vgap-15"><!-- Vertical Gap 15px --></div>
+							<div ng-repeat-end ng-show="!$last" class="vgap-15"><!-- Vertical Gap 15px --></div>
 							<ul>
 								<li ng-repeat="part in activity.payment.parts">
 									<img ng-src="{[{part.programmer_image}]}"> {[{ part.programmer_screenname }]}: {[{ activity.payment.currency }]} {[{ part.price }]}
@@ -313,11 +313,11 @@
                 Unknown activity: {[{activity.action }]}
             </div>
         </div>
-		<div ng-if="!$last" class="vgap-15"><!-- Vertical Gap 15px --></div>
+		<div class="vgap-15"><!-- Vertical Gap 15px --></div>
     </div>
     <div ng-show="loading"><img src="/static/img2/ajax-loader.gif"></div>
     <div ng-show="show_more()">
-        <a href ng-click="more()" class="fs-button grey medium">More...</a>
+        <a href ng-click="more()" class="fs-button grey">More...</a>
     </div>
 
 
