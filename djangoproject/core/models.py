@@ -935,7 +935,7 @@ class PaymentPart(models.Model):
         return {
             'id': self.id,
             'programmer_id': self.programmer.id,
-            'programmer_image': self.programmer.gravatar_url_small(),
+            'programmer_image': self.programmer.gravatar_url_medium(),
             'programmer_screenname': self.programmer.getUserInfo().screenName,
             'solution_id': self.solution.id,
             'price': float(str(self.price)) if self.price else None,

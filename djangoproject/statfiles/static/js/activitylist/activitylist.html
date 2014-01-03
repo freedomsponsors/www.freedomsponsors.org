@@ -264,9 +264,6 @@
 						</div>
                     </div>
                 </div>
-				
-                edited his comment on issue <a href="{[{ activity.issue.link }]}">{[{ activity.issue.title }]} </a>
-                - <a href ng-click="show_detail(activity)">More</a>
             </div>
             <div ng-switch-when="PAY">
 				<!-- Payment Activity -->
@@ -291,7 +288,7 @@
 							<div ng-repeat="part in activity.payment.parts">
 								<div class="column-wrapper vcenter-content" style="height:40px;">
 									<div style="width:50px;" class="text-align-right">
-										<div class="user-picture thumb40"><img ng-src="{[{part.programmer_image}]}"></div>
+										<div class="user-picture thumb40"><img style="max-height: 40px; max-width: 40px;" ng-src="{[{part.programmer_image}]}"></div>
 									</div>
 									<div class="hgap-15"><!-- Horizontal Gap 15px --></div>
 									<div class="column fit">
