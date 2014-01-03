@@ -935,6 +935,7 @@ class PaymentPart(models.Model):
         return {
             'id': self.id,
             'programmer_id': self.programmer.id,
+            'programmer_link': self.programmer.get_view_link(),
             'programmer_image': self.programmer.gravatar_url_medium(),
             'programmer_screenname': self.programmer.getUserInfo().screenName,
             'solution_id': self.solution.id,
