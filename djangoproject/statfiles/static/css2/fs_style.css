@@ -8,6 +8,7 @@ General
 	General > Text Color
 	General > Text Sizes
 	General > Text Align
+	General > Text Styles
 	General > Links
 
 Header
@@ -15,6 +16,8 @@ Header
 	Header > Button
  
 Content
+	Content > User Picture
+		Content > User Picture > Thumb Sizes       
 	Content > Titles
 		Content > Titles > Boxes
 	Content > FS Box
@@ -134,11 +137,11 @@ textarea[rows="3"]{
 }
  
 .no-padding{
-	padding: 0;
+	padding: 0!important;
 }
 
 .no-margin{
-	margin: 0;
+	margin: 0!important;
 }
 
 .content-box{
@@ -293,12 +296,19 @@ body.loading .modal_ajax {
 	text-align:justify;
 }
 
+/* General > Text Styles
+----------------------------------------------- */
+
 .bold{
 	font-weight:bold;
 }
 
 .italic{
 	font-style:italic;
+}
+
+.uppercase{
+	text-transform: uppercase;
 }
 
 /* General > Links
@@ -375,6 +385,9 @@ a.propose-new{
 /* Content              
 ----------------------------------------------- */
 
+/* Content > User Picture            
+----------------------------------------------- */
+
 .user-picture{
 	width:50px;
 	height:50px;
@@ -384,6 +397,14 @@ a.propose-new{
 
 .user-picture.placeholder{
 	background-color: transparent;
+}
+
+/* Content > User Picture > Thumb Sizes         
+----------------------------------------------- */
+
+.user-picture.thumb16{
+	width:16px;
+	height:16px;
 }
 
 .user-picture.thumb22{
