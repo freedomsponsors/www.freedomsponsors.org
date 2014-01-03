@@ -288,23 +288,20 @@
                         </div>
 						<div class="vgap-15"><!-- Vertical Gap 15px --></div>
 						<div class="reply-area">
-							<div ng-repeat-start="part in activity.payment.parts" class="column-wrapper vcenter-content" style="height:40px;">
-								<div style="width:50px;" class="text-align-right">
-									<div class="user-picture thumb40"><img ng-src="{[{part.programmer_image}]}"></div>
+							<div ng-repeat="part in activity.payment.parts">
+								<div class="column-wrapper vcenter-content" style="height:40px;">
+									<div style="width:50px;" class="text-align-right">
+										<div class="user-picture thumb40"><img ng-src="{[{part.programmer_image}]}"></div>
+									</div>
+									<div class="hgap-15"><!-- Horizontal Gap 15px --></div>
+									<div class="column fit">
+										<h4 class="arial no-margin font-size-12">{[{ part.programmer_screenname }]}</h4>
+										<div class="vgap-5"><!-- Vertical Gap 5px --></div>
+										<span>received<span class="green-text"> {[{ activity.payment.currency }]} {[{ part.price }]}</span></span>
+									</div>
 								</div>
-								<div class="hgap-15"><!-- Horizontal Gap 15px --></div>
-								<div class="column fit">
-									<h4 class="arial no-margin font-size-12">{[{ part.programmer_screenname }]}</h4>
-									<div class="vgap-5"><!-- Vertical Gap 5px --></div>
-									<span>received<span class="green-text"> {[{ activity.payment.currency }]} {[{ part.price }]}</span></span>
-								</div>
+								<div ng-if="!$last" class="vgap-15"><!-- Vertical Gap 15px --></div>
 							</div>
-							<div ng-repeat-end ng-show="!$last" class="vgap-15"><!-- Vertical Gap 15px --></div>
-							<ul>
-								<li ng-repeat="part in activity.payment.parts">
-									<img ng-src="{[{part.programmer_image}]}"> {[{ part.programmer_screenname }]}: {[{ activity.payment.currency }]} {[{ part.price }]}
-								</li>
-							</ul>
 						</div>
                     </div>
                 </div>
