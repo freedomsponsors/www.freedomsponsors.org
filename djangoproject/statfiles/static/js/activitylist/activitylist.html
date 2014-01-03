@@ -1,5 +1,5 @@
 <div>
-    <div ng-repeat="activity in activities" style="border: solid 1px; margin-bottom: 20px">
+    <div ng-repeat="activity in activities">
         <div ng-switch on="activity.action">
             <div ng-switch-when="EDIT_PROJECT">
 				<!-- Edit Project Activity -->
@@ -299,7 +299,7 @@
 									<span>received<span class="green-text"> {[{ activity.payment.currency }]} {[{ part.price }]}</span></span>
 								</div>
 							</div>
-							<div ng-repeat-end ng-if="not($last)" class="vgap-15"><!-- Vertical Gap 15px --></div>
+							<div ng-repeat-end ng-if="!$last" class="vgap-15"><!-- Vertical Gap 15px --></div>
 						</div>
                     </div>
                 </div>
@@ -308,11 +308,11 @@
                 Unknown activity: {[{activity.action }]}
             </div>
         </div>
-		<div ng-if="not($last)"class="vgap-15"><!-- Vertical Gap 15px --></div>
+		<div ng-if="!$last" class="vgap-15"><!-- Vertical Gap 15px --></div>
     </div>
     <div ng-show="loading"><img src="/static/img2/ajax-loader.gif"></div>
     <div ng-show="show_more()">
-        <button ng-click="more()">More...</button>
+        <a href ng-click="more()" class="fs-button grey">More...</button>
     </div>
 
 
