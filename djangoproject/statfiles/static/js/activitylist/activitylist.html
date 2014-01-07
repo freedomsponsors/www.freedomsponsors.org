@@ -288,11 +288,11 @@
 							<div ng-repeat="part in activity.payment.parts">
 								<div class="column-wrapper vcenter-content" style="height:40px;">
 									<div style="width:50px;" class="text-align-right">
-										<div class="user-picture thumb40"><img style="max-height: 40px; max-width: 40px;" ng-src="{[{part.programmer_image}]}"></div>
+										<div><img class="user-picture thumb40" ng-src="{[{part.programmer_image}]}"></div>
 									</div>
 									<div class="hgap-15"><!-- Horizontal Gap 15px --></div>
 									<div class="column fit">
-										<h4 class="arial no-margin font-size-12">{[{ part.programmer_screenname }]}</h4>
+										<h4 class="arial no-margin font-size-12"><a href="{[{ part.programmer_link }]}">{[{ part.programmer_screenname }]}<>/a</h4>
 										<div class="vgap-5"><!-- Vertical Gap 5px --></div>
 										<span>received<span class="green-text"> {[{ activity.payment.currency }]} {[{ part.price }]}</span></span>
 									</div>

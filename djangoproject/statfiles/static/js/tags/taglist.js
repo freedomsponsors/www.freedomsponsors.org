@@ -34,6 +34,7 @@ mod.directive('taglist', function() {
         templateUrl: '/static/js/tags/taglist.html',
         controller: function ($scope, $timeout, SOApi, TagApi) {
             $scope.poptags = [];
+			$scope.editingTags = false;
 
             var timer = undefined;
 
@@ -45,15 +46,23 @@ mod.directive('taglist', function() {
             }
 
             function getTags(){
-                $scope.loading = true;
-                SOApi.getTags($scope.newtag).success(function(result){
-                    $scope.loading = false;
-                    $scope.poptags = result.items;
-                })
+				if($scope.newtag.length>0){
+					$scope.loading = true;
+					SOApi.getTags($scope.newtag).success(function(result){
+						$scope.loading = false;
+						$scope.poptags = result.items;
+					})
+				}else{
+					$scope.poptags = [];
+				}
             }
 
-            $scope.keypress = function(){
+            $scope.tagChanged = function(){
                 restartTimer();
+            };
+			
+			$scope.focus = function(){
+                event.currentTarget.getElementsByClassName('newtag')[0].focus();
             };
 
             $scope.addTag = function(t){

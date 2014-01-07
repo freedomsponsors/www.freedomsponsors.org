@@ -156,6 +156,9 @@ textarea[rows="3"]{
 	box-sizing: border-box!important;
 }
 
+.word-break{
+	word-break: break-all;
+}
 
 .disabled{
 	cursor:default;
@@ -317,6 +320,7 @@ body.loading .modal_ajax {
 a{
 	color: #27AAE1;
 	text-decoration:none;
+	cursor:pointer;
 }
 
 
@@ -641,6 +645,14 @@ div.divider.small:before{
 
 .iconized.delete{
 	background:transparent url(../img2/fs_delete_icon.png) left center no-repeat;
+}
+
+.iconized.tag{
+	background:transparent url(../img2/fs_tag_icon.png) left center no-repeat;
+}
+
+.iconized.done{
+	background:transparent url(../img2/fs_done_icon.png) left center no-repeat;
 }
 
 
@@ -1113,15 +1125,54 @@ div.project-logo > img{
 	border:1px solid #85BA2E;
 }
 
+/* FS TagList
+----------------------------------------------- */
 
-
-.tag-list .tag{
+.tag-list .tag:not(.iconized){
 	display:inline-block;
 	padding:5px 10px;
-	margin:4px 0;
+	margin:3px;
 	background-color:#F2F2F2;
 	border-bottom:1px solid #E6E6E6;
 }
+
+div.fakeinput{
+	width:100%;
+	
+	color: #B9B9B9;
+	background-color:#FFF!important;
+	line-height: 10px;
+	
+	border: 1px solid #E6E7E8;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-goog-ms-border-radius: 3px;
+	border-radius: 3px;
+	
+	-webkit-box-shadow: inset 0 4px 15px -5px #eee;
+	-moz-box-shadow: inset 0 4px 15px -5px #eee;
+	box-shadow: inset 0 4px 15px -5px #eee;
+
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	
+	padding:0;
+	margin: 0;
+}
+
+.fakeinput span[contenteditable='true']{
+	min-width:80px;
+	display:inline-block;
+}
+
+.padding5{
+	padding:5px 0;
+}
+
+/* Others
+----------------------------------------------- */
+
 
 [class^="icon-"],
 [class*=" icon-"] {

@@ -11,6 +11,7 @@
     <script src="/static/js/tags/taglist.js"></script>
     <script src="/static/js/issuecards/issuecards.js"></script>
     <script src="/static/js/activitylist/activitylist.js"></script>
+	 <script src="/static/js/contenteditable/contenteditable.js"></script>
     <script src="/static/js/fsutil.js"></script>
     <script src="/static/js/angularutils/watch.js"></script>
     {% if sandbox %}
@@ -25,7 +26,7 @@
     <script src="/static/bootstrap/js/showdown.js"></script>
     <script>
 
-        var dependencies = ['issuecards', 'angularutils', 'taglist', 'activitylist', 'fswatch'];
+        var dependencies = ['issuecards', 'angularutils', 'taglist', 'activitylist', 'fswatch', 'contenteditable'];
 
         var mod = angular.module('project', dependencies);
         mod.config(
@@ -123,10 +124,14 @@
                         <watch-entity entity="PROJECT" objid="{{ project.id }}" watching="watching" watch-link="watchLink"></watch-entity>
                     </div>
                 </div>
-                <!-- Project Description: Please limit to  characters -->
-{#                <p class="text-align-justify" style="min-height:52px;">{{ project.description|markdown|safe }}</p>#}
+				<span class="word-break" ng-if="project.homeURL">Official site: <a class="external-link" href="{{ project.homeURL }}">{{ project.homeURL }}</a></span>
+				<div class="vgap-5" ng-if="(project.homeURL) && (project.trackerURL)"><!-- Vertical Gap 5px --></div>
+				<span class="word-break" ng-if="project.trackerURL">Issue tracker: <a class="external-link" href="{{ project.trackerURL }}">{{ project.trackerURL }}</a></span>
+				<div class="vgap-15" ng-if="(project.homeURL) || (project.trackerURL)"><!-- Vertical Gap 15px --></div>
+{#              <p class="text-align-justify" style="min-height:52px;">{{ project.description|markdown|safe }}</p>#}
                 <div id="bootstrap-content">{{ project.description|markdown|safe }}</div>
                 <!-- Tags -->
+				<div class="vgap-30"><!-- Vertical Gap 30px --></div>
                 <div class="tag-list" ng-show="false"> <!-- SEO -->
                     {% for tag in project.get_tags %}
                     <a href="" class="tag">{{ tag }}</a>
