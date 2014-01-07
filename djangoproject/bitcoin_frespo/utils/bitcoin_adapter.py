@@ -24,7 +24,7 @@ def new_receive_address():
 def get_received_by_address(address):
     "Returns a decimal with how much money was received by the given address"
     c = _connect()
-    return c.getreceivedbyaccount(address)
+    return float(c.getreceivedbyaccount(address))
 
 
 def make_payment(from_address, to_address, value):
