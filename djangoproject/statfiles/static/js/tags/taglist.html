@@ -1,15 +1,19 @@
 <div>
-	<a class="iconized tag right" ng-hide="editingTags" ng-click="editingTags=true" style="margin:2px">edit tags</a>
+	<a class="iconized tag right" ng-hide="editingTags" ng-click="editTags()" style="margin:2px">edit tags</a>
 	<a class="iconized done right" ng-show="editingTags" ng-click="editingTags=false" style="margin:2px">done</a>
 	<div class="clearfix"></div>
-	<div ng-class="{fakeinput:editingTags}" ng-click="focus()">
+	<div ng-class="{fakeinput:editingTags}" ng-click="focus($event)">
 		<span href class="tag" ng-repeat="tag in tags">{[{tag}]} <a href ng-show="editingTags" ng-click="remove($index)">x</a></span>
-		<span style="position:relative" ng-show="editingTags">
-			<span class="newtag" contenteditable='true' strip-br="true" ng-model="newtag" ng-keypress="tagChanged()" ng-change="tagChanged()" ng-class="{padding5:(newtag.length>0)}"></span>
-			<div class="fs-box" ng-show="poptags" style="position:absolute;z-index:1000;">
-				<ul><li ng-repeat="poptag in poptags" ng-click="addTag(poptag)">{{ poptag.name }}</li></ul>
-			</div>
-			<img src="/static/img2/ajax-loader.gif" ng-show="loading">
-		</span>
+		<div style="position:relative!important;display:inline-block;">
+			<span ng-show="editingTags">
+				<span class="newtag" contenteditable='true' strip-br="true" ng-model="newtag" ng-keypress="tagChanged($event)" ng-change="tagChanged($event)"></span>
+				<div class="poptags">
+					<div class="fs-box" ng-show="poptags">
+						<ul><li ng-repeat="poptag in poptags" ng-click="addTag(poptag)"><span class="no-wrap">{{ poptag.name }}</span></li></ul>
+					</div>
+				</div>
+				<img src="/static/img2/ajax-loader.gif" ng-show="loading">
+			</span>
+		</div>
 	</div>
 </div>

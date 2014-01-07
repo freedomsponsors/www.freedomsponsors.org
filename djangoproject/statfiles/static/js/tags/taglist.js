@@ -56,18 +56,28 @@ mod.directive('taglist', function() {
 					$scope.poptags = [];
 				}
             }
+			
+			$scope.editTags = function(){
+                $scope.editingTags = true;
+				$scope.poptags = [];
+				$scope.newtag = null;
+				
+            };
 
-            $scope.tagChanged = function(){
+            $scope.tagChanged = function($event){
                 restartTimer();
             };
 			
-			$scope.focus = function(){
-                event.currentTarget.getElementsByClassName('newtag')[0].focus();
+			$scope.focus = function($event){
+				if($scope.editingTags){
+					$event.currentTarget.getElementsByClassName('newtag')[0].focus();
+				}
             };
 
             $scope.addTag = function(t){
                 $scope.tags.push(t.name);
                 $scope.poptags = [];
+				$scope.newtag = null;
                 TagApi.addTag(t.name, $scope.type, $scope.objid);
             };
 

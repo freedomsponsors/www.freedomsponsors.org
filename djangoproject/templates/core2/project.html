@@ -124,12 +124,12 @@
                         <watch-entity entity="PROJECT" objid="{{ project.id }}" watching="watching" watch-link="watchLink"></watch-entity>
                     </div>
                 </div>
-				<span class="word-break" ng-if="project.homeURL">Official site: <a class="external-link" href="{{ project.homeURL }}">{{ project.homeURL }}</a></span>
-				<div class="vgap-5" ng-if="(project.homeURL) && (project.trackerURL)"><!-- Vertical Gap 5px --></div>
-				<span class="word-break" ng-if="project.trackerURL">Issue tracker: <a class="external-link" href="{{ project.trackerURL }}">{{ project.trackerURL }}</a></span>
-				<div class="vgap-15" ng-if="(project.homeURL) || (project.trackerURL)"><!-- Vertical Gap 15px --></div>
+				<span class="word-break" ng-show="project.homeURL">Official site: <a class="external-link" href="{{ project.homeURL }}">{{ project.homeURL }}</a></span>
+				<div class="vgap-5" ng-show="(project.homeURL) && (project.trackerURL)"><!-- Vertical Gap 5px --></div>
+				<span class="word-break" ng-show="project.trackerURL">Issue tracker: <a class="external-link" href="{{ project.trackerURL }}">{{ project.trackerURL }}</a></span>
+				<div class="vgap-15" ng-show="(project.homeURL) || (project.trackerURL)"><!-- Vertical Gap 15px --></div>
 {#              <p class="text-align-justify" style="min-height:52px;">{{ project.description|markdown|safe }}</p>#}
-                <div id="bootstrap-content">{{ project.description|markdown|safe }}</div>
+                <div id="bootstrap-content" class="text-align-justify">{{ project.description|markdown|safe }}</div>
                 <!-- Tags -->
 				<div class="vgap-30"><!-- Vertical Gap 30px --></div>
                 <div class="tag-list" ng-show="false"> <!-- SEO -->

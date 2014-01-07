@@ -491,19 +491,22 @@
                 <a href="{{ issue.project.get_view_link }}"> <span class="font-size-18 darkblue-text ubahn issue-title"> {{ issue.project.name }}</span> </a>
                 <div class="divider small"><!--Small Divider--></div>
                 <!-- Issue Project Logo -->
-                <div class="project-logo">
-                    <img src="{{ issue.get_card_image }}"/>
-                </div>
+                <a href="{{ issue.project.get_view_link }}">
+					<div class="project-logo">
+						<img src="{{ issue.get_card_image }}"/>
+					</div>
+				</a>
                 <div class="vgap-15"><!-- Vertical Gap 15px --></div>
                 <!--Issue Values-->
                 <div class="issue-values">
                     {% if issue.getTotalOffersPriceUSD or issue.getTotalOffersPriceBTC %}
                         <h1 class="orange-text arial">
-                            {% if issue.getTotalOffersPriceUSD %}
-                                <span>US$ {{ issue.getTotalOffersPriceUSD }}</span>
-                            {% endif %}
                             {% if issue.getTotalOffersPriceBTC %}
                                 <span>BTC {{ issue.getTotalOffersPriceBTC }}</span>
+                            {% endif %}
+							{% if issue.getTotalOffersPriceUSD and issue.getTotalOffersPriceBTC %}<div class="vgap-5"><!-- Vertical Gap 5px --></div>{% endif %}
+							{% if issue.getTotalOffersPriceUSD %}
+                                <span>US$ {{ issue.getTotalOffersPriceUSD }}</span>
                             {% endif %}
                         </h1>
                         <h4 class="orange-text arial">Offered</h4>
@@ -511,11 +514,12 @@
                     </br>
                     {% if issue.getTotalPaidPriceUSD or issue.getTotalPaidPriceBTC %}
                         <h1 class="arial">
-                            {% if issue.getTotalPaidPriceUSD %}
-                                <span>US$ {{ issue.getTotalPaidPriceUSD }}</span>
-                            {% endif %}
                             {% if issue.getTotalPaidPriceBTC %}
                                 <span>BTC {{ issue.getTotalPaidPriceBTC }}</span>
+                            {% endif %}
+							{% if issue.getTotalPaidPriceUSD and issue.getTotalPaidPriceBTC %}<div class="vgap-5"><!-- Vertical Gap 5px --></div>{% endif %}
+							{% if issue.getTotalPaidPriceUSD %}
+                                <span>US$ {{ issue.getTotalPaidPriceUSD }}</span>
                             {% endif %}
                         </h1>
                         <h4 class="arial">Paid</h4>
