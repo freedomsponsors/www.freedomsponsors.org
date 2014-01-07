@@ -121,7 +121,7 @@ def _notify_payments_sent_if_applicable(payment):
     parts = PaymentPart.objects.filter(payment__id=payment.id)
     notify_sent = parts and True
     for part in parts:
-        if part.money_sent.status != MoneySent.SENT:
+        if not part.money_sent or part.money_sent.status != MoneySent.SENT:
             notify_sent = False
             break
     if notify_sent:
