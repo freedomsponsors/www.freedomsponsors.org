@@ -11,7 +11,7 @@
     <script src="/static/js/tags/taglist.js"></script>
     <script src="/static/js/issuecards/issuecards.js"></script>
     <script src="/static/js/activitylist/activitylist.js"></script>
-	 <script src="/static/js/contenteditable/contenteditable.js"></script>
+	<script src="/static/js/contenteditable/contenteditable.js"></script>
     <script src="/static/js/fsutil.js"></script>
     <script src="/static/js/angularutils/watch.js"></script>
     {% if sandbox %}
@@ -120,7 +120,6 @@
                     <div>
                         <a class="iconized edit" href="/project/{{ project.id }}/edit">edit project</a>
                         <div class="hgap-10 inline"><!-- Horizontal Gap 10px --></div>
-{#                        <a class="iconized watch" href="">watch</a>#}
                         <watch-entity entity="PROJECT" objid="{{ project.id }}" watching="watching" watch-link="watchLink"></watch-entity>
                     </div>
                 </div>
