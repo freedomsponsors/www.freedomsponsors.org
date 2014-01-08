@@ -1209,17 +1209,16 @@ div.fakeinput{
   background-position: -96px -119px;
 }
 
+.poptags {
+    padding: 0px;
+}
 
+.poptags ul li{
+    margin: 0px;
+    padding: 6px 5px;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
+.poptags ul li:hover{
+    background-color: #44f;
+    cursor: pointer;
+}

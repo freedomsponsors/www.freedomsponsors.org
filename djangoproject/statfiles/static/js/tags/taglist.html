@@ -8,7 +8,7 @@
 			<span ng-show="editingTags">
 				<span class="newtag" contenteditable='true' strip-br="true" ng-model="newtag" ng-keypress="tagChanged($event)" ng-change="tagChanged($event)"></span>
 				<div class="poptags">
-					<div class="fs-box" ng-show="poptags">
+					<div class="fs-box poptags" ng-show="poptags">
 						<ul><li ng-repeat="poptag in poptags" ng-click="addTag(poptag)"><span class="no-wrap">{{ poptag.name }}</span></li></ul>
 					</div>
 				</div>
