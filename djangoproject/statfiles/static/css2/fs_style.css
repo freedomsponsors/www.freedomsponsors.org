@@ -1043,10 +1043,7 @@ div.project-logo {
 	height:58px;
 	line-height:56px;
 	width:100%;
-}
-
-div.project-logo:before {
-	content:"";
+	font-size:0;
 }
 
 div.project-logo > img{

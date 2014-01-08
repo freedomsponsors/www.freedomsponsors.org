@@ -1,8 +1,8 @@
 <span>
-    <a class="iconized watch" ng-show="showWatchLink()" href="{[{watchLink}]}">
+    <a class="iconized" ng-show="showWatchLink()" href="{[{watchLink}]}" ng-class="{watch:$scope.watching=='watch',unwatch:$scope.watching=='unwatch'}">
         {[{ action() }]}
     </a>
-    <a class="iconized watch" ng-hide="showWatchLink()" href ng-click="toggle()">
+    <a class="iconized" ng-hide="showWatchLink()" href ng-click="toggle()" ng-class="{watch:$scope.watching=='watch',unwatch:$scope.watching=='unwatch'}">
         {[{ action() }]}
     </a>
     <img src="/static/img2/ajax-loader.gif" ng-show="loading">
