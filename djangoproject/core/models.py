@@ -420,10 +420,12 @@ class Issue(models.Model):
         return self.getTotalPaidPrice_by_currency('BTC')
 
     def getTotalPaidPrice_by_currency(self, currency):
-        offers = Offer.objects.filter(issue=self, status=Offer.PAID, currency=currency)
+        payments = Payment.objects.filter(status__in=[Payment.CONFIRMED_IPN, Payment.CONFIRMED_TRN],
+                                          offer__issue=self,
+                                          currency=currency)
         s = Decimal(0)
-        for offer in offers:
-            s = s + offer.price
+        for payment in payments:
+            s = s + payment.total
         return twoplaces(s)
 
     def touch(self):
