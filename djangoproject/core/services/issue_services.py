@@ -355,7 +355,7 @@ def _throwIfNotSolutionOwner(solution, user):
 def _append_project_id_and_update_db_if_needed(issueInfo, trackerURL, user):
     issueInfo.project_id = ''
     project = None
-    if(issueInfo.project_trackerURL):
+    if issueInfo.project_trackerURL:
         found_projects = Project.objects.filter(trackerURL__iexact=issueInfo.project_trackerURL)
         if(found_projects.count() > 1):
             notify_admin("WARNING: Database inconsistency", "more than one project found with url = %s"%issueInfo.project_trackerURL)

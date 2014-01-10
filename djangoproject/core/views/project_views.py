@@ -48,6 +48,7 @@ def edit(request):
     if 'image3x1' in request.FILES and request.FILES['image3x1']:
         project.image3x1 = request.FILES['image3x1']
     project.description = request.POST.get('description')
+    project.homeURL = request.POST.get('homeURL')
     project.save()
     watches = watch_services.find_project_watches(project)
     mail_services.notifyWatchers_project_edited(request.user, project, old_json, watches)
