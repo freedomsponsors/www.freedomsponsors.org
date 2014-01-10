@@ -1,4 +1,10 @@
 {% extends "core2/base_old.html" %}
+
+{% block title %}
+    User {{le_user.getUserInfo.screenName}}
+{% endblock %}
+
+
 {% block mainContent%}
 <h3>{{le_user.getUserInfo.screenName}}</h3>
 <hr>

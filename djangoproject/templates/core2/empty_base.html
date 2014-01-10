@@ -36,7 +36,11 @@ Copyright (C) 2013  FreedomSponsors
         {% endblock og_meta %}
 
 
-        <title>FreedomSponsors</title>
+        <title>
+            {% block title %}
+            FreedomSponsors
+            {% endblock %}
+        </title>
         <link href='/static/css2/reset.css' rel='stylesheet' type='text/css'/>
         <link href='/static/css2/fs_style.css' rel='stylesheet' type='text/css'/>
         <link href='/static/css2/fs_structure.css' rel='stylesheet' type='text/css'/>

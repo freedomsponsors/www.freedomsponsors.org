@@ -3,6 +3,10 @@
 {% load markdown %}
 {% load l10n %}
 
+{% block title %}
+    Project {{ project.name }}
+{% endblock %}
+
 
 {% block head %}
     <script src="/static/js/angular.min.js"></script>

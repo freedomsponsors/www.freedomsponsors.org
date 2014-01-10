@@ -10,6 +10,11 @@
     <meta name="image" content="http://www.freedomsponsors.org/{{ issue.get_card_image }}" />
 {% endblock og_meta %}
 
+{% block title %}
+    {{ issue.project.name }} - {{ issue.title }}
+{% endblock %}
+
+
 
 {% block head %}
     <script src="/static/js/angular.min.js"></script>
