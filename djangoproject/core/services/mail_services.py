@@ -70,7 +70,7 @@ def notifyWatchers_workbegun(solution, comment, watches):
 def notifyWatchers_project_edited(user, project, old_json, watches):
     old_dic = json.loads(old_json)
     changed_description = old_dic['description'] != project.description
-    changed_image = old_dic['image3x1'] != project.image3x1.url
+    changed_image = project.image3x1 and old_dic['image3x1'] != project.image3x1.url
     def send_func(watch):
         if watch.user.id != user.id:
             _send_mail_to_user(user=watch.user,
