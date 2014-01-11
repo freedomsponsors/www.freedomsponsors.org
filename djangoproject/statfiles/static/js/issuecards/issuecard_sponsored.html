@@ -21,7 +21,7 @@
     <div class="card-sponsors">
         <div class="column-wrapper">
             <div class="user-picture" ng-class="{placeholder: sponsor.empty}" ng-repeat="sponsor in issue.four_sponsors_places">
-                <img ng-hide="sponsor.empty" ng-src="{[{ sponsor.image_link }]}" alt="{[{ sponsor.screen_name }]}" title="{[{ sponsor.screen_name }]}">
+                <a href="{[{ sponsor.sponsor_link }]}"><img ng-hide="sponsor.empty" ng-src="{[{ sponsor.image_link }]}" alt="{[{ sponsor.screen_name }]}" title="{[{ sponsor.screen_name }]}"></a>
             </div>
         </div>
         <a href="{[{ issue_link(issue) }]}" class="sponsors-label">
