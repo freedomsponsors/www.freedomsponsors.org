@@ -14,10 +14,15 @@ def get_offer_stats():
         paid_offer_count=Count('pk', only=Q(status=Offer.PAID)),
         open_offer_count=Count('pk', only=Q(status=Offer.OPEN)),
         revoked_offer_count=Count('pk', only=Q(status=Offer.REVOKED)),
-        paid_sum=Sum('price', only=Q(status=Offer.PAID)),
-        open_sum=Sum('price', only=Q(status=Offer.OPEN) & (Q(expirationDate=None) | Q(expirationDate__gt=date.today()))),
-        expired_sum=Sum('price', only=Q(status=Offer.OPEN) & Q(expirationDate__lte=date.today())),
-        revoked_sum=Sum('price', only=Q(status=Offer.REVOKED)),
+        paid_sum_usd=Sum('price', only=Q(status=Offer.PAID, currency='USD')),
+        open_sum_usd=Sum('price', only=Q(status=Offer.OPEN, currency='USD') & (Q(expirationDate=None) | Q(expirationDate__gt=date.today()))),
+        expired_sum_usd=Sum('price', only=Q(status=Offer.OPEN, currency='USD', expirationDate__lte=date.today())),
+        revoked_sum_usd=Sum('price', only=Q(status=Offer.REVOKED, currency='USD')),
+        paid_sum_btc=Sum('price', only=Q(status=Offer.PAID, currency='BTC')),
+        open_sum_btc=Sum('price', only=Q(status=Offer.OPEN, currency='BTC') & (Q(expirationDate=None) | Q(expirationDate__gt=date.today()))),
+        expired_sum_btc=Sum('price', only=Q(status=Offer.OPEN, currency='BTC', expirationDate__lte=date.today())),
+        revoked_sum_btc=Sum('price', only=Q(status=Offer.REVOKED, currency='BTC')),
+
     )
 
 def get_issue_stats():
@@ -35,9 +40,11 @@ def get_stats():
         'programmer_count' : Solution.objects.aggregate(Count('programmer', distinct=True))['programmer__count'] or 0,
         'paid_programmer_count' : PaymentPart.objects.filter(payment__status='CONFIRMED_IPN').aggregate(Count('programmer', distinct=True))['programmer__count'] or 0,
         'sponsors' : UserInfo.objects.annotate(
-                         paid_amount=Sum('user__offer__price', only=Q(user__offer__status=Offer.PAID)),
-                         open_amount=Sum('user__offer__price', only=Q(user__offer__status=Offer.OPEN)),
-                     ).order_by('-paid_amount'),
+                         paid_amount_usd=Sum('user__offer__price', only=Q(user__offer__status=Offer.PAID, user__offer__currency='USD')),
+                         open_amount_usd=Sum('user__offer__price', only=Q(user__offer__status=Offer.OPEN, user__offer__currency='USD')),
+                         paid_amount_btc=Sum('user__offer__price', only=Q(user__offer__status=Offer.PAID, user__offer__currency='BTC')),
+                         open_amount_btc=Sum('user__offer__price', only=Q(user__offer__status=Offer.OPEN, user__offer__currency='BTC')),
+                     ).order_by('-paid_amount_usd'),
         'projects' : Project.objects.annotate(issue_count=Count('issue', distinct=True), offer_sum=Sum('issue__offer__price')).order_by('-offer_sum'),
     }
 

@@ -28,15 +28,15 @@ class StatsView(TestCase):
 class Sponsors(TestCase):
     def setUp(self):
         u = mommy.make_one('core.UserInfo', screenName='sponsorA')
-        mommy.make_one('core.Offer', sponsor=u.user, price=10, status='PAID', expirationDate=None)
-        mommy.make_one('core.Offer', sponsor=u.user, price=90, status='OPEN', expirationDate=None)
+        mommy.make_one('core.Offer', sponsor=u.user, price=10, status='PAID', currency='USD', expirationDate=None)
+        mommy.make_one('core.Offer', sponsor=u.user, price=90, status='OPEN', currency='USD', expirationDate=None)
 
         self.stats = stats_services.get_stats()
 
     def test_sponsors(self):
         qs = self.stats['sponsors']
         self.assertQuerysetEqual(qs, [('sponsorA', 10, 90)],
-                                 lambda u: (u.screenName, u.paid_amount, u.open_amount))
+                                 lambda u: (u.screenName, u.paid_amount_usd, u.open_amount_usd))
 
     def test_num_queries(self):
         with self.assertNumQueries(1):
@@ -90,41 +90,57 @@ class Projects(TestCase):
 
 class OfferStats(TestCase):
     def setUp(self):
-        mommy.make_many('core.Offer', quantity=2, price=10, status='OPEN')
-        mommy.make_many('core.Offer', quantity=2, price=11, status='PAID')
-        mommy.make_many('core.Offer', quantity=2, price=12, status='OPEN', expirationDate=date.today()) #expired
-        mommy.make_many('core.Offer', quantity=2, price=13, status='REVOKED')
+        mommy.make_many('core.Offer', quantity=2, price=10, status='OPEN', currency='USD')
+        mommy.make_many('core.Offer', quantity=2, price=11, status='PAID', currency='USD')
+        mommy.make_many('core.Offer', quantity=2, price=12, status='OPEN', currency='USD', expirationDate=date.today()) #expired
+        mommy.make_many('core.Offer', quantity=2, price=13, status='REVOKED', currency='USD')
+        mommy.make_many('core.Offer', quantity=2, price=20, status='OPEN', currency='BTC')
+        mommy.make_many('core.Offer', quantity=2, price=21, status='PAID', currency='BTC')
+        mommy.make_many('core.Offer', quantity=2, price=22, status='OPEN', currency='BTC', expirationDate=date.today()) #expired
+        mommy.make_many('core.Offer', quantity=2, price=23, status='REVOKED', currency='BTC')
 
         with self.assertNumQueries(1):
             self.stats = stats_services.get_offer_stats()
 
     def test_offer_count(self):
-        self.assertEqual(8, self.stats['offer_count'])
+        self.assertEqual(16, self.stats['offer_count'])
 
     def test_sponsor_count(self):
-        self.assertEqual(8, self.stats['sponsor_count'])
+        self.assertEqual(16, self.stats['sponsor_count'])
 
     def test_paid_offer_count(self):
-        self.assertEqual(2, self.stats['paid_offer_count'])
+        self.assertEqual(4, self.stats['paid_offer_count'])
 
     def test_open_offer_count(self):
         # FIXME: For now it's including OPEN but EXPIRED
-        self.assertEqual(4, self.stats['open_offer_count'])
+        self.assertEqual(8, self.stats['open_offer_count'])
 
     def test_revoked_offer_count(self):
-        self.assertEqual(2, self.stats['revoked_offer_count'])
+        self.assertEqual(4, self.stats['revoked_offer_count'])
 
-    def test_open_sum(self):
-        self.assertEqual(20, self.stats['open_sum'])
+    def test_open_sum_usd(self):
+        self.assertEqual(20, self.stats['open_sum_usd'])
 
-    def test_paid_sum(self):
-        self.assertEqual(22, self.stats['paid_sum'])
+    def test_paid_sum_usd(self):
+        self.assertEqual(22, self.stats['paid_sum_usd'])
 
-    def test_expired_sum(self):
-        self.assertEqual(24, self.stats['expired_sum'])
+    def test_expired_sum_usd(self):
+        self.assertEqual(24, self.stats['expired_sum_usd'])
 
-    def test_revoked_sum(self):
-        self.assertEqual(26, self.stats['revoked_sum'])
+    def test_revoked_sum_usd(self):
+        self.assertEqual(26, self.stats['revoked_sum_usd'])
+
+    def test_open_sum_btc(self):
+        self.assertEqual(40, self.stats['open_sum_btc'])
+
+    def test_paid_sum_btc(self):
+        self.assertEqual(42, self.stats['paid_sum_btc'])
+
+    def test_expired_sum_btc(self):
+        self.assertEqual(44, self.stats['expired_sum_btc'])
+
+    def test_revoked_sum_btc(self):
+        self.assertEqual(46, self.stats['revoked_sum_btc'])
 
 
 class IssueStats(TestCase):
