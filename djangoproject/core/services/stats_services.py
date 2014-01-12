@@ -83,7 +83,6 @@ def project_issues_stats(project_id):
     )
 
 def project_stats(project):
-    id = project.id
     result = {}
 
     result.update(project_issues_stats(project.id))

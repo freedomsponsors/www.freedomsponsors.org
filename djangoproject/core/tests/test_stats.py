@@ -88,6 +88,22 @@ class Projects(TestCase):
                              lambda p: (p.name, p.issue_count, p.offer_count, p.offer_sum))
 
 
+class ProjectStats(TestCase):
+    def setUp(self):
+        project = mommy.make_one('core.Project')
+        mommy.make_one('core.Issue', project__id=project.id, status='done')
+        for i in mommy.make_many('core.Issue', quantity=3, project__id=project.id, status='open'):
+            mommy.make_many('core.Offer', quantity=2, price=10, issue=i, status='OPEN', currency='USD')
+
+        self.stats = stats_services.project_stats(project)
+
+    def test_project_stats_issues_open(self):
+        self.assertEqual(self.stats['issues_open'], 3)
+
+    def test_project_stats_issues_done(self):
+        self.assertEqual(self.stats['issues_done'], 1)
+
+
 class OfferStats(TestCase):
     def setUp(self):
         mommy.make_many('core.Offer', quantity=2, price=10, status='OPEN', currency='USD')
