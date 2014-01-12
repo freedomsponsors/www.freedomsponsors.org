@@ -40,12 +40,17 @@ def get_stats():
         'programmer_count' : Solution.objects.aggregate(Count('programmer', distinct=True))['programmer__count'] or 0,
         'paid_programmer_count' : PaymentPart.objects.filter(payment__status='CONFIRMED_IPN').aggregate(Count('programmer', distinct=True))['programmer__count'] or 0,
         'sponsors' : UserInfo.objects.annotate(
+                         offer_count=Count('user__offer__pk'),
                          paid_amount_usd=Sum('user__offer__price', only=Q(user__offer__status=Offer.PAID, user__offer__currency='USD')),
                          open_amount_usd=Sum('user__offer__price', only=Q(user__offer__status=Offer.OPEN, user__offer__currency='USD')),
                          paid_amount_btc=Sum('user__offer__price', only=Q(user__offer__status=Offer.PAID, user__offer__currency='BTC')),
                          open_amount_btc=Sum('user__offer__price', only=Q(user__offer__status=Offer.OPEN, user__offer__currency='BTC')),
                      ).order_by('-paid_amount_usd'),
-        'projects' : Project.objects.annotate(issue_count=Count('issue', distinct=True), offer_sum=Sum('issue__offer__price')).order_by('-offer_sum'),
+        'projects' : Project.objects.annotate(
+                         issue_count=Count('issue', distinct=True),
+                         offer_count=Count('issue__offer__pk'),
+                         offer_sum=Sum('issue__offer__price'),
+                     ).order_by('-offer_sum'),
     }
 
     stats.update(get_offer_stats())
