@@ -63,49 +63,42 @@ def _age():
     return s;
 
 
-def _count(query, params=None):
-    return int(_sum(query, params))
+def project_offers_stats(project_id):
+    return Offer.objects.filter(issue__project_id=project_id).aggregate(
+        usd_paid=Sum('price', only=Q(status=Offer.PAID, currency='USD')),
+        usd_open=Sum('price', only=Q(status=Offer.OPEN, currency='USD') & (Q(expirationDate=None) | Q(expirationDate__gt=date.today()))),
+        btc_paid=Sum('price', only=Q(status=Offer.PAID, currency='BTC')),
+        btc_open=Sum('price', only=Q(status=Offer.OPEN, currency='BTC') & (Q(expirationDate=None) | Q(expirationDate__gt=date.today()))),
+        )
 
-
-def _sum(query, params=None):
-    rows = _select(query, params)
-    r = rows[0][0]
-    if r is None:
-        r = 0
-    return r
-
-
-def _select(query, params=None):
-    if not params:
-        params = []
-    cursor = connection.cursor()
-    cursor.execute(query, params)
-    rows = cursor.fetchall()
-    return rows
-
+def project_issues_stats(project_id):
+    return Issue.objects.filter(project_id=project_id, is_feedback=False).aggregate(
+        issues_open=Count('pk', only=Q(is_public_suggestion=False) & (Q(status='open') | Q(status='working'))),
+        issues_done=Count('pk', only=Q(status='done')),
+    )
 
 def project_stats(project):
     id = project.id
-    issues_open = _count(COUNT_ISSUES_SPONSORING_OPEN_OR_WORKING_BY_PROJECT, [id])
-    issues_done = _count(COUNT_ISSUES_SPONSORING_DONE_BY_PROJECT, [id])
-    usd_paid = _sum(SUM_PAID_USD_BY_PROJECT, [id])
-    usd_open = _sum(SUM_OPEN_USD_BY_PROJECT, [id])
-    btc_paid = _sum(SUM_PAID_BTC_BY_PROJECT, [id])
-    btc_open = _sum(SUM_OPEN_BTC_BY_PROJECT, [id])
+    result = {}
+
+    result.update(project_issues_stats(project.id))
+    issues_open = result['issues_open'] or 0
+    issues_done = result['issues_done'] or 0
+
+    result.update(project_offers_stats(project.id))
+    usd_paid = result['usd_paid'] or 0
+    usd_open = result['usd_open'] or 0
+    btc_paid = result['btc_paid'] or 0
+    btc_open = result['btc_open'] or 0
+
     total_issues = issues_open + issues_done
     total_usd = usd_open + usd_paid
     total_btc = btc_open + btc_paid
-    result = {
-        'issues_open': issues_open,
-        'issues_done': issues_done,
-        'usd_paid': usd_paid,
-        'usd_open': usd_open,
-        'btc_paid': btc_paid,
-        'btc_open': btc_open,
+    result.update({
         'total_issues': total_issues,
         'total_usd': total_usd,
         'total_btc': total_btc,
-    }
+    })
     if total_issues > 0:
         percent_issues_open = int(100 * issues_open / total_issues)
         percent_issues_done = int(100 * issues_done / total_issues)
