@@ -11,3 +11,4 @@ if not settings.TEST_WITH_NOSE:
     from test_watch_views import *
     from test_feedback_views import *
     from test_bitcoin import *
+    from test_stats import *

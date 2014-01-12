@@ -38,15 +38,15 @@
       </tr>
       {% for project in stats.projects %}
       <tr>
-        <td><a href="/project/{{project.0}}/{{ project.1|slugify }}">{{project.1}}</a></td>
-        <td style="text-align:right">{{project.2}}</td>
-        <td style="text-align:right">{{project.3}}</td>
+        <td><a href="/project/{{project.pk}}/{{ project.name|slugify }}">{{project.name}}</a></td>
+        <td style="text-align:right">{{project.issue_count}}</td>
+        <td style="text-align:right">{{project.offer_count}}</td>
         <td style="text-align:right">
           <div>
-          {% include 'core/include/green_and_orange.html' with currency="US$" vOrange=project.5 vGreen=project.4 %}
+          {% include 'core/include/green_and_orange.html' with currency="US$" vOrange=project.open_amount_usd vGreen=project.paid_amount_usd %}
           </div>
           <div>
-          {% include 'core/include/green_and_orange.html' with currency="BTC" vOrange=project.7 vGreen=project.6 %}
+          {% include 'core/include/green_and_orange.html' with currency="BTC" vOrange=project.open_amount_btc vGreen=project.paid_amount_btc %}
           </div>
         </td>
       </tr>
@@ -67,14 +67,14 @@
       </tr>
       {% for sponsor in stats.sponsors %}
       <tr>
-        <td><a href="{% url core.views.user_views.viewUser user_id=sponsor.0 user_slug=sponsor.1 %}">{{sponsor.1}}</td>
-        <td>{{sponsor.2}}</td>
+        <td><a href="/core/user/{{sponsor.user.pk}}/{{sponsor.pk}}">{{sponsor.screenName}}</a></td>
+        <td>{{sponsor.num_offers}}</td>
         <td style="text-align:right">
           <div>
-          {% include 'core/include/green_and_orange.html' with currency="US$" vOrange=sponsor.4 vGreen=sponsor.3 %}
+          {% include 'core/include/green_and_orange.html' with currency="US$" vOrange=sponsor.open_amount_usd vGreen=sponsor.paid_amount_usd %}
           </div>
           <div>
-          {% include 'core/include/green_and_orange.html' with currency="BTC" vOrange=sponsor.6 vGreen=sponsor.5 %}
+          {% include 'core/include/green_and_orange.html' with currency="BTC" vOrange=sponsor.open_amount_btc vGreen=sponsor.paid_amount_btc %}
           </div>
         </td>
       </tr>

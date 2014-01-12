@@ -23,3 +23,5 @@ django-registration==0.8
 django-emailmgr==0.9
 PIL==1.1.7
 mock==1.0.1
+model-mommy==0.8.1
+django-aggregate-if==0.3.1
