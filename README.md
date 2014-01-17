@@ -61,7 +61,7 @@ If you want to help out, check out our Waffle board below to see what's going on
 
 [![Stories in Ready](https://badge.waffle.io/freedomsponsors/www.freedomsponsors.org.png)](http://waffle.io/freedomsponsors/www.freedomsponsors.org)
 
-## Useful resources
+## Useful  resources
 
 * [Setting up a development environment](http://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/doc/setup.md)
 * [Running unit tests](http://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/doc/testing.md)
