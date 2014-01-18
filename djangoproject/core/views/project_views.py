@@ -1,4 +1,5 @@
 import json
+from django.http import HttpResponse
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from core.models import Project, ActionLog
@@ -10,7 +11,10 @@ __author__ = 'tony'
 
 
 def view(request, project_id):
-    project = Project.objects.get(pk=project_id)
+    try:
+        project = Project.objects.get(pk=project_id)
+    except:
+        return HttpResponse(status=404, content='Project not found')
     stats = stats_services.project_stats(project)
     issues_sponsoring = issue_services.search_issues(project_id=project_id, is_public_suggestion=False)[0:3]
     issues_kickstarting = issue_services.search_issues(project_id=project_id, is_public_suggestion=True)[0:3]

@@ -6,6 +6,7 @@ import traceback
 from django.contrib.auth.decorators import login_required
 from django.contrib.syndication.views import Feed
 from django.contrib import messages
+from django.http import HttpResponse
 from django.shortcuts import redirect, render_to_response
 from django.template import RequestContext
 from django.conf import settings
@@ -224,7 +225,10 @@ def _actionbar(issue, myoffer, mysolution, user):
 
 
 def viewIssue(request, issue_id):
-    issue = Issue.objects.get(pk=issue_id)
+    try:
+        issue = Issue.objects.get(pk=issue_id)
+    except:
+        return HttpResponse(status=404, content='Issue not found')
     myoffer = None
     mysolution = None
     show_alert = None

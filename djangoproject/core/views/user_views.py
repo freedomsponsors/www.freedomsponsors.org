@@ -1,4 +1,5 @@
 import urllib
+from django.http import HttpResponse
 from core.models import *
 from django.contrib import messages
 from django.template import  RequestContext
@@ -11,7 +12,10 @@ from core.views import template_folder
 
 
 def viewUser(request, user_id, user_slug=None):
-    user = User.objects.get(pk=user_id)
+    try:
+        user = User.objects.get(pk=user_id)
+    except:
+        return HttpResponse(status=404, content='User not found')
     unconnectedSocialAccounts = None
     if(user.id == request.user.id):
         unconnectedSocialAccounts = user.getUnconnectedSocialAccounts()
