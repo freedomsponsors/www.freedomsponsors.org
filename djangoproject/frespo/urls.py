@@ -27,6 +27,8 @@ if 'core' in settings.INSTALLED_APPS:
             'backend': 'registration.backends.default.DefaultBackend',
             'form_class': RegistrationForm
         }, name='registration_register'),
+        url(r'^robots.txt$', direct_to_template, {'template': 'core2/robots.txt', 'mimetype': 'text'}),
+        url(r'^sitemap.xml$', 'core.views.main_views.sitemap'),
         url(r'^accounts/', include('registration.backends.default.urls')),
         url(r'', include('social_auth.urls')),
         url(r'^email/$', 'core.views.user_views.redirect_to_user_page',

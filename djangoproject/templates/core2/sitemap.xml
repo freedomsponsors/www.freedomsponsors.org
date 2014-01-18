@@ -1,0 +1,52 @@
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>{{SITE_HOME}}</loc>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>{{SITE_HOME}}/core/issue</loc>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>{{SITE_HOME}}/core/stats</loc>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>{{SITE_HOME}}/user</loc>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>{{SITE_HOME}}/faq</loc>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>{{SITE_HOME}}/feedback</loc>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>{{SITE_HOME}}/project</loc>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>{{SITE_HOME}}/core/jslic</loc>
+        <priority>1.0</priority>
+    </url>
+    {% for issue in issues %}
+        <url>
+            <loc>{{SITE_HOME}}{{ issue.get_view_link }}</loc>
+            <priority>1.0</priority>
+        </url>
+    {% endfor %}
+    {% for project in projects %}
+        <url>
+            <loc>{{SITE_HOME}}{{ project.get_view_link }}</loc>
+            <priority>0.7</priority>
+        </url>
+    {% endfor %}
+    {% for user in users %}
+        <url>
+            <loc>{{SITE_HOME}}{{ user.get_view_link }}</loc>
+            <priority>0.4</priority>
+        </url>
+    {% endfor %}
+</urlset>

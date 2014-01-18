@@ -92,6 +92,18 @@ def login_error(request):
     return redirect('/')
 
 
+def sitemap(request):
+    issues = Issue.objects.all()
+    projects = Project.objects.all()
+    users = User.objects.all()
+    return render_to_response('core2/sitemap.xml',
+                              {'issues': issues,
+                               'projects': projects,
+                               'users': users},
+                              context_instance=RequestContext(request),
+                              mimetype='text/xml')
+
+
 def stats(request):
     stats = stats_services.get_stats()
     return render_to_response(template_folder(request) + 'stats.html',
