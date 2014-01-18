@@ -269,6 +269,7 @@ class Project(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
     createdByUser = models.ForeignKey(User)
+    redirectto_project = models.ForeignKey("Project", null=True)
     creationDate = models.DateTimeField()
     homeURL = models.URLField(null=True, blank=True)
     trackerURL = models.URLField(null=True, blank=True)

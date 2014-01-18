@@ -15,6 +15,11 @@ def view(request, project_id):
         project = Project.objects.get(pk=project_id)
     except:
         return HttpResponse(status=404, content='Project not found')
+    if project.redirectto_project:
+        do_redirect = 'false' != request.GET.get('redirect')
+        if do_redirect:
+            return redirect(project.redirectto_project.get_view_link())
+
     stats = stats_services.project_stats(project)
     issues_sponsoring = issue_services.search_issues(project_id=project_id, is_public_suggestion=False)[0:3]
     issues_kickstarting = issue_services.search_issues(project_id=project_id, is_public_suggestion=True)[0:3]

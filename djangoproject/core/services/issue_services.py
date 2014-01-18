@@ -180,14 +180,13 @@ def resolve_existing_solution(solution_id, comment_content, user):
 
 
 def process_issue_url(trackerURL, user):
-    result = {}
-    result["urlValidationError"] = validateIssueURL(trackerURL)
-    if(not result["urlValidationError"]):
+    result = {"urlValidationError": validateIssueURL(trackerURL)}
+    if not result["urlValidationError"]:
         issues = Issue.objects.filter(trackerURL__iexact=trackerURL)
         issue_already_exists = issues.count() >= 1
-        if(issues.count() > 1):
+        if issues.count() > 1:
             logger.warning("Database inconsistency: more than one issue found with url = %s"%trackerURL)
-        if(issue_already_exists):
+        if issue_already_exists:
             result["issue"] = {"id": issues[0].id}
             return result
         else:
@@ -358,15 +357,18 @@ def _append_project_id_and_update_db_if_needed(issueInfo, trackerURL, user):
     project = None
     if issueInfo.project_trackerURL:
         found_projects = Project.objects.filter(trackerURL__iexact=issueInfo.project_trackerURL)
-        if(found_projects.count() > 1):
+        if found_projects.count() > 1:
             notify_admin("WARNING: Database inconsistency", "more than one project found with url = %s"%issueInfo.project_trackerURL)
-        elif(found_projects.count() == 1):
+        elif found_projects.count() == 1:
             project = found_projects[0]
         else:
             project = _create_project(issueInfo, user)
-    if(project):
+    if project:
+        if project.redirectto_project:
+            project = project.redirectto_project
         issueInfo.project_id = project.id
         issueInfo.project_homeURL = project.homeURL
+
 
 def _create_project(issueInfo, createdByUser):
     project = Project.newProject(issueInfo.project_name, createdByUser, '', issueInfo.project_trackerURL)

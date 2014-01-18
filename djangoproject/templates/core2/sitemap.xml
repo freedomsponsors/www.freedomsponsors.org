@@ -9,11 +9,11 @@
     </url>
     <url>
         <loc>{{SITE_HOME}}/core/stats</loc>
-        <priority>1.0</priority>
+        <priority>0.7</priority>
     </url>
     <url>
         <loc>{{SITE_HOME}}/user</loc>
-        <priority>1.0</priority>
+        <priority>0.7</priority>
     </url>
     <url>
         <loc>{{SITE_HOME}}/faq</loc>
@@ -21,15 +21,15 @@
     </url>
     <url>
         <loc>{{SITE_HOME}}/feedback</loc>
-        <priority>1.0</priority>
+        <priority>0.7</priority>
     </url>
     <url>
         <loc>{{SITE_HOME}}/project</loc>
-        <priority>1.0</priority>
+        <priority>0.7</priority>
     </url>
     <url>
         <loc>{{SITE_HOME}}/core/jslic</loc>
-        <priority>1.0</priority>
+        <priority>0.4</priority>
     </url>
     {% for issue in issues %}
         <url>
