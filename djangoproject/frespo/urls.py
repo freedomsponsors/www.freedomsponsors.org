@@ -21,6 +21,7 @@ if 'core' in settings.INSTALLED_APPS:
         url(r'^github/', include('gh_frespo_integration.urls')),
         url(r'^bladmin/doc/', include('django.contrib.admindocs.urls')),
         url(r'^bladmin/', include(admin.site.urls)),
+        url(r'^login-error/$', 'core.views.main_views.login_error'),
         url(r'^accounts/password/reset/$', 'core.views.registration_views.reset_password'),
         url(r'^/accounts/register/$', 'registration.views.register', {
             'backend': 'registration.backends.default.DefaultBackend',

@@ -88,6 +88,10 @@ def home(request):
         context_instance=RequestContext(request))
 
 
+def login_error(request):
+    return redirect('/')
+
+
 def stats(request):
     stats = stats_services.get_stats()
     return render_to_response(template_folder(request) + 'stats.html',

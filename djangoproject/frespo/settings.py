@@ -140,6 +140,7 @@ MIDDLEWARE_CLASSES = (
     'core.middlewares.CompleteRegistrationFirst',
     'core.middlewares.Translation',
     'pagination.middleware.PaginationMiddleware',
+    'social_auth.middleware.SocialAuthExceptionMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -287,7 +288,7 @@ TWITTER_EXTRA_DATA = [('screen_name', 'social_username')]
 
 ACCOUNT_ACTIVATION_DAYS = 1
 
-#LOGIN_ERROR_URL    = '/login-error/'
+LOGIN_ERROR_URL = '/login-error/'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
