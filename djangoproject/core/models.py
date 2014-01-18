@@ -273,7 +273,7 @@ class Project(models.Model):
     creationDate = models.DateTimeField()
     homeURL = models.URLField(null=True, blank=True)
     trackerURL = models.URLField(null=True, blank=True)
-    image3x1 = models.ImageField(null=True, upload_to=upload_to('project_images/image3x1'))
+    image3x1 = models.ImageField(null=True, blank=True, upload_to=upload_to('project_images/image3x1'))
 
     @classmethod
     def newProject(cls, name, createdByUser, homeURL, trackerURL):
