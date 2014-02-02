@@ -94,10 +94,10 @@ def sponsor_existing_issue(issue_id, dict, user):
     return offer
 
 
-def change_existing_issue(issue_id, issuedict, user):
+def change_existing_issue(issue_id, issuedict, logo, user):
     issue = Issue.objects.get(pk=issue_id)
     _throwIfNotIssueCreator(issue, user)
-    issue.changeIssue(issuedict)
+    issue.changeIssue(issuedict, logo)
     return issue
 
 

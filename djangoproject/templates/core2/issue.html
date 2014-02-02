@@ -270,10 +270,14 @@
                     </div>
                     {% if issue.createdByUser.id == user.id %}
                         <div id="div_description_w" style="display: none">
-                            <form method="post" class="well form-horizontal" action="/core/issue/edit/submit">
+                            <form method="post" class="well form-horizontal" action="/core/issue/edit/submit" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <input type="hidden" name="issue_id" value="{{issue.id}}">
                                 <text-with-markdown-preview model="description" nameid="description"></text-with-markdown-preview>
+                                <div>
+                                    <input type="checkbox" ng-model="add_issue_logo">Add a logo for this issue
+                                    <input type="file" ng-show="add_issue_logo" name="logo">
+                                </div>
                                 <span>
                                 <a href ng-click="editDescription(false)">{% trans "Cancel"%}</a>
                                 <button type="submit">{% trans "Submit"%}</button>

@@ -67,6 +67,7 @@ def verify_ipn(data):
 
     return True
 
+
 def is_verified_account(email):
     try:
         response = paypal.pay(

@@ -269,8 +269,11 @@ def viewIssue(request, issue_id):
 def editIssue(request):
     issue_id = int(request.POST['issue_id'])
     issue = Issue.objects.get(pk=issue_id)
+    logo = None
+    if 'logo' in request.FILES and request.FILES['logo']:
+        logo = request.FILES['logo']
     old_json = issue.to_json()
-    issue = issue_services.change_existing_issue(issue_id, request.POST, request.user)
+    issue = issue_services.change_existing_issue(issue_id, request.POST, logo, request.user)
     ActionLog.log_edit_issue(issue=issue, user=request.user, old_json=old_json)
     return redirect(issue.get_view_link())
 

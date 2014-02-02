@@ -339,6 +339,7 @@ class Issue(models.Model):
     is_feedback = models.BooleanField()
     is_public_suggestion = models.BooleanField()
     status = models.CharField(max_length=40)
+    logo = models.ImageField(null=True, blank=True, upload_to=upload_to('issue_images/logo'))
 
     @classmethod
     def newIssue(cls, project, key, title, description, createdByUser, trackerURL):
@@ -382,11 +383,13 @@ class Issue(models.Model):
         issue.status = 'open'
         return issue
 
-    def changeIssue(self, issuedict):
+    def changeIssue(self, issuedict, logo):
         if issuedict.get('description'):
             self.description = issuedict.get('description')
         if issuedict.get('title'):
             self.title = issuedict.get('title')
+        if logo:
+            self.logo = logo
         self.touch()
 
     def to_dict_json(self):
@@ -458,7 +461,9 @@ class Issue(models.Model):
         return '/core/issue/%s'%self.id+'/'+urlquote(slugify(self.title))
 
     def get_card_image(self):
-        if self.project:
+        if self.logo:
+            return '%s/%s' % (settings.MEDIA_ROOT_URL, self.logo)
+        elif self.project:
             return self.project.get_image3x1()
         else:
             return ''
@@ -479,10 +484,10 @@ class Issue(models.Model):
 
     def __unicode__(self):
         s = ''
-        if(self.project):
-            s += '('+self.project.name+') '
-        if (self.key):
-            s += self.key+': '
+        if self.project:
+            s += '(' + self.project.name + ') '
+        if self.key:
+            s += self.key + ': '
         s += self.title
         return s
 
