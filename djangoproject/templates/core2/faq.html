@@ -20,6 +20,7 @@
 				<li><a href="#What about privacy?">What about privacy?</a></li>
 				<li><a href="#How do payments work?">How does payment work?</a></li>
 				<li><a href="#I don't have a Paypal account or a Bitcoin wallet, is that ok?">I don't have a Paypal account or a Bitcoin wallet, is that ok?</a></li>
+				<li><a href="#What is Bitcoin?">What is Bitcoin?</a></li>
 				<li><a href="#Two developers are claiming to have resolved my issue. What should I do?">Two developers are claiming to have resolved my issue. What should I do?</a></li>
 			</ol>
 			<div class="hgap-30"><!-- Horizontal Gap 30px --></div>
@@ -124,17 +125,23 @@
 		<div class="vgap-30"><!-- Vertical Gap 30px --></div>
 		<div class="fs-box">
 			<h3 class="green-text">How do payments work?</h3>
-			<p>Payments can be made either in USD via Paypal, or in <a href="http://bitcoin.org/">Bitcoins</a>. Before you can send payments, you’re going to need a Paypal account or a Bitcoin wallet. Before you can receive payments, set up both so you can accept all offers. We check that each Paypal account is valid before allowing anyone to make a payment to it.</p>
+			<p>Payments can be made either in USD via Paypal, or in <a href="http://bitcoin.org/">Bitcoins</a></p>
+
+			<p>If you don't have a Paypal account, setting up one is very easy and you can do it when you're making your first payment.<br>
+			Setting up a bitcoin wallet is also very easy, see <a href="#What is Bitcoin?">"What is Bitcoin?"</a>.</p>
+
+			<p>Before you can receive payments, we recommend you have both a Paypal account and a Bitcoin address so you can accept all offers. We check that each Paypal account is valid before allowing anyone to make a payment to it.</p>
+			
 			<p>FreedomSponsors charges a 3% fee on top of offers, regardless of the payment method. We clearly state this on each payment page. To keep things simple, we use Paypal’s <span class="bold">Parallel</span> payment type, so a single payment is sent to two or more receivers.</p>
-			<p>For example, when you want to pay a US$10 bounty, you may decide to give US$5 each to 2 developers. On Paypal’s website, you will see:</p>
+			<p>For example, when you want to pay a US$ 100 bounty, you may decide to give US$ 50 each to 2 developers. On Paypal’s website, you will see:</p>
 			<br/>
 			<ul>
-				<li>Developer A: USD $5</li>
-				<li>Developer B: USD $5</li>
-				<li>FreedomSponsors' 3% fee: USD $0.30</li>
-				<li>PayPal's Fee: USD $1.03 (may vary)</li>
+				<li>Developer A: USD $50</li>
+				<li>Developer B: USD $50</li>
+				<li>FreedomSponsors' 3% fee: USD $3</li>
+				<li>PayPal's Fee: USD $4.60 (may vary)</li>
 				<li>-----------------------------------------------------------</li>
-				<li>TOTAL: USD $11.33</li>
+				<li>TOTAL: USD $107.60</li>
 			</ul>
 			<br/>
 			<p>Bitcoin has no “parallel payment.” Instead, you send us, we verify the transaction, keep 3%, and transfer the rest to the developer(s) being paid.</p>
@@ -148,12 +155,26 @@
                 </a>.
             </p>
 		</div>
+
 		<a name="I don't have a Paypal account or a Bitcoin wallet, is that ok?"></a>
 		<div class="vgap-30"><!-- Vertical Gap 30px --></div>
 		<div class="fs-box">
 			<h3 class="green-text">I don't have a Paypal account or a Bitcoin wallet, is that ok?</h3>
-			<p>It is okay for commenting. To send or receive payments, you’ll need to set up one of these options on <a href="{% url core.views.user_views.editUserForm %}">your profile page</a>.</p>
+			<p>To be able to <span class="bold">receive</span> payments, you’ll need to set up one of these options on <a href="{% url core.views.user_views.editUserForm %}">your profile page</a>. </p>
+
+			<p>If you're sponsoring issues, you don't need that until right before making your payment. If you made an offer in USD and you don't have a Paypal account, you'll be prompted to setup one when you're making your first payment (and it's very easy to do so).</p>
 		</div>
+
+		<a name="What is Bitcoin?"></a>
+		<div class="vgap-30"><!-- Vertical Gap 30px --></div>
+		<div class="fs-box">
+			<h3 class="green-text">What is Bitcoin?</h3>
+			<p>If you don't know what Bitcoin is, you should! <a href="http://www.weusecoins.com/en/">This short video</a> (1m44s) does an excellent job explaining it.</p>
+
+			<p>If you still don’t have a Bitcoin Wallet, it’s really easy to set up one – and it’s free.
+			You can either host your wallet on your computer using a Bitcoin client, or you can create a wallet online in a web wallet provider. Take a look at this link to learn more about those options: <a href="http://bitcoin.org/en/choose-your-wallet">http://bitcoin.org/en/choose-your-wallet</a></p>
+		</div>
+
 		<a name="Two developers are claiming to have resolved my issue. What should I do?"></a>
 		<div class="vgap-30"><!-- Vertical Gap 30px --></div>
 		<div class="fs-box">
