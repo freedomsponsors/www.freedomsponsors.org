@@ -76,12 +76,24 @@ def _get_blockchain_data(rates):
 
 
 def _get_oer_data(rates):
-    response = requests.get('http://openexchangerates.org/api/latest.json?app_id=%s' % settings.OPENEXCHANGERATES_API_KEY)
-    content = response.content
+    if settings.MOCK_OPENEXCHANGE_RATES
+        content = """{
+          "timestamp": 1391814062,
+          "base": "USD",
+          "rates": {
+            "BRL": 2.38329,
+            "BTC": 0.0013829378,
+            "USD": 1,
+          }
+        }"""
+    else:
+        response = requests.get('http://openexchangerates.org/api/latest.json?app_id=%s' % settings.OPENEXCHANGERATES_API_KEY)
+        content = response.content
+    logger.info('got response from OpenExchangeRate: %s' % content)
     if Rates.is_valid_oer_data(content):
         rates.oer_data = content
         rates.last_update_oer = timezone.now()
         rates.save()
     else:
-        logger.error('got invalid OpenExchangeRate data: %s' % content)
+        logger.error('invalid OpenExchangeRate data: %s' % content)
 
