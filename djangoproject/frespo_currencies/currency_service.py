@@ -76,7 +76,7 @@ def _get_blockchain_data(rates):
 
 
 def _get_oer_data(rates):
-    if settings.MOCK_OPENEXCHANGE_RATES
+    if settings.MOCK_OPENEXCHANGE_RATES:
         content = """{
           "timestamp": 1391814062,
           "base": "USD",
