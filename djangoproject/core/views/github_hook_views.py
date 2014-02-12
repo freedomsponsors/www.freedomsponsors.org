@@ -5,4 +5,6 @@ from django.http import HttpResponse
 
 @csrf_exempt
 def hook(request, token):
-    return HttpResponse("OK")
+    if request.method == 'POST':
+        return HttpResponse(request.POST.get('payload'))
+    return HttpResponse('OK')
