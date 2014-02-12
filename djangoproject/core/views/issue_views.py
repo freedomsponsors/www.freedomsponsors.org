@@ -305,14 +305,12 @@ def _currency_options(offer):
         brl = {'currency': 'BRL',
                'selectLabel': 'R$, usando Paypal',
                'rate': currency_service.get_rate(offer.currency, 'BRL')}
-        # return [brl, btc]
-        return [brl]
+        return [brl, btc]
     else:
         usd = {'currency': 'USD',
                'selectLabel': 'US$, using Paypal',
                'rate': currency_service.get_rate(offer.currency, 'USD')}
-        # return [usd, btc]
-        return [usd]
+        return [usd, btc]
 
 
 @login_required
