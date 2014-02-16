@@ -131,7 +131,7 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'core.middlewares.PutUserInMETA',
+    'core.middlewares.ErrorMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
