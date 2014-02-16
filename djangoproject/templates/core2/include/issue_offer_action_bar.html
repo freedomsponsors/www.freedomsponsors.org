@@ -19,7 +19,11 @@
     <a href ng-click="revoke()" class="fs-button green">Revoke Offer</a>
 {% endif %}
 {% if actionbar.work %}
-    <a href ng-click="work()" class="fs-button blue">Work on this issue</a>
+    {% if user.is_authenticated %}
+        <a href ng-click="work()" class="fs-button blue">Work on this issue</a>
+    {% else %}
+        <a href="/core/login/?next={{issue.get_view_link}}" class="fs-button blue">Work on this issue</a>
+    {% endif %}
 {% endif %}
 {% if actionbar.resolve %}
     {% if user.is_authenticated %}
