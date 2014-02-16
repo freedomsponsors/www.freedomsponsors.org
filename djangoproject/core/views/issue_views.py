@@ -355,9 +355,9 @@ def payOfferForm(request, offer_id):
 
 @login_required
 def payOffer(request):
-    currency = request.POST['currency']
-    if currency == 'BTC':
-        return render_to_response(template_folder(request) + 'bitcoin_disabled.html', {}, context_instance=RequestContext(request))
+    # currency = request.POST['currency']
+    # if currency == 'BTC':
+    #     return render_to_response(template_folder(request) + 'bitcoin_disabled.html', {}, context_instance=RequestContext(request))
     offer_id = int(request.POST['offer_id'])
     offer = Offer.objects.get(pk=offer_id)
     if offer.status == Offer.PAID:
