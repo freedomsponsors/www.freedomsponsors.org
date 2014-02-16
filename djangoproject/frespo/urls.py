@@ -18,6 +18,7 @@ if 'core' in settings.INSTALLED_APPS:
         url(r'^github-hook/', include('core.urls.github_hook_urls')),
         url(r'^feedback', include('core.urls.feedback_urls')),
         url(r'^user/', include('core.urls.user_urls')),
+        url(r'^payment/', include('core.urls.payment_urls')),
         url(r'^sandbox/', include('sandbox.urls')),
         url(r'^github/', include('gh_frespo_integration.urls')),
         url(r'^bladmin/doc/', include('django.contrib.admindocs.urls')),

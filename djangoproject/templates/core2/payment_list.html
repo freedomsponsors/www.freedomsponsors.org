@@ -1,0 +1,31 @@
+{% extends "core2/base_old.html" %}
+{% load pagination_tags %}
+
+{% block mainContent%}
+
+<table class="table table-striped table-condensed">
+    <th>
+        <td>ID</td>
+        <td>Who</td>
+        <td>Status</td>
+        <td>Created</td>
+        <td>Issue</td>
+        <td>Amount</td>
+    </th>
+    {% autopaginate payments %}
+    {% for payment in payments %}
+    <tr>
+        <td><a href="payment/{{ payment.id }}">{{ payment.id }}</a></td>
+        <td><a href="{{ payment.offer.sponsor.get_view_link }}">{{ payment.offer.sponsor.getUserInfo.screenName }}</a></td>
+        <td>{{ payment.status }}</td>
+        <td>{{ payment.creationDate }}</td>
+        <td><a href="{{ payment.offer.issue.get_view_link }}">{{ payment.offer.issue.title }}</a></td>
+        <td>{{ payment.currency }} {{ payment.total }}</td>
+    </tr>
+    {% endfor %}
+</table>
+<div class="pagination pagination-right">
+    {% paginate %}
+</div>
+
+{% endblock mainContent %}
