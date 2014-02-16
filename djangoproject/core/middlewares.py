@@ -1,8 +1,9 @@
-from exceptions import BaseException
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.utils import translation
 from django.core.urlresolvers import reverse
+import logging
+logger = logging.getLogger(__name__)
 
 
 class CompleteRegistrationFirst:
@@ -43,8 +44,10 @@ class ErrorMiddleware(object):
         """
         Add user details.
         """
+        logger.info('ErrorMiddleware.process_exception %s' % exception)
         user = request.user
         if user.is_authenticated():
             request.META['USER'] = "%s / %s" % (request.user.id, request.user.getUserInfo().screenName)
         else:
             request.META['USER'] = "Unauthenticated"
+        logger.info('user = %s' % request.META['USER'])
