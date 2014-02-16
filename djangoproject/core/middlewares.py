@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.utils import translation
 from django.core.urlresolvers import reverse
 
+
 class CompleteRegistrationFirst:
     def process_request(self, request):
         user = request.user
@@ -22,6 +23,7 @@ class CompleteRegistrationFirst:
         else:
             return None
 
+
 class Translation(object):
     def process_request(self, request):
         language = "en"
@@ -32,3 +34,17 @@ class Translation(object):
         translation.activate(language)
         request.LANGUAGE_CODE = translation.get_language()
 
+
+class ErrorMiddleware(object):
+    """
+    Alter HttpRequest objects on Error
+    """
+    def process_exception(self, request, exception):
+        """
+        Add user details.
+        """
+        user = request.user
+        if user.is_authenticated():
+            request.META['USER'] = "%s / %s" % (request.user.id, request.user.getUserInfo().screenName)
+        else:
+            request.META['USER'] = "Unauthenticated"

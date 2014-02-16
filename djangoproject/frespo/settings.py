@@ -139,6 +139,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'core.middlewares.CompleteRegistrationFirst',
     'core.middlewares.Translation',
+    'core.middlewares.ErrorMiddleware',
     'pagination.middleware.PaginationMiddleware',
     'social_auth.middleware.SocialAuthExceptionMiddleware',
     # Uncomment the next line for simple clickjacking protection:
