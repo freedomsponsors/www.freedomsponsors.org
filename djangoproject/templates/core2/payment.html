@@ -59,7 +59,7 @@
     {% if payment.currency == 'BTC' %}
     <tr>
         <th>bitcoin_receive_address</th>
-        <td>{{ payment.bitcoin_receive_address }}</td>
+        <td>{{ payment.bitcoin_receive_address.idd }} / {{ payment.bitcoin_receive_address.address }}</td>
     </tr>
     <tr>
         <th>bitcoin_transaction_hash</th>
@@ -79,7 +79,7 @@
 {% for part in payment.getParts %}
 
 <h3>Part {{ part.id }}</h3>
-<table>
+<table class="table table-striped table-condensed">
     <tr>
         <th>Programmer</th>
         <td><a href="{{ part.programmer.get_view_link }}">{{ part.programmer.getUserInfo.screenName }}</a></td>
