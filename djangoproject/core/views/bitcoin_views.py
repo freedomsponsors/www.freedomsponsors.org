@@ -13,14 +13,17 @@ logger = logging.getLogger(__name__)
 
 def bitcoinIPN(request):
     # logger.info('----- bitcoinIPN ------')
-    value = Decimal(request.GET["value"]) * Decimal('1e-8')
-    destination_address = request.GET["destination_address"]
-    transaction_hash = request.GET["transaction_hash"]
-    confirmations = int(request.GET["confirmations"])
-    logger.info("bitcoin IPN confirmation: host = %s(%s), value = %s, destination_address=%s, transaction_hash = %s, confirmations = %s" %
+    value = Decimal(request.GET.get("value")) * Decimal('1e-8')
+    destination_address = request.GET.get("destination_address")
+    address = request.GET.get("address")
+    transaction_hash = request.GET.get("transaction_hash")
+    confirmations = int(request.GET.get("confirmations"))
+    logger.info("bitcoin IPN data: %s" % request.GET)
+    logger.info("bitcoin IPN confirmation: host = %s(%s), value = %s, address=%s, destination_address=%s, transaction_hash = %s, confirmations = %s" %
                 (request.META.get('REMOTE_HOST', ''),
                  request.META.get('REMOTE_ADDR', ''),
                  value,
+                 address,
                  destination_address,
                  transaction_hash,
                  confirmations))

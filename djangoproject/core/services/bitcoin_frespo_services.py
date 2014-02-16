@@ -27,7 +27,6 @@ def bitcoin_ipn_received(value, destination_address, transaction_hash, confirmat
         mail_services.notify_admin('Received bitcoins outside FS', 'address = %s,\n value = %s,\n hash = %s' % (destination_address, value, transaction_hash))
 
 
-
 def bitcoin_ipn_sent(value, destination_address, transaction_hash, confirmations):
     part = get_or_none(PaymentPart, money_sent__transaction_hash=transaction_hash)
     if part:
@@ -91,8 +90,8 @@ def bitcoin_pay_programmers():
                                                             to_address = part.solution.programmer.getUserInfo().bitcoin_receive_address,
                                                             value = part.price)
             part.save()
-            _notify_payments_sent_if_applicable(part.payment)
             _log_info_money_sent(part)
+            _notify_payments_sent_if_applicable(part.payment)
         else:
             _log_error_invalid_paymentpart_for_sending_money(part, verr)
 

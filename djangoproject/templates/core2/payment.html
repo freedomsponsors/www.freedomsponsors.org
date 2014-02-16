@@ -1,0 +1,136 @@
+{% extends "core2/base_old.html" %}
+{% load pagination_tags %}
+
+{% block mainContent%}
+
+<h1>Payment {{ payment.id }}</h1>
+
+<table class="table table-striped table-condensed">
+    <tr>
+        <th>Sponsor</th>
+        <td><a href="{{ payment.offer.sponsor.get_view_link }}">{{ payment.offer.sponsor.getUserInfo.screenName }}</a></td>
+    </tr>
+    <tr>
+        <th>Status</th>
+        <td>{{ payment.status }}</td>
+    </tr>
+    <tr>
+        <th>Created</th>
+        <td>{{ payment.creationDate }}</td>
+    </tr>
+    <tr>
+        <th>Last Updated</th>
+        <td>{{ payment.lastChangeDate }}</td>
+    </tr>
+    <tr>
+        <th>Issue</th>
+        <td><a href="{{ payment.offer.issue.get_view_link }}">{{ payment.offer.issue.title }}</a></td>
+    </tr>
+    <tr>
+        <th>Amount</th>
+        <td>{{ payment.currency }} {{ payment.total }}</td>
+    </tr>
+    <tr>
+        <th>offer_currency</th>
+        <td>{{ payment.offer_currency }}</td>
+    </tr>
+    <tr>
+        <th>fee</th>
+        <td>{{ payment.fee }}</td>
+    </tr>
+    <tr>
+        <th>offer2payment_suggested_rate</th>
+        <td>{{ payment.offer2payment_suggested_rate }}</td>
+    </tr>
+    <tr>
+        <th>usd2payment_rate</th>
+        <td>{{ payment.usd2payment_rate }}</td>
+    </tr>
+    {% if payment.paykey %}
+    <tr>
+        <th>Paykey (paypal)</th>
+        <td>{{ payment.paykey }}</td>
+    </tr>
+    <tr>
+        <th>confirm_key (paypal)</th>
+        <td>{{ payment.confirm_key }}</td>
+    </tr>
+    {% endif %}
+    {% if payment.currency == 'BTC' %}
+    <tr>
+        <th>bitcoin_receive_address</th>
+        <td>{{ payment.bitcoin_receive_address }}</td>
+    </tr>
+    <tr>
+        <th>bitcoin_transaction_hash</th>
+        <td>{{ payment.bitcoin_transaction_hash }}</td>
+    </tr>
+    <tr>
+        <th>total_bitcoin_received</th>
+        <td>{{ payment.total_bitcoin_received }}</td>
+    </tr>
+    <tr>
+        <th>bitcoin_fee</th>
+        <td>{{ payment.bitcoin_fee }}</td>
+    </tr>
+    {% endif %}
+</table>
+
+{% for part in payment.getParts %}
+
+<h3>Part {{ part.id }}</h3>
+<table>
+    <tr>
+        <th>Programmer</th>
+        <td><a href="{{ part.programmer.get_view_link }}">{{ part.programmer.getUserInfo.screenName }}</a></td>
+    </tr>
+    <tr>
+        <th>Amount</th>
+        <td>{{ part.price }}</td>
+    </tr>
+    <tr>
+        <th>paypalEmail</th>
+        <td>{{ part.paypalEmail }}</td>
+    </tr>
+    <tr>
+        <th>Solution status</th>
+        <td>{{ part.solution.status }}</td>
+    </tr>
+    {% if part.money_sent %}
+    <tr>
+        <th>From</th>
+        <td>{{ part.money_sent.from_address }}</td>
+    </tr>
+    <tr>
+        <th>To</th>
+        <td>{{ part.money_sent.to_address }}</td>
+    </tr>
+    <tr>
+        <th>Moneysent value</th>
+        <td>{{ part.money_sent.value }}</td>
+    </tr>
+    <tr>
+        <th>txn hash</th>
+        <td>{{ part.money_sent.transaction_hash }}</td>
+    </tr>
+    <tr>
+        <th>Moneysent status</th>
+        <td>{{ part.money_sent.status }}</td>
+    </tr>
+    <tr>
+        <th>MoneySent creation</th>
+        <td>{{ part.money_sent.creationDate }}</td>
+    </tr>
+    <tr>
+        <th>MoneySent last update</th>
+        <td>{{ part.money_sent.lastChangeDate }}</td>
+    </tr>
+    {% endif %}
+</table>
+
+{% endfor %}
+<div class="pagination pagination-right">
+    {% paginate %}
+</div>
+
+{% endblock mainContent %}
