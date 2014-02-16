@@ -10,5 +10,5 @@ __author__ = 'tony'
 def list_payments(request):
     payments = Payment.objects.all().order_by('creationDate')
     return render_to_response('core2/payment_list.html',
-                              {'payments, payments'},
+                              {'payments': payments},
                               context_instance=RequestContext(request))
