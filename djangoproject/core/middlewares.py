@@ -36,18 +36,13 @@ class Translation(object):
         request.LANGUAGE_CODE = translation.get_language()
 
 
-class ErrorMiddleware(object):
-    """
-    Alter HttpRequest objects on Error
-    """
-    def process_exception(self, request, exception):
+class PutUserInMETA(object):
+    def process_request(self, request):
         """
         Add user details.
         """
-        logger.info('ErrorMiddleware.process_exception %s' % exception)
         user = request.user
         if user.is_authenticated():
             request.META['USER'] = "%s / %s" % (request.user.id, request.user.getUserInfo().screenName)
         else:
             request.META['USER'] = "Unauthenticated"
-        logger.info('user = %s' % request.META['USER'])
