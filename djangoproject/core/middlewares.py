@@ -46,3 +46,4 @@ class PutUserInMETA(object):
             request.META['USER'] = "%s / %s" % (request.user.id, request.user.getUserInfo().screenName)
         else:
             request.META['USER'] = "Unauthenticated"
+        logger.info('PutUserInMETA %s' % request.META['USER'])
