@@ -98,6 +98,10 @@
     </tr>
     {% if part.money_sent %}
     <tr>
+        <th>Moneysent id</th>
+        <td>{{ part.money_sent.id }}</td>
+    </tr>
+    <tr>
         <th>From</th>
         <td>{{ part.money_sent.from_address }}</td>
     </tr>
