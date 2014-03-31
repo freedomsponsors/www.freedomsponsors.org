@@ -24,26 +24,30 @@
 {% endblock %}
 
 {% block mainContent%}
-    <div ng-app="project" ng-controller="MyCtrl">
-        <h2> Editing project: {{ project.name }}</h2>
-        <hr>
-        <form method="POST" action="{% url core.views.project_views.edit %}" enctype="multipart/form-data">
-            {% csrf_token %}
-            <input type="hidden" name="id" value="{{ project.id }}">
-            <div>
-                <label for="image3x1">Image</label>
-                <input type="file" name="image3x1" id="image3x1">
-            </div>
-            <div>
-                <label for="homeURL">Home URL</label>
-                <input type="text" name="homeURL" id="homeURL" style="width: 300px;" value="{{ project.homeURL }}">
-            </div>
-            <div>
-                <label for="description">Description</label>
-                <text-with-markdown-preview model="description" nameid="description"></text-with-markdown-preview>
-            </div>
-            <input type="submit">
-        </form>
-
+    <div ng-app="project" class="content" align="center" ng-controller="MyCtrl">
+		<div class="home-content-section" align="left">
+			<h2> Editing project: {{ project.name }}</h2>
+			<div class="fs-box">
+				<form method="POST" action="{% url core.views.project_views.edit %}" enctype="multipart/form-data">
+					{% csrf_token %}
+					<input type="hidden" name="id" value="{{ project.id }}">
+					<div>
+						<label for="image3x1">Image</label>
+						<input type="file" name="image3x1" id="image3x1">
+					</div>
+					<div class="vgap-5"><!-- Vertical Gap 5px --></div>
+					<div>
+						<label for="homeURL">Home URL</label>
+						<input type="text" name="homeURL" id="homeURL" style="width: 300px;" value="{{ project.homeURL }}">
+					</div>
+					<div class="vgap-5"><!-- Vertical Gap 5px --></div>
+					<div>
+						<label for="description">Description</label>
+						<text-with-markdown-preview model="description" nameid="description"></text-with-markdown-preview>
+					</div>
+					<input type="submit" class="fs-button blue medium">
+				</form>
+			</div>
+		</div>
     </div>
 {% endblock mainContent%}
