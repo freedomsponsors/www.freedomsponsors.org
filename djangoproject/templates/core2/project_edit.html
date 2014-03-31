@@ -26,26 +26,26 @@
 {% block mainContent%}
     <div ng-app="project" class="content" align="center" ng-controller="MyCtrl">
 		<div class="home-content-section" align="left">
-			<h2> Editing project: {{ project.name }}</h2>
+			<h1 class="green-text"> Editing project: {{ project.name }}</h1>
 			<div class="fs-box">
 				<form id="edit_project_form" method="POST" action="{% url core.views.project_views.edit %}" enctype="multipart/form-data">
 					{% csrf_token %}
 					<input type="hidden" name="id" value="{{ project.id }}">
-					<div class="column-wrapper">
+					<div class="column-wrapper vcenter-content" style="height:30px">
 						<div style="width:80px"><label for="image3x1">Image: </label></div>
 						<div class="column fit"><input type="file" name="image3x1" id="image3x1"></div>
 					</div>
-					<div class="vgap-5"><!-- Vertical Gap 5px --></div>
-					<div class="column-wrapper">
+					<div class="vgap-10"><!-- Vertical Gap 10px --></div>
+					<div class="column-wrapper vcenter-content" style="height:30px">
 						<div style="width:80px"><label for="homeURL">Home URL: </label></div>
-						<div class="column fit"><input type="text" class="fs-input" name="homeURL" id="homeURL" style="width: 300px;" value="{{ project.homeURL }}"></div>
+						<div class="column fit"><input type="text" class="fs-input" name="homeURL" id="homeURL" value="{{ project.homeURL }}"></div>
 					</div>
-					<div class="vgap-5"><!-- Vertical Gap 5px --></div>
+					<div class="vgap-30"><!-- Vertical Gap 30px --></div>
 					<div>
 						<label for="description">Description</label>
 						<text-with-markdown-preview model="description" nameid="description"></text-with-markdown-preview>
 					</div>
-					<a href onclick="edit_project_form.submit()" class="fs-button blue medium">Submit</a>
+					<div class="text-align-right"><a href onclick="edit_project_form.submit()" class="fs-button blue medium">Submit</a></div>
 				</form>
 			</div>
 		</div>
