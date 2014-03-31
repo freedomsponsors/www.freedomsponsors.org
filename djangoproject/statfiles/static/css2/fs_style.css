@@ -107,6 +107,8 @@ textarea{
 	width:100%;
 	min-height:120px;
 	
+	color: #8D8D8D;
+	
 	-webkit-box-sizing: border-box!important;
 	-moz-box-sizing: border-box!important;
 	box-sizing: border-box!important;
@@ -687,7 +689,7 @@ input.fs-input.black::-webkit-input-placeholder {
 input.fs-input{
 	width:100%;
 	
-	color: #B9B9B9;
+	color: #8D8D8D;
 	background-color:#FFF!important;
 	line-height: 10px;
 	
