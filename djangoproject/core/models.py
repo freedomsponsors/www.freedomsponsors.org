@@ -570,7 +570,7 @@ class Offer(models.Model):
     sponsor = models.ForeignKey(User)
     creationDate = models.DateTimeField()
     lastChangeDate = models.DateTimeField()
-    price = models.DecimalField(max_digits=9, decimal_places=2) # Ateh 9999999.99 dolares
+    price = models.DecimalField(max_digits=16, decimal_places=8) # up to 9999999.99999999
     currency = models.CharField(max_length=10)
     acceptanceCriteria = models.TextField(null=True, blank=True)
     expirationDate = models.DateField(null=True, blank=True)

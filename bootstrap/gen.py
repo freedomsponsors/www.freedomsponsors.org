@@ -19,14 +19,14 @@ import subprocess
 
 # get current dir
 def adjust_options(options, args):
-    BOOTSTRAP_PATH = abspath(dirname(__file__))
+    from hooks import VIRTUALENV
 
     # erase args
     while len(args):
         args.pop()
 
     # set virtualenv's dir
-    args.append(join(BOOTSTRAP_PATH, pardir))
+    args.append(VIRTUALENV)
 
 # override default options
 def extend_parser(parser):
