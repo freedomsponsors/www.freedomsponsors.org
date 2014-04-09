@@ -381,9 +381,9 @@ def _generate_payment_entity(offer, dict):
     sum = Decimal(0)
     btc_fee = Decimal(0)
     for i in range(count):
-        pay_str = dict['pay_%s' % i]
+        pay_str = dict.get('pay_%s' % i)
         solution_id = int(dict['solutionId_%s' % i])
-        if(pay_str):
+        if pay_str:
             pay = Decimal(pay_str)
             if pay > 0:
                 solution = Solution.objects.get(pk=solution_id)
