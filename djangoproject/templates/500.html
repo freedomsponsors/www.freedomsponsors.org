@@ -1,1 +1,10 @@
-Internal server error
+{% extends "core2/base_old.html" %}
+{% block mainContent%}
+
+  <h3>500 error</h3>
+  Internal server error. Please kindly report it to us. We'll get back at you as soon as possible.
+  <hr>
+
+{% include "core2/feedback_form.html" %}
+
+{% endblock mainContent%}
