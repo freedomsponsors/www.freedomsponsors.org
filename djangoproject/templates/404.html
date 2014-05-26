@@ -1,1 +1,10 @@
-404 - aqui num tem isso nao!
+{% extends "core2/base_old.html" %}
+{% block mainContent%}
+
+  <h3>404 error</h3>
+  The page you are visiting doesn't exist. If this is caused by a broken link, please kindly report it to us. We'll get back at you as soon as possible.
+  <hr>
+
+{% include "core2/feedback_form.html" %}
+
+{% endblock mainContent%}
