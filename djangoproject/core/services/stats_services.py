@@ -116,6 +116,20 @@ LAUNCH_DATE = datetime(2012, 7, 8)
 
 
 def get_stats():
+    btc2usd = currency_service.get_rate('BTC', 'USD', False)
+
+    open_sum_btc        = _sum(SUM_OPEN_BTC)
+    open_sum_btc_in_usd = open_sum_btc * btc2usd
+
+    paid_sum_btc        = _sum(SUM_PAID_BTC)
+    paid_sum_btc_in_usd = paid_sum_btc * btc2usd
+
+    revoked_sum_btc        =  _sum(SUM_REVOKED_BTC)
+    revoked_sum_btc_in_usd = revoked_sum_btc * btc2usd
+
+    expired_sum_btc        =  _sum(SUM_EXPIRED_BTC)
+    expired_sum_btc_in_usd = expired_sum_btc * btc2usd
+
     return {
         'age': _age(),
         'user_count': UserInfo.objects.count(),
@@ -131,13 +145,17 @@ def get_stats():
         'open_offer_count': _count(COUNT_OFFERS_OPEN),
         'revoked_offer_count': _count(COUNT_OFFERS_REVOKED),
         'paid_sum_usd': _sum(SUM_PAID_USD),
-        'paid_sum_btc': _sum(SUM_PAID_BTC),
+        'paid_sum_btc': paid_sum_btc,
+        'paid_sum_btc_in_usd': paid_sum_btc_in_usd,
         'open_sum_usd': _sum(SUM_OPEN_USD),
-        'open_sum_btc': _sum(SUM_OPEN_BTC),
+        'open_sum_btc': open_sum_btc,
+        'open_sum_btc_in_usd': open_sum_btc_in_usd,
         'expired_sum_usd': _sum(SUM_EXPIRED_USD),
-        'expired_sum_btc': _sum(SUM_EXPIRED_BTC),
+        'expired_sum_btc': expired_sum_btc,
+        'expired_sum_btc_in_usd': expired_sum_btc_in_usd,
         'revoked_sum_usd': _sum(SUM_REVOKED_USD),
-        'revoked_sum_btc': _sum(SUM_REVOKED_BTC),
+        'revoked_sum_btc': revoked_sum_btc,
+        'revoked_sum_btc_in_usd': revoked_sum_btc_in_usd,
         'sponsors': _select(SELECT_SPONSORS),
         'projects': _select(SELECT_SPONSORED_PROJECTS),
     }
