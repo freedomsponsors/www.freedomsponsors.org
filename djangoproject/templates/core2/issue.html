@@ -511,11 +511,11 @@
                     {% if issue.getTotalOffersPriceUSD or issue.getTotalOffersPriceBTC %}
                         <h1 class="orange-text arial">
                             {% if issue.getTotalOffersPriceBTC %}
-                                <span>BTC {{ issue.getTotalOffersPriceBTC|floatformat:-4 }}</span>
+                                <span>BTC {{ issue.getTotalOffersPriceBTC|floatformat:4 }}</span>
                             {% endif %}
 							{% if issue.getTotalOffersPriceUSD and issue.getTotalOffersPriceBTC %}<div class="vgap-5"><!-- Vertical Gap 5px --></div>{% endif %}
 							{% if issue.getTotalOffersPriceUSD %}
-                                <span>US$ {{ issue.getTotalOffersPriceUSD|floatformat:-2 }}</span>
+                                <span>US$ {{ issue.getTotalOffersPriceUSD|floatformat:2 }}</span>
                             {% endif %}
                         </h1>
                         <h4 class="orange-text arial">Offered</h4>
@@ -524,11 +524,11 @@
                     {% if issue.getTotalPaidPriceUSD or issue.getTotalPaidPriceBTC %}
                         <h1 class="arial">
                             {% if issue.getTotalPaidPriceBTC %}
-                                <span>BTC {{ issue.getTotalPaidPriceBTC|floatformat:-4 }}</span>
+                                <span>BTC {{ issue.getTotalPaidPriceBTC|floatformat:4 }}</span>
                             {% endif %}
 							{% if issue.getTotalPaidPriceUSD and issue.getTotalPaidPriceBTC %}<div class="vgap-5"><!-- Vertical Gap 5px --></div>{% endif %}
 							{% if issue.getTotalPaidPriceUSD %}
-                                <span>US$ {{ issue.getTotalPaidPriceUSD|floatformat:-2 }}</span>
+                                <span>US$ {{ issue.getTotalPaidPriceUSD|floatformat:2 }}</span>
                             {% endif %}
                         </h1>
                         <h4 class="arial">Paid</h4>

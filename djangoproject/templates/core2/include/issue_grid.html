@@ -18,7 +18,7 @@
       <th>Title</th>
 
       {% ifequal showOffers "true" %}
-      <th>Offers (US$) <i class="icon-question-sign popopo" rel="popover" data-content="Green means paid. Orange means open." data-original-title="Colors meaning"></i></th>
+      <th>Offers <i class="icon-question-sign popopo" rel="popover" data-content="Green means paid. Orange means open." data-original-title="Colors meaning"></i></th>
       {% endifequal %}
 
       {% ifequal showWorking "true" %}
@@ -60,10 +60,10 @@
       {% ifequal showOffers "true" %}
       <td style="width:140px">
         <div>
-        {% include 'core/include/green_and_orange.html' with vOrange=issue.getTotalOffersPriceUSD vGreen=issue.getTotalPaidPriceUSD currency='US$' %}
+        {% include 'core2/include/green_and_orange.html' with vOrange=issue.getTotalOffersPriceUSD vGreen=issue.getTotalPaidPriceUSD currency='US$' places=2 %}
         </div>
         <div>
-        {% include 'core/include/green_and_orange.html' with vOrange=issue.getTotalOffersPriceBTC vGreen=issue.getTotalPaidPriceBTC currency='BTC' %}
+        {% include 'core2/include/green_and_orange.html' with vOrange=issue.getTotalOffersPriceBTC vGreen=issue.getTotalPaidPriceBTC currency='BTC' places=4 %}
         </div>
       </td>
       {% endifequal %}
