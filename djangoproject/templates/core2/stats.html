@@ -27,12 +27,12 @@
 
   <div>
     <h2> Here's how the offers are distributed among projects </h2>
-    <table class="table table-striped table-condensed" style="max-width: 400px">
+    <table class="table table-striped table-condensed" style="max-width: 460px">
       <tr>
         <th style="text-align:left">Project</th>
         <th style="text-align:right">Issues</th>
         <th style="text-align:right">Offers</th>
-        <th style="text-align:right">Total offered
+        <th style="text-align:right; min-width: 150px">Total offered
         <i class="icon-question-sign popopo" rel="popover" data-content="Green means paid. Orange means open." data-original-title="Colors meaning"></i>
         </th>
       </tr>
@@ -43,10 +43,10 @@
         <td style="text-align:right">{{project.3}}</td>
         <td style="text-align:right">
           <div>
-          {% include 'core2/include/green_and_orange.html' with currency="US$" places=2 vOrange=project.5 vGreen=project.4 %}
+          {% include 'core2/include/green_and_orange.html' with currency="US$" places=-2 vOrange=project.5 vGreen=project.4 %}
           </div>
           <div>
-          {% include 'core2/include/green_and_orange.html' with currency="BTC" places=4 vOrange=project.7 vGreen=project.6 %}
+          {% include 'core2/include/green_and_orange.html' with currency="BTC" places=-4 vOrange=project.7 vGreen=project.6 %}
           </div>
         </td>
       </tr>
@@ -57,11 +57,11 @@
 
   <div>
     <h2> And here's a list of our top sponsors </h2>
-    <table class="table table-striped table-condensed" style="max-width: 400px">
+    <table class="table table-striped table-condensed" style="max-width: 460px">
       <tr>
         <th style="text-align:left">Sponsor</th>
         <th style="text-align:right">Offers</th>
-        <th style="text-align:right">Total offered
+        <th style="text-align:right; min-width: 150px;">Total offered
         <i class="icon-question-sign popopo" rel="popover" data-content="Green means paid. Orange means open." data-original-title="Colors meaning"></i>
       </th>
       </tr>
@@ -71,10 +71,10 @@
         <td>{{sponsor.2}}</td>
         <td style="text-align:right">
           <div>
-          {% include 'core2/include/green_and_orange.html' with currency="US$" places=2 vOrange=sponsor.4 vGreen=sponsor.3 %}
+          {% include 'core2/include/green_and_orange.html' with currency="US$" places=-2 vOrange=sponsor.4 vGreen=sponsor.3 %}
           </div>
           <div>
-          {% include 'core2/include/green_and_orange.html' with currency="BTC" places=4 vOrange=sponsor.6 vGreen=sponsor.5 %}
+          {% include 'core2/include/green_and_orange.html' with currency="BTC" places=-4 vOrange=sponsor.6 vGreen=sponsor.5 %}
           </div>
         </td>
       </tr>

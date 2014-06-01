@@ -1,7 +1,7 @@
 
 {% if vGreen or vOrange %}
 	{{currency}}
-    {% with places=places|default:2 %}
+    {% with places=places|default:-2 %}
         {% if vGreen %}
             {% if vOrange %}
                 <span style="color:#090"><strong>{{vGreen|floatformat:places}}</strong></span> / <span style="color:#c60"><strong>{{vOrange|floatformat:places}}</strong></span>
