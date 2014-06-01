@@ -616,7 +616,7 @@ class Offer(models.Model):
         return _CURRENCY_SYMBOLS[self.currency]
 
     def price_formatted(self):
-        return self.price.quantize(4 if self.currency == 'BTC' else 2)
+        return self.price.quantize(Decimal('0.0001') if self.currency == 'BTC' else Decimal('0.01'))
 
     def set_expiration_days(self, expiration_days):
         if(expiration_days and expiration_days > 0):
