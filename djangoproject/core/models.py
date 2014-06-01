@@ -960,6 +960,11 @@ class PaymentPart(models.Model):
         part.price = Decimal(price)
         return part
 
+    def price_formatted(self):
+        return self.price.quantize(Decimal('0.0001') if self.payment.currency == 'BTC' else Decimal('0.01'))
+
+
+
 
 # A historical log event
 class ActionLog(models.Model):

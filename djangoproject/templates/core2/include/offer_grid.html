@@ -16,7 +16,7 @@
       <td class="fav-td fav-{{ offer.issue.project.name|slugify }}"><a href="{{ offer.issue.project.get_view_link }}">{{ offer.issue.project.name }}</a></td>
       <td><a href="{{ offer.issue.get_view_link }}">{{ offer.issue.key }}</a></td>
       <td><a href="{{ offer.issue.get_view_link }}">{{ offer.issue.title }}</a></td>
-      <td><a href="{{ offer.issue.get_view_link }}">{{offer.get_currency_symbol}} {{offer.price|floatformat:2}}</a></td>
+      <td><a href="{{ offer.issue.get_view_link }}">{{offer.get_currency_symbol}} {{offer.price_formatted}}</a></td>
       <td>{{offer.status}}</td>
       <td><span title="{{ offer.creationDate }}">{{ offer.creationDate|date:"M/d/Y" }}</span></td>
       <td><span title="{{ offer.expirationDate }}">{{ offer.expirationDate|date:"M/d/Y" }}</span></td>
@@ -26,7 +26,7 @@
             <tr>
                 <td colspan="3"> </td>
                 <td colspan="2"><a href="{{part.programmer.get_view_link}}"><img src="{{part.programmer.gravatar_url_small}}"> {{ part.programmer.getUserInfo.screenName }}</a></td>
-                <td colspan="2"><span style="color:#030"><strong>{{ payment.get_currency_symbol }} {{ part.price|floatformat:2 }}</strong></span></td>
+                <td colspan="2"><span style="color:#030"><strong>{{ payment.get_currency_symbol }} {{ part.price_formatted }}</strong></span></td>
             </tr>
         {% endfor %}
     {% endfor %}
