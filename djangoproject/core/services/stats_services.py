@@ -117,18 +117,19 @@ LAUNCH_DATE = datetime(2012, 7, 8)
 
 def get_stats():
     btc2usd = currency_service.get_rate('BTC', 'USD', False)
+    btc2usd_decimal = Decimal(str(btc2usd))
 
     open_sum_btc        = _sum(SUM_OPEN_BTC)
-    open_sum_btc_in_usd = open_sum_btc * btc2usd
+    open_sum_btc_in_usd = open_sum_btc * btc2usd_decimal
 
     paid_sum_btc        = _sum(SUM_PAID_BTC)
-    paid_sum_btc_in_usd = paid_sum_btc * btc2usd
+    paid_sum_btc_in_usd = paid_sum_btc * btc2usd_decimal
 
     revoked_sum_btc        =  _sum(SUM_REVOKED_BTC)
-    revoked_sum_btc_in_usd = revoked_sum_btc * btc2usd
+    revoked_sum_btc_in_usd = revoked_sum_btc * btc2usd_decimal
 
     expired_sum_btc        =  _sum(SUM_EXPIRED_BTC)
-    expired_sum_btc_in_usd = expired_sum_btc * btc2usd
+    expired_sum_btc_in_usd = expired_sum_btc * btc2usd_decimal
 
     return {
         'age': _age(),
