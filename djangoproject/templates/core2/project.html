@@ -81,18 +81,18 @@
                 <div class="column-wrapper">
                     <div class="column">
                         <div class="column-wrapper fs-bargraph bottom-align-content" style="height:100px">
-                            <div class="bar green" style="height:{{ stats.percent_usd_paid }}%" title="US$ {{ stats.usd_paid }} already paid to developers"><!-- US$ Paid GraphBar --></div>
+                            <div class="bar green" style="height:{{ stats.percent_usd_paid }}%" title="US$ {{ stats.usd_paid|floatformat:-2 }} already paid to developers"><!-- US$ Paid GraphBar --></div>
                             <div class="hgap-5 inline"><!-- Horizontal Gap 5px --></div>
-                            <div class="bar" style="height:{{ stats.percent_usd_open }}%" title="US$ {{ stats.usd_open }} being offered to developers on issues"><!-- US$ Open GraphBar --></div>
+                            <div class="bar" style="height:{{ stats.percent_usd_open }}%" title="US$ {{ stats.usd_open|floatformat:-2 }} being offered to developers on issues"><!-- US$ Open GraphBar --></div>
                         </div>
                         <div class="vgap-15"><!-- Vertical Gap 15px --></div>
                         <h4 class="arial text-align-center">US$</h4>
                     </div>
                     <div class="column">
                         <div class="column-wrapper fs-bargraph bottom-align-content" style="height:100px">
-                            <div class="bar green" style="height:{{ stats.percent_btc_paid }}%" title="BTC {{ stats.btc_paid }} already paid to developers"><!-- BTC Paid GraphBar --></div>
+                            <div class="bar green" style="height:{{ stats.percent_btc_paid }}%" title="BTC {{ stats.btc_paid|floatformat:-4 }} already paid to developers"><!-- BTC Paid GraphBar --></div>
                             <div class="hgap-5 inline"><!-- Horizontal Gap 5px --></div>
-                            <div class="bar" style="height:{{ stats.percent_btc_open }}%" title="BTC {{ stats.btc_open }} being offered to developers on issues"><!-- BTC Open GraphBar --></div>
+                            <div class="bar" style="height:{{ stats.percent_btc_open }}%" title="BTC {{ stats.btc_open|floatformat:-4 }} being offered to developers on issues"><!-- BTC Open GraphBar --></div>
                         </div>
                         <div class="vgap-15"><!-- Vertical Gap 15px --></div>
                         <h4 class="arial text-align-center">BTC</h4>
@@ -150,9 +150,9 @@
         <div class="column" style="width:200px;">
             <div class="fs-box border-box">
                 <h4 class="arial">Total Offered</h4>
-                <div><span class="green-text" title="US$ {{ stats.usd_paid }} already paid to developers">US$ {{ stats.usd_paid }}</span> / <span title="US$ {{ stats.total_usd }} offered to developers on issues">{{ stats.total_usd }}</span></div>
+                <div><span class="green-text" title="US$ {{ stats.usd_paid|floatformat:-2 }} already paid to developers">US$ {{ stats.usd_paid|floatformat:-2 }}</span> / <span title="US$ {{ stats.total_usd|floatformat:-2 }} offered to developers on issues">{{ stats.total_usd|floatformat:-2 }}</span></div>
                 <div class="vgap-5"><!-- Vertical Gap 5px --></div>
-                <div><span class="green-text" title="BTC {{ stats.btc_paid }} already paid to developers">BTC {{ stats.btc_paid }}</span> / <span title="BTC {{ stats.total_btc }} being offered to developers on issues">{{ stats.total_btc }}</span></div>
+                <div><span class="green-text" title="BTC {{ stats.btc_paid|floatformat:-4 }} already paid to developers">BTC {{ stats.btc_paid|floatformat:-4 }}</span> / <span title="BTC {{ stats.total_btc|floatformat:-4 }} being offered to developers on issues">{{ stats.total_btc|floatformat:-4 }}</span></div>
                 <div class="vgap-15"><!-- Vertical Gap 15px --></div>
                 <h4 class="arial">Total Issues</h4>
                 <p><span class="green-text" title="{{ stats.issues_done }} issues solved">{{ stats.issues_done }} Solved</span> / <span title="{{ stats.issues_open }} issues open">{{ stats.issues_open }} Open</span></p>
