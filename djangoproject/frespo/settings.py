@@ -5,6 +5,7 @@ from unipath import Path
 import os
 
 ENVIRONMENT = 'NOTDEV'
+SKIPTESTS_TRACKERINTEGRATION = False # Skip tests in tests_trackerintegration
 
 PROJECT_DIR = Path(__file__).parent.parent
 

@@ -1,8 +1,11 @@
 from django.test import TestCase
 from core.utils.trackers_adapter import fetchIssueInfo
+from django.utils.unittest import skipIf
+from django.conf import settings
 
 __author__ = 'tony'
 
+@skipIf(settings.SKIPTESTS_TRACKERINTEGRATION == True, 'Skipped as requested by SKIPTESTS_TRACKERINTEGRATION in settings.py')
 class TrackerUtilsTest(TestCase):
     def test_hibernate_jira(self):
         issueInfo = fetchIssueInfo("https://hibernate.onjira.com/browse/HHH-1050")
