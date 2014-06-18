@@ -67,6 +67,13 @@ If you want to help out, check out our Waffle board below to see what's going on
 * [Running unit tests](http://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/doc/testing.md)
 * [Test coverage report](http://freedomsponsors.github.com/www.freedomsponsors.org/coverage_html_report/)
 
+## Special Thanks
+
+A special thanks goes out to JetBrains for providing the [Open Source license](http://www.jetbrains.com/pycharm/buy/buy.jsp#openSource) for its awesome Pycharm IDE, which is heavily used for the development of FreedomSponsors.
+
+<a href="http://www.jetbrains.com/"><img src="http://www.jetbrains.com/img/logos/logo_JB_tagline.png" width="120"></a> + 
+<a href="http://www.jetbrains.com/pycharm/"><img src="http://www.jetbrains.com/img/logos/pycharm_logo.gif" width="120"></a>
+
 ## Licensing
 
 This software is licensed under the [AFFERO GENERAL PUBLIC LICENSE](http://www.gnu.org/licenses/agpl-3.0.html)
