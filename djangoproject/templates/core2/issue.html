@@ -215,6 +215,17 @@
 
 
         }
+
+        function activaTab(tab){
+            $('a[href="' + tab + '"]').trigger('click');
+        };
+
+        $(document).ready(function(){
+            var h = document.location.hash;
+            if(h) {
+                activaTab(h);
+            }
+        });
     </script>
 {% endblock %}
 
