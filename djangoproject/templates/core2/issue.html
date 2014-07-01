@@ -221,6 +221,10 @@
         };
 
         $(document).ready(function(){
+            $('a[data-toggle]').click(function (e) {
+              window.location.hash = e.target.hash;
+            });
+
             var h = document.location.hash;
             if(h) {
                 activaTab(h);
