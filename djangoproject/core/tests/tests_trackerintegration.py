@@ -31,7 +31,7 @@ class TrackerUtilsTest(TestCase):
         assert(issueInfo.tracker == 'JIRA')
         assert(issueInfo.key == 'MNG-5121')
         assert(issueInfo.project_trackerURL == 'http://jira.codehaus.org/browse/MNG')
-        assert(issueInfo.project_name == 'Maven 2 & 3')
+        assert(issueInfo.project_name == 'Maven')
         assert(issueInfo.issue_title == 'maven seems to lose transitive dependencies from the list of compilation dependencies')
 
     def test_easymock_jira(self):
