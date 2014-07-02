@@ -154,24 +154,47 @@ def is_registration_complete(self):
 
 def getStats(self):
     stats = {'sponsoredOpenCount' : 0,
-        'sponsoredOpenPrice' : Decimal(0),
+        'sponsoredOpenPriceUSD' : Decimal(0),
+        'sponsoredOpenPriceBTC' : Decimal(0),
+        'sponsoredOpenPriceBTC_inUSD' : Decimal(0),
         'sponsoredRevokedCount' : 0,
-        'sponsoredRevokedPrice' : Decimal(0),
+        'sponsoredRevokedPriceUSD' : Decimal(0),
+        'sponsoredRevokedPriceBTC' : Decimal(0),
+        'sponsoredRevokedPriceBTC_inUSD' : Decimal(0),
         'sponsoredPaidCount' : 0,
-        'sponsoredPaidPrice' : Decimal(0),
+        'sponsoredPaidPriceUSD' : Decimal(0),
+        'sponsoredPaidPriceBTC' : Decimal(0),
+        'sponsoredPaidPriceBTC_inUSD' : Decimal(0),
         'workingInProgressCount' : 0,
         'workingAbortedCount' : 0,
         'workingDoneCount' : 0}
     for offer in self.getOffers():
+        assert offer.currency in ('USD','BTC')
         if(offer.status == Offer.OPEN):
             stats['sponsoredOpenCount'] += 1
-            stats['sponsoredOpenPrice'] += offer.price
+            if offer.currency == 'USD':
+                stats['sponsoredOpenPriceUSD'] += offer.price
+            elif offer.currency == 'BTC':
+                stats['sponsoredOpenPriceBTC'] += offer.price
         elif(offer.status == Offer.REVOKED):
             stats['sponsoredRevokedCount'] += 1
-            stats['sponsoredRevokedPrice'] += offer.price
+            if offer.currency == 'USD':
+                stats['sponsoredRevokedPriceUSD'] += offer.price
+            elif offer.currency == 'BTC':
+                stats['sponsoredRevokedPriceBTC'] += offer.price
         elif(offer.status == Offer.PAID):
             stats['sponsoredPaidCount'] += 1
-            stats['sponsoredPaidPrice'] += offer.price
+            if offer.currency == 'USD':
+                stats['sponsoredPaidPriceUSD'] += offer.price
+            elif offer.currency == 'BTC':
+                stats['sponsoredPaidPriceBTC'] += offer.price
+
+    btc2usd = currency_service.get_rate('BTC', 'USD', False)
+    btc2usd_decimal = Decimal(str(btc2usd))
+    stats['sponsoredOpenPriceBTC_inUSD']    = stats['sponsoredOpenPriceBTC']    * btc2usd_decimal
+    stats['sponsoredRevokedPriceBTC_inUSD'] = stats['sponsoredRevokedPriceBTC'] * btc2usd_decimal
+    stats['sponsoredPaidPriceBTC_inUSD']    = stats['sponsoredPaidPriceBTC']    * btc2usd_decimal
+
     for solution in self.getSolutions():
         if(solution.status == Solution.IN_PROGRESS):
             stats['workingInProgressCount'] += 1
