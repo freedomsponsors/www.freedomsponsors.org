@@ -12,6 +12,8 @@ PROJECT_DIR = Path(__file__).parent.parent
 FS_FEE = Decimal('0.03')
 BITCOIN_FEE = Decimal('0.0002')
 
+FETCH_ISSUE_TIMEOUT = 5.0
+
 DEBUG = False
 FRESPO_PROJECT_ID = -1 # only needed for backwards compatibility with south patch 0008_set_isfeedback_true.py
 ADMINS = (

@@ -5,6 +5,7 @@ from xml.dom.minidom import parseString
 import json
 from core.services.mail_services import notify_admin
 from django.conf import settings
+import socket
 
 class IssueInfo(object):
 
@@ -47,7 +48,7 @@ def retriveJIRAInfo(url):
     path_before_jira_key = parsedURL.path.split('/'+jira_key)[0]
     project_abbrev = get_jira_project_abbrev(jira_key)
     xmlviewURL = parsedURL.scheme+'://'+parsedURL.netloc+get_jira_xml_view(parsedURL.path)
-    h = httplib2.Http(disable_ssl_certificate_validation=True)
+    h = httplib2.Http(disable_ssl_certificate_validation=True, timeout=settings.FETCH_ISSUE_TIMEOUT)
     try: 
         resp, content = h.request(xmlviewURL)
         info.key = jira_key
@@ -65,7 +66,7 @@ def retriveJIRAInfo(url):
                 info.error = 'Could not parse XML view from: '+xmlviewURL
         else:
             info.error = ('status %s: '%resp.status)+xmlviewURL
-    except httplib2.HttpLib2Error as e:
+    except (httplib2.HttpLib2Error, socket.timeout) as e:
         info.error = e.message
     return info
             
@@ -109,7 +110,7 @@ def retriveGithubInfo(url):
     info.project_trackerURL = parsedURL.scheme+'://'+parsedURL.netloc+'/'+pathTokens[1]+'/'+pathTokens[2]+'/'+pathTokens[3]
     auth = 'client_id=%s&client_secret=%s' % (settings.GITHUB_APP_ID, settings.GITHUB_API_SECRET)
     issueJsonURL = 'https://api.github.com/repos' + parsedURL.path + '?' + auth
-    h = httplib2.Http(disable_ssl_certificate_validation=True)
+    h = httplib2.Http(disable_ssl_certificate_validation=True, timeout=settings.FETCH_ISSUE_TIMEOUT)
     try: 
         resp, content = h.request(issueJsonURL)
         if resp.status == 200:
@@ -121,7 +122,7 @@ def retriveGithubInfo(url):
                 info.error = 'Could not parse JSON view from: '+issueJsonURL
         else:
             info.error = ('status %s: '%resp.status)+issueJsonURL
-    except httplib2.HttpLib2Error as e:
+    except (httplib2.HttpLib2Error, socket.timeout) as e:
         info.error = e.message
     return info
 
@@ -147,7 +148,7 @@ def retriveBugzillaInfo(url):
     info.tracker = 'BUGZILLA'
     pathBeforeShowBug=parsedURL.path.split('show_bug.cgi')[0]
     bugJsonURL = parsedURL.scheme+'://'+parsedURL.netloc+pathBeforeShowBug+'jsonrpc.cgi?method=Bug.get&params=[{"ids":['+info.key+']}]'
-    h = httplib2.Http(disable_ssl_certificate_validation=True)
+    h = httplib2.Http(disable_ssl_certificate_validation=True, timeout=settings.FETCH_ISSUE_TIMEOUT)
     try: 
         resp, content = h.request(bugJsonURL)
         if resp.status == 200:
@@ -162,7 +163,7 @@ def retriveBugzillaInfo(url):
         elif resp.status == 404:
             pass
         return info
-    except httplib2.HttpLib2Error as e:
+    except (httplib2.HttpLib2Error, socket.timeout) as e:
         info.error = e.message
         return info
 
@@ -187,7 +188,7 @@ def retrieveBitBucketInfo(url):
     info.project_name = _project_name
     info.project_trackerURL = parsedURL.scheme+'://'+parsedURL.netloc+'/'+_username+'/'+_project_name + '/issues'
     issueJsonURL = 'https://api.bitbucket.org/1.0/repositories/' + _username + '/' + _project_name + '/issues/' + pathTokens[4]
-    h = httplib2.Http(disable_ssl_certificate_validation=True)
+    h = httplib2.Http(disable_ssl_certificate_validation=True, timeout=settings.FETCH_ISSUE_TIMEOUT)
     try: 
         resp, content = h.request(issueJsonURL)
         if resp.status == 200:
@@ -199,7 +200,7 @@ def retrieveBitBucketInfo(url):
                 info.error = 'Could not parse JSon view from: '+issueJsonURL
         else:
             info.error = ('status %s: '%resp.status)+issueJsonURL
-    except httplib2.HttpLib2Error as e:
+    except (httplib2.HttpLib2Error, socket.timeout) as e:
         info.error = e.message
     return info
 
@@ -220,7 +221,7 @@ def retrieveGoogleCodeInfo(url):
     info.project_trackerURL = info.project_trackerURL = parsedURL.scheme+'://'+parsedURL.netloc+'/p/'+info.project_name+'/issues/list'
     issueUrl = 'https://code.google.com/feeds/issues/p/' + info.project_name + '/issues/full?id=' + info.key
 
-    h = httplib2.Http(disable_ssl_certificate_validation=True)
+    h = httplib2.Http(disable_ssl_certificate_validation=True, timeout=settings.FETCH_ISSUE_TIMEOUT)
     try: 
         resp, content = h.request(issueUrl)
         if resp.status == 200:
@@ -233,7 +234,7 @@ def retrieveGoogleCodeInfo(url):
                 info.error = 'Could not parse XML from: '+issueUrl
         else:
             info.error = ('status %s: '%resp.status)+issueUrl
-    except httplib2.HttpLib2Error as e:
+    except (httplib2.HttpLib2Error, socket.timeout) as e:
         info.error = e.message
     return info
             
