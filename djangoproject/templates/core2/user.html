@@ -99,19 +99,19 @@
 							<td>
 								{{stats.sponsoredOpenCount}}
 								{% if stats.sponsoredOpenCount %}
-							 		/ US$ {{stats.sponsoredOpenPrice|floatformat:2}}
+							 		/ US$ {{stats.sponsoredOpenPriceUSD|floatformat:2}} + <span title="BTC {{stats.sponsoredOpenPriceBTC|floatformat:4}} = US$ {{stats.sponsoredOpenPriceBTC_inUSD|floatformat:2}}">BTC {{stats.sponsoredOpenPriceBTC|floatformat:4}}*</span>
 							 	{% endif %}
 							</td>
 							<td>
 								{{stats.sponsoredRevokedCount}}
 								{% if stats.sponsoredRevokedCount %}
-									/ US$ {{stats.sponsoredRevokedPrice|floatformat:2}}
+									/ US$ {{stats.sponsoredRevokedPriceUSD|floatformat:2}} + <span title="BTC {{stats.sponsoredRevokedPriceBTC|floatformat:4}} = US$ {{stats.sponsoredRevokedPriceBTC_inUSD|floatformat:4}}">BTC {{stats.sponsoredRevokedPriceBTC|floatformat:4}}*</span>
 								{% endif %}
 							</td>
 							<td>
 								{{stats.sponsoredPaidCount}}
 								{% if stats.sponsoredPaidCount %}
-									/ US$ {{stats.sponsoredPaidPrice|floatformat:2}}
+									/ US$ {{stats.sponsoredPaidPriceUSD|floatformat:2}} + <span title="BTC {{stats.sponsoredPaidPriceBTC|floatformat:4}} = US$ {{stats.sponsoredPaidPriceBTC_inUSD|floatformat:2}}">BTC {{stats.sponsoredPaidPriceBTC|floatformat:4}}*</span>
 								{% endif %}
 							</td>
 						</tr>
