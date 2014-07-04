@@ -20,7 +20,6 @@ urlpatterns = patterns('core.views.main_views',
 
 urlpatterns += patterns('core.views.issue_views',
     url(r'^myissues/$', 'myissues'),
-    url(r'^issue/$', 'listIssues'),
     url(r'^issue/rss$', 'listIssuesFeed'),
     url(r'^issue/sponsor/submit$', 'sponsorIssue'),
     url(r'^issue/sponsor$', 'addIssueForm'),
