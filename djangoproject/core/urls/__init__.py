@@ -41,6 +41,11 @@ urlpatterns += patterns('core.views.issue_views',
 )
 
 urlpatterns += patterns('',
+    url(r'^issue/$', RedirectView.as_view(url='/search/', permanent=True, query_string=True)),
+)
+
+
+urlpatterns += patterns('',
     url(r'^project/$', RedirectView.as_view(url='/project/', permanent=True)),
     url(r'^project/(?P<project_id>\d+)/$', RedirectView.as_view(url='/project/%(project_id)s/', permanent=True)),
     url(r'^project/(?P<project_id>\d+)/edit$', RedirectView.as_view(url='/project/%(project_id)s/edit', permanent=True)),
