@@ -230,7 +230,7 @@ def viewIssue(request, issue_id):
     except:
         return HttpResponse(status=404, content='Issue not found')
     if issue.get_view_link() != request.path:
-        return redirect(issue.get_view_link())  # only allow one URL per issue
+        return redirect(issue.get_view_link(), permanent=True)  # only allow one URL per issue
     myoffer = None
     mysolution = None
     show_alert = None
