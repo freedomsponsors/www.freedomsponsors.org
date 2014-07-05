@@ -20,17 +20,8 @@ urlpatterns = patterns('core.views.main_views',
 
 urlpatterns += patterns('core.views.issue_views',
     url(r'^myissues/$', 'myissues'),
-    url(r'^issue/rss$', 'listIssuesFeed'),
-    url(r'^issue/sponsor/submit$', 'sponsorIssue'),
-    url(r'^issue/sponsor$', 'addIssueForm'),
-    url(r'^issue/add/submit$', 'addIssue'),
-    url(r'^issue/kickstart/submit$', 'kickstartIssue'),
-    url(r'^issue/add/$', 'addIssueForm'),
-    url(r'^issue/edit/submit$', 'editIssue'),
     url(r'^offer/(?P<offer_id>\d+)/pay$', 'payOfferForm'),
     url(r'^offer/pay/submit$', 'payOffer'),
-    url(r'^issue/(?P<issue_id>\d+)/$', 'viewIssue'),
-    url(r'^issue/(?P<issue_id>\d+)/.*$', 'viewIssue'),
     # url(r'^offer/(?P<offer_id>\d+)/$', 'viewOffer'),
     # url(r'^offer/(?P<offer_id>\d+)/.*$', 'viewOffer'),
     url(r'^offer/revoke/submit$', 'revokeOffer'),
@@ -40,10 +31,11 @@ urlpatterns += patterns('core.views.issue_views',
     url(r'^solution/resolve/submit$', 'resolveSolution'),
 )
 
+# below url redirections ensure existing/external links to /core/issue/* urls still work
 urlpatterns += patterns('',
-    url(r'^issue/$', RedirectView.as_view(url='/search/', permanent=True, query_string=True)),
+    url(r'^issue/$',              RedirectView.as_view(url='/search/',        permanent=True, query_string=True)),
+    url(r'^issue/(?P<temp>.*)$',  RedirectView.as_view(url='/issue/%(temp)s', permanent=True, query_string=True)),
 )
-
 
 urlpatterns += patterns('',
     url(r'^project/$', RedirectView.as_view(url='/project/', permanent=True)),
@@ -52,9 +44,6 @@ urlpatterns += patterns('',
 )
 
 urlpatterns += patterns('core.views.comment_views',
-    url(r'^issue/comment/add/submit$', 'addIssueComment'),
-    url(r'^issue/comment/edit/submit$', 'editIssueComment'),
-    url(r'^issue/comment/(?P<comment_id>\d+)/history$', 'viewIssueCommentHistory'),
     url(r'^offer/comment/(?P<comment_id>\d+)/history$', 'viewOfferCommentHistory'),
 )
 

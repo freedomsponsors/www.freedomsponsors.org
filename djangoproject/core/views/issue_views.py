@@ -146,7 +146,7 @@ def listIssuesFeed(request):
 
 class LatestIssuesFeed(Feed):
     title = "FreedomSponsors.org issues"
-    link = "/core/issue/rss"
+    link = "/issue/rss"
     description = "Lastest updated FreedomSponsors.org issues."
 
     def get_object(self, request, *args, **kwargs):

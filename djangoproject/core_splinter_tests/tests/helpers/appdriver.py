@@ -107,7 +107,7 @@ class AppDriver:
 
     def sponsor_issue_from_plugin(self, trackerURL, offer_dict):
         browser = self.browser
-        browser.visit(self.home_url+'/core/issue/sponsor?trackerURL='+trackerURL)
+        browser.visit(self.home_url+'/issue/sponsor?trackerURL='+trackerURL)
         offer = Struct(**offer_dict)
         browser.find_by_id('btnNext1').click()
         if(offer_dict.has_key('step2')):
@@ -132,7 +132,7 @@ class AppDriver:
         browser = self.browser
         offer = Struct(**offer_dict)
 
-        browser.click_link_by_href('/core/issue/add')
+        browser.click_link_by_href('/issue/add')
         if(offer_dict.has_key('step1')):
             step1 = Struct(**offer.step1)
             if(offer.step1.has_key('trackerURL')):

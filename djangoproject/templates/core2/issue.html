@@ -140,7 +140,7 @@
                 $scope.actionmodal.action = 'SPONSOR';
                 $scope.actionmodal.validate_and_submit = validate_submit_sponsor;
                 $scope.actionmodal.title = 'Sponsor issue';
-                $scope.actionmodal.formaction = '/core/issue/sponsor/submit';
+                $scope.actionmodal.formaction = '/issue/sponsor/submit';
                 $scope.actionmodal.buttonlabel = 'Sponsor!';
                 $scope.actionmodal.commentplaceholder = "Please put some thought into this one - it's a big help for the programmer who will work on this. What is your definition of 'done' for this task? Not just 'done', but 'so-done-that-I'm-willing-to-pay-for-it-done' :-)";
                 $('#action_modal').modal()
@@ -285,7 +285,7 @@
                     </div>
                     {% if issue.createdByUser.id == user.id %}
                         <div id="div_description_w" style="display: none">
-                            <form method="post" class="well form-horizontal" action="/core/issue/edit/submit" enctype="multipart/form-data">
+                            <form method="post" class="well form-horizontal" action="/issue/edit/submit" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <input type="hidden" name="issue_id" value="{{issue.id}}">
                                 <text-with-markdown-preview model="description" nameid="description"></text-with-markdown-preview>
@@ -320,7 +320,7 @@
                             <div class="hgap-15"><!-- Horizontal Gap 15px --></div>
                             <div class="fs-box column fit">
                                 <p>Leave your comment.</p>
-                                <form id="add_comment" action="/core/issue/comment/add/submit" method="post">
+                                <form id="add_comment" action="/issue/comment/add/submit" method="post">
                                     {% csrf_token %}
                                     <input type="hidden" id="issue_id" name="issue_id" value="{{issue.id}}">
 
@@ -582,11 +582,11 @@
             <!-- Share Buttons -->
             <h3 class="text-align-right">Help fund this issue. Share on:</h3>
             <div class="text-align-right">
-                <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.freedomsponsors.org/core/issue/{{ issue.id }}" class="social-button facebook"></a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.freedomsponsors.org/issue/{{ issue.id }}" class="social-button facebook"></a>
                 <div class="hgap-5 inline"><!-- Horizontal Gap 5px --></div>
-                <a href="https://twitter.com/intent/tweet?url=http://www.freedomsponsors.org/core/issue/{{ issue.id }}&text=US$ {{ issue.getTotalOffersPriceUSD }} bounty on FreedomSponsors: {{ issue.title }}" class="social-button twitter"></a>
+                <a href="https://twitter.com/intent/tweet?url=http://www.freedomsponsors.org/issue/{{ issue.id }}&text=US$ {{ issue.getTotalOffersPriceUSD }} bounty on FreedomSponsors: {{ issue.title }}" class="social-button twitter"></a>
                 <div class="hgap-5 inline"><!-- Horizontal Gap 5px --></div>
-                <a href="https://plus.google.com/share?url=http%3A%2F%2Fwww.freedomsponsors.org/core/issue/{{ issue.id }}" class="social-button google"></a>
+                <a href="https://plus.google.com/share?url=http%3A%2F%2Fwww.freedomsponsors.org/issue/{{ issue.id }}" class="social-button google"></a>
             </div>
 
         </div>

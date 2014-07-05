@@ -481,7 +481,7 @@ class Issue(models.Model):
         return IssueComment.objects.filter(issue=self).order_by('creationDate')
 
     def get_view_link(self):
-        return '/core/issue/%s'%self.id+'/'+urlquote(slugify(self.title))
+        return '/issue/%s'%self.id+'/'+urlquote(slugify(self.title))
 
     def get_card_image(self):
         if self.logo:
