@@ -184,7 +184,7 @@
           <div class="span2"></div>
           <div class="span8">
             {% for comment in issue.getComments %}
-              {% include 'core/include/comment.html' with counter=forloop.counter formaction='/core/issue/comment/edit/submit' %}
+              {% include 'core/include/comment.html' with counter=forloop.counter formaction='/issue/comment/edit/submit' %}
             {% endfor %}
           </div>
           <div class="span2"></div>
@@ -193,7 +193,7 @@
             function loadCommentHistory(comment_id){
                 $("body").addClass("loading");
                 $.ajax({
-                    url: '/core/issue/comment/'+comment_id+'/history',
+                    url: '/issue/comment/'+comment_id+'/history',
                     dataType: 'HTML',
                     async: true,
                     success: function(data){
@@ -230,7 +230,7 @@
     </div>
 
     {% if user.is_authenticated %}
-      <form method="post" class="well form-horizontal" style="margin:20px" action="/core/issue/comment/add/submit">
+      <form method="post" class="well form-horizontal" style="margin:20px" action="/issue/comment/add/submit">
       {% csrf_token %}
         <fieldset>
 

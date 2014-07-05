@@ -25,7 +25,7 @@ class TestMailNotifications(unittest.TestCase):
         client2.login(username=user2.username, password='xyz456')
 
         email_asserts.clear_sent()
-        response = client2.post('/core/issue/comment/add/submit', {'issue_id': str(issue.id), 'content': 'Im adding a comment'})
+        response = client2.post('/issue/comment/add/submit', {'issue_id': str(issue.id), 'content': 'Im adding a comment'})
         self.assertEqual(response.status_code, 302)
 
         email_asserts.assert_sent_count(self, 1)
@@ -45,7 +45,7 @@ class TestMailNotifications(unittest.TestCase):
         client2.login(username=user2.username, password='xyz456')
 
         email_asserts.clear_sent()
-        response = client2.post('/core/issue/sponsor/submit',
+        response = client2.post('/issue/sponsor/submit',
             {'issue_id': str(issue.id),
              'price': '20.00',
              'currency': 'USD',
@@ -93,7 +93,7 @@ class TestMailNotifications(unittest.TestCase):
              'comment':''})
         self.assertEqual(response.status_code, 302)
         issue_id = response.get('location').split('/')[-2]
-        response = client2.get('/core/issue/%s/blah'%issue_id)
+        response = client2.get('/issue/%s/blah'%issue_id)
         solution_id = str(response.context['mysolution'].id)
 
         email_asserts.assert_sent_count(self, 1)
@@ -116,7 +116,7 @@ class TestMailNotifications(unittest.TestCase):
              'comment':''})
         self.assertEqual(response.status_code, 302)
         issue_id = response.get('location').split('/')[-2]
-        response = client2.get('/core/issue/%s/blah'%issue_id)
+        response = client2.get('/issue/%s/blah'%issue_id)
         solution_id2 = str(response.context['mysolution'].id)
         self.assertEqual(solution_id, solution_id2)
 

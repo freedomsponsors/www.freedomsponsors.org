@@ -35,7 +35,7 @@
 </div>
 {% ifequal comment.author.id user.id %}
     <div id="div_comment_w_{{ comment.id }}" style="display: none">
-        <form method="post" class="well form-horizontal" action="/core/issue/comment/edit/submit">
+        <form method="post" class="well form-horizontal" action="/issue/comment/edit/submit">
             {% csrf_token %}
             <input type="hidden" name="comment_id" value="{{comment.id}}">
             <text-with-markdown-preview model="comment_{{ comment.id }}" nameid="content"></text-with-markdown-preview>

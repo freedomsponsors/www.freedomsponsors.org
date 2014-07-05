@@ -31,7 +31,7 @@
 </div>
 
 
-<form method="post" id="form_addIssue" class="form-horizontal" action="/core/issue/add/submit">
+<form method="post" id="form_addIssue" class="form-horizontal" action="/issue/add/submit">
 {% csrf_token %}
   <fieldset>
 
@@ -409,9 +409,9 @@
         setVisibleHiding($('#no_forking_label'), !avulsa);
         setVisibleHiding($('#require_release_label'), !avulsa);
         if (kickstarting){
-          _form_addIssue.action = '/core/issue/kickstart/submit';
+          _form_addIssue.action = '/issue/kickstart/submit';
         } else {
-          _form_addIssue.action = '/core/issue/add/submit';
+          _form_addIssue.action = '/issue/add/submit';
         }
         setVisibleHiding($btnSubmitOffer, !kickstarting);
         setVisibleHiding($div_offer_form_fields, !kickstarting);
@@ -650,7 +650,7 @@
 
 
 function vaiPraIssue(){
-  window.location = '/core/issue/'+stage.existing_issue_id;
+  window.location = '/issue/'+stage.existing_issue_id;
 }
 
 </script>

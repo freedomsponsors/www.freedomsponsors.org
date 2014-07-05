@@ -93,7 +93,7 @@ def add_sponsorthis_comments():
 def _add_comment_if_not_already(repo_config, issue_number, repo_owner, repo_name):
     issue_already_commented = get_issue_already_commented(repo_config.repo, issue_number)
     if not issue_already_commented:
-        body = u"""Do you care about this issue? To get it fixed quickly, [offer a cash incentive to developers on FreedomSponsors.org](%s/core/issue/sponsor?trackerURL=https://github.com/%s/%s/issues/%s).
+        body = u"""Do you care about this issue? To get it fixed quickly, [offer a cash incentive to developers on FreedomSponsors.org](%s/issue/sponsor?trackerURL=https://github.com/%s/%s/issues/%s).
 If you can only give US$5, offering just that will invite other people to do the same. Sharing the cost will soon add up!""" % (settings.SITE_HOME, repo_owner, repo_name, issue_number)
         github_adapter.bot_comment(repo_owner, repo_name, issue_number, body)
         issue_already_commented = IssueAlreadyCommented.newIssueAlreadyCommented(repo_config.repo, issue_number)

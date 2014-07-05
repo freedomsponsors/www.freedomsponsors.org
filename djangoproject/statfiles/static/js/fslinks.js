@@ -26,7 +26,7 @@ var fsapi_mod = angular.module('fslinks', []);
 fsapi_mod.factory('FSLinks', function(){
 
     function issue_link(issue){
-        return "/core/issue/" + issue.id
+        return "/issue/" + issue.id
     }
 
     return {

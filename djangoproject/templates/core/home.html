@@ -31,7 +31,7 @@
 
     <!-- miniform sponsor/kickstart -->
     <div style="margin-top:30px;">
-      <form class="well form-inline" id="the_form" method="GET" action="/core/issue/add" style="width:600px;margin: 0 auto;">
+      <form class="well form-inline" id="the_form" method="GET" action="/issue/add" style="width:600px;margin: 0 auto;">
         <legend>{% trans "Sponsor/Propose a new issue" %}</legend>
         <label>{% trans "Issue URL" %}</label>
         <input type="text" name="trackerURL" id="trackerURL" class="input-xlarge" placeholder="{% trans 'Paste the issue URL' %}">
@@ -133,7 +133,7 @@
                   
                 </tbody></table>
                 <div class="">
-                  <a href="/core/issue?operation=SPONSOR">{% trans "More..." %}</a>
+                  <a href="/issue?operation=SPONSOR">{% trans "More..." %}</a>
                 </div>
               </div>
               <div class="tab-pane fade" id="kickstarting">
@@ -146,7 +146,7 @@
                   {% endfor %}
                 </tbody></table>
                 <div class="">
-                  <a href="/core/issue?operation=KICKSTART">{% trans "More..." %}</a>
+                  <a href="/issue?operation=KICKSTART">{% trans "More..." %}</a>
                 </div>
               </div>
             </div>
