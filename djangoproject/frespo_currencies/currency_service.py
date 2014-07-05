@@ -13,6 +13,7 @@ __author__ = 'tony'
 def get_rate(fron, to, for_payment=True):
     if fron == to:
         return 1
+
     rates = _get_rates()
     if fron == 'USD':
         if to == 'BRL':
@@ -83,7 +84,7 @@ def _get_oer_data(rates):
           "rates": {
             "BRL": 2.38329,
             "BTC": 0.0013829378,
-            "USD": 1,
+            "USD": 1
           }
         }"""
     else:
