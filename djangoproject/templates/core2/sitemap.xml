@@ -4,7 +4,7 @@
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>{{SITE_HOME}}/core/issue</loc>
+        <loc>{{SITE_HOME}}/search</loc>
         <priority>1.0</priority>
     </url>
     <url>
