@@ -205,6 +205,7 @@ def to_card_dict(issues):
                'status': issue.get_status(),
                'sponsor_status': 'PROPOSED' if issue.is_public_suggestion else 'SPONSORED',
                'project_link': '#',
+               'issue_link': issue.get_view_link(),
                'description': strip_markdown(issue.description),
                'totalPaidPriceUSD': str(issue.getTotalPaidPriceUSD()),
                'totalPaidPriceBTC': str(issue.getTotalPaidPriceBTC()),
