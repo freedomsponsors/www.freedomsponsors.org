@@ -17,7 +17,7 @@ urlpatterns = patterns('core.views.main_views',
 )
 
 # ensure /core/login, /core/logout still work
-urlpatterns = patterns('',
+urlpatterns += patterns('',
     url(r'^login/$',   RedirectView.as_view(url='/login/',    permanent=True, query_string=True)),
     url(r'^logout/$',  RedirectView.as_view(url='/logout/',   permanent=True, query_string=True)),
 )
