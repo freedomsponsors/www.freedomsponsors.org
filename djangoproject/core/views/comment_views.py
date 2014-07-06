@@ -39,18 +39,20 @@ def editOfferComment(request):
     comment = comment_services.edit_comment_of_offer(comment_id, comment_content, request.user)
     return redirect(comment.offer.get_view_link())
 
+
 def viewIssueCommentHistory(request, comment_id):
     comment = IssueComment.objects.get(pk = comment_id)
     comment_events = IssueCommentHistEvent.objects.filter(comment__id = comment_id).order_by("eventDate")
-    return render_to_response('core/comment_history.html',
+    return render_to_response('core2/comment_history.html',
         {'comment':comment,
          'comment_events':comment_events,},
         context_instance = RequestContext(request))
 
+
 def viewOfferCommentHistory(request, comment_id):
     comment = OfferComment.objects.get(pk = comment_id)
     comment_events = OfferCommentHistEvent.objects.filter(comment__id = comment_id).order_by("eventDate")
-    return render_to_response('core/comment_history.html',
+    return render_to_response('core2/comment_history.html',
         {'comment':comment,
          'comment_events':comment_events,},
         context_instance = RequestContext(request))

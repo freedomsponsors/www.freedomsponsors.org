@@ -1,0 +1,41 @@
+{% extends "core2/base_old.html" %}
+{% load i18n %}
+
+
+{% block mainContent%}
+
+    <p>All Javascript code used in this website is Free Software.<br>
+    The table below displays script files, their sources and licenses, where it's not available in the script files themselves.</br>
+    If you find any broken links, please report it to tonylampada@gmail.com</p>
+
+    <table class="table table-striped table-condensed" id="jslicense-labels1">
+        <tr>
+            <th> Script </th>
+            <th> License </th>
+            <th> Source </th>
+        </tr>
+        <tr>
+            <td> <a href="/static/bootstrap/js/bootstrap.min.js">bootstrap.min.js</a> </td>
+            <td> <a href="http://www.apache.org/licenses/LICENSE-2.0.txt">Apache 2.0</a> </td>
+            <td> <a href="/static/bootstrap/js/bootstrap.js">Bootstrap 2.0.4</a> </td>
+        </tr>
+        <tr>
+            <td> <a href="/static/bootstrap/js/jquery.maskedinput-1.3.min.js">jquery.maskedinput-1.3.min.js</a> </td>
+            <td> <a href="http://digitalbush.com/projects/masked-input-plugin/#license">Copyright (c) 2007-2013 Josh Bush (digitalbush.com)</a> </td>
+            <td> <a href="https://raw.github.com/digitalBush/jquery.maskedinput/1.3.1/dist/jquery.maskedinput.js">JQuery MaskedInput 1.3</a> </td>
+        </tr>
+        <tr>
+            <td> <a href="/static/bootstrap/js/jquery.min.js">jquery.min.js</a> </td>
+            <td> <a href="https://jquery.org/license/">MIT</a> </td>
+            <td> <a href="/static/bootstrap/js/jquery.min.js">JQuery 1.7.1</a> </td>
+        </tr>
+        <tr>
+            <td> <a href="/static/js/angular.min.js">angular.min.js</a> </td>
+            <td> <a href="https://github.com/angular/angular.js/blob/master/LICENSE">MIT</a> </td>
+            <td> <a href="http://code.angularjs.org/1.1.5/angular.js">AngularJS 1.1.5</a> </td>
+        </tr>
+    </table>
+
+    For a quick browse over all static files (javascript/css), <a href="https://github.com/freedomsponsors/www.freedomsponsors.org/tree/master/djangoproject/core/static">see them on Github</a>.
+
+{% endblock mainContent%}

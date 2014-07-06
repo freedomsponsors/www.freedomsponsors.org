@@ -10,7 +10,7 @@ urlpatterns = []
 if 'core' in settings.INSTALLED_APPS:
     from core.forms import RegistrationForm
     urlpatterns += patterns('',
-        # url(r'^.*$', direct_to_template, {'template': 'core/maintainance.html'}),
+        # url(r'^.*$', direct_to_template, {'template': 'core2/maintainance.html'}),
         url(r'^$', 'core.views.main_views.home', name='home'),
         url(r'^404$', direct_to_template, {'template': '404.html'}),
         url(r'^faq$', direct_to_template, {'template': 'core2/faq.html'}),
