@@ -6,7 +6,7 @@
     {% if user.is_authenticated %}
         <a href ng-click="sponsor()" class="fs-button green">Sponsor this issue</a>
     {% else %}
-        <a href="/core/login/?next={{issue.get_view_link}}" class="fs-button green">Sponsor this issue</a>
+        <a href="/login/?next={{issue.get_view_link}}" class="fs-button green">Sponsor this issue</a>
     {% endif %}
 {% endif %}
 {% if actionbar.pay %}
@@ -22,14 +22,14 @@
     {% if user.is_authenticated %}
         <a href ng-click="work()" class="fs-button blue">Work on this issue</a>
     {% else %}
-        <a href="/core/login/?next={{issue.get_view_link}}" class="fs-button blue">Work on this issue</a>
+        <a href="/login/?next={{issue.get_view_link}}" class="fs-button blue">Work on this issue</a>
     {% endif %}
 {% endif %}
 {% if actionbar.resolve %}
     {% if user.is_authenticated %}
         <a href ng-click="resolve()" class="fs-button blue">Resolve issue</a>
     {% else %}
-        <a href="/core/login/?next={{issue.get_view_link}}" class="fs-button blue">Resolve issue</a>
+        <a href="/login/?next={{issue.get_view_link}}" class="fs-button blue">Resolve issue</a>
     {% endif %}
 {% endif %}
 {% if actionbar.abort %}

@@ -12,6 +12,8 @@ if 'core' in settings.INSTALLED_APPS:
     urlpatterns += patterns('',
         # url(r'^.*$', direct_to_template, {'template': 'core2/maintainance.html'}),
         url(r'^$', 'core.views.main_views.home', name='home'),
+        url(r'^login/$',  'core.views.main_views.login'),
+        url(r'^logout/$', 'core.views.main_views.logout'),
         url(r'^404$', direct_to_template, {'template': '404.html'}),
         url(r'^faq$', direct_to_template, {'template': 'core2/faq.html'}),
         url(r'^core/', include('core.urls')),

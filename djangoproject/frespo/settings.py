@@ -284,7 +284,7 @@ FACEBOOK_EXTENDED_PERMISSIONS = ['email',]
 GITHUB_EXTENDED_PERMISSIONS = []
 
 
-LOGIN_URL          = '/core/login'
+LOGIN_URL          = '/login'
 LOGIN_REDIRECT_URL = '/'
 GITHUB_EXTRA_DATA = [('login', 'social_username')]
 FACEBOOK_EXTRA_DATA = [('username', 'social_username')]

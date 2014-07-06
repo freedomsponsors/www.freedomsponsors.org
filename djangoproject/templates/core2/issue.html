@@ -43,7 +43,7 @@
             $scope.watching = 'True' == '{{ is_watching }}';
             $scope.watchLink = '';
             if(!is_authenticated){
-                $scope.watchLink = '/core/login?next={{ issue.get_view_link }}';
+                $scope.watchLink = '/login?next={{ issue.get_view_link }}';
             }
 
             $scope.description = '{{ issue.description|escapejs }}'

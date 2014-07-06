@@ -4,11 +4,11 @@
     <a href="#" id="btnToggleWatch" class="btn btn-inverse" title=""></a>
   {% else %}
     {% if offer %}
-      <a href="/core/login/?next={{offer.issue.get_view_link}}" id="btnToggleWatch" class="btn btn-inverse" title="">
+      <a href="/login/?next={{offer.issue.get_view_link}}" id="btnToggleWatch" class="btn btn-inverse" title="">
         <i class="icon-eye-close icon-white"></i> {% trans "Watch" %}
       </a>
     {% else %}
-      <a href="/core/login/?next={{issue.get_view_link}}" id="btnToggleWatch" class="btn btn-inverse" title="">
+      <a href="/login/?next={{issue.get_view_link}}" id="btnToggleWatch" class="btn btn-inverse" title="">
         <i class="icon-eye-close icon-white"></i> {% trans "Watch" %}
       </a>
     {% endif %}
