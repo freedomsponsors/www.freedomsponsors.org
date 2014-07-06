@@ -43,9 +43,9 @@
             <priority>0.7</priority>
         </url>
     {% endfor %}
-    {% for user in users %}
+    {% for user_info in user_infos %}
         <url>
-            <loc>{{SITE_HOME}}{{ user.get_view_link }}</loc>
+            <loc>{{SITE_HOME}}{{ user_info.user.get_view_link }}</loc>
             <priority>0.4</priority>
         </url>
     {% endfor %}

@@ -95,11 +95,11 @@ def login_error(request):
 def sitemap(request):
     issues = Issue.objects.all()
     projects = Project.objects.all()
-    users = User.objects.all()
+    user_infos = UserInfo.objects.select_related('user').all()
     return render_to_response('core2/sitemap.xml',
                               {'issues': issues,
                                'projects': projects,
-                               'users': users},
+                               'user_infos': user_infos},
                               context_instance=RequestContext(request),
                               mimetype='text/xml')
 
