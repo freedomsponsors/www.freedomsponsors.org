@@ -10,24 +10,13 @@ urlpatterns = patterns('core.views.main_views',
     url(r'^admail/$', 'admail'),
     url(r'^mailtest/$', 'mailtest'),
     url(r'^about/$', redirect_to, {'url': 'http://blog.freedomsponsors.org/about/'}),
-    url(r'^faq/$', redirect_to, {'url': 'http://blog.freedomsponsors.org/faq/'}),
+    url(r'^faq/$', RedirectView.as_view(url='/faq', permanent=True)),
     url(r'^dev/$', redirect_to, {'url': 'http://blog.freedomsponsors.org/developers/'}),
     url(r'^jslic$', direct_to_template, {'template': 'core2/jslic.html'}),
 )
 
-# ensure /core/login, /core/logout still work
-urlpatterns += patterns('',
-    url(r'^login/$',   RedirectView.as_view(url='/login/',    permanent=True, query_string=True)),
-    url(r'^logout/$',  RedirectView.as_view(url='/logout/',   permanent=True, query_string=True)),
-)
-
 urlpatterns += patterns('core.views.issue_views',
     url(r'^myissues/$', 'myissues'),
-)
-
-# below url redirections ensure existing/external links to /solution/* urls still work
-urlpatterns += patterns('',
-    url(r'^solution/(?P<temp>.*)$',  RedirectView.as_view(url='/solution/%(temp)s', permanent=True, query_string=True)),
 )
 
 # below url redirections ensure existing/external links to /core/issue/* urls still work
@@ -40,18 +29,6 @@ urlpatterns += patterns('',
     url(r'^project/$', RedirectView.as_view(url='/project/', permanent=True)),
     url(r'^project/(?P<project_id>\d+)/$', RedirectView.as_view(url='/project/%(project_id)s/', permanent=True)),
     url(r'^project/(?P<project_id>\d+)/edit$', RedirectView.as_view(url='/project/%(project_id)s/edit', permanent=True)),
-)
-
-# below url redirections ensure existing/external links to /core/offer/* urls still work
-urlpatterns += patterns('',
-    url(r'^offer/(?P<temp>.*)$',  RedirectView.as_view(url='/offer/%(temp)s', permanent=True, query_string=True)),
-)
-
-urlpatterns += patterns('', # TODO: how to use reverse_lazy here?
-    url(r'^watch/issue/(?P<issue_id>\d+)$', RedirectView.as_view(url='/issue/%(issue_id)s/watch', permanent=True)),
-    url(r'^unwatch/issue/(?P<issue_id>\d+)$', RedirectView.as_view(url='/issue/%(issue_id)s/unwatch', permanent=True)),
-    url(r'^watch/offer/(?P<offer_id>\d+)$', RedirectView.as_view(url='/offer/%(offer_id)s/watch', permanent=True)),
-    url(r'^unwatch/offer/(?P<offer_id>\d+)$', RedirectView.as_view(url='/offer/%(offer_id)s/unwatch', permanent=True)),
 )
 
 urlpatterns += patterns('core.views.paypal_views',
@@ -68,7 +45,6 @@ urlpatterns += patterns('',
     url(r'^user/$', RedirectView.as_view(url='/user/', permanent=True)),
     url(r'^user/(?P<user_id>\d+)/$', RedirectView.as_view(url='/user/%(user_id)s/', permanent=True)),
     url(r'^user/(?P<user_id>\d+)/(?P<user_slug>.*)$', RedirectView.as_view(url='/user/%(user_id)s/%(user_slug)s', permanent=True)),
-    url(r'^user/edit$', RedirectView.as_view(url='/user/edit', permanent=True)),
 )
 
 urlpatterns += patterns('core.views.json_views',
@@ -81,10 +57,6 @@ urlpatterns += patterns('core.views.json_views',
     url(r'^json/latest_activity', 'latest_activity'),
     url(r'^json/toggle_watch', 'toggle_watch'),
 )
-
-# urlpatterns += patterns('core.jiraviews',
-#   url(r'^issue/sponsor_jira$', 'sponsorJiraForm'),
-# )
 
 urlpatterns += patterns('',
     url(r'^feedback$', RedirectView.as_view(url='/feedback', permanent=True)),
