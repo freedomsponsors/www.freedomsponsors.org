@@ -67,7 +67,7 @@ class UserInfo(models.Model):
         return is_different
 
     def get_website_url(self):
-        if(self.website.startswith("http://") or self.website.startswith("https://")):
+        if self.website.startswith("http://") or self.website.startswith("https://"):
             return self.website
         else:
             return "http://"+self.website
@@ -76,6 +76,12 @@ class UserInfo(models.Model):
         if self.website and len(self.website) > 40:
             return self.website[0:40]+'...'
         return self.website
+
+    def get_view_link(self):
+        kwargs = {'user_id': self.user.id}
+        if self.screenName:
+            kwargs['user_slug'] = urlquote(slugify(self.screenName))
+        return reverse('core.views.user_views.viewUser', kwargs=kwargs)
 
     def is_complete(self):
         return self.screenName and self.realName and self.user.email
@@ -142,10 +148,11 @@ def set_email_verified(sender, **kwargs):
 
 
 def get_view_link(self):
-    kwargs = {'user_id': self.id}
-    if(self.getUserInfo() and self.getUserInfo().screenName):
-        kwargs['user_slug'] = urlquote(slugify(self.getUserInfo().screenName))
-    return reverse('core.views.user_views.viewUser', kwargs=kwargs)
+    user_info = self.getUserInfo()
+    if user_info:
+        return user_info.get_view_link()
+    else:
+        return reverse('core.views.user_views.viewUser', kwargs={'user_id': self.id})
 
 
 def is_registration_complete(self):
