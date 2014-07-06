@@ -151,7 +151,7 @@
                 $scope.actionmodal.validate_and_submit = validate_submit_others;
                 $scope.actionmodal.show_accept_payments = false;
                 $scope.actionmodal.title = 'Revoke offer';
-                $scope.actionmodal.formaction = '/core/offer/revoke/submit';
+                $scope.actionmodal.formaction = '/offer/revoke/submit';
                 $scope.actionmodal.buttonlabel = 'Revoke offer';
                 $scope.actionmodal.commentplaceholder = "Add a comment to let everyone know that you're not willing to pay for this issue anymore.";
                 $('#action_modal').modal()
@@ -161,7 +161,7 @@
                 $scope.actionmodal.action = 'SPONSOR';
                 $scope.actionmodal.validate_and_submit = validate_submit_sponsor;
                 $scope.actionmodal.title = 'Change offer';
-                $scope.actionmodal.formaction = '/core/offer/edit/submit';
+                $scope.actionmodal.formaction = '/offer/edit/submit';
                 $scope.actionmodal.buttonlabel = 'Change offer';
                 $scope.actionmodal.commentplaceholder = "Please put some thought into this one - it's a big help for the programmer who will work on this. What is your definition of 'done' for this task? Not just 'done', but 'so-done-that-I'm-willing-to-pay-for-it-done' :-)";
                 $('#action_modal').modal()

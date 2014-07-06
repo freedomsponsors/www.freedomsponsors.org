@@ -20,10 +20,6 @@ urlpatterns = patterns('core.views.main_views',
 
 urlpatterns += patterns('core.views.issue_views',
     url(r'^myissues/$', 'myissues'),
-    url(r'^offer/(?P<offer_id>\d+)/pay$', 'payOfferForm'),
-    url(r'^offer/pay/submit$', 'payOffer'),
-    url(r'^offer/revoke/submit$', 'revokeOffer'),
-    url(r'^offer/edit/submit$', 'editOffer'),
     url(r'^solution/add/submit$', 'addSolution'),
     url(r'^solution/abort/submit$', 'abortSolution'),
     url(r'^solution/resolve/submit$', 'resolveSolution'),
@@ -41,8 +37,9 @@ urlpatterns += patterns('',
     url(r'^project/(?P<project_id>\d+)/edit$', RedirectView.as_view(url='/project/%(project_id)s/edit', permanent=True)),
 )
 
-urlpatterns += patterns('core.views.comment_views',
-    url(r'^offer/comment/(?P<comment_id>\d+)/history$', 'viewOfferCommentHistory'),
+# below url redirections ensure existing/external links to /core/offer/* urls still work
+urlpatterns += patterns('',
+    url(r'^offer/(?P<temp>.*)$',  RedirectView.as_view(url='/offer/%(temp)s', permanent=True, query_string=True)),
 )
 
 urlpatterns += patterns('', # TODO: how to use reverse_lazy here?

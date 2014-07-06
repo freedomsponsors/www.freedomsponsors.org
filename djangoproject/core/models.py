@@ -702,7 +702,7 @@ class Offer(models.Model):
         return []
 
     def get_view_link(self):
-        return '/core/offer/%s'%self.id+'/'+urlquote(slugify(self.issue.title))
+        return '/offer/%s'%self.id+'/'+urlquote(slugify(self.issue.title))
 
 
 # Um comentario que pode ser adicionado numa offer por qualquer pessoa.

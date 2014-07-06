@@ -43,7 +43,7 @@ class BitcoinPaymentTests(TestCase):
             return True
         paypal_adapter.is_verified_account = is_verified_account_mock
 
-        response = client.get('/core/offer/%s/pay' % offer.id)
+        response = client.get('/offer/%s/pay' % offer.id)
         self.assertEqual(response.status_code, 200)
         response_offer = response.context['offer']
         response_solutions = json.loads(response.context['solutions_json'])
@@ -64,7 +64,7 @@ class BitcoinPaymentTests(TestCase):
         return response_offer, response_solutions
 
     def _submitPayForm(self, client, offer, solutions, pay, pay_email_admin):
-        response = client.post('/core/offer/pay/submit',
+        response = client.post('/offer/pay/submit',
                                {'offer_id': str(offer.id),
                                 'count': '1',
                                 'check_0': 'true',

@@ -50,7 +50,7 @@
 {#            Specify how much you'll pay to whom.#}
 {#        {% endif %}#}
 {#        <br><br>#}
-        <form ng-app="pay_offer" method="post" action="/core/offer/pay/submit">
+        <form ng-app="pay_offer" method="post" action="/offer/pay/submit">
             {% csrf_token %}
             <div ng-view></div>
         </form>

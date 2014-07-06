@@ -60,7 +60,7 @@
 {% if not offer or not myoffer or myoffer.id == offer.id %}
   {% if myoffer and myoffer.status == 'OPEN' %}
     <div class="btn-group">
-      <a href="/core/offer/{{myoffer.id}}/pay" class="btn btn-success">{% trans "Pay Offer" %}</a>
+      <a href="/offer/{{myoffer.id}}/pay" class="btn btn-success">{% trans "Pay Offer" %}</a>
       <a href="javascript:showModal_editOffer()" class="btn btn-warning">{% trans "Change offer" %}</a>
       <a href="javascript:showModal_revokeThisOffer()" class="btn btn-danger">{% trans "Revoke Offer" %}</a>
     </div>
@@ -122,7 +122,7 @@
 
   function showModal_editOffer(){
     document.getElementById('offerDataFormModal_title').innerHTML = 'Change offer';
-    document.getElementById('offerDataFormModal_form').action = '/core/offer/edit/submit';
+    document.getElementById('offerDataFormModal_form').action = '/offer/edit/submit';
 
     setOfferData(myoffer); //setOfferData is defined inside offer_form_fields.html
 
@@ -134,7 +134,7 @@
 
   function showModal_revokeThisOffer(){
     document.getElementById('commentFormModal_title').innerHTML = 'Revoke {{offer.get_currency_symbol}} {{offer.price}} offer';
-    document.getElementById('commentFormModal_form').action = '/core/offer/revoke/submit';
+    document.getElementById('commentFormModal_form').action = '/offer/revoke/submit';
     document.getElementById('commentFormModal_comment').placeholder = "Add a comment to let everyone know that you're not willing to pay for this issue anymore";
     document.getElementById('commentFormModal_submit').innerHTML = 'Revoke offer!';
     $('#div_accept_payments').addClass("hide")

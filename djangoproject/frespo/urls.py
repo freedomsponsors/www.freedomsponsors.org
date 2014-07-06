@@ -17,6 +17,7 @@ if 'core' in settings.INSTALLED_APPS:
         url(r'^core/', include('core.urls')),
         url(r'^project/', include('core.urls.project_urls')),
         url(r'^issue/', include('core.urls.issue_urls')),
+        url(r'^offer/', include('core.urls.offer_urls')),
         url(r'^search/', 'core.views.issue_views.listIssues'),
         url(r'^github-hook/', include('core.urls.github_hook_urls')),
         url(r'^feedback', include('core.urls.feedback_urls')),
