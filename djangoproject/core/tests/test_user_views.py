@@ -97,6 +97,3 @@ class TestDeprecatedCoreUserViews(TestCase):
 
     def test_view_user_with_slug(self):
         self._assert_redirect('/user/%d/%s' % (self.user.id, self.user.username))
-
-    def test_edit_user_form(self):
-        self._assert_redirect('/user/edit')
