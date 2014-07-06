@@ -94,6 +94,9 @@ class TestMailNotifications(unittest.TestCase):
         self.assertEqual(response.status_code, 302)
         issue_id = response.get('location').split('/')[-2]
         response = client2.get('/issue/%s/blah'%issue_id)
+        self.assertEqual(response.status_code, 301)
+        issue_link = response.get('location')
+        response = client2.get(issue_link)
         solution_id = str(response.context['mysolution'].id)
 
         email_asserts.assert_sent_count(self, 1)
@@ -117,6 +120,9 @@ class TestMailNotifications(unittest.TestCase):
         self.assertEqual(response.status_code, 302)
         issue_id = response.get('location').split('/')[-2]
         response = client2.get('/issue/%s/blah'%issue_id)
+        self.assertEqual(response.status_code, 301)
+        issue_link = response.get('location')
+        response = client2.get(issue_link)
         solution_id2 = str(response.context['mysolution'].id)
         self.assertEqual(solution_id, solution_id2)
 
