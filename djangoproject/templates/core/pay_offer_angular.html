@@ -214,7 +214,7 @@
     {% endlocalize %}
 
 
-    <form method="post" action="/core/offer/pay/submit">
+    <form method="post" action="/offer/pay/submit">
         {% csrf_token %}
         <input type="hidden" name="offer_id" value="{{ offer.id }}">
         <input type="hidden" name="count" value="{{ count }}">

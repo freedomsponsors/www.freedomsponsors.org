@@ -58,7 +58,7 @@ class TestMailNotifications(unittest.TestCase):
         email_asserts.assert_sent(self, to=self.user.email, subject="%s made a US$ 20.00 offer for issue [%s]"%(user2ScreenName, issue.title))
 
         email_asserts.clear_sent()
-        response = client2.post('/core/offer/edit/submit',
+        response = client2.post('/offer/edit/submit',
             {'offer_id': offer_id,
              'currency': 'USD',
              'price': '30.00',
@@ -68,7 +68,7 @@ class TestMailNotifications(unittest.TestCase):
         email_asserts.assert_sent(self, to=self.user.email, subject="%s raised the US$ 20.00 offer on issue [%s]"%(user2ScreenName, issue.title))
 
         email_asserts.clear_sent()
-        response = client2.post('/core/offer/revoke/submit',
+        response = client2.post('/offer/revoke/submit',
             {'offer_id': offer_id,
              'comment' : ''})
         self.assertEqual(response.status_code, 302)

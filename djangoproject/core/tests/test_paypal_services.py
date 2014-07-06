@@ -39,7 +39,7 @@ class TestPaypalPayment(unittest.TestCase):
     def _request_payment_form(self, offer, expect_brl=False, expect_btc=False):
         client = Client()
         client.login(username=offer.sponsor.username, password='abcdef')
-        response = client.get('/core/offer/%s/pay' % offer.id)
+        response = client.get('/offer/%s/pay' % offer.id)
         if response.status_code != 200:
             print('ERROR - was expecting 200, got %s' % response.status_code)
             for message in list(response.context['messages']):
@@ -74,7 +74,7 @@ class TestPaypalPayment(unittest.TestCase):
         return client
 
     def _submit_pay_form(self, client, offer, solution, currency, pay):
-        response = client.post('/core/offer/pay/submit',
+        response = client.post('/offer/pay/submit',
                                {'offer_id': str(offer.id),
                                 'count': '1',
                                 'currency': currency,

@@ -78,14 +78,14 @@
 <h3>Offer comments</h3>
 {% for comment in offer.getComments %}
   <hr>
-  {% include 'core/include/comment.html' with counter=forloop.counter formaction='/core/offer/comment/edit/submit' %}
+  {% include 'core/include/comment.html' with counter=forloop.counter formaction='/offer/comment/edit/submit' %}
 {% endfor %}
 
 <script>
     function loadCommentHistory(comment_id){
         $("body").addClass("loading");
         $.ajax({
-            url: '/core/offer/comment/'+comment_id+'/history',
+            url: '/offer/comment/'+comment_id+'/history',
             dataType: 'HTML',
             async: true,
             success: function(data){
@@ -104,7 +104,7 @@
 
 {% if user.is_authenticated %}
 
-	<form method="post" class="well form-horizontal" action="/core/offer/comment/add/submit">
+	<form method="post" class="well form-horizontal" action="/offer/comment/add/submit">
 	{% csrf_token %}
 	  <fieldset>
 

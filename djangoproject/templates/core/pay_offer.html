@@ -44,7 +44,7 @@
   Specify how much you'll pay to whom.
   {% endif %}
   <br><br>
-  <form method="post" action="/core/offer/pay/submit">
+  <form method="post" action="/offer/pay/submit">
 {% csrf_token %}
   <div id="div_step1">
 	<input type="hidden" id="offer_id" name="offer_id" value="{{offer.id}}">
