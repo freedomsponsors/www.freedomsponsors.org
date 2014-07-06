@@ -20,9 +20,11 @@ urlpatterns = patterns('core.views.main_views',
 
 urlpatterns += patterns('core.views.issue_views',
     url(r'^myissues/$', 'myissues'),
-    url(r'^solution/add/submit$', 'addSolution'),
-    url(r'^solution/abort/submit$', 'abortSolution'),
-    url(r'^solution/resolve/submit$', 'resolveSolution'),
+)
+
+# below url redirections ensure existing/external links to /solution/* urls still work
+urlpatterns += patterns('',
+    url(r'^solution/(?P<temp>.*)$',  RedirectView.as_view(url='/solution/%(temp)s', permanent=True, query_string=True)),
 )
 
 # below url redirections ensure existing/external links to /core/issue/* urls still work

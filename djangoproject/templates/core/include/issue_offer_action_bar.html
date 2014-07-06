@@ -168,7 +168,7 @@
     }
 
     document.getElementById('commentFormModal_title').innerHTML = 'Abort work on this issue';
-    document.getElementById('commentFormModal_form').action = '/core/solution/abort/submit';
+    document.getElementById('commentFormModal_form').action = '/solution/abort/submit';
     document.getElementById('commentFormModal_comment').placeholder = "Add a comment to let everyone know that you won't be working on this issue anymore";
     document.getElementById('commentFormModal_submit').innerHTML = 'Abort work on this issue!';
     $('#div_accept_payments').addClass("hide")
@@ -177,7 +177,7 @@
 
   function showModal_resolveThisIssue(){
     document.getElementById('commentFormModal_title').innerHTML = 'Resolve issue';
-    document.getElementById('commentFormModal_form').action = '/core/solution/resolve/submit';
+    document.getElementById('commentFormModal_form').action = '/solution/resolve/submit';
     document.getElementById('commentFormModal_comment').placeholder = "Add a comment to let everyone know that you resolved the issue!";
     document.getElementById('commentFormModal_submit').innerHTML = 'Resolve issue!';
     $('#div_accept_payments').addClass("hide")
@@ -186,7 +186,7 @@
 {% else %}
   function showModal_workOnThisIssue(){
     document.getElementById('commentFormModal_title').innerHTML = 'Begin working on this issue';
-    document.getElementById('commentFormModal_form').action = '/core/solution/add/submit';
+    document.getElementById('commentFormModal_form').action = '/solution/add/submit';
     document.getElementById('commentFormModal_comment').placeholder = "Add a comment to let everyone know that you'll be working on this issue";
     document.getElementById('commentFormModal_submit').innerHTML = 'Work on this issue!';
     $('#div_accept_payments').removeClass("hide")

@@ -88,7 +88,7 @@ class TestMailNotifications(unittest.TestCase):
 
         #STARTS WORKING
         email_asserts.clear_sent()
-        response = client2.post('/core/solution/add/submit',
+        response = client2.post('/solution/add/submit',
             {'issue_id': str(issue.id),
              'comment':''})
         self.assertEqual(response.status_code, 302)
@@ -104,7 +104,7 @@ class TestMailNotifications(unittest.TestCase):
 
         #ABORTS WORK
         email_asserts.clear_sent()
-        response = client2.post('/core/solution/abort/submit',
+        response = client2.post('/solution/abort/submit',
             {'solution_id': solution_id,
              'comment':''})
         self.assertEqual(response.status_code, 302)
@@ -114,7 +114,7 @@ class TestMailNotifications(unittest.TestCase):
 
         #STARTS WORKING again
         email_asserts.clear_sent()
-        response = client2.post('/core/solution/add/submit',
+        response = client2.post('/solution/add/submit',
             {'issue_id': str(issue.id),
              'comment':''})
         self.assertEqual(response.status_code, 302)
@@ -131,7 +131,7 @@ class TestMailNotifications(unittest.TestCase):
 
         #FINISHES WORK
         email_asserts.clear_sent()
-        response = client2.post('/core/solution/resolve/submit',
+        response = client2.post('/solution/resolve/submit',
             {'solution_id': solution_id,
              'comment':''})
         self.assertEqual(response.status_code, 302)
