@@ -6,8 +6,3 @@ urlpatterns = patterns('core.views.issue_views',
     url(r'^revoke/submit$', 'revokeOffer'),
     url(r'^edit/submit$', 'editOffer'),
 )
-
-urlpatterns += patterns('core.views.comment_views',
-    url(r'^comment/(?P<comment_id>\d+)/history$', 'viewOfferCommentHistory'),
-)
-

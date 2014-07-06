@@ -17,14 +17,6 @@ def addIssueComment(request):
 
 
 @login_required
-def addOfferComment(request):
-    offer_id = int(request.POST['offer_id'])
-    comment_content = request.POST['content']
-    offer = comment_services.add_comment_to_offer(offer_id, comment_content, request.user)
-    return redirect(offer.get_view_link())
-
-
-@login_required
 def editIssueComment(request):
     comment_id = int(request.POST['comment_id'])
     comment_content = request.POST['content']
@@ -32,26 +24,9 @@ def editIssueComment(request):
     return redirect(comment.issue.get_view_link())
 
 
-@login_required
-def editOfferComment(request):
-    comment_id = int(request.POST['comment_id'])
-    comment_content = request.POST['content']
-    comment = comment_services.edit_comment_of_offer(comment_id, comment_content, request.user)
-    return redirect(comment.offer.get_view_link())
-
-
 def viewIssueCommentHistory(request, comment_id):
     comment = IssueComment.objects.get(pk = comment_id)
     comment_events = IssueCommentHistEvent.objects.filter(comment__id = comment_id).order_by("eventDate")
-    return render_to_response('core2/comment_history.html',
-        {'comment':comment,
-         'comment_events':comment_events,},
-        context_instance = RequestContext(request))
-
-
-def viewOfferCommentHistory(request, comment_id):
-    comment = OfferComment.objects.get(pk = comment_id)
-    comment_events = OfferCommentHistEvent.objects.filter(comment__id = comment_id).order_by("eventDate")
     return render_to_response('core2/comment_history.html',
         {'comment':comment,
          'comment_events':comment_events,},
