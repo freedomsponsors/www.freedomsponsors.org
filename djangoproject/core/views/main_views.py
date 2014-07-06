@@ -109,11 +109,3 @@ def stats(request):
     return render_to_response(template_folder(request) + 'stats.html',
         {'stats': stats},
         context_instance=RequestContext(request))
-
-
-def toggle_layout(request):
-    if 'old_layout' in request.session:
-        del request.session['old_layout']
-    else:
-        request.session['old_layout'] = True
-    return redirect('/')
