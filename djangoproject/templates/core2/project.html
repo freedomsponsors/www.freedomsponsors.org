@@ -47,7 +47,7 @@
             $scope.watching = 'True' == '{{ is_watching }}';
             $scope.watchLink = '';
             if(!$scope.authenticated){
-                $scope.watchLink = '/core/login?next=/project/{{ project.id }}';
+                $scope.watchLink = '/login?next=/project/{{ project.id }}';
             }
 
             var issues_sponsoring = {{ issues_sponsoring|safe }};

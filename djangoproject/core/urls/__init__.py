@@ -13,9 +13,13 @@ urlpatterns = patterns('core.views.main_views',
     url(r'^about/$', redirect_to, {'url': 'http://blog.freedomsponsors.org/about/'}),
     url(r'^faq/$', redirect_to, {'url': 'http://blog.freedomsponsors.org/faq/'}),
     url(r'^dev/$', redirect_to, {'url': 'http://blog.freedomsponsors.org/developers/'}),
-    url(r'^login/$', 'login'),
-    url(r'^logout/$', 'logout'),
     url(r'^jslic$', direct_to_template, {'template': 'core2/jslic.html'}),
+)
+
+# ensure /core/login, /core/logout still work
+urlpatterns += patterns('',
+    url(r'^login/$',   RedirectView.as_view(url='/login/',    permanent=True, query_string=True)),
+    url(r'^logout/$',  RedirectView.as_view(url='/logout/',   permanent=True, query_string=True)),
 )
 
 urlpatterns += patterns('core.views.issue_views',
