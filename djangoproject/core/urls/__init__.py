@@ -11,7 +11,11 @@ urlpatterns = patterns('core.views.main_views',
     url(r'^about/$', redirect_to, {'url': 'http://blog.freedomsponsors.org/about/'}),
     url(r'^faq/$', RedirectView.as_view(url='/faq', permanent=True)),
     url(r'^dev/$', redirect_to, {'url': 'http://blog.freedomsponsors.org/developers/'}),
-    url(r'^jslic$', direct_to_template, {'template': 'core2/jslic.html'}),
+)
+
+# below url redirections ensure existing/external links to /core/jslic still work
+urlpatterns += patterns('',
+    url(r'^jslic$',  RedirectView.as_view(url='/jslic',  permanent=True, query_string=True)),
 )
 
 # below url redirections ensure existing/external links to /core/stats still work
