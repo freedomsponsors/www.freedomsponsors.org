@@ -15,10 +15,6 @@ urlpatterns = patterns('core.views.main_views',
     url(r'^jslic$', direct_to_template, {'template': 'core2/jslic.html'}),
 )
 
-urlpatterns += patterns('core.views.issue_views',
-    url(r'^myissues/$', 'myissues'),
-)
-
 # below url redirections ensure existing/external links to /core/issue/* urls still work
 urlpatterns += patterns('',
     url(r'^issue/$',              RedirectView.as_view(url='/search/',        permanent=True, query_string=True)),

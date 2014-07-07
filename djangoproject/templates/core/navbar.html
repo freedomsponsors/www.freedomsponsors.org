@@ -23,7 +23,7 @@
   {% endif %}
 {% if user and user.is_authenticated %}
               <li class="divider"></li>
-              <li><a href="/core/myissues">{% trans "My issues" %}</a></li>
+              <li><a href="/myissues">{% trans "My issues" %}</a></li>
   {% if user.github_username %}
               <li class="divider"></li>
               <li><a href="/github/configure">{% trans "Github Settings" %}</a></li>
