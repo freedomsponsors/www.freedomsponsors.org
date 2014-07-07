@@ -78,6 +78,7 @@ Instructions to run application locally:
     ```bash
     $ python bootstrap
     ```
+  This will create a python virtualenv and install all dependecies listed on `requirements.txt` on it.
   If this command fails because of psycopg2, make sure you have installed postgresql-server-dev-all (mentioned on step 1)
 
   Then you can enter the virtualenv:
