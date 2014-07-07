@@ -6,13 +6,17 @@ from django.views.generic.simple import redirect_to, direct_to_template
 urlpatterns = patterns('core.views.main_views',
     url(r'^$', 'home'),
     url(r'^home/$', RedirectView.as_view(url='/', permanent=True)),
-    url(r'^stats/$', 'stats'),
     url(r'^admail/$', 'admail'),
     url(r'^mailtest/$', 'mailtest'),
     url(r'^about/$', redirect_to, {'url': 'http://blog.freedomsponsors.org/about/'}),
     url(r'^faq/$', RedirectView.as_view(url='/faq', permanent=True)),
     url(r'^dev/$', redirect_to, {'url': 'http://blog.freedomsponsors.org/developers/'}),
     url(r'^jslic$', direct_to_template, {'template': 'core2/jslic.html'}),
+)
+
+# below url redirections ensure existing/external links to /core/stats still work
+urlpatterns += patterns('',
+    url(r'^stats/$',  RedirectView.as_view(url='/stats/',        permanent=True, query_string=True)),
 )
 
 # below url redirections ensure existing/external links to /core/issue/* urls still work

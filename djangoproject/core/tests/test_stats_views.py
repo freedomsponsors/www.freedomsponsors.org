@@ -9,6 +9,6 @@ class TestStatsViews(unittest.TestCase):
         self.client = Client()
 
     def test_stats_view(self):
-        response = self.client.get('/core/stats/')
+        response = self.client.get('/stats/')
         self.assertTrue('Open offers amount to' in response.content)
 
