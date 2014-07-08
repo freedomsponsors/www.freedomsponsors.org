@@ -17,7 +17,7 @@
             </a>
             <ul class="dropdown-menu">
               <li><a href="{{ user.get_view_link }}">{% trans "View Profile" %}</a></li>
-              <li><a href="{% url core.views.user_views.editUserForm %}">{% trans "Edit Profile" %}</a></li>
+              <li><a href="{% url 'core.views.user_views.editUserForm' %}">{% trans "Edit Profile" %}</a></li>
   {% if user.has_usable_password %}
               <li><a href="/accounts/password/change">{% trans "Change password" %}</a></li>
   {% endif %}
@@ -47,8 +47,8 @@
               <li><a target="_about" href="http://blog.freedomsponsors.org/about">{% trans "About" %}</a></li>
               <li><a href="/search">{% trans "Search" %}</a></li>
               <li><a href="/stats">{% trans "Stats" %}</a></li>
-              <li><a href="{% url core.views.user_views.listUsers %}">{% trans "Users" %}</a></li>
-              <li><a href="{% url core.views.feedback_views.feedback %}">{% trans "Feedback" %}</a></li>
+              <li><a href="{% url 'core.views.user_views.listUsers' %}">{% trans "Users" %}</a></li>
+              <li><a href="{% url 'core.views.feedback_views.feedback' %}">{% trans "Feedback" %}</a></li>
             </ul>
           </div><!--/.nav-collapse -->
           {% block menuItems %}

@@ -52,6 +52,7 @@ class UserInfo(models.Model):
         userinfo.website = ''
         userinfo.about = ''
         userinfo.realName = user.first_name+' '+user.last_name
+        userinfo.receiveAllEmail = False
         userinfo.receiveEmail_issue_comments = True
         userinfo.receiveEmail_issue_work = True
         userinfo.receiveEmail_issue_offer = True
@@ -384,6 +385,7 @@ class Issue(models.Model):
         issue.trackerURL = trackerURL
         issue.trackerURL_noprotocol = strip_protocol(trackerURL)
         issue.is_feedback = False
+        issue.is_public_suggestion = False
         issue.status = 'open'
         return issue
 
@@ -410,6 +412,7 @@ class Issue(models.Model):
         issue.updatedDate = issue.creationDate
         issue.createdByUser = createdByUser
         issue.is_feedback = True
+        issue.is_public_suggestion = False # to check with Tony
         issue.status = 'open'
         return issue
 
