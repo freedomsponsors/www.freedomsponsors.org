@@ -1,14 +1,13 @@
 from django.conf.urls import patterns, include, url
 from django.views.generic import TemplateView, RedirectView
 from django.conf import settings
-from django.views.generic.simple import redirect_to, direct_to_template
 
 urlpatterns = patterns('core.views.main_views',
     url(r'^$', 'home'),
     url(r'^admail/$', 'admail'),
     url(r'^mailtest/$', 'mailtest'),
-    url(r'^about/$', redirect_to, {'url': 'http://blog.freedomsponsors.org/about/'}),
-    url(r'^dev/$', redirect_to, {'url': 'http://blog.freedomsponsors.org/developers/'}),
+    url(r'^about/$', RedirectView.as_view(url='http://blog.freedomsponsors.org/about/')),
+    url(r'^dev/$', RedirectView.as_view(url='http://blog.freedomsponsors.org/developers/')),
 )
 
 # 301 redirects

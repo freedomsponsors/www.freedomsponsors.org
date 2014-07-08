@@ -1,4 +1,4 @@
-django==1.4
+django==1.6.5
 splinter==0.5.4
 Pygments==1.5
 misaka==1.0.2
@@ -19,7 +19,7 @@ south==0.7.5
 bitcoin-python==0.3
 git+git://github.com/pinax/django-mailer.git@887ec2c9d8e05d061293b56ff913a9b293c42aa0#egg=django-mailer
 git+git://github.com/freedomsponsors/python-paypalx.git@34d624ed8a7b6505aa6e6e12c0a5b854cacbc612#egg=paypalx
-django-registration==0.8
+git+git://github.com/macropin/django-registration.git@42f66646a5e8a80bf1250fe03fb4738b9cde6593#egg=django-registration
 django-emailmgr==0.9
 Pillow==2.2.1
 mock==1.0.1

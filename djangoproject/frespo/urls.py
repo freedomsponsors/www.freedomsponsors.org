@@ -2,7 +2,8 @@ from django.conf.urls import patterns, include, url
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib import admin
 from django.conf import settings
-from django.views.generic.simple import direct_to_template
+from django.views.generic import TemplateView
+from registration.backends.default.views import RegistrationView
 
 admin.autodiscover()
 
@@ -10,12 +11,12 @@ urlpatterns = []
 if 'core' in settings.INSTALLED_APPS:
     from core.forms import RegistrationForm
     urlpatterns += patterns('',
-        # url(r'^.*$', direct_to_template, {'template': 'core2/maintainance.html'}),
+        # url(r'^.*$', TemplateView.as_view(template_name='core2/maintainance.html')),
         url(r'^$', 'core.views.main_views.home', name='home'),
         url(r'^login/$',  'core.views.main_views.login'),
         url(r'^logout/$', 'core.views.main_views.logout'),
-        url(r'^404$', direct_to_template, {'template': '404.html'}),
-        url(r'^faq$', direct_to_template, {'template': 'core2/faq.html'}),
+        url(r'^404$', TemplateView.as_view(template_name='404.html')),
+        url(r'^faq$', TemplateView.as_view(template_name='core2/faq.html')),
         url(r'^core/', include('core.urls')),
         url(r'^project/', include('core.urls.project_urls')),
         url(r'^issue/', include('core.urls.issue_urls')),
@@ -24,7 +25,7 @@ if 'core' in settings.INSTALLED_APPS:
         url(r'^solution/', include('core.urls.solution_urls')),
         url(r'^search/', 'core.views.issue_views.listIssues'),
         url(r'^stats/',  'core.views.main_views.stats'),
-        url(r'^jslic$', direct_to_template, {'template': 'core2/jslic.html'}),
+        url(r'^jslic$', TemplateView.as_view(template_name='core2/jslic.html')),
         url(r'^github-hook/', include('core.urls.github_hook_urls')),
         url(r'^feedback', include('core.urls.feedback_urls')),
         url(r'^user/', include('core.urls.user_urls')),
@@ -35,11 +36,8 @@ if 'core' in settings.INSTALLED_APPS:
         url(r'^bladmin/', include(admin.site.urls)),
         url(r'^login-error/$', 'core.views.main_views.login_error'),
         url(r'^accounts/password/reset/$', 'core.views.registration_views.reset_password'),
-        url(r'^/accounts/register/$', 'registration.views.register', {
-            'backend': 'registration.backends.default.DefaultBackend',
-            'form_class': RegistrationForm
-        }, name='registration_register'),
-        url(r'^robots.txt$', direct_to_template, {'template': 'core2/robots.txt', 'mimetype': 'text'}),
+        url(r'^/accounts/register/$', RegistrationView.as_view(form_class=RegistrationForm), name='registration_register'),
+        url(r'^robots.txt$', TemplateView.as_view(template_name='core2/robots.txt', content_type='text/plain')),
         url(r'^sitemap.xml$', 'core.views.main_views.sitemap'),
         url(r'^accounts/', include('registration.backends.default.urls')),
         url(r'', include('social_auth.urls')),
