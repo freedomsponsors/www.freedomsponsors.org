@@ -90,7 +90,7 @@ Instructions to run application locally:
     from django.utils.hashcompat import sha_constructor
     ```
 
-  Modifed code:
+  Modified code:
     ```bash
     from hashlib import sha1 as sha_constructor
     ```
