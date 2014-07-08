@@ -80,6 +80,20 @@ Instructions to run application locally:
     ```
   This will create a python virtualenv and install all dependecies listed on `requirements.txt` on it.
   If this command fails because of psycopg2, make sure you have installed postgresql-server-dev-all (mentioned on step 1)
+  
+  Because package django-emailmg has some compatibility issue with Django 1.6.5, we need to modify the following file:
+  ```bash
+    ./local/lib/python2.7/site-packages/emailmgr/utils.py, line 8
+  ```
+  Original code:
+    ```bash
+    from django.utils.hashcompat import sha_constructor
+    ```
+
+  Modifed code:
+    ```bash
+    from hashlib import sha1 as sha_constructor
+    ```
 
   Then you can enter the virtualenv:
 
