@@ -9,7 +9,7 @@ SKIPTESTS_TRACKERINTEGRATION = False # Skip tests in tests_trackerintegration
 
 PROJECT_DIR = Path(__file__).parent.parent
 
-ALLOWED_HOSTS = ['freedomsponsors.org']
+ALLOWED_HOSTS = ['freedomsponsors.org', 'www.freedomsponsors.org']
 
 FS_FEE = Decimal('0.03')
 BITCOIN_FEE = Decimal('0.0002')
