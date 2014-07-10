@@ -1,73 +1,22 @@
 # coding: utf-8
 from decimal import Decimal
-import dj_database_url
 from unipath import Path
 import os
 
-ENVIRONMENT = 'NOTDEV'
-SKIPTESTS_TRACKERINTEGRATION = False # Skip tests in tests_trackerintegration
 
 PROJECT_DIR = Path(__file__).parent.parent
 
-ALLOWED_HOSTS = ['freedomsponsors.org', 'www.freedomsponsors.org']
 
-FS_FEE = Decimal('0.03')
-BITCOIN_FEE = Decimal('0.0002')
-
-FETCH_ISSUE_TIMEOUT = 10.0
-
-DEBUG = False
 FRESPO_PROJECT_ID = -1 # only needed for backwards compatibility with south patch 0008_set_isfeedback_true.py
-ADMINS = (
-    ('Admin', 'admin@freedomsponsors.org'),
-    )
 
-TEMPLATE_DEBUG = DEBUG
-MANAGERS = ADMINS
-
-ENABLE_PIWIK = False
-
-DATABASES = {
-    # 'default': dj_database_url.config(
-    #     default='sqlite:///' + PROJECT_DIR.child('database.db'))
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'frespo',                      # Or path to database file if using sqlite3.
-        'USER': 'frespo',                      # Not used with sqlite3.
-        'PASSWORD': 'frespo',                  # Not used with sqlite3.
-        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
-    }
-}
 
 MEDIA_ROOT = PROJECT_DIR.child('core').child('static').child('media')
 MEDIA_ROOT_URL = '/static/media'
 
-GITHUB_BOT_USERNAME = 'freedomsponsors-bot'
-GITHUB_BOT_PASSWORD = '*********'
-
-SITE_PROTOCOL = 'http'
-SITE_HOST = 'www.freedomsponsors.org'
+SITE_PROTOCOL = 'https'
+SITE_HOST = 'freedomsponsors.org'
 SITE_NAME = 'FreedomSponsors'
 SITE_HOME = SITE_PROTOCOL+'://'+SITE_HOST
-
-PAYPAL_USE_SANDBOX = False
-PAYPAL_DEBUG = False
-PAYPAL_IPNNOTIFY_URL_TOKEN = 'megablasteripn'
-PAYPAL_API_USERNAME = "FP_1338073142_biz_api1.gmail.com"
-PAYPAL_API_PASSWORD = '1338073168'
-PAYPAL_API_SIGNATURE = 'AFcWxV21C7fd0v3bYYYRCpSSRl31AVAvZTYca4potYVRXAbpeSKQGHZO'
-PAYPAL_API_APPLICATION_ID = 'APP-80W284485P519543T' #see www.x.com
-PAYPAL_API_EMAIL = 'FP_1338073142_biz@gmail.com'
-PAYPAL_FRESPO_RECEIVER_EMAIL = 'FP_1338073142_biz@gmail.com'
-
-PAYPAL_CANCEL_URL = SITE_HOME+'/core/paypal/cancel'
-PAYPAL_RETURN_URL = SITE_HOME+'/core/paypal/return'
-PAYPAL_IPNNOTIFY_URL = SITE_HOME+'/core/paypal/'+PAYPAL_IPNNOTIFY_URL_TOKEN
-
-BITCOIN_IPNNOTIFY_URL_TOKEN = 'megablasteripn'
-BITCOIN_ENABLED = False
-BITCOIN_RECEIVE_ADDRESS_POOL_SIZE = 20
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -125,8 +74,6 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = '*bz++cf(*#++vpo+b+=m3%p9#*x$$&amp;0mjs90x3oo5u@^zyvh)0'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -249,6 +196,105 @@ TEST_GMAIL_ACCOUNT_2 = {
     'password' : 'blimblom',
 }
 
+
+SOCIAL_AUTH_PROTECTED_USER_FIELDS = ['email',]
+FACEBOOK_EXTENDED_PERMISSIONS = ['email',]
+#GITHUB_EXTENDED_PERMISSIONS = ['public_repo']
+GITHUB_EXTENDED_PERMISSIONS = []
+
+
+LOGIN_URL          = '/login'
+LOGIN_REDIRECT_URL = '/'
+GITHUB_EXTRA_DATA = [('login', 'social_username')]
+FACEBOOK_EXTRA_DATA = [('username', 'social_username')]
+TWITTER_EXTRA_DATA = [('screen_name', 'social_username')]
+
+ACCOUNT_ACTIVATION_DAYS = 1
+
+LOGIN_ERROR_URL = '/login-error/'
+
+# A sample logging configuration. The only tangible logging
+# performed by this configuration is to send an email to
+# the site admins on every HTTP 500 error when DEBUG=False.
+# See http://docs.djangoproject.com/en/dev/topics/logging for
+# more details on how to customize your logging configuration.
+
+PAGINATION_DEFAULT_PAGINATION = 20
+PAGINATION_DEFAULT_WINDOW = 3
+
+
+# os.environ.setdefault('TEST_WITH_NOSE', 'true')
+
+# pycharm is not able to run tests with nose runner
+# so, you might want to configure your pycharm environment variables with TEST_WITH_NOSE=false
+# TEST_WITH_NOSE = os.environ['TEST_WITH_NOSE'] == 'true'
+
+# if TEST_WITH_NOSE:
+#     TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+#     NOSE_ARGS = [
+#         '--match=^(must|ensure|should|test|it_should)',
+#         '--where=%s' % PROJECT_DIR,
+#         '--id-file=%s' % PROJECT_DIR.child('.noseids'),
+#         '--all-modules',
+#         '--with-id',
+#         '--verbosity=2',
+#         '--nologcapture',
+#         '--rednose',
+#     ]
+
+
+##############################################################
+# settings that are likely to change on different environments
+# ############################################################
+
+ALLOWED_HOSTS = ['freedomsponsors.org', 'www.freedomsponsors.org']
+ADMINS = (
+    ('Admin', 'admin@freedomsponsors.org'),
+)
+MANAGERS = ADMINS
+
+DEBUG = True
+TEMPLATE_DEBUG = DEBUG
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+SKIPTESTS_TRACKERINTEGRATION = False # Skip tests in tests_trackerintegration
+SKIPTESTS_BITCOINADAPTER = True
+SKIPTESTS_PAYPALAPI = True
+SKIPTESTS_ACCOUNTGMAIL = True
+
+FS_FEE = Decimal('0.03')
+BITCOIN_FEE = Decimal('0.0002')
+FETCH_ISSUE_TIMEOUT = 10.0
+SECRET_KEY = '*bz++cf(*#++vpo+b+=m3%p9#*x$$&amp;0mjs90x3oo5u@^zyvh)0'
+ENABLE_PIWIK = False
+
+AUTO_EMAIL_USERNAME = 'noreply@freedomsponsors.com'
+AUTO_EMAIL_PASSWORD = 'ThisIsNotTheRealPassword_obviously'
+GITHUB_BOT_USERNAME = 'freedomsponsors-bot'
+GITHUB_BOT_PASSWORD = '*********'
+
+PAYPAL_USE_SANDBOX = True
+PAYPAL_DEBUG = False
+PAYPAL_IPNNOTIFY_URL_TOKEN = 'megablasteripn'
+PAYPAL_API_USERNAME = "FP_1338073142_biz_api1.gmail.com"
+PAYPAL_API_PASSWORD = '1338073168'
+PAYPAL_API_SIGNATURE = 'AFcWxV21C7fd0v3bYYYRCpSSRl31AVAvZTYca4potYVRXAbpeSKQGHZO'
+PAYPAL_API_APPLICATION_ID = 'APP-80W284485P519543T' #see www.x.com
+PAYPAL_API_EMAIL = 'FP_1338073142_biz@gmail.com'
+PAYPAL_FRESPO_RECEIVER_EMAIL = 'FP_1338073142_biz@gmail.com'
+
+PAYPAL_CANCEL_URL = SITE_HOME+'/core/paypal/cancel'
+PAYPAL_RETURN_URL = SITE_HOME+'/core/paypal/return'
+PAYPAL_IPNNOTIFY_URL = SITE_HOME+'/core/paypal/'+PAYPAL_IPNNOTIFY_URL_TOKEN
+
+BITCOIN_IPNNOTIFY_URL_TOKEN = 'megablasteripn'
+BITCOIN_ENABLED = False
+BITCOIN_RECEIVE_ADDRESS_POOL_SIZE = 20
+
+MOCK_OPENEXCHANGE_RATES = True
+# OPENEXCHANGERATES_API_KEY = '01ac624c42df447aa14a80f5844ee1d3'
+
 TWITTER_CONSUMER_KEY         = ''
 TWITTER_CONSUMER_SECRET      = ''
 FACEBOOK_APP_ID              = ''
@@ -282,27 +328,19 @@ SKYROCK_CONSUMER_SECRET      = ''
 YAHOO_CONSUMER_KEY           = ''
 YAHOO_CONSUMER_SECRET        = ''
 
-SOCIAL_AUTH_PROTECTED_USER_FIELDS = ['email',]
-FACEBOOK_EXTENDED_PERMISSIONS = ['email',]
-#GITHUB_EXTENDED_PERMISSIONS = ['public_repo']
-GITHUB_EXTENDED_PERMISSIONS = []
+DATABASES = {
+    # 'default': dj_database_url.config(
+    #     default='sqlite:///' + PROJECT_DIR.child('database.db'))
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'frespo',                      # Or path to database file if using sqlite3.
+        'USER': 'frespo',                      # Not used with sqlite3.
+        'PASSWORD': 'frespo',                  # Not used with sqlite3.
+        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
+    }
+}
 
-
-LOGIN_URL          = '/login'
-LOGIN_REDIRECT_URL = '/'
-GITHUB_EXTRA_DATA = [('login', 'social_username')]
-FACEBOOK_EXTRA_DATA = [('username', 'social_username')]
-TWITTER_EXTRA_DATA = [('screen_name', 'social_username')]
-
-ACCOUNT_ACTIVATION_DAYS = 1
-
-LOGIN_ERROR_URL = '/login-error/'
-
-# A sample logging configuration. The only tangible logging
-# performed by this configuration is to send an email to
-# the site admins on every HTTP 500 error when DEBUG=False.
-# See http://docs.djangoproject.com/en/dev/topics/logging for
-# more details on how to customize your logging configuration.
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -353,34 +391,3 @@ LOGGING = {
         },
     }
 }
-
-PAGINATION_DEFAULT_PAGINATION = 20
-PAGINATION_DEFAULT_WINDOW = 3
-
-# OPENEXCHANGERATES_API_KEY = '01ac624c42df447aa14a80f5844ee1d3'
-MOCK_OPENEXCHANGE_RATES = True
-
-os.environ.setdefault('TEST_WITH_NOSE', 'true')
-
-# pycharm is not able to run tests with nose runner
-# so, you might want to configure your pycharm environment variables with TEST_WITH_NOSE=false
-TEST_WITH_NOSE = os.environ['TEST_WITH_NOSE'] == 'true'
-
-if TEST_WITH_NOSE:
-    TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-    NOSE_ARGS = [
-        '--match=^(must|ensure|should|test|it_should)',
-        '--where=%s' % PROJECT_DIR,
-        '--id-file=%s' % PROJECT_DIR.child('.noseids'),
-        '--all-modules',
-        '--with-id',
-        '--verbosity=2',
-        '--nologcapture',
-        '--rednose',
-    ]
-
-os.environ.setdefault('ENV_SETTINGS', 'env_settings')
-try:
-    exec('from %s import *' % os.environ['ENV_SETTINGS'])
-except ImportError:
-    print u'WARNING: %s not found.' % os.environ['ENV_SETTINGS']

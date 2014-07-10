@@ -12,7 +12,7 @@ from frespo_currencies import currency_service
 
 __author__ = 'tony'
 
-@skipIf(settings.ENVIRONMENT != 'DEV', 'not supported in this environment')
+@skipIf(settings.SKIPTESTS_BITCOINADAPTER, 'not supported in this environment')
 class BitcoinAdapterTest(TestCase):
     def test_get_balance(self):
         c = bitcoin_adapter._connect()

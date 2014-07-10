@@ -147,7 +147,7 @@ class TestPaypalPayment(unittest.TestCase):
         self._ipn_confirmation_receive(paykey)
 
 
-@skipIf(settings.ENVIRONMENT != 'DEV', 'not supported in this environment')
+@skipIf(settings.SKIPTESTS_PAYPALAPI, 'not supported in this environment')
 class TestPaypalAPI(unittest.TestCase):
 
     def test_with_feesPayer_SENDER(self):

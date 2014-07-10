@@ -9,7 +9,7 @@ waitifbreak = 1
 
 __author__ = 'tony'
 
-@skipIf(settings.ENVIRONMENT != 'DEV', 'not supported in this environment')
+@skipIf(settings.SKIPTESTS_ACCOUNTGMAIL, 'not supported in this environment')
 class AccountCreationTests(FrespoSplinterTestCase):
     def needs_users(self):
         return False

@@ -12,7 +12,7 @@ __author__ = 'tony'
 
 waitifbreak = 1
 
-@skipIf(settings.ENVIRONMENT != 'DEV', 'not supported in this environment')
+@skipIf(settings.SKIPTESTS_PAYPALAPI, 'not supported in this environment')
 class PaymentTests(FrespoSplinterTestCase):
 #    def onAppCreate(self):
 #        self.app.createGoogleSession(td.userDict1)
