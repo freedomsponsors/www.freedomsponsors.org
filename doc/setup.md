@@ -50,6 +50,7 @@ Instructions to run application locally:
 
   ```bash
   $ git clone git://github.com/freedomsponsors/www.freedomsponsors.org.git
+  $ cd www.freedomsponsors.org
   ```
 
 3. Create the database/default user.
@@ -68,10 +69,8 @@ Instructions to run application locally:
   $ cp frespo/env_settings.py_template frespo/env_settings.py
   # edit the env_settings.py file - you must change the definitions shown below (values as used in this walkthrough):
   # ENVIRONMENT = 'DEV'
-  # DATABASE_NAME = 'frespo'
-  # DATABASE_USER = 'frespo'
-  # DATABASE_PASS = 'frespo'  
   $ nano frespo/env_settings.py 
+  $ cd .. 
   ```
 5. Create a virtualenv and install dependencies.
 
@@ -96,7 +95,7 @@ Instructions to run application locally:
 6. Create database objects.
 
   ```bash  
-  $ cd www.freedomsponsors.org/djangoproject
+  $ cd djangoproject
   $ ./manage.py syncdb --migrate --noinput
   ```
 
