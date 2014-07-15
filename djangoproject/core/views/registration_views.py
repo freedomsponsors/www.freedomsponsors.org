@@ -28,3 +28,17 @@ class CustomResetForm(PasswordResetForm):
 
 def reset_password(request):
     return auth_views.password_reset(request, password_reset_form=CustomResetForm)
+
+
+def reset_password_done(request):
+    return auth_views.password_reset_done(request, password_reset_form=CustomResetForm)
+
+
+def reset_password_confirm(request, uidb64=None, token=None,
+                           template_name='registration/password_reset_confirm.html',
+                           post_reset_redirect=None,
+                           current_app=None, extra_context=None):
+    return auth_views.password_reset_confirm(request, uidb64=uidb64, token=token,
+                           template_name=template_name,
+                           post_reset_redirect=post_reset_redirect,
+                           current_app=current_app, extra_context=extra_context)
