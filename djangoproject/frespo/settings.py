@@ -26,6 +26,7 @@ TEMPLATE_DEBUG = DEBUG
 MANAGERS = ADMINS
 
 ENABLE_PIWIK = False
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 DATABASES = {
     # 'default': dj_database_url.config(

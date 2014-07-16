@@ -4,6 +4,8 @@ from django.contrib import admin
 from django.conf import settings
 from django.views.generic import TemplateView
 from registration.backends.default.views import RegistrationView
+from registration.forms import RegistrationFormUniqueEmail
+
 
 admin.autodiscover()
 
@@ -11,10 +13,21 @@ urlpatterns = []
 if 'core' in settings.INSTALLED_APPS:
     from core.forms import RegistrationForm
     urlpatterns += patterns('',
+        url(r'', include('django.contrib.auth.urls')),
+
         # url(r'^.*$', TemplateView.as_view(template_name='core2/maintainance.html')),
+        # url(r'^login/$',  'core.views.main_views.login'),
+        # url(r'^logout/$', 'core.views.main_views.logout'),
+        # url(r'^accounts/password/reset_done/$', 'core.views.registration_views.reset_password_done', name='password_reset_done'),
+        # url(r'^/accounts/register/$', RegistrationView.as_view(form_class=RegistrationForm), name='registration_register'),
+        # url(r'^accounts/password/reset/$', 'core.views.registration_views.reset_password'),
+        # url(r'^accounts/password/reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        # 'core.views.registration_views.reset_password_confirm',
+        # name='password_reset_confirm'),
+        url(r'^accounts/register/$', RegistrationView.as_view(form_class=RegistrationFormUniqueEmail), name='registration_register'),
+        url(r'^accounts/', include('registration.backends.default.urls')),
+
         url(r'^$', 'core.views.main_views.home', name='home'),
-        url(r'^login/$',  'core.views.main_views.login'),
-        url(r'^logout/$', 'core.views.main_views.logout'),
         url(r'^404$', TemplateView.as_view(template_name='404.html')),
         url(r'^faq$', TemplateView.as_view(template_name='core2/faq.html')),
         url(r'^core/', include('core.urls')),
@@ -35,15 +48,8 @@ if 'core' in settings.INSTALLED_APPS:
         url(r'^bladmin/doc/', include('django.contrib.admindocs.urls')),
         url(r'^bladmin/', include(admin.site.urls)),
         url(r'^login-error/$', 'core.views.main_views.login_error'),
-        url(r'^accounts/password/reset/$', 'core.views.registration_views.reset_password'),
-        url(r'^accounts/password/reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-        'core.views.registration_views.reset_password_confirm',
-        name='password_reset_confirm'),
-        url(r'^accounts/password/reset_done/$', 'core.views.registration_views.reset_password_done', name='password_reset_done'),
-        url(r'^/accounts/register/$', RegistrationView.as_view(form_class=RegistrationForm), name='registration_register'),
         url(r'^robots.txt$', TemplateView.as_view(template_name='core2/robots.txt', content_type='text/plain')),
         url(r'^sitemap.xml$', 'core.views.main_views.sitemap'),
-        url(r'^accounts/', include('registration.backends.default.urls')),
         url(r'', include('social_auth.urls')),
         url(r'^email/$', 'core.views.user_views.redirect_to_user_page',
             {'email_verified': 'true'}, name='emailmgr_email_list'),
