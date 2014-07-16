@@ -24,6 +24,7 @@ if 'core' in settings.INSTALLED_APPS:
         # url(r'^accounts/password/reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         # 'core.views.registration_views.reset_password_confirm',
         # name='password_reset_confirm'),
+        url(r'^logout$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
         url(r'^accounts/register/$', RegistrationView.as_view(form_class=RegistrationFormUniqueEmail), name='registration_register'),
         url(r'^accounts/', include('registration.backends.default.urls')),
 
