@@ -5,6 +5,7 @@ from django.conf import settings
 from django.views.generic import TemplateView
 from registration.backends.default.views import RegistrationView
 from registration.forms import RegistrationFormUniqueEmail
+from core.forms import FrespoPasswordResetForm
 
 
 admin.autodiscover()
@@ -13,7 +14,6 @@ urlpatterns = []
 if 'core' in settings.INSTALLED_APPS:
     urlpatterns += patterns('',
         # url(r'^.*$', TemplateView.as_view(template_name='core2/maintainance.html')),
-        url(r'', include('django.contrib.auth.urls')),
 
         #from core.forms import RegistrationForm
         # url(r'^login/$',  'core.views.main_views.login'),
@@ -24,6 +24,10 @@ if 'core' in settings.INSTALLED_APPS:
         # name='password_reset_confirm'),
 
         url(r'^logout$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
+        # url(r'^password_reset/$', 'django.contrib.auth.views.password_reset', {'password_reset_form': FrespoPasswordResetForm}, name='password_reset'),
+        url(r'', include('django.contrib.auth.urls')),
+
+        url(r'^accounts/password/reset/$', 'django.contrib.auth.views.password_reset', {'password_reset_form': FrespoPasswordResetForm}, name='password_reset'),
         url(r'^accounts/register/$', RegistrationView.as_view(form_class=RegistrationFormUniqueEmail), name='registration_register'),
         url(r'^accounts/', include('registration.backends.default.urls')),
 
