@@ -506,6 +506,12 @@ class Issue(models.Model):
         self.touch()
         self.save()
 
+    def update_is_public_suggestion(self):
+        if self.getOffers().exclude(status=Offer.REVOKED).count() > 0:
+            self.is_public_suggestion = False
+        else:
+            self.is_public_suggestion = True
+
     def get_status(self):
         working = False
         for solution in self.getSolutions():

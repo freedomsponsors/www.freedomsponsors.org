@@ -104,6 +104,7 @@ def change_existing_issue(issue_id, issuedict, logo, user):
 def change_existing_offer(offer_id, offerdict, user):
     offer = Offer.objects.get(pk=offer_id)
     _throwIfNotOfferOwner(offer, user)
+    offer.issue.is_public_suggestion = False
     offer.issue.update_redundant_fields()
     old_offer = offer.clone()
     offer.changeOffer(offerdict)
@@ -154,6 +155,7 @@ def revoke_existing_offer(offer_id, comment_content, user):
     _throwIfNotOfferOwner(offer, user)
     _throwIfOfferNotOpen(offer, user, 'revoke offer')
     offer.revoke()
+    offer.issue.update_is_public_suggestion()
     offer.issue.update_redundant_fields()
     comment = None
     if(comment_content):
