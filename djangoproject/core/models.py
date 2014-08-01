@@ -366,7 +366,7 @@ class Issue(models.Model):
     creationDate = models.DateTimeField()
     updatedDate = models.DateTimeField(null=True, blank=True)
     trackerURL = models.URLField(null=True, blank=True)
-    trackerURL_noprotocol = models.URLField(null=True, blank=True)
+    trackerURL_noprotocol = models.CharField(max_length=1024, null=True, blank=True)
     is_feedback = models.BooleanField()
     is_sponsored = models.BooleanField()
     status = models.CharField(max_length=40)
