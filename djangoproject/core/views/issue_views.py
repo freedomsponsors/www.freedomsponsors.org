@@ -106,12 +106,12 @@ def _listIssues(request):
     project_name = request.GET.get('project_name')
     search_terms = request.GET.get('s')
     operation = request.GET.get('operation', '')
-    is_public_suggestion = None
-    if(operation == 'SPONSOR'):
-        is_public_suggestion = False
-    elif(operation == 'KICKSTART'):
-        is_public_suggestion = True
-    issues = issue_services.search_issues(project_id, project_name, search_terms, is_public_suggestion)
+    is_sponsored = None
+    if operation == 'SPONSOR':
+        is_sponsored = True
+    elif operation == 'KICKSTART':
+        is_sponsored = False
+    issues = issue_services.search_issues(project_id, project_name, search_terms, is_sponsored)
     return issues
 
 
@@ -227,6 +227,8 @@ def _actionbar(issue, myoffer, mysolution, user):
 def viewIssue(request, issue_id):
     try:
         issue = Issue.objects.get(pk=issue_id)
+        if timezone.now() - issue.updatedDate > timedelta(hours=1):
+            issue.update_redundant_fields()
     except:
         return HttpResponse(status=404, content='Issue not found')
     if issue.get_view_link() != request.path:

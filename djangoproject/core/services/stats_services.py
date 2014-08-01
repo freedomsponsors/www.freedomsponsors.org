@@ -58,8 +58,8 @@ and pa.status = 'CONFIRMED_IPN'"""
 
 COUNT_OFFERS = "select count(*) from core_offer"
 COUNT_ISSUES = "select count(*) from core_issue where is_feedback = false"
-COUNT_ISSUES_SPONSORING = "select count(*) from core_issue where is_feedback = false and is_public_suggestion = false"
-COUNT_ISSUES_KICKSTARTING = "select count(*) from core_issue where is_feedback = false and is_public_suggestion = true"
+COUNT_ISSUES_SPONSORING = "select count(*) from core_issue where is_feedback = false and is_sponsored = true"
+COUNT_ISSUES_KICKSTARTING = "select count(*) from core_issue where is_feedback = false and is_sponsored = false"
 COUNT_OFFERS_PAID = "select count(*) from core_offer where status = 'PAID'"
 COUNT_OFFERS_OPEN = "select count(*) from core_offer where status = 'OPEN'"
 COUNT_OFFERS_REVOKED = "select count(*) from core_offer where status = 'REVOKED'"
@@ -69,7 +69,7 @@ COUNT_ISSUES_SPONSORING_OPEN_OR_WORKING_BY_PROJECT = """select count(*) from cor
 where i.project_id = %s
 and i.status in ('open', 'working')
 and i.is_feedback = false
-and i.is_public_suggestion = false"""
+and i.is_sponsored = true"""
 COUNT_ISSUES_SPONSORING_DONE_BY_PROJECT = """select count(*) from core_issue i
 where i.project_id = %s
 and i.status = 'done'"""
