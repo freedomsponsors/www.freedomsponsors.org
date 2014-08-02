@@ -1,6 +1,6 @@
 python bootstrap
 source bin/activate
 cd djangoproject
-cp frespo/env_settings.py_template frespo/env_settings.py 
+export USE_NOSE=1
 ./manage.py test core gh_frespo_integration --noinput
 

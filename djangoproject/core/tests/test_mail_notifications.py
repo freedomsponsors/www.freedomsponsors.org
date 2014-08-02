@@ -1,13 +1,11 @@
-from core.models import *
-from django.utils import unittest
-from core.services import watch_services
+from django.test import TestCase
 from helpers import test_data, email_asserts
 from django.test.client import Client
 from django.core.urlresolvers import reverse
 
 __author__ = 'tony'
 
-class TestMailNotifications(unittest.TestCase):
+class TestMailNotifications(TestCase):
     def setUp(self):
         # Every test needs a client.
         self.user = test_data.createDummyUserRandom(login='johndoe', password='abc123')

@@ -1,9 +1,7 @@
-import json
 from django.test import TestCase
-from django.utils.unittest import skipIf
-from django.conf import settings
-from bitcoin_frespo.utils import bitcoin_adapter
 from core.tests.helpers import test_data, email_asserts, mockers
+from bitcoin_frespo.utils import bitcoin_adapter
+from django.utils.unittest import skipIf
 from core.models import *
 from django.test.client import Client
 from core.services import bitcoin_frespo_services

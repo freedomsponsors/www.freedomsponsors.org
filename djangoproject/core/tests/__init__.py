@@ -1,4 +1,4 @@
-from django.conf import settings
+# from django.conf import settings
 
 # if not settings.TEST_WITH_NOSE:
 #     from tests_trackerintegration import *

@@ -1,11 +1,11 @@
-from django.utils import unittest
+from django.test import TestCase
 from core.tests.helpers import test_data, email_asserts
 from django.test.client import Client
 
 __author__ = 'tony'
 
 
-class TestFeedbackViews(unittest.TestCase):
+class FeedbackViewsTests(TestCase):
     def setUp(self):
         self.user = test_data.createDummyUserRandom(login='johndoe', password='abc123')
         self.client = Client()
@@ -24,7 +24,7 @@ class TestFeedbackViews(unittest.TestCase):
         self.assertTrue('Do Something!' in response.content)
 
 
-class TestDeprecatedCoreFeedbackViews(unittest.TestCase):
+class TestDeprecatedCoreFeedbackViews(TestCase):
     def setUp(self):
         self.client = Client()
 

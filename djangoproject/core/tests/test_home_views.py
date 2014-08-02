@@ -1,10 +1,8 @@
-from django.utils import unittest
-from core.services import watch_services
-from core.tests.helpers import test_data, email_asserts
+from django.test import TestCase
 from django.test.client import Client
 
 
-class TestHomeViews(unittest.TestCase):
+class HomeViewsTests(TestCase):
     def setUp(self):
         self.client = Client()
 

@@ -1,6 +1,5 @@
-import json
 from core.models import *
-from django.utils import unittest
+from django.test import TestCase
 from core.tests.helpers import mockers
 from frespo_currencies import currency_service
 from helpers import test_data
@@ -19,7 +18,7 @@ def _mock_paypal_adapter():
     paypal_adapter.is_verified_account = mock_is_verified_account
 
 
-class TestPaypalPayment(unittest.TestCase):
+class TestPaypalPayment(TestCase):
 
     def _create_test_data(self, bitcoin_offer=False):
         #setup
@@ -148,7 +147,7 @@ class TestPaypalPayment(unittest.TestCase):
 
 
 @skipIf(settings.SKIPTESTS_PAYPALAPI, 'not supported in this environment')
-class TestPaypalAPI(unittest.TestCase):
+class TestPaypalAPI(TestCase):
 
     def test_with_feesPayer_SENDER(self):
 

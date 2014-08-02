@@ -1,12 +1,12 @@
 from core.models import *
-from django.utils import unittest
+from django.test import TestCase
 from core.services import watch_services
 from helpers import test_data
 
 __author__ = 'tony'
 
 
-class TestWatchService(unittest.TestCase):
+class TestWatchService(TestCase):
 
     def test_watch_toggle_issue(self):
         issue = test_data.create_dummy_issue()

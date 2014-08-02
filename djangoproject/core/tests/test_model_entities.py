@@ -1,5 +1,5 @@
 from core.models import Project, User, Issue
-from django.utils import unittest
+from django.test import TestCase
 
 USER_NAME = 'test_user'
 USER_MAIL = 'mail@mail.com.zz'
@@ -13,7 +13,7 @@ ISSUE_KEY = 'ISSUEID'
 ISSUE_TITLE = 'first_issue'
 ISSUE_DESCRIPTION = 'a description'
 
-class TestUser(unittest.TestCase):
+class TestUser(TestCase):
     
     def setUp(self):
         try:
@@ -32,7 +32,7 @@ class TestUser(unittest.TestCase):
         #TODO: test password generation
         pass
 
-class TestProject(unittest.TestCase):
+class TestProject(TestCase):
     
     def setUp(self):
         try:
@@ -53,7 +53,7 @@ class TestProject(unittest.TestCase):
     def test_project_bugtracking_url(self):
         self.assertEquals(self.project.trackerURL, PROJECT_BUGTRACKER)
      
-class TestIssue(unittest.TestCase):
+class TestIssue(TestCase):
     
     def setUp(self):
         try:

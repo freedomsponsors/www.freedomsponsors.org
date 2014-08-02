@@ -2,7 +2,6 @@ set -e
 python bootstrap
 source bin/activate
 cd djangoproject
-cp frespo/env_settings.py_template frespo/env_settings.py 
 
 coverage -e
 coverage -x manage.py test --noinput core gh_frespo_integration

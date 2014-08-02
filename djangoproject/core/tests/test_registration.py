@@ -1,8 +1,8 @@
-from django.utils import unittest
+from django.test import TestCase
 from registration.forms import RegistrationForm
 from django.test.client import Client
 
-class TestRegistration(unittest.TestCase):
+class TestRegistration(TestCase):
 
     def setUp(self):
         self.client = Client()
