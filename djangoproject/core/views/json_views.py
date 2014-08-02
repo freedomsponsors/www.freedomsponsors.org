@@ -57,9 +57,9 @@ def list_issue_cards(request):
     count = int(request.GET.get('count'))
     if not count:
         count = 3
-    sponsoring = request.GET.get('sponsoring').lower() == 'true'
+    is_sponsored = request.GET.get('sponsoring').lower() == 'true'
     count = min(count, 100)
-    query = issue_services.search_issues(project_id=project_id, is_public_suggestion=not sponsoring)
+    query = issue_services.search_issues(project_id=project_id, is_sponsored=is_sponsored)
     total_count = query.count()
     issues = query[offset: offset + count]
     issues = issue_services.to_card_dict(issues)

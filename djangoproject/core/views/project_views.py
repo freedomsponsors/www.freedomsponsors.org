@@ -21,8 +21,8 @@ def view(request, project_id):
             return redirect(project.redirectto_project.get_view_link())
 
     stats = stats_services.project_stats(project)
-    issues_sponsoring = issue_services.search_issues(project_id=project_id, is_public_suggestion=False)[0:3]
-    issues_kickstarting = issue_services.search_issues(project_id=project_id, is_public_suggestion=True)[0:3]
+    issues_sponsoring = issue_services.search_issues(project_id=project_id, is_sponsored=True)[0:3]
+    issues_kickstarting = issue_services.search_issues(project_id=project_id, is_sponsored=False)[0:3]
     issues_sponsoring = json.dumps(issue_services.to_card_dict(issues_sponsoring))
     issues_kickstarting = json.dumps(issue_services.to_card_dict(issues_kickstarting))
     top_sponsors = stats_services.project_top_sponsors(project_id)[0:5]

@@ -7,24 +7,38 @@ from django import forms
 from django.contrib.auth.hashers import UNUSABLE_PASSWORD_PREFIX, is_password_usable, get_hasher
 
 
-class CustomResetForm(PasswordResetForm):
+# class CustomResetForm(PasswordResetForm):
+#
+#     def clean_email(self):
+#         """
+#         Validates that an active user exists with the given email address.
+#         """
+#         email = self.cleaned_data["email"]
+#         self.users_cache = User.objects.filter(email__iexact=email,
+#                                                is_active=True)
+#         if not len(self.users_cache):
+#             raise forms.ValidationError(self.error_messages['unknown'])
+#         for user in self.users_cache:
+#             if user.password.startswith(UNUSABLE_PASSWORD_PREFIX):
+#                 raise forms.ValidationError(self.error_messages['unusable'] + 'This happens because the user account was '
+#                     'created with an OpenID or OAuth provider (tipically Google, Facebook, MyOpenID, etc). '
+#                     'Try logging in with a login provider (see http://freedomsponsors.org%s)' % user.get_view_link())
+#         return email
 
-    def clean_email(self):
-        """
-        Validates that an active user exists with the given email address.
-        """
-        email = self.cleaned_data["email"]
-        self.users_cache = User.objects.filter(email__iexact=email,
-                                               is_active=True)
-        if not len(self.users_cache):
-            raise forms.ValidationError(self.error_messages['unknown'])
-        for user in self.users_cache:
-            if user.password.startswith(UNUSABLE_PASSWORD_PREFIX):
-                raise forms.ValidationError(self.error_messages['unusable'] + 'This happens because the user account was '
-                    'created with an OpenID or OAuth provider (tipically Google, Facebook, MyOpenID, etc). '
-                    'Try logging in with a login provider (see http://freedomsponsors.org%s)' % user.get_view_link())
-        return email
 
-
-def reset_password(request):
-    return auth_views.password_reset(request, password_reset_form=CustomResetForm)
+# def reset_password(request):
+#     return auth_views.password_reset(request, password_reset_form=CustomResetForm)
+#
+#
+# def reset_password_done(request):
+#     return auth_views.password_reset_done(request, password_reset_form=CustomResetForm)
+#
+#
+# def reset_password_confirm(request, uidb64=None, token=None,
+#                            template_name='registration/password_reset_confirm.html',
+#                            post_reset_redirect=None,
+#                            current_app=None, extra_context=None):
+#     return auth_views.password_reset_confirm(request, uidb64=uidb64, token=token,
+#                            template_name=template_name,
+#                            post_reset_redirect=post_reset_redirect,
+#                            current_app=current_app, extra_context=extra_context)

@@ -1,5 +1,6 @@
 import json
 import logging
+import html2text
 
 from django.core.mail import EmailMultiAlternatives
 from django.core.validators import validate_email
@@ -50,7 +51,8 @@ def _send_mail_to_user(user, subject, templateName, contextData, whentrue):
         template = get_template(templateName)
         context = Context(contextData)
         html_content = template.render(context)
-        send_html_mail(subject, html_content, html_content, settings.DEFAULT_FROM_EMAIL, [user.email])
+        text_content = html2text.html2text(html_content)
+        send_html_mail(subject, text_content, html_content, settings.DEFAULT_FROM_EMAIL, [user.email])
 
 
 def notifyWatchers_workbegun(solution, comment, watches):
@@ -315,8 +317,9 @@ def notify_bitcoin_payment_was_sent_to_programmers_and_is_waiting_confirmation(p
     template = get_template('email/bitcoin_payment_was_sent_to_programmers_and_is_waiting_confirmation.html')
     context = Context(contextData)
     html_content = template.render(context)
+    text_content = html2text.html2text(html_content)
     subject = 'BTC %s payment received, and forwarded to programmer. Wating confirmation.' % payment.total_bitcoin_received
-    send_html_mail(subject, html_content, html_content, settings.DEFAULT_FROM_EMAIL, [payment.offer.sponsor.email])
+    send_html_mail(subject, text_content, html_content, settings.DEFAULT_FROM_EMAIL, [payment.offer.sponsor.email])
     adm_subject = '[ADMIN NOTIFY] %s' % subject
     notify_admin(adm_subject, html_content)
 

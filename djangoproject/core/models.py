@@ -130,7 +130,7 @@ def getSolutions(self):
 
 
 def getKickstartingIssues(self):
-    return Issue.objects.filter(createdByUser=self, is_public_suggestion=True).order_by('-creationDate')
+    return Issue.objects.filter(createdByUser=self, is_sponsored=False, is_feedback=False).order_by('-creationDate')
 
 
 def getWatchedIssues(self):
@@ -366,9 +366,9 @@ class Issue(models.Model):
     creationDate = models.DateTimeField()
     updatedDate = models.DateTimeField(null=True, blank=True)
     trackerURL = models.URLField(null=True, blank=True)
-    trackerURL_noprotocol = models.URLField(null=True, blank=True)
+    trackerURL_noprotocol = models.CharField(max_length=1024, null=True, blank=True)
     is_feedback = models.BooleanField()
-    is_public_suggestion = models.BooleanField()
+    is_sponsored = models.BooleanField()
     status = models.CharField(max_length=40)
     logo = models.ImageField(null=True, blank=True, upload_to=upload_to('issue_images/logo'))
 
@@ -385,7 +385,7 @@ class Issue(models.Model):
         issue.trackerURL = trackerURL
         issue.trackerURL_noprotocol = strip_protocol(trackerURL)
         issue.is_feedback = False
-        issue.is_public_suggestion = False
+        issue.is_sponsored = False
         issue.status = 'open'
         return issue
 
@@ -399,6 +399,7 @@ class Issue(models.Model):
         issue.updatedDate = issue.creationDate
         issue.createdByUser = createdByUser
         issue.is_feedback = False
+        issue.is_sponsored = False
         issue.status = 'open'
         return issue
 
@@ -412,7 +413,7 @@ class Issue(models.Model):
         issue.updatedDate = issue.creationDate
         issue.createdByUser = createdByUser
         issue.is_feedback = True
-        issue.is_public_suggestion = False # to check with Tony
+        issue.is_sponsored = False
         issue.status = 'open'
         return issue
 
@@ -503,6 +504,7 @@ class Issue(models.Model):
 
     def update_redundant_fields(self):
         self.status = self.get_status()
+        self.is_sponsored = self.get_sponsor_status()
         self.touch()
         self.save()
 
@@ -514,6 +516,15 @@ class Issue(models.Model):
             elif solution.status == Solution.IN_PROGRESS:
                 working = True
         return 'working' if working else 'open'
+
+    def get_sponsor_status(self):
+        for offer in self.getOffers():
+            if offer.price > 0:
+                if offer.status == Offer.PAID:
+                    return True
+                elif offer.status == Offer.OPEN and not offer.is_expired():
+                    return True
+        return False
 
     def __unicode__(self):
         s = ''

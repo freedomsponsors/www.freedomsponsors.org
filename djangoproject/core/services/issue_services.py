@@ -14,15 +14,15 @@ logger = logging.getLogger(__name__)
 __author__ = 'tony'
 
 
-def search_issues(project_id=None, project_name=None, search_terms='', is_public_suggestion=None):
+def search_issues(project_id=None, project_name=None, search_terms='', is_sponsored=None):
     if search_terms:
         issue = _find_by_tracker_url(search_terms)
         if issue:
             return issue
 
     issues = Issue.objects.filter(Q(is_feedback=False) | Q(offer__isnull=False)).distinct()
-    if is_public_suggestion != None:
-        issues = issues.filter(is_public_suggestion=is_public_suggestion)
+    if is_sponsored != None:
+        issues = issues.filter(is_sponsored=is_sponsored)
     if project_id:
         issues = issues.filter(project__id=project_id)
     elif project_name:
@@ -40,25 +40,27 @@ def _find_by_tracker_url(url):
 
 def sponsor_new_issue(dict, user):
     offer = _buildOfferFromDictionary(dict, user)
-    if(offer.issue.project):
+    if offer.issue.project:
         offer.issue.project.save()
         offer.issue.project = offer.issue.project
-    if(not offer.issue.id):
+    if not offer.issue.id:
         offer.issue.save()
         offer.issue = offer.issue
     offer.save()
+    offer.issue.update_redundant_fields()
     msg = "offer: " + str(offer.price) + "\n<br>" +\
           "issue key: " + offer.issue.key + "\n<br>" +\
           "issue title: " + offer.issue.title + "\n<br>"
-    if(offer.issue.project):
+    if offer.issue.project:
         msg += "project : " + offer.issue.project.name + "\n<br>" +\
                "project.trackerURL: " + offer.issue.project.trackerURL + "\n<br>"
     notify_admin("INFO: New issue sponsored", msg)
     return offer
 
+
 def kickstart_new_issue(dict, user):
-    issue = _buildIssueFromDictionary(dict, user);
-    issue.is_public_suggestion = True
+    issue = _buildIssueFromDictionary(dict, user)
+    issue.is_sponsored = False
     if(issue.project):
         issue.project.save()
         issue.project = issue.project
@@ -78,9 +80,6 @@ def sponsor_existing_issue(issue_id, dict, user):
     _throwIfAlreadySponsoring(issue, user)
     offer = _buildOfferFromDictionary_and_issue(dict, user, issue);
     offer.save()
-    if issue.is_public_suggestion:
-        issue.is_public_suggestion = False
-        issue.save()
     issue.update_redundant_fields()
     watches = watch_services.find_issue_and_project_watches(issue)
     notifyWatchers_offeradded(offer, watches)
@@ -104,9 +103,9 @@ def change_existing_issue(issue_id, issuedict, logo, user):
 def change_existing_offer(offer_id, offerdict, user):
     offer = Offer.objects.get(pk=offer_id)
     _throwIfNotOfferOwner(offer, user)
-    offer.issue.update_redundant_fields()
     old_offer = offer.clone()
     offer.changeOffer(offerdict)
+    offer.issue.update_redundant_fields()
     watches = watch_services.find_issue_and_project_watches(offer.issue)
     notifyWatchers_offerchanged(old_offer, offer, watches)
     return offer
@@ -203,7 +202,7 @@ def to_card_dict(issues):
         dic = {'id': issue.id,
                'title': issue.title,
                'status': issue.get_status(),
-               'sponsor_status': 'PROPOSED' if issue.is_public_suggestion else 'SPONSORED',
+               'sponsor_status': 'SPONSORED' if issue.is_sponsored else 'PROPOSED',
                'project_link': '#',
                'issue_link': issue.get_view_link(),
                'description': strip_markdown(issue.description),

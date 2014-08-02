@@ -76,8 +76,8 @@ def mailtest(request):
 
 
 def home(request):
-    issues_sponsoring = issue_services.search_issues(is_public_suggestion=False)[0:3]
-    issues_kickstarting = issue_services.search_issues(is_public_suggestion=True)[0:3]
+    issues_sponsoring = issue_services.search_issues(is_sponsored=True)[0:3]
+    issues_kickstarting = issue_services.search_issues(is_sponsored=False)[0:3]
     crumbs = [HOME_CRUMB]
     issues_sponsoring = json.dumps(issue_services.to_card_dict(issues_sponsoring))
     issues_kickstarting = json.dumps(issue_services.to_card_dict(issues_kickstarting))
