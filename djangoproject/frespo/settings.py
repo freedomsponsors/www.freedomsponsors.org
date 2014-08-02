@@ -1,7 +1,6 @@
 # coding: utf-8
 from decimal import Decimal
 from unipath import Path
-import os
 
 
 PROJECT_DIR = Path(__file__).parent.parent
@@ -13,8 +12,8 @@ FRESPO_PROJECT_ID = -1 # only needed for backwards compatibility with south patc
 MEDIA_ROOT = PROJECT_DIR.child('core').child('static').child('media')
 MEDIA_ROOT_URL = '/static/media'
 
-SITE_PROTOCOL = 'https'
-SITE_HOST = 'freedomsponsors.org'
+SITE_PROTOCOL = 'http'
+SITE_HOST = 'localhost:8080'
 SITE_NAME = 'FreedomSponsors'
 SITE_HOME = SITE_PROTOCOL+'://'+SITE_HOST
 
@@ -247,7 +246,7 @@ PAGINATION_DEFAULT_WINDOW = 3
 # settings that are likely to change on different environments
 # ############################################################
 
-ALLOWED_HOSTS = ['freedomsponsors.org', 'www.freedomsponsors.org']
+ALLOWED_HOSTS = ['localhost']
 ADMINS = (
     ('Admin', 'admin@freedomsponsors.org'),
 )
@@ -269,8 +268,6 @@ FETCH_ISSUE_TIMEOUT = 10.0
 SECRET_KEY = '*bz++cf(*#++vpo+b+=m3%p9#*x$$&amp;0mjs90x3oo5u@^zyvh)0'
 ENABLE_PIWIK = False
 
-AUTO_EMAIL_USERNAME = 'noreply@freedomsponsors.com'
-AUTO_EMAIL_PASSWORD = 'ThisIsNotTheRealPassword_obviously'
 GITHUB_BOT_USERNAME = 'freedomsponsors-bot'
 GITHUB_BOT_PASSWORD = '*********'
 
