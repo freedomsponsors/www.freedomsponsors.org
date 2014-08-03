@@ -71,4 +71,6 @@ Instructions to run application locally:
   $ ./manage.py runserver # and visit http://localhost:8000
   ```
 
-Next: [make sure you can run unit tests](http://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/doc/testing.md)
+Next: 
+* [make sure you can run unit tests](http://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/doc/testing.md)
+* [Customize your settings](http://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/doc/custom_settings.md)
