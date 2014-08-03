@@ -15,3 +15,5 @@ If your dev environment needs different settings, here's what you should do:
 
   * set the environment variable `DJANGO_SETTINGS_MODULE=frespo.settings_dev`; or
   * when running `manage.py` add `--settings=frespo.settings_dev`
+
+* **Remember**: you should not commit your settings_dev file.
