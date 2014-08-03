@@ -13,10 +13,10 @@ Instructions to run application locally:
 
 1. Install Postgresql and some other needed libs
 
-```bash
-$ sudo apt-get update --fix-missing
-$ sudo apt-get install postgresql postgresql-server-dev-all python-dev python-lxml libxslt-dev libpq-dev
-```
+  ```bash
+  $ sudo apt-get update --fix-missing
+  $ sudo apt-get install postgresql postgresql-server-dev-all python-dev python-lxml libxslt-dev libpq-dev
+  ```
 
 2. Clone the repo.
 
