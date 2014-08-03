@@ -56,7 +56,7 @@ Instructions to run application locally:
   $ deactivate
   ```
 
-  * Remember: You'll need to be in the virtual environment to use `./manage.py ...` commands
+  **Remember**: You'll need to be in the virtual environment to use `./manage.py ...` commands
 
 5. Create database objects.
 
