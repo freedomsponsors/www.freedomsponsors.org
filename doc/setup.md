@@ -15,60 +15,60 @@ Instructions to run application locally:
 
   ```bash
   $ sudo apt-get update --fix-missing
-  $ sudo apt-get install postgresql postgresql-server-dev-all python-dev python-lxml libxslt-dev libpq-dev
+  $ sudo apt-get install postgresql postgresql-server-dev-all \
+  python-dev python-lxml libxslt-dev libpq-dev
   ```
 
 2. Clone the repo.
 
-```bash
-$ git clone git://github.com/freedomsponsors/www.freedomsponsors.org.git
-$ cd www.freedomsponsors.org
-```
+  ```bash
+  $ git clone git://github.com/freedomsponsors/www.freedomsponsors.org.git
+  $ cd www.freedomsponsors.org
+  ```
 
 3. Create the database/default user.
   
-```bash
-$ sudo su postgres #run the next command as postgres
-$ createuser -d -SRP frespo # this will prompot you to create a password (just use frespo for now)
-$ createdb -O frespo frespo
-$ exit # go back to your normal user
-```
+  ```bash
+  $ sudo su postgres #run the next command as postgres
+  $ createuser -d -SRP frespo # this will prompot you to create a password (just use frespo for now)
+  $ createdb -O frespo frespo
+  $ exit # go back to your normal user
+  ```
 
 4. Create a virtualenv and install dependencies.
 
-```bash
-$ python bootstrap
-```
+  ```bash
+  $ python bootstrap
+  ```
 
-This will create a python virtualenv and install all dependecies listed on `requirements.txt` on it.
-If this command fails because of psycopg2, make sure you have installed postgresql-server-dev-all (mentioned on step 1)
+  This will create a python virtualenv and install all dependecies listed on `requirements.txt` on it.
+  If this command fails because of psycopg2, make sure you have installed postgresql-server-dev-all (mentioned on step 1)
 
-Then you can activate the virtualenv:
+  Then you can activate the virtualenv:
 
-```bash
-$ source bin/activate
-```
+  ```bash
+  $ source bin/activate
+  ```
 
-To deactivate the virtualenv
+  To deactivate the virtualenv
 
-```bash
-$ deactivate
-```
+  ```bash
+  $ deactivate
+  ```
 
-* Remember: You'll need to be in the virtual environment to use `./manage.py ...` commands
+  * Remember: You'll need to be in the virtual environment to use `./manage.py ...` commands
 
 5. Create database objects.
 
-```bash  
-$ cd djangoproject
-$ ./manage.py syncdb --migrate --noinput
-```
+  ```bash  
+  $ cd djangoproject
+  $ ./manage.py syncdb --migrate --noinput
+  ```
 
 6. Run!
 
-```bash
-$ ./manage.py runserver # and visit http://localhost:8000
-```
+  ```bash
+  $ ./manage.py runserver # and visit http://localhost:8000
+  ```
 
-You should also verify if you can run all the automatic tests successfully.
-Please see: [Running unit tests](http://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/doc/testing.md)
+Next: [make sure you can run unit tests](http://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/doc/testing.md)
