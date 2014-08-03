@@ -1,111 +1,74 @@
-## Windows users
+## Operating system
 
-If you're a Windows user we suggest you set up a virtual machine using [VirtualBox](http://www.virtualbox.org) - Ubuntu
-virtual machines can be downloaded [here](http://virtualboxes.org/images/ubuntu/). 
+FreedomSponsors uses a few python libs that I could never get to work properly on Windows or Mac.
+That means you need linux to get FS running on your machine.
 
-Alternatively, you can help us with [#185 - Windows development environment](https://github.com/freedomsponsors/www.freedomsponsors.org/issues/185)
+You can get Ubuntu VMs for VirtualBox [here](http://virtualboxes.org/images/ubuntu/). 
+
+Alternatively, you can [run FS in sandbox mode](https://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/doc/windows.md) (no database, good enough to work with html/css/js only)
 
 ## Running
 
 Instructions to run application locally:
 
-1. You'll need a few tools for the next steps - make sure all of them are installed before proceeding to the next steps.
+1. Install Postgresql and some other needed libs
 
- 1.1 Make sure your package information is up to date.
- 
- ```bash
- $ sudo apt-get update --fix-missing
- ```
- 
- 1.2 Install Git.
- 
-  ```bash
-  $ sudo apt-get install git
-  ```
- 
- 1.3 Install PostgreSQL.
- 
- ```bash
- $ sudo apt-get install postgresql 
- $ sudo apt-get install postgresql-server-dev-all # Make sure you have this.
- ```
- 1.4 Install python-dev.
- 
- ```bash
- $ sudo apt-get install python-dev
- ```
- 1.5 Install python-lxml.
- 
- ```bash
- $ sudo apt-get install python-lxml libxslt-dev
- ```
- 
- 1.6 Install libpq-dev.
- 
- ```bash
- $ sudo apt-get install libpq-dev
- ```
- 
-2. Clone the web application repository.
+```bash
+$ sudo apt-get update --fix-missing
+$ sudo apt-get install postgresql postgresql-server-dev-all python-dev python-lxml libxslt-dev libpq-dev
+```
 
-  ```bash
-  $ git clone git://github.com/freedomsponsors/www.freedomsponsors.org.git
-  $ cd www.freedomsponsors.org
-  ```
+2. Clone the repo.
+
+```bash
+$ git clone git://github.com/freedomsponsors/www.freedomsponsors.org.git
+$ cd www.freedomsponsors.org
+```
 
 3. Create the database/default user.
   
-    ```bash
-    $ sudo su postgres #run the next command as postgres
-    $ createuser -d -SRP frespo # this will prompot you to create a password (just use frespo for now)
-    $ createdb -O frespo frespo
-    $ exit # go back to your normal user
-    ```
+```bash
+$ sudo su postgres #run the next command as postgres
+$ createuser -d -SRP frespo # this will prompot you to create a password (just use frespo for now)
+$ createdb -O frespo frespo
+$ exit # go back to your normal user
+```
 
-4. Configure settings.
+4. Create a virtualenv and install dependencies.
 
-  ```bash
-  $ cd djangoproject
-  $ cp frespo/env_settings.py_template frespo/env_settings.py
-  # edit the env_settings.py file - you must change the definitions shown below (values as used in this walkthrough):
-  # ENVIRONMENT = 'DEV'
-  $ nano frespo/env_settings.py 
-  $ cd .. 
-  ```
-5. Create a virtualenv and install dependencies.
+```bash
+$ python bootstrap
+```
 
-    ```bash
-    $ python bootstrap
-    ```
-  This will create a python virtualenv and install all dependecies listed on `requirements.txt` on it.
-  If this command fails because of psycopg2, make sure you have installed postgresql-server-dev-all (mentioned on step 1)
-  
-  Then you can enter the virtualenv:
+This will create a python virtualenv and install all dependecies listed on `requirements.txt` on it.
+If this command fails because of psycopg2, make sure you have installed postgresql-server-dev-all (mentioned on step 1)
 
-    ```bash
-    $ source bin/activate
-    ```
-  To exit the virtualenv
+Then you can activate the virtualenv:
 
-    ```bash
-    $ deactivate
-    ```
-  You'll need to be in the virtual environment to use `./manage.py ...` commands
+```bash
+$ source bin/activate
+```
 
-6. Create database objects.
+To deactivate the virtualenv
 
-  ```bash  
-  $ cd djangoproject
-  $ ./manage.py syncdb --migrate --noinput
-  ```
+```bash
+$ deactivate
+```
 
-7. Run!
+* Remember: You'll need to be in the virtual environment to use `./manage.py ...` commands
 
-  ```bash
-  $ ./manage.py runserver # and visit http://localhost:8000
-  ```
+5. Create database objects.
 
-If you find that the steps above are not actually accurate, please [open a new issue to let us know](https://github.com/freedomsponsors/www.freedomsponsors.org/issues/new)!
+```bash  
+$ cd djangoproject
+$ ./manage.py syncdb --migrate --noinput
+```
+
+6. Run!
+
+```bash
+$ ./manage.py runserver # and visit http://localhost:8000
+```
 
 You should also verify if you can run all the automatic tests successfully.
 Please see: [Running unit tests](http://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/doc/testing.md)
