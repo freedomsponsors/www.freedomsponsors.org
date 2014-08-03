@@ -20,6 +20,8 @@ This will run all tests in packages 'core' and 'gh_frespo_integration'
 
 # Running splinter tests
 
+(Splinter tests are broken right now, you can skip this part!)
+
 There is another set of tests that need additional setup before they can be ran.
 Those tests live in the 'core_splinter_tests' package, and they use [Splinter](https://github.com/cobrateam/splinter) (a wrapper around Selenium). 
 
