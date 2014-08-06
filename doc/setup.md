@@ -16,7 +16,7 @@ Instructions to run application locally:
   ```bash
   $ sudo apt-get update --fix-missing
   $ sudo apt-get install postgresql postgresql-server-dev-all \
-  python-dev python-lxml libxslt-dev libpq-dev
+  python-dev python-lxml libxslt-dev libpq-dev pgadmin3
   ```
 
 2. Clone the repo.
