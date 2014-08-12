@@ -339,20 +339,6 @@ DATABASES = {
 }
 
 
-if os.getenv('USE_NOSE') == '1':
-    TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-    NOSE_ARGS = [
-        '--match=^(must|ensure|should|test|it_should)',
-        '--where=%s' % PROJECT_DIR,
-        '--id-file=%s' % PROJECT_DIR.child('.noseids'),
-        '--all-modules',
-        '--with-id',
-        '--verbosity=2',
-        '--nologcapture',
-        '--rednose',
-    ]
-
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
