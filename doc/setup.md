@@ -7,6 +7,12 @@ You can get Ubuntu VMs for VirtualBox [here](http://virtualboxes.org/images/ubun
 
 Alternatively, you can [run FS in sandbox mode](https://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/doc/windows.md) (no database, good enough to work with html/css/js only)
 
+## Watch the videos
+
+If you have trouble following the instructions here, we have videos to help :-)
+https://www.youtube.com/watch?v=Z0e_GNaPA-8&list=PLgMNBa0XaIgd4hpofUDaeyRNKMUlSfZde
+
+
 ## Running
 
 Instructions to run application locally:
