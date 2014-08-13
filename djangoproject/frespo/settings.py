@@ -4,7 +4,7 @@ from unipath import Path
 import os
 
 PROJECT_DIR = Path(__file__).parent.parent
-
+SECRET_KEY = '*bz++cf(*#++vpo+b+=m3%p9#*x$$&amp;0mjs90x3oo5u@^zyvh)0'
 
 FRESPO_PROJECT_ID = -1 # only needed for backwards compatibility with south patch 0008_set_isfeedback_true.py
 
@@ -221,27 +221,6 @@ LOGIN_ERROR_URL = '/login-error/'
 PAGINATION_DEFAULT_PAGINATION = 20
 PAGINATION_DEFAULT_WINDOW = 3
 
-
-# os.environ.setdefault('TEST_WITH_NOSE', 'true')
-
-# pycharm is not able to run tests with nose runner
-# so, you might want to configure your pycharm environment variables with TEST_WITH_NOSE=false
-# TEST_WITH_NOSE = os.environ['TEST_WITH_NOSE'] == 'true'
-
-# if TEST_WITH_NOSE:
-#     TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-#     NOSE_ARGS = [
-#         '--match=^(must|ensure|should|test|it_should)',
-#         '--where=%s' % PROJECT_DIR,
-#         '--id-file=%s' % PROJECT_DIR.child('.noseids'),
-#         '--all-modules',
-#         '--with-id',
-#         '--verbosity=2',
-#         '--nologcapture',
-#         '--rednose',
-#     ]
-
-
 ##############################################################
 # settings that are likely to change on different environments
 # ############################################################
@@ -325,18 +304,34 @@ SKYROCK_CONSUMER_SECRET      = ''
 YAHOO_CONSUMER_KEY           = ''
 YAHOO_CONSUMER_SECRET        = ''
 
-DATABASES = {
-    # 'default': dj_database_url.config(
-    #     default='sqlite:///' + PROJECT_DIR.child('database.db'))
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'frespo',                      # Or path to database file if using sqlite3.
-        'USER': 'frespo',                      # Not used with sqlite3.
-        'PASSWORD': 'frespo',                  # Not used with sqlite3.
-        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
+if os.getenv('USE_TEST_DB') == '1':
+    DATABASES = {
+        # 'default': dj_database_url.config(
+        #     default='sqlite:///' + PROJECT_DIR.child('database.db'))
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'frespotesting',
+            'USER': 'frespo',
+            'PASSWORD': 'frespo',
+            'HOST': 'localhost',
+            'PORT': '5432',
+            'TEST_MIRROR': 'default',
+        }
     }
-}
+else:
+    DATABASES = {
+        # 'default': dj_database_url.config(
+        #     default='sqlite:///' + PROJECT_DIR.child('database.db'))
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'frespo',
+            'USER': 'frespo',
+            'PASSWORD': 'frespo',
+            'HOST': 'localhost',
+            'PORT': '5432',
+            # 'TEST_MIRROR': None,
+        }
+    }
 
 
 LOGGING = {
