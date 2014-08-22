@@ -1,5 +1,3 @@
-import json
-from decimal import Decimal
 import logging
 import traceback
 
@@ -9,12 +7,9 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import redirect, render_to_response
 from django.template import RequestContext
-from django.conf import settings
-
-from core.utils.frespo_utils import get_or_none, twoplaces
 from core.models import *
 from core.services import issue_services, watch_services, paypal_services, mail_services
-from core.views import paypal_views, bitcoin_views, template_folder, HOME_CRUMB
+from core.views import paypal_views, bitcoin_views, HOME_CRUMB
 from frespo_currencies import currency_service
 
 
@@ -129,7 +124,7 @@ def listIssues(request):
         issue = issues[0]
         return redirect(issue.get_view_link())
 
-    return render_to_response(template_folder(request) + 'issue_list.html',
+    return render_to_response('core2/issue_list.html',
         {'issues': issues,
          's': search_terms,
          'project_id': project_id,
@@ -176,7 +171,7 @@ class LatestIssuesFeed(Feed):
 def myissues(request):
     if(request.user.is_authenticated() and request.user.getUserInfo() == None):
         return redirect('core.views.user_views.editUserForm')
-    return render_to_response(template_folder(request) + 'myissues.html',
+    return render_to_response('core2/myissues.html',
         {},
         context_instance = RequestContext(request))
 
@@ -244,9 +239,9 @@ def viewIssue(request, issue_id):
     show_sponsor_popup = (request.GET.get('show_sponsor') == 'true')
     alert = request.GET.get('alert')
     if alert == 'KICKSTART':
-        show_alert = template_folder(request) + 'popup/popup_just_kickstarted.html'
+        show_alert = 'core2/popup/popup_just_kickstarted.html'
     if alert == 'SPONSOR':
-        show_alert = template_folder(request) + 'popup/popup_just_sponsored.html'
+        show_alert = 'core2/popup/popup_just_sponsored.html'
     alert_reputation_revoking = mysolution and mysolution.status == Solution.IN_PROGRESS and mysolution.get_received_payments().count() > 0
 
     is_watching = request.user.is_authenticated() and watch_services.is_watching_issue(request.user, issue.id)
@@ -267,7 +262,7 @@ def viewIssue(request, issue_id):
         'crumbs': crumbs,
         'actionbar': _actionbar(issue, myoffer, mysolution, request.user)}
 
-    return render_to_response(template_folder(request) + 'issue.html', context, context_instance=RequestContext(request))
+    return render_to_response('core2/issue.html', context, context_instance=RequestContext(request))
 
 
 def editIssue(request):
@@ -294,7 +289,7 @@ def addIssueForm(request):
         if(issue_already_exists):
             return redirect(issues[0].get_view_link()+'?show_sponsor=true&c=s')
 
-    return render_to_response(template_folder(request) + 'add_issue.html',
+    return render_to_response('core2/add_issue.html',
         {'trackerURL' : trackerURL,
         'operation' : operation,},
         context_instance = RequestContext(request))
@@ -346,7 +341,7 @@ def payOfferForm(request, offer_id):
             'imglink': solution.programmer.gravatar_url_small()
         })
     currency_options = _currency_options(offer)
-    return render_to_response(template_folder(request) + 'pay_offer_angular.html',
+    return render_to_response('core2/pay_offer_angular.html',
                               {
                                   'offer': offer,
                                   'count': len(solutions_dict),
@@ -359,9 +354,6 @@ def payOfferForm(request, offer_id):
 
 @login_required
 def payOffer(request):
-    # currency = request.POST['currency']
-    # if currency == 'BTC':
-    #     return render_to_response(template_folder(request) + 'bitcoin_disabled.html', {}, context_instance=RequestContext(request))
     offer_id = int(request.POST['offer_id'])
     offer = Offer.objects.get(pk=offer_id)
     if offer.status == Offer.PAID:

@@ -6,12 +6,11 @@ from django.template import RequestContext
 from core.models import Issue, Watch
 from core.services import watch_services
 from core.services.mail_services import notify_admin
-from core.views import template_folder
 
 
 def feedback(request):
     issues = Issue.objects.filter(is_feedback=True).order_by('-creationDate')
-    return render_to_response(template_folder(request) + 'feedback.html',
+    return render_to_response('core2/feedback.html',
         {'issues':issues,},
         context_instance = RequestContext(request))
 

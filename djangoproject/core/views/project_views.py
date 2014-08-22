@@ -4,7 +4,6 @@ from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from core.models import Project, ActionLog
 from core.services import stats_services, issue_services, watch_services, mail_services
-from core.views import template_folder
 from django.contrib.auth.decorators import login_required
 
 __author__ = 'tony'
@@ -68,6 +67,6 @@ def edit(request):
 def list(request):
     projects = Project.objects.all()
     projects = projects.order_by('name')
-    return render_to_response(template_folder(request) + 'project_list.html',
+    return render_to_response('core2/project_list.html',
         {'projects':projects},
         context_instance = RequestContext(request))

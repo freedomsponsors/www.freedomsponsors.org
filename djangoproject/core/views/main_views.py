@@ -1,5 +1,4 @@
 # Create your views here.
-import json
 
 from django.http import HttpResponseRedirect
 from django.contrib.auth import logout as auth_logout
@@ -11,7 +10,7 @@ from core.services import stats_services
 from django.contrib import messages
 import logging
 from core.services import testmail_service
-from core.views import is_old_layout, template_folder, HOME_CRUMB
+from core.views import HOME_CRUMB
 
 logger = logging.getLogger(__name__)
 
@@ -32,7 +31,7 @@ def login(request):
             return redirect(getparams)
         else:
             return redirect('/')
-    return render_to_response(template_folder(request) + 'login.html',
+    return render_to_response('core2/login.html',
         {'getparams':getparams},
         context_instance = RequestContext(request))
 
@@ -54,7 +53,7 @@ def admail(request):
             messages.info(request, 'mail sent to %s users' % count)
     else:
         messages.info(request, 'nice try :-). If you do find a hole, please have the finesse to let us know though.')
-    return render_to_response(template_folder(request) + 'admail.html',
+    return render_to_response('core2/admail.html',
                               {},
                               context_instance = RequestContext(request))
 
@@ -70,7 +69,7 @@ def mailtest(request):
             messages.info(request, msg)
     else:
         messages.info(request, 'nice try :-). If you do find a hole, please have the finesse to let us know though.')
-    return render_to_response(template_folder(request) + 'mailtest.html',
+    return render_to_response('core2/mailtest.html',
                               {'to': to},
                               context_instance = RequestContext(request))
 
@@ -81,7 +80,7 @@ def home(request):
     crumbs = [HOME_CRUMB]
     issues_sponsoring = json.dumps(issue_services.to_card_dict(issues_sponsoring))
     issues_kickstarting = json.dumps(issue_services.to_card_dict(issues_kickstarting))
-    return render_to_response(template_folder(request) + 'home.html',
+    return render_to_response('core2/home.html',
         {'issues_sponsoring': issues_sponsoring,
          'issues_kickstarting': issues_kickstarting,
          'crumbs': crumbs},
@@ -106,6 +105,6 @@ def sitemap(request):
 
 def stats(request):
     stats = stats_services.get_stats()
-    return render_to_response(template_folder(request) + 'stats.html',
+    return render_to_response('core2/stats.html',
         {'stats': stats},
         context_instance=RequestContext(request))

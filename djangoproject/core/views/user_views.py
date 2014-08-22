@@ -8,7 +8,6 @@ from django.shortcuts import render_to_response, redirect
 from django.utils.translation import ugettext as _
 from core.services import user_services, mail_services
 from django.conf import settings
-from core.views import template_folder
 
 
 def viewUser(request, user_id, user_slug=None):
@@ -30,7 +29,7 @@ def viewUser(request, user_id, user_slug=None):
         'stats': user.getStats(),
         'unconnectedSocialAccounts':unconnectedSocialAccounts,
         }
-    return render_to_response(template_folder(request) + 'user.html',
+    return render_to_response('core2/user.html',
         context,
         context_instance = RequestContext(request))
 
@@ -47,7 +46,7 @@ def editUserForm(request):
         userinfo.save()
         mail_services.welcome(request.user)
         _notify_admin_new_user(request.user)
-    return render_to_response(template_folder(request) + 'useredit.html',
+    return render_to_response('core2/useredit.html',
         {'userinfo':userinfo,
          'available_languages' : available_languages,
         'next':request.GET.get('next', '')},
@@ -77,7 +76,7 @@ def editUser(request):
 
 def listUsers(request):
     users = user_services.get_users_list()
-    return render_to_response(template_folder(request) + 'userlist.html',
+    return render_to_response('core2/userlist.html',
         {'users':users,},
         context_instance = RequestContext(request))
 

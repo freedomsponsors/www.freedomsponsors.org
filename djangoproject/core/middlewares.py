@@ -1,14 +1,18 @@
-from django.shortcuts import redirect
+from django.shortcuts import render_to_response, redirect
 from django.contrib import messages
+from django.template.context import RequestContext
 from django.utils import translation
 from django.core.urlresolvers import reverse
 import logging
 logger = logging.getLogger(__name__)
 
 
-class CompleteRegistrationFirst:
+class FSPreconditionsMiddleware:
     def process_request(self, request):
         user = request.user
+        if user.is_authenticated() and not user.is_active:
+            if request.path != '/logout':
+                return render_to_response('core2/account_disabled.html', {}, context_instance=RequestContext(request))
         if user.is_authenticated() and not user.is_registration_complete():
             whitelist = [
                 'core.views.user_views.editUserForm',
