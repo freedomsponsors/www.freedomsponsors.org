@@ -34,8 +34,8 @@ def send_html_mail(subject, body_txt, body_html, from_email, to_addresses):
 
 def send_mail_to_all_users(subject, body, from_email=settings.DEFAULT_FROM_EMAIL):
     count = 0
-    for user in User.objects.all():
-        if(user.getUserInfo() and user.getUserInfo().receiveEmail_announcements):
+    for user in User.objects.filter(is_active=True):
+        if user.is_active and user.getUserInfo() and user.getUserInfo().receiveEmail_announcements:
             try:
                 plain_send_mail(user.email, subject, body, from_email)
                 count += 1
@@ -46,8 +46,8 @@ def send_mail_to_all_users(subject, body, from_email=settings.DEFAULT_FROM_EMAIL
     return count
 
 
-def _send_mail_to_user(user, subject, templateName, contextData, whentrue):
-    if(user.getUserInfo() and (not whentrue or getattr(user.getUserInfo(), whentrue))):
+def _send_mail_to_user(user, subject, templateName, contextData, whentrue, even_when_inactive=False):
+    if (user.is_active or even_when_inactive) and user.getUserInfo() and (not whentrue or getattr(user.getUserInfo(), whentrue)):
         template = get_template(templateName)
         context = Context(contextData)
         html_content = template.render(context)
@@ -57,15 +57,17 @@ def _send_mail_to_user(user, subject, templateName, contextData, whentrue):
 
 def notifyWatchers_workbegun(solution, comment, watches):
     def send_func(watch):
-        if(watch.user.id != solution.programmer.id):
-            _send_mail_to_user(user = watch.user,
-                subject = solution.programmer.getUserInfo().screenName+" has just begun working on issue [%s]"%solution.issue.title,
-                templateName = 'email/workbegun.html',
-                contextData = {"solution" : solution,
-                               "you" : watch.user,
-                               "SITE_HOME" : settings.SITE_HOME,
-                               "comment" : comment},
-                whentrue='receiveEmail_issue_work')
+        if watch.user.id != solution.programmer.id:
+            _send_mail_to_user(
+                user=watch.user,
+                subject=solution.programmer.getUserInfo().screenName+" has just begun working on issue [%s]" % solution.issue.title,
+                templateName='email/workbegun.html',
+                contextData={"solution": solution,
+                             "you": watch.user,
+                             "SITE_HOME": settings.SITE_HOME,
+                             "comment": comment},
+                whentrue='receiveEmail_issue_work'
+            )
     _notify_watchers(send_func, watches)
 
 
@@ -237,20 +239,25 @@ def notifyWatchers_offerchanged(old_offer, new_offer, watches):
 def notify_payment_parties_and_watchers_paymentconfirmed(payment, watches):
     already_sent_to = {}
     for part in payment.getParts():
-        _send_mail_to_user(user = part.programmer, 
-            subject = payment.offer.sponsor.getUserInfo().screenName+" has made you a "+payment.get_currency_symbol()+" "+str(twoplaces(part.price))+" payment",
-            templateName = 'email/payment_received.html',
-            contextData = {"payment" : payment,
+        _send_mail_to_user(
+            user = part.programmer,
+            subject=payment.offer.sponsor.getUserInfo().screenName+" has made you a "+payment.get_currency_symbol()+" "+str(twoplaces(part.price))+" payment",
+            templateName='email/payment_received.html',
+            contextData={"payment" : payment,
             "part" : part,
-            "SITE_HOME" : settings.SITE_HOME},
-            whentrue=None)
+            "SITE_HOME": settings.SITE_HOME},
+            whentrue=None,
+            even_when_inactive=True,
+        )
         already_sent_to[part.programmer.email] = True
-    _send_mail_to_user(user = payment.offer.sponsor,
-        subject = "You have made a "+payment.get_currency_symbol()+" "+str(twoplaces(payment.total))+" payment",
-        templateName = 'email/payment_sent.html',
-        contextData = {"payment" : payment,
-        "SITE_HOME" : settings.SITE_HOME},
-        whentrue=None)
+    _send_mail_to_user(
+        user=payment.offer.sponsor,
+        subject="You have made a "+payment.get_currency_symbol()+" "+str(twoplaces(payment.total))+" payment",
+        templateName='email/payment_sent.html',
+        contextData={"payment": payment, "SITE_HOME": settings.SITE_HOME},
+        whentrue=None,
+        even_when_inactive=True,
+    )
     already_sent_to[payment.offer.sponsor.email] = True
     def send_func(watch):
         subject = "%s has paid his offer [%s %s / %s]" % (
@@ -289,7 +296,7 @@ def notifyWatchers_newissuecomment(comment, watches):
 
 def notifyWatchers_newoffercomment(comment, watches):
     def send_func(watch):
-        if(watch.user.id != comment.author.id):
+        if watch.user.id != comment.author.id:
             subject = "%s added a comment on offer [%s %s / %s]" % (
                 comment.author.getUserInfo().screenName,
                 comment.offer.get_currency_symbol(),
@@ -301,11 +308,13 @@ def notifyWatchers_newoffercomment(comment, watches):
                            "comment": comment,
                            "SITE_HOME": settings.SITE_HOME,
                            "type": "offer"}
-            _send_mail_to_user(user = watch.user,
-                subject = subject,
-                templateName = 'email/comment_added.html',
-                contextData = contextData,
-                whentrue='receiveEmail_issue_comments')
+            _send_mail_to_user(
+                user=watch.user,
+                subject=subject,
+                templateName='email/comment_added.html',
+                contextData=contextData,
+                whentrue='receiveEmail_issue_comments'
+            )
     _notify_watchers(send_func, watches)
 
 
@@ -328,7 +337,7 @@ def _notify_watchers(send_func, watches, already_sent_to = None):
     if not already_sent_to:
         already_sent_to = {}
     for watch in watches:
-        if(not already_sent_to.has_key(watch.user.email)):
+        if not already_sent_to.has_key(watch.user.email):
             send_func(watch)
             already_sent_to[watch.user.email] = True
 
