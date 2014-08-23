@@ -1224,3 +1224,7 @@ div.fakeinput{
     background-color: #44f;
     cursor: pointer;
 }
+
+.errorlist {
+    color: #FF0000;
+}

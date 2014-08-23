@@ -55,6 +55,7 @@
     <div class="span1"></div>
     <div class="span10">
         <form class="form-inline" action="/login/?next=/" method="post">
+            {{ form.non_field_errors }}
             {% csrf_token %}
             <div>
                 <label for="id_username">Use you plain old</label>
