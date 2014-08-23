@@ -211,6 +211,7 @@ TWITTER_EXTRA_DATA = [('screen_name', 'social_username')]
 ACCOUNT_ACTIVATION_DAYS = 1
 
 LOGIN_ERROR_URL = '/login-error/'
+SOCIAL_AUTH_INACTIVE_USER_MESSAGE = 'This account has been deactivated'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
