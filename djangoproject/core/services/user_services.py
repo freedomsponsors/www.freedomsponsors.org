@@ -1,7 +1,6 @@
 from core.services import paypal_services
 from emailmgr import utils as emailmgr_utils
 from emailmgr.models import EmailAddress
-from django.contrib.auth.models import User
 from core.models import *
 from django.conf import settings
 
@@ -55,6 +54,17 @@ def edit_existing_user(user, dict):
     userinfo.save()
     paypal_services.accepts_paypal_payments(user)
     return paypalActivation, primaryActivation
+
+
+def deactivate_user(user):
+    for solution in Solution.objects.filter(programmer=user, status=Solution.IN_PROGRESS):
+        solution.abort()
+    for offer in Offer.objects.filter(sponsor=user, status=Offer.OPEN):
+        offer.revoke()
+    Watch.objects.filter(user=user).delete()
+    user.is_active = False
+    user.save()
+
 
 def get_users_list():
     return UserInfo.objects.filter(hide_from_userlist = False).order_by("-id")

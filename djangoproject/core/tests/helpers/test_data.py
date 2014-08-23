@@ -60,12 +60,16 @@ def _create_dummy_offer_with_currency(value, currency):
     offer.save()
     return offer
 
-def create_dummy_solution():
-    issue = create_dummy_issue()
-    programmer = create_dummy_programmer()
+
+def create_dummy_solution(issue=None, programmer=None):
+    if not issue:
+        issue = create_dummy_issue()
+    if not programmer:
+        programmer = create_dummy_programmer()
     solution = Solution.newSolution(issue, programmer, False)
     solution.save()
     return solution
+
 
 def create_dummy_payment_usd():
     offer = create_dummy_offer_usd()
