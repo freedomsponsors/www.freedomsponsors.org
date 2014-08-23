@@ -30,7 +30,8 @@
         <button type="button" class="close" data-dismiss="modal">×</button>
         <h3>You're about to terminate your account. Are you sure?</h3>
     </div>
-    <form method="post" action="/user/cancel_accountn">
+    <form method="post" action="/user/cancel_account">
+        {% csrf_token %}
         <div class="modal-body">
             <p>By cancelling your account:</p>
             <ul>

@@ -86,3 +86,10 @@ def redirect_to_user_page(request, **kwargs):
     if kwargs:
         link += '?' + urllib.urlencode(kwargs)
     return redirect(link)
+
+
+@login_required
+def cancel_account(request):
+    user_services.deactivate_user(request.user)
+    messages.info(request, 'Your account has been disabled.')
+    return redirect('/logout')

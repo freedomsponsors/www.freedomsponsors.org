@@ -6,4 +6,5 @@ urlpatterns = patterns('core.views.user_views',
     url(r'^(?P<user_id>\d+)/(?P<user_slug>.*)$', 'viewUser'),
     url(r'^edit$', 'editUserForm'),
     url(r'^edit/submit$', 'editUser'),
+    url(r'^cancel_account$', 'cancel_account'),
 )
