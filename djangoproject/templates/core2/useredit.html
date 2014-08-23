@@ -25,6 +25,30 @@
   </div>
 </div>
 
+<div class="modal hide fade in" id="div_cancelAccountModal">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3>You're about to terminate your account. Are you sure?</h3>
+    </div>
+    <form method="post" action="/user/cancel_accountn">
+        <div class="modal-body">
+            <p>By cancelling your account:</p>
+            <ul>
+                <li>You won't be able to log in.</li>
+                <li>You will not receive any emails from FreedomSponsors, unless it has something to do with payments to or from you.</li>
+                <li>Your public profile page will just display your username and a "Account disabled" message</li>
+                <li>Any pending offers from you will be automatically revoked</li>
+                <li>Any issues "in progress" that you may have will be automatically aborted</li>
+            </ul>
+            <p>Are you sure?</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn btn-primary" data-dismiss="modal">NO! Keep my account!</a>
+            <input type="submit" class="btn btn-danger" value="Yes, cancel my account">
+        </div>
+    </form>
+</div>
+
 <div class="row-fluid">
 	<div class="span2">
 	  	<img src="{{user.gravatar_url_big}}"/>
@@ -249,6 +273,15 @@
 	</div>
 </div>
 
+<div class="row-fluid">
+	<div class="span12">
+        <h1>Danger zone</h1>
+        <hr>
+        <button id="btnCancelAccount" class="btn btn-danger">Cancel my account</button>
+    </div>
+</div>
+
+
 <script>
 	function submit_onclick(){
 		if(!$('#screenName').val().trim()){
@@ -289,6 +322,9 @@
 			$('#div_paypalEmail').slideUp();
 		}
 	});
+	$('#btnCancelAccount').click(function(){
+        $('#div_cancelAccountModal').modal();
+    });
   });
 </script>
 {% endblock mainContent%}
