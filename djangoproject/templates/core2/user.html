@@ -60,6 +60,14 @@
 					</tr>
 					{% endif %}
 					{% if user.is_superuser %}
+                        {% if not le_user.is_active %}
+                        <tr>
+                            <td>INACTIVE!!!</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        {% endif %}
 					<tr>
 						<td>email</td>
 						<td>&nbsp;</td>

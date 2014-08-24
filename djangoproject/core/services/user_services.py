@@ -1,4 +1,4 @@
-from core.services import paypal_services
+from core.services import paypal_services, mail_services
 from emailmgr import utils as emailmgr_utils
 from emailmgr.models import EmailAddress
 from core.models import *
@@ -64,6 +64,10 @@ def deactivate_user(user):
     Watch.objects.filter(user=user).delete()
     user.is_active = False
     user.save()
+    mail_services.deactivated(user)
+    subject = 'user deactivated: %s/%s' % (user.id, user.getUserInfo().screenName)
+    body = '<a href="http://freedomsponsors.org/user/%s">%s</a>' % (user.id, user.getUserInfo().screenName)
+    mail_services.notify_admin(subject, body)
 
 
 def get_users_list():

@@ -137,11 +137,24 @@ def notifyWatchers_acceptingpayments(solution, watches):
 
 
 def welcome(user):
-    _send_mail_to_user(user=user,
+    _send_mail_to_user(
+        user=user,
         subject='Welcome to FreedomSponsors',
         templateName='email/welcome.html',
-        contextData={"you" : user},
-        whentrue=None)
+        contextData={"you": user},
+        whentrue=None
+    )
+
+
+def deactivated(user):
+    _send_mail_to_user(
+        user=user,
+        subject='Your account has been deactivated',
+        templateName='email/farewell.html',
+        contextData={"you": user},
+        whentrue=None,
+        even_when_inactive=True
+    )
 
 
 def notifyWatchers_workstopped(solution, comment, watches):

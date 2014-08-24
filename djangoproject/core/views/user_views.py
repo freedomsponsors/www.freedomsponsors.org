@@ -15,23 +15,36 @@ def viewUser(request, user_id, user_slug=None):
         user = User.objects.get(pk=user_id)
     except:
         return HttpResponse(status=404, content='User not found')
+
+    if not user.is_active and not request.user.is_superuser:
+        return render_to_response(
+            'core2/user_inactive.html',
+            {'le_user': user},
+            context_instance=RequestContext(request)
+        )
+
     unconnectedSocialAccounts = None
-    if(user.id == request.user.id):
+    if user.id == request.user.id:
         unconnectedSocialAccounts = user.getUnconnectedSocialAccounts()
-    alert_strings = user_services.getAlertsForViewUser(request.user, user,
+    alert_strings = user_services.getAlertsForViewUser(
+        request.user, user,
         changedPrimaryEmail=request.GET.get('prim') == 'true',
         changedPaypalEmail=request.GET.get('payp') == 'true',
-        emailVerified=request.GET.get('email_verified') == 'true')
+        emailVerified=request.GET.get('email_verified') == 'true'
+    )
     for alert in alert_strings:
         messages.info(request, alert)
 
-    context = {'le_user':user,
+    context = {
+        'le_user': user,
         'stats': user.getStats(),
-        'unconnectedSocialAccounts':unconnectedSocialAccounts,
-        }
-    return render_to_response('core2/user.html',
+        'unconnectedSocialAccounts': unconnectedSocialAccounts,
+    }
+    return render_to_response(
+        'core2/user.html',
         context,
-        context_instance = RequestContext(request))
+        context_instance=RequestContext(request)
+    )
 
 @login_required
 def editUserForm(request):
