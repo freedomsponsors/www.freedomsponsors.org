@@ -33,3 +33,18 @@ class TestUserServices(TestCase):
         self.assertFalse(watch_services.is_watching_project(user, issue.project.id))
         self.assertFalse(watch_services.is_watching_issue(user, offer.issue.id))
         self.assertFalse(watch_services.is_watching_issue(user, solution.issue.id))
+
+    def test_change_username(self):
+        user = test_data.create_dummy_sponsor()
+
+        change_ok = user_services.change_username(user, 'oreiudo')
+        user = User.objects.get(pk=user.id)
+
+        self.assertTrue(change_ok)
+        self.assertEqual('oreiudo', user.username)
+
+        user2 = test_data.create_dummy_sponsor()
+        change_ok = user_services.change_username(user2, 'oreiudo')
+
+        self.assertFalse(change_ok)
+        self.assertNotEqual('oreiudo', user2.username)

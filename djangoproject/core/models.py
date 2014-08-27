@@ -40,6 +40,7 @@ class UserInfo(models.Model):
     receiveEmail_issue_offer = models.BooleanField()
     receiveEmail_issue_payment = models.BooleanField()
     receiveEmail_announcements = models.BooleanField()
+    can_change_username = models.BooleanField(default=True)
 
     @classmethod
     def newUserInfo(cls, user):

@@ -70,6 +70,19 @@ def deactivate_user(user):
     mail_services.notify_admin(subject, body)
 
 
+def is_username_available(username):
+    existing_user = get_or_none(User, username=username)
+    return False if existing_user else True
+
+
+def change_username(user, new_username):
+    if not is_username_available(new_username):
+        return False
+    user.username = new_username
+    user.save()
+    return True
+
+
 def get_users_list():
     return UserInfo.objects.filter(hide_from_userlist = False).order_by("-id")
 
