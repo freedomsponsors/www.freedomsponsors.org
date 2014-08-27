@@ -51,9 +51,14 @@ fsapi_mod.factory('FSApi', function(){
         return fs_ajax_async_result($.post, '/core/json/toggle_watch', params)
     }
 
+    function check_username_availability(username){
+        return fs_ajax_async_result($.get, '/core/json/check_username_availability/'+username)
+    }
+
     return {
         list_issues: list_issues,
         get_latest_activity: get_latest_activity,
-        toggle_watch: toggle_watch
+        toggle_watch: toggle_watch,
+        check_username_availability: check_username_availability
     };
-})
+});

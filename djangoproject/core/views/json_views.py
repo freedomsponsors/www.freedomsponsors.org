@@ -5,7 +5,7 @@ from core.models import *
 from django.http import HttpResponse
 from django.utils.translation import ugettext as _
 import json
-from core.services import issue_services, tag_services, activity_services, watch_services, mail_services
+from core.services import issue_services, tag_services, activity_services, watch_services, mail_services, user_services
 import traceback
 import logging
 from django.contrib.auth.decorators import login_required
@@ -115,6 +115,12 @@ def latest_activity(request):
         'activities': [activity.to_dict_json() for activity in activities],
     }
     return HttpResponse(json.dumps(result))
+
+
+@login_required
+def check_username_availability(request, username):
+    is_available = user_services.is_username_available(username)
+    return HttpResponse(str(is_available).lower())
 
 
 def _convert_offers_to_dict(offers):

@@ -1,0 +1,65 @@
+{% extends "core2/base.html" %}
+
+{% block title %}
+    Change username
+{% endblock %}
+
+{% block head %}
+    <script src="/static/js/angular.min.js"></script>
+    <script src="/static/js/fsapi.js"></script>
+    <script src="/static/js/fsutil.js"></script>
+    <script>
+        angular.module('main', ['fsapi']).config(
+            function($interpolateProvider, $httpProvider){
+                $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
+                $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+                $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+            }
+        ).controller('ChangeUsernameCtrl', function ChangeUsernameCtrl($scope, FSApi){
+            $scope.new_username = '{{ user.username }}';
+
+            $scope.check = function(){
+                $scope.checking = true;
+                var new_username = $scope.new_username;
+                FSApi.check_username_availability(new_username).onResult(function(result){
+                    result = ''+result;
+                    $scope.$apply(function(){
+                        if(result.toLowerCase() == 'true'){
+                            $scope.message = 'Great! "'+new_username+'" is available!'
+                        } else {
+                            $scope.message = 'Sorry, "'+new_username+'" is already taken.'
+                        }
+                        $scope.checking = false;
+                    });
+                })
+            }
+        });
+
+    </script>
+{% endblock head %}
+
+
+{% block mainContent%}
+<div class="content" align="center" ng-app="main" ng-controller="ChangeUsernameCtrl">
+    <div class="content-section" align="left">
+    {% if can_change %}
+        <h3>Change username</h3>
+        <hr>
+        <form method="post" action="/user/change_username">
+            {% csrf_token %}
+            <div>
+                New username: <input type="text" name="new_username" ng-model="new_username">
+                <a href ng-click="check()" class="fs-button blue medium">Is available?</a>
+                <a href class="fs-button green medium">Change!</a>
+            </div>
+            <div>
+                <img src="/static/img2/ajax-loader.gif" ng-show="checking">
+                {[{ message }]}
+            </div>
+        </form>
+    {% else %}
+        <h3>You already changed your username.</h3>
+    {% endif %}
+    </div>
+</div>
+{% endblock mainContent%}

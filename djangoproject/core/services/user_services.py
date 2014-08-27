@@ -80,6 +80,9 @@ def change_username(user, new_username):
         return False
     user.username = new_username
     user.save()
+    userinfo = user.getUserInfo()
+    userinfo.can_change_username = False
+    userinfo.save()
     return True
 
 
@@ -89,12 +92,12 @@ def get_users_list():
 
 def _changePaypalEmailIfNeeded(userinfo, newPaypalEmail):
     oldPaypalEmail = userinfo.paypalEmail
-    if(newPaypalEmail != oldPaypalEmail):
+    if newPaypalEmail != oldPaypalEmail:
         userinfo.paypalEmail = newPaypalEmail
     do_it = newPaypalEmail != userinfo.user.email and (
         newPaypalEmail != oldPaypalEmail or
         not userinfo.is_paypal_email_verified)
-    if(do_it):
+    if do_it:
         emailActivation = _makeEmailActivation(userinfo.user, newPaypalEmail, 'PAYPAL')
         _send_activation(emailActivation)
         userinfo.is_paypal_email_verified = False

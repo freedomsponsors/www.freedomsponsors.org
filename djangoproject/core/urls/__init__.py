@@ -49,4 +49,5 @@ urlpatterns += patterns('core.views.json_views',
     url(r'^json/remove_tag', 'remove_tag'),
     url(r'^json/latest_activity', 'latest_activity'),
     url(r'^json/toggle_watch', 'toggle_watch'),
+    url(r'^json/check_username_availability/(?P<username>.+)', 'check_username_availability'),
 )

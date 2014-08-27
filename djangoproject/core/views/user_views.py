@@ -74,24 +74,28 @@ def editUser(request):
     paypalActivation, primaryActivation = user_services.edit_existing_user(request.user, request.POST)
 
     next = request.POST.get(_('next'))
-    if(next):
+    if next:
         return redirect(next)
     else:
         params = []
-        if(primaryActivation):
+        if primaryActivation:
             params.append("prim=true")
-        if(paypalActivation):
+        if paypalActivation:
             params.append("payp=true")
         params = '&'.join(params)
-        if(params):
+        if params:
             params = '?'+params
         return redirect(request.user.get_view_link()+params)
 
+
 def listUsers(request):
     users = user_services.get_users_list()
-    return render_to_response('core2/userlist.html',
-        {'users':users,},
-        context_instance = RequestContext(request))
+    return render_to_response(
+        'core2/userlist.html',
+        {'users': users},
+        context_instance=RequestContext(request)
+    )
+
 
 @login_required
 def redirect_to_user_page(request, **kwargs):
@@ -106,3 +110,28 @@ def cancel_account(request):
     user_services.deactivate_user(request.user)
     messages.info(request, 'Your account has been disabled.')
     return redirect('/logout')
+
+
+@login_required
+def change_username(request):
+    can_change = request.user.getUserInfo().can_change_username
+    if request.method.lower() == 'post':
+        if can_change:
+            old_username = request.user.username
+            new_username = request.POST['new_username']
+            change_ok = user_services.change_username(request.user, new_username)
+            if change_ok:
+                messages.info(request, 'Your username has been changed')
+                can_change = False
+                subject = 'user %s changed username %s --> %s' % (request.user.id, old_username, new_username)
+                body = '<a href="http://freedomsponsors.org/user/%s">%s</a>' % (request.user.id, new_username)
+                mail_services.notify_admin(subject, body)
+            else:
+                messages.error(request, 'Sorry, that username is already taken')
+        else:
+            messages.warning(request, 'You cannot change your username anymore')
+    return render_to_response(
+        'core2/change_username.html',
+        {'can_change': can_change},
+        context_instance=RequestContext(request)
+    )
