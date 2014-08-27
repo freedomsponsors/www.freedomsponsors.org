@@ -1228,3 +1228,10 @@ div.fakeinput{
 .errorlist {
     color: #FF0000;
 }
+
+.success {
+	color: #22dd22;
+}
+.fail {
+	color: #dd2222;
+}

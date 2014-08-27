@@ -18,20 +18,33 @@
         ).controller('ChangeUsernameCtrl', function ChangeUsernameCtrl($scope, FSApi){
             $scope.new_username = '{{ user.username }}';
 
+            $scope.keypress = function(evt){
+                if(evt.charCode == 13){
+                    $scope.check();
+                    evt.preventDefault();
+                }
+                return false;
+            };
+
             $scope.check = function(){
                 $scope.checking = true;
                 var new_username = $scope.new_username;
                 FSApi.check_username_availability(new_username).onResult(function(result){
                     result = ''+result;
                     $scope.$apply(function(){
-                        if(result.toLowerCase() == 'true'){
+                        $scope.available = result.toLowerCase() == 'true';
+                        if($scope.available){
                             $scope.message = 'Great! "'+new_username+'" is available!'
                         } else {
                             $scope.message = 'Sorry, "'+new_username+'" is already taken.'
                         }
                         $scope.checking = false;
                     });
-                })
+                });
+            }
+
+            $scope.submit = function(){
+                $('#le_form').submit();
             }
         });
 
@@ -45,16 +58,17 @@
     {% if can_change %}
         <h3>Change username</h3>
         <hr>
-        <form method="post" action="/user/change_username">
+        <form id="le_form" method="post" action="/user/change_username">
             {% csrf_token %}
             <div>
-                New username: <input type="text" name="new_username" ng-model="new_username">
+                New username: <input type="text" name="new_username" ng-model="new_username" 
+                ng-keypress="keypress($event)">
                 <a href ng-click="check()" class="fs-button blue medium">Available?</a>
-                <a href class="fs-button green medium">Change!</a>
+                <a href ng-show="available" class="fs-button green medium" ng-click="submit()">Change!</a>
             </div>
             <div>
                 <img src="/static/img2/ajax-loader.gif" ng-show="checking">
-                {[{ message }]}
+                <h2 ng-class="{success:available, fail:!available}">{[{ message }]}</h2>
             </div>
         </form>
     {% else %}
