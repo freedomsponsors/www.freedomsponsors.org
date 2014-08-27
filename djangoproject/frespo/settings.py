@@ -13,7 +13,7 @@ MEDIA_ROOT = PROJECT_DIR.child('core').child('static').child('media')
 MEDIA_ROOT_URL = '/static/media'
 
 SITE_PROTOCOL = 'http'
-SITE_HOST = 'localhost:8080'
+SITE_HOST = 'localhost:8000'
 SITE_NAME = 'FreedomSponsors'
 SITE_HOME = SITE_PROTOCOL+'://'+SITE_HOST
 
