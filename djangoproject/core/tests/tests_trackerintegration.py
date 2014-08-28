@@ -61,14 +61,14 @@ class TrackerUtilsTest(TestCase):
         # assert(issueInfo.project_name == 'blau')
         # assert(issueInfo.issue_title == 'blau')
 
-    def test_gittip_github(self):
-        issueInfo = fetchIssueInfo("https://github.com/gittip/www.gittip.com/issues/14")
+    def test_freedomsponsors_github(self):
+        issueInfo = fetchIssueInfo("https://github.com/freedomsponsors/www.freedomsponsors.org/issues/1")
         assert(not issueInfo.error)
         assert(issueInfo.tracker == 'GITHUB')
-        assert(issueInfo.key == '14')
-        assert(issueInfo.project_trackerURL == 'https://github.com/gittip/www.gittip.com/issues')
-        assert(issueInfo.project_name == 'www.gittip.com')
-        assert(issueInfo.issue_title == 'pay in with bitcoin')
+        assert(issueInfo.key == '1')
+        assert(issueInfo.project_trackerURL == 'https://github.com/freedomsponsors/www.freedomsponsors.org/issues')
+        assert(issueInfo.project_name == 'www.freedomsponsors.org')
+        assert(issueInfo.issue_title == 'Make freedomsponsors web application open sourced')
 
     def test_coveragepy_bitbucket(self):
         issueInfo = fetchIssueInfo("https://bitbucket.org/ned/coveragepy/issue/193/unicodedecodeerror-on-htmlpy")
