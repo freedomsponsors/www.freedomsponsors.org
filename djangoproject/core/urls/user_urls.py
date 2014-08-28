@@ -7,5 +7,5 @@ urlpatterns = patterns('core.views.user_views',
     url(r'^edit$', 'editUserForm'),
     url(r'^edit/submit$', 'editUser'),
     url(r'^cancel_account$', 'cancel_account'),
-    url(r'^change_username', 'change_username'),
+    # url(r'^change_username', 'change_username'),
 )
