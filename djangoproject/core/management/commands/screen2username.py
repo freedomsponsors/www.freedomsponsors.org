@@ -21,7 +21,7 @@ class Command(NoArgsCommand):
     def handle_noargs(self, **options):
         count = 0
         for user in User.objects.all().order_by('id'):
-            screenName = user.getUserInfo.screenName
+            screenName = user.getUserInfo().screenName
             username = slugify(screenName)
             valid = user_services.is_valid_username(username)
             p = '[INVALID]' if not valid else ''
