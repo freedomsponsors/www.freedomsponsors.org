@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.test import TestCase
 from helpers import test_data
 from django.test.client import Client
@@ -75,6 +76,26 @@ class TestUserAuthenticatedViews(TestCase):
         self.assertEqual(302, redirect_status)
         self.assertTrue(redirect_url.startswith('http://testserver/user/'))
         self.assertTrue(redirect_url.endswith('/john-doe?prim=true'))
+
+    def test_change_username_ok(self):
+        response = self.client.post('/user/change_username', {
+            'new_username': 'oreiudo'
+        })
+        user = User.objects.get(pk=self.user.id)
+        self.assertEqual(200, response.status_code)
+        self.assertEqual('oreiudo', user.username)
+
+    def test_change_username_name_already_taken(self):
+        old_username = self.user.username
+        response = self.client.post('/user/change_username', {
+            'new_username': self.another_user.username
+        })
+        user = User.objects.get(pk=self.user.id)
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(old_username, user.username)
+
+        msg = [m for m in response.context['messages']][0].message
+        self.assertTrue('username is already taken' in msg)
 
 
 class TestDeprecatedCoreUserViews(TestCase):
