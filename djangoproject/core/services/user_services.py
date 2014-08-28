@@ -72,7 +72,7 @@ def deactivate_user(user):
 
 
 def is_valid_username(username):
-    return re.search(r'^\w*[a-zA-Z]\w*$', username) is not None
+    return re.search(r'^[\w\-_]*[a-zA-Z][\w\-_]*$', username) is not None
 
 
 def is_username_available(username):
