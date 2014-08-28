@@ -119,8 +119,10 @@ def latest_activity(request):
 
 @login_required
 def check_username_availability(request, username):
-    is_available = user_services.is_username_available(username)
-    return HttpResponse(str(is_available).lower())
+    result = {'is_valid': user_services.is_valid_username(username)}
+    if result['is_valid']:
+        result['is_available'] = user_services.is_username_available(username)
+    return HttpResponse(json.dumps(result))
 
 
 def _convert_offers_to_dict(offers):

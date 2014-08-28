@@ -30,13 +30,16 @@
                 $scope.checking = true;
                 var new_username = $scope.new_username;
                 FSApi.check_username_availability(new_username).onResult(function(result){
-                    result = ''+result;
                     $scope.$apply(function(){
-                        $scope.available = result.toLowerCase() == 'true';
-                        if($scope.available){
-                            $scope.message = 'Great! "'+new_username+'" is available!'
-                        } else {
+                        if(!result.is_valid){
+                            $scope.available = false;
+                            $scope.message = 'Sorry! "'+new_username+'" is not a valid username (should be alphanumeric).'
+                        } else if(!result.is_available){
+                            $scope.available = false;
                             $scope.message = 'Sorry, "'+new_username+'" is already taken.'
+                        } else {
+                            $scope.available = true;
+                            $scope.message = 'Great! "'+new_username+'" is available!'
                         }
                         $scope.checking = false;
                     });
@@ -56,13 +59,17 @@
 <div class="content" align="center" ng-app="main" ng-controller="ChangeUsernameCtrl">
     <div class="content-section" align="left">
     {% if can_change %}
-        <h3>Change username</h3>
+        <h2>Change username</h2>
+        <h3 class="blue-text">Attention: you can only change your username once. Make it a good one :-)</h3>
         <hr>
         <form id="le_form" method="post" action="/user/change_username">
             {% csrf_token %}
             <div>
-                New username: <input type="text" name="new_username" ng-model="new_username" 
-                ng-keypress="keypress($event)">
+                New username:
+                <input type="text" name="new_username"
+                       ng-model="new_username"
+                       ng-pattern="/\w*[a-zA-Z]\w*/"
+                       ng-keypress="keypress($event)">
                 <a href ng-click="check()" class="fs-button blue medium">Available?</a>
                 <a href ng-show="available" class="fs-button green medium" ng-click="submit()">Change!</a>
             </div>

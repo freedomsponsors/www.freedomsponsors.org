@@ -119,15 +119,18 @@ def change_username(request):
         if can_change:
             old_username = request.user.username
             new_username = request.POST['new_username']
-            change_ok = user_services.change_username(request.user, new_username)
-            if change_ok:
-                messages.info(request, 'Your username has been changed')
-                can_change = False
-                subject = 'user %s changed username %s --> %s' % (request.user.id, old_username, new_username)
-                body = '<a href="http://freedomsponsors.org/user/%s">%s</a>' % (request.user.id, new_username)
-                mail_services.notify_admin(subject, body)
+            if not user_services.is_valid_username(new_username):
+                messages.error(request, 'Sorry, this username is invalid')
             else:
-                messages.error(request, 'Sorry, that username is already taken')
+                change_ok = user_services.change_username(request.user, new_username)
+                if change_ok:
+                    messages.info(request, 'Your username has been changed')
+                    can_change = False
+                    subject = 'user %s changed username %s --> %s' % (request.user.id, old_username, new_username)
+                    body = '<a href="http://freedomsponsors.org/user/%s">%s</a>' % (request.user.id, new_username)
+                    mail_services.notify_admin(subject, body)
+                else:
+                    messages.error(request, 'Sorry, that username is already taken')
         else:
             messages.warning(request, 'You cannot change your username anymore')
     return render_to_response(

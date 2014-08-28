@@ -3,6 +3,7 @@ from emailmgr import utils as emailmgr_utils
 from emailmgr.models import EmailAddress
 from core.models import *
 from django.conf import settings
+import re
 
 __author__ = 'tony'
 
@@ -68,6 +69,10 @@ def deactivate_user(user):
     subject = 'user deactivated: %s/%s' % (user.id, user.getUserInfo().screenName)
     body = '<a href="http://freedomsponsors.org/user/%s">%s</a>' % (user.id, user.getUserInfo().screenName)
     mail_services.notify_admin(subject, body)
+
+
+def is_valid_username(username):
+    return re.search(r'^\w*[a-zA-Z]\w*$', username) is not None
 
 
 def is_username_available(username):
