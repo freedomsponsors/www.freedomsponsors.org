@@ -25,7 +25,7 @@
 
 <a href="{{offer.issue.get_view_link}}">View issue</a>
 
- | Sponsor: <a href="{{offer.sponsor.get_view_link}}"><img src="{{offer.sponsor.gravatar_url_small}}">  {{offer.sponsor.getUserInfo.screenName}}</a>
+ | Sponsor: <a href="{{offer.sponsor.get_view_link}}"><img src="{{offer.sponsor.gravatar_url_small}}">  {{offer.sponsor.username}}</a>
 {% if offer.issue.project %}
  | Project: <a target="_project" href="{{offer.issue.project.homeURL}}">{{offer.issue.project.name}}</a>
 {% endif %}
@@ -45,7 +45,7 @@
             </tr>
             {% for part in payment.getParts %}
                 <tr>
-                    <td><a href="{{part.programmer.get_view_link}}"><img src="{{part.programmer.gravatar_url_medium}}"> {{ part.programmer.getUserInfo.screenName }}</a></td>
+                    <td><a href="{{part.programmer.get_view_link}}"><img src="{{part.programmer.gravatar_url_medium}}"> {{ part.programmer.username }}</a></td>
                     <td><span style="color:#030"><strong>{{ payment.get_currency_symbol }} {{ part.price }}</strong></span></td>
                 </tr>
             {% endfor %}

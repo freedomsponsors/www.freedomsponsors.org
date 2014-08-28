@@ -42,7 +42,7 @@
       {% endifequal %}
 
       {% ifequal showCreatedBy "true" %}
-      <td><a href="{{ issue.createdByUser.get_view_link }}">{{ issue.createdByUser.getUserInfo.screenName }}</a></td>
+      <td><a href="{{ issue.createdByUser.get_view_link }}">{{ issue.createdByUser.username }}</a></td>
       {% endifequal %}
 
       <td>

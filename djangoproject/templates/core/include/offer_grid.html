@@ -25,7 +25,7 @@
         {% for part in payment.getParts %}
             <tr>
                 <td colspan="3"> </td>
-                <td colspan="2"><a href="{{part.programmer.get_view_link}}"><img src="{{part.programmer.gravatar_url_small}}"> {{ part.programmer.getUserInfo.screenName }}</a></td>
+                <td colspan="2"><a href="{{part.programmer.get_view_link}}"><img src="{{part.programmer.gravatar_url_small}}"> {{ part.programmer.username }}</a></td>
                 <td colspan="2"><span style="color:#030"><strong>{{ payment.get_currency_symbol }} {{ part.price|floatformat:2 }}</strong></span></td>
             </tr>
         {% endfor %}

@@ -12,7 +12,7 @@
 {% if user and user.is_authenticated %}
           <div class="btn-group pull-right">
             <a id="a_userMenu" class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-              <i class="icon-user"></i> {{ user.getUserInfo.screenName }}
+              <i class="icon-user"></i> {{ user.username }}
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">

@@ -221,7 +221,7 @@ def to_card_dict(issues):
         for offer in issue.getOffers()[0:4]:
             sponsor = {
                 'image_link': offer.sponsor.gravatar_url_medium(),
-                'screen_name': offer.sponsor.getUserInfo().screenName,
+                'username': offer.sponsor.username,
                 'sponsor_link': offer.sponsor.get_view_link(),
             }
             four_sponsors.append(sponsor)

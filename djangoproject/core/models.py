@@ -80,13 +80,14 @@ class UserInfo(models.Model):
         return self.website
 
     def get_view_link(self):
-        kwargs = {'user_id': self.user.id}
-        if self.screenName:
-            kwargs['user_slug'] = urlquote(slugify(self.screenName))
-        return reverse('core.views.user_views.viewUser', kwargs=kwargs)
+        # kwargs = {'user_id': self.user.id}
+        # if self.screenName:
+        #     kwargs['user_slug'] = urlquote(slugify(self.screenName))
+        return '/user/%s' % self.user.username
+        # return reverse('core.views.user_views.viewUser', kwargs=kwargs)
 
     def is_complete(self):
-        return self.screenName and self.realName and self.user.email
+        return self.user.username and self.user.email
 
 
 def gravatar_url_small(self):
@@ -990,7 +991,7 @@ class PaymentPart(models.Model):
             'programmer_id': self.programmer.id,
             'programmer_link': self.programmer.get_view_link(),
             'programmer_image': self.programmer.gravatar_url_medium(),
-            'programmer_screenname': self.programmer.getUserInfo().screenName,
+            'programmer_username': self.programmer.username,
             'solution_id': self.solution.id,
             'price': float(str(self.price)) if self.price else None,
         }
@@ -1050,7 +1051,7 @@ class ActionLog(models.Model):
             'entity': self.entity,
             # 'creationDate': self.id,
             'user_image': self.user.gravatar_url_medium(),
-            'user_screenname': self.user.getUserInfo().screenName,
+            'username': self.user.username,
             'user_link': self.user.get_view_link(),
             'user_id': self.user.id,
             'project_id': self.project.id if self.project else None,

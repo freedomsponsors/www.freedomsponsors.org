@@ -1,6 +1,6 @@
 {% extends "email/base.html" %}
 {% block mainContent%}
-Hello {{ payment.offer.sponsor.getUserInfo.screenName }}<br>
+Hello {{ payment.offer.sponsor.username }}<br>
 Your {{payment.get_currency_symbol}} {{payment.total}} payment has been processed.<br><br>
 
 This payment is regarding issue:<br>
@@ -21,7 +21,7 @@ This payment is regarding issue:<br>
     	</tr>
     	{% for part in payment.paymentpart_set.all %}
     	<tr>
-    		<td>{{ part.solution.programmer.getUserInfo.screenName }}</td>
+    		<td>{{ part.solution.programmer.username }}</td>
     		<td>{{ part.money_sent.transaction_hash }}</td>
     	</tr>
     	{% endfor%}

@@ -29,7 +29,7 @@ def getAlertsForViewUser(logged_user, user_to_view, changedPrimaryEmail, changed
 
 def edit_existing_user(user, dict):
     userinfo = user.getUserInfo()
-    userinfo.screenName = dict['screenName']
+    # userinfo.screenName = dict['screenName']
     userinfo.website = dict['website']
     userinfo.about = dict['about']
     userinfo.realName = dict['realName']
@@ -66,8 +66,8 @@ def deactivate_user(user):
     user.is_active = False
     user.save()
     mail_services.deactivated(user)
-    subject = 'user deactivated: %s/%s' % (user.id, user.getUserInfo().screenName)
-    body = '<a href="http://freedomsponsors.org/user/%s">%s</a>' % (user.id, user.getUserInfo().screenName)
+    subject = 'user deactivated: %s/%s' % (user.id, user.username)
+    body = '<a href="http://freedomsponsors.org/user/%s">%s</a>' % (user.id, user.username)
     mail_services.notify_admin(subject, body)
 
 

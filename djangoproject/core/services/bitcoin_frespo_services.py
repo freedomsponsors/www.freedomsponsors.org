@@ -238,7 +238,7 @@ def _log_info_active_send_confirmation(part):
         part.id,
         part.money_sent.value,
         part.money_sent.to_address,
-        part.solution.programmer.getUserInfo().screenName,
+        part.solution.programmer.username,
         part.payment.offer.issue.title)
     logger.info(msg)
 
@@ -247,7 +247,7 @@ def _log_info_money_sent(part):
     msg = 'MoneySent_%s %s bitcoins to programmer %s on address %s' % (
         part.money_sent.id,
         part.money_sent.value,
-        part.solution.programmer.getUserInfo().screenName,
+        part.solution.programmer.username,
         part.money_sent.to_address)
     logger.info(msg)
 

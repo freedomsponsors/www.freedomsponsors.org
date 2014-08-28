@@ -10,7 +10,7 @@ from core.services import user_services, mail_services
 from django.conf import settings
 
 
-def viewUser(request, user_id, user_slug=None):
+def viewUserById(request, user_id, user_slug=None):
     try:
         user = User.objects.get(pk=user_id)
     except:
@@ -66,7 +66,7 @@ def editUserForm(request):
         context_instance = RequestContext(request))
 
 def _notify_admin_new_user(user):
-    mail_services.notify_admin(subject=_('New user registered: ')+user.getUserInfo().screenName,
+    mail_services.notify_admin(subject=_('New user registered: ')+user.username,
         msg=settings.SITE_HOME+user.get_view_link())
 
 @login_required

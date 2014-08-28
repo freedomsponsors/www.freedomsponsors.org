@@ -34,7 +34,7 @@
     {% if issue.trackerURL %}
         | <a href="{{offer.issue.trackerURL}}" target="_issue">View original</a>
     {% endif %}
-    | Sponsor: <a href="{{offer.sponsor.get_view_link}}">{{offer.sponsor.getUserInfo.screenName}}</a>
+    | Sponsor: <a href="{{offer.sponsor.get_view_link}}">{{offer.sponsor.username}}</a>
     {% if offer.issue.project %}
         | Project: <a target="_project" href="{{offer.issue.project.homeURL}}">{{offer.issue.project.name}}</a>
     {% endif %}

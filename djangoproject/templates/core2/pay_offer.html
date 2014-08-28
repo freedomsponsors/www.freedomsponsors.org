@@ -26,7 +26,7 @@
 {% if issue.trackerURL %}
  | <a href="{{offer.issue.trackerURL}}" target="_issue">View original</a>
 {% endif %}
- | Sponsor: <a href="{{offer.sponsor.get_view_link}}">{{offer.sponsor.getUserInfo.screenName}}</a>
+ | Sponsor: <a href="{{offer.sponsor.get_view_link}}">{{offer.sponsor.username}}</a>
 {% if offer.issue.project %}
  | Project: <a target="_project" href="{{offer.issue.project.homeURL}}">{{offer.issue.project.name}}</a>
 {% endif %}
@@ -58,7 +58,7 @@
 	      <div class="span2">
 		      <input type="hidden" id="solutionId_{{forloop.counter0}}" name="solutionId_{{forloop.counter0}}" value="{{solution.id}}">
 			  <input type="checkbox" class="sol_checkbox" checked id="check_{{forloop.counter0}}" name="check_{{forloop.counter0}}">
-			  <img src="{{solution.programmer.gravatar_url_small}}"/> {{ solution.programmer.getUserInfo.screenName }}
+			  <img src="{{solution.programmer.gravatar_url_small}}"/> {{ solution.programmer.username }}
 	      </div>
 	      <div class="span2 input-prepend">
         {% localize off %}
@@ -86,7 +86,7 @@
   	{% for solution in solutions_accepting_payments %}
 
       <tr id="div_summary_{{forloop.counter0}}">
-        <td> <img src="{{solution.programmer.gravatar_url_small}}"/> {{ solution.programmer.getUserInfo.screenName }} </td>
+        <td> <img src="{{solution.programmer.gravatar_url_small}}"/> {{ solution.programmer.username }} </td>
         <td style="width:100px;text-align:right"> {{currency_symbol}} <span id="amt_{{forloop.counter0}}"></span> </td>
       </tr>
 

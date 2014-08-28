@@ -50,6 +50,6 @@ class ErrorMiddleware(object):
         """
         user = request.user
         if user.is_authenticated():
-            request.META['USER'] = "%s / %s" % (request.user.id, request.user.getUserInfo().screenName)
+            request.META['USER'] = "%s / %s" % (request.user.id, request.user.username)
         else:
             request.META['USER'] = "Unauthenticated"

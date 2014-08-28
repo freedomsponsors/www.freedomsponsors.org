@@ -62,7 +62,7 @@ def issue(request):
         'getOffers':[
             {
                 'id': 1,
-                'sponsor': {'getUserInfo': {'screenName': 'Demi Moore'}},
+                'sponsor': {'username': 'Demi-Moore'},
                 'get_currency_symbol': 'US$',
                 'price_2': '60.00',
                 'no_forking': True,
@@ -72,7 +72,7 @@ def issue(request):
                 },
             {
                 'id': 2,
-                'sponsor': {'getUserInfo': {'screenName': 'Johnny Depp'}},
+                'sponsor': {'username': 'Johnny-Depp'},
                 'get_currency_symbol': 'BTC',
                 'price_2': '3.00',
                 'no_forking': True,
@@ -82,7 +82,7 @@ def issue(request):
                 },
             ],
         'getSolutions': [
-            {'programmer': {'getUserInfo': {'screenName': 'Nicholas Cage'}},
+            {'programmer': {'username': 'Nicholas-Cage'},
              'status': 'DONE',
              'accepting_payments': True,
              'creationDate': datetime.now()}

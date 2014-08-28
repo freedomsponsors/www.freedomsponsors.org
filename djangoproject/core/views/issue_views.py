@@ -335,7 +335,7 @@ def payOfferForm(request, offer_id):
         solutions_dict.append({
             'id': solution.id,
             'status': solution.status,
-            'programmerScreenName': programmer_userinfo.screenName,
+            'programmerUsername': solution.programmer.username,
             'acceptsPaypal': accepts_paypal,
             'acceptsBitcoin': True and programmer_userinfo.bitcoin_receive_address,
             'imglink': solution.programmer.gravatar_url_small()

@@ -17,7 +17,7 @@
   <div class="span11 issueComment" id="comment-{{ comment.id }}">
     <div style="background-color: #eeeeee;">
       <span>
-        <a href="{{comment.author.get_view_link}}">{{ comment.author.getUserInfo.screenName }}</a>
+        <a href="{{comment.author.get_view_link}}">{{ comment.author.username }}</a>
         {% ifequal comment.author.id user.id %}
           <a href="javascript:showEditComment({{counter}})" id="selector-edit-comment{{counter}}"><i class="icon-pencil"></i></a>
         {% endifequal %}

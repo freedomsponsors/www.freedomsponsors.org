@@ -167,7 +167,7 @@
             <p class="font-size-16 text-align-center">Top Sponsors</p>
             <div class="column-wrapper">
                 {% for sponsor in top_sponsors %}
-                    <div class="user-picture" title="{{ sponsor.getUserInfo.screenName }}">
+                    <div class="user-picture" title="{{ sponsor.username }}">
                         <a href="{{ sponsor.get_view_link }}">
                             <img src="{{ sponsor.gravatar_url_medium }}">
                         </a>
@@ -181,7 +181,7 @@
             <p class="font-size-16 text-align-center">Top Programmers</p>
             <div class="column-wrapper">
                 {% for programmer in top_programmers %}
-                    <div class="user-picture" title="{{ programmer.getUserInfo.screenName }}">
+                    <div class="user-picture" title="{{ programmer.username }}">
                         <a href="{{ programmer.get_view_link }}">
                             <img src="{{ programmer.gravatar_url_medium }}">
                         </a>

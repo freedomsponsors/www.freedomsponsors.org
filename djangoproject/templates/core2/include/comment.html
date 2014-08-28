@@ -7,7 +7,7 @@
     </div>
     <div class="hgap-15"><!-- Horizontal Gap 15px --></div>
     <div class="fs-box push-footer column fit" id="div_comment_r_{{ comment.id }}">
-        <h4 class="arial"><a href="{{comment.author.get_view_link}}">{{ comment.author.getUserInfo.screenName }}</a></h4>
+        <h4 class="arial"><a href="{{comment.author.get_view_link}}">{{ comment.author.username }}</a></h4>
         <div id="comment-{{ comment.id }}">
             <div id="bootstrap-content">
                 {% autoescape off %}

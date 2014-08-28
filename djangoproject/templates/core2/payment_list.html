@@ -16,7 +16,7 @@
     {% for payment in payments %}
     <tr>
         <td><a href="/payment/{{ payment.id }}">{{ payment.id }}</a></td>
-        <td><a href="{{ payment.offer.sponsor.get_view_link }}">{{ payment.offer.sponsor.getUserInfo.screenName }}</a></td>
+        <td><a href="{{ payment.offer.sponsor.get_view_link }}">{{ payment.offer.sponsor.username }}</a></td>
         <td>{{ payment.status }}</td>
         <td>{{ payment.creationDate }}</td>
         <td><a href="{{ payment.offer.issue.get_view_link }}">{{ payment.offer.issue.title }}</a></td>

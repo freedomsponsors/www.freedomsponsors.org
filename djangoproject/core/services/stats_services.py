@@ -6,17 +6,17 @@ from frespo_currencies import currency_service
 
 SELECT_SPONSORS = """
 select 
-  ui.user_id, 
-  ui."screenName",
+  u.id,
+  u.username,
   count(o.id) cOffer,
   sum(case when (o.status = 'PAID' and o.currency = 'USD') then o.price else 0 end) spaidUSD,
   sum(case when (o.status = 'OPEN' and (o."expirationDate" is null or o."expirationDate" > now()) and o.currency = 'USD') then o.price else 0 end) sopenUSD,
   sum(case when (o.status = 'PAID' and o.currency = 'BTC') then o.price else 0 end) spaidBTC,
   sum(case when (o.status = 'OPEN' and (o."expirationDate" is null or o."expirationDate" > now()) and o.currency = 'BTC') then o.price else 0 end) sopenBTC
-from core_userinfo ui, core_offer o
+from auth_user u, core_offer o
 where
-  o.sponsor_id = ui.user_id
-group by ui.user_id, ui."screenName"
+  o.sponsor_id = u.id
+group by u.id, u.username
 having sum(case when (o.status = 'PAID' and o.currency = 'USD') then o.price else 0 end) > 0
     or sum(case when (o.status = 'OPEN' and (o."expirationDate" is null or o."expirationDate" > now()) and o.currency = 'USD') then o.price else 0 end) > 0
     or sum(case when (o.status = 'PAID' and o.currency = 'BTC') then o.price else 0 end) > 0

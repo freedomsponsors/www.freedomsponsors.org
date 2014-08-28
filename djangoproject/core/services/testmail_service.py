@@ -8,9 +8,7 @@ __author__ = 'tony'
 
 
 SPONSOR = {
-    'getUserInfo': {
-        'screenName': 'Mr Sponsor'
-    }
+    'username': 'Mr Sponsor'
 }
 
 
@@ -20,9 +18,7 @@ PAYMENT_BITCOIN = {
         {
             'solution': {
                 'programmer': {
-                    'getUserInfo': {
-                        'screenName': 'Programmer 1'
-                    }
+                    'username': 'Programmer 1'
                 },
             },
             'money_sent': {
@@ -33,9 +29,7 @@ PAYMENT_BITCOIN = {
         {
             'solution': {
                 'programmer': {
-                    'getUserInfo': {
-                        'screenName': 'Programmer 2'
-                    }
+                    'username': 'Programmer 2'
                 },
             },
             'money_sent': {

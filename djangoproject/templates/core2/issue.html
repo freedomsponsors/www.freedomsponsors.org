@@ -55,7 +55,7 @@
             $scope.offer_dic = {};
             {% for offer in issue.getOffers %}
                 $scope.offer_dic[{{ offer.id }}] = {
-                    author: '{{ offer.sponsor.getUserInfo.screenName }}',
+                    author: '{{ offer.sponsor.username }}',
                     acceptance_criteria: '{{ offer.acceptanceCriteria|markdown|escapejs }}'
                 };
             {% endfor %}
@@ -376,7 +376,7 @@
                                             <div class="hgap-15"><!-- Horizontal Gap 15px --></div>
                                             <!-- Sponsor Name -->
                                             <div class="column fit">
-                                                <a href="{{ offer.sponsor.get_view_link }}" class="arial">{{ offer.sponsor.getUserInfo.screenName }}</a>
+                                                <a href="{{ offer.sponsor.get_view_link }}" class="arial">{{ offer.sponsor.username }}</a>
                                             </div>
                                         </div>
                                     </div>
@@ -475,7 +475,7 @@
                                             <div class="hgap-15"><!-- Horizontal Gap 15px --></div>
                                             <!-- Sponsor Name -->
                                             <div class="column fit">
-                                                <a href="{{ solution.programmer.get_view_link }}" class="arial">{{ solution.programmer.getUserInfo.screenName }}</a>
+                                                <a href="{{ solution.programmer.get_view_link }}" class="arial">{{ solution.programmer.username }}</a>
                                             </div>
                                         </div>
                                     </div>
@@ -572,7 +572,7 @@
                     <!-- Creator Name-->
                     <div class="column fit">
                         <h5 class="arial">Created by</h5>
-                        <a href="{{ issue.createdByUser.get_view_link }}" class="arial font-size-11">{{ issue.createdByUser.getUserInfo.screenName }}</a>
+                        <a href="{{ issue.createdByUser.get_view_link }}" class="arial font-size-11">{{ issue.createdByUser.username }}</a>
                     </div>
                 </div>
             </div>

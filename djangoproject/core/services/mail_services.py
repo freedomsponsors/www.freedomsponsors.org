@@ -60,7 +60,7 @@ def notifyWatchers_workbegun(solution, comment, watches):
         if watch.user.id != solution.programmer.id:
             _send_mail_to_user(
                 user=watch.user,
-                subject=solution.programmer.getUserInfo().screenName+" has just begun working on issue [%s]" % solution.issue.title,
+                subject=solution.programmer.username+" has just begun working on issue [%s]" % solution.issue.title,
                 templateName='email/workbegun.html',
                 contextData={"solution": solution,
                              "you": watch.user,
@@ -78,7 +78,7 @@ def notifyWatchers_project_edited(user, project, old_json, watches):
     def send_func(watch):
         if watch.user.id != user.id:
             _send_mail_to_user(user=watch.user,
-                               subject=user.getUserInfo().screenName + " edited project [%s]" % project.name,
+                               subject=user.username + " edited project [%s]" % project.name,
                                templateName='email/project_edited.html',
                                contextData={"project": project,
                                             "user": user,
@@ -95,7 +95,7 @@ def notifyWatchers_project_tag_added(user, project, tag, watches):
     def send_func(watch):
         if watch.user.id != user.id:
             _send_mail_to_user(user=watch.user,
-                               subject=user.getUserInfo().screenName + " added the tag [%s] to project [%s]" % (tag, project.name),
+                               subject=user.username + " added the tag [%s] to project [%s]" % (tag, project.name),
                                templateName='email/project_tag_added.html',
                                contextData={"project": project,
                                             "user": user,
@@ -111,7 +111,7 @@ def notifyWatchers_project_tag_removed(user, project, tag, watches):
     def send_func(watch):
         if watch.user.id != user.id:
             _send_mail_to_user(user=watch.user,
-                               subject=user.getUserInfo().screenName + " removed tag [%s] from project [%s]" % (tag, project.name),
+                               subject=user.username + " removed tag [%s] from project [%s]" % (tag, project.name),
                                templateName='email/project_tag_removed.html',
                                contextData={"project": project,
                                             "user": user,
@@ -127,7 +127,7 @@ def notifyWatchers_acceptingpayments(solution, watches):
     def send_func(watch):
         if(watch.user.id != solution.programmer.id):
             _send_mail_to_user(user = watch.user,
-                subject = solution.programmer.getUserInfo().screenName+" is ready to accept payments for issue [%s]"%solution.issue.title,
+                subject = solution.programmer.username+" is ready to accept payments for issue [%s]"%solution.issue.title,
                 templateName = 'email/acceptingpayments.html',
                 contextData = {"solution" : solution,
                                "you" : watch.user,
@@ -161,7 +161,7 @@ def notifyWatchers_workstopped(solution, comment, watches):
     def send_func(watch):
         if(watch.user.id != solution.programmer.id):
             _send_mail_to_user(user = watch.user,
-                subject = solution.programmer.getUserInfo().screenName+" has stopped working on issue [%s]"%solution.issue.title,
+                subject = solution.programmer.username+" has stopped working on issue [%s]"%solution.issue.title,
                 templateName = 'email/workstopped.html',
                 contextData = {"solution" : solution,
                                "you" : watch.user,
@@ -175,7 +175,7 @@ def notifyWatchers_workdone(solution, comment, watches):
     def send_func(watch):
         if(watch.user.id != solution.programmer.id):
             _send_mail_to_user(user = watch.user,
-                subject = solution.programmer.getUserInfo().screenName+" resolved issue [%s]"%solution.issue.title,
+                subject = solution.programmer.username+" resolved issue [%s]"%solution.issue.title,
                 templateName = 'email/workdone.html',
                 contextData = {"theirSolution" : solution,
                                "you" : watch.user,
@@ -193,7 +193,7 @@ def notifyWatchers_offerrevoked(offer, comment, watches):
         if(watch.user.id != offer.sponsor.id):
             _send_mail_to_user(user = watch.user,
                 subject = "%s revoked his %s %s offer for issue [%s]" % (
-                    offer.sponsor.getUserInfo().screenName,
+                    offer.sponsor.username,
                     offer.get_currency_symbol(),
                     str(twoplaces(offer.price)),
                     offer.issue.title
@@ -212,7 +212,7 @@ def notifyWatchers_offeradded(offer, watches):
         if(watch.user.id != offer.sponsor.id):
             _send_mail_to_user(user = watch.user,
                 subject = "%s made a %s %s offer for issue [%s]" % (
-                    offer.sponsor.getUserInfo().screenName,
+                    offer.sponsor.username,
                     offer.get_currency_symbol(),
                     str(offer.price),
                     offer.issue.title
@@ -237,15 +237,17 @@ def notifyWatchers_offerchanged(old_offer, new_offer, watches):
     if(action):
         def send_func(watch):
             if(watch.user.id != new_offer.sponsor.id):
-                _send_mail_to_user(user = watch.user,
-                    subject = old_offer.sponsor.getUserInfo().screenName+" "+action+" the "+old_offer.get_currency_symbol()+" "+str(twoplaces(old_offer.price))+" offer on issue [%s]"%old_offer.issue.title,
+                _send_mail_to_user(
+                    user = watch.user,
+                    subject = old_offer.sponsor.username+" "+action+" the "+old_offer.get_currency_symbol()+" "+str(twoplaces(old_offer.price))+" offer on issue [%s]"%old_offer.issue.title,
                     templateName = 'email/offerchanged.html',
                     contextData = {"you" : watch.user,
-                                   "old_offer" : old_offer,
-                                   "new_offer" : new_offer,
-                                   "action" : action,
-                                   "SITE_HOME" : settings.SITE_HOME},
-                    whentrue='receiveEmail_issue_offer')
+                                   "old_offer": old_offer,
+                                   "new_offer": new_offer,
+                                   "action": action,
+                                   "SITE_HOME": settings.SITE_HOME},
+                    whentrue='receiveEmail_issue_offer'
+                )
         _notify_watchers(send_func, watches)
 
 
@@ -254,7 +256,7 @@ def notify_payment_parties_and_watchers_paymentconfirmed(payment, watches):
     for part in payment.getParts():
         _send_mail_to_user(
             user = part.programmer,
-            subject=payment.offer.sponsor.getUserInfo().screenName+" has made you a "+payment.get_currency_symbol()+" "+str(twoplaces(part.price))+" payment",
+            subject=payment.offer.sponsor.username+" has made you a "+payment.get_currency_symbol()+" "+str(twoplaces(part.price))+" payment",
             templateName='email/payment_received.html',
             contextData={"payment" : payment,
             "part" : part,
@@ -274,7 +276,7 @@ def notify_payment_parties_and_watchers_paymentconfirmed(payment, watches):
     already_sent_to[payment.offer.sponsor.email] = True
     def send_func(watch):
         subject = "%s has paid his offer [%s %s / %s]" % (
-            payment.offer.sponsor.getUserInfo().screenName,
+            payment.offer.sponsor.username,
             payment.offer.get_currency_symbol(),
             str(twoplaces(payment.offer.price)),
             payment.offer.issue.title)
@@ -293,7 +295,7 @@ def notify_payment_parties_and_watchers_paymentconfirmed(payment, watches):
 def notifyWatchers_newissuecomment(comment, watches):
     def send_func(watch):
         if(watch.user.id != comment.author.id):
-            subject = "%s added a comment on issue [%s]"%(comment.author.getUserInfo().screenName, comment.issue.title)
+            subject = "%s added a comment on issue [%s]"%(comment.author.username, comment.issue.title)
             contextData = {"you" : watch.user,
                            "issue" : comment.issue,
                            "comment" : comment,
@@ -311,7 +313,7 @@ def notifyWatchers_newoffercomment(comment, watches):
     def send_func(watch):
         if watch.user.id != comment.author.id:
             subject = "%s added a comment on offer [%s %s / %s]" % (
-                comment.author.getUserInfo().screenName,
+                comment.author.username,
                 comment.offer.get_currency_symbol(),
                 str(twoplaces(comment.offer.price)),
                 comment.offer.issue.title)

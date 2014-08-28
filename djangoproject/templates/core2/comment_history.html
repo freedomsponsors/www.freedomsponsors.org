@@ -4,7 +4,7 @@
     <h3>Comment's previous versions</h3>
 </div>
 <div class="modal-body">
-    <a href="{{comment.author.get_view_link}}"><img src="{{comment.author.gravatar_url_medium}}"> {{ comment.author.getUserInfo.screenName }}</a>
+    <a href="{{comment.author.get_view_link}}"><img src="{{comment.author.gravatar_url_medium}}"> {{ comment.author.username }}</a>
     {% for event in comment_events %}
         <hr>
         <div><span class="label label-info">{{ event.eventDate|date:"D, d/M/Y H:i" }}</span></div>

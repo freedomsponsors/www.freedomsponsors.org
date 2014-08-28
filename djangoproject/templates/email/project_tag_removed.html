@@ -1,8 +1,8 @@
 {% extends "email/base.html" %}
 {% block mainContent%}
-Hello {{ you.getUserInfo.screenName }}<br>
+Hello {{ you.username }}<br>
 <a href="{{SITE_HOME}}{{ user.get_view_link }}" style="color: #08C;text-decoration: none;cursor: auto;">
-  {{ user.getUserInfo.screenName }}
+  {{ user.username }}
 </a>
 removed tag <strong>{{ tag }}</strong> from project
 <a href="{{SITE_HOME}}/project/{{ project.id }}">{{ project.name }}</a>

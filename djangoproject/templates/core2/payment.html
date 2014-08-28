@@ -8,7 +8,7 @@
 <table class="table table-striped table-condensed">
     <tr>
         <th>Sponsor</th>
-        <td><a href="{{ payment.offer.sponsor.get_view_link }}">{{ payment.offer.sponsor.getUserInfo.screenName }}</a></td>
+        <td><a href="{{ payment.offer.sponsor.get_view_link }}">{{ payment.offer.sponsor.username }}</a></td>
     </tr>
     <tr>
         <th>Status</th>
@@ -82,7 +82,7 @@
 <table class="table table-striped table-condensed">
     <tr>
         <th>Programmer</th>
-        <td><a href="{{ part.programmer.get_view_link }}">{{ part.programmer.getUserInfo.screenName }}</a></td>
+        <td><a href="{{ part.programmer.get_view_link }}">{{ part.programmer.username }}</a></td>
     </tr>
     <tr>
         <th>Amount</th>

@@ -18,7 +18,7 @@
 {% autopaginate users %}
 {% for userinfo in users %}
     <tr>
-      <td><a href="{{ userinfo.user.get_view_link }}"><img src="{{userinfo.user.gravatar_url_medium}}"> {{userinfo.screenName}}</a></td>
+      <td><a href="{{ userinfo.user.get_view_link }}"><img src="{{userinfo.user.gravatar_url_medium}}"> {{userinfo.user.username}}</a></td>
       <td>
         {% for auth in userinfo.user.getSocialAuths %}
         {% if auth.getSocialIcon_small %}

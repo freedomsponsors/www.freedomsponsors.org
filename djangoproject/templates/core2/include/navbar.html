@@ -5,7 +5,7 @@
         {% if user and user.is_authenticated %}
             <div class="dropdown-button">
                 <a class="dropdown-label" id="drop_user" data-toggle="dropdown" href="#">
-                    {{ user.getUserInfo.screenName }}
+                    {{ user.username }}
                     <span class="arrow-down"></span>
                 </a>
                 <ul id="menu1" class="dropdown-menu" aria-labelledby="drop_user">

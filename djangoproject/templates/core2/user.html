@@ -1,12 +1,12 @@
 {% extends "core2/base_old.html" %}
 
 {% block title %}
-    User {{le_user.getUserInfo.screenName}}
+    User {{le_user.username}}
 {% endblock %}
 
 
 {% block mainContent%}
-<h3>{{le_user.getUserInfo.screenName}}</h3>
+<h3>{{le_user.username}}</h3>
 <hr>
 
 <div class="row-fluid">
@@ -43,7 +43,7 @@
 						<td>Screen name:</td>
 						<td>&nbsp;</td>
 						<td>&nbsp;</td>
-						<td>{{le_user.getUserInfo.screenName}}</td>
+						<td>{{le_user.username}}</td>
 					</tr>
 					<tr>
 						<td>Real name:</td>
@@ -138,7 +138,7 @@
 				</div>
 			</div>
 			<div class="span6">
-				About {{le_user.getUserInfo.screenName}}
+				About {{le_user.username}}
 				<div class="alert alert-info">
 				    {% load markdown %}
 				    {% autoescape off %}

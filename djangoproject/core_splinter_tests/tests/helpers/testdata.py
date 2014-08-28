@@ -174,7 +174,7 @@ def _defaultUserInfo(user):
     userInfo = UserInfo()
     userInfo.user = user
     userInfo.paypalEmail = user.email
-    userInfo.screenName = user.username
+    # userInfo.screenName = user.username
     userInfo.realName = user.first_name + ' ' + user.last_name
     userInfo.website = ''
     userInfo.about = ''

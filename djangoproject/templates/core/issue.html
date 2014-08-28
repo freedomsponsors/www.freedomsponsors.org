@@ -39,7 +39,7 @@
     </h3>
     <hr style="margin-top:2px; margin-bottom:2px;">
     <div id="issue-info">
-      {% trans "Created by" %}: <a href="{{issue.createdByUser.get_view_link}}"><img src="{{issue.createdByUser.gravatar_url_small}}"> {{issue.createdByUser.getUserInfo.screenName}}</a>
+      {% trans "Created by" %}: <a href="{{issue.createdByUser.get_view_link}}"><img src="{{issue.createdByUser.gravatar_url_small}}"> {{issue.createdByUser.username}}</a>
       {% if issue.project %}
        | {% trans "Project" %}: <a target="_project" href="{{issue.project.homeURL}}">{{issue.project.name}}</a>
       {% endif %}
@@ -111,7 +111,7 @@
             <tbody>
           {% for offer in issue.getOffers %}
               <tr>
-                <td><a href="{{ offer.sponsor.get_view_link }}"><img src="{{offer.sponsor.gravatar_url_small}}"> {{ offer.sponsor.getUserInfo.screenName }}</a></td>
+                <td><a href="{{ offer.sponsor.get_view_link }}"><img src="{{offer.sponsor.gravatar_url_small}}"> {{ offer.sponsor.username }}</a></td>
                 <td><a href="{{ offer.get_view_link }}">{{offer.get_currency_symbol}} {{offer.price_2}}</a></td>
                 <td style="text-align:left">
                   {% if offer.no_forking %}
@@ -156,7 +156,7 @@
               <tbody>
             {% for solution in issue.getSolutions %}
                 <tr>
-                  <td><a href="{{solution.programmer.get_view_link}}"><img src="{{solution.programmer.gravatar_url_small}}"> {{ solution.programmer.getUserInfo.screenName }}</a></td>
+                  <td><a href="{{solution.programmer.get_view_link}}"><img src="{{solution.programmer.gravatar_url_small}}"> {{ solution.programmer.username }}</a></td>
                   <td>{{solution.status}}
                   {% if solution.accepting_payments %}
                     / {% trans "Accepting payments" %}

@@ -27,7 +27,7 @@ class TestMailNotifications(TestCase):
         self.assertEqual(response.status_code, 302)
 
         email_asserts.assert_sent_count(self, 1)
-        email_asserts.assert_sent(self, to=self.user.email, subject="%s added a comment on issue [%s]"%(user2.getUserInfo().screenName, issue.title))
+        email_asserts.assert_sent(self, to=self.user.email, subject="%s added a comment on issue [%s]"%(user2.username, issue.title))
 
         email_asserts.clear_sent()
 
@@ -38,7 +38,7 @@ class TestMailNotifications(TestCase):
         self.assertEqual(response.status_code, 200)
 
         user2 = test_data.createDummyUserRandom(login='marydoe', password='xyz456')
-        user2ScreenName = user2.getUserInfo().screenName
+        # user2ScreenName = user2.username
         client2 = Client()
         client2.login(username=user2.username, password='xyz456')
 
@@ -53,7 +53,7 @@ class TestMailNotifications(TestCase):
         offer_id = issue.getOffers()[0].id
 
         email_asserts.assert_sent_count(self, 2) #one to the watcher, other to the site admin
-        email_asserts.assert_sent(self, to=self.user.email, subject="%s made a US$ 20.00 offer for issue [%s]"%(user2ScreenName, issue.title))
+        email_asserts.assert_sent(self, to=self.user.email, subject="%s made a US$ 20.00 offer for issue [%s]"%(user2.username, issue.title))
 
         email_asserts.clear_sent()
         response = client2.post('/offer/edit/submit',
@@ -63,7 +63,7 @@ class TestMailNotifications(TestCase):
              'acceptanceCriteria': 'some criteria'})
         self.assertEqual(response.status_code, 302)
         email_asserts.assert_sent_count(self, 1)
-        email_asserts.assert_sent(self, to=self.user.email, subject="%s raised the US$ 20.00 offer on issue [%s]"%(user2ScreenName, issue.title))
+        email_asserts.assert_sent(self, to=self.user.email, subject="%s raised the US$ 20.00 offer on issue [%s]"%(user2.username, issue.title))
 
         email_asserts.clear_sent()
         response = client2.post('/offer/revoke/submit',
@@ -71,7 +71,7 @@ class TestMailNotifications(TestCase):
              'comment' : ''})
         self.assertEqual(response.status_code, 302)
         email_asserts.assert_sent_count(self, 1)
-        email_asserts.assert_sent(self, to=self.user.email, subject="%s revoked his US$ 30.00 offer for issue [%s]"%(user2ScreenName, issue.title))
+        email_asserts.assert_sent(self, to=self.user.email, subject="%s revoked his US$ 30.00 offer for issue [%s]"%(user2.username, issue.title))
 
     def test_should_send_mail_for_starting_or_aborting_or_finishing_work(self):
         offer = test_data.create_dummy_offer_usd()
@@ -80,7 +80,6 @@ class TestMailNotifications(TestCase):
         self.assertEqual(response.status_code, 200)
 
         user2 = test_data.createDummyUserRandom(login='marydoe', password='xyz456')
-        user2ScreenName = user2.getUserInfo().screenName
         client2 = Client()
         client2.login(username=user2.username, password='xyz456')
 
@@ -98,7 +97,7 @@ class TestMailNotifications(TestCase):
         solution_id = str(response.context['mysolution'].id)
 
         email_asserts.assert_sent_count(self, 1)
-        email_asserts.assert_sent(self, to=self.user.email, subject="%s has just begun working on issue [%s]"%(user2ScreenName, issue.title))
+        email_asserts.assert_sent(self, to=self.user.email, subject="%s has just begun working on issue [%s]"%(user2.username, issue.title))
 
         #ABORTS WORK
         email_asserts.clear_sent()
@@ -108,7 +107,7 @@ class TestMailNotifications(TestCase):
         self.assertEqual(response.status_code, 302)
 
         email_asserts.assert_sent_count(self, 1)
-        email_asserts.assert_sent(self, to=self.user.email, subject="%s has stopped working on issue [%s]"%(user2ScreenName, issue.title))
+        email_asserts.assert_sent(self, to=self.user.email, subject="%s has stopped working on issue [%s]"%(user2.username, issue.title))
 
         #STARTS WORKING again
         email_asserts.clear_sent()
@@ -125,7 +124,7 @@ class TestMailNotifications(TestCase):
         self.assertEqual(solution_id, solution_id2)
 
         email_asserts.assert_sent_count(self, 1)
-        email_asserts.assert_sent(self, to=self.user.email, subject="%s has just begun working on issue [%s]"%(user2ScreenName, issue.title))
+        email_asserts.assert_sent(self, to=self.user.email, subject="%s has just begun working on issue [%s]"%(user2.username, issue.title))
 
         #FINISHES WORK
         email_asserts.clear_sent()
@@ -135,4 +134,4 @@ class TestMailNotifications(TestCase):
         self.assertEqual(response.status_code, 302)
 
         email_asserts.assert_sent_count(self, 1)
-        email_asserts.assert_sent(self, to=self.user.email, subject="%s resolved issue [%s]"%(user2ScreenName, issue.title))
+        email_asserts.assert_sent(self, to=self.user.email, subject="%s resolved issue [%s]"%(user2.username, issue.title))
