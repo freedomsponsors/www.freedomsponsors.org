@@ -82,7 +82,7 @@ function random_sponsors(num){
     for(var i=0; i<count; i++){
         result.push({
             "image_link": random_gravatar(),
-            "screen_name": random_username()
+            "username": random_username()
         })
     }
     return result;
