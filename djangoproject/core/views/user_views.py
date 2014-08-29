@@ -10,19 +10,13 @@ from core.services import user_services, mail_services
 from django.conf import settings
 
 
-def viewUserById(request, user_id, user_slug=None):
-    try:
-        user = User.objects.get(pk=user_id)
-    except:
-        return HttpResponse(status=404, content='User not found')
-
+def _view_user(request, user):
     if not user.is_active and not request.user.is_superuser:
         return render_to_response(
             'core2/user_inactive.html',
             {'le_user': user},
             context_instance=RequestContext(request)
         )
-
     unconnectedSocialAccounts = None
     if user.id == request.user.id:
         unconnectedSocialAccounts = user.getUnconnectedSocialAccounts()
@@ -34,7 +28,6 @@ def viewUserById(request, user_id, user_slug=None):
     )
     for alert in alert_strings:
         messages.info(request, alert)
-
     context = {
         'le_user': user,
         'stats': user.getStats(),
@@ -45,6 +38,23 @@ def viewUserById(request, user_id, user_slug=None):
         context,
         context_instance=RequestContext(request)
     )
+
+
+def viewUserById(request, user_id, user_slug=None):
+    try:
+        user = User.objects.get(pk=user_id)
+    except:
+        return HttpResponse(status=404, content='User not found')
+
+    return _view_user(request, user)
+
+def viewUserByUsername(request, username):
+    try:
+        user = User.objects.get(username=username)
+    except:
+        return HttpResponse(status=404, content='User not found')
+
+    return _view_user(request, user)
 
 @login_required
 def editUserForm(request):
