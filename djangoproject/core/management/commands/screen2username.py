@@ -1,30 +1,62 @@
 from django.contrib.auth.models import User
 from django.core.management.base import NoArgsCommand
 from optparse import make_option
+from django.template.base import Template
+from django.template.context import Context
 from django.template.defaultfilters import slugify
 from core.services import user_services, mail_services
+
+BODY_USER_WITH_PASSWORD = """
+TODO
+"""
+
+BODY_USER_WITH_SAME_SCREENNAME = """
+TODO
+"""
+
+BODY_USER_WITH_INVALID_SCREENNAME = """
+TODO
+"""
+
+BODY_USER_DEFAULT = """
+TODO
+"""
 
 
 def _has_password(user):
     return user.password and len(user.password) > 1
 
 
+def _template_render(source, user):
+    t = Template(source)
+    body = t.render(Context({'user': user}))
+    return body
+
+
 def _user_with_password(user):
     subject = 'Important information about your account on FreedomSponsors'
-    body = "TODO..."
+    body = _template_render(BODY_USER_WITH_PASSWORD, user)
     mail_services.plain_send_mail(user.email, subject, body)
 
 
 def _user_with_same_screenName_already(user):
-    pass
+    subject = 'Important information about your account on FreedomSponsors'
+    body = _template_render(BODY_USER_WITH_SAME_SCREENNAME, user)
+    mail_services.plain_send_mail(user.email, subject, body)
 
 
 def _user_with_invalid_screenName(user):
-    pass
+    # TODO: set username
+    subject = 'Important information about your account on FreedomSponsors'
+    body = _template_render(BODY_USER_WITH_INVALID_SCREENNAME, user)
+    mail_services.plain_send_mail(user.email, subject, body)
 
 
 def _user_default(user):
-    pass
+    # TODO: set username
+    subject = 'Important information about your account on FreedomSponsors'
+    body = _template_render(BODY_USER_DEFAULT, user)
+    mail_services.plain_send_mail(user.email, subject, body)
 
 
 class Command(NoArgsCommand):
