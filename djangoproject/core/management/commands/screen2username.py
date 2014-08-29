@@ -1,36 +1,53 @@
 from django.contrib.auth.models import User
 from django.core.management.base import NoArgsCommand
 from optparse import make_option
-import logging
 from django.template.defaultfilters import slugify
-from core.services import user_services
-
-logger = logging.getLogger(__name__)
+from core.services import user_services, mail_services
 
 
-__author__ = 'tony'
+def _has_password(user):
+    return user.password and len(user.password) > 1
+
+
+def _user_with_password(user):
+    subject = 'Important information about your account on FreedomSponsors'
+    body = "TODO..."
+    mail_services.plain_send_mail(user.email, subject, body)
+
+
+def _user_with_same_screenName_already(user):
+    pass
+
+
+def _user_with_invalid_screenName(user):
+    pass
+
+
+def _user_default(user):
+    pass
+
 
 class Command(NoArgsCommand):
 
-    help = "Asynchronous Bitcoin transaction processing"
+    help = "Copy screenName to username - one time deal"
 
     option_list = NoArgsCommand.option_list + (
         make_option('--verbose', action='store_true'),
     )
 
     def handle_noargs(self, **options):
-        count = 0
         for user in User.objects.all().order_by('id'):
             userinfo = user.getUserInfo()
-            screenName = userinfo.screenName if userinfo else 'EMPTY'
-            username = slugify(screenName)
-            valid = user_services.is_valid_username(username)
             if userinfo:
-                p = '[INVALID]' if not valid else ''
-            else:
-                p = '[NO_USERINFO]'
-            if not valid:
-                count += 1
-            print('%s (%s) %s --> %s' % (p, user.id, screenName, username))
-        print('----------------------------')
-        print('invalid: %s' % count)
+                has_password = _has_password(user)
+                screenName = userinfo.screenName
+                new_username = slugify(screenName)
+                new_is_valid = user_services.is_valid_username(new_username)
+                if has_password:
+                    _user_with_password(user)
+                elif screenName == new_username:
+                    _user_with_same_screenName_already(user)
+                elif not new_is_valid:
+                    _user_with_invalid_screenName(user)
+                else:
+                    _user_default(user)
