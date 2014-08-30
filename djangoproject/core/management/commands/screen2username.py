@@ -7,7 +7,25 @@ from django.template.defaultfilters import slugify
 from core.services import user_services, mail_services
 
 BODY_USER_WITH_PASSWORD = """
-TODO
+<p>Hello {{screen_name}},</p>
+<p>We're changing how users are identified on FreedomSponsors.
+This affects all users, so please keep reading.</p>
+<p>Instead of using <strong>Screen Name</strong>, FreedomSponsors will refer to users by <strong>username</strong>
+So, for example, "&lt;screen_name&gt; sponsored issue X" will become "&lt;username&gt; sponsored issue X".</p>
+
+<p>Unlike Screen Names, usernames must be unique and may not contain spaces or special characters.</p>
+
+<p>Your current Screen Name is <strong>{{screen_name}}</strong> and your current username is <strong>{{username}}</strong>.</p>
+
+<p>Because of this policy change, we're allowing all users to change their username, once, until {{deadline}}.</p>
+
+<p>If you wish to change your username, just log on to your account on http://freedomsponsors.org,
+click your username on the top right corner and select the "change username" option.
+Otherwise, no action is needed.</p>
+<p></p>
+
+<p>Thanks!<br>
+The FreedomSponsors team</p>
 """
 
 BODY_USER_WITH_SAME_SCREENNAME = """
