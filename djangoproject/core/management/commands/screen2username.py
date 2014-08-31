@@ -178,10 +178,10 @@ class Command(NoArgsCommand):
                 if has_password:
                     _user_with_password(user, screenName, new_username)
                 elif new_is_valid:
-                    new_username = _make_available(new_username)
                     if screenName == new_username:
                         _user_with_same_screenName_already(user, screenName, new_username)
                     else:
+                        new_username = _make_available(new_username)
                         _user_default(user, screenName, new_username)
                 else:
                     new_username = _random_username()
