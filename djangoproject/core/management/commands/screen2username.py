@@ -58,13 +58,13 @@ This affects all users, so please keep reading.</p>
 This will affect everything on the site: pages, emails and URLs.</p>
 <p>Unlike Screen Names, usernames must be unique and may not contain spaces or special characters.</p>
 <p>Your current Screen Name is <strong>{{screenName}}</strong>.
-We were not able to automatically generate a valid username from your Screen Name (most probably because of special
+We were not able to automatically generate a valid username from your Screen Name (most probably because of special characters).
 So we automatically generated a temporary random username for you, which is <strong>{{new_username}}</strong>.</p>
 <p>But don't worry, you can change your username (once!), and you have until the end of the year to do it.</p>
 <p>To choose a new username, just log on to your account on http://freedomsponsors.org,
 click your username on the top right corner and select the "change username" option.</p>
 <p>If you have any questions/feedback, feel free to reply this email or drop a comment on the
-<a href="">corresponding issue</a> on Github.</p>
+<a href="https://github.com/freedomsponsors/www.freedomsponsors.org/issues/209">corresponding issue</a> on Github.</p>
 <p></p>
 <p>Thanks!<br>
 The FreedomSponsors team</p>
