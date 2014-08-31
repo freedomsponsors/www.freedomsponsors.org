@@ -22,7 +22,11 @@ This will affect everything on the site: pages, emails and URLs.</p>
 click your username on the top right corner and select the "change username" option.
 Otherwise, no action is needed.</p>
 <p>If you have any questions/feedback, feel free to reply this email or drop a comment on the
+<<<<<<< HEAD
+<a href="">corresponding issue</a> on Github.</p>
+=======
 <a href="https://github.com/freedomsponsors/www.freedomsponsors.org/issues/209">corresponding issue</a> on Github.</p>
+>>>>>>> master
 <p></p>
 <p>Thanks!<br>
 The FreedomSponsors team</p>
@@ -43,7 +47,11 @@ This is a valid username so we automatically set your username to that.</p>
 click your username on the top right corner and select the "change username" option.
 Otherwise, no action is needed.</p>
 <p>If you have any questions/feedback, feel free to reply this email or drop a comment on the
+<<<<<<< HEAD
+<a href="">corresponding issue</a> on Github.</p>
+=======
 <a href="https://github.com/freedomsponsors/www.freedomsponsors.org/issues/209">corresponding issue</a> on Github.</p>
+>>>>>>> master
 <p></p>
 <p>Thanks!<br>
 The FreedomSponsors team</p>
@@ -58,13 +66,21 @@ This affects all users, so please keep reading.</p>
 This will affect everything on the site: pages, emails and URLs.</p>
 <p>Unlike Screen Names, usernames must be unique and may not contain spaces or special characters.</p>
 <p>Your current Screen Name is <strong>{{screenName}}</strong>.
+<<<<<<< HEAD
+We were not able to automatically generate a valid username from your Screen Name (most probably because of special
+=======
 We were not able to automatically generate a valid username from your Screen Name (most probably because of special characters).
+>>>>>>> master
 So we automatically generated a temporary random username for you, which is <strong>{{new_username}}</strong>.</p>
 <p>But don't worry, you can change your username (once!), and you have until the end of the year to do it.</p>
 <p>To choose a new username, just log on to your account on http://freedomsponsors.org,
 click your username on the top right corner and select the "change username" option.</p>
 <p>If you have any questions/feedback, feel free to reply this email or drop a comment on the
+<<<<<<< HEAD
+<a href="">corresponding issue</a> on Github.</p>
+=======
 <a href="https://github.com/freedomsponsors/www.freedomsponsors.org/issues/209">corresponding issue</a> on Github.</p>
+>>>>>>> master
 <p></p>
 <p>Thanks!<br>
 The FreedomSponsors team</p>
@@ -85,7 +101,11 @@ This will affect everything on the site: pages, emails and URLs.</p>
 click your username on the top right corner and select the "change username" option.
 Otherwise, no action is needed.</p>
 <p>If you have any questions/feedback, feel free to reply this email or drop a comment on the
+<<<<<<< HEAD
+<a href="">corresponding issue</a> on Github.</p>
+=======
 <a href="https://github.com/freedomsponsors/www.freedomsponsors.org/issues/209">corresponding issue</a> on Github.</p>
+>>>>>>> master
 <p></p>
 <p>Thanks!<br>
 The FreedomSponsors team</p>
@@ -104,7 +124,11 @@ def _template_render_and_send(subject, source, user, screenName, new_username):
         'new_username': new_username,
     }))
     # mail_services.plain_send_mail(user.email, subject, body, settings.ADMAIL_FROM_EMAIL)
+<<<<<<< HEAD
+    # mail_services.plain_send_mail('tonylampada@gmail.com', subject, body, settings.ADMAIL_FROM_EMAIL)
+=======
     mail_services.plain_send_mail('tonylampada@gmail.com', subject, body, settings.ADMAIL_FROM_EMAIL)
+>>>>>>> master
 
 
 def _user_with_password(user, screenName, new_username):
@@ -117,16 +141,24 @@ def _user_with_same_screenName_already(user, screenName, new_username):
     _set_username(user, new_username)
     subject = 'Important information about your account on FreedomSponsors'
     _template_render_and_send(subject, BODY_USER_WITH_SAME_SCREENNAME, user, screenName, new_username)
+<<<<<<< HEAD
+    print('SAME,%s,%s,%s,%s,%s,%s' % (user.id, user.email, screenName, slugify(screenName), user.username, new_username))
+=======
     print('SAME_SCREENNAME,%s,%s,%s,%s,%s,%s' % (user.id, user.email, screenName, slugify(screenName), user.username, new_username))
 
 
 def _user_with_same_username_already(user, screenName, new_username):
     print('SAME_USERNAME,%s,%s,%s,%s,%s,%s' % (user.id, user.email, screenName, slugify(screenName), user.username, new_username))
+>>>>>>> master
 
 
 def _user_with_invalid_screenName(user, screenName, new_username):
     _set_username(user, new_username)
+<<<<<<< HEAD
+    subject = 'Important information about your account on FreedomSponsors'
+=======
     subject = 'Important information about your account on FreedomSponsors (you need to pick a username!)'
+>>>>>>> master
     _template_render_and_send(subject, BODY_USER_WITH_INVALID_SCREENNAME, user, screenName, new_username)
     print('INVALID,%s,%s,%s,%s,%s,%s' % (user.id, user.email, screenName, slugify(screenName), user.username, new_username))
 
@@ -171,9 +203,14 @@ class Command(NoArgsCommand):
     )
 
     def handle_noargs(self, **options):
+<<<<<<< HEAD
+        for user in User.objects.all().order_by('id'):
+        # for user in User.objects.filter(id__le=20).order_by('id'):
+=======
         print('TYPE,id,email,screenName,slugify(screenName),old_username,new_username')
         # for user in User.objects.all().order_by('id'):
         for user in User.objects.filter(id__in=(1, 2, 7, 345, 625)).order_by('id'):
+>>>>>>> master
             userinfo = user.getUserInfo()
             if userinfo:
                 has_password = _has_password(user)
@@ -183,12 +220,19 @@ class Command(NoArgsCommand):
                 if has_password:
                     _user_with_password(user, screenName, new_username)
                 elif new_is_valid:
+<<<<<<< HEAD
+                    new_username = _make_available(new_username)
+                    if screenName == new_username:
+                        _user_with_same_screenName_already(user, screenName, new_username)
+                    else:
+=======
                     if new_username == user.username:
                         _user_with_same_username_already(user, screenName, new_username)
                     elif screenName == new_username:
                         _user_with_same_screenName_already(user, screenName, new_username)
                     else:
                         new_username = _make_available(new_username)
+>>>>>>> master
                         _user_default(user, screenName, new_username)
                 else:
                     new_username = _random_username()
