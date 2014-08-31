@@ -117,7 +117,11 @@ def _user_with_same_screenName_already(user, screenName, new_username):
     _set_username(user, new_username)
     subject = 'Important information about your account on FreedomSponsors'
     _template_render_and_send(subject, BODY_USER_WITH_SAME_SCREENNAME, user, screenName, new_username)
-    print('SAME,%s,%s,%s,%s,%s,%s' % (user.id, user.email, screenName, slugify(screenName), user.username, new_username))
+    print('SAME_SCREENNAME,%s,%s,%s,%s,%s,%s' % (user.id, user.email, screenName, slugify(screenName), user.username, new_username))
+
+
+def _user_with_same_username_already(user, screenName, new_username):
+    print('SAME_USERNAME,%s,%s,%s,%s,%s,%s' % (user.id, user.email, screenName, slugify(screenName), user.username, new_username))
 
 
 def _user_with_invalid_screenName(user, screenName, new_username):
@@ -167,6 +171,7 @@ class Command(NoArgsCommand):
     )
 
     def handle_noargs(self, **options):
+        print('TYPE,id,email,screenName,slugify(screenName),old_username,new_username')
         for user in User.objects.all().order_by('id'):
         # for user in User.objects.filter(id__le=20).order_by('id'):
             userinfo = user.getUserInfo()
@@ -178,7 +183,9 @@ class Command(NoArgsCommand):
                 if has_password:
                     _user_with_password(user, screenName, new_username)
                 elif new_is_valid:
-                    if screenName == new_username:
+                    if new_username == user.username:
+                        _user_with_same_username_already(user, screenName, new_username)
+                    elif screenName == new_username:
                         _user_with_same_screenName_already(user, screenName, new_username)
                     else:
                         new_username = _make_available(new_username)
