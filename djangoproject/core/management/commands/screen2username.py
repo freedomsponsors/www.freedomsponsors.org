@@ -104,30 +104,34 @@ def _template_render_and_send(subject, source, user, screenName, new_username):
         'new_username': new_username,
     }))
     # mail_services.plain_send_mail(user.email, subject, body, settings.ADMAIL_FROM_EMAIL)
-    mail_services.plain_send_mail('tonylampada@gmail.com', subject, body, settings.ADMAIL_FROM_EMAIL)
+    # mail_services.plain_send_mail('tonylampada@gmail.com', subject, body, settings.ADMAIL_FROM_EMAIL)
 
 
 def _user_with_password(user, screenName, new_username):
     subject = 'Important information about your account on FreedomSponsors'
     _template_render_and_send(subject, BODY_USER_WITH_PASSWORD, user, screenName, new_username)
+    print('PASSWORD,%s,%s,%s,%s,%s,%s' % (user.id, user.email, screenName, slugify(screenName), user.username, new_username))
 
 
 def _user_with_same_screenName_already(user, screenName, new_username):
     _set_username(user, new_username)
     subject = 'Important information about your account on FreedomSponsors'
     _template_render_and_send(subject, BODY_USER_WITH_SAME_SCREENNAME, user, screenName, new_username)
+    print('SAME,%s,%s,%s,%s,%s,%s' % (user.id, user.email, screenName, slugify(screenName), user.username, new_username))
 
 
 def _user_with_invalid_screenName(user, screenName, new_username):
     _set_username(user, new_username)
     subject = 'Important information about your account on FreedomSponsors'
     _template_render_and_send(subject, BODY_USER_WITH_INVALID_SCREENNAME, user, screenName, new_username)
+    print('INVALID,%s,%s,%s,%s,%s,%s' % (user.id, user.email, screenName, slugify(screenName), user.username, new_username))
 
 
 def _user_default(user, screenName, new_username):
     _set_username(user, new_username)
     subject = 'Important information about your account on FreedomSponsors'
     _template_render_and_send(subject, BODY_USER_DEFAULT, user, screenName, new_username)
+    print('DEFAULT,%s,%s,%s,%s,%s,%s' % (user.id, user.email, screenName, slugify(screenName), user.username, new_username))
 
 
 def _make_available(username):
@@ -163,8 +167,8 @@ class Command(NoArgsCommand):
     )
 
     def handle_noargs(self, **options):
-        # for user in User.objects.all().order_by('id'):
-        for user in User.objects.filter(id__le=20).order_by('id'):
+        for user in User.objects.all().order_by('id'):
+        # for user in User.objects.filter(id__le=20).order_by('id'):
             userinfo = user.getUserInfo()
             if userinfo:
                 has_password = _has_password(user)
