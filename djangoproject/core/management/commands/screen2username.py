@@ -22,7 +22,7 @@ This will affect everything on the site: pages, emails and URLs.</p>
 click your username on the top right corner and select the "change username" option.
 Otherwise, no action is needed.</p>
 <p>If you have any questions/feedback, feel free to reply this email or drop a comment on the
-<a href="">corresponding issue</a> on Github.</p>
+<a href="https://github.com/freedomsponsors/www.freedomsponsors.org/issues/209">corresponding issue</a> on Github.</p>
 <p></p>
 <p>Thanks!<br>
 The FreedomSponsors team</p>
@@ -43,7 +43,7 @@ This is a valid username so we automatically set your username to that.</p>
 click your username on the top right corner and select the "change username" option.
 Otherwise, no action is needed.</p>
 <p>If you have any questions/feedback, feel free to reply this email or drop a comment on the
-<a href="">corresponding issue</a> on Github.</p>
+<a href="https://github.com/freedomsponsors/www.freedomsponsors.org/issues/209">corresponding issue</a> on Github.</p>
 <p></p>
 <p>Thanks!<br>
 The FreedomSponsors team</p>
@@ -85,7 +85,7 @@ This will affect everything on the site: pages, emails and URLs.</p>
 click your username on the top right corner and select the "change username" option.
 Otherwise, no action is needed.</p>
 <p>If you have any questions/feedback, feel free to reply this email or drop a comment on the
-<a href="">corresponding issue</a> on Github.</p>
+<a href="https://github.com/freedomsponsors/www.freedomsponsors.org/issues/209">corresponding issue</a> on Github.</p>
 <p></p>
 <p>Thanks!<br>
 The FreedomSponsors team</p>
