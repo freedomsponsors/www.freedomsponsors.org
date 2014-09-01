@@ -27,9 +27,15 @@ def getAlertsForViewUser(logged_user, user_to_view, changedPrimaryEmail, changed
 
     return None, None
 
+
 def edit_existing_user(user, dict):
     userinfo = user.getUserInfo()
     # userinfo.screenName = dict['screenName']
+    first_time = userinfo.date_last_updated == userinfo.date_created
+    if first_time:
+        pass
+        #TODO: change username
+    now = timezone.now()
     userinfo.website = dict['website']
     userinfo.about = dict['about']
     userinfo.realName = dict['realName']
@@ -41,11 +47,12 @@ def edit_existing_user(user, dict):
     userinfo.brazilianPaypal = dict.has_key('brazilianPaypal')
     userinfo.hide_from_userlist = dict.has_key('hide_from_userlist')
     userinfo.preferred_language_code = dict['preferred_language_code']
-    if(settings.BITCOIN_ENABLED):
+    userinfo.date_last_updated = now
+    if settings.BITCOIN_ENABLED:
         userinfo.bitcoin_receive_address = dict['bitcoin_receive_address']
     newEmail = dict['primaryEmail']
     newPaypalEmail = dict.get('paypalEmail')
-    if(not newPaypalEmail):
+    if not newPaypalEmail:
         newPaypalEmail = newEmail
     changedPaypalEmail = newPaypalEmail != userinfo.paypalEmail
     primaryActivation = _changePrimaryEmailIfNeeded(userinfo, newEmail)

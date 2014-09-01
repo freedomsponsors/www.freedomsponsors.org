@@ -41,15 +41,17 @@ class UserInfo(models.Model):
     receiveEmail_issue_payment = models.BooleanField()
     receiveEmail_announcements = models.BooleanField()
     can_change_username = models.BooleanField(default=True)
+    date_created = models.DateTimeField(null=False)
+    date_last_updated = models.DateTimeField(null=False)
 
     @classmethod
     def newUserInfo(cls, user):
+        now = timezone.now()
         userinfo = cls()
         userinfo.user = user
         userinfo.paypalEmail = user.email
         userinfo.is_primary_email_verified = True
         userinfo.is_paypal_email_verified = True
-        userinfo.screenName = user.username
         userinfo.website = ''
         userinfo.about = ''
         userinfo.realName = user.first_name+' '+user.last_name
@@ -62,6 +64,8 @@ class UserInfo(models.Model):
         userinfo.brazilianPaypal = False
         userinfo.hide_from_userlist = False
         userinfo.paypal_verified = False
+        userinfo.date_created = now
+        userinfo.date_last_updated = now
         return userinfo
 
     def is_differentPaypalEmail(self):
@@ -87,7 +91,7 @@ class UserInfo(models.Model):
         # return reverse('core.views.user_views.viewUser', kwargs=kwargs)
 
     def is_complete(self):
-        return self.user.username and self.user.email
+        return self.user.username and self.user.email and self.date_last_updated > self.date_created
 
 
 def gravatar_url_small(self):

@@ -56,28 +56,32 @@ def viewUserByUsername(request, username):
 
     return _view_user(request, user)
 
+
 @login_required
 def editUserForm(request):
     userinfo = request.user.getUserInfo()
     available_languages = [
-        {'code':'en', 'label':_('English')},
-        {'code':'pt-br', 'label':_('Brazilian Portuguese')},
-        {'code':'es', 'label':_('Spanish')},
+        {'code': 'en', 'label': _('English')},
+        {'code': 'pt-br', 'label': _('Brazilian Portuguese')},
+        {'code': 'es', 'label': _('Spanish')},
     ]
-    if(not userinfo):
+    if not userinfo:
         userinfo = UserInfo.newUserInfo(request.user)
         userinfo.save()
         mail_services.welcome(request.user)
         _notify_admin_new_user(request.user)
-    return render_to_response('core2/useredit.html',
-        {'userinfo':userinfo,
-         'available_languages' : available_languages,
-        'next':request.GET.get('next', '')},
-        context_instance = RequestContext(request))
+    return render_to_response('core2/useredit.html', {
+        'userinfo': userinfo,
+        'available_languages': available_languages,
+        'next': request.GET.get('next', '')},
+        context_instance=RequestContext(request)
+    )
+
 
 def _notify_admin_new_user(user):
     mail_services.notify_admin(subject=_('New user registered: ')+user.username,
-        msg=settings.SITE_HOME+user.get_view_link())
+                               msg=settings.SITE_HOME+user.get_view_link())
+
 
 @login_required
 def editUser(request):
