@@ -11,6 +11,9 @@
                 <ul id="menu1" class="dropdown-menu" aria-labelledby="drop_user">
                     <li><a href="{{ user.get_view_link }}">View Profile</a></li>
                     <li><a href="/user/edit">Edit Profile</a></li>
+                    {% if user.getUserInfo.can_change_username %}
+                        <li><a href="/user/change_username">Change username</a></li>
+                    {% endif %}
                     {% if user.has_usable_password %}
                         <li><a href="/accounts/password/change">Change password</a></li>
                     {% endif %}

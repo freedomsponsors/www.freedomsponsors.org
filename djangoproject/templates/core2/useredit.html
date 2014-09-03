@@ -1,4 +1,50 @@
 {% extends "core2/base_old.html" %}
+
+{% block head %}
+    <script src="/static/js/angular.min.js"></script>
+    <script src="/static/js/fsapi.js"></script>
+    <script src="/static/js/fsutil.js"></script>
+    <script>
+        angular.module('main', ['fsapi']).config(
+            function($interpolateProvider, $httpProvider){
+                $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
+                $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+                $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+            }
+        ).controller('ChangeUsernameCtrl', function ChangeUsernameCtrl($scope, FSApi){
+            $scope.curr_username = '{{ user.username }}';
+            $scope.username = $scope.curr_username;
+
+            $scope.keypress = function(evt){
+                if(evt.charCode == 13){
+                    $scope.check();
+                    evt.preventDefault();
+                }
+                return false;
+            };
+
+            $scope.check = function(evt){
+                $scope.checking = true;
+                var username = $scope.username;
+                FSApi.check_username_availability(username).onResult(function(result){
+                    $scope.$apply(function(){
+                        $scope.available = result.ok;
+                        $scope.message = result.message;
+                        $scope.checking = false;
+                    });
+                });
+                evt.preventDefault();
+            }
+
+            $scope.submit = function(){
+                $('#le_form').submit();
+            }
+        });
+
+    </script>
+{% endblock head %}
+
+
 {% block mainContent%}
 <h3>{{user.first_name}} {{user.last_name}} - edit profile</h3>
 <hr>
@@ -50,7 +96,7 @@
     </form>
 </div>
 
-<div class="row-fluid">
+<div class="row-fluid" ng-app="main" ng-controller="ChangeUsernameCtrl">
 	<div class="span2">
 	  	<img src="{{user.gravatar_url_big}}"/>
 	  	<a href="http://en.gravatar.com/" target="_gravatar">Change picture</a> <i class="icon-question-sign icon-white popopo" rel="popover" data-content="We display your picture as it is registered in Gravatar. Go ahead and create your account there if you still don't have one" data-original-title="No upload here!"></i>
@@ -62,12 +108,25 @@
 		
 		<input type="hidden" name="next" value="{{next}}">
 
-		<div class="control-group">
-			<label class="control-label" for="screenName">Screen name</label>
-			<div class="controls">
-				<input type="text" class="span4" id="screenName" name="screenName" value="{{userinfo.screenName}}">
-			</div>
-		</div>
+        {% if can_edit_username %}
+            <div class="control-group">
+                <label class="control-label" for="username">Username</label>
+                <div class="controls" style="display: inline; margin-left: 20px;">
+                    <input type="text" class="span4" style="display: inline" id="username" name="username" ng-model="username" ng-keypress="keypress($event)">
+                    <button ng-click="check($event)" style="display: inline" ng-show="username != curr_username">Check availability</button>
+                    <p class="help-block" style="margin-left: 160px;">
+                        <img src="/static/img2/ajax-loader.gif" ng-show="checking">
+                        <span ng-class="{success:available, fail:!available}">{[{ message }]}</span>
+                    </p>
+                </div>
+            </div>
+        {% else %}
+            <div class="control-group">
+                <label class="control-label" for="username">Username</label>
+                <div class="controls" style="padding-top: 6px">{{ user.username }}</div>
+            </div>
+        {% endif %}
+
 		<div class="control-group">
 			<label class="control-label" for="primaryEmail">Primary email
 {% if user.email and not userinfo.is_primary_email_verified %}

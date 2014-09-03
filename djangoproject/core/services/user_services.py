@@ -1,4 +1,4 @@
-from core.services import paypal_services, mail_services
+from core.services import paypal_services, mail_services, FSException
 from emailmgr import utils as emailmgr_utils
 from emailmgr.models import EmailAddress
 from core.models import *
@@ -33,8 +33,9 @@ def edit_existing_user(user, dict):
     # userinfo.screenName = dict['screenName']
     first_time = userinfo.date_last_updated == userinfo.date_created
     if first_time:
-        pass
-        #TODO: change username
+        new_username = dict['username']
+        if new_username != user.username:
+            change_username(user, new_username)
     now = timezone.now()
     userinfo.website = dict['website']
     userinfo.about = dict['about']
@@ -88,13 +89,22 @@ def is_username_available(username):
 
 
 def change_username(user, new_username):
+    can_change = user.getUserInfo().can_change_username
+    if not can_change:
+        raise FSException('You cannot change your username anymore.')
+    if not is_valid_username(new_username):
+        raise FSException('Sorry, this username is invalid.')
     if not is_username_available(new_username):
-        return False
+        raise FSException('Sorry, that username is already taken.')
+    old_username = user.username
     user.username = new_username
     user.save()
     userinfo = user.getUserInfo()
     userinfo.can_change_username = False
     userinfo.save()
+    subject = 'user %s changed username %s --> %s' % (user.id, old_username, new_username)
+    body = '<a href="http://freedomsponsors.org/user/%s">%s</a>' % (user.id, new_username)
+    mail_services.notify_admin(subject, body)
     return True
 
 

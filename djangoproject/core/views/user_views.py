@@ -6,11 +6,24 @@ from django.template import  RequestContext
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, redirect
 from django.utils.translation import ugettext as _
-from core.services import user_services, mail_services
+from core.services import user_services, mail_services, FSException
 from django.conf import settings
 
 
-def _view_user(request, user):
+def viewUserById(request, user_id, user_slug=None):
+    try:
+        user = User.objects.get(pk=user_id)
+    except:
+        return HttpResponse(status=404, content='User not found')
+
+    return redirect('/user/%s' % user.username, permanent=True)
+
+def viewUserByUsername(request, username):
+    try:
+        user = User.objects.get(username=username)
+    except:
+        return HttpResponse(status=404, content='User not found')
+
     if not user.is_active and not request.user.is_superuser:
         return render_to_response(
             'core2/user_inactive.html',
@@ -40,23 +53,6 @@ def _view_user(request, user):
     )
 
 
-def viewUserById(request, user_id, user_slug=None):
-    try:
-        user = User.objects.get(pk=user_id)
-    except:
-        return HttpResponse(status=404, content='User not found')
-
-    return _view_user(request, user)
-
-def viewUserByUsername(request, username):
-    try:
-        user = User.objects.get(username=username)
-    except:
-        return HttpResponse(status=404, content='User not found')
-
-    return _view_user(request, user)
-
-
 @login_required
 def editUserForm(request):
     userinfo = request.user.getUserInfo()
@@ -70,8 +66,11 @@ def editUserForm(request):
         userinfo.save()
         mail_services.welcome(request.user)
         _notify_admin_new_user(request.user)
+    first_time = userinfo.date_last_updated == userinfo.date_created
+
     return render_to_response('core2/useredit.html', {
         'userinfo': userinfo,
+        'can_edit_username': first_time,
         'available_languages': available_languages,
         'next': request.GET.get('next', '')},
         context_instance=RequestContext(request)
@@ -85,7 +84,11 @@ def _notify_admin_new_user(user):
 
 @login_required
 def editUser(request):
-    paypalActivation, primaryActivation = user_services.edit_existing_user(request.user, request.POST)
+    try:
+        paypalActivation, primaryActivation = user_services.edit_existing_user(request.user, request.POST)
+    except FSException as e:
+        messages.error(request, e.message)
+        return redirect('/user/edit')
 
     next = request.POST.get(_('next'))
     if next:
@@ -130,23 +133,12 @@ def cancel_account(request):
 def change_username(request):
     can_change = request.user.getUserInfo().can_change_username
     if request.method.lower() == 'post':
-        if can_change:
-            old_username = request.user.username
-            new_username = request.POST['new_username']
-            if not user_services.is_valid_username(new_username):
-                messages.error(request, 'Sorry, this username is invalid')
-            else:
-                change_ok = user_services.change_username(request.user, new_username)
-                if change_ok:
-                    messages.info(request, 'Your username has been changed')
-                    can_change = False
-                    subject = 'user %s changed username %s --> %s' % (request.user.id, old_username, new_username)
-                    body = '<a href="http://freedomsponsors.org/user/%s">%s</a>' % (request.user.id, new_username)
-                    mail_services.notify_admin(subject, body)
-                else:
-                    messages.error(request, 'Sorry, that username is already taken')
-        else:
-            messages.warning(request, 'You cannot change your username anymore')
+        new_username = request.POST['new_username']
+        try:
+            user_services.change_username(request.user, new_username)
+            messages.info(request, 'Your username has been changed')
+        except FSException as e:
+            messages.error(request, e.message)
     return render_to_response(
         'core2/change_username.html',
         {'can_change': can_change},

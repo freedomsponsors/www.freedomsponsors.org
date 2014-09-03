@@ -119,9 +119,26 @@ def latest_activity(request):
 
 @login_required
 def check_username_availability(request, username):
-    result = {'is_valid': user_services.is_valid_username(username)}
-    if result['is_valid']:
-        result['is_available'] = user_services.is_username_available(username)
+    if username == request.user.username:
+        result = {
+            'ok': False,
+            'message': '"%s" is already your current username!' % username
+        }
+    elif not user_services.is_valid_username(username):
+        result = {
+            'ok': False,
+            'message': 'Sorry! "%s" is not a valid username (should be alphanumeric).' % username
+        }
+    elif not user_services.is_username_available(username):
+        result = {
+            'ok': False,
+            'message': 'Sorry, "%s" is already taken.' % username
+        }
+    else:
+        result = {
+            'ok': True,
+            'message': 'Great! "%s" is available!' % username
+        }
     return HttpResponse(json.dumps(result))
 
 

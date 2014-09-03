@@ -18,9 +18,13 @@ class FSPreconditionsMiddleware:
                 'core.views.user_views.editUserForm',
                 'core.views.user_views.editUser',
             ]
-            _paths = [reverse(v) for v in whitelist]
-            if request.path in _paths:
-                return None
+            whitelist2 = [
+                '/core/json/check_username_availability'
+            ]
+            _paths = [reverse(v) for v in whitelist] + whitelist2
+            for p in _paths:
+                if p in request.path:
+                    return None
 
             messages.info(request, 'Please complete your profile before proceeding.')
             url = reverse('core.views.user_views.editUserForm')
