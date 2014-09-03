@@ -32,13 +32,14 @@ class TestUserUnauthenticatedViews(TestCase):
         self.assertEqual(2, len(response.context['users']))
 
     def test_view_user(self):
-        response = self.client.get('/user/%d/' % self.user.id)
+        response = self.client.get('/user/%s/' % self.user.username)
         self.assertTemplateUsed(response, 'core2/user.html')
         self.assertEqual(self.user, response.context['le_user'])
 
     def test_view_user_with_slug(self):
-        response = self.client.get('/user/%d/%s' % (self.user.id, self.user.username))
+        response = self.client.get('/user/%d/%s' % (self.user.id, self.user.username), follow=True)
         self.assertTemplateUsed(response, 'core2/user.html')
+        self.assertTrue('http://testserver/user/%s/' % self.user.username, response.redirect_chain[-1][0])
         self.assertEqual(self.user, response.context['le_user'])
 
     def test_view_edit_form(self):
@@ -64,7 +65,6 @@ class TestUserAuthenticatedViews(TestCase):
 
     def test_view_edit_submit(self):
         response = self.client.post('/user/edit/submit', {
-            'screenName': 'John Doe',
             'website': 'http://www.test.com',
             'about': 'A placeholder user.',
             'realName': 'John Doe',
@@ -75,10 +75,8 @@ class TestUserAuthenticatedViews(TestCase):
         redirect_url = response.redirect_chain[0][0]
         redirect_status = response.redirect_chain[0][1]
         self.assertEqual(302, redirect_status)
-        self.assertTrue(redirect_url.startswith('http://testserver/user/'))
-        self.assertTrue(redirect_url.endswith('/john-doe?prim=true'))
+        self.assertEqual('http://testserver/user/%s?prim=true' % self.user.username, redirect_url)
 
-    @skip('TODO')
     def test_change_username_ok(self):
         response = self.client.post('/user/change_username', {
             'new_username': 'oreiudo'
@@ -87,7 +85,6 @@ class TestUserAuthenticatedViews(TestCase):
         self.assertEqual(200, response.status_code)
         self.assertEqual('oreiudo', user.username)
 
-    @skip('TODO')
     def test_change_username_name_already_taken(self):
         old_username = self.user.username
         response = self.client.post('/user/change_username', {
@@ -113,11 +110,15 @@ class TestDeprecatedCoreUserViews(TestCase):
         expected = [('http://testserver' + url, 301)]
         self.assertEqual(expected, response.redirect_chain)
 
+    def _assert_redirect_to_user(self, url):
+        response = self.client.get('/core' + url, follow=True)
+        self.assertTrue('http://testserver/user/%s/' % self.user.username, response.redirect_chain[-1][0])
+
     def test_list_users(self):
         self._assert_redirect('/user/')
 
     def test_view_user(self):
-        self._assert_redirect('/user/%d/' % self.user.id)
+        self._assert_redirect_to_user('/user/%d/' % self.user.id)
 
     def test_view_user_with_slug(self):
-        self._assert_redirect('/user/%d/%s' % (self.user.id, self.user.username))
+        self._assert_redirect_to_user('/user/%d/%s' % (self.user.id, self.user.username))

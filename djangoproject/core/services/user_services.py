@@ -105,7 +105,6 @@ def change_username(user, new_username):
     subject = 'user %s changed username %s --> %s' % (user.id, old_username, new_username)
     body = '<a href="http://freedomsponsors.org/user/%s">%s</a>' % (user.id, new_username)
     mail_services.notify_admin(subject, body)
-    return True
 
 
 def get_users_list():

@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 from core.models import Watch, Offer, Solution
-from core.services import watch_services, user_services
+from core.services import watch_services, user_services, FSException
 from core.tests.helpers import test_data
 
 
@@ -37,14 +37,17 @@ class TestUserServices(TestCase):
     def test_change_username(self):
         user = test_data.create_dummy_sponsor()
 
-        change_ok = user_services.change_username(user, 'oreiudo')
+        user_services.change_username(user, 'oreiudo')
         user = User.objects.get(pk=user.id)
-
-        self.assertTrue(change_ok)
         self.assertEqual('oreiudo', user.username)
 
         user2 = test_data.create_dummy_sponsor()
-        change_ok = user_services.change_username(user2, 'oreiudo')
-
-        self.assertFalse(change_ok)
+        deupau = False
+        try:
+            user_services.change_username(user2, 'oreiudo')
+        except FSException as e:
+            deupau = True
+            self.assertTrue('already taken' in e.message)
+        self.assertTrue(deupau)
+        user2 = User.objects.get(pk=user2.id)
         self.assertNotEqual('oreiudo', user2.username)

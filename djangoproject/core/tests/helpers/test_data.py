@@ -14,6 +14,7 @@ def createDummyUserRandom(login, password):
     user = User.objects.create_user(random_login, random_login+'@gogogo.com', password)
     userinfo = UserInfo.newUserInfo(user)
     userinfo.realName = login+' Real'
+    userinfo.date_last_updated = timezone.now()
     userinfo.save()
     return user
 
@@ -22,6 +23,7 @@ def create_dummy_sponsor():
     user = User.objects.create_user('userone_%s'%randomnum, 'userone_%s@gogogo.com'%randomnum, 'abcdef')
     userinfo = UserInfo.newUserInfo(user)
     userinfo.realName = 'User One'
+    userinfo.date_last_updated = timezone.now()
     userinfo.save()
     return user
 
@@ -30,6 +32,7 @@ def create_dummy_programmer():
     user = User.objects.create_user('usertwo_%s'%randomnum, 'usertwo_%s@gogogo.com'%randomnum, 'abcdef')
     userinfo = UserInfo.newUserInfo(user)
     userinfo.realName = 'User Two'
+    userinfo.date_last_updated = timezone.now()
     userinfo.save()
     return user
 
