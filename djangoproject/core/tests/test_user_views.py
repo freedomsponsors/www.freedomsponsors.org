@@ -1,3 +1,4 @@
+#coding: utf-8
 from unittest.case import skip
 from django.contrib.auth.models import User
 from django.test import TestCase
@@ -96,6 +97,36 @@ class TestUserAuthenticatedViews(TestCase):
 
         msg = [m for m in response.context['messages']][0].message
         self.assertTrue('username is already taken' in msg)
+
+    def test_change_username_name_invalid(self):
+        old_username = self.user.username
+        response = self.client.post('/user/change_username', {
+            'new_username': 'cannót'
+        })
+        user = User.objects.get(pk=self.user.id)
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(old_username, user.username)
+
+        msg = [m for m in response.context['messages']][0].message
+        self.assertTrue('username is invalid' in msg)
+
+    def test_can_change_username_once_but_not_twice(self):
+        response = self.client.post('/user/change_username', {
+            'new_username': 'oreiudo'
+        })
+        self.assertEqual(200, response.status_code)
+        user = User.objects.get(pk=self.user.id)
+        self.assertEqual('oreiudo', user.username)
+
+        response = self.client.post('/user/change_username', {
+            'new_username': 'narigudo'
+        })
+        user = User.objects.get(pk=self.user.id)
+        self.assertEqual(200, response.status_code)
+        self.assertEqual('oreiudo', user.username)
+
+        msg = [m for m in response.context['messages']][0].message
+        self.assertEqual('You cannot change your username anymore.', msg)
 
 
 class TestDeprecatedCoreUserViews(TestCase):
