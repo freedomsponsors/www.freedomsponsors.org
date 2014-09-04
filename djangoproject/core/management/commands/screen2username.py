@@ -8,6 +8,9 @@ from django.template.defaultfilters import slugify
 from django.conf import settings
 from core.services import user_services, mail_services
 
+
+# 209
+
 BODY_USER_WITH_PASSWORD = """
 <p>Hello {{screenName}},</p>
 <p>We're changing how users are identified on FreedomSponsors.
