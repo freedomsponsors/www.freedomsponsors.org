@@ -9,8 +9,6 @@ from django.conf import settings
 from core.services import user_services, mail_services
 
 
-# 209
-
 BODY_USER_WITH_PASSWORD = """
 <p>Hello {{screenName}},</p>
 <p>We're changing how users are identified on FreedomSponsors.
@@ -96,7 +94,7 @@ The FreedomSponsors team</p>
 
 
 def _has_password(user):
-    return user.password and len(user.password) > 1
+    return user.password and len(user.password) > 1 and user.has_usable_password()
 
 
 def _template_render_and_send(subject, source, user, screenName, new_username):
@@ -106,8 +104,8 @@ def _template_render_and_send(subject, source, user, screenName, new_username):
         'screenName': screenName,
         'new_username': new_username,
     }))
-    # mail_services.plain_send_mail(user.email, subject, body, settings.ADMAIL_FROM_EMAIL)
-    mail_services.plain_send_mail('tonylampada@gmail.com', subject, body, settings.ADMAIL_FROM_EMAIL)
+    mail_services.plain_send_mail(user.email, subject, body, settings.ADMAIL_FROM_EMAIL)
+    # mail_services.plain_send_mail('tonylampada@gmail.com', subject, body, settings.ADMAIL_FROM_EMAIL)
 
 
 def _user_with_password(user, screenName, new_username):
@@ -155,10 +153,9 @@ def _make_available(username):
 
 
 def _set_username(user, username):
-    pass
-    # user = User.objects.get(pk=user.id)
-    # user.username = username
-    # user.save()
+    user = User.objects.get(pk=user.id)
+    user.username = username
+    user.save()
 
 
 def _random_username():
