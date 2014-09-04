@@ -8,5 +8,5 @@ urlpatterns = patterns('core.views.user_views',
     url(r'^change_username', 'change_username'),
     url(r'^(?P<user_id>\d+)/$', 'viewUserById'),
     url(r'^(?P<user_id>\d+)/(?P<user_slug>.*)$', 'viewUserById'),
-    url(r'^(?P<username>\w+)/$', 'viewUserByUsername'),
+    url(r'^(?P<username>.+)/$', 'viewUserByUsername'),
 )
