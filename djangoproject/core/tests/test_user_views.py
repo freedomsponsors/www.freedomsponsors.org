@@ -62,7 +62,15 @@ class TestUserAuthenticatedViews(TestCase):
 
     def test_view_edit_form(self):
         response = self.client.get('/user/edit', follow=True)
+        self.assertEqual(200, response.status_code)
         self.assertEqual([], response.redirect_chain)
+
+    def test_view_edit_form_with_new_user(self):
+        userinfo = self.user.getUserInfo()
+        userinfo.delete()
+        response = self.client.get('/user/edit', follow=True)
+        self.assertEqual(200, response.status_code)
+        self.assertTrue(response.context['can_edit_username'])
 
     def test_view_edit_submit(self):
         response = self.client.post('/user/edit/submit', {
@@ -77,6 +85,42 @@ class TestUserAuthenticatedViews(TestCase):
         redirect_status = response.redirect_chain[0][1]
         self.assertEqual(302, redirect_status)
         self.assertEqual('http://testserver/user/%s?prim=true' % self.user.username, redirect_url)
+
+    def test_edit_user_changing_username(self):
+        userinfo = self.user.getUserInfo()
+        userinfo.date_last_updated = userinfo.date_created  # pretend it's the first time the user is updating his data
+        userinfo.save()
+        response = self.client.post('/user/edit/submit', {
+            'username': 'oreiudo',
+            'website': '',
+            'about': '',
+            'realName': '',
+            'preferred_language_code': 'en',
+            'primaryEmail': 'john@test.com',
+            'bitcoin_receive_address': ''
+        }, follow=True)
+        self.assertEqual('oreiudo', response.context['le_user'].username)
+        self.assertEqual(200, response.status_code)
+
+    def test_edit_user_cannot_allow_invalid_username(self):
+        old_username = self.user.username
+        userinfo = self.user.getUserInfo()
+        userinfo.date_last_updated = userinfo.date_created  # pretend it's the first time the user is updating his data
+        userinfo.save()
+        response = self.client.post('/user/edit/submit', {
+            'username': 'oreiúdo',
+            'website': '',
+            'about': '',
+            'realName': '',
+            'preferred_language_code': 'en',
+            'primaryEmail': 'john@test.com',
+            'bitcoin_receive_address': ''
+        }, follow=True)
+        msg = [m for m in response.context['messages']][0].message
+        self.assertEqual(old_username, response.context['userinfo'].user.username)
+        self.assertEqual(200, response.status_code)
+        self.assertTrue('/useredit.html' in response.templates[0].name)
+        self.assertTrue('username is invalid' in msg)
 
     def test_change_username_ok(self):
         response = self.client.post('/user/change_username', {
@@ -127,6 +171,13 @@ class TestUserAuthenticatedViews(TestCase):
 
         msg = [m for m in response.context['messages']][0].message
         self.assertEqual('You cannot change your username anymore.', msg)
+
+    def test_cancel_account(self):
+        response = self.client.post('/user/cancel_account', {}, follow=True)
+        user = User.objects.get(pk=self.user.id)
+        self.assertFalse(user.is_active)
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(('http://testserver/', 302), response.redirect_chain[-1])
 
 
 class TestDeprecatedCoreUserViews(TestCase):

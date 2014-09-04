@@ -66,8 +66,8 @@ def retriveJIRAInfo(url):
                 info.error = 'Could not parse XML view from: '+xmlviewURL
         else:
             info.error = ('status %s: '%resp.status)+xmlviewURL
-    except (httplib2.HttpLib2Error, socket.timeout) as e:
-        info.error = e.message
+    except (httplib2.HttpLib2Error, socket.timeout, socket.error) as e:
+        info.error = 'error: ' + e.message
     return info
             
     
