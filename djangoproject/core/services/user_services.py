@@ -32,7 +32,7 @@ def edit_existing_user(user, dict):
     userinfo = user.getUserInfo()
     new_username = dict.get('username')
     if new_username and not is_valid_username(new_username):
-        raise FSException('Invalid username (must not contain any special characters')
+        raise FSException('Sorry, this username is invalid (usernames must not contain special characters).')
     first_time = userinfo.date_last_updated == userinfo.date_created
     if first_time:
         new_username = dict['username']
@@ -95,7 +95,7 @@ def change_username(user, new_username):
     if not can_change:
         raise FSException('You cannot change your username anymore.')
     if not is_valid_username(new_username):
-        raise FSException('Sorry, this username is invalid.')
+        raise FSException('Sorry, this username is invalid (usernames must not contain special characters).')
     if not is_username_available(new_username):
         raise FSException('Sorry, that username is already taken.')
     old_username = user.username
