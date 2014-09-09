@@ -30,7 +30,9 @@ def getAlertsForViewUser(logged_user, user_to_view, changedPrimaryEmail, changed
 
 def edit_existing_user(user, dict):
     userinfo = user.getUserInfo()
-    # userinfo.screenName = dict['screenName']
+    new_username = dict.get('username')
+    if new_username and not is_valid_username(new_username):
+        raise FSException('Invalid username (must not contain any special characters')
     first_time = userinfo.date_last_updated == userinfo.date_created
     if first_time:
         new_username = dict['username']

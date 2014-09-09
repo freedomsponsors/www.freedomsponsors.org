@@ -18,6 +18,7 @@ def viewUserById(request, user_id, user_slug=None):
 
     return redirect('/user/%s' % user.username, permanent=True)
 
+
 def viewUserByUsername(request, username):
     try:
         user = User.objects.get(username=username)
