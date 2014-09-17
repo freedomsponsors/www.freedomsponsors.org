@@ -2,6 +2,7 @@ import json
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
+from core.decorators import only_post
 from core.models import Project, ActionLog
 from core.services import stats_services, issue_services, watch_services, mail_services
 from django.contrib.auth.decorators import login_required
@@ -49,6 +50,7 @@ def edit_form(request, project_id):
 
 
 @login_required
+@only_post
 def edit(request):
     project_id = int(request.POST.get('id'))
     project = Project.objects.get(pk=project_id)

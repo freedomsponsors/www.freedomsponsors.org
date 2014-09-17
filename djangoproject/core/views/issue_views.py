@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import redirect, render_to_response
 from django.template import RequestContext
+from core.decorators import only_post
 from core.models import *
 from core.services import issue_services, watch_services, paypal_services, mail_services
 from core.views import paypal_views, bitcoin_views, HOME_CRUMB
@@ -19,6 +20,7 @@ __author__ = 'tony'
 
 
 @login_required
+@only_post
 def addIssue(request):
     offer = issue_services.sponsor_new_issue(request.POST, request.user)
     watch_services.watch_issue(request.user, offer.issue.id, Watch.SPONSORED)
@@ -27,6 +29,7 @@ def addIssue(request):
 
 
 @login_required
+@only_post
 def kickstartIssue(request):
     issue = issue_services.kickstart_new_issue(request.POST, request.user)
     watch_services.watch_issue(request.user, issue.id, Watch.CREATED)
@@ -35,6 +38,7 @@ def kickstartIssue(request):
 
 
 @login_required
+@only_post
 def abortSolution(request):
     solution_id = int(request.POST['solution_id'])
     comment_content = request.POST['comment']
@@ -44,6 +48,7 @@ def abortSolution(request):
 
 
 @login_required
+@only_post
 def addSolution(request):
     """Start working on this issue"""
     issue_id = int(request.POST['issue_id'])
@@ -87,6 +92,7 @@ def _need_to_verify_paypal_account(user, issue):
 
 
 @login_required
+@only_post
 def editOffer(request):
     offer_id = int(request.POST['offer_id'])
     offer = Offer.objects.get(pk=offer_id)
@@ -177,6 +183,7 @@ def myissues(request):
 
 
 @login_required
+@only_post
 def resolveSolution(request):
     solution_id = int(request.POST['solution_id'])
     comment_content = request.POST['comment']
@@ -186,6 +193,7 @@ def resolveSolution(request):
 
 
 @login_required
+@only_post
 def revokeOffer(request):
     offer_id = int(request.POST['offer_id'])
     comment_content = request.POST['comment']
@@ -195,6 +203,7 @@ def revokeOffer(request):
 
 
 @login_required
+@only_post
 def sponsorIssue(request):
     issue_id = int(request.POST['issue_id'])
 
@@ -265,6 +274,8 @@ def viewIssue(request, issue_id):
     return render_to_response('core2/issue.html', context, context_instance=RequestContext(request))
 
 
+@login_required
+@only_post
 def editIssue(request):
     issue_id = int(request.POST['issue_id'])
     issue = Issue.objects.get(pk=issue_id)
@@ -353,6 +364,7 @@ def payOfferForm(request, offer_id):
                               context_instance=RequestContext(request))
 
 @login_required
+@only_post
 def payOffer(request):
     offer_id = int(request.POST['offer_id'])
     offer = Offer.objects.get(pk=offer_id)

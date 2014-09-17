@@ -1,5 +1,6 @@
 import urllib
 from django.http import HttpResponse
+from core.decorators import only_post
 from core.models import *
 from django.contrib import messages
 from django.template import  RequestContext
@@ -84,6 +85,7 @@ def _notify_admin_new_user(user):
 
 
 @login_required
+@only_post
 def editUser(request):
     try:
         paypalActivation, primaryActivation = user_services.edit_existing_user(request.user, request.POST)

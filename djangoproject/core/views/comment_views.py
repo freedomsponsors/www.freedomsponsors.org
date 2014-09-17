@@ -2,12 +2,14 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render_to_response
 from django.utils.translation import ugettext as _
 from django.template import RequestContext
+from core.decorators import only_post
 from core.models import *
 from core.services import comment_services, watch_services
 
 __author__ = 'tony'
 
 @login_required
+@only_post
 def addIssueComment(request):
     issue_id = int(request.POST['issue_id'])
     comment_content = request.POST['content']
@@ -17,6 +19,7 @@ def addIssueComment(request):
 
 
 @login_required
+@only_post
 def editIssueComment(request):
     comment_id = int(request.POST['comment_id'])
     comment_content = request.POST['content']
