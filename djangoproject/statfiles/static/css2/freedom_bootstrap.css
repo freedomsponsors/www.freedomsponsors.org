@@ -3742,7 +3742,7 @@
 #bootstrap-content .popover-title {
   padding: 9px 15px;
   line-height: 1;
-  background-color: #f5f5f5;
+  background-color: #ada6a6;
   border-bottom: 1px solid #eee;
   -webkit-border-radius: 3px 3px 0 0;
   -moz-border-radius: 3px 3px 0 0;
@@ -3751,6 +3751,7 @@
 #bootstrap-content .popover-content {
   padding: 14px;
   background-color: #ffffff;
+  color: #9e9898;
   -webkit-border-radius: 0 0 3px 3px;
   -moz-border-radius: 0 0 3px 3px;
   border-radius: 0 0 3px 3px;
