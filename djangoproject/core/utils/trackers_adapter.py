@@ -1,3 +1,4 @@
+import html2text
 import httplib2
 from urlparse import urlparse, parse_qs
 import re
@@ -32,6 +33,8 @@ def fetchIssueInfo(issueURL):
         info = retrieveGoogleCodeInfo(issueURL)
     else:
         info = IssueInfo()
+    if hasattr(info, 'description'):
+        info.description = html2text.html2text(info.description)
     if info.error:
         print 'Error fetching info for: '+issueURL+' - '+info.error
         notify_admin('Error fetching info for: '+issueURL, info.error)
