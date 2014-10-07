@@ -19,7 +19,6 @@ class GithubAdapterTest(TestCase):
     def test_fetch_repos(self):
         repos = github_adapter.fetch_repos("tonylampada")
         self.assertTrue(len(repos) >= 6)
-        _assert_repo_contains(self, repos, "liquibase")
         _assert_repo_contains(self, repos, "PituKontrol")
         _assert_repo_contains(self, repos, "Svn-Hooks-In-Java")
         _assert_repo_contains(self, repos, "www.freedomsponsors.org")
