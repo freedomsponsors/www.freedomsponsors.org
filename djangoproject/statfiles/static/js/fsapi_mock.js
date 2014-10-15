@@ -1,25 +1,3 @@
-/**
- *
- Copyright (C) 2013  FreedomSponsors
-
- The JavaScript code in this page is free software: you can
- redistribute it and/or modify it under the terms of the GNU
- AFFERO GENERAL PUBLIC LICENSE (GNU AGPL) as published by the Free Software
- Foundation, either version 3 of the License, or (at your option)
- any later version.  The code is distributed WITHOUT ANY WARRANTY;
- without even the implied warranty of MERCHANTABILITY or FITNESS
- FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
- As additional permission under GNU GPL version 3 section 7, you
- may distribute non-source (e.g., minimized or compacted) forms of
- that code without the copy of the GNU GPL normally required by
- section 4, provided you include this license notice and a URL
- through which recipients can access the Corresponding Source.
-
- For more information, refer to
- https://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/AGPL_license.txt
- */
-
 var lero = "Neste sentido, a determinação clara de objetivos assume importantes posições no estabelecimento do remanejamento dos quadros funcionais. Todavia, a consulta aos diversos militantes deve passar por modificações independentemente dos modos de operação convencionais. Ainda assim, existem dúvidas a respeito de como o desafiador cenário globalizado pode nos levar a considerar a reestruturação do impacto na agilidade decisória. Evidentemente, a complexidade dos estudos efetuados afeta positivamente a correta previsão dos índices pretendidos. As experiências acumuladas demonstram que a percepção das dificuldades cumpre um papel essencial na formulação da gestão inovadora da qual fazemos parte.";
 leros = lero.split(" ");
 var statuses = ['open', 'working', 'done']
