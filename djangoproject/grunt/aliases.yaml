@@ -1,0 +1,10 @@
+build:
+  - 'ngtemplates'
+  - 'concat'
+  # - 'ngmin:fix_angular_declarations'
+  # - 'concat:withtemplates'
+  # - 'uglify:build'
+  # - 'copy:myapp'
+
+# test:
+#   - 'karma:unit'
