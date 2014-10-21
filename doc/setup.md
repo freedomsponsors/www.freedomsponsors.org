@@ -37,7 +37,7 @@ Instructions to run application locally:
   
   ```bash
   $ sudo su postgres #run the next command as postgres
-  $ createuser -d -SRP frespo # this will prompot you to create a password (just use frespo for now)
+  $ createuser -d -SRP frespo # this will prompt you to create a password (just use frespo for now)
   $ createdb -O frespo frespo
   $ exit # go back to your normal user
   ```
