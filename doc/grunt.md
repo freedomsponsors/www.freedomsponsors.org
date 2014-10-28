@@ -1,6 +1,6 @@
 # Javascript build
 
-FreedomSponsors development environment uses grunt to generate a single .js file by concatenating other files.
+FreedomSponsors development environment uses [grunt](http://gruntjs.com/) to generate a single .js file by concatenating other files.
 Basically it will read some files from `djangoproject/statfiles/static/js/**` and write to 'djangoproject/statfiles/static/js-generated/fs.js'.
 
 So anytime you change any javascript, you need to rebuild fs.js
