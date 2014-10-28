@@ -37,7 +37,7 @@ angular.module('fs').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/static/js/issuecards/issuecards.html',
-    "<div class=card-list-section><div class=card-list-header><h3 class=\"boxed medium\">{{ label }}</h3><a href class=\"fs-button square grey less\" ng-class=\"{'disabled' : no_less()}\" ng-click=less()>«</a> <a href class=\"fs-button square grey more\" ng-class=\"{'disabled' : no_more()}\" ng-click=more()>»</a> <img ng-show=is_loading src=/static/img2/ajax-loader.gif> <a href=\"/search/?project_id={[{ projectId }]}&operation={[{getViewAllOperation()}]}\" class=\"fs-button medium grey view-all right\">View All</a></div><div class=column-wrapper><div ng-repeat=\"issue in issues\" ng-include=getInclude()></div></div></div>"
+    "<div class=card-list-section><div class=card-list-header><h3 class=\"boxed medium\">{{ label }}</h3><a href class=\"fs-button square grey less\" ng-class=\"{'disabled' : no_less()}\" ng-click=less()>&laquo;</a> <a href class=\"fs-button square grey more\" ng-class=\"{'disabled' : no_more()}\" ng-click=more()>&raquo;</a> <img ng-show=is_loading src=/static/img2/ajax-loader.gif> <a href=\"/search/?project_id={[{ projectId }]}&operation={[{getViewAllOperation()}]}\" class=\"fs-button medium grey view-all right\">View All</a></div><div class=column-wrapper><div ng-repeat=\"issue in issues\" ng-include=getInclude()></div></div></div>"
   );
 
 

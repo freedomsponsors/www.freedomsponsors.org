@@ -3,28 +3,25 @@
 
 
 {% block head %}
+    <script>
+        if(!window.FS){
+            window.FS = {};
+        }
+        FS.dependencies = ['angularutils'];
+    </script>
     <script src="/static/js/angular.min.js"></script>
-    <script src="/static/js/angularutils/angularutils.js"></script>
+    <script src="/static/js-generated/fs.js"></script>
     <script src="/static/bootstrap/js/showdown.js"></script>
     <script>
 
-        var dependencies = ['angularutils'];
-
-        var mod = angular.module('project', dependencies);
-        mod.config(
-            function($interpolateProvider){
-                $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
-            }
-        );
-
-        mod.controller("MyCtrl", function($scope){
+        angular.module('fs').controller("MyCtrl", function($scope){
             $scope.description = '{{ project.description|escapejs }}';
         });
     </script>
 {% endblock %}
 
 {% block mainContent%}
-    <div ng-app="project" class="content" align="center" ng-controller="MyCtrl">
+    <div ng-app="fs" class="content" align="center" ng-controller="MyCtrl">
 		<div class="home-content-section" align="left">
 			<h1 class="green-text"> Editing project: {{ project.name }}</h1>
 			<div class="fs-box">

@@ -21,9 +21,9 @@
  */
 
 
-var mod = angular.module('tagapi', []);
+angular.module('tagapi', []);
 
-mod.factory('TagApi', function($http) {
+angular.module('tagapi').factory('TagApi', function($http) {
     var add_tag = '/core/json/add_tag';
     var remove_tag = '/core/json/remove_tag';
 

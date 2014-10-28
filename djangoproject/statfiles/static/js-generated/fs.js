@@ -6,14 +6,16 @@ if(!FS.dependencies){
 }
 
 angular.module('fs', FS.dependencies).config(
-    function($interpolateProvider){
+    function($interpolateProvider, $httpProvider){
         $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
+        $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+        $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
     }
 );
 
-var fsapi_mod = angular.module('fsapi', []);
+angular.module('fsapi', []);
 
-fsapi_mod.factory('FSApi', function(){
+angular.module('fsapi').factory('FSApi', function(){
 
     function list_issues(project_id, sponsoring, offset, count){
         var params = {
@@ -53,9 +55,9 @@ fsapi_mod.factory('FSApi', function(){
     };
 });
 
-var fsapi_mod = angular.module('fslinks', []);
+angular.module('fslinks', []);
 
-fsapi_mod.factory('FSLinks', function(){
+angular.module('fslinks').factory('FSLinks', function(){
 
     function issue_link(issue){
         return issue.issue_link;
@@ -141,8 +143,8 @@ function get4Sponsors(issue){
  https://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/AGPL_license.txt
  */
 
-var mod = angular.module('activitylist', ['fsapi']);
-mod.directive('activitylist', function() {
+angular.module('activitylist', ['fsapi']);
+angular.module('activitylist').directive('activitylist', function() {
     return {
         restrict: 'E',
         replace: true,
@@ -194,8 +196,8 @@ mod.directive('activitylist', function() {
     }
 });
 
-var mod = angular.module('angularutils', []);
-mod.directive('textWithMarkdownPreview', function() {
+angular.module('angularutils', []);
+angular.module('angularutils').directive('textWithMarkdownPreview', function() {
     return {
         restrict: 'E',
         replace: true,
@@ -215,7 +217,7 @@ mod.directive('textWithMarkdownPreview', function() {
     }
 });
 
-mod.directive('watchIssue', function() {
+angular.module('angularutils').directive('watchIssue', function() {
     return {
         restrict: 'E',
         replace: true,
@@ -252,7 +254,7 @@ mod.directive('watchIssue', function() {
     }
 });
 
-mod.directive('multilineEllipsis', function () {
+angular.module('angularutils').directive('multilineEllipsis', function () {
     return {
         restrict: 'A',
         link: function (scope, element, attr) {
@@ -320,9 +322,9 @@ $.ajaxSetup({
         }
     }
 });
-var mod = angular.module('fswatch', ['fsapi']);
+angular.module('fswatch', ['fsapi']);
 
-mod.directive('watchEntity', function() {
+angular.module('fswatch').directive('watchEntity', function() {
     return {
         restrict: 'E',
         replace: true,
@@ -419,8 +421,8 @@ angular.module('contenteditable', []).
 		}
 	};
 });
-var mod = angular.module('issuecards', ['fsapi', 'fslinks', 'angularutils']);
-mod.directive('issueCards', function() {
+angular.module('issuecards', ['fsapi', 'fslinks', 'angularutils']);
+angular.module('issuecards').directive('issueCards', function() {
     return {
         restrict: 'E',
         replace: true,
@@ -570,6 +572,30 @@ mod.directive('issueCards', function() {
     };
 });
 
+angular.module('soapi', []);
+
+angular.module('soapi').factory('SOApi', function($http){
+    var get_tags = "https://api.stackexchange.com/2.1/tags";
+
+
+    function getTags(s){
+        return $http({
+            url: get_tags,
+            method: "GET",
+            params: {
+                order: 'desc',
+                sort: 'popular',
+                inname: s,
+                site: 'stackoverflow'
+            }
+        });
+    }
+
+    return {
+        getTags: getTags
+    };
+})
+
 /**
  *
  Copyright (C) 2013  FreedomSponsors
@@ -593,9 +619,9 @@ mod.directive('issueCards', function() {
  */
 
 
-var mod = angular.module('tagapi', []);
+angular.module('tagapi', []);
 
-mod.factory('TagApi', function($http) {
+angular.module('tagapi').factory('TagApi', function($http) {
     var add_tag = '/core/json/add_tag';
     var remove_tag = '/core/json/remove_tag';
 
@@ -650,8 +676,8 @@ mod.factory('TagApi', function($http) {
  https://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/AGPL_license.txt
  */
 
-var mod = angular.module('taglist', ['soapi', 'tagapi']);
-mod.directive('taglist', function() {
+angular.module('taglist', ['soapi', 'tagapi']);
+angular.module('taglist').directive('taglist', function() {
     return {
         restrict: 'E',
         replace: true,
@@ -758,7 +784,7 @@ angular.module('fs').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/static/js/issuecards/issuecards.html',
-    "<div class=card-list-section><div class=card-list-header><h3 class=\"boxed medium\">{{ label }}</h3><a href class=\"fs-button square grey less\" ng-class=\"{'disabled' : no_less()}\" ng-click=less()>«</a> <a href class=\"fs-button square grey more\" ng-class=\"{'disabled' : no_more()}\" ng-click=more()>»</a> <img ng-show=is_loading src=/static/img2/ajax-loader.gif> <a href=\"/search/?project_id={[{ projectId }]}&operation={[{getViewAllOperation()}]}\" class=\"fs-button medium grey view-all right\">View All</a></div><div class=column-wrapper><div ng-repeat=\"issue in issues\" ng-include=getInclude()></div></div></div>"
+    "<div class=card-list-section><div class=card-list-header><h3 class=\"boxed medium\">{{ label }}</h3><a href class=\"fs-button square grey less\" ng-class=\"{'disabled' : no_less()}\" ng-click=less()>&laquo;</a> <a href class=\"fs-button square grey more\" ng-class=\"{'disabled' : no_more()}\" ng-click=more()>&raquo;</a> <img ng-show=is_loading src=/static/img2/ajax-loader.gif> <a href=\"/search/?project_id={[{ projectId }]}&operation={[{getViewAllOperation()}]}\" class=\"fs-button medium grey view-all right\">View All</a></div><div class=column-wrapper><div ng-repeat=\"issue in issues\" ng-include=getInclude()></div></div></div>"
   );
 
 

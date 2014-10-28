@@ -5,17 +5,16 @@
 {% endblock %}
 
 {% block head %}
-    <script src="/static/js/angular.min.js"></script>
-    <script src="/static/js/fsapi.js"></script>
-    <script src="/static/js/fsutil.js"></script>
     <script>
-        angular.module('main', ['fsapi']).config(
-            function($interpolateProvider, $httpProvider){
-                $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
-                $httpProvider.defaults.xsrfCookieName = 'csrftoken';
-                $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
-            }
-        ).controller('ChangeUsernameCtrl', function ChangeUsernameCtrl($scope, FSApi){
+        if(!window.FS){
+            window.FS = {};
+        }
+        FS.dependencies = ['fsapi'];
+    </script>
+    <script src="/static/js/angular.min.js"></script>
+    <script src="/static/js-generated/fs.js"></script>
+    <script>
+        angular.module('fs').controller('ChangeUsernameCtrl', function ChangeUsernameCtrl($scope, FSApi){
             $scope.new_username = '{{ user.username }}';
 
             $scope.keypress = function(evt){
@@ -48,7 +47,7 @@
 
 
 {% block mainContent%}
-<div class="content" align="center" ng-app="main" ng-controller="ChangeUsernameCtrl">
+<div class="content" align="center" ng-app="fs" ng-controller="ChangeUsernameCtrl">
     <div class="content-section" align="left">
     {% if can_change %}
         <h2>Change username</h2>

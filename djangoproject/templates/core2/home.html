@@ -20,6 +20,10 @@
             $scope.issues_sponsoring = issues_sponsoring;
             $scope.issues_proposed = {{ issues_kickstarting|safe }};
         }
+
+    angular.module('fs').run(function($templateCache){
+        window.TC = $templateCache;
+    });
     </script>
 {% endblock %}
 

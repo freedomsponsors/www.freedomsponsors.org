@@ -20,8 +20,8 @@
  https://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/AGPL_license.txt
  */
 
-var mod = angular.module('activitylist', ['fsapi']);
-mod.directive('activitylist', function() {
+angular.module('activitylist', ['fsapi']);
+angular.module('activitylist').directive('activitylist', function() {
     return {
         restrict: 'E',
         replace: true,

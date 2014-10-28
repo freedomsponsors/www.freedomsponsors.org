@@ -7,16 +7,16 @@
 {% block mainContent%}
 
     <script src="/static/bootstrap/js/jquery.numeric.js"></script>
+    <script>
+        if(!window.FS){
+            window.FS = {};
+        }
+        FS.dependencies = [];
+    </script>
     <script src="/static/js/angular.min.js"></script>
+    <script src="/static/js-generated/fs.js"></script>
     {% localize off %}
     <script type="text/javascript">
-
-        var mod = angular.module('pay_offer', [])
-        mod.config(
-            function($interpolateProvider){
-                $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
-            }
-        );
 
         function PayCtrl($scope) {
             var is_brazilian = '{{ is_brazilian }}' == 'True';
@@ -218,7 +218,7 @@
         {% csrf_token %}
         <input type="hidden" name="offer_id" value="{{ offer.id }}">
         <input type="hidden" name="count" value="{{ count }}">
-        <div class="span12" ng-app="pay_offer" ng-controller="PayCtrl">
+        <div class="span12" ng-app="fs" ng-controller="PayCtrl">
 
             <div class="modal hide fade in" id="alert_modal_currency">
                 <div class="modal-header">

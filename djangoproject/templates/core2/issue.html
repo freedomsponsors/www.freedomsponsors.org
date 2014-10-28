@@ -17,24 +17,16 @@
 
 
 {% block head %}
+    <script>
+        if(!window.FS){
+            window.FS = {};
+        }
+        FS.dependencies = ['angularutils', 'fswatch'];
+    </script>
     <script src="/static/js/angular.min.js"></script>
-    <script src="/static/js/angularutils/angularutils.js"></script>
-    <script src="/static/js/angularutils/watch.js"></script>
-    <script src="/static/js/fsapi.js"></script>
-    <script src="/static/js/fsutil.js"></script>
+    <script src="/static/js-generated/fs.js"></script>
     <script src="/static/bootstrap/js/showdown.js"></script>
     <script type="text/javascript">
-
-        var dependencies = ['angularutils', 'fswatch'];
-
-        var mod = angular.module('issue', dependencies);
-        mod.config(
-            function($interpolateProvider, $httpProvider){
-                $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
-                $httpProvider.defaults.xsrfCookieName = 'csrftoken';
-                $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
-            }
-        );
 
         function IssueCtrl($scope) {
             $scope.new_comment = '';
@@ -235,7 +227,7 @@
 
 {% block mainContent%}
 
-    <div ng-app="issue" ng-controller="IssueCtrl">
+    <div ng-app="fs" ng-controller="IssueCtrl">
         <div class="content" align="center">
         <div class="content-section" align="left">
         <!-- Issue Title -->

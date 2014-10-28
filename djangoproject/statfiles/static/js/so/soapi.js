@@ -1,6 +1,6 @@
-var mod = angular.module('soapi', []);
+angular.module('soapi', []);
 
-mod.factory('SOApi', function($http){
+angular.module('soapi').factory('SOApi', function($http){
     var get_tags = "https://api.stackexchange.com/2.1/tags";
 
 

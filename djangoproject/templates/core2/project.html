@@ -9,39 +9,18 @@
 
 
 {% block head %}
+    <script>
+        if(!window.FS){
+            window.FS = {};
+        }
+        FS.dependencies = ['issuecards', 'angularutils', 'taglist', 'activitylist', 'fswatch', 'contenteditable'];
+    </script>
     <script src="/static/js/angular.min.js"></script>
-    <script src="/static/js/angularutils/angularutils.js"></script>
-    <script src="/static/js/so/soapi.js"></script>
-    <script src="/static/js/tags/taglist.js"></script>
-    <script src="/static/js/issuecards/issuecards.js"></script>
-    <script src="/static/js/activitylist/activitylist.js"></script>
-	<script src="/static/js/contenteditable/contenteditable.js"></script>
-    <script src="/static/js/fsutil.js"></script>
-    <script src="/static/js/angularutils/watch.js"></script>
-    {% if sandbox %}
-        <script src="/static/js/tags/tag_api_mock.js"></script>
-        <script src="/static/js/fsapi_mock.js"></script>
-        <script src="/static/js/fslinks_sandbox.js"></script>
-    {% else %}
-        <script src="/static/js/tags/tag_api.js"></script>
-        <script src="/static/js/fsapi.js"></script>
-        <script src="/static/js/fslinks.js"></script>
-    {% endif %}
+    <script src="/static/js-generated/fs.js"></script>
     <script src="/static/bootstrap/js/showdown.js"></script>
     <script>
 
-        var dependencies = ['issuecards', 'angularutils', 'taglist', 'activitylist', 'fswatch', 'contenteditable'];
-
-        var mod = angular.module('project', dependencies);
-        mod.config(
-            function($interpolateProvider, $httpProvider){
-                $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
-                $httpProvider.defaults.xsrfCookieName = 'csrftoken';
-                $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
-            }
-        );
-
-        mod.controller("MyCtrl", function($scope){
+        angular.module('fs').controller("MyCtrl", function($scope){
             $scope.tags = {{ tags|safe }};
             $scope.authenticated = {% if user.is_authenticated %}true{% else %}false{% endif %};
             $scope.watching = 'True' == '{{ is_watching }}';
@@ -65,7 +44,7 @@
 
 
 {% block mainContent%}
-    <div class="content" align="center" ng-app="project" ng-controller="MyCtrl">
+    <div class="content" align="center" ng-app="fs" ng-controller="MyCtrl">
     <div class="home-content-section" align="left">
     <!-- Project Header -->
     <div style="height:160px">

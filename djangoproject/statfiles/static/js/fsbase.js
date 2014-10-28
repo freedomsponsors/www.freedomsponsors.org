@@ -6,7 +6,9 @@ if(!FS.dependencies){
 }
 
 angular.module('fs', FS.dependencies).config(
-    function($interpolateProvider){
+    function($interpolateProvider, $httpProvider){
         $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
+        $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+        $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
     }
 );

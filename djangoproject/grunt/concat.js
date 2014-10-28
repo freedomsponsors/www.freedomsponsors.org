@@ -11,7 +11,7 @@ module.exports = function(grunt, options){
 				P + '/angularutils/*.js',
 				P + '/contenteditable/*.js',
 				P + '/issuecards/*.js',
-				P + '/soapi/*.js',
+				P + '/so/*.js',
 				P + '/tags/tag_api.js',
 				P + '/tags/taglist.js',
 				'statfiles/static/js-generated/fs-templates.js'
