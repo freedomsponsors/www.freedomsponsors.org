@@ -79,5 +79,6 @@ Instructions to run application locally:
   ```
 
 Next: 
+* [Updating and build javascript](http://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/doc/grunt.md)
 * [make sure you can run unit tests](http://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/doc/testing.md)
 * [Customize your settings](http://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/doc/custom_settings.md)
