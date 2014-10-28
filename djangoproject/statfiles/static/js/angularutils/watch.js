@@ -1,6 +1,6 @@
-var mod = angular.module('fswatch', ['fsapi']);
+angular.module('fswatch', ['fsapi']);
 
-mod.directive('watchEntity', function() {
+angular.module('fswatch').directive('watchEntity', function() {
     return {
         restrict: 'E',
         replace: true,

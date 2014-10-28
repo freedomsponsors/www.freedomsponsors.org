@@ -1,17 +1,16 @@
 {% extends "core2/base_old.html" %}
 
 {% block head %}
-    <script src="/static/js/angular.min.js"></script>
-    <script src="/static/js/fsapi.js"></script>
-    <script src="/static/js/fsutil.js"></script>
     <script>
-        angular.module('main', ['fsapi']).config(
-            function($interpolateProvider, $httpProvider){
-                $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
-                $httpProvider.defaults.xsrfCookieName = 'csrftoken';
-                $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
-            }
-        ).controller('ChangeUsernameCtrl', function ChangeUsernameCtrl($scope, FSApi){
+        if(!window.FS){
+            window.FS = {};
+        }
+        FS.dependencies = ['fsapi'];
+    </script>
+    <script src="/static/js/angular.min.js"></script>
+    <script src="/static/js-generated/fs.js"></script>
+    <script>
+        angular.module('fs').controller('ChangeUsernameCtrl', function ChangeUsernameCtrl($scope, FSApi){
             $scope.curr_username = '{{ user.username }}';
             $scope.username = $scope.curr_username;
 
@@ -96,7 +95,7 @@
     </form>
 </div>
 
-<div class="row-fluid" ng-app="main" ng-controller="ChangeUsernameCtrl">
+<div class="row-fluid" ng-app="fs" ng-controller="ChangeUsernameCtrl">
 	<div class="span2">
 	  	<img src="{{user.gravatar_url_big}}"/>
 	  	<a href="http://en.gravatar.com/" target="_gravatar">Change picture</a> <i class="icon-question-sign icon-white popopo" rel="popover" data-content="We display your picture as it is registered in Gravatar. Go ahead and create your account there if you still don't have one" data-original-title="No upload here!"></i>
@@ -362,8 +361,6 @@
 			return false;
 		}
 	}
-
-
 
   $(function(){
 	$('#btnSubmit').click(submit_onclick);

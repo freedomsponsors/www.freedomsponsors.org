@@ -31,3 +31,4 @@ djangoproject/core/static/media
 ENV
 Include
 Scripts
+node_modules

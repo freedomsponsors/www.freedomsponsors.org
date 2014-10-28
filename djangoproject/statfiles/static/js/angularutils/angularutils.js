@@ -1,5 +1,5 @@
-var mod = angular.module('angularutils', []);
-mod.directive('textWithMarkdownPreview', function() {
+angular.module('angularutils', []);
+angular.module('angularutils').directive('textWithMarkdownPreview', function() {
     return {
         restrict: 'E',
         replace: true,
@@ -19,7 +19,7 @@ mod.directive('textWithMarkdownPreview', function() {
     }
 });
 
-mod.directive('watchIssue', function() {
+angular.module('angularutils').directive('watchIssue', function() {
     return {
         restrict: 'E',
         replace: true,
@@ -56,7 +56,7 @@ mod.directive('watchIssue', function() {
     }
 });
 
-mod.directive('multilineEllipsis', function () {
+angular.module('angularutils').directive('multilineEllipsis', function () {
     return {
         restrict: 'A',
         link: function (scope, element, attr) {

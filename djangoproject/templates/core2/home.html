@@ -2,44 +2,34 @@
 {% load i18n %}
 
 {% block head %}
+    <script>
+        if(!window.FS){
+            window.FS = {};
+        }
+        FS.dependencies = ['issuecards'];
+    </script>
     <script src="/static/js/angular.min.js"></script>
-    <script src="/static/js/issuecards/issuecards.js"></script>
-    <script src="/static/js/angularutils/angularutils.js"></script>
-    {% if sandbox %}
-        <script src="/static/js/fsapi_mock.js"></script>
-        <script src="/static/js/fslinks_sandbox.js"></script>
-    {% else %}
-        <script src="/static/js/fsapi.js"></script>
-        <script src="/static/js/fslinks.js"></script>
-    {% endif %}
-    <script src="/static/js/fsutil.js"></script>
-    <script type="text/javascript">
-
-        var dependencies = ['issuecards']
-
-        var mod = angular.module('home', dependencies)
-        mod.config(
-            function($interpolateProvider){
-                $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
-            }
-        );
-
+    <script src="/static/js-generated/fs.js"></script>
+    <script>
         function HomeCtrl($scope) {
             var issues_sponsoring = {{ issues_sponsoring|safe }};
             for(var i=0; i < issues_sponsoring.length; i++){
                 var issue = issues_sponsoring[i];
                 issue.four_sponsors_places = get4Sponsors(issue);
             }
-
             $scope.issues_sponsoring = issues_sponsoring;
             $scope.issues_proposed = {{ issues_kickstarting|safe }};
         }
+
+    angular.module('fs').run(function($templateCache){
+        window.TC = $templateCache;
+    });
     </script>
 {% endblock %}
 
 
 {% block mainContent%}
-    <div class="content" align="center" ng-app="home" ng-controller="HomeCtrl">
+    <div class="content" align="center" ng-app="fs" ng-controller="HomeCtrl">
         <div class="home-content-section" align="left">
 
             <!-- FS Home Logo -->

@@ -20,8 +20,8 @@
  https://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/AGPL_license.txt
  */
 
-var mod = angular.module('taglist', ['soapi', 'tagapi']);
-mod.directive('taglist', function() {
+angular.module('taglist', ['soapi', 'tagapi']);
+angular.module('taglist').directive('taglist', function() {
     return {
         restrict: 'E',
         replace: true,

@@ -1,5 +1,5 @@
-var mod = angular.module('issuecards', ['fsapi', 'fslinks', 'angularutils']);
-mod.directive('issueCards', function() {
+angular.module('issuecards', ['fsapi', 'fslinks', 'angularutils']);
+angular.module('issuecards').directive('issueCards', function() {
     return {
         restrict: 'E',
         replace: true,

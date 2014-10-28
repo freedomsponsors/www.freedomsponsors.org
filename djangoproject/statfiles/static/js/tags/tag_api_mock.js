@@ -20,9 +20,9 @@
  https://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/AGPL_license.txt
  */
 
-var mod = angular.module('tagapi', []);
+angular.module('tagapi', []);
 
-mod.factory('TagApi', function() {
+angular.module('tagapi').factory('TagApi', function() {
     function addTag(name, objtype, objid){
 
     }

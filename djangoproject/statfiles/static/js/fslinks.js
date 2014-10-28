@@ -1,6 +1,6 @@
-var fsapi_mod = angular.module('fslinks', []);
+angular.module('fslinks', []);
 
-fsapi_mod.factory('FSLinks', function(){
+angular.module('fslinks').factory('FSLinks', function(){
 
     function issue_link(issue){
         return issue.issue_link;
