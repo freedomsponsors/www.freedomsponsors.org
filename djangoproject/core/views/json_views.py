@@ -20,9 +20,9 @@ def project(request):
         result = []
         for project in projects:
             result.append({"id": project.id, "value": project.name})
-        return HttpResponse(json.dumps(result))
+        return HttpResponse(json.dumps(result), content_type="application/json")
     else:
-        return HttpResponse(_("Error: need query parameter."), status=404)
+        return HttpResponse(_("Error: need query parameter."), status=404, content_type="text/plain")
 
 
 def by_issue_url(request):
@@ -30,12 +30,12 @@ def by_issue_url(request):
         trackerURL = request.GET['trackerURL']
         try:
             result = issue_services.process_issue_url(trackerURL, request.user)
-            return HttpResponse(json.dumps(result))
+            return HttpResponse(json.dumps(result), content_type="application/json")
         except:
             traceback.print_exc()
             raise
     else:
-        return HttpResponse(_("Error: need trackerURL parameter."), status=404)
+        return HttpResponse(_("Error: need trackerURL parameter."), status=404, content_type="text/plain")
 
 
 def get_offers(request):
@@ -46,7 +46,7 @@ def get_offers(request):
     offers = Offer.objects.filter(issue__trackerURL__iexact=trackerURL)
     if sponsor_id:
         offers = offers.filter(sponsor__id=int(sponsor_id))
-    return HttpResponse(json.dumps(_convert_offers_to_dict(offers)))
+    return HttpResponse(json.dumps(_convert_offers_to_dict(offers)), content_type="application/json")
 
 
 def list_issue_cards(request):
@@ -67,7 +67,7 @@ def list_issue_cards(request):
         'count': total_count,
         'issues': issues
     }
-    return HttpResponse(json.dumps(result))
+    return HttpResponse(json.dumps(result), content_type="application/json")
 
 
 @login_required
@@ -82,7 +82,7 @@ def add_tag(request):
     watches = watch_services.find_project_watches(_project)  #TODO: in the future, not only projects!
     mail_services.notifyWatchers_project_tag_added(request.user, _project, name, watches)
     ActionLog.log_project_tag_added(user=request.user, project_id=objid, tag_name=name)
-    return HttpResponse('')
+    return HttpResponse('', content_type="text/plain")
 
 
 @login_required
@@ -95,7 +95,7 @@ def remove_tag(request):
     watches = watch_services.find_project_watches(_project)
     mail_services.notifyWatchers_project_tag_removed(request.user, _project, name, watches)
     ActionLog.log_project_tag_removed(user=request.user, project_id=objid, tag_name=name)
-    return HttpResponse('')
+    return HttpResponse('', content_type="text/plain")
 
 
 @login_required
@@ -103,7 +103,7 @@ def toggle_watch(request):
     objid = int(request.POST.get('objid'))
     entity = request.POST.get('entity')
     watching = watch_services.toggle_watch(request.user, entity, objid, Watch.WATCHED)
-    return HttpResponse('WATCHING' if watching else 'NOT_WATCHING')
+    return HttpResponse('WATCHING' if watching else 'NOT_WATCHING', content_type="text/plain")
 
 
 def latest_activity(request):
@@ -114,7 +114,7 @@ def latest_activity(request):
         'count': count,
         'activities': [activity.to_dict_json() for activity in activities],
     }
-    return HttpResponse(json.dumps(result))
+    return HttpResponse(json.dumps(result), content_type="application/json")
 
 
 @login_required
@@ -139,7 +139,7 @@ def check_username_availability(request, username):
             'ok': True,
             'message': 'Great! "%s" is available!' % username
         }
-    return HttpResponse(json.dumps(result))
+    return HttpResponse(json.dumps(result), content_type="application/json")
 
 
 def _convert_offers_to_dict(offers):
