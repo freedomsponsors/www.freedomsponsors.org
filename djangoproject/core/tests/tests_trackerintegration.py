@@ -41,7 +41,7 @@ class TrackerUtilsTest(TestCase):
         assert(issueInfo.key == 'EASYMOCK-111')
         assert(issueInfo.project_trackerURL == 'http://jira.codehaus.org/browse/EASYMOCK')
         assert(issueInfo.project_name == 'EasyMock')
-        assert(issueInfo.issue_title == 'Calling behaviour more than expected number of times does not assert failure when the call is from multple threads')
+        assert(issueInfo.issue_title == 'Calling behaviour more than expected number of times does not assert failure when the call is from multiple threads')
 
     def test_axis_jira(self):
         issueInfo = fetchIssueInfo("https://issues.apache.org/jira/browse/AXIS-66")
