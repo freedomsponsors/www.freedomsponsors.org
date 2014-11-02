@@ -4,8 +4,8 @@
 {% load l10n %}
 
 {% block og_meta %}
-    <meta property="og:title" content="US$ {{ issue.getTotalOffersPriceUSD }} bounty on FreedomSponsors: {{ issue.title }}" />
-    <meta name="description" content="US$ {{ issue.getTotalOffersPriceUSD }} bounty on FreedomSponsors: {{ issue.title }}" />
+    <meta property="og:title" content="US$ {{ issue.total_open_offers_usd }} bounty on FreedomSponsors: {{ issue.title }}" />
+    <meta name="description" content="US$ {{ issue.total_open_offers_usd }} bounty on FreedomSponsors: {{ issue.title }}" />
     <meta property="og:image" content="http://www.freedomsponsors.org/{{ issue.get_card_image }}" />
     <meta name="image" content="http://www.freedomsponsors.org/{{ issue.get_card_image }}" />
 {% endblock og_meta %}
@@ -515,27 +515,27 @@
                 <div class="vgap-15"><!-- Vertical Gap 15px --></div>
                 <!--Issue Values-->
                 <div class="issue-values">
-                    {% if issue.getTotalOffersPriceUSD or issue.getTotalOffersPriceBTC %}
+                    {% if issue.total_open_offers_usd or issue.total_open_offers_btc %}
                         <h1 class="orange-text arial">
-                            {% if issue.getTotalOffersPriceBTC %}
-                                <span>BTC {{ issue.getTotalOffersPriceBTC|floatformat:4 }}</span>
+                            {% if issue.total_open_offers_btc %}
+                                <span>BTC {{ issue.total_open_offers_btc|floatformat:4 }}</span>
                             {% endif %}
-							{% if issue.getTotalOffersPriceUSD and issue.getTotalOffersPriceBTC %}<div class="vgap-5"><!-- Vertical Gap 5px --></div>{% endif %}
-							{% if issue.getTotalOffersPriceUSD %}
-                                <span>US$ {{ issue.getTotalOffersPriceUSD|floatformat:2 }}</span>
+							{% if issue.total_open_offers_usd and issue.total_open_offers_btc %}<div class="vgap-5"><!-- Vertical Gap 5px --></div>{% endif %}
+							{% if issue.total_open_offers_usd %}
+                                <span>US$ {{ issue.total_open_offers_usd|floatformat:2 }}</span>
                             {% endif %}
                         </h1>
                         <h4 class="orange-text arial">Offered</h4>
                     {% endif %}
                     </br>
-                    {% if issue.getTotalPaidPriceUSD or issue.getTotalPaidPriceBTC %}
+                    {% if issue.total_paid_offers_usd or issue.total_paid_offers_btc %}
                         <h1 class="arial">
-                            {% if issue.getTotalPaidPriceBTC %}
-                                <span>BTC {{ issue.getTotalPaidPriceBTC|floatformat:4 }}</span>
+                            {% if issue.total_paid_offers_btc %}
+                                <span>BTC {{ issue.total_paid_offers_btc|floatformat:4 }}</span>
                             {% endif %}
-							{% if issue.getTotalPaidPriceUSD and issue.getTotalPaidPriceBTC %}<div class="vgap-5"><!-- Vertical Gap 5px --></div>{% endif %}
-							{% if issue.getTotalPaidPriceUSD %}
-                                <span>US$ {{ issue.getTotalPaidPriceUSD|floatformat:2 }}</span>
+							{% if issue.total_paid_offers_usd and issue.total_paid_offers_btc %}<div class="vgap-5"><!-- Vertical Gap 5px --></div>{% endif %}
+							{% if issue.total_paid_offers_usd %}
+                                <span>US$ {{ issue.total_paid_offers_usd|floatformat:2 }}</span>
                             {% endif %}
                         </h1>
                         <h4 class="arial">Paid</h4>
@@ -576,7 +576,7 @@
             <div class="text-align-right">
                 <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.freedomsponsors.org/issue/{{ issue.id }}" class="social-button facebook"></a>
                 <div class="hgap-5 inline"><!-- Horizontal Gap 5px --></div>
-                <a href="https://twitter.com/intent/tweet?url=http://www.freedomsponsors.org/issue/{{ issue.id }}&text=US$ {{ issue.getTotalOffersPriceUSD }} bounty on FreedomSponsors: {{ issue.title }}" class="social-button twitter"></a>
+                <a href="https://twitter.com/intent/tweet?url=http://www.freedomsponsors.org/issue/{{ issue.id }}&text=US$ {{ issue.total_open_offers_usd }} bounty on FreedomSponsors: {{ issue.title }}" class="social-button twitter"></a>
                 <div class="hgap-5 inline"><!-- Horizontal Gap 5px --></div>
                 <a href="https://plus.google.com/share?url=http%3A%2F%2Fwww.freedomsponsors.org/issue/{{ issue.id }}" class="social-button google"></a>
             </div>

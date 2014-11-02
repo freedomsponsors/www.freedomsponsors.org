@@ -552,22 +552,20 @@ angular.module('issuecards').directive('issueCards', function() {
 
 
             $scope.getPaidValue = function(issue){
-                return _mixedValue(issue.totalPaidPriceUSD, issue.totalPaidPriceBTC);
+                return _mixedValue(issue.total_paid_offers_usd, issue.total_paid_offers_usd);
             };
 
             $scope.getOfferedValue = function(issue){
-                return _mixedValue(issue.totalOffersPriceUSD, issue.totalOffersPriceBTC);
+                return _mixedValue(issue.total_open_offers_usd, issue.total_open_offers_btc);
             };
 
             $scope.getTitlePaid = function(issue){
-                return _mixedTitle(issue.totalPaidPriceUSD, issue.totalPaidPriceBTC);
+                return _mixedTitle(issue.total_paid_offers_usd, issue.total_paid_offers_usd);
             };
 
             $scope.getTitleOffered = function(issue){
-                return _mixedTitle(issue.totalOffersPriceUSD, issue.totalOffersPriceBTC);
-
+                return _mixedTitle(issue.total_open_offers_usd, issue.total_open_offers_btc);
             };
-
         }
     };
 });

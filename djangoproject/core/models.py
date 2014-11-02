@@ -360,9 +360,8 @@ class Tag(models.Model):
     objid = models.IntegerField()
 
 
-# Uma issue de um projeto open source.
-# Isso aqui vai ser criado junto com a primeira "Offer" associada
-#@Auditable
+# An issue of an open source project
+# This will be created along with the first Offer
 class Issue(models.Model):
     project = models.ForeignKey(Project, null=True, blank=True)
     key = models.CharField(max_length=30, null=True, blank=True)
@@ -377,6 +376,12 @@ class Issue(models.Model):
     is_sponsored = models.BooleanField()
     status = models.CharField(max_length=40)
     logo = models.ImageField(null=True, blank=True, upload_to=upload_to('issue_images/logo'))
+    total_open_offers_usd = models.DecimalField(max_digits=16, decimal_places=8, default=0)
+    total_open_offers_btc = models.DecimalField(max_digits=16, decimal_places=8, default=0)
+    total_paid_offers_usd = models.DecimalField(max_digits=16, decimal_places=8, default=0)
+    total_paid_offers_btc = models.DecimalField(max_digits=16, decimal_places=8, default=0)
+    count_solutions_done = models.IntegerField(default=0)
+    count_solutions_in_progress = models.IntegerField(default=0)
 
     @classmethod
     def newIssue(cls, project, key, title, description, createdByUser, trackerURL):
@@ -443,27 +448,15 @@ class Issue(models.Model):
     def to_json(self):
         return json.dumps(self.to_dict_json())
 
-    def getTotalOffersPriceUSD(self):
-        return self.getTotalOffersPrice_by_currency('USD')
-
-    def getTotalOffersPriceBTC(self):
-        return self.getTotalOffersPrice_by_currency('BTC')
-
-    def getTotalOffersPrice_by_currency(self, currency):
-        offers = Offer.objects.filter(issue=self, status=Offer.OPEN,currency=currency)
+    def _get_total_open_price_by_currency(self, currency):
+        offers = Offer.objects.filter(issue=self, status=Offer.OPEN, currency=currency)
         s = Decimal(0)
         for offer in offers:
             if not offer.is_expired():
                 s = s + offer.price
         return twoplaces(s)
 
-    def getTotalPaidPriceUSD(self):
-        return self.getTotalPaidPrice_by_currency('USD')
-
-    def getTotalPaidPriceBTC(self):
-        return self.getTotalPaidPrice_by_currency('BTC')
-
-    def getTotalPaidPrice_by_currency(self, currency):
+    def _get_total_paid_price_by_currency(self, currency):
         payments = Payment.objects.filter(status__in=[Payment.CONFIRMED_IPN, Payment.CONFIRMED_TRN],
                                           offer__issue=self,
                                           currency=currency)
@@ -476,14 +469,8 @@ class Issue(models.Model):
         self.updatedDate = timezone.now()
         self.save()
 
-    def countSolutionsDone(self):
-        return Solution.objects.filter(issue=self, status=Solution.DONE).count()
-
-    def countSolutionsInProgress(self):
-        return Solution.objects.filter(issue=self, status=Solution.IN_PROGRESS).count()
-
     def getOffers(self):
-        return Offer.objects.filter(issue=self).order_by('status','-price')
+        return Offer.objects.filter(issue=self).order_by('status', '-price')
 
     def getSolutions(self):
         return Solution.objects.filter(issue=self).order_by('-creationDate')
@@ -511,6 +498,12 @@ class Issue(models.Model):
     def update_redundant_fields(self):
         self.status = self.get_status()
         self.is_sponsored = self.get_sponsor_status()
+        self.total_paid_offers_usd = self._get_total_paid_price_by_currency('USD')
+        self.total_paid_offers_btc = self._get_total_paid_price_by_currency('BTC')
+        self.total_open_offers_usd = self._get_total_open_price_by_currency('USD')
+        self.total_open_offers_btc = self._get_total_open_price_by_currency('BTC')
+        self.count_solutions_done = Solution.objects.filter(issue=self, status=Solution.DONE).count()
+        self.count_solutions_in_progress = Solution.objects.filter(issue=self, status=Solution.IN_PROGRESS).count()
         self.touch()
         self.save()
 
@@ -565,8 +558,8 @@ class Watch(models.Model):
         watch.reason = reason
         return watch
 
-# Um comentario que pode ser adicionado numa issue por qualquer pessoa
-#@Auditable
+
+# A comment on an issue made by any user
 class IssueComment(models.Model):
     issue = models.ForeignKey(Issue)
     author = models.ForeignKey(User)
@@ -596,6 +589,7 @@ class IssueComment(models.Model):
     def was_edited(self):
         return IssueCommentHistEvent.objects.filter(comment__id = self.id).count() > 0
 
+
 class IssueCommentHistEvent(models.Model):
     comment = models.ForeignKey(IssueComment)
     eventDate = models.DateTimeField()
@@ -613,8 +607,8 @@ class IssueCommentHistEvent(models.Model):
         evt.event = event
         return evt
 
-# Uma oferta de dinheiro feita por um sponsor em potencial
-#@Auditable
+
+# A money Offer for an issue
 class Offer(models.Model):
     issue = models.ForeignKey(Issue)
     sponsor = models.ForeignKey(User)

@@ -102,11 +102,16 @@ def editOffer(request):
     return redirect(offer.issue.get_view_link())
 
 
+def _get_search_sort(sort):
+    pass
+
+
 def _listIssues(request):
     project_id = request.GET.get('project_id')
     project_name = request.GET.get('project_name')
     search_terms = request.GET.get('s')
     operation = request.GET.get('operation', '')
+    sort = _get_search_sort(request.GET.get('sort', ''))
     is_sponsored = None
     if operation == 'SPONSOR':
         is_sponsored = True
@@ -394,7 +399,6 @@ def _generate_payment_entity(offer, dict):
         if pay_str:
             pay = Decimal(pay_str)
             if pay > 0:
-                solution = Solution.objects.get(pk=solution_id)
                 solution = Solution.objects.get(pk=solution_id)
                 part = PaymentPart.newPart(payment, solution, pay)
                 parts.append(part)

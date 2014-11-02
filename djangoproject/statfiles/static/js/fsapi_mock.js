@@ -95,11 +95,11 @@ function randomSponsoredIssue(){
         "description": random_text(100),
         "project_link": "#",
         "image_link": random_image(),
-        "totalOffersPriceUSD": random_float(100),
+        "total_open_offers_usd": random_float(100),
         "moresponsors": random_int(4),
         "id": COUNT,
         "title": random_text(10),
-        "totalPaidPriceUSD": random_float(100),
+        "total_paid_offers_usd": random_float(100),
         "commentcount": random_int(10)
     };
 }
@@ -114,11 +114,11 @@ function randomProposedIssue(){
         "description": random_text(100),
         "project_link": "#",
         "image_link": random_image(),
-        "totalOffersPriceUSD": "0.00",
+        "total_open_offers_usd": "0.00",
         "moresponsors": random_int(4),
         "id": COUNT,
         "title": random_text(10),
-        "totalPaidPriceUSD": "0.00",
+        "total_paid_offers_usd": "0.00",
         "commentcount": random_int(10)
     }
 }

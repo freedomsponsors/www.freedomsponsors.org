@@ -36,17 +36,22 @@ def create_dummy_programmer():
     userinfo.save()
     return user
 
+
 def create_dummy_project():
     sponsor = create_dummy_sponsor()
     project = Project.newProject('Hibernate', sponsor, 'http://www.hibernate.org', 'https://hibernate.onjira.com/')
     project.save()
     return project
 
-def create_dummy_issue():
-    project = create_dummy_project()
-    issue = Issue.newIssue(project, 'HHH-1051', 'Compiled native SQL queries are not cached', 'meh', project.createdByUser, 'https://hibernate.onjira.com/browse/HHH-1051')
+
+def create_dummy_issue(project=None, key='HHH-1051', title='Compiled native SQL queries are not cached'):
+    if not project:
+        project = create_dummy_project()
+    issue = Issue.newIssue(project, key, title, 'meh', project.createdByUser,
+                           'https://hibernate.onjira.com/browse/HHH-1051')
     issue.save()
     return issue
+
 
 def create_dummy_offer_usd():
     return _create_dummy_offer_with_currency(Decimal('10.00'), 'USD')

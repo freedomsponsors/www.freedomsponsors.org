@@ -46,31 +46,23 @@
       {% endifequal %}
 
       <td>
-        <a href="{{issue.get_view_link}}"
-          {% if issue.getTotalPaidPrice %}
-           style="color:#090;"
-          {% endif %}
-         >
-          {% if issue.getTotalPaidPrice %}
-           <strong>PAID: </strong>
-          {% endif %}
-         {{issue.title}}</a>
+        <a href="{{issue.get_view_link}}">{{issue.title}}</a>
       </td>
 
       {% ifequal showOffers "true" %}
       <td style="width:140px">
         <div>
-        {% include 'core2/include/green_and_orange.html' with vOrange=issue.getTotalOffersPriceUSD vGreen=issue.getTotalPaidPriceUSD currency='US$' places=2 %}
+        {% include 'core2/include/green_and_orange.html' with vOrange=issue.total_open_offers_usd vGreen=issue.total_paid_offers_usd currency='US$' places=2 %}
         </div>
         <div>
-        {% include 'core2/include/green_and_orange.html' with vOrange=issue.getTotalOffersPriceBTC vGreen=issue.getTotalPaidPriceBTC currency='BTC' places=4 %}
+        {% include 'core2/include/green_and_orange.html' with vOrange=issue.total_open_offers_btc vGreen=issue.total_paid_offers_btc currency='BTC' places=4 %}
         </div>
       </td>
       {% endifequal %}
 
       {% ifequal showWorking "true" %}
       <td>
-        {% include 'core2/include/green_and_orange.html' with vOrange=issue.countSolutionsInProgress vGreen=issue.countSolutionsDone %}
+        {% include 'core2/include/green_and_orange.html' with vOrange=issue.count_solutions_in_progress vGreen=issue.count_solutions_done %}
       </td>
       {% endifequal %}
 
