@@ -1,4 +1,5 @@
 build:
+  - 'clean:before'
   - 'ngtemplates'
   - 'concat'
   # - 'ngmin:fix_angular_declarations'
