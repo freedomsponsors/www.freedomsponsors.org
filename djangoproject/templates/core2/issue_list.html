@@ -13,7 +13,7 @@
 
 {% block mainContent%}
 <div ng-app="fs">
-    <form method="get" id="search_form">
+    <form method="get" action="/search" id="search_form">
       <input type="hidden" name="sortby" id="sortby" value="{{ sortby }}">
       <input type="hidden" name="asc" id="asc" value="{{ asc }}">
       <div class="well">
@@ -70,12 +70,12 @@
     </form>
 
     <hr>
-
     {% if issues %}
       {% include 'core2/include/issue_grid.html' %}
     {% else %}
         <p>No issues found</p>
     {% endif %}
+
 
 </div>
 {% endblock mainContent %}
