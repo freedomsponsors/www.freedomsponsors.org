@@ -102,22 +102,19 @@ def editOffer(request):
     return redirect(offer.issue.get_view_link())
 
 
-def _get_search_sort(sort):
-    pass
-
-
 def _listIssues(request):
     project_id = request.GET.get('project_id')
     project_name = request.GET.get('project_name')
     search_terms = request.GET.get('s')
     operation = request.GET.get('operation', '')
-    sort = _get_search_sort(request.GET.get('sort', ''))
+    sortby = request.GET.get('sortby', '')
+    asc = request.GET.get('asc', '') == 'True'
     is_sponsored = None
     if operation == 'SPONSOR':
         is_sponsored = True
     elif operation == 'KICKSTART':
         is_sponsored = False
-    issues = issue_services.search_issues(project_id, project_name, search_terms, is_sponsored)
+    issues = issue_services.search_issues(project_id, project_name, search_terms, is_sponsored, sortby, asc)
     return issues
 
 
@@ -126,6 +123,8 @@ def listIssues(request):
     project_name = request.GET.get('project_name')
     search_terms = request.GET.get('s')
     operation = request.GET.get('operation', '')
+    sortby = request.GET.get('sortby', '')
+    asc = request.GET.get('asc', '')
 
     issues = _listIssues(request)
     if isinstance(issues, Issue):
@@ -136,13 +135,17 @@ def listIssues(request):
         return redirect(issue.get_view_link())
 
     return render_to_response('core2/issue_list.html',
-        {'issues': issues,
-         's': search_terms,
-         'project_id': project_id,
-         'project_name': project_name,
-         'operation': operation,
-        },
-        context_instance = RequestContext(request))
+                              {
+                                  'issues': issues,
+                                  's': search_terms,
+                                  'project_id': project_id,
+                                  'project_name': project_name,
+                                  'operation': operation,
+                                  'sortby': sortby,
+                                  'asc': asc,
+                                  'sortable': True,
+                              },
+                              context_instance=RequestContext(request))
 
 
 def listIssuesFeed(request):

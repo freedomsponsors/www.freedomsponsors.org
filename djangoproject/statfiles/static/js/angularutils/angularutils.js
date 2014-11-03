@@ -81,6 +81,47 @@ angular.module('angularutils').directive('multilineEllipsis', function () {
     };
 });
 
+angular.module('angularutils').directive('sortHeader', function () {
+    return {
+        restrict: 'E',
+        replace: true,
+        scope:{
+            label: '@',
+            property: '@'
+        },
+        templateUrl: '/static/js/angularutils/sortHeader.html',
+        controller: function ($scope, SortHeaderModel) {
+            $scope.m = SortHeaderModel;
+            $scope.toggle = function(){
+                SortHeaderModel.toggle($scope.property);
+            };
+        }
+    };
+});
+
+
+angular.module('angularutils').factory('SortHeaderModel', function (){
+    var self = {
+        property: null,
+        asc: true
+    };
+    self.toggle = function(property){
+        if(self.property == property){
+            self.asc = !self.asc;
+        } else {
+            self.property = property;
+        }
+        if(self.onchange){
+            self.onchange(self.property, self.asc);
+        }
+    };
+    self.init = function(property, asc){
+        self.property = property;
+        self.asc = asc;
+    };
+    return self;
+});
+
 
 function getCookie(name) {
     var cookieValue = null;

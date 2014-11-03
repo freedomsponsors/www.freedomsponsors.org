@@ -14,7 +14,8 @@ logger = logging.getLogger(__name__)
 __author__ = 'tony'
 
 
-def search_issues(project_id=None, project_name=None, search_terms='', is_sponsored=None):
+def search_issues(project_id=None, project_name=None, search_terms='', is_sponsored=None,
+                  sortby=None, asc=True):
     if search_terms:
         issue = _find_by_tracker_url(search_terms)
         if issue:
@@ -29,8 +30,30 @@ def search_issues(project_id=None, project_name=None, search_terms='', is_sponso
         issues = issues.filter(project__name__icontains=project_name)
     if search_terms:
         issues = issues.filter(Q(title__icontains=search_terms) | Q(trackerURL__icontains=search_terms))
-    issues = issues.order_by('-updatedDate')
+    sorts = _get_sorts(sortby, asc)
+    issues = issues.order_by(*sorts)
     return issues
+
+
+def _get_sorts(sortby, asc):
+    if not sortby:
+        return ['-updatedDate']
+    prefix = '-' if not asc else ''
+    if sortby == 'project':
+        return [prefix + 'project__name']
+    if sortby == 'key':
+        return [prefix + 'key']
+    if sortby == 'title':
+        return [prefix + 'title']
+    if sortby == 'createdby':
+        return [prefix + 'createdByUser__username']
+    if sortby == 'offers':
+        return [prefix + 'total_open_offers_btc', prefix + 'total_open_offers_usd']
+    if sortby == 'solutions':
+        return [prefix + 'count_solutions_done', prefix + 'count_solutions_in_progress']
+    if sortby == 'created':
+        return [prefix + 'creationDate']
+    return ['-updatedDate']
 
 
 def _find_by_tracker_url(url):

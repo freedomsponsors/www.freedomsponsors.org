@@ -279,6 +279,47 @@ angular.module('angularutils').directive('multilineEllipsis', function () {
     };
 });
 
+angular.module('angularutils').directive('sortHeader', function () {
+    return {
+        restrict: 'E',
+        replace: true,
+        scope:{
+            label: '@',
+            property: '@'
+        },
+        templateUrl: '/static/js/angularutils/sortHeader.html',
+        controller: function ($scope, SortHeaderModel) {
+            $scope.m = SortHeaderModel;
+            $scope.toggle = function(){
+                SortHeaderModel.toggle($scope.property);
+            };
+        }
+    };
+});
+
+
+angular.module('angularutils').factory('SortHeaderModel', function (){
+    var self = {
+        property: null,
+        asc: true
+    };
+    self.toggle = function(property){
+        if(self.property == property){
+            self.asc = !self.asc;
+        } else {
+            self.property = property;
+        }
+        if(self.onchange){
+            self.onchange(self.property, self.asc);
+        }
+    };
+    self.init = function(property, asc){
+        self.property = property;
+        self.asc = asc;
+    };
+    return self;
+});
+
 
 function getCookie(name) {
     var cookieValue = null;
@@ -758,6 +799,11 @@ angular.module('fs').run(['$templateCache', function($templateCache) {
     "                            </pre></div><div ng-switch-when=ADD_ISSUE_COMMENT>New comment:<pre>\n" +
     "                                {[{ selected_activity.issue_comment_content }]}\n" +
     "                            </pre></div><div ng-switch-when=EDIT_ISSUE_COMMENT><ul><li>old comment:<br><pre>{[{ selected_activity.old_dic.content }]}</pre></li><li>new comment:<br><pre>{[{ selected_activity.new_dic.content }]}</pre></li></ul></div></div></div><div class=\"modal-footer inline-content\"><div class=\"column-wrapper vcenter-content\" style=height:28px><div class=\"hgap-15 inline\"></div><div><a href=# onclick=\"$('#activity_detail').modal('hide')\" class=\"fs-button green medium\">OK</a></div></div></div></div><div class=\"column fit\"></div></div></div></div>"
+  );
+
+
+  $templateCache.put('/static/js/angularutils/sortHeader.html',
+    "<span><a href ng-click=toggle()>{[{label}]} <i ng-show=\"property == m.property\" ng-class=\"{'icon-chevron-up': m.asc, 'icon-chevron-down': !m.asc}\"></i></a></span>"
   );
 
 

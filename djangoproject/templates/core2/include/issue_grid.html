@@ -1,31 +1,49 @@
 {% with showOffers=showOffers|default:"true" showWorking=showWorking|default:"true" showProject=showProject|default:"true" showKey=showKey|default:"true" showCreatedBy=showCreatedBy|default:"true" %}
+
+{% if sortable %}
+<script>
+    function IssueGridCtrl($scope, SortHeaderModel){
+        var sortby = $('#sortby').val();
+        var asc = $('#asc').val() != 'False';
+        SortHeaderModel.init(sortby, asc);
+        SortHeaderModel.onchange = function(property, asc){
+            $('#sortby').val(property);
+            $('#asc').val(asc ? 'True' : 'False');
+            $('#search_form').submit();
+        }
+    }
+</script>
+{% endif %}
+
 {% load pagination_tags %}
-<table class="table table-striped table-condensed">
+<table class="table table-striped table-condensed" ng-controller="IssueGridCtrl">
   <thead>
     <tr>
       {% ifequal showProject "true" %}
-      <th>Project</th>
+      <th>{% if sortable %}<sort-header label="Project" property="project"></sort-header>{% else %}Project{% endif %}</th>
       {% endifequal %}
 
       {% ifequal showKey "true" %}
-      <th>Key</th>
+      <th>{% if sortable %}<sort-header label="Key" property="key"></sort-header>{% else %}Key{% endif %}</th>
       {% endifequal %}
 
       {% ifequal showCreatedBy "true" %}
-      <th>Created by</th>
+      <th>{% if sortable %}<sort-header label="Created by" property="createdby"></sort-header>{% else %}Created by{% endif %}</th>
       {% endifequal %}
 
-      <th>Title</th>
+      <th>{% if sortable %}<sort-header label="Title" property="title"></sort-header>{% else %}Title{% endif %}</th>
 
       {% ifequal showOffers "true" %}
-      <th>Offers <i class="icon-question-sign popopo" rel="popover" data-content="Green means paid. Orange means open." data-original-title="Colors meaning"></i></th>
+      <th>{% if sortable %}<sort-header label="Offers" property="offers"></sort-header>{% else %}Offers{% endif %}
+          <i class="icon-question-sign popopo" rel="popover" data-content="Green means paid. Orange means open." data-original-title="Colors meaning"></i></th>
       {% endifequal %}
 
       {% ifequal showWorking "true" %}
-      <th>Workers <i class="icon-question-sign popopo" rel="popover" data-content="Green means DONE. Orange means IN PROGRESS." data-original-title="Colors meaning"></i></th>
+      <th>{% if sortable %}<sort-header label="Workers" property="solutions"></sort-header>{% else %}Workers{% endif %}
+          <i class="icon-question-sign popopo" rel="popover" data-content="Green means DONE. Orange means IN PROGRESS." data-original-title="Colors meaning"></i></th>
       {% endifequal %}
 
-      <th>Added</th>
+      <th>{% if sortable %}<sort-header label="Created" property="created"></sort-header>{% else %}Created{% endif %}</th>
     </tr>
   </thead>
   <tbody>

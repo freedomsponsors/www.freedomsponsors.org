@@ -16,6 +16,11 @@ angular.module('fs').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('/static/js/angularutils/sortHeader.html',
+    "<span><a href ng-click=toggle()>{[{label}]} <i ng-show=\"property == m.property\" ng-class=\"{'icon-chevron-up': m.asc, 'icon-chevron-down': !m.asc}\"></i></a></span>"
+  );
+
+
   $templateCache.put('/static/js/angularutils/textarea-and-markdownpreview.html',
     "<div><textarea id=\"{[{ nameid }]}\" name=\"{[{ nameid }]}\" ng-model=model placeholder=\"{[{ placeholder }]}\"></textarea><p class=help-block>You can use <a target=_markdown href=\"http://blog.freedomsponsors.org/markdown_formatting/\">markdown</a> for formatting</p><div id=bootstrap-content ng-bind-html-unsafe=markdown(model)></div></div>"
   );
