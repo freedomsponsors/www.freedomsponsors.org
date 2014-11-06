@@ -2,6 +2,7 @@
 
 from django.http import HttpResponseRedirect
 from django.contrib.auth import logout as auth_logout
+from django.http.response import HttpResponse
 from django.template import  RequestContext
 from django.shortcuts import render_to_response, redirect
 from core.services import issue_services
@@ -56,6 +57,18 @@ def admail(request):
     return render_to_response('core2/admail.html',
                               {},
                               context_instance = RequestContext(request))
+
+
+def rates(request):
+    data = {
+        'usd2usd': currency_service.get_rate('USD', 'USD'),
+        'usd2brl': currency_service.get_rate('USD', 'BRL'),
+        'usd2btc': currency_service.get_rate('USD', 'BTC'),
+        'btc2usd': currency_service.get_rate('BTC', 'USD'),
+        'btc2btc': currency_service.get_rate('BTC', 'BTC'),
+        'btc2brl': currency_service.get_rate('BTC', 'BRL'),
+    }
+    return HttpResponse(json.dumps(data, indent=4), content_type="application/json")
 
 
 def mailtest(request):
