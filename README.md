@@ -66,6 +66,10 @@ If you want to help out, check out our Waffle board below to see what's going on
 * [Setting up a development environment](http://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/doc/setup.md)
 * [Running unit tests](http://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/doc/testing.md)
 * [Test coverage report](http://freedomsponsors.github.com/www.freedomsponsors.org/coverage_html_report/)
+* [To get started with GitHub](https://www.youtube.com/watch?v=73I5dRucCds)
+* [To learn JavaScript with FreedomSponsors] [js4grownups](https://www.youtube.com/watch?v=iabZob_YEKg)
+* [To learn Django] [The Django book] (http://www.djangobook.com/en/2.0/index.html) or [The tutorial] (https://docs.djangoproject.com/en/1.7/intro/tutorial01/)
+
 
 ## Special Thanks
 
