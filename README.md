@@ -66,6 +66,8 @@ If you want to help out, check out our Waffle board below to see what's going on
 * [Setting up a development environment](http://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/doc/setup.md)
 * [Running unit tests](http://github.com/freedomsponsors/www.freedomsponsors.org/blob/master/doc/testing.md)
 * [Test coverage report](http://freedomsponsors.github.com/www.freedomsponsors.org/coverage_html_report/)
+* [Material for beginners](https://github.com/CecileSun/www.freedomsponsors.org/blob/master/MaterialForBeginners.md)
+
 
 ## Special Thanks
 
