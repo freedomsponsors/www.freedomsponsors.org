@@ -18,6 +18,11 @@ You do this once in a lifetime.
 ### 2. Download FreedomSponsors node dependencies
 
 ```
+sudo ln -s /usr/bin/nodejs /usr/bin/node
+```
+Make 'node' command available as soft link to 'nodejs' command, otherwise 'npm install' below might run into errors.
+
+```
 cd djangoproject
 npm install
 ```
