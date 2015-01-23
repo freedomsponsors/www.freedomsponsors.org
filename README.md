@@ -39,7 +39,7 @@ Great things come up when people communicate and we'd love to hear from you.
 There are many ways you can get in touch:
 
 - Email: write to [Tony Lampada](mailto:tonylampada@gmail.com) (the founder).
-- Meet the founder on [twitter](twitter.com/tonylampada), [facebook](https://www.facebook.com/tonylampada) or Skype ("tonylampada")
+- Meet the founder on [twitter](https://twitter.com/tonylampada), [facebook](https://www.facebook.com/tonylampada) or Skype ("tonylampada")
 - Join the [official mailing list](https://groups.google.com/forum/?hl=en#!forum/freedomsponsors)
 - Follow our [facebook page](https://www.facebook.com/freedomsponsors)
 
