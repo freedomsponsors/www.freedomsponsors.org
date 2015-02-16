@@ -7,7 +7,7 @@ urlpatterns = patterns('core.views.main_views',
     url(r'^admail/$', 'admail'),
     url(r'^mailtest/$', 'mailtest'),
     url(r'^about/$', RedirectView.as_view(url='http://blog.freedomsponsors.org/about/')),
-    url(r'^dev/$', RedirectView.as_view(url='http://blog.freedomsponsors.org/developers/')),
+    url(r'^dev/$', RedirectView.as_view(url='/developers/')),
 )
 
 # 301 redirects

@@ -1,0 +1,76 @@
+{% extends "core2/base.html" %}
+
+{% block title %}
+    FreedomSponsors - Developers area
+{% endblock %}
+
+{% block mainContent%}
+    <style type="text/css" media="screen">
+        table{
+            border-collapse:collapse;
+            border:1px solid #475674;
+        }
+        table td, table th{
+            border:1px solid #475674;
+            padding: 10px;
+        }
+    </style>
+
+    <div class="content" align="left">
+        <div style="width: 800px; margin: auto; margin-bottom: 125px;">
+            <h1>Developers area</h1>
+
+            <p>Below is the relevant information for developers who may want to build any kind of integration with FreedomSponsors.</p>
+            <p>Didn't find what you need? Give us some <a href="/feedback">feedback</a> and let us know!</p>
+
+    		<div class="vgap-30"><!-- Vertical Gap 30px --></div>
+            <div class="fs-box">
+	            <h3 class="green-text">Plugins for JIRA, Bugzilla and Trac</h3>
+
+	            <p>If your project uses any of the issue trackers mentioned above,
+	                you might want to take a look at the FreedomSponsors plugins for
+	                <a href="https://github.com/freedomsponsors/freedomsponsors-jira-plugin">JIRA</a>,
+	                <a href="https://github.com/freedomsponsors/freedomsponsors-bugzilla-plugin">Bugzilla</a>
+	                and <a href="https://github.com/freedomsponsors/freedomsponsors-trac-plugin">Trac</a>.
+	            </p>
+            </div>
+    		<div class="vgap-30"><!-- Vertical Gap 30px --></div>
+            <div class="fs-box">
+                <h3 class="green-text">"Sponsor this issue" button</h3>
+                <p>Make a “Sponsor this issue” link by pointing it to “http://www.freedomsponsors.org/core/sponsor?trackerURL=&lt;url&gt;”<br>
+                    Where &lt;url&gt; is the “original” issue URL.<br>
+                    Examples:
+                </p>
+                <ul>
+                    <li><a href="http://www.freedomsponsors.org/core/issue/sponsor?trackerURL=https://hibernate.onjira.com/browse/HHH-1050">Sponsor HQL Unions on Hibernate</a></li>
+                    <li><a href="http://www.freedomsponsors.org/core/issue/sponsor?trackerURL=https://issues.jenkins-ci.org/browse/JENKINS-9216">Sponsor Google Apps Authentication for Jenkins</a></li>
+                </ul>
+            </div>
+    		<div class="vgap-30"><!-- Vertical Gap 30px --></div>
+            <div class="fs-box">
+                <h3 class="green-text">Rest API</h3>
+                <p>We are building a public JSON-based REST API that you can use to pull data from FreedomSponsors.
+                There's not much right now, but if you need additional services, please don't hesitate to open a <a href="/feedback">feedback</a> issue</p>
+                <table class="table table-condensed table-striped">
+                    <tr>
+                        <th>Purpose</th>
+                        <th>Endpoint</th>
+                        <th>Examples</th>
+                    </tr>
+                    <tr>
+                        <td>Get Project info</td>
+                        <td>/api/project/&lt;id&gt;</td>
+                        <td><a href="/api/project/1">Data for FreedomSponsors project</a></td>
+                    </tr>
+                    <tr>
+                        <td>More...</td>
+                        <td>todo...</td>
+                        <td></td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock mainContent%}
