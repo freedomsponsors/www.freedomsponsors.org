@@ -38,6 +38,7 @@ if 'core' in settings.INSTALLED_APPS:
         url(r'^core/', include('core.urls')),
         url(r'^project/', include('core.urls.project_urls')),
         url(r'^issue/', include('core.urls.issue_urls')),
+        url(r'^api/', include('core.urls.api_urls')),
         url(r'^myissues/', 'core.views.issue_views.myissues'),
         url(r'^offer/', include('core.urls.offer_urls')),
         url(r'^solution/', include('core.urls.solution_urls')),

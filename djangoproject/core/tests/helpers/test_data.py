@@ -53,14 +53,17 @@ def create_dummy_issue(project=None, key='HHH-1051', title='Compiled native SQL 
     return issue
 
 
-def create_dummy_offer_usd():
-    return _create_dummy_offer_with_currency(Decimal('10.00'), 'USD')
+def create_dummy_offer_usd(issue=None):
+    return _create_dummy_offer_with_currency(issue, Decimal('10.00'), 'USD')
 
-def create_dummy_offer_btc():
-    return _create_dummy_offer_with_currency(Decimal('5.00'), 'BTC')
 
-def _create_dummy_offer_with_currency(value, currency):
-    issue = create_dummy_issue()
+def create_dummy_offer_btc(issue=None):
+    return _create_dummy_offer_with_currency(issue, Decimal('5.00'), 'BTC')
+
+
+def _create_dummy_offer_with_currency(issue, value, currency):
+    if not issue:
+        issue = create_dummy_issue()
     offer = Offer.newOffer(issue, issue.createdByUser, value, currency, 'comita aih', True, True, None)
     offer.save()
     return offer
