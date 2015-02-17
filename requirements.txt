@@ -12,7 +12,8 @@ dj-database-url==0.2.1
 httplib2==0.7.7
 python-openid==2.2.5
 requests-oauthlib==0.4.2
-python-social-auth==0.2.1
+#python-social-auth==0.2.1
+git+git://github.com/cambonf/python-social-auth.git@68041313935c78d5045643cca7d2becbdbdf0438#egg=python-social-auth
 requests==2.5.1
 django-pagination==1.0.7
 south==0.7.5

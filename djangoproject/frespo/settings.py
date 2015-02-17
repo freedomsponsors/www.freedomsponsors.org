@@ -160,8 +160,9 @@ SOUTH_MIGRATION_MODULES = {
 
 
 AUTHENTICATION_BACKENDS = (
-    'social.backends.open_id.OpenIdAuth',
     'social.backends.google.GoogleOpenId',
+    'social.backends.google.GoogleOpenIdConnect',
+    'social.backends.open_id.OpenIdAuth',
     'social.backends.google.GoogleOAuth2',
     'social.backends.google.GoogleOAuth',
     'social.backends.twitter.TwitterOAuth',
@@ -293,6 +294,8 @@ GOOGLE_CONSUMER_KEY          = ''
 GOOGLE_CONSUMER_SECRET       = ''
 GOOGLE_OAUTH2_CLIENT_ID      = ''
 GOOGLE_OAUTH2_CLIENT_SECRET  = ''
+SOCIAL_AUTH_GOOGLE_OPENIDCONNECT_KEY = 'XXXXX'
+SOCIAL_AUTH_GOOGLE_OPENIDCONNECT_SECRET = 'XXXXX'
 FOURSQUARE_CONSUMER_KEY      = ''
 FOURSQUARE_CONSUMER_SECRET   = ''
 GITHUB_APP_ID                = ''
