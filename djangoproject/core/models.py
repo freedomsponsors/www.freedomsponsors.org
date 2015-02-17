@@ -1,12 +1,10 @@
 # -*- coding: UTF-8 -*-
 import json
-from django.db import models
-from django.utils import timezone
 from datetime import timedelta
 from django.contrib.auth.models import User
 import hashlib, time, random
 from core.utils.frespo_utils import get_or_none, strip_protocol, as_time_string
-from social_auth.models import UserSocialAuth
+from social.apps.django_app.default.models import UserSocialAuth
 from django.utils.http import urlquote
 from django.template.defaultfilters import slugify
 from django.dispatch import receiver

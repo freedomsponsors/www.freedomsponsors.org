@@ -57,7 +57,7 @@ if 'core' in settings.INSTALLED_APPS:
         url(r'^login-error/$', 'core.views.main_views.login_error'),
         url(r'^robots.txt$', TemplateView.as_view(template_name='core2/robots.txt', content_type='text/plain')),
         url(r'^sitemap.xml$', 'core.views.main_views.sitemap'),
-        url(r'', include('social_auth.urls')),
+        url('', include('social.apps.django_app.urls', namespace='social')),
         url(r'^email/$', 'core.views.user_views.redirect_to_user_page',
             {'email_verified': 'true'}, name='emailmgr_email_list'),
         url(r'^email/activate/(?P<identifier>\w+)/$',

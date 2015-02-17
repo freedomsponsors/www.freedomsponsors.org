@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from core.models import *
 from django.utils import timezone
-from social_auth.models import UserSocialAuth
+from social.apps.django_app.default.models import UserSocialAuth
 from decimal import Decimal
 from django.conf import settings
 

@@ -92,11 +92,10 @@ MIDDLEWARE_CLASSES = (
     'core.middlewares.FSPreconditionsMiddleware',
     'core.middlewares.Translation',
     'pagination.middleware.PaginationMiddleware',
-    'social_auth.middleware.SocialAuthExceptionMiddleware',
+    'social.apps.django_app.middleware.SocialAuthExceptionMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
-SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -108,9 +107,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.tz",
     "django.contrib.messages.context_processors.messages",
     'django.core.context_processors.request',
-    'social_auth.context_processors.social_auth_by_name_backends',
-    'social_auth.context_processors.social_auth_backends',
-    'social_auth.context_processors.social_auth_by_type_backends',
+    'social.apps.django_app.context_processors.backends',
+    'social.apps.django_app.context_processors.login_redirect',
     'core.context_processors.addAFewFrespoSettings',
 )
 
@@ -148,42 +146,53 @@ INSTALLED_APPS = (
     'sandbox',
     'core_splinter_tests',
     'gh_frespo_integration',
-#    'bootstrap-pagination'
+    # 'bootstrap-pagination'
     'pagination',
-    'social_auth',
+    'social.apps.django_app.default',
     'south',
     'emailmgr',
     'registration',
 )
 
+SOUTH_MIGRATION_MODULES = {
+    'default': 'social.apps.django_app.default.south_migrations'
+}
 
 
 AUTHENTICATION_BACKENDS = (
-    'social_auth.backends.twitter.TwitterBackend',
-    'social_auth.backends.facebook.FacebookBackend',
-    'social_auth.backends.google.GoogleOAuthBackend',
-    'social_auth.backends.google.GoogleOAuth2Backend',
-    'social_auth.backends.google.GoogleBackend',
-    'social_auth.backends.yahoo.YahooBackend',
-    'social_auth.backends.contrib.linkedin.LinkedinBackend',
+    'social.backends.open_id.OpenIdAuth',
+    'social.backends.google.GoogleOpenId',
+    'social.backends.google.GoogleOAuth2',
+    'social.backends.google.GoogleOAuth',
+    'social.backends.twitter.TwitterOAuth',
+    'social.backends.yahoo.YahooOpenId',
+    'django.contrib.auth.backends.ModelBackend',
+    # 'social_auth.backends.twitter.TwitterBackend',
+    # 'social_auth.backends.facebook.FacebookBackend',
+    # 'social_auth.backends.google.GoogleOAuthBackend',
+    # 'social_auth.backends.google.GoogleOAuth2Backend',
+    # 'social_auth.backends.google.GoogleBackend',
+    # 'social_auth.backends.yahoo.YahooBackend',
+    # 'social_auth.backends.OpenIDBackend',
+
+    # 'social_auth.backends.contrib.linkedin.LinkedinBackend',
 #    'social_auth.backends.contrib.skyrock.SkyrockBackend',
-    'social_auth.backends.contrib.flickr.FlickrBackend',
-    'social_auth.backends.contrib.instagram.InstagramBackend',
-    'social_auth.backends.contrib.github.GithubBackend',
-    'social_auth.backends.contrib.bitbucket.BitbucketBackend',
-    'social_auth.backends.contrib.yandex.YandexBackend',
+#     'social_auth.backends.contrib.flickr.FlickrBackend',
+#     'social_auth.backends.contrib.instagram.InstagramBackend',
+#     'social_auth.backends.contrib.github.GithubBackend',
+#     'social_auth.backends.contrib.bitbucket.BitbucketBackend',
+#     'social_auth.backends.contrib.yandex.YandexBackend',
 #    'social_auth.backends.contrib.yahoo.YahooOAuthBackend',
-    'social_auth.backends.OpenIDBackend',
-    'social_auth.backends.contrib.livejournal.LiveJournalBackend',
+#     'social_auth.backends.contrib.livejournal.LiveJournalBackend',
 #    'social_auth.backends.contrib.douban.DoubanBackend',
-    'social_auth.backends.browserid.BrowserIDBackend',
+#     'social_auth.backends.browserid.BrowserIDBackend',
 #    'social_auth.backends.contrib.vkontakte.VKontakteBackend',
 #    'social_auth.backends.contrib.yandex.YandexOAuth2Backend',
-    'social_auth.backends.contrib.yandex.YaruBackend',
+#     'social_auth.backends.contrib.yandex.YaruBackend',
 #    'social_auth.backends.contrib.odnoklassniki.OdnoklassnikiBackend',
 #    'social_auth.backends.contrib.vkontakte.VKontakteOAuth2Backend',
 #    'social_auth.backends.contrib.mailru.MailruBackend',
-    'django.contrib.auth.backends.ModelBackend',
+#     'django.contrib.auth.backends.ModelBackend',
 )
 
 TEST_GMAIL_ACCOUNT_1 = {
