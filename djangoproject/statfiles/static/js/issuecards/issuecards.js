@@ -129,7 +129,7 @@ angular.module('issuecards').directive('issueCards', function() {
 
 
             $scope.getPaidValue = function(issue){
-                return _mixedValue(issue.total_paid_offers_usd, issue.total_paid_offers_usd);
+                return _mixedValue(issue.total_paid_offers_usd, issue.total_paid_offers_btc);
             };
 
             $scope.getOfferedValue = function(issue){
