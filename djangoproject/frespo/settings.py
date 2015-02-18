@@ -160,40 +160,36 @@ SOUTH_MIGRATION_MODULES = {
 
 
 AUTHENTICATION_BACKENDS = (
-    'social.backends.google.GoogleOpenId',
     'social.backends.google.GoogleOpenIdConnect',
-    'social.backends.open_id.OpenIdAuth',
-    'social.backends.google.GoogleOAuth2',
-    'social.backends.google.GoogleOAuth',
+    'social.backends.github.GithubOAuth2',
+    'social.backends.facebook.FacebookOAuth2',
+    'social.backends.bitbucket.BitbucketOAuth',
     'social.backends.twitter.TwitterOAuth',
+    'social.backends.open_id.OpenIdAuth',
     'social.backends.yahoo.YahooOpenId',
     'django.contrib.auth.backends.ModelBackend',
-    # 'social_auth.backends.twitter.TwitterBackend',
-    # 'social_auth.backends.facebook.FacebookBackend',
-    # 'social_auth.backends.google.GoogleOAuthBackend',
-    # 'social_auth.backends.google.GoogleOAuth2Backend',
-    # 'social_auth.backends.google.GoogleBackend',
-    # 'social_auth.backends.yahoo.YahooBackend',
-    # 'social_auth.backends.OpenIDBackend',
+)
 
-    # 'social_auth.backends.contrib.linkedin.LinkedinBackend',
-#    'social_auth.backends.contrib.skyrock.SkyrockBackend',
-#     'social_auth.backends.contrib.flickr.FlickrBackend',
-#     'social_auth.backends.contrib.instagram.InstagramBackend',
-#     'social_auth.backends.contrib.github.GithubBackend',
-#     'social_auth.backends.contrib.bitbucket.BitbucketBackend',
-#     'social_auth.backends.contrib.yandex.YandexBackend',
-#    'social_auth.backends.contrib.yahoo.YahooOAuthBackend',
-#     'social_auth.backends.contrib.livejournal.LiveJournalBackend',
-#    'social_auth.backends.contrib.douban.DoubanBackend',
-#     'social_auth.backends.browserid.BrowserIDBackend',
-#    'social_auth.backends.contrib.vkontakte.VKontakteBackend',
-#    'social_auth.backends.contrib.yandex.YandexOAuth2Backend',
-#     'social_auth.backends.contrib.yandex.YaruBackend',
-#    'social_auth.backends.contrib.odnoklassniki.OdnoklassnikiBackend',
-#    'social_auth.backends.contrib.vkontakte.VKontakteOAuth2Backend',
-#    'social_auth.backends.contrib.mailru.MailruBackend',
-#     'django.contrib.auth.backends.ModelBackend',
+SOCIALAUTH_PIPELINE_TRUSTED_BACKENDS = [
+    'social.backends.google.GoogleOpenIdConnect',
+    'social.backends.github.GithubOAuth2',
+    'social.backends.facebook.FacebookBackend',
+    'social.backends.bitbucket.BitbucketBackend',
+    'social.backends.twitter.TwitterOAuth',
+    'social.backends.yahoo.YahooOpenId',
+]
+
+SOCIAL_AUTH_PIPELINE = (
+    'social.pipeline.social_auth.social_details',
+    'social.pipeline.social_auth.social_uid',
+    'social.pipeline.social_auth.auth_allowed',
+    'social.pipeline.social_auth.social_user',
+    'social.pipeline.user.get_username',
+    'frespo.socialauth_pipeline.associate_by_email',
+    'social.pipeline.user.create_user',
+    'social.pipeline.social_auth.associate_user',
+    'social.pipeline.social_auth.load_extra_data',
+    'social.pipeline.user.user_details'
 )
 
 TEST_GMAIL_ACCOUNT_1 = {
@@ -294,8 +290,8 @@ GOOGLE_CONSUMER_KEY          = ''
 GOOGLE_CONSUMER_SECRET       = ''
 GOOGLE_OAUTH2_CLIENT_ID      = ''
 GOOGLE_OAUTH2_CLIENT_SECRET  = ''
-SOCIAL_AUTH_GOOGLE_OPENIDCONNECT_KEY = 'XXXXX'
-SOCIAL_AUTH_GOOGLE_OPENIDCONNECT_SECRET = 'XXXXX'
+SOCIAL_AUTH_GOOGLE_OPENIDCONNECT_KEY = '902963218455-80ju3cbcm21rulrjeid3v2andi2o8c9r.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OPENIDCONNECT_SECRET = '6B58_fBfCSJcP742_0kmt_CS'
 FOURSQUARE_CONSUMER_KEY      = ''
 FOURSQUARE_CONSUMER_SECRET   = ''
 GITHUB_APP_ID                = ''
