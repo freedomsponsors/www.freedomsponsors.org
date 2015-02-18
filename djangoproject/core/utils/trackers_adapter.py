@@ -111,7 +111,7 @@ def retriveGithubInfo(url):
     info.tracker = 'GITHUB'
     info.project_name = pathTokens[2]
     info.project_trackerURL = parsedURL.scheme+'://'+parsedURL.netloc+'/'+pathTokens[1]+'/'+pathTokens[2]+'/'+pathTokens[3]
-    auth = 'client_id=%s&client_secret=%s' % (settings.GITHUB_APP_ID, settings.GITHUB_API_SECRET)
+    auth = 'client_id=%s&client_secret=%s' % (settings.SOCIAL_AUTH_GITHUB_KEY, settings.SOCIAL_AUTH_GITHUB_SECRET)
     issueJsonURL = 'https://api.github.com/repos' + parsedURL.path + '?' + auth
     h = httplib2.Http(disable_ssl_certificate_validation=True, timeout=settings.FETCH_ISSUE_TIMEOUT)
     try: 
