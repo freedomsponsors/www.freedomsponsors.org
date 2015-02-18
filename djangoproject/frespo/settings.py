@@ -173,8 +173,8 @@ AUTHENTICATION_BACKENDS = (
 SOCIALAUTH_PIPELINE_TRUSTED_BACKENDS = [
     'social.backends.google.GoogleOpenIdConnect',
     'social.backends.github.GithubOAuth2',
-    'social.backends.facebook.FacebookBackend',
-    'social.backends.bitbucket.BitbucketBackend',
+    'social.backends.facebook.FacebookOAuth2',
+    'social.backends.bitbucket.BitbucketOAuth',
     'social.backends.twitter.TwitterOAuth',
     'social.backends.yahoo.YahooOpenId',
 ]
