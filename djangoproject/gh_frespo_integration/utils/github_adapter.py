@@ -14,7 +14,7 @@ BOT_AUTH = (settings.GITHUB_BOT_USERNAME, settings.GITHUB_BOT_PASSWORD)
 
 def _fetch_json_objects_from_url(url):
     u = urlparse(url)
-    auth = 'client_id=%s&client_secret=%s' % (settings.GITHUB_APP_ID, settings.GITHUB_API_SECRET)
+    auth = 'client_id=%s&client_secret=%s' % (settings.SOCIAL_AUTH_GITHUB_KEY, settings.SOCIAL_AUTH_GITHUB_SECRET)
     url += '&' if u.query else '?'
     url += auth
     h = httplib2.Http(disable_ssl_certificate_validation=True)
