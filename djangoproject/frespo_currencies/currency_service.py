@@ -66,7 +66,7 @@ def _get_rates():
 
 
 def _get_blockchain_data(rates):
-    response = requests.get('https://blockcshain.info/pt/ticker')
+    response = requests.get('https://blockchain.info/pt/ticker')
     content = response.content
     if Rates.is_valid_blockchain_data(content):
         rates.blockchain_data = content
