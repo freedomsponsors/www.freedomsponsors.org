@@ -23,14 +23,9 @@ class TestGetProjectData(TestCase):
         self.assertEqual(100, project['stats']['percent_issues_open'])
         self.assertEqual(10.0, project['stats']['usd_open'])
 
-	responseNG1 = self.client.get('/api/project/-1')
-	self.assertEqual(responseNG1.status_code, 404)
-	self.assertEqual(json.loads(responseNG1.content)['error'], 'Project not found')
 
-	#responseNG2 = self.client.get('/api/project/100000000)
-	#self.assertEqual(responseNG2.status_code, 404)
-	#self.assertEqual(json.loads(responseNG2.content)['error'], 'Project not found')
-
-	#responseNG3 = self.client.get('/api/project/A)
-	#self.assertEqual(responseNG3.status_code, 404)
-	#self.assertEqual(json.loads(responseNG3.content)['error'], 'Project not found')
+    def test_get_project_that_does_not_exist(self):
+        responseNG = self.client.get('/api/project/10000000')
+        self.assertEqual(responseNG.status_code, 404)
+        projectNG = json.loads(responseNG.content)  		    
+        self.assertEqual(projectNG['error'], 'Project not found')
