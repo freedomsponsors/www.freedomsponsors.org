@@ -2,15 +2,25 @@ import json
 from django.http.response import HttpResponse
 from core.models import Project
 from core.services import stats_services
-
+from django.core.exceptions import ObjectDoesNotExist
 
 def get_project(request, project_id):
-    project = Project.objects.get(pk=project_id)
-    if not project:
+    try:
+        project = Project.objects.get(pk=project_id)
+        result = project.to_dict_json()
+        result['stats'] = _replace_decimals_stats(stats_services.project_stats(project))
+        return HttpResponse(json.dumps(result), content_type='application/json')
+    except ObjectDoesNotExist:
         return HttpResponse(json.dumps({'error': 'Project not found'}), status=404, content_type='application/json')
-    result = project.to_dict_json()
-    result['stats'] = _replace_decimals_stats(stats_services.project_stats(project))
-    return HttpResponse(json.dumps(result), content_type='application/json')
+	
+
+#def get_project(request, project_id):
+#    project = Project.objects.get(pk=project_id)
+#    if not project:
+#        return HttpResponse(json.dumps({'error': 'Project not found'}), status=404, content_type='application/json')
+#    result = project.to_dict_json()
+#    result['stats'] = _replace_decimals_stats(stats_services.project_stats(project))
+#    return HttpResponse(json.dumps(result), content_type='application/json')
 
 
 def _replace_decimals_stats(stats):
