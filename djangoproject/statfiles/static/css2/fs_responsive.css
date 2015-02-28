@@ -1,0 +1,154 @@
+/* ----------------------- SUMMARY -----------------------
+
+- General
+
+- Header
+ 
+- Content
+
+- Footer
+	- Sticky Footer
+
+- Columns Layout
+	- Sizes
+
+- Home
+   
+*/
+
+@media all and (max-width: 1024px)
+{
+
+/* Header
+----------------------------------------------- */
+.header-middle-section
+{
+	height: unset;
+	padding: 0px;
+	width: 100%;
+}
+.header-middle-section .column-wrapper div
+{
+	display: inline-block;
+	padding-bottom: 2%;
+	width: 100%;
+}
+.header-middle-section .column
+{
+	align-self: baseline;
+	color: #ffffff;
+	min-height: 100%;
+	min-width: 100px;
+	z-index: 1;
+}
+.header-middle-section .column:before
+{
+	content: "Menu";
+	font-size: 14pt;
+	font-weight: bold;
+}
+.header-middle-section .column .menu-option
+{
+	/*background: #323232;*/
+	background: #4b4b4b;
+	border-top: 1px solid #000000;
+	display: none;
+	margin-left: 0px;
+	width: 100%;
+}
+
+.header-middle-section .column:hover .menu-option
+{
+	display: block;
+}
+.header-middle-section .column .menu-option:hover
+{
+	display: block;
+}
+.header-bottom-section
+{
+	
+}
+.header-bottom-section div
+{
+	width: 100%;
+}
+
+
+/* Content
+----------------------------------------------- */
+.content-section
+{
+	width: 100%;
+}
+.home-content-section
+{
+	width: 100%;
+	text-align: center;
+}
+img.fs-logo
+{
+	display: inline;
+}
+.card-list-section
+{
+	max-width: 100%;
+}
+.card-list-header
+{
+	text-align: left;
+}
+#bootstrap-content .span1, 
+#bootstrap-content .span4
+{
+	margin-left: 0 !important;
+}
+#bootstrap-content .table
+{
+	table-layout: fixed;
+}
+#bootstrap-content .table td
+{
+	word-wrap: break-word;
+}
+.non-footer-wrapper > div:nth-child(2)
+{
+	width: auto !important;
+}
+
+
+
+/* Footer
+----------------------------------------------- */
+.footer-midle-section
+{
+	line-height: 3em;
+	text-align: center;
+}
+.footer-midle-section span
+{
+	display: block;
+	float: none;
+	text-align: center;
+}
+
+
+
+
+/* Columns Layout
+----------------------------------------------- */
+div.column-wrapper
+{
+	display: inline-block;
+}
+div.column-wrapper .ng-scope
+{
+	float: left;
+}
+.column-wrapper.vcenter-content
+{
+	height: unset;
+	display: inline-block;
+}
+
+} /* end of media query */
