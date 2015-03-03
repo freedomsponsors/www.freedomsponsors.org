@@ -23,9 +23,13 @@
 ----------------------------------------------- */
 .header-middle-section
 {
-	height: unset;
+	height: auto;
 	padding: 0px;
 	width: 100%;
+}
+.header-middle-section .column-wrapper
+{
+	height: auto;
 }
 .header-middle-section .column-wrapper div
 {
@@ -37,7 +41,6 @@
 {
 	align-self: baseline;
 	color: #ffffff;
-	min-height: 100%;
 	min-width: 100px;
 	z-index: 1;
 }
@@ -49,7 +52,6 @@
 }
 .header-middle-section .column .menu-option
 {
-	/*background: #323232;*/
 	background: #4b4b4b;
 	border-top: 1px solid #000000;
 	display: none;
