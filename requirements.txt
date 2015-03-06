@@ -21,7 +21,7 @@ bitcoin-python==0.3
 git+git://github.com/pinax/django-mailer.git@887ec2c9d8e05d061293b56ff913a9b293c42aa0#egg=django-mailer
 git+git://github.com/freedomsponsors/python-paypalx.git@34d624ed8a7b6505aa6e6e12c0a5b854cacbc612#egg=paypalx
 
-# Both django-registration v0.8 and v1.0 have compatible issues with Django 1.6.5.
+# Both django-registration v0.8 and v1.0 have compatibility issues with Django 1.6.5.
 # See refs:
 #   http://stackoverflow.com/questions/19985103/django-1-6-and-django-registration-built-in-authentication-views-not-picked-up
 #   https://bitbucket.org/ubernostrum/django-registration/pull-request/63/django-16-compatibility-fix-auth-views/diff
