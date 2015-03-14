@@ -269,11 +269,11 @@ def getSocialIcon_small(self):
 
 
 def getSocialProfileLink(self):
-    if(self.provider == 'facebook'):
+    if self.provider == 'facebook':
         return 'http://www.facebook.com/'+self.uid
-    elif(self.provider == 'github' and self.extra_data.has_key('social_username')):
+    elif self.provider == 'github' and self.extra_data.has_key('social_username'):
         return 'http://github.com/'+self.extra_data['social_username']
-    elif(self.provider == 'twitter' and self.extra_data.has_key('social_username')):
+    elif self.provider == 'twitter' and self.extra_data.has_key('social_username'):
         return 'http://twitter.com/'+self.extra_data['social_username']
     else: 
         return None
