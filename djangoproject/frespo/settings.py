@@ -213,7 +213,7 @@ SOCIAL_AUTH_GITHUB_SCOPE = ['user:email',]
 
 LOGIN_URL          = '/login'
 LOGIN_REDIRECT_URL = '/'
-SOCIAL_AUTH_GITHUB_SCOPE = [('login', 'social_username')]
+SOCIAL_AUTH_GITHUB_SCOPE = ['login', 'social_username']
 # GITHUB_EXTRA_DATA = [('login', 'social_username')]
 FACEBOOK_EXTRA_DATA = [('username', 'social_username')]
 TWITTER_EXTRA_DATA = [('screen_name', 'social_username')]
