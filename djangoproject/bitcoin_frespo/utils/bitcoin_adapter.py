@@ -18,6 +18,7 @@ def _connect():
 def new_receive_address():
     "Returns a String with the new receiving address"
     c = _connect()
+    c.walletpassphrase(settings.BITCOINRPC_CONN['password2'], 4)
     return c.getnewaddress()
 
 
@@ -29,6 +30,7 @@ def get_received_by_address(address):
 
 def make_payment(from_address, to_address, value):
     c = _connect()
+    c.walletpassphrase(settings.BITCOINRPC_CONN['password2'], 4)
     return c.sendfrom(from_address, to_address, value)
 
 

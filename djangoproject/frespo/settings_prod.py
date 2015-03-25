@@ -92,6 +92,7 @@ BITCOINRPC_CONN = {
     'remote': True,
     'user': os.environ['BITCOINRPC_CONN_USER'],
     'password': os.environ['BITCOINRPC_CONN_PASSWORD'],
+    'password2': os.environ['BITCOINRPC_CONN_PASSWORD2'],
     'host': os.environ['BITCOINRPC_CONN_HOST'],
     'port': 443,
     'use_https': True
