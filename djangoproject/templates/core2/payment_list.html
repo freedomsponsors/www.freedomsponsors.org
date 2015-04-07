@@ -7,7 +7,8 @@
     <tr>
         <th>ID</th>
         <th>Who</th>
-        <th>Status</th>
+        <th>Payment status</th>
+        <th>Offer status</th>
         <th style="width: 155px;">Created</th>
         <th>Issue</th>
         <th>Amount</th>
@@ -18,6 +19,7 @@
         <td><a href="/payment/{{ payment.id }}">{{ payment.id }}</a></td>
         <td><a href="{{ payment.offer.sponsor.get_view_link }}">{{ payment.offer.sponsor.username }}</a></td>
         <td>{{ payment.status }}</td>
+        <td>{{ payment.offer.status }}</td>
         <td>{{ payment.creationDate }}</td>
         <td><a href="{{ payment.offer.issue.get_view_link }}">{{ payment.offer.issue.title }}</a></td>
         <td>{{ payment.currency }} {{ payment.total }}</td>
