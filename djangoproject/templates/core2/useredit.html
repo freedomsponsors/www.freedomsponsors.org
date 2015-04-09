@@ -216,7 +216,7 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label" for="realName">Real name</label>
+			<label class="control-label" for="realName">Name</label>
 			<div class="controls">
 				<input type="text" class="span4" id="realName" name="realName" value="{{userinfo.realName}}">
 			</div>
@@ -343,19 +343,21 @@
 
 <script>
 	function submit_onclick(){
-		if(!$('#screenName').val().trim()){
-			alert('Screen name is required')
+        var username = undefined;
+        var need_username = $('#username').length > 0;
+        if(need_username){
+            username = $('#username').val().trim();
+        }
+        var primaryEmail = $('#primaryEmail').val().trim();
+		var bitcoin_addr = $('#bitcoin_receive_address').val()
+		if(need_username && ! username){
+			alert('username is required')
 			return false;
 		}
-		if(!$('#primaryEmail').val().trim()){
+		if(!primaryEmail){
 			alert('Primary email is required')
 			return false;
 		}
-		if(!$('#realName').val().trim()){
-			alert('Real name is required')
-			return false;
-		}
-		bitcoin_addr = $('#bitcoin_receive_address').val()
 		if(bitcoin_addr && !check_address(bitcoin_addr)){
 			alert('Bitcoin address invalid')
 			return false;
