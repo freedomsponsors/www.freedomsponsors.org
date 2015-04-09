@@ -4,6 +4,7 @@ from emailmgr.models import EmailAddress
 from core.models import *
 from django.conf import settings
 import re
+from core.utils import bitcoin_validation
 
 __author__ = 'tony'
 
@@ -52,7 +53,10 @@ def edit_existing_user(user, dict):
     userinfo.preferred_language_code = dict['preferred_language_code']
     userinfo.date_last_updated = now
     if settings.BITCOIN_ENABLED:
-        userinfo.bitcoin_receive_address = dict['bitcoin_receive_address']
+        btcaddr = dict['bitcoin_receive_address']
+        if btcaddr and not bitcoin_validation.validate(btcaddr):
+            raise FSException('Invalid Bitcoin Receive Address')
+        userinfo.bitcoin_receive_address = btcaddr
     newEmail = dict['primaryEmail']
     newPaypalEmail = dict.get('paypalEmail')
     if not newPaypalEmail:
