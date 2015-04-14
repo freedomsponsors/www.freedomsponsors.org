@@ -26,11 +26,11 @@ class TrackerUtilsTest(TestCase):
         assert(issueInfo.issue_title == 'Make OpenID work with Google Apps accounts')
 
     def test_maven_jira(self):
-        issueInfo = fetchIssueInfo("http://jira.codehaus.org/browse/MNG-5121")
+        issueInfo = fetchIssueInfo("https://issues.apache.org/jira/browse/MNG-5121")
         assert(not issueInfo.error)
         assert(issueInfo.tracker == 'JIRA')
         assert(issueInfo.key == 'MNG-5121')
-        assert(issueInfo.project_trackerURL == 'http://jira.codehaus.org/browse/MNG')
+        assert(issueInfo.project_trackerURL == 'https://issues.apache.org/jira/browse/MNG')
         assert(issueInfo.project_name == 'Maven')
         assert(issueInfo.issue_title == 'maven seems to lose transitive dependencies from the list of compilation dependencies')
 
