@@ -124,7 +124,7 @@ def notifyWatchers_project_tag_removed(user, project, tag, watches):
 
 def notifyWatchers_acceptingpayments(solution, watches):
     def send_func(watch):
-        if(watch.user.id != solution.programmer.id):
+        if watch.user.id != solution.programmer.id:
             _send_mail_to_user(user = watch.user,
                 subject = solution.programmer.username+" is ready to accept payments for issue [%s]"%solution.issue.title,
                 templateName = 'email/acceptingpayments.html',
@@ -255,7 +255,7 @@ def notify_payment_parties_and_watchers_paymentconfirmed(payment, watches):
     for part in payment.getParts():
         _send_mail_to_user(
             user = part.programmer,
-            subject=payment.offer.sponsor.username+" has made you a "+payment.get_currency_symbol()+" "+str(twoplaces(part.price))+" payment",
+            subject=payment.offer.sponsor.username+" has made you a "+part.get_full_value()+" payment",
             templateName='email/payment_received.html',
             contextData={"payment" : payment,
             "part" : part,
@@ -266,7 +266,7 @@ def notify_payment_parties_and_watchers_paymentconfirmed(payment, watches):
         already_sent_to[part.programmer.email] = True
     _send_mail_to_user(
         user=payment.offer.sponsor,
-        subject="You have made a "+payment.get_currency_symbol()+" "+str(twoplaces(payment.total))+" payment",
+        subject="You have made a "+payment.get_full_value_with_fee()+" payment",
         templateName='email/payment_sent.html',
         contextData={"payment": payment, "SITE_HOME": settings.SITE_HOME},
         whentrue=None,

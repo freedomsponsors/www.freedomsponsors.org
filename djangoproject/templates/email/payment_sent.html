@@ -1,7 +1,7 @@
 {% extends "email/base.html" %}
 {% block mainContent%}
 Hello {{ payment.offer.sponsor.username }}<br>
-Your {{payment.get_currency_symbol}} {{payment.total}} payment has been processed.<br><br>
+Your {{payment.get_full_value_with_fee}} payment has been processed.<br><br>
 
 This payment is regarding issue:<br>
 

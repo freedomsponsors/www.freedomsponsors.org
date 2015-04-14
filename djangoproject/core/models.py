@@ -879,6 +879,12 @@ class Payment(models.Model):
     def get_currency_symbol(self):
         return _CURRENCY_SYMBOLS[self.currency]
 
+    def get_full_value_with_fee(self):
+        v = self.total_with_fee()
+        if self.currency != 'BTC':
+            v = twoplaces(v)
+        return '%s %s' % (self.get_currency_symbol(), v)
+
     def total_with_fee(self):
         return self.total + self.fee + self.bitcoin_fee
 
@@ -1005,7 +1011,11 @@ class PaymentPart(models.Model):
     def price_formatted(self):
         return self.price.quantize(Decimal('0.0001') if self.payment.currency == 'BTC' else Decimal('0.01'))
 
-
+    def get_full_value(self):
+        v = self.price
+        if self.payment.currency != 'BTC':
+            v = twoplaces(v)
+        return '%s %s' % (self.payment.get_currency_symbol(), v)
 
 
 # A historical log event

@@ -113,7 +113,7 @@ def _notify_payment_finished_if_applicable(payment_id):
             payment.id,
             payment.total_bitcoin_received,
             payment.offer.issue.title)
-        mail_services.notify_admin('Bitcoin payment made - %s'%payment.total_bitcoin_received, msg)
+        mail_services.notify_admin('Bitcoin payment made - %s' % payment.total_bitcoin_received, msg)
 
 
 def _notify_payments_sent_if_applicable(payment):

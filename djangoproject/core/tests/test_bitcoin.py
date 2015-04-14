@@ -129,7 +129,7 @@ class BitcoinPaymentTests(TestCase):
         part = PaymentPart.objects.get(payment__id=payment.id)
         self.assertEqual(part.money_sent.status, MoneySent.CONFIRMED_IPN)
 
-    def _confirm_sent(self, offer, programmer, transaction_value, email_value1, email_value2):
+    def _confirm_sent(self, offer, programmer, transaction_value, email_value1, email_value2, email_value3):
         def get_transaction_mock(hash):
             class X:
                 pass
@@ -153,8 +153,8 @@ class BitcoinPaymentTests(TestCase):
         email_asserts.assert_sent_count(self, 3)
         email_asserts.assert_sent(self, to=programmer.email,
                                   subject='%s has made you a BTC %s payment' % (offer.sponsor.username, email_value1))
-        email_asserts.assert_sent(self, to=offer.sponsor.email, subject='You have made a BTC %s payment' % email_value1)
-        email_asserts.assert_sent(self, to=settings.ADMINS[0][1], subject='Bitcoin payment made - %s' % email_value2)
+        email_asserts.assert_sent(self, to=offer.sponsor.email, subject='You have made a BTC %s payment' % email_value2)
+        email_asserts.assert_sent(self, to=settings.ADMINS[0][1], subject='Bitcoin payment made - %s' % email_value3)
 
     def setUp(self):
         self.get_rate_old = currency_service.get_rate
@@ -176,7 +176,7 @@ class BitcoinPaymentTests(TestCase):
         payment = self._confirm_received(payment, 5.1505)
         self._pay_programmer(payment, Decimal('5'), '5.15050000')
         self._ipn_confirmation_send(payment, -Decimal('5'))
-        self._confirm_sent(offer, programmer, Decimal('5'), '5.00', '5.15050000')
+        self._confirm_sent(offer, programmer, Decimal('5'), '5.00000000', '5.15020000', '5.15050000')
 
     def test_bitcoin_payment_complete_offer_usd(self):
 
@@ -191,4 +191,4 @@ class BitcoinPaymentTests(TestCase):
         payment = self._confirm_received(payment, 0.1035)
         self._pay_programmer(payment, Decimal('0.1'), '0.10350000')
         self._ipn_confirmation_send(payment, -Decimal('0.1'))
-        self._confirm_sent(offer, programmer, Decimal('0.1'), '0.10', '0.10350000')
+        self._confirm_sent(offer, programmer, Decimal('0.1'), '0.10000000', '0.10320000', '0.10350000')
