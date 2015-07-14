@@ -17,7 +17,7 @@
       <td><a href="{{ offer.issue.get_view_link }}">{{ offer.issue.key }}</a></td>
       <td><a href="{{ offer.issue.get_view_link }}">{{ offer.issue.title }}</a></td>
       <td><a href="{{ offer.issue.get_view_link }}">{{offer.get_currency_symbol}} {{offer.price_formatted}}</a></td>
-      <td>{{offer.status}}</td>
+      <td>{% if offer.is_expired %}{% trans "EXPIRED" %}{% else %}{{offer.status}}{% endif %}</td>
       <td><span title="{{ offer.creationDate }}">{{ offer.creationDate|date:"M/d/Y" }}</span></td>
       <td><span title="{{ offer.expirationDate }}">{{ offer.expirationDate|date:"M/d/Y" }}</span></td>
     </tr>
