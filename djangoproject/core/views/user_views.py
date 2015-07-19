@@ -130,20 +130,3 @@ def cancel_account(request):
     user_services.deactivate_user(request.user)
     messages.info(request, 'Your account has been disabled.')
     return redirect('/logout')
-
-
-@login_required
-def change_username(request):
-    can_change = request.user.getUserInfo().can_change_username
-    if request.method.lower() == 'post':
-        new_username = request.POST['new_username']
-        try:
-            user_services.change_username(request.user, new_username)
-            messages.info(request, 'Your username has been changed')
-        except FSException as e:
-            messages.error(request, e.message)
-    return render_to_response(
-        'core2/change_username.html',
-        {'can_change': can_change},
-        context_instance=RequestContext(request)
-    )
