@@ -34,15 +34,6 @@ class TrackerUtilsTest(TestCase):
         assert(issueInfo.project_name == 'Maven')
         assert(issueInfo.issue_title == 'maven seems to lose transitive dependencies from the list of compilation dependencies')
 
-    def test_easymock_jira(self):
-        issueInfo = fetchIssueInfo("http://jira.codehaus.org/browse/EASYMOCK-111")
-        assert(not issueInfo.error)
-        assert(issueInfo.tracker == 'JIRA')
-        assert(issueInfo.key == 'EASYMOCK-111')
-        assert(issueInfo.project_trackerURL == 'http://jira.codehaus.org/browse/EASYMOCK')
-        assert(issueInfo.project_name == 'EasyMock')
-        assert(issueInfo.issue_title == 'Calling behaviour more than expected number of times does not assert failure when the call is from multiple threads')
-
     def test_axis_jira(self):
         issueInfo = fetchIssueInfo("https://issues.apache.org/jira/browse/AXIS-66")
         assert(not issueInfo.error)
