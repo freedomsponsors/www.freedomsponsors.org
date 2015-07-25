@@ -45,6 +45,7 @@ if 'core' in settings.INSTALLED_APPS:
         url(r'^solution/', include('core.urls.solution_urls')),
         url(r'^search/', 'core.views.issue_views.listIssues'),
         url(r'^stats/',  'core.views.main_views.stats'),
+        url(r'^spa$', TemplateView.as_view(template_name='spa.html')),
         url(r'^jslic$', TemplateView.as_view(template_name='core2/jslic.html')),
         url(r'^github-hook/', include('core.urls.github_hook_urls')),
         url(r'^feedback', include('core.urls.feedback_urls')),

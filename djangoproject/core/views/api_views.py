@@ -3,6 +3,7 @@ from django.http.response import HttpResponse
 from core.models import Project
 from core.services import stats_services
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib import auth
 
 
 def get_project(request, project_id):
@@ -13,6 +14,37 @@ def get_project(request, project_id):
         return HttpResponse(json.dumps(result), content_type='application/json')
     except ObjectDoesNotExist:
         return HttpResponse(json.dumps({'error': 'Project not found'}), status=404, content_type='application/json')
+
+
+def login(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = auth.authenticate(username=username, password=password)
+    user_json = None
+    if user is not None:
+        if user.is_active:
+            auth.login(request, user)
+            user_json = {
+                'username': user.username,
+                'name': user.getUserInfo().realName,
+            }
+    return HttpResponse(json.dumps(user_json), content_type='application/json')
+
+
+def logout(request):
+    auth.logout(request)
+    return HttpResponse('{}', content_type='application/json')
+
+
+def whoami(request):
+    i_am = {
+        'user': {
+            'username': request.user.username,
+            'name': request.user.getUserInfo().realName,
+        },
+        'authenticated': True,
+    } if request.user.is_authenticated() else {'authenticated': False}
+    return HttpResponse(json.dumps(i_am), content_type='application/json')
 
 
 def _replace_decimals_stats(stats):

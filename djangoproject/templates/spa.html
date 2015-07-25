@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <meta name="viewport" content="initial-scale=1" />
+        <link rel="stylesheet" href="./static/spa/css/lib.css">
+        <link rel="stylesheet" href="./static/spa/css/fs.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
+        <script src="./static/spa/js/lib.js"></script>
+        <!--FSJS-->
+        <script src="./static/spa/js/fs.js"></script>
+        <!--FSJS END-->
+    </head>
+    <body ng-app="fs_main" layout="column" ng-controller="FSMainCtrl">
+        <md-toolbar layout="row">
+            <fstoolbar></fstoolbar>
+        </md-toolbar>
+        <div layout="row" flex>
+            <div layout="column" flex id="content">
+                <md-content layout="column" flex class="md-padding">
+                    <div ui-view></div>
+                </md-content>
+            </div>
+        </div>
+    </body>
+</html>
