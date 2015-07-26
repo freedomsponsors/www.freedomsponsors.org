@@ -252,6 +252,14 @@ def to_card_dict(issues):
     return result
 
 
+def list_issues_dict(filters=None):
+    if not filters:
+        filters = {}
+    issues = search_issues(search_terms=filters.get('q', ''))
+    issues_dict = to_card_dict(issues)
+    return issues_dict
+
+
 def _buildOfferFromDictionary(dict, user):
     issue = _buildIssueFromDictionary(dict, user)
     return _buildOfferFromDictionary_and_issue(dict, user, issue);

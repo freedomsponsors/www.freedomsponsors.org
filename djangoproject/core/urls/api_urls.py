@@ -6,4 +6,5 @@ urlpatterns = patterns('core.views.api_views',
     url(r'^login$', 'login'),
     url(r'^logout$', 'logout'),
     url(r'^whoami$', 'whoami'),
+    url(r'^list_issues$', 'list_issues'),
 )

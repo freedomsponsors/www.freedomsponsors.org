@@ -1,7 +1,7 @@
 import json
 from django.http.response import HttpResponse
 from core.models import Project
-from core.services import stats_services
+from core.services import stats_services, issue_services
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import auth
 
@@ -45,6 +45,12 @@ def whoami(request):
         'authenticated': True,
     } if request.user.is_authenticated() else {'authenticated': False}
     return HttpResponse(json.dumps(i_am), content_type='application/json')
+
+
+def list_issues(request):
+    filters = json.loads(request.GET.get('filters', '{}'))
+    issues_json = issue_services.list_issues_dict(filters)
+    return HttpResponse(json.dumps(issues_json), content_type='application/json')
 
 
 def _replace_decimals_stats(stats):

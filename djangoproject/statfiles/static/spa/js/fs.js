@@ -6,7 +6,7 @@ $templateCache.put("TEMPLATE_CACHE/pages/docs.html","<html><head><meta name=\"vi
 $templateCache.put("TEMPLATE_CACHE/pages/index.html","<html><head><meta name=\"viewport\" content=\"initial-scale=1\"><link rel=\"stylesheet\" href=\"./css/lib.css\"><link rel=\"stylesheet\" href=\"./css/fs.css\"><link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic\"><script src=\"./js/lib.js\"></script><!--FSJS--><!--FSJS END--></head><body ng-app=\"fs_main\" layout=\"column\" ng-controller=\"FSMainCtrl\"><md-toolbar layout=\"row\"><fstoolbar></fstoolbar></md-toolbar><div layout=\"row\" flex><div layout=\"column\" flex id=\"content\"><md-content layout=\"column\" flex class=\"md-padding\"><div ui-view></div></md-content></div></div></body></html>");
 $templateCache.put("TEMPLATE_CACHE/project/fslistprojects.html","<div>PROJECT LIST</div>");
 $templateCache.put("TEMPLATE_CACHE/project/fsproject.html","<div>PROJECT</div>");
-$templateCache.put("TEMPLATE_CACHE/search/fssearch.html","<div>SEARCH</div>");
+$templateCache.put("TEMPLATE_CACHE/search/fssearch.html","<div><div><input type=\"text\" ng-model=\"m.searchform.text\" ng-keypress=\"$event.keyCode == 13 && m.search()\"> <span ng-show=\"m.loading\">loading...</span></div><div><table><tr><th>Project</th><th>Title</th></tr><tr ng-repeat=\"issue in m.issues\"><td>{[{issue.project_name}]}</td><td>{[{issue.title}]}</td></tr></table></div></div>");
 $templateCache.put("TEMPLATE_CACHE/sponsor/fssponsor.html","<div>SPONSOR</div>");
 $templateCache.put("TEMPLATE_CACHE/viewuser/fsviewuser.html","<div><div ng-if=\"m.loading\">loading...</div><div ng-if=\"!m.loading\"><div>login: {[{m.user.username}]}</div><div>name: {[{m.user.name}]}</div><div>Paypal: {[{m.user.has_paypal}]}</div><div>Bitcoin: {[{m.user.has_bitcoin}]}</div></div></div>");
 $templateCache.put("TEMPLATE_CACHE/components/todo_example/todo.html","<div><md-content layout=\"row\" layout-sm=\"column\"><md-input-container><label>New task</label><input ng-model=\"m.newtodo\"></md-input-container><md-button class=\"md-raised md-primary\" ng-click=\"m.add()\">Add</md-button><md-progress-circular ng-if=\"m.adding\" md-mode=\"indeterminate\"></md-progress-circular></md-content><ul class=\"todo\"><li ng-repeat=\"todo in m.todos\"><span>{[{todo.description}]}</span><md-button class=\"md-raised\" ng-click=\"m.remove(todo)\">Remove</md-button></li></ul></div>");
@@ -315,7 +315,25 @@ angular.module('fsproject').directive('fsproject', function(){
 angular.module('fssearch', ['fsapi']);
 
 angular.module('fssearch').factory('FSSearchModel', function(FSApi){
-	var m = {};
+	var m = {
+		searchform: {
+			text: ''
+		},
+		loading: false,
+		issues: []
+	};
+	angular.extend(m, {
+		search: search
+	});
+
+	function search(evt){
+		m.loading = true;
+		FSApi.list_issues({q: m.searchform.text}).then(function(result){
+			m.issues = result.data;
+		}).finally(function(){
+			m.loading = false;
+		});
+	}
 
 	return m;
 });
@@ -331,10 +349,11 @@ angular.module('fssearch').directive('fssearch', function(){
 		scope: {},
 		templateUrl: FS.BASE_URL+'search/fssearch.html',
 		controller: function($scope, FSSearchModel){
-
+			var m = $scope.m = FSSearchModel;
 		},
 	};
 });
+
 angular.module('fssponsor', ['fsapi']);
 
 angular.module('fssponsor').factory('FSSponsorModel', function(FSApi){
@@ -476,6 +495,7 @@ angular.module('fsapi').factory('FSApi', function(FSAjax){
 		login: login,
 		logout: logout,
 		whoami: whoami,
+		list_issues: list_issues,
 		get_user_details: todo,
 	};
 
@@ -491,6 +511,10 @@ angular.module('fsapi').factory('FSApi', function(FSAjax){
 
 	function whoami(){
 		return FSAjax.get('/api/whoami');
+	}
+
+	function list_issues(filters){
+		return FSAjax.get('/api/list_issues', {filters: angular.toJson(filters)});
 	}
 
 	return fsapi;
