@@ -33,6 +33,7 @@ git+git://github.com/macropin/django-registration.git@42f66646a5e8a80bf1250fe03f
 # This new version of django-emailmgr is already compatible with django 1.6. It's not on pypi yet though.
 git+git://github.com/un33k/django-emailmgr.git@7a6454346dc962ba3550821d51c311a4f69967ba#egg=django-emailmgr
 
-Pillow==2.2.1
+Pillow==2.9.0
 mock==1.0.1
-html2text==2014.7.3
+html2text==2015.6.21
+
