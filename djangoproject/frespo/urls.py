@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.views.generic import TemplateView
 from registration.backends.default.views import RegistrationView
-from registration.forms import RegistrationFormUniqueEmail
+from core.forms import MyRegForm
 from core.forms import FrespoPasswordResetForm
 
 
@@ -28,7 +28,7 @@ if 'core' in settings.INSTALLED_APPS:
         url(r'', include('django.contrib.auth.urls')),
 
         url(r'^accounts/password/reset/$', 'django.contrib.auth.views.password_reset', {'password_reset_form': FrespoPasswordResetForm}, name='password_reset'),
-        url(r'^accounts/register/$', RegistrationView.as_view(form_class=RegistrationFormUniqueEmail), name='registration_register'),
+        url(r'^accounts/register/$', RegistrationView.as_view(form_class=MyRegForm), name='registration_register'),
         url(r'^accounts/', include('registration.backends.default.urls')),
 
         url(r'^$', 'core.views.main_views.home', name='home'),
@@ -69,6 +69,9 @@ if 'core' in settings.INSTALLED_APPS:
 
 urlpatterns += patterns('',
     url(r'^sandbox/', include('sandbox.urls')),
+)
+urlpatterns += patterns('',
+    url(r'^captcha/', include('captcha.urls')),
 )
 
 urlpatterns += staticfiles_urlpatterns()

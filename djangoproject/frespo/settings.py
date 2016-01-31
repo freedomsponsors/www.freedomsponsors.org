@@ -152,10 +152,12 @@ INSTALLED_APPS = (
     'south',
     'emailmgr',
     'registration',
+    'captcha',
 )
 
 SOUTH_MIGRATION_MODULES = {
-    'default': 'social.apps.django_app.default.south_migrations'
+    'default': 'social.apps.django_app.default.south_migrations',
+    'captcha': 'captcha.south_migrations',
 }
 
 

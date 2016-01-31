@@ -1,9 +1,11 @@
+from captcha.fields import CaptchaField
 from django import forms
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.hashers import UNUSABLE_PASSWORD_PREFIX
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
-from registration.forms import RegistrationForm as _RegistrationForm
+from registration.forms import RegistrationForm as _RegistrationForm, RegistrationFormUniqueEmail
+
 
 class RegistrationForm(_RegistrationForm):
 
@@ -28,6 +30,10 @@ class RegistrationForm(_RegistrationForm):
             raise forms.ValidationError(_("We won't lecture you on password security - you probably heard enough about it by now. But please make it at least 6 characters long!"))
         else:
             return self.cleaned_data['password1']
+
+
+class MyRegForm(RegistrationFormUniqueEmail):
+    captcha = CaptchaField()
 
 
 class FrespoPasswordResetForm(PasswordResetForm):

@@ -38,6 +38,13 @@
       {% endif %}
       {{ form.password2 }}
     </p>
+    <p>
+      <label for="id_captcha">Are you human?</label>
+      {% if form.captcha.errors %}
+          <div class="alert alert-error">{{ form.captcha.errors.as_text }}</div>
+      {% endif %}
+      {{ form.captcha }}
+    </p>
     <p class="submit"><input type="submit" value="Register &rarr;"></p>
   </form>
   
