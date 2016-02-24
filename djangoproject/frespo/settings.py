@@ -304,11 +304,11 @@ else:
         #     default='sqlite:///' + PROJECT_DIR.child('database.db'))
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'frespo',
-            'USER': 'frespo',
-            'PASSWORD': 'frespo',
-            'HOST': 'localhost',
-            'PORT': '5432',
+            'NAME': os.getenv('DATABASE_NAME', 'frespo'),
+            'USER': os.getenv('DATABASE_USER', 'frespo'),
+            'PASSWORD': os.getenv('DATABASE_PASS', 'frespo'),
+            'HOST': os.getenv('DATABASE_HOST', 'localhost'),
+            'PORT': os.getenv('DATABASE_PORT', '5432'),
             # 'TEST_MIRROR': None,
         }
     }
