@@ -36,4 +36,4 @@ git+git://github.com/un33k/django-emailmgr.git@7a6454346dc962ba3550821d51c311a4f
 Pillow==3.1.0
 mock==1.0.1
 html2text==2014.7.3
-django-simple-captcha==0.5.1
+django-recaptcha==1.0.5

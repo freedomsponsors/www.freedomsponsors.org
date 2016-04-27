@@ -70,9 +70,6 @@ if 'core' in settings.INSTALLED_APPS:
 urlpatterns += patterns('',
     url(r'^sandbox/', include('sandbox.urls')),
 )
-urlpatterns += patterns('',
-    url(r'^captcha/', include('captcha.urls')),
-)
 
 urlpatterns += staticfiles_urlpatterns()
 # urlpatterns += feedback_urlpatterns

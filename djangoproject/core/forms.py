@@ -1,4 +1,4 @@
-from captcha.fields import CaptchaField
+from captcha.fields import ReCaptchaField
 from django import forms
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.hashers import UNUSABLE_PASSWORD_PREFIX
@@ -33,7 +33,7 @@ class RegistrationForm(_RegistrationForm):
 
 
 class MyRegForm(RegistrationFormUniqueEmail):
-    captcha = CaptchaField()
+    captcha = ReCaptchaField()
 
 
 class FrespoPasswordResetForm(PasswordResetForm):

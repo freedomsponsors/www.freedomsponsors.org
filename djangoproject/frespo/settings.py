@@ -157,8 +157,12 @@ INSTALLED_APPS = (
 
 SOUTH_MIGRATION_MODULES = {
     'default': 'social.apps.django_app.default.south_migrations',
-    'captcha': 'captcha.south_migrations',
 }
+
+RECAPTCHA_PUBLIC_KEY = os.getenv('RECAPTCHA_PUBLIC_KEY')
+RECAPTCHA_PRIVATE_KEY = os.getenv('RECAPTCHA_PRIVATE_KEY')
+NOCAPTCHA = True
+RECAPTCHA_USE_SSL = True
 
 
 AUTHENTICATION_BACKENDS = (
