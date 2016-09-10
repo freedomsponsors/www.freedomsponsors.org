@@ -7,7 +7,6 @@ from registration.backends.default.views import RegistrationView
 from core.forms import MyRegForm
 from core.forms import FrespoPasswordResetForm
 
-
 admin.autodiscover()
 
 urlpatterns = []
@@ -49,7 +48,7 @@ if 'core' in settings.INSTALLED_APPS:
         url(r'^jslic$', TemplateView.as_view(template_name='core2/jslic.html')),
         url(r'^github-hook/', include('core.urls.github_hook_urls')),
         url(r'^feedback', include('core.urls.feedback_urls')),
-        url(r'^user/', include('core.urls.user_urls')),
+#        url(r'^user/', include('core.urls.user_urls')),
         url(r'^payment/', include('core.urls.payment_urls')),
         url(r'^sandbox/', include('sandbox.urls')),
         url(r'^github/', include('gh_frespo_integration.urls')),

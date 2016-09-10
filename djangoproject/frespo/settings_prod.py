@@ -75,7 +75,6 @@ GITHUB_BOT_PASSWORD = os.environ['GITHUB_BOT_PASSWORD']
 
 SERVER_EMAIL = 'errors@freedomsponsors.org'
 DEFAULT_FROM_EMAIL = 'noreply@freedomsponsors.org'
-ADMAIL_FROM_EMAIL = 'tony@freedomsponsors.org'
 
 PAYPAL_USE_SANDBOX = False
 PAYPAL_CANCEL_URL = SITE_HOME+'/core/paypal/cancel'

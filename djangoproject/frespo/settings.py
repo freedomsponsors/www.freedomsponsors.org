@@ -247,6 +247,8 @@ ADMINS = (
     ('Admin', 'admin@freedomsponsors.org'),
 )
 MANAGERS = ADMINS
+ADMAIL_FROM_EMAIL = 'tony@freedomsponsors.org'
+
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG

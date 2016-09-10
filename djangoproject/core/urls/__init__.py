@@ -25,7 +25,7 @@ urlpatterns += patterns('',
     url(r'^project/(?P<project_id>\d+)/$',     RedirectView.as_view(url='/project/%(project_id)s/', permanent=True)),
     url(r'^project/(?P<project_id>\d+)/edit$', RedirectView.as_view(url='/project/%(project_id)s/edit', permanent=True)),
 
-    url(r'^user/$',                                   RedirectView.as_view(url='/user/', permanent=True)),
+    # url(r'^user/$',                                   RedirectView.as_view(url='/user/', permanent=True)),
     url(r'^user/(?P<user_id>\d+)/$',                  RedirectView.as_view(url='/user/%(user_id)s/', permanent=True)),
     url(r'^user/(?P<user_id>\d+)/(?P<user_slug>.*)$', RedirectView.as_view(url='/user/%(user_id)s/%(user_slug)s', permanent=True)),
 )

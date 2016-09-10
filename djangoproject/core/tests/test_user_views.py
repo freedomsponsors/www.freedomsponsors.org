@@ -27,10 +27,10 @@ class TestUserUnauthenticatedViews(TestCase):
         self.another_user = test_data.createDummyUserRandom(login='janeroe', password='abc123')
         self.client = Client()
 
-    def test_list_users(self):
-        response = self.client.get('/user/')
-        self.assertTemplateUsed(response, 'core2/userlist.html')
-        self.assertEqual(2, len(response.context['users']))
+    # def test_list_users(self):
+    #     response = self.client.get('/user/')
+    #     self.assertTemplateUsed(response, 'core2/userlist.html')
+    #     self.assertEqual(2, len(response.context['users']))
 
     def test_view_user(self):
         response = self.client.get('/user/%s/' % self.user.username)
@@ -146,8 +146,8 @@ class TestDeprecatedCoreUserViews(TestCase):
         response = self.client.get('/core' + url, follow=True)
         self.assertTrue('http://testserver/user/%s/' % self.user.username, response.redirect_chain[-1][0])
 
-    def test_list_users(self):
-        self._assert_redirect('/user/')
+    # def test_list_users(self):
+    #     self._assert_redirect('/user/')
 
     def test_view_user(self):
         self._assert_redirect_to_user('/user/%d/' % self.user.id)
