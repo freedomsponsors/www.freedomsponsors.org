@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, url
 
 urlpatterns = patterns('core.views.user_views',
-    url(r'^$', 'listUsers'),
+    # url(r'^$', 'listUsers'),
     url(r'^edit$', 'editUserForm'),
     url(r'^edit/submit$', 'editUser'),
     url(r'^cancel_account$', 'cancel_account'),
