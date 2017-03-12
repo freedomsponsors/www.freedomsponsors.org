@@ -1,0 +1,21 @@
+version: '2'
+
+services:
+  postgres:
+    image: postgres:9.6
+    environment:
+      POSTGRES_PASSWORD: secret
+    ports:
+      - 5431:5432
+    volumes:
+     - /var/data/fs/postgres:/var/lib/postgresql/data:rw
+  fs:
+    container_name: fs
+    image: fs:latest
+    volumes:
+      - ./djangoproject:/usr/src/app
+    links:
+     - postgres:postgres
+    ports:
+      - 8000:8000
+    command: "/bin/sh -c 'while true; do sleep 60; done'"

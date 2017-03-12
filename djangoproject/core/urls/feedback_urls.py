@@ -1,7 +1,8 @@
 # coding: utf-8
-from django.conf.urls import patterns, url
+from django.conf.urls import url
+from core.views import feedback_views
 
-urlpatterns = patterns('core.views.feedback_views',
-    url(r'^$', 'feedback'),
-    url(r'^/submit$', 'addFeedback'),
-)
+urlpatterns = [
+    url(r'^$', feedback_views.feedback),
+    url(r'^/submit$', feedback_views.addFeedback),
+]

@@ -1,7 +1,9 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
+from core.views import issue_views
 
-urlpatterns = patterns('core.views.issue_views',
-    url(r'^add/submit$', 'addSolution'),
-    url(r'^abort/submit$', 'abortSolution'),
-    url(r'^resolve/submit$', 'resolveSolution'),
-)
+
+urlpatterns = [
+    url(r'^add/submit$', issue_views.addSolution),
+    url(r'^abort/submit$', issue_views.abortSolution),
+    url(r'^resolve/submit$', issue_views.resolveSolution),
+]

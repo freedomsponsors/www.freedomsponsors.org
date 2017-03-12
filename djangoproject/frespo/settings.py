@@ -143,21 +143,25 @@ INSTALLED_APPS = (
     'frespo_currencies',
     'statfiles',
     'core',
-    'sandbox',
+    # 'sandbox',
     'core_splinter_tests',
     'gh_frespo_integration',
     # 'bootstrap-pagination'
     'pagination',
-    'social.apps.django_app.default',
-    'south',
+    # 'social-auth-app-django',
+    # 'social.apps.django_app.default',
+    'social_django',
+    # 'south',
     'emailmgr',
     'registration',
     'captcha',
 )
 
-SOUTH_MIGRATION_MODULES = {
-    'default': 'social.apps.django_app.default.south_migrations',
-}
+
+
+# SOUTH_MIGRATION_MODULES = {
+#     'default': 'social.apps.django_app.default.south_migrations',
+# }
 
 RECAPTCHA_PUBLIC_KEY = os.getenv('RECAPTCHA_PUBLIC_KEY')
 RECAPTCHA_PRIVATE_KEY = os.getenv('RECAPTCHA_PRIVATE_KEY')
@@ -336,7 +340,7 @@ LOGGING = {
     'handlers': {
         'null': {
             'level':'DEBUG',
-            'class':'django.utils.log.NullHandler',
+            'class':'logging.NullHandler',
         },
         'mail_admins': {
             'level': 'ERROR',

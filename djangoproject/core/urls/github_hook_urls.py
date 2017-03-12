@@ -1,5 +1,6 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
+from core.views import github_hook_views
 
-urlpatterns = patterns('core.views.github_hook_views',
-    url(r'^(?P<token>\w+)/$', 'hook'),
-)
+urlpatterns = [
+    url(r'^(?P<token>\w+)/$', github_hook_views.hook),
+]
