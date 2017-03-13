@@ -3,8 +3,8 @@ coverage==3.6b1
 defusedxml==0.4.1
 dj-database-url==0.2.1
 Django==1.10.6
-django-emailmgr==1.0
-django-mailer==0.2a1
+django-emailmgr==0.9
+django-mailer==1.2.2
 django-pagination==1.0.7
 django-recaptcha==1.0.5
 django-registration==2.2
@@ -17,7 +17,7 @@ lxml==3.7.3
 misaka==1.0.2
 mock==1.0.1
 oauthlib==2.0.1
-paypalx==0.1
+paypal==1.2.5
 Pillow==3.1.0
 psycopg2==2.4.5
 pycryptodomex==3.4.5

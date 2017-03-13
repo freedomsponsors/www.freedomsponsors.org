@@ -6,8 +6,8 @@ RUN apt-get -y install libxmlsec1-dev swig
 ENV PYTHONUNBUFFERED=1
 COPY docker/bin/* /usr/local/bin
 WORKDIR /usr/src/app
-COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
+COPY requirements-django1.10.txt requirements-django1.10.txt
+RUN pip install -r requirements-django1.10.txt
 ENV DATABASE_NAME=frespo
 ENV DATABASE_USER=frespo
 ENV DATABASE_PASS=frespo
