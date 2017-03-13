@@ -16,7 +16,6 @@ report.xml
 htmlcov
 bitcoin_json.txt
 bitcoin_senhas.txt
-bin
 lib
 build
 distribute-0.6.34.tar.gz
