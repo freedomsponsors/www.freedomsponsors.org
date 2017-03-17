@@ -3,8 +3,9 @@ coverage==3.6b1
 defusedxml==0.4.1
 dj-database-url==0.2.1
 Django==1.10.6
-django-emailmgr==0.9
-django-mailer==1.2.2
+#django-emailmgr==0.9
+git+git://github.com/un33k/django-emailmgr.git@7a6454346dc962ba3550821d51c311a4f69967ba#egg=django-emailmgr
+#django-mailer==1.2.2
 django-pagination==1.0.7
 django-recaptcha==1.0.5
 django-registration==2.2
@@ -17,7 +18,7 @@ lxml==3.7.3
 misaka==1.0.2
 mock==1.0.1
 oauthlib==2.0.1
-paypal==1.2.5
+git+git://github.com/freedomsponsors/python-paypalx.git@34d624ed8a7b6505aa6e6e12c0a5b854cacbc612#egg=paypalx
 Pillow==3.1.0
 psycopg2==2.4.5
 pycryptodomex==3.4.5

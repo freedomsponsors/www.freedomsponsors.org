@@ -144,7 +144,6 @@ INSTALLED_APPS = (
     'statfiles',
     'core',
     # 'sandbox',
-    'core_splinter_tests',
     'gh_frespo_integration',
     # 'bootstrap-pagination'
     'pagination',

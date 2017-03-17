@@ -4,5 +4,5 @@ from core.views import feedback_views
 
 urlpatterns = [
     url(r'^$', feedback_views.feedback),
-    url(r'^/submit$', feedback_views.addFeedback),
+    url(r'^submit$', feedback_views.addFeedback),
 ]
