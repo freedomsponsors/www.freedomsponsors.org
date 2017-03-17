@@ -284,12 +284,19 @@ UserSocialAuth.getSocialIcon_small = getSocialIcon_small
 UserSocialAuth.getSocialProfileLink = getSocialProfileLink
 
 
-def upload_to(name):
-    def f(project, filename):
-        extension = filename.split('.')[-1]
-        timestamp = timezone.now().strftime('%Y%m%d%H%M%S')
-        return '%s_%s_%s.%s' % (name, project.id, timestamp, extension)
-    return f
+def upload_project_image(project, filename):
+    name = 'project_images/image3x1'
+    extension = filename.split('.')[-1]
+    timestamp = timezone.now().strftime('%Y%m%d%H%M%S')
+    return '%s_%s_%s.%s' % (name, project.id, timestamp, extension)
+
+
+def upload_issue_image(project, filename):
+    name = 'issue_images/logo'
+    extension = filename.split('.')[-1]
+    timestamp = timezone.now().strftime('%Y%m%d%H%M%S')
+    return '%s_%s_%s.%s' % (name, project.id, timestamp, extension)
+
 
 
 # Tudo que estah marcado como "@Auditable" eh um lembrete que pode ter algum atributo que eh alterado pelo
@@ -308,7 +315,7 @@ class Project(models.Model):
     creationDate = models.DateTimeField()
     homeURL = models.URLField(null=True, blank=True)
     trackerURL = models.URLField(null=True, blank=True)
-    image3x1 = models.ImageField(null=True, blank=True, upload_to=upload_to('project_images/image3x1'))
+    image3x1 = models.ImageField(null=True, blank=True, upload_to=upload_project_image)
 
     @classmethod
     def newProject(cls, name, createdByUser, homeURL, trackerURL):
@@ -373,7 +380,7 @@ class Issue(models.Model):
     is_feedback = models.BooleanField()
     is_sponsored = models.BooleanField()
     status = models.CharField(max_length=40)
-    logo = models.ImageField(null=True, blank=True, upload_to=upload_to('issue_images/logo'))
+    logo = models.ImageField(null=True, blank=True, upload_to=upload_issue_image)
     total_open_offers_usd = models.DecimalField(max_digits=16, decimal_places=8, default=0)
     total_open_offers_btc = models.DecimalField(max_digits=16, decimal_places=8, default=0)
     total_paid_offers_usd = models.DecimalField(max_digits=16, decimal_places=8, default=0)

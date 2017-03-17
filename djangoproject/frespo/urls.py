@@ -95,9 +95,5 @@ if 'core' in settings.INSTALLED_APPS:
         ),
     ]
 
-urlpatterns += [
-    url(r'^sandbox/', include('sandbox.urls')),
-]
-
 urlpatterns += staticfiles_urlpatterns()
 # urlpatterns += feedback_urlpatterns
