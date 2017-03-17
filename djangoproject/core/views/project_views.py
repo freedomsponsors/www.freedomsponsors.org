@@ -1,6 +1,5 @@
 import json
 from django.http import HttpResponse
-# from django.shortcuts import render_to_response, redirect
 from django.shortcuts import render, redirect
 from django.template import RequestContext
 from core.decorators import only_post
@@ -29,7 +28,7 @@ def view(request, project_id):
     top_sponsors = stats_services.project_top_sponsors(project_id)[0:5]
     top_programmers = stats_services.project_top_programmers(project_id)[0:5]
     is_watching = request.user.is_authenticated() and watch_services.is_watching_project(request.user, project.id)
-    return render('core2/project.html',
+    return render(request, 'core2/project.html',
                               {'project': project,
                                'stats': stats,
                                'tags': json.dumps([t.name for t in project.get_tags()]),
@@ -44,8 +43,7 @@ def view(request, project_id):
 @login_required
 def edit_form(request, project_id):
     project = Project.objects.get(pk=project_id)
-    return render('core2/project_edit.html',
-                              {'project': project})
+    return render(request, 'core2/project_edit.html', {'project': project})
 
 
 @login_required
@@ -68,5 +66,4 @@ def edit(request):
 def list(request):
     projects = Project.objects.all()
     projects = projects.order_by('name')
-    return render('core2/project_list.html',
-        {'projects':projects})
+    return render(request, 'core2/project_list.html', {'projects':projects})

@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render_to_response
+from django.shortcuts import redirect, render
 from django.utils.translation import ugettext as _
 from django.template import RequestContext
 from core.decorators import only_post
@@ -30,7 +30,6 @@ def editIssueComment(request):
 def viewIssueCommentHistory(request, comment_id):
     comment = IssueComment.objects.get(pk = comment_id)
     comment_events = IssueCommentHistEvent.objects.filter(comment__id = comment_id).order_by("eventDate")
-    return render_to_response('core2/comment_history.html',
+    return render(request, 'core2/comment_history.html',
         {'comment':comment,
-         'comment_events':comment_events,},
-        context_instance = RequestContext(request))
+         'comment_events':comment_events,})

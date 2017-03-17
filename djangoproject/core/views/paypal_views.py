@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponse
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import ugettext as _
 from core.utils import paypal_adapter

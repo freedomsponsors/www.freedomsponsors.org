@@ -5,7 +5,7 @@ from django.template import RequestContext
 import logging
 from decimal import Decimal
 from django.contrib import messages
-from django.shortcuts import redirect, render_to_response
+from django.shortcuts import redirect, render
 from core.services import bitcoin_frespo_services
 
 
@@ -41,10 +41,9 @@ def payOffer(request, offer, payment):
         receive_address = bitcoin_services.get_available_receive_address()
         payment.bitcoin_receive_address = receive_address
         payment.save()
-        return render_to_response('core2/waitPaymentBitcoin.html',
+        return render(request, 'core2/waitPaymentBitcoin.html',
             {'payment': payment,
-             'bitcoin_address': receive_address.address},
-            context_instance=RequestContext(request))
+             'bitcoin_address': receive_address.address})
     except BitcoinFrespoException as e:
         messages.error(request, e.value)
         return redirect(offer.issue.get_view_link())

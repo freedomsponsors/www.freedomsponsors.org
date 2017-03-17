@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.http.response import HttpResponse
 from django.utils.translation import ugettext as _
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render, redirect
 from django.template import RequestContext
 from core.decorators import only_post
 
@@ -12,10 +12,7 @@ from core.services.mail_services import notify_admin
 
 def feedback(request):
     issues = Issue.objects.filter(is_feedback=True).order_by('-creationDate')
-    return render_to_response(
-        'core2/feedback.html',
-        {'issues': issues},
-        context_instance=RequestContext(request))
+    return render(request, 'core2/feedback.html', {'issues': issues})
 
 
 @login_required

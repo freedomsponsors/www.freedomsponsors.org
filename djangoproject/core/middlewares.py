@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.template.context import RequestContext
 from django.utils import translation
@@ -12,7 +12,7 @@ class FSPreconditionsMiddleware:
         user = request.user
         if user.is_authenticated() and not user.is_active:
             if request.path != '/logout':
-                return render_to_response('core2/account_disabled.html', {}, context_instance=RequestContext(request))
+                return render(request, 'core2/account_disabled.html', {})
         if user.is_authenticated() and not user.is_registration_complete():
             whitelist = [
                 'core.views.user_views.editUserForm',

@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.syndication.views import Feed
 from django.contrib import messages
 from django.http import HttpResponse
-from django.shortcuts import redirect, render_to_response
+from django.shortcuts import redirect, render
 from django.template import RequestContext
 from core.decorators import only_post
 from core.models import *
@@ -134,7 +134,7 @@ def listIssues(request):
         issue = issues[0]
         return redirect(issue.get_view_link())
 
-    return render_to_response('core2/issue_list.html',
+    return render(request, 'core2/issue_list.html',
                               {
                                   'issues': issues,
                                   's': search_terms,
@@ -144,8 +144,7 @@ def listIssues(request):
                                   'sortby': sortby,
                                   'asc': asc,
                                   'sortable': True,
-                              },
-                              context_instance=RequestContext(request))
+                              })
 
 
 def listIssuesFeed(request):
@@ -185,9 +184,7 @@ class LatestIssuesFeed(Feed):
 def myissues(request):
     if(request.user.is_authenticated() and request.user.getUserInfo() == None):
         return redirect('core.views.user_views.editUserForm')
-    return render_to_response('core2/myissues.html',
-        {},
-        context_instance = RequestContext(request))
+    return render(request, 'core2/myissues.html', {})
 
 
 @login_required
@@ -279,7 +276,7 @@ def viewIssue(request, issue_id):
         'crumbs': crumbs,
         'actionbar': _actionbar(issue, myoffer, mysolution, request.user)}
 
-    return render_to_response('core2/issue.html', context, context_instance=RequestContext(request))
+    return render(request, 'core2/issue.html', context)
 
 
 @login_required
@@ -308,10 +305,9 @@ def addIssueForm(request):
         if(issue_already_exists):
             return redirect(issues[0].get_view_link()+'?show_sponsor=true&c=s')
 
-    return render_to_response('core2/add_issue.html',
+    return render(request, 'core2/add_issue.html',
         {'trackerURL' : trackerURL,
-        'operation' : operation,},
-        context_instance = RequestContext(request))
+        'operation' : operation,})
 
 
 def _currency_options(offer):
@@ -360,7 +356,7 @@ def payOfferForm(request, offer_id):
             'imglink': solution.programmer.gravatar_url_small()
         })
     currency_options = _currency_options(offer)
-    return render_to_response('core2/pay_offer_angular.html',
+    return render(request, 'core2/pay_offer_angular.html',
                               {
                                   'offer': offer,
                                   'count': len(solutions_dict),
@@ -368,8 +364,7 @@ def payOfferForm(request, offer_id):
                                   'currency_options_json': json.dumps(currency_options),
                                   'is_brazilian': is_brazilian,
                                   'solutions_json': json.dumps(solutions_dict)
-                              },
-                              context_instance=RequestContext(request))
+                              })
 
 @login_required
 @only_post

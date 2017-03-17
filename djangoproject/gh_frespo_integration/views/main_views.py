@@ -1,5 +1,5 @@
 from django.template import  RequestContext
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render, redirect
 from gh_frespo_integration.services import github_services
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -11,9 +11,7 @@ def configure(request):
     except BaseException as e:
         repos = []
         messages.error(request, 'Cannot list repos: '+e.message)
-    return render_to_response('github/configure.html',
-        {"repos" : repos},
-        context_instance = RequestContext(request))
+    return render(request, 'github/configure.html', {"repos" : repos})
 
 @login_required
 def configure_submit(request):

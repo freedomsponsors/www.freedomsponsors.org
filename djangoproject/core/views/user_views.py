@@ -5,7 +5,7 @@ from core.models import *
 from django.contrib import messages
 from django.template import  RequestContext
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render, redirect
 from django.utils.translation import ugettext as _
 from core.services import user_services, mail_services, FSException
 from django.conf import settings
@@ -27,11 +27,7 @@ def viewUserByUsername(request, username):
         return HttpResponse(status=404, content='User not found')
 
     if not user.is_active and not request.user.is_superuser:
-        return render_to_response(
-            'core2/user_inactive.html',
-            {'le_user': user},
-            context_instance=RequestContext(request)
-        )
+        return render(request, 'core2/user_inactive.html', {'le_user': user})
     unconnectedSocialAccounts = None
     if user.id == request.user.id:
         unconnectedSocialAccounts = user.getUnconnectedSocialAccounts()
@@ -48,11 +44,7 @@ def viewUserByUsername(request, username):
         'stats': user.getStats(),
         'unconnectedSocialAccounts': unconnectedSocialAccounts,
     }
-    return render_to_response(
-        'core2/user.html',
-        context,
-        context_instance=RequestContext(request)
-    )
+    return render(request, 'core2/user.html', context)
 
 
 @login_required
@@ -70,12 +62,11 @@ def editUserForm(request):
         _notify_admin_new_user(request.user)
     first_time = userinfo.date_last_updated == userinfo.date_created
 
-    return render_to_response('core2/useredit.html', {
+    return render(request, 'core2/useredit.html', {
         'userinfo': userinfo,
         'can_edit_username': first_time,
         'available_languages': available_languages,
         'next': request.GET.get('next', '')},
-        context_instance=RequestContext(request)
     )
 
 
@@ -110,11 +101,7 @@ def editUser(request):
 
 def listUsers(request):
     users = user_services.get_users_list()
-    return render_to_response(
-        'core2/userlist.html',
-        {'users': users},
-        context_instance=RequestContext(request)
-    )
+    return render(request, 'core2/userlist.html', {'users': users})
 
 
 @login_required
