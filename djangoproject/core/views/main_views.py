@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import logout as auth_logout
 from django.http.response import HttpResponse
 from django.template import  RequestContext
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render, redirect
 from core.services import issue_services
 from core.services.mail_services import *
 from core.services import stats_services
@@ -32,9 +32,8 @@ def login(request):
             return redirect(getparams)
         else:
             return redirect('/')
-    return render_to_response('core2/login.html',
-        {'getparams':getparams},
-        context_instance = RequestContext(request))
+    return render(request, 'core2/login.html',
+        {'getparams':getparams})
 
 
 def admail(request):
@@ -54,9 +53,7 @@ def admail(request):
             messages.info(request, 'mail sent to %s users' % count)
     else:
         messages.info(request, 'nice try :-). If you do find a hole, please have the finesse to let us know though.')
-    return render_to_response('core2/admail.html',
-                              {},
-                              context_instance = RequestContext(request))
+    return render(request, 'core2/admail.html', {})
 
 
 def rates(request):
@@ -82,9 +79,7 @@ def mailtest(request):
             messages.info(request, msg)
     else:
         messages.info(request, 'nice try :-). If you do find a hole, please have the finesse to let us know though.')
-    return render_to_response('core2/mailtest.html',
-                              {'to': to},
-                              context_instance = RequestContext(request))
+    return render(request, 'core2/mailtest.html', {'to': to})
 
 
 def home(request):
@@ -93,11 +88,11 @@ def home(request):
     crumbs = [HOME_CRUMB]
     issues_sponsoring = json.dumps(issue_services.to_card_dict(issues_sponsoring))
     issues_kickstarting = json.dumps(issue_services.to_card_dict(issues_kickstarting))
-    return render_to_response('core2/home.html',
+    return render(request, 'core2/home.html',
         {'issues_sponsoring': issues_sponsoring,
          'issues_kickstarting': issues_kickstarting,
-         'crumbs': crumbs},
-        context_instance=RequestContext(request))
+         'crumbs': crumbs}
+    )
 
 
 def login_error(request):
@@ -108,16 +103,14 @@ def sitemap(request):
     issues = Issue.objects.all()
     projects = Project.objects.all()
     user_infos = UserInfo.objects.select_related('user').all()
-    return render_to_response('core2/sitemap.xml',
+    return render(request, 'core2/sitemap.xml',
                               {'issues': issues,
                                'projects': projects,
                                'user_infos': user_infos},
-                              context_instance=RequestContext(request),
                               mimetype='text/xml')
 
 
 def stats(request):
     stats = stats_services.get_stats()
-    return render_to_response('core2/stats.html',
-        {'stats': stats},
-        context_instance=RequestContext(request))
+    return render(request, 'core2/stats.html',
+        {'stats': stats})
