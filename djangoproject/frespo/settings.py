@@ -81,10 +81,11 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+ATOMIC_REQUESTS = True
+
 MIDDLEWARE_CLASSES = (
     'core.middlewares.ErrorMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.transaction.TransactionMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
