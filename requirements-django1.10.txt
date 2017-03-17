@@ -36,7 +36,6 @@ simplejson==2.6.2
 six==1.10.0
 social-auth-app-django==1.1.0
 social-auth-core==1.2.0
-South==0.7.5
 splinter==0.5.4
 Unipath==0.2.1
 uWSGI==2.0.13.1
