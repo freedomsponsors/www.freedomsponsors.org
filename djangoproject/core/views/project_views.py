@@ -1,6 +1,7 @@
 import json
 from django.http import HttpResponse
-from django.shortcuts import render_to_response, redirect
+# from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render, redirect
 from django.template import RequestContext
 from core.decorators import only_post
 from core.models import Project, ActionLog
@@ -28,7 +29,7 @@ def view(request, project_id):
     top_sponsors = stats_services.project_top_sponsors(project_id)[0:5]
     top_programmers = stats_services.project_top_programmers(project_id)[0:5]
     is_watching = request.user.is_authenticated() and watch_services.is_watching_project(request.user, project.id)
-    return render_to_response('core2/project.html',
+    return render('core2/project.html',
                               {'project': project,
                                'stats': stats,
                                'tags': json.dumps([t.name for t in project.get_tags()]),
@@ -37,16 +38,14 @@ def view(request, project_id):
                                'top_sponsors': top_sponsors,
                                'top_programmers': top_programmers,
                                'is_watching': is_watching,
-                               },
-                              context_instance=RequestContext(request))
+                               })
 
 
 @login_required
 def edit_form(request, project_id):
     project = Project.objects.get(pk=project_id)
-    return render_to_response('core2/project_edit.html',
-                              {'project': project},
-                              context_instance=RequestContext(request))
+    return render('core2/project_edit.html',
+                              {'project': project})
 
 
 @login_required
@@ -69,6 +68,5 @@ def edit(request):
 def list(request):
     projects = Project.objects.all()
     projects = projects.order_by('name')
-    return render_to_response('core2/project_list.html',
-        {'projects':projects},
-        context_instance = RequestContext(request))
+    return render('core2/project_list.html',
+        {'projects':projects})
