@@ -4,7 +4,7 @@ defusedxml==0.4.1
 dj-database-url==0.2.1
 Django==1.10.6
 #django-emailmgr==0.9
-git+git://github.com/un33k/django-emailmgr.git@7a6454346dc962ba3550821d51c311a4f69967ba#egg=django-emailmgr
+git+git://github.com/freedomsponsors/django-emailmgr.git@master#egg=django-emailmgr
 #django-mailer==1.2.2
 django-pagination==1.0.7
 django-recaptcha==1.0.5
