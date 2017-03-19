@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import logout as auth_logout
 from django.http.response import HttpResponse
 from django.template import  RequestContext
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, resolve_url
 from core.services import issue_services
 from core.services.mail_services import *
 from core.services import stats_services
@@ -112,5 +112,6 @@ def sitemap(request):
 
 def stats(request):
     stats = stats_services.get_stats()
+    resolve_url('core.views.feedback_views.feedback')
     return render(request, 'core2/stats.html',
         {'stats': stats})

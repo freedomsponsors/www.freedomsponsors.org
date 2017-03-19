@@ -30,4 +30,4 @@ class TestDeprecatedCoreFeedbackViews(TestCase):
 
     def test_view_feedback(self):
         response = self.client.get('/core/feedback', follow=True)
-        self.assertEqual([('http://testserver/feedback', 301)], response.redirect_chain)
+        self.assertEqual([('/feedback', 301)], response.redirect_chain)

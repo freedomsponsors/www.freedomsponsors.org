@@ -40,7 +40,7 @@ class TestUserUnauthenticatedViews(TestCase):
     def test_view_user_with_slug(self):
         response = self.client.get('/user/%d/%s' % (self.user.id, self.user.username), follow=True)
         self.assertTemplateUsed(response, 'core2/user.html')
-        self.assertTrue('http://testserver/user/%s/' % self.user.username, response.redirect_chain[-1][0])
+        self.assertTrue('/user/%s/' % self.user.username, response.redirect_chain[-1][0])
         self.assertEqual(self.user, response.context['le_user'])
 
     def test_view_edit_form(self):
@@ -84,7 +84,7 @@ class TestUserAuthenticatedViews(TestCase):
         redirect_url = response.redirect_chain[0][0]
         redirect_status = response.redirect_chain[0][1]
         self.assertEqual(302, redirect_status)
-        self.assertEqual('http://testserver/user/%s?prim=true' % self.user.username, redirect_url)
+        self.assertEqual('/user/%s?prim=true' % self.user.username, redirect_url)
 
     def test_edit_user_changing_username(self):
         userinfo = self.user.getUserInfo()
@@ -127,7 +127,7 @@ class TestUserAuthenticatedViews(TestCase):
         user = User.objects.get(pk=self.user.id)
         self.assertFalse(user.is_active)
         self.assertEqual(200, response.status_code)
-        self.assertEqual(('http://testserver/', 302), response.redirect_chain[-1])
+        self.assertEqual(('/', 302), response.redirect_chain[-1])
 
 
 class TestDeprecatedCoreUserViews(TestCase):
@@ -139,12 +139,12 @@ class TestDeprecatedCoreUserViews(TestCase):
 
     def _assert_redirect(self, url):
         response = self.client.get('/core' + url, follow=True)
-        expected = [('http://testserver' + url, 301)]
+        expected = [(url, 301)]
         self.assertEqual(expected, response.redirect_chain)
 
     def _assert_redirect_to_user(self, url):
         response = self.client.get('/core' + url, follow=True)
-        self.assertTrue('http://testserver/user/%s/' % self.user.username, response.redirect_chain[-1][0])
+        self.assertTrue('/user/%s/' % self.user.username, response.redirect_chain[-1][0])
 
     # def test_list_users(self):
     #     self._assert_redirect('/user/')

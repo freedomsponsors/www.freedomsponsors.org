@@ -8,4 +8,4 @@ class HomeViewsTests(TestCase):
 
     def test_redirect_core_home(self):
         response = self.client.get('/core/home/', follow=True)
-        self.assertEqual([('http://testserver/', 301)], response.redirect_chain)
+        self.assertEqual([('/', 301)], response.redirect_chain)

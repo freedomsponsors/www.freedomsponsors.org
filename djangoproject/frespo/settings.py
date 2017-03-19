@@ -180,13 +180,21 @@ RECAPTCHA_USE_SSL = True
 
 
 AUTHENTICATION_BACKENDS = (
-    'social.backends.google.GoogleOpenIdConnect',
-    'social.backends.github.GithubOAuth2',
-    'social.backends.facebook.FacebookOAuth2',
-    'social.backends.bitbucket.BitbucketOAuth',
-    'social.backends.twitter.TwitterOAuth',
-    'social.backends.open_id.OpenIdAuth',
-    'social.backends.yahoo.YahooOpenId',
+    # 'social.backends.google.GoogleOpenIdConnect',
+    'social_core.backends.google.GoogleOpenId',
+    # 'social.backends.github.GithubOAuth2',
+    'social_core.backends.github.GithubOAuth2',
+    # 'social.backends.facebook.FacebookOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
+    # 'social.backends.bitbucket.BitbucketOAuth',
+    'social_core.backends.bitbucket.BitbucketOAuth',
+    # 'social.backends.twitter.TwitterOAuth',
+    'social_core.backends.twitter.TwitterOAuth',
+    # 'social.backends.open_id.OpenIdAuth',
+    'social_core.backends.open_id.OpenIdAuth',
+    # 'social.backends.yahoo.YahooOpenId',
+    'social_core.backends.yahoo.YahooOpenId',
+
     'django.contrib.auth.backends.ModelBackend',
 )
 
