@@ -4,7 +4,7 @@ from core.tests.helpers import mockers
 from frespo_currencies import currency_service
 from helpers import test_data
 from django.conf import settings
-from django.utils.unittest import skipIf
+from unittest import skipIf
 from paypalx import AdaptivePayments
 from django.test.client import Client
 from core.utils import paypal_adapter

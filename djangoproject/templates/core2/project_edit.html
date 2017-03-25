@@ -25,7 +25,7 @@
 		<div class="home-content-section" align="left">
 			<h1 class="green-text"> Editing project: {{ project.name }}</h1>
 			<div class="fs-box">
-				<form id="edit_project_form" method="POST" action="{% url 'core.views.project_views.edit' %}" enctype="multipart/form-data">
+				<form id="edit_project_form" method="POST" action="{% url 'edit_project' %}" enctype="multipart/form-data">
 					{% csrf_token %}
 					<input type="hidden" name="id" value="{{ project.id }}">
 					<div class="column-wrapper vcenter-content" style="height:30px">

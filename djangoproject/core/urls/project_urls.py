@@ -7,5 +7,5 @@ urlpatterns = [
     url(r'^(?P<project_id>\d+)/$', project_views.view),
     url(r'^(?P<project_id>\d+)/edit$', project_views.edit_form),
     url(r'^(?P<project_id>\d+)/.*$', project_views.view),
-    url(r'^submit$', project_views.edit),
+    url(r'^submit$', project_views.edit, name='edit_project'),
 ]

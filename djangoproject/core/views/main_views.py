@@ -112,6 +112,6 @@ def sitemap(request):
 
 def stats(request):
     stats = stats_services.get_stats()
-    resolve_url('core.views.feedback_views.feedback')
+    resolve_url('feedback')
     return render(request, 'core2/stats.html',
         {'stats': stats})

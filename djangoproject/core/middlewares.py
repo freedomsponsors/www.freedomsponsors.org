@@ -15,8 +15,8 @@ class FSPreconditionsMiddleware:
                 return render(request, 'core2/account_disabled.html', {})
         if user.is_authenticated() and not user.is_registration_complete():
             whitelist = [
-                'core.views.user_views.editUserForm',
-                'core.views.user_views.editUser',
+                'editUserForm',
+                'editUser',
             ]
             whitelist2 = [
                 '/core/json/check_username_availability'
@@ -27,7 +27,7 @@ class FSPreconditionsMiddleware:
                     return None
 
             messages.info(request, 'Please complete your profile before proceeding.')
-            url = reverse('core.views.user_views.editUserForm')
+            url = reverse('editUserForm')
             return redirect('%s?next=%s' % (url, request.get_full_path()))
         else:
             return None

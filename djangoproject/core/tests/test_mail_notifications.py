@@ -1,7 +1,6 @@
 from django.test import TestCase
 from helpers import test_data, email_asserts
 from django.test.client import Client
-from django.core.urlresolvers import reverse
 
 __author__ = 'tony'
 
@@ -15,7 +14,7 @@ class TestMailNotifications(TestCase):
     def test_should_send_mail_for_new_comments(self):
         offer = test_data.create_dummy_offer_usd()
         issue = offer.issue
-        response = self.client.post(reverse('core.views.json_views.toggle_watch'), {'entity': 'ISSUE', 'objid': issue.id})
+        response = self.client.post('/core/json/toggle_watch', {'entity': 'ISSUE', 'objid': issue.id})
         self.assertEqual(response.status_code, 200)
 
         user2 = test_data.createDummyUserRandom(login='marydoe', password='xyz456')
@@ -34,7 +33,7 @@ class TestMailNotifications(TestCase):
     def test_should_send_mail_for_adding_or_changing_or_revoking_offer(self):
         offer = test_data.create_dummy_offer_usd()
         issue = offer.issue
-        response = self.client.post(reverse('core.views.json_views.toggle_watch'), {'entity': 'ISSUE', 'objid': issue.id})
+        response = self.client.post('/core/json/toggle_watch', {'entity': 'ISSUE', 'objid': issue.id})
         self.assertEqual(response.status_code, 200)
 
         user2 = test_data.createDummyUserRandom(login='marydoe', password='xyz456')
@@ -76,7 +75,7 @@ class TestMailNotifications(TestCase):
     def test_should_send_mail_for_starting_or_aborting_or_finishing_work(self):
         offer = test_data.create_dummy_offer_usd()
         issue = offer.issue
-        response = self.client.post(reverse('core.views.json_views.toggle_watch'), {'entity': 'ISSUE', 'objid': issue.id})
+        response = self.client.post('/core/json/toggle_watch', {'entity': 'ISSUE', 'objid': issue.id})
         self.assertEqual(response.status_code, 200)
 
         user2 = test_data.createDummyUserRandom(login='marydoe', password='xyz456')

@@ -22,12 +22,3 @@ class FeedbackViewsTests(TestCase):
         response = self.client.get('/feedback')
         self.assertTrue('We care a lot about what you think' in response.content)
         self.assertTrue('Do Something!' in response.content)
-
-
-class TestDeprecatedCoreFeedbackViews(TestCase):
-    def setUp(self):
-        self.client = Client()
-
-    def test_view_feedback(self):
-        response = self.client.get('/core/feedback', follow=True)
-        self.assertEqual([('/feedback', 301)], response.redirect_chain)

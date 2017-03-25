@@ -85,7 +85,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'core.middlewares.FSPreconditionsMiddleware',
     'core.middlewares.Translation',
-    'pagination.middleware.PaginationMiddleware',
     'social.apps.django_app.middleware.SocialAuthExceptionMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -157,7 +156,6 @@ INSTALLED_APPS = (
     # 'sandbox',
     'gh_frespo_integration',
     # 'bootstrap-pagination'
-    'pagination',
     # 'social-auth-app-django',
     # 'social.apps.django_app.default',
     'social_django',

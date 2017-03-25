@@ -1,6 +1,6 @@
 from django.test import TestCase
 from core.utils.trackers_adapter import fetchIssueInfo
-from django.utils.unittest import skipIf
+from unittest import skipIf
 from django.conf import settings
 
 __author__ = 'tony'

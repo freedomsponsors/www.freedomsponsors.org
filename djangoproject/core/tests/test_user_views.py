@@ -128,29 +128,3 @@ class TestUserAuthenticatedViews(TestCase):
         self.assertFalse(user.is_active)
         self.assertEqual(200, response.status_code)
         self.assertEqual(('/', 302), response.redirect_chain[-1])
-
-
-class TestDeprecatedCoreUserViews(TestCase):
-
-    def setUp(self):
-        self.user = test_data.createDummyUserRandom(login='johndoe', password='abc123')
-        self.client = Client()
-        self.client.login(username=self.user.username, password='abc123')
-
-    def _assert_redirect(self, url):
-        response = self.client.get('/core' + url, follow=True)
-        expected = [(url, 301)]
-        self.assertEqual(expected, response.redirect_chain)
-
-    def _assert_redirect_to_user(self, url):
-        response = self.client.get('/core' + url, follow=True)
-        self.assertTrue('/user/%s/' % self.user.username, response.redirect_chain[-1][0])
-
-    # def test_list_users(self):
-    #     self._assert_redirect('/user/')
-
-    def test_view_user(self):
-        self._assert_redirect_to_user('/user/%d/' % self.user.id)
-
-    def test_view_user_with_slug(self):
-        self._assert_redirect_to_user('/user/%d/%s' % (self.user.id, self.user.username))

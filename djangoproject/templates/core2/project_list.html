@@ -16,7 +16,7 @@
     </tr>
   </thead>
   <tbody>
-{% autopaginate projects 50 %}
+{#{% autopaginate projects 50 %}#}
 {% for project in projects %}
     <tr>
       <td><a href="{{project.get_view_link}}"><span class="project-name">{{ project.name }}</span></a></td>
@@ -28,7 +28,7 @@
   </tbody>
 </table>
 <div class="pagination pagination-right">
-{% paginate %}
+{#{% paginate %}#}
 </div>
 
 {% else %}

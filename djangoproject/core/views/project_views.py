@@ -60,7 +60,7 @@ def edit(request):
     watches = watch_services.find_project_watches(project)
     mail_services.notifyWatchers_project_edited(request.user, project, old_json, watches)
     ActionLog.log_edit_project(project=project, user=request.user, old_json=old_json)
-    return redirect('core.views.project_views.view', project_id=project.id)
+    return redirect('/project/%s' % project.id)
 
 
 def list(request):

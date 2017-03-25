@@ -27,4 +27,4 @@ def addFeedback(request):
     issue.save()
     watch_services.watch_issue(request.user, issue.id, Watch.CREATED)
     notify_admin(_('new Feedback: %s') % issue_title, issue_description)
-    return redirect('core.views.feedback_views.feedback')
+    return redirect('feedback')

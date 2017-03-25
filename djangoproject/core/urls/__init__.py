@@ -14,26 +14,6 @@ urlpatterns = [
     url(r'^dev/$', RedirectView.as_view(url='/developers/')),
 ]
 
-# 301 redirects
-urlpatterns += [
-    url(r'^home/$',    RedirectView.as_view(url='/',         permanent=True)),
-    url(r'^faq$',      RedirectView.as_view(url='/faq',      permanent=True)),
-    url(r'^jslic$',    RedirectView.as_view(url='/jslic',    permanent=True)),
-    url(r'^stats$',    RedirectView.as_view(url='/stats',    permanent=True)),
-    url(r'^feedback$', RedirectView.as_view(url='/feedback', permanent=True)),
-
-    url(r'^issue/$',              RedirectView.as_view(url='/search/',        permanent=True, query_string=True)),
-    url(r'^issue/(?P<temp>.*)$',  RedirectView.as_view(url='/issue/%(temp)s', permanent=True, query_string=True)),
-
-    url(r'^project/$',                         RedirectView.as_view(url='/project/', permanent=True)),
-    url(r'^project/(?P<project_id>\d+)/$',     RedirectView.as_view(url='/project/%(project_id)s/', permanent=True)),
-    url(r'^project/(?P<project_id>\d+)/edit$', RedirectView.as_view(url='/project/%(project_id)s/edit', permanent=True)),
-
-    # url(r'^user/$',                                   RedirectView.as_view(url='/user/', permanent=True)),
-    url(r'^user/(?P<user_id>\d+)/$',                  RedirectView.as_view(url='/user/%(user_id)s/', permanent=True)),
-    url(r'^user/(?P<user_id>\d+)/(?P<user_slug>.*)$', RedirectView.as_view(url='/user/%(user_id)s/%(user_slug)s', permanent=True)),
-]
-
 urlpatterns += [
     url(r'^paypal/cancel$', paypal_views.paypalCancel),
     url(r'^paypal/return$', paypal_views.paypalReturn),

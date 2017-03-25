@@ -13,7 +13,7 @@
         <th>Issue</th>
         <th>Amount</th>
     </tr>
-    {% autopaginate payments %}
+{#    {% autopaginate payments %}#}
     {% for payment in payments %}
     <tr>
         <td><a href="/payment/{{ payment.id }}">{{ payment.id }}</a></td>
@@ -27,7 +27,7 @@
     {% endfor %}
 </table>
 <div class="pagination pagination-right">
-    {% paginate %}
+{#    {% paginate %}#}
 </div>
 
 {% endblock mainContent %}

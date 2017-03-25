@@ -15,7 +15,7 @@
     </tr>
   </thead>
   <tbody>
-{% autopaginate users %}
+{#{% autopaginate users %}#}
 {% for userinfo in users %}
     <tr>
       <td><a href="{{ userinfo.user.get_view_link }}"><img src="{{userinfo.user.gravatar_url_medium}}"> {{userinfo.user.username}}</a></td>
@@ -40,7 +40,7 @@
   </tbody>
 </table>
 <div class="pagination pagination-right">
-{% paginate %}
+{#{% paginate %}#}
 </div>
 
 {% endblock mainContent%}

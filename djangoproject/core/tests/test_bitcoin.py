@@ -1,7 +1,7 @@
 from django.test import TestCase
 from core.tests.helpers import test_data, email_asserts, mockers
 from bitcoin_frespo.utils import bitcoin_adapter
-from django.utils.unittest import skipIf
+from unittest import skipIf
 from core.models import *
 from django.test.client import Client
 from core.services import bitcoin_frespo_services

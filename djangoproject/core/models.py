@@ -14,7 +14,6 @@ from core.utils.frespo_utils import twoplaces
 from bitcoin_frespo.models import *
 from frespo_currencies import currency_service
 from django.conf import settings
-from django.core.urlresolvers import reverse
 
 _CURRENCY_SYMBOLS = {'USD': 'US$', 'BRL': 'R$', 'BTC': 'BTC'}
 
@@ -154,10 +153,7 @@ def set_email_verified(sender, **kwargs):
 
 def get_view_link(self):
     user_info = self.getUserInfo()
-    if user_info:
-        return user_info.get_view_link()
-    else:
-        return reverse('core.views.user_views.viewUser', kwargs={'user_id': self.id})
+    return user_info.get_view_link()
 
 
 def is_registration_complete(self):
