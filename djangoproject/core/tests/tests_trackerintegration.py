@@ -8,11 +8,12 @@ __author__ = 'tony'
 @skipIf(settings.SKIPTESTS_TRACKERINTEGRATION == True, 'Skipped as requested by SKIPTESTS_TRACKERINTEGRATION in settings.py')
 class TrackerUtilsTest(TestCase):
     def test_hibernate_jira(self):
-        issueInfo = fetchIssueInfo("https://hibernate.onjira.com/browse/HHH-1050")
+        # issueInfo = fetchIssueInfo("https://hibernate.onjira.com/browse/HHH-1050")
+        issueInfo = fetchIssueInfo("https://hibernate.atlassian.net/browse/HHH-1050")
         assert(not issueInfo.error)
         assert(issueInfo.tracker == 'JIRA')
         assert(issueInfo.key == 'HHH-1050')
-        assert(issueInfo.project_trackerURL == 'https://hibernate.onjira.com/browse/HHH')
+        assert(issueInfo.project_trackerURL == 'https://hibernate.atlassian.net/browse/HHH')
         assert(issueInfo.project_name == 'Hibernate ORM')
         assert(issueInfo.issue_title == 'HQL Unions')
 
