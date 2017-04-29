@@ -54,9 +54,10 @@ def paginate(current, range):
 
     return list_pages_range
 
-@register.inclusion_tag('pagination/pagination.html')
-def pagination(request, paginator):
-    context={}
+
+@register.inclusion_tag('pagination/pagination.html', takes_context=True)
+def pagination(context, paginator):
+    request = context['request']
     pages = []
 
     page_range = paginator.paginator.page_range

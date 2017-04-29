@@ -1,7 +1,6 @@
 {% extends "core2/base_old.html" %}
 {% block mainContent%}
 {% load markdown %}
-{#{% load pagination_tags %}#}
 
 <h3> Users </h3>
 <hr>
@@ -15,7 +14,6 @@
     </tr>
   </thead>
   <tbody>
-{#{% autopaginate users %}#}
 {% for userinfo in users %}
     <tr>
       <td><a href="{{ userinfo.user.get_view_link }}"><img src="{{userinfo.user.gravatar_url_medium}}"> {{userinfo.user.username}}</a></td>
