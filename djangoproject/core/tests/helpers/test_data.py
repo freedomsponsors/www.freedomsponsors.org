@@ -43,6 +43,14 @@ def create_dummy_project():
     project.save()
     return project
 
+def create_dummy_list_project():
+    sponsor = create_dummy_sponsor()
+    list_projects = []
+    for i in range(20):
+        project = Project.newProject('Hibernate'+str(i), sponsor, 'http://www.hibernate.org', 'https://hibernate.onjira.com/')
+        project.save()
+        list_projects.append(project)
+    return list_projects
 
 def create_dummy_issue(project=None, key='HHH-1051', title='Compiled native SQL queries are not cached'):
     if not project:

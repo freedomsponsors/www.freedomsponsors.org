@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from core.decorators import only_post
 from core.models import *
 from django.contrib import messages
+from core.templatetags.pagination import pagina
 from django.template import  RequestContext
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
@@ -39,8 +40,13 @@ def viewUserByUsername(request, username):
     )
     for alert in alert_strings:
         messages.info(request, alert)
+
+    issues = user.getKickstartingIssues()
+    issues_user = pagina(request, issues)
+
     context = {
         'le_user': user,
+        'issues': issues_user,
         'stats': user.getStats(),
         'unconnectedSocialAccounts': unconnectedSocialAccounts,
     }

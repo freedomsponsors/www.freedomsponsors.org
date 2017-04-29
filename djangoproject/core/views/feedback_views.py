@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.http.response import HttpResponse
+from core.templatetags.pagination import pagina
 from django.utils.translation import ugettext as _
 from django.shortcuts import render, redirect
 from django.template import RequestContext
@@ -11,7 +12,8 @@ from core.services.mail_services import notify_admin
 
 
 def feedback(request):
-    issues = Issue.objects.filter(is_feedback=True).order_by('-creationDate')
+    _issues = Issue.objects.filter(is_feedback=True).order_by('-creationDate')
+    issues = pagina(request, _issues)
     return render(request, 'core2/feedback.html', {'issues': issues})
 
 

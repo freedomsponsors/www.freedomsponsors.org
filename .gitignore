@@ -31,3 +31,4 @@ ENV
 Include
 Scripts
 node_modules
+env

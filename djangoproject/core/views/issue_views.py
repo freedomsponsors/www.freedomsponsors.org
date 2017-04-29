@@ -1,6 +1,7 @@
 import logging
 import traceback
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from core.templatetags.pagination import pagina
 from django.contrib.auth.decorators import login_required
 from django.contrib.syndication.views import Feed
 from django.contrib import messages
@@ -126,13 +127,15 @@ def listIssues(request):
     sortby = request.GET.get('sortby', '')
     asc = request.GET.get('asc', '')
 
-    issues = _listIssues(request)
-    if isinstance(issues, Issue):
-        issue = issues
+    _issues = _listIssues(request)
+    if isinstance(_issues, Issue):
+        issue = _issues
         return redirect(issue.get_view_link())
-    if issues.count() == 1:
-        issue = issues[0]
+    if _issues.count() == 1:
+        issue = _issues[0]
         return redirect(issue.get_view_link())
+
+    issues = pagina(request, _issues)
 
     return render(request, 'core2/issue_list.html',
                               {
@@ -145,7 +148,6 @@ def listIssues(request):
                                   'asc': asc,
                                   'sortable': True,
                               })
-
 
 def listIssuesFeed(request):
     feed_class = LatestIssuesFeed()
@@ -184,7 +186,9 @@ class LatestIssuesFeed(Feed):
 def myissues(request):
     if(request.user.is_authenticated() and request.user.getUserInfo() == None):
         return redirect('editUserForm')
-    return render(request, 'core2/myissues.html', {})
+    _issues = request.user.getWatchedIssues()
+    issues = pagina(request, _issues)
+    return render(request, 'core2/myissues.html', {'issues':issues})
 
 
 @login_required

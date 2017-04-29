@@ -5,7 +5,6 @@ from django.test import TestCase
 from helpers import test_data
 from django.test.client import Client
 
-
 __author__ = 'tony'
 
 
@@ -14,7 +13,7 @@ class TestProjectViews(TestCase):
 
     def setUp(self):
         self.project = test_data.create_dummy_project()
-        self.client = Client()
+        self.client = Client()                
 
     def test_project_list(self):
         response = self.client.get('/project/')
@@ -48,3 +47,4 @@ class TestProjectViews(TestCase):
             self.assertTrue(_save.has_been_called())
         location = response._headers['location'][1]
         self.assertTrue(location.endswith('/project/%s' % self.project.id))
+

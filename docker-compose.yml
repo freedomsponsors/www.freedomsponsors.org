@@ -12,6 +12,8 @@ services:
   fs:
     container_name: fs
     image: fs:latest
+    #enviroment:
+      #LOGFILENAME: /tmp/frespo.log
     volumes:
       - ./djangoproject:/usr/src/app
     links:

@@ -110,6 +110,7 @@ TEMPLATES = [
 
                 'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.debug',
+                'django.template.context_processors.request',
                 'django.template.context_processors.i18n',
                 'django.template.context_processors.media',
                 'django.template.context_processors.static',
@@ -255,8 +256,8 @@ SOCIAL_AUTH_INACTIVE_USER_MESSAGE = 'This account has been deactivated'
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
 
-PAGINATION_DEFAULT_PAGINATION = 20
-PAGINATION_DEFAULT_WINDOW = 3
+PAGINATION_DEFAULT_PAGINATION = 10
+PAGINATION_DEFAULT_ORPHANS = 5
 
 ##############################################################
 # settings that are likely to change on different environments
@@ -339,7 +340,7 @@ else:
         }
     }
 
-
+logfilename = os.getenv("LOGFILENAME", PROJECT_DIR.child('logs', 'frespo.log'))
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -366,7 +367,7 @@ LOGGING = {
         'default': {
             'level':'DEBUG',
             'class':'logging.handlers.RotatingFileHandler',
-            'filename': PROJECT_DIR.child('logs', 'frespo.log'),
+            'filename': logfilename,
             'maxBytes': 1024*1024*5, # 5 MB
             'backupCount': 5,
             'formatter':'standard',

@@ -15,7 +15,7 @@
 {% if user.getWatchedIssues %}
   <hr>
   <h3>Watched Issues</h3>
-  {% include 'core2/include/issue_grid.html' with issues=user.getWatchedIssues %}
+  {% include 'core2/include/issue_grid.html' %}
 {% endif %}
 
 {% if not user.getSolutions and not user.getOffers %}

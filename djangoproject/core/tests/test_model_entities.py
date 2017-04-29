@@ -16,6 +16,7 @@ ISSUE_DESCRIPTION = 'a description'
 class TestUser(TestCase):
     
     def setUp(self):
+
         try:
             self.user = User.objects.get_by_natural_key(USER_NAME)
         except:

@@ -14,6 +14,7 @@
 </script>
 
 {#{% load pagination_tags %}#}
+{% load pagination %}
 <table class="table table-striped table-condensed"
        ng-controller="IssueGridCtrl">
   <thead>
@@ -90,6 +91,7 @@
 </table>
 <div class="pagination pagination-right">
 {#{% paginate %}#}
+  {% pagination request issues %}
 </div>
 
 {% endwith %}

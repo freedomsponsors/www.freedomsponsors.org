@@ -1,7 +1,8 @@
 import json
 from django.http import HttpResponse
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from core.templatetags.pagination import pagina
 from django.shortcuts import render, redirect
-from django.template import RequestContext
 from core.decorators import only_post
 from core.models import Project, ActionLog
 from core.services import stats_services, issue_services, watch_services, mail_services
@@ -64,6 +65,6 @@ def edit(request):
 
 
 def list(request):
-    projects = Project.objects.all()
-    projects = projects.order_by('name')
+    proj_list = Project.objects.all().order_by('name')
+    projects = pagina(request, proj_list)
     return render(request, 'core2/project_list.html', {'projects':projects})
