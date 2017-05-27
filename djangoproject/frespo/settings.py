@@ -9,75 +9,35 @@ SECRET_KEY = '*bz++cf(*#++vpo+b+=m3%p9#*x$$&amp;0mjs90x3oo5u@^zyvh)0'
 FRESPO_PROJECT_ID = -1 # only needed for backwards compatibility with south patch 0008_set_isfeedback_true.py
 
 
-MEDIA_ROOT = PROJECT_DIR.child('core').child('static').child('media')
-MEDIA_ROOT_URL = '/static/media'
+MEDIA_ROOT = os.getenv('DJANGO_MEDIA_ROOT', PROJECT_DIR.child('core').child('static').child('media'))
+MEDIA_ROOT_URL = '/media'
 
-SITE_PROTOCOL = 'http'
-SITE_HOST = 'localhost:8000'
 SITE_NAME = 'FreedomSponsors'
+SITE_PROTOCOL = os.getenv('DJANGO_SITE_PROTOCOL', 'http')
+SITE_HOST = os.getenv('DJANGO_SITE_HOST', 'localhost:8000')
 SITE_HOME = SITE_PROTOCOL+'://'+SITE_HOST
 
-# Local time zone for this installation. Choices can be found here:
-# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
-# although not all choices may be available on all operating systems.
-# On Unix systems, a value of None will cause Django to use the same
-# timezone as the operating system.
-# If running in a Windows environment this must be set to the same as your
-# system time zone.
 TIME_ZONE = 'America/Sao_Paulo'
-
-# Language code for this installation. All choices can be found here:
-# http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-us'
 
 SITE_ID = 1
 
-# If you set this to False, Django will make some optimizations so as not
-# to load the internationalization machinery.
 USE_I18N = True
-
-# If you set this to False, Django will not format dates, numbers and
-# calendars according to the current locale.
 USE_L10N = True
-
-# If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True
 
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash.
-# Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
 MEDIA_URL = ''
-
-# Absolute path to the directory static files should be collected to.
-# Don't put anything in this directory yourself; store your static files
-# in apps' "static/" subdirectories and in STATICFILES_DIRS.
-# Example: "/home/media/media.lawrence.com/static/"
 STATIC_ROOT = ''
-
-# URL prefix for static files.
-# Example: "http://media.lawrence.com/static/"
 STATIC_URL = '/static/'
-
-# Additional locations of static files
-STATICFILES_DIRS = (
-    # Put strings here, like "/home/html/static" or "C:/www/django/static".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-)
-
-# List of finder classes that know how to find static files in
-# various locations.
+STATICFILES_DIRS = ()
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
-
-
-ATOMIC_REQUESTS = True
 
 MIDDLEWARE_CLASSES = (
     'core.middlewares.ErrorMiddleware',
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -85,7 +45,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'core.middlewares.FSPreconditionsMiddleware',
     'core.middlewares.Translation',
-    'social.apps.django_app.middleware.SocialAuthExceptionMiddleware',
+    # 'social.apps.django_app.middleware.SocialAuthExceptionMiddleware',  # tava aih so no settings de dev
+    'django.middleware.cache.FetchFromCacheMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -98,16 +59,6 @@ TEMPLATES = [
         ],
         'OPTIONS': {
             'context_processors': [
-                # "django.contrib.auth.context_processors.auth",
-                # "django.core.context_processors.debug",
-                # "django.core.context_processors.i18n",
-                # "django.core.context_processors.media",
-                # "django.core.context_processors.static",
-                # "django.core.context_processors.tz",
-                # "django.contrib.messages.context_processors.messages",
-                # 'django.core.context_processors.request',
-
-
                 'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -116,23 +67,17 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
-                # 'social.apps.django_app.context_processors.backends',
-                # 'social.apps.django_app.context_processors.login_redirect',
-                # 'core.context_processors.addAFewFrespoSettings',
             ],
             'loaders': [
                 'django.template.loaders.filesystem.Loader',
                 'django.template.loaders.app_directories.Loader',
-            #     'django.template.loaders.eggs.Loader',
             ]
         },
     },
 ]
 
-
 ROOT_URLCONF = 'frespo.urls'
 
-# Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'frespo.wsgi.application'
 
 LOCALE_PATHS = (
@@ -166,11 +111,6 @@ INSTALLED_APPS = (
     'captcha',
 )
 
-
-
-# SOUTH_MIGRATION_MODULES = {
-#     'default': 'social.apps.django_app.default.south_migrations',
-# }
 
 RECAPTCHA_PUBLIC_KEY = os.getenv('RECAPTCHA_PUBLIC_KEY')
 RECAPTCHA_PRIVATE_KEY = os.getenv('RECAPTCHA_PRIVATE_KEY')
@@ -228,9 +168,6 @@ TEST_GMAIL_ACCOUNT_2 = {
     'password' : 'blimblom',
 }
 
-SOCIAL_AUTH_GITHUB_KEY = ''
-SOCIAL_AUTH_GITHUB_SECRET = ''
-
 
 SOCIAL_AUTH_PROTECTED_USER_FIELDS = ['email',]
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email',]
@@ -244,6 +181,17 @@ SOCIAL_AUTH_GITHUB_SCOPE = ['login', 'social_username']
 SOCIAL_AUTH_GITHUB_EXTRA_DATA = [('login', 'social_username')]
 FACEBOOK_EXTRA_DATA = [('username', 'social_username')]
 TWITTER_EXTRA_DATA = [('screen_name', 'social_username')]
+
+SOCIAL_AUTH_TWITTER_KEY                 = os.getenv('TWITTER_CONSUMER_KEY')
+SOCIAL_AUTH_TWITTER_SECRET              = os.getenv('TWITTER_CONSUMER_SECRET')
+SOCIAL_AUTH_FACEBOOK_KEY                = os.getenv('FACEBOOK_APP_ID')
+SOCIAL_AUTH_FACEBOOK_SECRET             = os.getenv('FACEBOOK_API_SECRET')
+SOCIAL_AUTH_GITHUB_KEY                  = os.getenv('GITHUB_APP_ID')
+SOCIAL_AUTH_GITHUB_SECRET               = os.getenv('GITHUB_API_SECRET')
+SOCIAL_AUTH_BITBUCKET_KEY               = os.getenv('BITBUCKET_CONSUMER_KEY')
+SOCIAL_AUTH_BITBUCKET_SECRET            = os.getenv('BITBUCKET_CONSUMER_SECRET')
+SOCIAL_AUTH_GOOGLE_OPENIDCONNECT_KEY    = os.getenv('SOCIAL_AUTH_GOOGLE_OPENIDCONNECT_KEY')
+SOCIAL_AUTH_GOOGLE_OPENIDCONNECT_SECRET = os.getenv('SOCIAL_AUTH_GOOGLE_OPENIDCONNECT_SECRET')
 
 ACCOUNT_ACTIVATION_DAYS = 1
 
@@ -263,18 +211,25 @@ PAGINATION_DEFAULT_ORPHANS = 5
 # settings that are likely to change on different environments
 # ############################################################
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['freedomsponsors.org', 'www.freedomsponsors.org', 'localhost']
 ADMINS = (
-    ('Admin', 'admin@freedomsponsors.org'),
+    ('Tony', 'tonylampada@gmail.com'),
+    ('Hugo', 'hugodieb.hd@gmail.com'),
 )
 MANAGERS = ADMINS
 ADMAIL_FROM_EMAIL = 'tony@freedomsponsors.org'
 
 
-DEBUG = True
+DEBUG = os.getenv('DJANGO_DEBUG', '1') == '1'
 TEMPLATE_DEBUG = DEBUG
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = os.getenv('DJANGO_EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend') # 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.getenv('DJANGO_EMAIL_HOST', 'localhost')
+EMAIL_PORT = int(os.getenv('DJANGO_EMAIL_PORT', '25'))
+EMAIL_USE_TLS = os.getenv('DJANGO_EMAIL_USE_TLS', '0') == '1'
+DEFAULT_FROM_EMAIL = 'noreply@freedomsponsors.org'
+
+
 
 SKIPTESTS_TRACKERINTEGRATION = False # Skip tests in tests_trackerintegration
 SKIPTESTS_BITCOINADAPTER = True
@@ -284,63 +239,56 @@ SKIPTESTS_ACCOUNTGMAIL = True
 FS_FEE = Decimal('0.03')
 BITCOIN_FEE = Decimal('0.0002')
 FETCH_ISSUE_TIMEOUT = 10.0
-SECRET_KEY = '*bz++cf(*#++vpo+b+=m3%p9#*x$$&amp;0mjs90x3oo5u@^zyvh)0'
-ENABLE_PIWIK = False
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', '*bz++cf(*#++vpo+b+=m3%p9#*x$$&amp;0mjs90x3oo5u@^zyvh)0')
+ENABLE_PIWIK = os.getenv('ENABLE_PIWIK', '0') == '1'
 
 GITHUB_BOT_USERNAME = 'freedomsponsors-bot'
-GITHUB_BOT_PASSWORD = '*********'
+GITHUB_BOT_PASSWORD = os.getenv('GITHUB_BOT_PASSWORD', '*********')
 
-PAYPAL_USE_SANDBOX = True
-PAYPAL_DEBUG = False
-PAYPAL_IPNNOTIFY_URL_TOKEN = 'megablasteripn'
-PAYPAL_API_USERNAME = "FP_1338073142_biz_api1.gmail.com"
-PAYPAL_API_PASSWORD = '1338073168'
-PAYPAL_API_SIGNATURE = 'AFcWxV21C7fd0v3bYYYRCpSSRl31AVAvZTYca4potYVRXAbpeSKQGHZO'
-PAYPAL_API_APPLICATION_ID = 'APP-80W284485P519543T' #see www.x.com
-PAYPAL_API_EMAIL = 'FP_1338073142_biz@gmail.com'
-PAYPAL_FRESPO_RECEIVER_EMAIL = 'FP_1338073142_biz@gmail.com'
+PAYPAL_USE_SANDBOX           = os.getenv('PAYPAL_USE_SANDBOX', '1') == '1'
+PAYPAL_DEBUG                 = os.getenv('PAYPAL_DEBUG', '0') == '1'
+PAYPAL_IPNNOTIFY_URL_TOKEN   = os.getenv('PAYPAL_IPNNOTIFY_URL_TOKEN', 'megablasteripn')
+PAYPAL_API_USERNAME          = os.getenv('PAYPAL_API_USERNAME', "FP_1338073142_biz_api1.gmail.com")
+PAYPAL_API_PASSWORD          = os.getenv('PAYPAL_API_PASSWORD', '1338073168')
+PAYPAL_API_SIGNATURE         = os.getenv('PAYPAL_API_SIGNATURE', 'AFcWxV21C7fd0v3bYYYRCpSSRl31AVAvZTYca4potYVRXAbpeSKQGHZO')
+PAYPAL_API_APPLICATION_ID    = os.getenv('PAYPAL_API_APPLICATION_ID', 'APP-80W284485P519543T')  #see www.x.com
+PAYPAL_API_EMAIL             = os.getenv('PAYPAL_API_EMAIL', 'FP_1338073142_biz@gmail.com')
+PAYPAL_FRESPO_RECEIVER_EMAIL = os.getenv('PAYPAL_FRESPO_RECEIVER_EMAIL', 'FP_1338073142_biz@gmail.com')
 
 PAYPAL_CANCEL_URL = SITE_HOME+'/core/paypal/cancel'
 PAYPAL_RETURN_URL = SITE_HOME+'/core/paypal/return'
 PAYPAL_IPNNOTIFY_URL = SITE_HOME+'/core/paypal/'+PAYPAL_IPNNOTIFY_URL_TOKEN
 
-BITCOIN_IPNNOTIFY_URL_TOKEN = 'megablasteripn'
-BITCOIN_ENABLED = False
+
+BITCOIN_ENABLED = os.getenv('BITCOIN_ENABLED', '0') == '1'
+BITCOIN_IPNNOTIFY_URL_TOKEN = os.getenv('BITCOIN_IPNNOTIFY_URL_TOKEN', 'megablasteripn')
 BITCOIN_RECEIVE_ADDRESS_POOL_SIZE = 20
+BITCOINRPC_CONN = {
+    'remote': os.getenv('BITCOINRPC_CONN_REMOTE') == '1',
+    'user': os.getenv('BITCOINRPC_CONN_USER'),
+    'password': os.getenv('BITCOINRPC_CONN_PASSWORD'),
+    'password2': os.getenv('BITCOINRPC_CONN_PASSWORD2'),
+    'host': os.getenv('BITCOINRPC_CONN_HOST'),
+    'port': int(os.getenv('BITCOINRPC_CONN_PORT', '443')),
+    'use_https': os.getenv('BITCOINRPC_CONN_USE_HTTPS') == '1',
+}
 
-MOCK_OPENEXCHANGE_RATES = True
-# OPENEXCHANGERATES_API_KEY = '01ac624c42df447aa14a80f5844ee1d3'
 
-if os.getenv('USE_TEST_DB') == '1':
-    DATABASES = {
-        # 'default': dj_database_url.config(
-        #     default='sqlite:///' + PROJECT_DIR.child('database.db'))
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'frespotesting',
-            'USER': 'frespo',
-            'PASSWORD': 'frespo',
-            'HOST': 'localhost',
-            'PORT': '5432',
-            'TEST_MIRROR': 'default',
-        }
+MOCK_OPENEXCHANGE_RATES = os.getenv('MOCK_OPENEXCHANGE_RATES', '1') == '1'
+OPENEXCHANGERATES_API_KEY = os.getenv('OPENEXCHANGERATES_API_KEY')
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ATOMIC_REQUESTS': True,
+        'NAME': os.getenv('DATABASE_NAME', 'frespo'),
+        'USER': os.getenv('DATABASE_USER', 'frespo'),
+        'PASSWORD': os.getenv('DATABASE_PASS', 'frespo'),
+        'HOST': os.getenv('DATABASE_HOST', 'localhost'),
+        'PORT': os.getenv('DATABASE_PORT', '5432'),
     }
-else:
-    DATABASES = {
-        # 'default': dj_database_url.config(
-        #     default='sqlite:///' + PROJECT_DIR.child('database.db'))
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': os.getenv('DATABASE_NAME', 'frespo'),
-            'USER': os.getenv('DATABASE_USER', 'frespo'),
-            'PASSWORD': os.getenv('DATABASE_PASS', 'frespo'),
-            'HOST': os.getenv('DATABASE_HOST', 'localhost'),
-            'PORT': os.getenv('DATABASE_PORT', '5432'),
-            # 'TEST_MIRROR': None,
-        }
-    }
+}
 
-logfilename = os.getenv("LOGFILENAME", PROJECT_DIR.child('logs', 'frespo.log'))
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -362,12 +310,13 @@ LOGGING = {
         'mail_admins': {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler'
+            'class': 'django.utils.log.AdminEmailHandler',
+#            'include_html': True,
         },
         'default': {
             'level':'DEBUG',
             'class':'logging.handlers.RotatingFileHandler',
-            'filename': logfilename,
+            'filename': os.getenv('FRESPO_LOG_FILE', PROJECT_DIR.child('logs', 'frespo.log')),
             'maxBytes': 1024*1024*5, # 5 MB
             'backupCount': 5,
             'formatter':'standard',
@@ -380,6 +329,11 @@ LOGGING = {
             'propagate': True
         },
         'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        'core.management.commands.bitcoin_jobs': {
             'handlers': ['mail_admins'],
             'level': 'ERROR',
             'propagate': True,
