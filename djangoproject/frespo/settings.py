@@ -27,7 +27,7 @@ USE_L10N = True
 USE_TZ = True
 
 MEDIA_URL = ''
-STATIC_ROOT = ''
+STATIC_ROOT = os.getenv('DJANGO_STATIC_ROOT', '')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = ()
 STATICFILES_FINDERS = (
@@ -120,7 +120,8 @@ RECAPTCHA_USE_SSL = True
 
 AUTHENTICATION_BACKENDS = (
     # 'social.backends.google.GoogleOpenIdConnect',
-    'social_core.backends.google.GoogleOpenId',
+    # 'social_core.backends.google.GoogleOpenId',
+    'social_core.backends.google_openidconnect.GoogleOpenIdConnect',
     # 'social.backends.github.GithubOAuth2',
     'social_core.backends.github.GithubOAuth2',
     # 'social.backends.facebook.FacebookOAuth2',
@@ -211,7 +212,7 @@ PAGINATION_DEFAULT_ORPHANS = 5
 # settings that are likely to change on different environments
 # ############################################################
 
-ALLOWED_HOSTS = ['freedomsponsors.org', 'www.freedomsponsors.org', 'localhost']
+ALLOWED_HOSTS = ['freedomsponsors.org', 'www.freedomsponsors.org', 'test.freedomsponsors.org', 'localhost']
 ADMINS = (
     ('Tony', 'tonylampada@gmail.com'),
     ('Hugo', 'hugodieb.hd@gmail.com'),
@@ -225,6 +226,8 @@ TEMPLATE_DEBUG = DEBUG
 
 EMAIL_BACKEND = os.getenv('DJANGO_EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend') # 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.getenv('DJANGO_EMAIL_HOST', 'localhost')
+EMAIL_HOST_USER = os.getenv('DJANGO_EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('DJANGO_EMAIL_HOST_PASSWORD')
 EMAIL_PORT = int(os.getenv('DJANGO_EMAIL_PORT', '25'))
 EMAIL_USE_TLS = os.getenv('DJANGO_EMAIL_USE_TLS', '0') == '1'
 DEFAULT_FROM_EMAIL = 'noreply@freedomsponsors.org'

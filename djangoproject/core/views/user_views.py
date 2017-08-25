@@ -72,8 +72,9 @@ def editUserForm(request):
         'userinfo': userinfo,
         'can_edit_username': first_time,
         'available_languages': available_languages,
-        'next': request.GET.get('next', '')},
-    )
+        'next': request.GET.get('next', ''),
+        'BITCOIN_ENABLED': settings.BITCOIN_ENABLED,
+    })
 
 
 def _notify_admin_new_user(user):

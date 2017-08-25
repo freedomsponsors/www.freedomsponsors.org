@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  fs:
+    container_name: frespo
+    image: frespo:latest
+    environment:
+      - DATABASE_NAME=frespo_prod
+      - DATABASE_HOST=172.17.0.1
+    volumes:
+      - ./djangoproject:/app
+      - /uwsgi
+    ports:
+      - 80:8000
+    command: "uwsgi --ini /uwsgi.ini"

@@ -53,7 +53,7 @@ def edit_existing_user(user, dict):
     userinfo.preferred_language_code = dict['preferred_language_code']
     userinfo.date_last_updated = now
     if settings.BITCOIN_ENABLED:
-        btcaddr = dict['bitcoin_receive_address']
+        btcaddr = dict.get('bitcoin_receive_address')
         if btcaddr and not bitcoin_validation.validate(btcaddr):
             raise FSException('Invalid Bitcoin Receive Address')
         userinfo.bitcoin_receive_address = btcaddr

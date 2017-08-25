@@ -1,3 +1,0 @@
-#!/bin/bash
-# This hook is run after every virtualenv is activated.
-cdvirtualenv
