@@ -4,7 +4,7 @@ RED='\033[00;31m'
 GREEN='\033[00;32m'
 YELLOW='\e[0;33m'
 
-HOST=ec2-54-149-61-80.us-west-2.compute.amazonaws.com
+HOST=freedomsponsors.org
 
 # Pq ninguem merece ter que ficar decorando comando
 # Instruções:
