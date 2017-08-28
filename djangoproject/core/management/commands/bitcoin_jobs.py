@@ -1,4 +1,4 @@
-from django.core.management.base import NoArgsCommand
+from django.core.management.base import BaseCommand
 from optparse import make_option
 from core.services import bitcoin_frespo_services, mail_services
 import logging
@@ -9,15 +9,11 @@ logger = logging.getLogger(__name__)
 
 __author__ = 'tony'
 
-class Command(NoArgsCommand):
+class Command(BaseCommand):
 
     help = "Asynchronous Bitcoin transaction processing"
 
-    option_list = NoArgsCommand.option_list + (
-        make_option('--verbose', action='store_true'),
-    )
-
-    def handle_noargs(self, **options):
+    def handle(*args, **options):
         try:
             bitcoin_frespo_services.bitcoin_active_receive_confirmation()
             bitcoin_frespo_services.bitcoin_pay_programmers()
