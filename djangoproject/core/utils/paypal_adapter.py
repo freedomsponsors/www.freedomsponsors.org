@@ -40,14 +40,17 @@ def generate_paypal_payment(payment):
     )
     paykey = response['payKey']
     msg = '''Paypal PAYREQUEST paykey=%s
+        returnUrl = [%s]
+        ipnNotificationUrl = [%s]
         receivers = [%s]
-        response = [%s]''' % (paykey, str(receivers), str(response))
+        response = [%s]''' % (paykey, settings.PAYPAL_RETURN_URL, settings.PAYPAL_IPNNOTIFY_URL, str(receivers), str(response))
     logger.info(msg)
     payment.setPaykey(paykey)
 
 
 def verify_ipn(data):
     # prepares provided data set to inform PayPal we wish to validate the response
+    print
     data["cmd"] = "_notify-validate"
     params = urlencode(data)
  
