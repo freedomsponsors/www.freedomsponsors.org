@@ -1,39 +1,41 @@
-django==1.6.5
-splinter==0.5.4
-Pygments==1.5
-misaka==1.0.2
-psycopg2==2.4.5
-simplejson==2.6.2
-coverage==3.6b1
-python-dateutil==2.1
-six==1.2.0
-Unipath==0.2.1
-dj-database-url==0.2.1
-httplib2==0.7.7
-python-openid==2.2.5
-requests-oauthlib==0.4.2
-#python-social-auth==0.2.1
-git+git://github.com/cambonf/python-social-auth.git@68041313935c78d5045643cca7d2becbdbdf0438#egg=python-social-auth
-requests==2.5.1
-django-pagination==1.0.7
-south==0.7.5
 bitcoin-python==0.3
-git+git://github.com/pinax/django-mailer.git@887ec2c9d8e05d061293b56ff913a9b293c42aa0#egg=django-mailer
-git+git://github.com/freedomsponsors/python-paypalx.git@34d624ed8a7b6505aa6e6e12c0a5b854cacbc612#egg=paypalx
-
-# Both django-registration v0.8 and v1.0 have compatibility issues with Django 1.6.5.
-# See refs:
-#   http://stackoverflow.com/questions/19985103/django-1-6-and-django-registration-built-in-authentication-views-not-picked-up
-#   https://bitbucket.org/ubernostrum/django-registration/pull-request/63/django-16-compatibility-fix-auth-views/diff
-#
-#   Below github fork targets a Django-1.6-compatible version of django-registration package, which is a good starting point
-#   to twist for Django 1.6.5.
-git+git://github.com/macropin/django-registration.git@42f66646a5e8a80bf1250fe03fb4738b9cde6593#egg=django-registration
-
-# This new version of django-emailmgr is already compatible with django 1.6. It's not on pypi yet though.
-git+git://github.com/un33k/django-emailmgr.git@7a6454346dc962ba3550821d51c311a4f69967ba#egg=django-emailmgr
-
-Pillow==3.1.0
-mock==1.0.1
-html2text==2014.7.3
+coverage==3.6b1
+defusedxml==0.4.1
+dj-database-url==0.2.1
+Django==1.10.6
+#django-emailmgr==0.9
+git+git://github.com/freedomsponsors/django-emailmgr.git@master#egg=django-emailmgr
+#django-mailer==1.2.2
 django-recaptcha==1.0.5
+django-registration==2.2
+dm.xmlsec.binding==1.3.2
+future==0.16.0
+html2text==2014.7.3
+httplib2==0.7.7
+isodate==0.5.4
+lxml==3.7.3
+misaka==1.0.2
+mock==1.0.1
+oauthlib==2.0.1
+git+git://github.com/freedomsponsors/python-paypalx.git@34d624ed8a7b6505aa6e6e12c0a5b854cacbc612#egg=paypalx
+Pillow==3.1.0
+psycopg2==2.4.5
+pycryptodomex==3.4.5
+Pygments==1.5
+pyjwkest==1.3.2
+PyJWT==1.4.2
+python-dateutil==2.1
+python-openid==2.2.5
+python-saml==2.2.1
+python-social-auth==0.3.6
+requests==2.13.0
+requests-oauthlib==0.8.0
+selenium==3.3.0
+simplejson==2.6.2
+six==1.10.0
+social-auth-app-django==1.1.0
+social-auth-core==1.2.0
+splinter==0.5.4
+Unipath==0.2.1
+uWSGI==2.0.13.1
+virtualenv==15.0.3

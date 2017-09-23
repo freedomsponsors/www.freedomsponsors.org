@@ -26,7 +26,7 @@ def addIssue(request):
     offer = issue_services.sponsor_new_issue(request.POST, request.user)
     watch_services.watch_issue(request.user, offer.issue.id, Watch.SPONSORED)
     ActionLog.log_sponsor(offer)
-    return  redirect(offer.issue.get_view_link() + '?alert=SPONSOR')
+    return redirect(offer.issue.get_view_link() + '?alert=SPONSOR')
 
 
 @login_required

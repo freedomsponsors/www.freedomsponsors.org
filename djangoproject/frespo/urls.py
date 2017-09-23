@@ -64,7 +64,7 @@ if 'core' in settings.INSTALLED_APPS:
         url(r'^rates$', main_views.rates, name='rates'),
         url(r'^404$', TemplateView.as_view(template_name='404.html')),
         url(r'^faq$', TemplateView.as_view(template_name='core2/faq.html')),
-        url(r'^developers$', TemplateView.as_view(template_name='core2/developers.html')),
+        url(r'^developers', TemplateView.as_view(template_name='core2/developers.html')),
         url(r'^core/', include(core_urls)),
         url(r'^project/', include(core_urls.project_urls)),
         url(r'^issue/', include(core_urls.issue_urls)),

@@ -212,7 +212,13 @@ PAGINATION_DEFAULT_ORPHANS = 5
 # settings that are likely to change on different environments
 # ############################################################
 
-ALLOWED_HOSTS = ['freedomsponsors.org', 'www.freedomsponsors.org', 'test.freedomsponsors.org', 'localhost']
+ALLOWED_HOSTS = [
+    'freedomsponsors.org',
+    'www.freedomsponsors.org',
+    'test.freedomsponsors.org',
+    'localhost', 
+    os.getenv('DJANGO_ALLOWED_HOST', 'x.y.z'),
+]
 ADMINS = (
     ('Tony', 'tonylampada@gmail.com'),
     ('Hugo', 'hugodieb.hd@gmail.com'),

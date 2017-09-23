@@ -42,6 +42,10 @@ function devhelp {
     echo -e ""
     echo -e "${GREEN}dknginx${RESTORE}           Sobe um nginx na porta 80, redirecionando pra 8000/3000"
     echo -e ""
+    echo -e "${GREEN}sendcode${RESTORE}          ${RED}Envia${RESTORE} o código para o servidor de produção"
+    echo -e ""
+    echo -e "${GREEN}redeploy${RESTORE}          ${RED}Redeploya${RESTORE} a aplicação em produção"
+    echo -e ""
     echo -e ""
 }
 
@@ -119,6 +123,15 @@ function sendcode {
     cd $CD
     return $exitcode
 }
+
+function redeploy {
+    sendcode
+    ssh ubuntu@$HOST "cd www.freedomsponsors.org && docker build -t frespo ."
+    ssh ubuntu@$HOST ./dkfrespo.sh
+    exitcode=$?
+    return $exitcode
+}
+
 
 function echo_red {
     echo -e "\e[31m$1\e[0m";

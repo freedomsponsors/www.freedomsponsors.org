@@ -1,3 +1,0 @@
-django==1.6.5
-six==1.2.0
-Unipath==0.2.1
