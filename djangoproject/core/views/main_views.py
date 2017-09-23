@@ -16,6 +16,9 @@ from core.views import HOME_CRUMB
 logger = logging.getLogger(__name__)
 
 
+def redirect_core(request):
+    return redirect(request.get_full_path().split('/core')[1])
+
 
 def logout(request):
     """Logs out user"""

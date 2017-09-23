@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^mailtest/$', main_views.mailtest),
     url(r'^about/$', RedirectView.as_view(url='http://blog.freedomsponsors.org/about/')),
     url(r'^dev/$', RedirectView.as_view(url='/developers/')),
+    url(r'^issue', main_views.redirect_core),
 ]
 
 urlpatterns += [
