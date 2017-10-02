@@ -89,7 +89,7 @@ def create_dummy_solution(issue=None, programmer=None):
 
 def create_dummy_payment_usd():
     offer = create_dummy_offer_usd()
-    payment = Payment.newPayment(offer)
+    payment = Payment.newPayment(offer, offer.currency)
     payment.setPaykey('PK_ABCDEFG')
     payment.fee = Decimal('0.30')
     payment.total = Decimal('10.00')
